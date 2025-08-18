@@ -75,7 +75,7 @@ const footerData = {
         { name: "Instagram", href: "https://www.instagram.com/" },
         { name: "Twitter", href: "https://x.com/" }
     ],
-    copyright: "© Studiova copyright 2025"
+    copyright: "© Creditor Academy 2025"
 };
 
 export const GET = async () => {

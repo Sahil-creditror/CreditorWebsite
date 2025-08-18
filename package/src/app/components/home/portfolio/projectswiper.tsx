@@ -29,20 +29,18 @@ const Projectswiper = () => {
                 delay: 2000,
                 disableOnInteraction: false,
             }}
-            slidesPerView={"auto"}
+            slidesPerView={3}   // fixed to 3
+            spaceBetween={20}
             breakpoints={{
-                320: { spaceBetween: 0 },
-                640: { spaceBetween: 10 },
-                768: { spaceBetween: 20 },
-                1024: { spaceBetween: 20 },
-                1920: { spaceBetween: 30 },
+                320: { slidesPerView: 1, spaceBetween: 10 },   // Mobile
+                640: { slidesPerView: 2, spaceBetween: 15 },   // Tablet
+                1024: { slidesPerView: 3, spaceBetween: 20 },  // Desktop
             }}
             modules={[Autoplay]}
             className="mySwiper"
         >
-            {projects.map((value,index)=>{
-                
-                return(
+            {projects.map((value, index) => {
+                return (
                     <SwiperSlide key={index}>
                         <div className="relative group flex flex-col gap-3 lg:gap-5">
                             <div className="relative">
@@ -61,7 +59,7 @@ const Projectswiper = () => {
                                 >
                                     <span className="flex justify-center items-center p-5 w-full">
                                         <svg width="65" height="64" viewBox="0 0 65 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect x="0.333374" width="64" height="64" rx="32" fill="#C1FF72" />
+                                            <rect x="0.333374" width="64" height="64" rx="32" fill="#026fe2" />
                                             <path
                                                 d="M25.6667 25.3333H39M39 25.3333V38.6666M39 25.3333L25.6667 38.6666"
                                                 stroke="#1F2A2E"
@@ -75,7 +73,7 @@ const Projectswiper = () => {
                             </div>
                             <div className="flex flex-col gap-2 lg:gap-4">
                                 <h3>{value.title}</h3>
-                                <div className="flex gap-3">
+                                <div className="flex gap-3 flex-wrap">
                                     {value.ScopeOfWork.map((tag, idx) => (
                                         <p
                                             key={idx}

@@ -47,8 +47,8 @@ const MenuData = [
 
 
 const footerData = {
-    name: "Studiova",
-    tagline: "Build something together?",
+    name: "Creditor Academy",
+    tagline: "Learn the Law. Know the Difference",
     info: [
         {
             icon: "/images/footer/email-arrow.svg",

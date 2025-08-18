@@ -1,7 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -11,10 +9,10 @@ type Project = {
   ScopeOfWork: string[];
   industry?: string;
   coverImage: string;
-  description?: string; // ✅ added description
+  description?: string;
 };
 
-const Projectswiper = () => {
+const ProjectGrid = () => {
   const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
@@ -24,100 +22,80 @@ const Projectswiper = () => {
   }, []);
 
   return (
-    <Swiper
-      loop
-      autoplay={{
-        delay: 2000,
-        disableOnInteraction: false,
-      }}
-      slidesPerView={3}
-      spaceBetween={20}
-      breakpoints={{
-        320: { slidesPerView: 1, spaceBetween: 10 }, // Mobile
-        640: { slidesPerView: 2, spaceBetween: 15 }, // Tablet
-        1024: { slidesPerView: 3, spaceBetween: 20 }, // Desktop
-      }}
-      modules={[Autoplay]}
-      className="mySwiper"
-    >
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {projects.map((value, index) => (
-        <SwiperSlide key={index}>
-          <div className="relative group flex flex-col gap-3 lg:gap-5">
-            <div className="relative">
-              <div className="w-auto h-80">
-                <Image
-                  src={value.coverImage}
-                  alt={value.title}
-                  width={530}
-                  height={350}
-                  style={{
-                    width: "100%",
-                    maxWidth: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              </div>
-              <Link
-                href={`/projects/${value.slug}`}
-                className="absolute top-0 left-0 backdrop-blur-xs bg-black/70 w-full h-full hidden group-hover:flex"
-              >
-                <span className="flex justify-center items-center p-5 w-full">
-                  <svg
-                    width="65"
-                    height="64"
-                    viewBox="0 0 65 64"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect
-                      x="0.333374"
-                      width="64"
-                      height="64"
-                      rx="32"
-                      fill="#026fe2"
-                    />
-                    <path
-                      d="M25.6667 25.3333H39M39 25.3333V38.6666M39 25.3333L25.6667 38.6666"
-                      stroke="#1F2A2E"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
-              </Link>
+        <div key={index} className="relative group flex flex-col gap-3 lg:gap-5">
+          <div className="relative">
+            <div className="w-auto h-80">
+              <Image
+                src={value.coverImage}
+                alt={value.title}
+                width={530}
+                height={350}
+                style={{
+                  width: "100%",
+                  maxWidth: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
             </div>
+            <Link
+              href={`/projects/${value.slug}`}
+              className="absolute top-0 left-0 backdrop-blur-xs bg-black/70 w-full h-full hidden group-hover:flex"
+            >
+              <span className="flex justify-center items-center p-5 w-full">
+                <svg
+                  width="65"
+                  height="64"
+                  viewBox="0 0 65 64"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    x="0.333374"
+                    width="64"
+                    height="64"
+                    rx="32"
+                    fill="#026fe2"
+                  />
+                  <path
+                    d="M25.6667 25.3333H39M39 25.3333V38.6666M39 25.3333L25.6667 38.6666"
+                    stroke="#1F2A2E"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+            </Link>
+          </div>
 
-            <div className="flex flex-col gap-2 lg:gap-4">
-              <h3>{value.title}</h3>
+          <div className="flex flex-col gap-2 lg:gap-4">
+            <h3>{value.title}</h3>
 
-              {/* ✅ Render description safely (it has <span> in markdown) */}
-              {value.description && (
+            {value.description && (
+              <p
+                className="text-sm text-gray-600 dark:text-gray-300"
+                dangerouslySetInnerHTML={{ __html: value.description }}
+              />
+            )}
+
+            <div className="flex gap-3 flex-wrap">
+              {value.ScopeOfWork.map((tag, idx) => (
                 <p
-                  className="text-sm text-gray-600 dark:text-gray-300"
-                  dangerouslySetInnerHTML={{ __html: value.description }}
-                />
-              )}
-
-              <div className="flex gap-3 flex-wrap">
-                {value.ScopeOfWork.map((tag, idx) => (
-                  <p
-                    key={idx}
-                    className="text-base dark:text-white dark:hover:text-secondary hover:bg-primary border border-secondary/12 dark:border-white/12 w-fit rounded-full py-1 px-3"
-                  >
-                    {tag}
-                  </p>
-                ))}
-              </div>
+                  key={idx}
+                  className="text-base dark:text-white dark:hover:text-secondary hover:bg-primary border border-secondary/12 dark:border-white/12 w-fit rounded-full py-1 px-3"
+                >
+                  {tag}
+                </p>
+              ))}
             </div>
           </div>
-        </SwiperSlide>
+        </div>
       ))}
-    </Swiper>
+    </div>
   );
 };
 
-export default Projectswiper;
-
-
+export default ProjectGrid;

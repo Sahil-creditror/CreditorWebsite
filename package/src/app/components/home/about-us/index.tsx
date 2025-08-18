@@ -89,8 +89,8 @@ function Aboutus() {
                                 <p>Brands served worldwide</p>
                             </div>
                             <div className="flex flex-col gap-4 relative z-10">
-                                <Image src={"/images/logo/logo-black.svg"} alt="Logo Image" height={44} width={160} className="dark:hidden"/>
-                                <Image src={"/images/logo/WhiteLogo.svg"} alt="Logo Image" height={44} width={160} className="hidden dark:block"/>
+                                <Image src={"/images/logo/creditorlogo.png"} alt="Logo Image" height={44} width={160} className="dark:hidden"/>
+                                <Image src={"/images/logo/creditorlogo.png"} alt="Logo Image" height={44} width={160} className="hidden dark:block"/>
                                 <p>Our global reach allows us to create unique, culturally relevant designs for businesses across different industries.</p>
                             </div>
                             <div className="absolute -top-72 right-0 border border-secondary/12 dark:border-white/30 rounded-full w-[489px] h-[489px]" />

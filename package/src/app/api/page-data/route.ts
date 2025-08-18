@@ -21,23 +21,28 @@ const avatarList = [
 
 const statsFactData = {
     number: '01',
-    name: "Stats & facts",
-    heading: "High quality web design solutions you can trust.",
-    description: "When selecting a web design agency, it's essential to consider its reputation, experience, and the specific needs of your project.",
+    name: "Stats & Facts",
+    heading: "Proven results that empower financial freedom.",
+    description: "At Creditor Academy, we focus on transforming financial education into real-world results. Our community of learners actively eliminates debt, builds strong credit, and achieves lasting financial independence.",
     scoreData: [
         {
-            number: 40,
+            number: 525,
             numberValue: 'K',
-            scoreDescp: "People who have launched their websites"
+            scoreDescp: "YouTube Views"
         },
         {
-            number: 238,
-            scoreDescp: "Experienced professionals ready to assist"
+            number: 1673,
+            scoreDescp: "Active Learners"
         },
         {
-            number: 3,
+            number: 1.27,
             numberValue: 'M',
-            scoreDescp: "Support through messages and live consultations"
+            scoreDescp: "Total Debt Eliminated"
+        },
+        {
+            number: 9,
+            numberValue: 'K',
+            scoreDescp: "YouTube Subscribers"
         },
     ]
 };

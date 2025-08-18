@@ -69,8 +69,8 @@ const Signin = () => {
                         <div className="w-full">
                             <div className="relative shadow-xl mx-auto max-w-lg overflow-hidden bg-white dark:bg-darkblack px-8 py-14 text-center sm:px-12 md:px-16">
                                 <Link href={"/"} className="mb-10 flex justify-center">
-                                    <Image src={"/images/logo/logo-black.svg"} alt="Image" width={187} height={30} className="dark:hidden"/>
-                                    <Image src={"/images/logo/WhiteLogo.svg"} alt="Image" width={187} height={30} className="hidden dark:block"/>
+                                    <Image src={"/images/logo/creditorlogo.png"} alt="Image" width={187} height={30} className="dark:hidden"/>
+                                    <Image src={"/images/logo/creditorlogo.png"} alt="Image" width={187} height={30} className="hidden dark:block"/>
                                 </Link>
 
                                 <SocialSignIn actionText="Sign In" />

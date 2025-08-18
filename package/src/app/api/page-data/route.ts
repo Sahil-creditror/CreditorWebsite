@@ -44,33 +44,33 @@ const statsFactData = {
 
 const servicesData = {
     number: '03',
-    name: "Services",
-    heading: "What we do",
-    description: "A glimpse into our creativity—exploring innovative designs, successful collaborations, and transformative digital experiences.",
+    name: "Roadmap",
+    heading: "Roadmap Series",
+    description: "Begin your journey with Coach Paulmicheal as you’re introduced to Creditors Academy and its mission to guide you toward private, sovereign living. This orientation walks you through the complete Roadmap Series, giving you a clear view of what’s ahead.",
     data: [
         {
             id: 1,
             image: "/images/home/services/services_1.png",
-            heading: "Brand identity",
-            descp: "When selecting a web design agency, it's essential to consider its reputation, experience, and the specific needs of your project."
+            heading: " 1. Orientation to the Private Path",
+            descp: "Meet Coach Paulmicheal and discover what Creditor Academy stands for Understand your journey through the Roadmap Series to private living"
         },
         {
             id: 2,
             image: "/images/home/services/services_2.png",
-            heading: "Web development",
-            descp: "When selecting a web design agency, it's essential to consider its reputation, experience, and the specific needs of your project."
+            heading: "2. Become Private & New SOV 101",
+            descp: "Get an introduction to the SOV 101 and Become Private courses Access the official readiness checklist and scorecard system to assess your eligibility with a counsellor"
         },
         {
             id: 3,
             image: "/images/home/services/services_3.png",
-            heading: "Content creation",
-            descp: "When selecting a web design agency, it's essential to consider its reputation, experience, and the specific needs of your project."
+            heading: "3. Operate Private",
+            descp: "Get introduced to the key principles of the Operate Private course and what it empowers you to do. Access the official readiness checklist and scorecard with guidance from a counsellor.Explore the complete course catalogue to see what each lesson will cover."
         },
         {
             id: 4,
             image: "/images/home/services/services_4.png",
-            heading: "Motion & 3d modeling",
-            descp: "When selecting a web design agency, it's essential to consider its reputation, experience, and the specific needs of your project."
+            heading: "4. Senior Business credit",
+            descp: "Get introduced to Business Credit building, the “I Want Remedy Now” credit repair system, and Private Merchant Processing without banks. Access the Business Credit Checklist and Private Score Readiness system to evaluate your current position."
         },
     ]
 };

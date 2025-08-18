@@ -23,32 +23,32 @@ const HeroSection = () => {
     {
       src: "/video/hero-1.mp4",
       poster: "/images/hero/banner-1.png",
-      title: "Creative Studio",
-      description: "We craft immersive digital experiences",
+      title: "Creditor Academy",
+      description: "Protect What You Build. Pass On What Matters",
     },
     {
       src: "/video/hero-2.mp4",
       poster: "/images/hero/banner-2.png",
-      title: "Brand Strategy",
-      description: "Building memorable brand identities",
+      title: "Creditor Academy",
+      description: "\"When the people fear the government there is tyranny. When the government fears the people, there is liberty\" - Thomas Jefferson"
     },
     {
       src: "/video/hero-3.mp4",
       poster: "/images/hero/banner-3.png",
-      title: "Web Design",
-      description: "High-converting websites that perform",
+      title: "Creditor Academy",
+      description: "Board as a Student. Land as a Sovereign.",
     },
     {
       src: "/video/hero-4.mp4",
       poster: "/images/hero/banner-4.png",
-      title: "Motion Graphics",
-      description: "Bringing your brand to life",
+      title: "Creditor Academy",
+      description: "Operate Private. Take Control. Live Sovereign",
     },
     {
-      src: "/video/Banner.mp4",
+      src: "/video/hero-5.mp4",
       poster: "/images/hero/banner-5.png",
-      title: "Digital Marketing",
-      description: "Data-driven growth strategies",
+      title: "Creditor Academy",
+      description: "Restore Your Credit. Discharge Debt. Take Your Power Back.",
     },
   ];
 
@@ -173,7 +173,7 @@ const HeroSection = () => {
           </motion.div>
         </AnimatePresence>
 
-        {/* ✨ Content */}
+        {/* Content */}
         <div className="relative z-10 container mx-auto px-6 text-left pb-20">
           <motion.div
             className="flex flex-col gap-6"
@@ -197,11 +197,11 @@ const HeroSection = () => {
                 />
               </motion.div>
               <p className="text-white/80 max-w-md text-lg leading-relaxed">
-                We create{" "}
+                We empower individuals with{" "}
                 <span className="text-primary font-semibold">
-                  high-performing
+                  credit and financial mastery
                 </span>{" "}
-                digital designs that elevate brands and enhance conversions.
+                to unlock lasting freedom and confidence.
               </p>
             </div>
 
@@ -218,7 +218,7 @@ const HeroSection = () => {
         </div>
 
         {/* ◀ Navigation Arrows ▶ */}
-        <motion.button
+        {/* <motion.button
           className="absolute left-6 top-1/2 -translate-y-1/2 z-20 p-4 rounded-full bg-white/10 backdrop-blur-md"
           onClick={goToPrevious}
           whileHover={{ scale: 1.15, backgroundColor: "rgba(255,255,255,0.25)" }}
@@ -264,7 +264,7 @@ const HeroSection = () => {
               strokeLinejoin="round"
             />
           </svg>
-        </motion.button>
+        </motion.button> */}
 
         {/* 🔘 Indicators */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">

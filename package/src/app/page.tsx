@@ -10,6 +10,8 @@ import Services from "./components/home/services";
 import StatsFacts from "./components/home/stats-facts";
 import Team from "./components/home/team";
 import Testimonial from "./components/home/testimonial";
+import Masterclass from "./components/home/masterclass";
+import MasterInfo from "./components/home/masterinfo";
 
 export const metadata: Metadata = {
     title: "Studiova",
@@ -20,9 +22,11 @@ export default function Home() {
     <>
       <HeroSection />
       <StatsFacts/>
+      <Aboutus/>
+      <Masterclass />
+      <MasterInfo />
       <Portfolio/>
       <Services/>
-      <Aboutus/>
       <Testimonial/>
       <Team teamdataNumber="06"/>
       <Pricing/>

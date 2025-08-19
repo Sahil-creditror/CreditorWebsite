@@ -675,23 +675,6 @@ function Aboutus() {
                     ))}
                   </ul>
                 </motion.div>
-                
-                {/* Floating emoji decoration */}
-                {/* <motion.div 
-                  className="absolute bottom-4 right-4 text-2xl"
-                  animate={{
-                    y: [0, -10, 0],
-                    rotate: [0, 10, -10, 0]
-                  }}
-                  transition={{
-                    duration: 5,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    ease: "easeInOut"
-                  }}
-                >
-                  👥
-                </motion.div> */}
               </motion.div>
             </div>
 
@@ -772,14 +755,14 @@ function Aboutus() {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Image
-                    src={"/images/logo/creditorlogowhite.png"}
+                    src={"/images/logo/creditorlogo.png"}
                     alt="Logo Image"
                     height={60}
                     width={250}
                     className="dark:hidden"
                   />
                   <Image
-                    src={"/images/logo/creditorlogoblack.png"}
+                    src={"/images/logo/creditorlogo.png"}
                     alt="Logo Image"
                     height={60}
                     width={250}

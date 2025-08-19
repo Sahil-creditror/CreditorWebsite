@@ -218,7 +218,7 @@ const HeroSection = () => {
         </div>
 
         {/* ◀ Navigation Arrows ▶ */}
-        {/* <motion.button
+        <motion.button
           className="absolute left-6 top-1/2 -translate-y-1/2 z-20 p-4 rounded-full bg-white/10 backdrop-blur-md"
           onClick={goToPrevious}
           whileHover={{ scale: 1.15, backgroundColor: "rgba(255,255,255,0.25)" }}
@@ -264,7 +264,7 @@ const HeroSection = () => {
               strokeLinejoin="round"
             />
           </svg>
-        </motion.button> */}
+        </motion.button>
 
         {/* 🔘 Indicators */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">

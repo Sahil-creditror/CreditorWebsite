@@ -14,25 +14,25 @@ import Masterclass from "./components/home/masterclass";
 import MasterInfo from "./components/home/masterinfo";
 
 export const metadata: Metadata = {
-    title: "Studiova",
+    title: "Creditor Academy",
 };
 
 export default function Home() {
   return (
     <>
       <HeroSection />
-      <StatsFacts/>
-      <Aboutus/>
+      <StatsFacts />
+      <Aboutus />
       <Masterclass />
       <MasterInfo />
-      <Portfolio/>
-      <Services/>
-      <Testimonial/>
-      <Team teamdataNumber="06"/>
-      <Pricing/>
-      <Faq/>
-      <Resources/>
-      <Contact contactdataNumber="10"/>
+      <Portfolio />
+      <Services />
+      <Testimonial />
+      <Team teamdataNumber="06" />
+      <Pricing />
+      <Faq />
+      <Resources />
+      <Contact contactdataNumber="10" />
     </>
   );
 }

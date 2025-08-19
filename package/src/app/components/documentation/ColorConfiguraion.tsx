@@ -22,7 +22,7 @@ export const ColorConfiguration = () => {
                     For change , go to : \src\app\globals.css</p>
                 <div className="py-4 px-5 rounded-md bg-black mt-8">
                     <p className="text-sm text-gray-400 flex flex-col gap-2">
-                        <span>--color-primary: #C1FF72;</span>
+                        <span>--color-primary: #72b4ffff;</span>
                         <span>--color-secondary: #1F2A2E;</span>
                     </p>
                 </div>

@@ -13,8 +13,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 function Aboutus() {
   const [avatarList, setAvatarList] = useState<any>(null);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const bubblesRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const modalVideoRef = useRef<HTMLVideoElement>(null);
   const { x, y } = useMousePosition();
   const controls = useAnimation();
   const [ref, inView] = useInView({
@@ -215,6 +218,40 @@ function Aboutus() {
     }
   }, [avatarList, controls]);
 
+  // Handle video modal
+  const openVideoModal = () => {
+    setIsVideoModalOpen(true);
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  };
+
+  const closeVideoModal = () => {
+    setIsVideoModalOpen(false);
+    document.body.style.overflow = 'auto'; // Re-enable scrolling
+    
+    // Pause the modal video when closing
+    if (modalVideoRef.current) {
+      modalVideoRef.current.pause();
+    }
+  };
+
+  // Close modal when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const modal = document.querySelector('.video-modal');
+      if (modal && !modal.contains(event.target as Node)) {
+        closeVideoModal();
+      }
+    };
+
+    if (isVideoModalOpen) {
+      document.addEventListener('mousedown', handleClickOutside as any);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside as any);
+    };
+  }, [isVideoModalOpen]);
+
   return (
     <section 
       ref={sectionRef}
@@ -278,7 +315,7 @@ function Aboutus() {
       />
       
       <div className="container section-content relative z-10">
-        <div className="flex flex-col 2xl:flex-row gap-10 2xl:gap-28">
+        <div className="flex flex-col 2xl:flex-row gap-5 2xl:gap-18">
           {/* Left Side */}
           <motion.div 
             ref={ref}
@@ -368,7 +405,7 @@ function Aboutus() {
               </motion.h2>
 
               <motion.p 
-                className="2xl:max-w-sm text-secondary/70 dark:text-white/70"
+                className="2xl:max-w-sm text-secondary/70 dark:text-white/70 text-justify"
                 variants={{
                   hidden: { y: 30, opacity: 0 },
                   visible: {
@@ -378,161 +415,17 @@ function Aboutus() {
                   }
                 }}
               >
-                Creditor Academy empowers individuals and businesses with the
-                knowledge, strategies, and tools to take full control of their
-                financial journey. Through expert-led courses, legal insights,
-                and proven frameworks, we help our members build credit mastery,
-                financial freedom, and long-term success.
+                At Creditor Academy, we equip individuals and entrepreneurs with the knowledge to unlock 
+                the full power of the "Private" operating outside the public system, which means more control, 
+                more protection, and more opportunity. 
               </motion.p>
             </motion.div>
           </motion.div>
 
           {/* Right Side - 3 Columns */}
           <div className="grid md:grid-cols-3 gap-5 2xl:gap-7">
-            {/* Card 1 */}
-            <motion.div
-              initial={{ opacity: 0, y: 50, rotateY: 15 }}
-              whileInView={{ 
-                opacity: 1, 
-                y: 0,
-                rotateY: 0,
-                transition: { 
-                  duration: 0.8,
-                  delay: 0.1,
-                  ease: [0.34, 1.56, 0.64, 1]
-                }
-              }}
-              whileHover={{ 
-                scale: 1.03,
-                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-              }}
-              viewport={{ once: true, margin: "0px 0px -50px 0px" }}
-              className="interactive-card relative bg-primary p-4 2xl:p-7 flex flex-col justify-between gap-8 md:gap-0 cursor-pointer group rounded-xl overflow-hidden"
-              onMouseEnter={() => {
-                gsap.to(".mouse-follower", { 
-                  opacity: 1,
-                  scale: 2,
-                  backgroundColor: "rgba(255, 200, 0, 0.3)",
-                  backdropFilter: "blur(4px)"
-                });
-              }}
-              onMouseLeave={() => {
-                gsap.to(".mouse-follower", { 
-                  opacity: 0,
-                  scale: 1,
-                  backgroundColor: "rgba(0, 0, 0, 0.1)",
-                  backdropFilter: "blur(2px)"
-                });
-              }}
-            >
-              <motion.div 
-                className="relative z-10 flex flex-col gap-2 lg:gap-4"
-                whileHover={{ transition: { staggerChildren: 0.1 } }}
-              >
-                <motion.div whileHover={{ scale: 1.05 }}>
-                  <StarRating count={5} color="#1F2A2E" />
-                </motion.div>
-                <motion.p 
-                  className="dark:text-secondary"
-                  whileHover={{ x: 5 }}
-                >
-                  "Creditor Academy transformed my understanding of credit and
-                  empowered me with strategies I never thought possible."
-                </motion.p>
-              </motion.div>
-              
-              <motion.div 
-                className="relative z-10"
-                initial={{ opacity: 0 }}
-                whileInView={{ 
-                  opacity: 1,
-                  transition: { delay: 0.3 }
-                }}
-              >
-                <div className="relative border-b border-secondary/12 pb-5">
-                  <motion.h2 
-                    className="dark:text-secondary"
-                    initial={{ scale: 0.9 }}
-                    whileInView={{ 
-                      scale: 1,
-                      transition: { 
-                        type: "spring",
-                        stiffness: 300
-                      }
-                    }}
-                  >
-                    98.9%
-                  </motion.h2>
-                  <motion.p className="text-base text-secondary/70">
-                    Student satisfaction rate
-                  </motion.p>
-                </div>
-                
-                <div className="flex items-center gap-2 lg:gap-5 pt-5">
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  >
-                    <Image
-                      src={"/images/home/aboutusIndex/avatar.svg"}
-                      alt="Image"
-                      width={64}
-                      height={64}
-                      className="rounded-full"
-                    />
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ 
-                      opacity: 1,
-                      x: 0,
-                      transition: { delay: 0.4 }
-                    }}
-                  >
-                    <p className="font-medium dark:text-secondary">
-                      Jordan Matthews
-                    </p>
-                    <p className="text-base text-secondary/70">
-                      Academy Graduate
-                    </p>
-                  </motion.div>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                className="absolute bottom-0 right-0 parallax-bg"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ 
-                  opacity: 1,
-                  scale: 1,
-                  transition: { delay: 0.5 }
-                }}
-              >
-                <Image
-                  src={"/images/home/aboutusIndex/bg-ellipse.svg"}
-                  alt="image"
-                  width={200}
-                  height={200}
-                />
-              </motion.div>
-              
-              {/* Animated decorative elements */}
-              <motion.div 
-                className="absolute -top-10 -left-10 w-20 h-20 rounded-full bg-white/10"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.2, 0.5, 0.2]
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-            </motion.div>
 
-            {/* Card 2 */}
+            {/* Card 1 */}
             <div className="flex flex-col gap-5 2xl:gap-7">
               <motion.div
                 initial={{ opacity: 0, y: 50, rotateX: -15 }}
@@ -551,7 +444,7 @@ function Aboutus() {
                   boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
                 }}
                 viewport={{ once: true, margin: "0px 0px -50px 0px" }}
-                className="interactive-card w-full h-full overflow-hidden rounded-lg cursor-pointer rounded-xl"
+                className="interactive-card w-full h-full overflow-hidden rounded-lg cursor-pointer rounded-xl group"
                 onMouseEnter={() => {
                   gsap.to(".mouse-follower", { 
                     opacity: 1,
@@ -568,17 +461,31 @@ function Aboutus() {
                     backdropFilter: "blur(2px)"
                   });
                 }}
+                onClick={openVideoModal}
               >
-                <motion.div>
-                  <Image
-                    src={"/images/home/services/3062.jpg"}
-                    alt="Image"
-                    width={340}
-                    height={215}
-                    style={{ width: "100%", height: "100%" }}
-                    className="transition-transform duration-500"
-                  />
-                </motion.div>
+                <div className="relative w-full h-full">
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    // poster="/images/home/services/video-poster.jpg" // Optional: add a poster frame
+                  >
+                    <source src="/video/intro.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  
+                  {/* Play button overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center">
+                      <svg className="w-8 h-8 text-secondary ml-1" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
               
               <motion.div
@@ -678,7 +585,7 @@ function Aboutus() {
               </motion.div>
             </div>
 
-            {/* Card 3 */}
+            {/* Card 2 */}
             <motion.div
               initial={{ opacity: 0, y: 50, rotateY: -15 }}
               whileInView={{ 
@@ -696,13 +603,15 @@ function Aboutus() {
                 boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
               }}
               viewport={{ once: true, margin: "0px 0px -50px 0px" }}
-              className="interactive-card relative overflow-hidden p-5 2xl:p-7 border border-secondary/12 dark:border-white/30 flex flex-col justify-between gap-8 md:gap-0 cursor-pointer rounded-xl"
+              className="interactive-card relative overflow-hidden p-5 2xl:p-7 bg-white flex flex-col justify-between gap-8 md:gap-0 cursor-pointer rounded-xl"
               onMouseEnter={() => {
                 gsap.to(".mouse-follower", { 
                   opacity: 1,
                   scale: 2,
                   backgroundColor: "rgba(200, 100, 255, 0.3)",
-                  backdropFilter: "blur(4px)"
+                  backdropFilter: "blur(4px)",
+                  duration: 0.3,
+                  ease: "power2.out"
                 });
               }}
               onMouseLeave={() => {
@@ -710,7 +619,9 @@ function Aboutus() {
                   opacity: 0,
                   scale: 1,
                   backgroundColor: "rgba(0, 0, 0, 0.1)",
-                  backdropFilter: "blur(2px)"
+                  backdropFilter: "blur(2px)",
+                  duration: 0.3,
+                  ease: "power2.out"
                 });
               }}
             >
@@ -723,18 +634,20 @@ function Aboutus() {
                 }}
               >
                 <motion.h2
+                  className="text-4xl font-bold text-gray-800"
                   initial={{ scale: 0.9 }}
                   whileInView={{ 
                     scale: 1,
                     transition: { 
                       type: "spring",
-                      stiffness: 300
+                      stiffness: 300,
+                      damping: 15
                     }
                   }}
                 >
                   35+
                 </motion.h2>
-                <motion.p>
+                <motion.p className="text-gray-600 mt-2">
                   Exclusive credit & legal courses
                 </motion.p>
               </motion.div>
@@ -749,10 +662,10 @@ function Aboutus() {
               >
                 <motion.div
                   whileHover={{ 
-                    rotate: [0, -5, 5, -5, 0],
-                    transition: { duration: 0.7 }
+                    rotate: [0, -2, 2, -2, 0],
+                    transition: { duration: 0.5 }
                   }}
-                  whileTap={{ scale: 0.95 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   <Image
                     src={"/images/logo/creditorlogo.png"}
@@ -771,68 +684,299 @@ function Aboutus() {
                 </motion.div>
                 
                 <motion.p
+                  className="text-gray-600"
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ 
                     opacity: 1,
                     y: 0,
-                    transition: { delay: 0.7 }
+                    transition: { delay: 0.7, duration: 0.5 }
                   }}
                 >
-                  Our programs are designed to deliver actionable knowledge,
-                  practical frameworks, and real-world financial empowerment for
-                  members at every stage of their credit journey.
+                  Our educational platform & Instructors empower you to structure your life and business 
+                  for maximum privacy, asset protection, and true independence. This is where knowledge 
+                  becomes sovereignty, because real freedom begins in the Private.
                 </motion.p>
               </motion.div>
               
-              {/* Animated floating circles */}
+              {/* Subtle animated gradient background */}
               <motion.div 
-                className="floating-circle absolute -top-72 right-0 border border-secondary/12 dark:border-white/30 rounded-full w-[489px] h-[489px] group-hover:opacity-80 transition-opacity duration-300"
+                className="absolute inset-0 -z-10 opacity-5 pointer-events-none"
                 initial={{ opacity: 0 }}
                 whileInView={{ 
-                  opacity: 0.3,
-                  transition: { delay: 0.8 }
+                  opacity: 0.05,
+                  transition: { delay: 0.8, duration: 1 }
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-blue-500"></div>
+              </motion.div>
+              
+              {/* Thicker animated floating circles */}
+              <motion.div 
+                className="absolute -top-72 -right-24 border-2 border-gray-300 rounded-full w-[489px] h-[489px] opacity-40"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ 
+                  opacity: 0.4,
+                  scale: 1,
+                  transition: { 
+                    delay: 0.8,
+                    duration: 1.2,
+                    ease: "easeOut"
+                  }
+                }}
+                whileHover={{
+                  opacity: 0.5,
+                  borderWidth: "3px",
+                  transition: { duration: 0.5 }
                 }}
               />
               
               <motion.div 
-                className="floating-circle absolute -bottom-36 -right-14 border border-secondary/12 dark:border-white/30 rounded-full w-[489px] h-[489px] group-hover:opacity-80 transition-opacity duration-300"
-                initial={{ opacity: 0 }}
+                className="absolute -bottom-36 -right-14 border-2 border-gray-300 rounded-full w-[489px] h-[489px] opacity-40"
+                initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ 
-                  opacity: 0.3,
-                  transition: { delay: 0.9 }
+                  opacity: 0.4,
+                  scale: 1,
+                  transition: { 
+                    delay: 0.9,
+                    duration: 1.2,
+                    ease: "easeOut"
+                  }
+                }}
+                whileHover={{
+                  opacity: 0.5,
+                  borderWidth: "3px",
+                  transition: { duration: 0.5 }
                 }}
               />
               
-              {/* Particle animation */}
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {Array.from({ length: 20 }).map((_, i) => (
+              {/* Additional medium circle for depth */}
+              <motion.div 
+                className="absolute -top-40 -left-20 border border-gray-400 rounded-full w-[350px] h-[350px] opacity-20"
+                initial={{ opacity: 0, scale: 0.7 }}
+                whileInView={{ 
+                  opacity: 0.2,
+                  scale: 1,
+                  transition: { 
+                    delay: 1.0,
+                    duration: 1.5,
+                    ease: "easeOut"
+                  }
+                }}
+              />
+              
+              {/* Subtle shimmer effect */}
+              <motion.div 
+                className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                initial={{ x: "-100%", skewX: "-15deg" }}
+                whileHover={{
+                  x: "200%",
+                  transition: { duration: 1.2, ease: "easeOut" }
+                }}
+              >
+                <div className="w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+              </motion.div>
+            </motion.div>
+
+            {/* Card 3 */}
+            <motion.div
+              initial={{ opacity: 0, y: 50, rotateY: 15 }}
+              whileInView={{ 
+                opacity: 1, 
+                y: 0,
+                rotateY: 0,
+                transition: { 
+                  duration: 0.8,
+                  delay: 0.1,
+                  ease: [0.34, 1.56, 0.64, 1]
+                }
+              }}
+              whileHover={{ 
+                scale: 1.03,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+              }}
+              viewport={{ once: true, margin: "0px 0px -50px 0px" }}
+              className="interactive-card relative bg-primary p-4 2xl:p-7 flex flex-col justify-between gap-8 md:gap-0 cursor-pointer group rounded-xl overflow-hidden"
+              onMouseEnter={() => {
+                gsap.to(".mouse-follower", { 
+                  opacity: 1,
+                  scale: 2,
+                  backgroundColor: "rgba(255, 200, 0, 0.3)",
+                  backdropFilter: "blur(4px)",
+                  duration: 0.3,
+                  ease: "power2.out"
+                });
+              }}
+              onMouseLeave={() => {
+                gsap.to(".mouse-follower", { 
+                  opacity: 0,
+                  scale: 1,
+                  backgroundColor: "rgba(0, 0, 0, 0.1)",
+                  backdropFilter: "blur(2px)",
+                  duration: 0.3,
+                  ease: "power2.out"
+                });
+              }}
+            >
+              <motion.div 
+                className="relative z-10 flex flex-col gap-2 lg:gap-4"
+                whileHover={{ transition: { staggerChildren: 0.1 } }}
+              >
+                <motion.div whileHover={{ scale: 1.05 }}>
+                  <StarRating count={5} color="#FFFFFF" />
+                </motion.div>
+                <motion.p 
+                  className="text-white"
+                  whileHover={{ x: 5 }}
+                >
+                  "Creditor Academy transformed my understanding of credit and
+                  empowered me with strategies I never thought possible."
+                </motion.p>
+              </motion.div>
+              
+              <motion.div 
+                className="relative z-10"
+                initial={{ opacity: 0 }}
+                whileInView={{ 
+                  opacity: 1,
+                  transition: { delay: 0.3 }
+                }}
+              >
+                <div className="relative border-b border-white/20 pb-5">
+                  <motion.h2 
+                    className="text-white"
+                    initial={{ scale: 0.9 }}
+                    whileInView={{ 
+                      scale: 1,
+                      transition: { 
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 15
+                      }
+                    }}
+                  >
+                    98.9%
+                  </motion.h2>
+                  <motion.p className="text-base text-white/80">
+                    Student satisfaction rate
+                  </motion.p>
+                </div>
+                
+                <div className="flex items-center gap-2 lg:gap-5 pt-5">
                   <motion.div
-                    key={i}
-                    className="absolute rounded-full bg-primary/10 dark:bg-secondary/10"
-                    style={{
-                      width: `${Math.random() * 6 + 2}px`,
-                      height: `${Math.random() * 6 + 2}px`,
-                      left: `${Math.random() * 100}%`,
-                      top: `${Math.random() * 100}%`
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  >
+                    <Image
+                      src={"/images/home/aboutusIndex/avatar.svg"}
+                      alt="Image"
+                      width={64}
+                      height={64}
+                      className="rounded-full"
+                    />
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ 
+                      opacity: 1,
+                      x: 0,
+                      transition: { delay: 0.4 }
                     }}
-                    animate={{
-                      y: [0, Math.random() * 40 - 20],
-                      x: [0, Math.random() * 40 - 20],
-                      opacity: [0.5, 1, 0.5]
-                    }}
-                    transition={{
-                      duration: Math.random() * 10 + 5,
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                      delay: Math.random() * 3
-                    }}
-                  />
-                ))}
+                  >
+                    <p className="font-medium text-white">
+                      Jordan Matthews
+                    </p>
+                    <p className="text-base text-white/80">
+                      Academy Graduate
+                    </p>
+                  </motion.div>
+                </div>
+              </motion.div>
+              
+              {/* Optimized background element without extra space */}
+              <motion.div 
+                className="absolute bottom-0 right-0 w-40 h-40 opacity-10 pointer-events-none"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ 
+                  opacity: 0.1,
+                  scale: 1,
+                  transition: { delay: 0.5, duration: 0.8 }
+                }}
+              >
+                <div className="w-full h-full rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 blur-xl"></div>
+              </motion.div>
+              
+              {/* Optimized decorative elements with reduced lag */}
+              <motion.div 
+                className="absolute -top-10 -left-10 w-20 h-20 rounded-full bg-white/5"
+                animate={{
+                  scale: [1, 1.1, 1],
+                  opacity: [0.1, 0.3, 0.1]
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                style={{
+                  willChange: "transform, opacity" // Performance optimization
+                }}
+              />
+              
+              {/* Additional subtle glow for depth */}
+              <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl blur-lg opacity-20"></div>
               </div>
             </motion.div>
+
           </div>
         </div>
       </div>
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {isVideoModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 video-modal"
+            onClick={closeVideoModal}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="relative w-full max-w-4xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close button - positioned outside the video container */}
+              <button
+                onClick={closeVideoModal}
+                className="absolute -top-12 right-0 z-10 w-10 h-10 rounded-full bg-black/70 flex items-center justify-center text-white hover:bg-black/90 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              
+              {/* Video player */}
+              <div className="relative bg-black rounded-lg overflow-hidden">
+                <div className="relative pt-[56.25%]"> {/* 16:9 aspect ratio */}
+                  <iframe
+                    src="https://drive.google.com/file/d/1jUjnrebq_Z6jy64RWnIZqAHjD6JEfW9Y/preview"
+                    className="absolute inset-0 w-full h-full"
+                    allow="autoplay"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

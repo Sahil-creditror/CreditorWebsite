@@ -3,7 +3,7 @@ import Aboutus from "./components/home/about-us";
 import Contact from "./components/home/contact";
 import Faq from "./components/home/faq";
 import HeroSection from "./components/home/hero";
-import Portfolio from "./components/home/portfolio";
+import Catalog from "./components/home/catalogs";
 import Pricing from "./components/home/pricing";
 import Resources from "./components/home/resources";
 import Services from "./components/home/services";
@@ -25,7 +25,7 @@ export default function Home() {
       <Aboutus />
       <Masterclass />
       <MasterInfo />
-      <Portfolio />
+      <Catalog />
       <Services />
       <Testimonial />
       <Team teamdataNumber="06" />

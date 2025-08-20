@@ -59,7 +59,7 @@ const BannerContentSection = () => {
                 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white"
             >
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-500">
-                Master Class Program
+                Private Business Launchpad Program
                 </span>
                 <br className="hidden sm:block" />
                 <motion.span 
@@ -80,7 +80,7 @@ const BannerContentSection = () => {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="text-gray-300 text-sm sm:text-lg"
             >
-                The 90-Day Master Class by Creditor Academy is your all-in-one business launch system for the private world. Whether you're a first-time entrepreneur or ready to restructure your public business, this program equips you with everything you need to operate sovereignly.
+                The 90-Day Masterclass by Creditor Academy is your all-in-one business launch system for the private world. Whether you're a first-time entrepreneur or ready to restructure your public business, this program equips you with everything you need to operate sovereignly.
             </motion.p>
 
             <motion.div 
@@ -114,7 +114,7 @@ const BannerContentSection = () => {
                 >
                     <FaRocket className="text-blue-400 shrink-0" />
                 </motion.div>
-                <span>Why This Master Class Is Different</span>
+                <span>Why This Private Business Launchpad Is Different?</span>
                 </motion.h3>
                 <motion.p 
                 className="text-gray-300 mb-3 sm:mb-4 text-xs sm:text-sm"

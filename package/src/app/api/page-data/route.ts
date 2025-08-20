@@ -218,27 +218,28 @@ const pricingData = {
 const faqData = {
     data: [
         {
-            faq_que: "What services does your agency offer?",
-            faq_ans: 'Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.'
+            faq_que: "What is Creditor Academy?",
+            faq_ans: "Creditor Academy is a premier learning platform that empowers individuals with knowledge in credit, finance, and legal strategies. Our courses are designed to help you build, protect, and leverage your credit and financial profile."
         },
         {
-            faq_que: "How long does a typical project take?",
-            faq_ans: 'Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.'
+            faq_que: "Who can join Creditor Academy?",
+            faq_ans: "Our programs are designed for professionals, entrepreneurs, and individuals seeking to improve their credit understanding, financial literacy, and legal empowerment. No prior experience is required."
         },
         {
-            faq_que: "Do you offer custom designs, or do you use templates?",
-            faq_ans: 'Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.'
+            faq_que: "How are the courses delivered?",
+            faq_ans: "All courses are delivered online through an immersive learning portal. You’ll get access to video lessons, downloadable resources, live Q&A sessions, and step-by-step guidance."
         },
         {
-            faq_que: "What’s the cost of a project?",
-            faq_ans: 'Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.'
+            faq_que: "What’s the cost of enrollment?",
+            faq_ans: "We offer multiple enrollment options depending on the program. You can choose from one-time payments or flexible installment plans. Detailed pricing is available on our enrollment page."
         },
         {
-            faq_que: "Do you provide ongoing support after project completion?",
-            faq_ans: 'Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.'
+            faq_que: "Do you provide ongoing support after enrollment?",
+            faq_ans: "Yes. Learners receive lifetime access to course materials, community forums, and regular updates. Premium members also get access to mentorship sessions and personalized guidance."
         }
     ]
 };
+
 const contactData = {
     keypoint:["Always-On Customer Support","Service Across the Globe"],
     managerProfile:{

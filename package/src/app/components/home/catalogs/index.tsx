@@ -1,7 +1,7 @@
 import "swiper/css";
 import Projectswiper from "./projectswiper";
 
-function Portfolio() {
+function catalog() {
   return (
     <section className="bg-lightgray dark:bg-darkblack py-20 md:py-40">
       <div className="flex flex-col gap-24">
@@ -41,5 +41,5 @@ function Portfolio() {
   );
 }
 
-export default Portfolio;
+export default catalog;
 import Image from "next/image";

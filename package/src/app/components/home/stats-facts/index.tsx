@@ -27,28 +27,32 @@ const statConfig = [
     bgColor: "bg-red-500/10",
     borderColor: "border-red-500/30",
     icon: <FaYoutube className="w-6 h-6" />,
-    bubbleColor: "bg-red-500/10"
+    bubbleColor: "bg-red-500/10",
+    delay: 0.1
   },
   {
     color: "text-emerald-500", // Green
     bgColor: "bg-emerald-500/10",
     borderColor: "border-emerald-500/30",
     icon: <FaUsers className="w-6 h-6" />,
-    bubbleColor: "bg-emerald-500/10"
+    bubbleColor: "bg-emerald-500/10",
+    delay: 0.2
   },
   {
     color: "text-blue-500",  // Blue
     bgColor: "bg-blue-500/10",
     borderColor: "border-blue-500/30",
     icon: <FaDollarSign className="w-6 h-6" />,
-    bubbleColor: "bg-blue-500/10"
+    bubbleColor: "bg-blue-500/10",
+    delay: 0.3
   },
   {
     color: "text-amber-500",   // Amber
     bgColor: "bg-amber-500/10",
     borderColor: "border-amber-500/30",
     icon: <FaUserAlt className="w-6 h-6" />,
-    bubbleColor: "bg-amber-500/10"
+    bubbleColor: "bg-amber-500/10",
+    delay: 0.4
   },
 ];
 
@@ -62,9 +66,10 @@ const formatNumber = (value: number): string => {
 
 function StatsFacts() {
   const [statsFactData, setStatsFactData] = useState<StatsFactData | null>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const { ref, inView } = useInView({
     triggerOnce: true,
-    threshold: 0.5,
+    threshold: 0.3,
   });
 
   useEffect(() => {
@@ -109,10 +114,45 @@ function StatsFacts() {
     fetchStats();
   }, []);
 
+  useEffect(() => {
+    if (inView && !hasAnimated) {
+      setHasAnimated(true);
+    }
+  }, [inView, hasAnimated]);
+
   if (!statsFactData) {
     return (
-      <section className="py-20 md:py-40 flex items-center justify-center">
-        <p className="text-gray-500 dark:text-gray-400">Loading stats...</p>
+      <section className="relative bg-white dark:bg-secondary overflow-hidden py-20 md:py-40">
+        <div className="container">
+          <div className="flex flex-col xl:flex-row items-start gap-8">
+            {/* Skeleton loading state */}
+            <div className="flex items-center py-3 gap-4 md:gap-8 w-full max-w-xl">
+              <div className="h-8 w-8 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
+              <div className="h-px w-16 bg-gray-200 dark:bg-gray-700"></div>
+              <div className="h-8 w-32 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
+            </div>
+            
+            <div className="flex flex-col gap-11 w-full">
+              <div className="flex flex-col gap-5">
+                <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-3/4"></div>
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-full"></div>
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-5/6"></div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {[1, 2, 3, 4].map((item) => (
+                  <div key={item} className="flex flex-col items-start gap-4 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-100/50 dark:bg-gray-800/50">
+                    <div className="h-12 w-12 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
+                    <div className="h-16 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-1/2"></div>
+                    <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-3/4"></div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-40"></div>
+            </div>
+          </div>
+        </div>
       </section>
     );
   }
@@ -124,7 +164,7 @@ function StatsFacts() {
         {[...Array(12)].map((_, i) => (
           <div
             key={i}
-            className="absolute rounded-full bg-blue-100/30 dark:bg-blue-500/10"
+            className="absolute rounded-full bg-blue-300/40 dark:bg-blue-500/40"
             style={{
               width: `${Math.random() * 100 + 50}px`,
               height: `${Math.random() * 100 + 50}px`,
@@ -137,6 +177,9 @@ function StatsFacts() {
           />
         ))}
       </div>
+      
+      {/* Gradient fade at bottom for seamless transition */}
+      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-white to-transparent dark:from-secondary z-20 pointer-events-none"></div>
       
       <div className="relative py-20 md:py-40 z-10">
         <div className="container">
@@ -173,13 +216,17 @@ function StatsFacts() {
                       p-6 rounded-2xl border ${statConfig[index].borderColor}
                       ${statConfig[index].bgColor}
                       shadow-sm 
-                      transition-all duration-300 ease-in-out
+                      transition-all duration-500 ease-out
                       hover:shadow-xl hover:-translate-y-2 hover:border-current
                       relative overflow-hidden
+                      ${hasAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}
                     `}
+                    style={{
+                      transitionDelay: `${statConfig[index].delay}s`
+                    }}
                   >
                     {/* Icon */}
-                    <div className={`p-3 rounded-full ${statConfig[index].bgColor} ${statConfig[index].color}`}>
+                    <div className={`p-3 rounded-full ${statConfig[index].bgColor} ${statConfig[index].color} transition-all duration-500 group-hover:scale-110`}>
                       {statConfig[index].icon}
                     </div>
                     
@@ -193,20 +240,30 @@ function StatsFacts() {
                           end={value.number}
                           duration={3}
                           formattingFn={formatNumber}
+                          onEnd={() => {
+                            // Add a subtle pulse effect when counting completes
+                            const element = document.getElementById(`stat-${index}`);
+                            if (element) {
+                              element.classList.add('animate-pulse');
+                              setTimeout(() => {
+                                element.classList.remove('animate-pulse');
+                              }, 1000);
+                            }
+                          }}
                         />
                       ) : (
                         "0"
                       )}
-                      <span>+</span>
+                      <span className="ml-1">+</span>
                     </h3>
-                    <p className={`text-base text-secondary/70 dark:text-white/70 group-hover:${statConfig[index].color} transition-colors duration-300`}>
+                    <p className={`text-base text-secondary/70 dark:text-white/70 group-hover:${statConfig[index].color.replace('text-', 'text-')} transition-colors duration-300`}>
                       {value.scoreDescp}
                     </p>
                   </div>
                 ))}
               </div>
 
-              <div>
+              <div className={`transition-opacity duration-700 delay-700 ${hasAnimated ? 'opacity-100' : 'opacity-0'}`}>
                 <NavigationLink
                   navigationTitle="Who we are"
                   navigationLink="/about"
@@ -219,19 +276,19 @@ function StatsFacts() {
       </div>
 
       {/* Background */}
-      <div className="absolute -bottom-0 -left-20 animate-spin-slow">
+      <div className="absolute -bottom-20 -left-60 animate-spin-slow opacity-50">
         <Image
           src={"/images/home/statsfact/sectionbg.png"}
           alt="background"
-          height={590}
-          width={590}
+          height={800}
+          width={800}
           className="dark:hidden"
         />
         <Image
-          src={"/images/home/statsfact/sectionbgdark.png"}
+          src={"/images/home/statsfact/sectionbg.png"}  //darktheme
           alt="background dark"
-          height={590}
-          width={590}
+          height={800}
+          width={800}
           className="hidden dark:block"
         />
       </div>
@@ -240,13 +297,13 @@ function StatsFacts() {
       <style jsx global>{`
         @keyframes float {
           0% {
-            transform: translateY(0) translateX(0) rotate(0deg);
+            transform: translate(-50%, -50%) translateY(0) translateX(0) rotate(0deg);
           }
           50% {
-            transform: translateY(-50px) translateX(20px) rotate(180deg);
+            transform: translate(-50%, -50%) translateY(-40px) translateX(20px) rotate(180deg);
           }
           100% {
-            transform: translateY(0) translateX(0) rotate(360deg);
+            transform: translate(-50%, -50%) translateY(0) translateX(0) rotate(360deg);
           }
         }
 
@@ -259,7 +316,7 @@ function StatsFacts() {
           }
         }
         .animate-spin-slow {
-          animation: spin 20s linear infinite; /* 20s for one full rotation */
+          animation: spin 20s linear infinite;
         }
       `}</style>
     </section>

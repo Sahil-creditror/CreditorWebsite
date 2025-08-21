@@ -55,25 +55,25 @@ const servicesData = {
     data: [
         {
             id: 1,
-            image: "/images/home/services/services_1.png",
+            image: "/images/home/services/services_1.webp",
             heading: " 1. Orientation to the Private Path",
             descp: "Meet Coach Paulmicheal and discover what Creditor Academy stands for Understand your journey through the Roadmap Series to private living"
         },
         {
             id: 2,
-            image: "/images/home/services/services_2.png",
+            image: "/images/home/services/services_2.webp",
             heading: "2. Become Private & New SOV 101",
             descp: "Get an introduction to the SOV 101 and Become Private courses Access the official readiness checklist and scorecard system to assess your eligibility with a counsellor"
         },
         {
             id: 3,
-            image: "/images/home/services/services_3.png",
+            image: "/images/home/services/services_3.webp",
             heading: "3. Operate Private",
             descp: "Get introduced to the key principles of the Operate Private course and what it empowers you to do. Access the official readiness checklist and scorecard with guidance from a counsellor.Explore the complete course catalogue to see what each lesson will cover."
         },
         {
             id: 4,
-            image: "/images/home/services/services_4.png",
+            image: "/images/home/services/services_4.webp",
             heading: "4. Senior Business credit",
             descp: "Get introduced to Business Credit building, the “I Want Remedy Now” credit repair system, and Private Merchant Processing without banks. Access the Business Credit Checklist and Private Score Readiness system to evaluate your current position."
         },

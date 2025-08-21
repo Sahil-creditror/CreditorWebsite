@@ -12,6 +12,8 @@ import Team from "./components/home/team";
 import Testimonial from "./components/home/testimonial";
 import Masterclass from "./components/home/masterclass";
 import MasterInfo from "./components/home/masterinfo";
+import Game from "./components/home/Game";
+import Demo from "./components/home/demo";
 
 export const metadata: Metadata = {
     title: "Creditor Academy",
@@ -28,9 +30,11 @@ export default function Home() {
       <Catalog />
       <Services />
       <Testimonial />
+      <Game />
       <Team teamdataNumber="06" />
       <Pricing />
       <Faq />
+      <Demo />
       <Resources />
       <Contact contactdataNumber="10" />
     </>

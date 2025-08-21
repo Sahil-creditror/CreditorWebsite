@@ -48,7 +48,7 @@ const statsFactData = {
 };
 
 const servicesData = {
-    number: '03',
+    number: '05',
     name: "Roadmap",
     heading: "Roadmap Series",
     description: "Begin your journey with Coach Paulmicheal as you’re introduced to Creditors Academy and its mission to guide you toward private, sovereign living. This orientation walks you through the complete Roadmap Series, giving you a clear view of what’s ahead.",
@@ -186,32 +186,37 @@ const teamData = {
 const pricingData = {
     data: [
         {
-            planName: "Launch",
-            planPrice: "$699",
+            // planName: "Laurich",
+            tag:"Website Launch",
+            planPrice: "Website Service",
             planDescp: "Ideal for startups and small businesses taking their first steps online.",
-            planIncludes: ["Competitive research & insights","Wireframing and prototyping","Basic tracking setup (Google Analytics, etc.)","Standard contact form integration"]
+            planIncludes: ["Competitive research & insights","Wireframing and prototyping","Basic tracking setup (Google Analytics, etc.)","Standard contact form integration"],
+            coverImage: "/images/pricing/Cover-1.png" // Optional
         },
         {
-            planName: "Scale",
-            tag: "Most popular",
-            planPrice: "$1,699",
-            cancelPrice: "$2,199",
+            // planName: "Scale",
+            tag: "Paul Michael's",
+            planPrice: "Live Class",
+            // cancelPrice: "$2,199",
             planDescp: "Perfect for growing brands needing more customization and flexibility.",
-            planIncludes: ["Everything in the Launch Plan","Custom design for up to 10 pages","Seamless social media integration","SEO enhancements for key pages"]
+            planIncludes: ["Everything in the Launch Plan","Custom design for up to 10 pages","Seamless social media integration","SEO enhancements for key pages"],
+            coverImage: "/images/pricing/Cover-2.jpg" // Optional
         },
         {
-            planName: "Elevate",
-            planPrice: "$3,499",
+            // planName: "Elevate", 
+            tag: "Private Merchant",   
+            planPrice: "Private Merchant Processing",
             planDescp: "Best suited for established businesses wanting a fully tailored experience.",
-            planIncludes: ["Everything in the Scale Plan","E-commerce functionality (if needed)","Branded email template design","Priority support for six months after launch"]
+            planIncludes: ["Everything in the Scale Plan","E-commerce functionality (if needed)","Branded email template design","Priority support for six months after launch"],
+            coverImage: "/images/pricing/Cover-3.jpg" // Optional
         },
     ],
     partnerLogo: [
-        { light: "/images/home/pricing/partner-1.svg", dark: "/images/home/pricing/partner-dark-1.svg" },
-        { light: "/images/home/pricing/partner-2.svg", dark: "/images/home/pricing/partner-dark-2.svg" },
-        { light: "/images/home/pricing/partner-3.svg", dark: "/images/home/pricing/partner-dark-3.svg" },
-        { light: "/images/home/pricing/partner-4.svg", dark: "/images/home/pricing/partner-dark-4.svg" },
-        { light: "/images/home/pricing/partner-5.svg", dark: "/images/home/pricing/partner-dark-5.svg" },
+        { light: "/images/logo/creditorlogo.png", dark: "/images/logo/creditorlogo.png" },
+        { light: "/images/logo/creditorlogoblack.png", dark: "/images/logo/creditorlogowhite.png" },
+        { light: "/images/logo/creditorlogo.png", dark: "/images/logo/creditorlogo.png" },
+        { light: "/images/logo/creditorlogoblack.png", dark: "/images/logo/creditorlogowhite.png" },
+        { light: "/images/logo/creditorlogo.png", dark: "/images/logo/creditorlogo.png" },
       ],
 };
 

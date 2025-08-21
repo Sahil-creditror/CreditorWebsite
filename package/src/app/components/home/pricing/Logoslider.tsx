@@ -7,16 +7,16 @@ const Logoslider = ({ logo }: { logo?: { light: string; dark: string } }) => {
             <Image
                 src={logo?.light || ""}
                 alt="partner logo"
-                height={50}
-                width={150}
+                height={80}
+                width={200}
                 className="block dark:hidden"
             />
             
             <Image
                 src={logo?.dark || ""}
                 alt="partner logo"
-                height={50}
-                width={150}
+                height={80}
+                width={200}
                 className="hidden dark:block"
             />
         </Slider.Slide>

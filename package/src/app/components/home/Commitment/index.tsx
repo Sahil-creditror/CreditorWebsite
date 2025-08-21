@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion, Variants } from "framer-motion";
+import RippleBackground from "../background/commitment/ripple";
 
 const commitments = [
   {
@@ -30,6 +31,7 @@ const fadeUp: Variants = {
 export default function CommitmentSection() {
   return (
     <section className="relative w-full bg-[#f9fbff] text-[#0d1b2a]">
+      <RippleBackground />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24 lg:py-36">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
           {/* LEFT SIDE */}

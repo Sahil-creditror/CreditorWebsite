@@ -5,7 +5,7 @@ import Faq from "./components/home/faq";
 import HeroSection from "./components/home/hero";
 import Catalog from "./components/home/catalogs";
 import Pricing from "./components/home/pricing";
-import Resources from "./components/home/resources";
+//import Resources from "./components/home/resources";
 import Services from "./components/home/services";
 import StatsFacts from "./components/home/stats-facts";
 import Team from "./components/home/team";
@@ -13,7 +13,7 @@ import Testimonial from "./components/home/testimonial";
 import Masterclass from "./components/home/masterclass";
 import MasterInfo from "./components/home/masterinfo";
 import Game from "./components/home/Game";
-import Demo from "./components/home/demo";
+import Commitment from "./components/home/Commitment";
 
 export const metadata: Metadata = {
     title: "Creditor Academy",
@@ -30,12 +30,12 @@ export default function Home() {
       <Catalog />
       <Services />
       <Testimonial />
-      <Game />
-      <Team teamdataNumber="06" />
+      {/* <Game /> */}
+      {/* <Team teamdataNumber="06" /> */}
+      <Commitment />
       <Pricing />
       <Faq />
-      <Demo />
-      <Resources />
+      {/* <Resources /> */}
       <Contact contactdataNumber="10" />
     </>
   );

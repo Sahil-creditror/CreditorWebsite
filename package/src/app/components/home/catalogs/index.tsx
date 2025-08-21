@@ -1,5 +1,8 @@
+"use client";
+
 import "swiper/css";
 import Projectswiper from "./projectswiper";
+import Image from "next/image";
 
 function catalog() {
   return (
@@ -42,4 +45,3 @@ function catalog() {
 }
 
 export default catalog;
-import Image from "next/image";

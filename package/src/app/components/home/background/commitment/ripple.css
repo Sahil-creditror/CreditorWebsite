@@ -1,3 +1,4 @@
+/* Base Ripple (light mode) */
 .ripple-background {
   position: absolute;   /* stays inside section */
   top: 0;
@@ -12,7 +13,7 @@
   border-radius: 50%;
   position: absolute;
   animation: ripple 25s infinite;
-  opacity: 0.6;   /* brighter (was 0.5) */
+  opacity: 0.6;
 }
 
 /* sizes remain the same */
@@ -22,13 +23,30 @@
 .medium  { width: 300px; height: 300px; right: 20%; bottom: -150px; }
 .small   { width: 200px; height: 200px; left: 40%; top: 30%; }
 
-/* brighter, higher opacity shades */
+/* Light mode shades */
 .shade1 { background: rgba(52, 152, 219, 0.5); }   /* bright blue */
 .shade2 { background: rgba(46, 204, 113, 0.5); }   /* bright green */
 .shade3 { background: rgba(155, 89, 182, 0.5); }   /* vivid purple */
 .shade4 { background: rgba(241, 196, 15, 0.5); }   /* strong yellow */
 .shade5 { background: rgba(231, 76, 60, 0.5); }    /* brighter red */
 
+
+/* =============================
+   DARK MODE
+   ============================= */
+body.dark .circle {
+  opacity: 0.3; /* make softer in dark mode */
+}
+
+/* darker muted shades */
+body.dark .shade1 { background: rgba(52, 152, 219, 0.25); }   /* muted blue */
+body.dark .shade2 { background: rgba(46, 204, 113, 0.25); }   /* muted green */
+body.dark .shade3 { background: rgba(155, 89, 182, 0.25); }   /* muted purple */
+body.dark .shade4 { background: rgba(241, 196, 15, 0.25); }   /* muted yellow */
+body.dark .shade5 { background: rgba(231, 76, 60, 0.25); }    /* muted red */
+
+
+/* ripple animation (same for both modes) */
 @keyframes ripple {
   0% { transform: scale(0.8); opacity: 0.5; }
   50% { transform: scale(1.2); opacity: 0.3; }

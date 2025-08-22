@@ -3,7 +3,7 @@ import Aboutus from "./components/home/about-us";
 import Contact from "./components/home/contact";
 import Faq from "./components/home/faq";
 import HeroSection from "./components/home/hero";
-import Catalog from "./components/home/catalogs";
+import Courses from "./components/home/courses";
 import Pricing from "./components/home/pricing";
 //import Resources from "./components/home/resources";
 import Services from "./components/home/services";
@@ -27,7 +27,7 @@ export default function Home() {
       <Aboutus />
       <Masterclass />
       <MasterInfo />
-      <Catalog />
+      <Courses />
       <Services />
       <Testimonial />
       {/* <Game /> */}

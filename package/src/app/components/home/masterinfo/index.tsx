@@ -59,15 +59,15 @@ const BannerContentSection = () => {
                 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white"
             >
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-500">
-                Private Business Launchpad Program
+                    Masterclass Membership
                 </span>
                 <br className="hidden sm:block" />
                 <motion.span 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: false, amount: 0.3 }}
-                transition={{ delay: 0.4 }}
-                className="block"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: false, amount: 0.3 }}
+                    transition={{ delay: 0.4 }}
+                    className="block"
                 >
                 Build Privately. Launch Confidently. Grow Without Limits.
                 </motion.span>

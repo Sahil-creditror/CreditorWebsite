@@ -217,6 +217,7 @@ const pricingData = {
         { light: "/images/logo/creditorlogo.png", dark: "/images/logo/creditorlogo.png" },
         { light: "/images/logo/creditorlogoblack.png", dark: "/images/logo/creditorlogowhite.png" },
         { light: "/images/logo/creditorlogo.png", dark: "/images/logo/creditorlogo.png" },
+        { light: "/images/logo/creditorlogoblack.png", dark: "/images/logo/creditorlogowhite.png" },
       ],
 };
 

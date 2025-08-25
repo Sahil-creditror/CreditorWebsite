@@ -2,7 +2,7 @@ import Herobanner from "@/app/components/shared/hero-banner";
 import TermsAndCondition from "@/app/components/terms-and-condition";
 import { Metadata } from "next";
 export const metadata: Metadata = {
-    title: "Terms & Condition | Studiova",
+    title: "Terms & Condition | Creditor",
 };
 
 export default function Page() {

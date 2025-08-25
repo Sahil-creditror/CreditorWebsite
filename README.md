@@ -1,3 +1,3 @@
-# studiova-nextjs-tailwind
+# Creditor-nextjs-tailwind
 
 image unoptimizaed in next config

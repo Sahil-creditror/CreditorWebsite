@@ -2,7 +2,7 @@ import PrivacyPolicy from "@/app/components/privacy-policy";
 import Herobanner from "@/app/components/shared/hero-banner";
 import { Metadata } from "next";
 export const metadata: Metadata = {
-    title: "Privacy Policy | Studiova",
+    title: "Privacy Policy | Creditor",
 };
 
 export default function Page() {

@@ -13,8 +13,8 @@ const Herobanner = ({ bannerimage, heading, desc, headingClass = "large-heading"
                 height={694}
                 width={1800}
             />
-            <div className="absolute top-0 left-0 w-full h-full bg-overlay"></div>
-
+            <div className="absolute top-0 left-0 w-full h-full"></div> 
+            {/* bg-overlay */}
             {/* Content */}
             <div className="relative z-10 container text-left">
                 <div className="flex flex-col gap-6  pb-16 xl:pb-20">
@@ -23,8 +23,8 @@ const Herobanner = ({ bannerimage, heading, desc, headingClass = "large-heading"
                             <Image
                                 src={"/images/Icon/primary-leaf.svg"}
                                 alt="icon"
-                                width={44}
-                                height={44}
+                                width={50}
+                                height={50}
                                 className="animate-spin"
                             />
                         </div>

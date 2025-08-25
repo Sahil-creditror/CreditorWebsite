@@ -5,7 +5,7 @@ import Faq from "./components/home/faq";
 import HeroSection from "./components/home/hero";
 import Courses from "./components/home/courses";
 import Pricing from "./components/home/pricing";
-//import Resources from "./components/home/resources";
+import Resources from "./components/home/resources";
 import Services from "./components/home/services";
 import StatsFacts from "./components/home/stats-facts";
 import Team from "./components/home/team";
@@ -33,11 +33,11 @@ export default function Home() {
       <Testimonial />
       {/* <AnimatedTestimonialsDemo /> */}
       {/* <Game /> */}
-      {/* <Team teamdataNumber="06" /> */}
+      <Team teamdataNumber="06" />
       <Commitment />
       <Pricing />
       <Faq />
-      {/* <Resources /> */}
+      <Resources />
       <Contact contactdataNumber="10" />
     </>
   );

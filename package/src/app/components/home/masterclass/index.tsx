@@ -135,57 +135,117 @@ const MasterclassSection = () => {
           </motion.div>
 
           {/* RIGHT COLUMN */}
-          <motion.div
-            className="w-full md:w-1/2 flex flex-col items-start md:items-end"
-            initial={{ opacity: 0, y: 50 }}
-            animate={
-              inView
-                ? { opacity: 1, y: 0, transition: { delay: 0.3, duration: 0.8 } }
-                : {}
-            }
+<motion.div
+  className="w-full md:w-1/2 flex flex-col items-start md:items-end"
+  initial={{ opacity: 0, y: 50 }}
+  animate={
+    inView
+      ? { opacity: 1, y: 0, transition: { delay: 0.3, duration: 0.8 } }
+      : {}
+  }
+>
+  <div className="w-full text-left md:text-right space-y-5 sm:space-y-6">
+    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight sm:leading-none">
+      PRIVATE <br />
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">
+        BUSINESS
+      </span>{" "}
+      <br />
+      LAUNCHPAD
+    </h1>
+
+    <motion.p
+      className="text-base sm:text-lg md:text-xl text-white/80 max-w-sm md:max-w-md md:ml-auto"
+      initial={{ opacity: 0 }}
+      animate={
+        inView
+          ? { opacity: 1, transition: { delay: 0.8, duration: 0.8 } }
+          : {}
+      }
+    >
+      Reclaim Your Legal Identity and Exit the Public System
+    </motion.p>
+
+    <motion.div
+      className="pt-2 sm:pt-4"
+      initial={{ opacity: 0 }}
+      animate={
+        inView
+          ? { opacity: 1, transition: { delay: 1, duration: 0.8 } }
+          : {}
+      }
+    >
+      {/* Row ensures the button aligns right on md+ */}
+      <div className="flex justify-end w-full">
+        <Link
+          href="/projects"
+          className="group flex gap-4 items-center w-fit bg-primary border border-primary hover:border hover:border-white/30 hover:bg-secondary rounded-full transition-all duration-200 ease-in-out"
+        >
+          <span className="pl-6 text-lg font-bold text-secondary group-hover:text-white group-hover:translate-x-12 transform transition-transform duration-200 ease-in-out">
+            Learn More
+          </span>
+          <svg
+            className="py-1 group-hover:-translate-x-37 group-hover:rotate-45 transition-all duration-300 ease-in-out"
+            width="58"
+            height="58"
+            viewBox="0 0 58 58"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <div className="text-left md:text-right space-y-5 sm:space-y-6">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight sm:leading-none">
-                PRIVATE <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">
-                  BUSINESS
-                </span>{" "}
-                <br />
-                LAUNCHPAD
-              </h1>
-              <motion.p
-                className="text-base sm:text-lg md:text-xl text-white/80 max-w-sm md:max-w-md ml-0 md:ml-auto"
-                initial={{ opacity: 0 }}
-                animate={
-                  inView
-                    ? { opacity: 1, transition: { delay: 0.8, duration: 0.8 } }
-                    : {}
-                }
+            <g filter="url(#filter0_d_1_873)">
+              <rect x="3" y="2" width="52" height="52" rx="26" fill="white" />
+              <path
+                d="M24 23H34M34 23V33M34 23L24 33"
+                stroke="#1F2A2E"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </g>
+            <defs>
+              <filter
+                id="filter0_d_1_873"
+                x="0"
+                y="0"
+                width="58"
+                height="58"
+                filterUnits="userSpaceOnUse"
+                colorInterpolationFilters="sRGB"
               >
-                Reclaim Your Legal Identity and Exit the Public System
-              </motion.p>
-              <motion.div
-                className="pt-2 sm:pt-4"
-                initial={{ opacity: 0 }}
-                animate={
-                  inView
-                    ? { opacity: 1, transition: { delay: 1, duration: 0.8 } }
-                    : {}
-                }
-              >
-                <Link href="/membership">
-                  <button className="relative px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold text-sm sm:text-lg transition-all duration-300 bg-blue-600 hover:bg-blue-700 text-white">
-                    <span className="flex items-center gap-2">
-                      LEARN MORE
-                      <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </span>
-                  </button>
-                </Link>
-              </motion.div>
-            </div>
-          </motion.div>
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                <feColorMatrix
+                  in="SourceAlpha"
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                  result="hardAlpha"
+                />
+                <feOffset dy="1" />
+                <feGaussianBlur stdDeviation="1.5" />
+                <feComposite in2="hardAlpha" operator="out" />
+                <feColorMatrix
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
+                />
+                <feBlend
+                  mode="normal"
+                  in2="BackgroundImageFix"
+                  result="effect1_dropShadow_1_873"
+                />
+                <feBlend
+                  mode="normal"
+                  in="SourceGraphic"
+                  in2="effect1_dropShadow_1_873"
+                  result="shape"
+                />
+              </filter>
+            </defs>
+          </svg>
+        </Link>
+      </div>
+    </motion.div>
+  </div>
+</motion.div>
+
         </div>
 
         {/* SCROLL INDICATOR */}

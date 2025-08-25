@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { FaShieldAlt, FaCreditCard, FaStore, FaRocket } from "react-icons/fa";
+import Link from "next/link";
 
 const BannerContentSection = () => {
   const features = [
@@ -238,12 +239,14 @@ const BannerContentSection = () => {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="relative"
                 >
-                <button
+                <Link href="/projects" passHref>
+                    <button
                     className="relative w-full bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 sm:py-4 px-4 sm:px-6 rounded-lg border border-blue-300/50 flex items-center justify-center gap-2 text-sm sm:text-lg transition-all duration-200 overflow-hidden"
-                >
+                    >
                     <FaRocket className="text-blue-100" />
                     <span>Explore Now</span>
-                </button>
+                    </button>
+                </Link>
                 </motion.div>
             </motion.div>
             </motion.div>

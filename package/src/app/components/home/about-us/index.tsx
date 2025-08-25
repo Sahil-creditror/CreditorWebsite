@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import StarRating from "../../shared/star-rating";
-import { useEffect, useState, useRef, MouseEvent } from "react";
+import { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
@@ -15,7 +15,6 @@ function Aboutus() {
   const [avatarList, setAvatarList] = useState<any>(null);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const bubblesRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
   const { x, y } = useMousePosition();
@@ -25,21 +24,26 @@ function Aboutus() {
     triggerOnce: false
   });
 
-  // Floating bubble configuration
-  const bubbleConfigs = Array.from({ length: 15 }).map(() => ({
-    size: Math.random() * 25 + 5,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    duration: Math.random() * 10 + 10,
-    delay: Math.random() * 2,
-    xMovement: Math.random() * 100 - 50,
-    yMovement: Math.random() * 100 - 50
-  }));
+  // GSAP timeline and animation references
+  const masterTL = useRef<gsap.core.Timeline | null>(null);
+  const cardAnimations = useRef<gsap.core.Tween[]>([]);
+
+  // Store DOM listener refs per card so we can remove them safely
+  const cardHandlers = useRef<
+    Map<
+      HTMLDivElement,
+      {
+        enter: (e: globalThis.MouseEvent) => void;
+        move: (e: globalThis.MouseEvent) => void;
+        leave: (e: globalThis.MouseEvent) => void;
+      }
+    >
+  >(new Map());
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("/api/page-data");
+        const res = await fetch("/api/page-data", { cache: "no-store" });
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
         setAvatarList(data?.avatarList);
@@ -53,73 +57,97 @@ function Aboutus() {
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    // Master timeline for coordinated animations
-    const masterTL = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 75%",
-        toggleActions: "play none none none"
+    // Scope all GSAP selectors/tweens/ScrollTriggers to this component
+    const ctx = gsap.context(() => {
+      // Clean up any existing animations
+      if (masterTL.current) {
+        masterTL.current.kill();
       }
-    });
+      cardAnimations.current.forEach((anim) => anim.kill());
+      cardAnimations.current = [];
 
-    // Section entrance animation with morphing effect
-    masterTL.from(sectionRef.current.querySelectorAll(".section-content > *"), {
-      opacity: 0,
-      y: 80,
-      duration: 1.2,
-      stagger: 0.15,
-      ease: "back.out(1.2)",
-      onStart: () => {
-        gsap.to(sectionRef.current, {
-          duration: 0.8,
-          css: { clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" },
-          ease: "power3.inOut"
-        });
-      }
-    });
+      // Master timeline for coordinated animations
+      masterTL.current = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+          toggleActions: "play none none none",
+          markers: false
+        }
+      });
 
-    // Card hover animations with 3D tilt effect
-    const cards = sectionRef.current?.querySelectorAll<HTMLDivElement>(".interactive-card");
+      // Section entrance animation with morphing effect
+      masterTL.current.from(
+        sectionRef.current!.querySelectorAll(".section-content > *"),
+        {
+          opacity: 0,
+          y: 80,
+          duration: 1.2,
+          stagger: 0.15,
+          ease: "back.out(1.2)",
+          onStart: () => {
+            gsap.to(sectionRef.current, {
+              duration: 0.8,
+              css: {
+                clipPath:
+                  "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"
+              },
+              ease: "power3.inOut"
+            });
+          }
+        }
+      );
+
+      // Card hover animations with 3D tilt effect
+      const cards =
+        sectionRef.current!.querySelectorAll<HTMLDivElement>(
+          ".interactive-card"
+        );
 
       cards?.forEach((card) => {
         // Set up transform perspective
         gsap.set(card, { transformPerspective: 1000 });
 
-        card.addEventListener("mouseenter", (e) => {
+        const handleMouseEnter = (e: globalThis.MouseEvent) => {
           const rect = card.getBoundingClientRect();
+          const cx = rect.width / 2;
+          const cy = rect.height / 2;
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
 
-          gsap.to(card, {
+          const tween = gsap.to(card, {
             duration: 0.5,
             y: -15,
-            rotateY: (x - centerX) / 20,
-            rotateX: (centerY - y) / 20,
+            rotateY: (x - cx) / 20,
+            rotateX: (cy - y) / 20,
             scale: 1.03,
-            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+            boxShadow:
+              "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
             ease: "power2.out",
+            overwrite: "auto"
           });
-        });
+          cardAnimations.current.push(tween);
+        };
 
-        card.addEventListener("mousemove", (e) => {
+        const handleMouseMove = (e: globalThis.MouseEvent) => {
           const rect = card.getBoundingClientRect();
+          const cx = rect.width / 2;
+          const cy = rect.height / 2;
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
 
-          gsap.to(card, {
+          const tween = gsap.to(card, {
             duration: 0.5,
-            rotateY: (x - centerX) / 20,
-            rotateX: (centerY - y) / 20,
+            rotateY: (x - cx) / 20,
+            rotateX: (cy - y) / 20,
             ease: "power1.out",
+            overwrite: "auto"
           });
-        });
+          cardAnimations.current.push(tween);
+        };
 
-        card.addEventListener("mouseleave", () => {
-          gsap.to(card, {
+        const handleMouseLeave = () => {
+          const tween = gsap.to(card, {
             duration: 0.7,
             y: 0,
             rotateY: 0,
@@ -127,76 +155,121 @@ function Aboutus() {
             scale: 1,
             boxShadow: "none",
             ease: "elastic.out(1, 0.5)",
+            overwrite: "auto"
           });
+          cardAnimations.current.push(tween);
+        };
+
+        card.addEventListener("mouseenter", handleMouseEnter);
+        card.addEventListener("mousemove", handleMouseMove);
+        card.addEventListener("mouseleave", handleMouseLeave);
+
+        cardHandlers.current.set(card, {
+          enter: handleMouseEnter,
+          move: handleMouseMove,
+          leave: handleMouseLeave
         });
       });
 
-
-    // Parallax effect with depth
-    gsap.to(sectionRef.current.querySelector(".parallax-bg"), {
-      y: 80,
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1.5
+      // Parallax effect with depth (only if element exists)
+      const parallaxEl = sectionRef.current!.querySelector(
+        ".parallax-bg"
+      ) as HTMLElement | null;
+      if (parallaxEl) {
+        const parallaxTween = gsap.to(parallaxEl, {
+          y: 80,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.5
+          }
+        });
+        cardAnimations.current.push(parallaxTween);
       }
-    });
 
-    // Floating circles animation
-    const circles = sectionRef.current.querySelectorAll(".floating-circle");
-    circles.forEach((circle, i) => {
-      gsap.to(circle, {
-        duration: 15 + i * 3,
-        x: `${Math.random() * 100 - 50}px`,
-        y: `${Math.random() * 100 - 50}px`,
-        rotation: Math.random() * 360,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
+      // Floating circles animation (safe if none exist)
+      const circles =
+        sectionRef.current!.querySelectorAll(".floating-circle");
+      circles.forEach((circle, i) => {
+        const circleTween = gsap.to(circle, {
+          duration: 15 + i * 3,
+          x: `${Math.random() * 100 - 50}px`,
+          y: `${Math.random() * 100 - 50}px`,
+          rotation: Math.random() * 360,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut"
+        });
+        cardAnimations.current.push(circleTween);
       });
-    });
 
-    // Animated gradient background
-    if (sectionRef.current.querySelector(".animated-gradient")) {
-      gsap.to(sectionRef.current.querySelector(".animated-gradient"), {
-        duration: 20,
-        backgroundPosition: "100% 50%",
-        repeat: -1,
-        yoyo: true,
-        ease: "none"
-      });
-    }
+      // Animated gradient background (if exists)
+      const gradientEl = sectionRef.current!.querySelector(
+        ".animated-gradient"
+      ) as HTMLElement | null;
+      if (gradientEl) {
+        const gradientTween = gsap.to(gradientEl, {
+          duration: 20,
+          backgroundPosition: "100% 50%",
+          repeat: -1,
+          yoyo: true,
+          ease: "none"
+        });
+        cardAnimations.current.push(gradientTween);
+      }
+    }, sectionRef);
 
-    // Cleanup
+    // Cleanup function (scoped and tidy)
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-      masterTL.kill();
+      // Remove card listeners safely
+      cardHandlers.current.forEach((handlers, card) => {
+        card.removeEventListener("mouseenter", handlers.enter);
+        card.removeEventListener("mousemove", handlers.move);
+        card.removeEventListener("mouseleave", handlers.leave);
+      });
+      cardHandlers.current.clear();
+
+      // Kill local tweens
+      if (masterTL.current) {
+        masterTL.current.kill();
+        masterTL.current = null;
+      }
+      cardAnimations.current.forEach((anim) => anim.kill());
+      cardAnimations.current = [];
+
+      // Revert GSAP context (kills ScrollTriggers created inside)
+      ctx.revert();
     };
   }, []);
 
-  // Advanced mouse follower effect
+  // Advanced mouse follower effect (do not treat 0 as falsy)
   useEffect(() => {
-    if (!sectionRef.current || !x || !y) return;
-    
-    const follower = sectionRef.current.querySelector(".mouse-follower");
+    if (!sectionRef.current || x == null || y == null) return;
+    const follower = sectionRef.current.querySelector(
+      ".mouse-follower"
+    ) as HTMLElement | null;
+
     if (follower) {
-      // Smooth chase with momentum
       gsap.to(follower, {
         x: x - 20,
         y: y - 20,
         duration: 0.8,
-        ease: "expo.out"
+        ease: "expo.out",
+        overwrite: "auto"
       });
-      
-      // Pulse effect when moving
-      if (Math.abs(x - follower._gsap.x) > 2 || Math.abs(y - follower._gsap.y) > 2) {
+
+      // Pulse on movement
+      const prevX = (follower as any)._gsap?.x || 0;
+      const prevY = (follower as any)._gsap?.y || 0;
+      if (Math.abs(x - prevX) > 2 || Math.abs(y - prevY) > 2) {
         gsap.to(follower, {
           scale: 1.1,
           duration: 0.3,
           yoyo: true,
           repeat: 1,
-          ease: "power1.inOut"
+          ease: "power1.inOut",
+          overwrite: "auto"
         });
       }
     }
@@ -204,8 +277,8 @@ function Aboutus() {
 
   // Avatar list stagger animation
   useEffect(() => {
-    if (avatarList && avatarList.length > 0) {
-      controls.start(i => ({
+    if (Array.isArray(avatarList) && avatarList.length > 0) {
+      controls.start((i) => ({
         opacity: 1,
         x: 0,
         transition: {
@@ -221,86 +294,63 @@ function Aboutus() {
   // Handle video modal
   const openVideoModal = () => {
     setIsVideoModalOpen(true);
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    if (typeof document !== "undefined") {
+      document.body.style.overflow = "hidden"; // Prevent background scrolling
+    }
   };
 
   const closeVideoModal = () => {
     setIsVideoModalOpen(false);
-    document.body.style.overflow = 'auto'; // Re-enable scrolling
-    
-    // Pause the modal video when closing
+    if (typeof document !== "undefined") {
+      document.body.style.overflow = "auto"; // Re-enable scrolling
+    }
+    // Pause the modal video when closing (if using <video>; iframe won't pause here)
     if (modalVideoRef.current) {
       modalVideoRef.current.pause();
     }
   };
 
-  // Close modal when clicking outside
+  // Close modal when clicking outside (kept behavior, but the overlay already closes onClick)
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const modal = document.querySelector('.video-modal');
+    const handleClickOutside = (event: globalThis.MouseEvent) => {
+      const modal = document.querySelector(".video-modal");
       if (modal && !modal.contains(event.target as Node)) {
         closeVideoModal();
       }
     };
 
     if (isVideoModalOpen) {
-      document.addEventListener('mousedown', handleClickOutside as any);
+      document.addEventListener("mousedown", handleClickOutside);
     }
-
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside as any);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isVideoModalOpen]);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className="relative py-20 md:py-40 dark:bg-darkblack overflow-hidden"
       style={{
-        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        clipPath:
+          "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
         willChange: "clip-path"
       }}
     >
       {/* Animated gradient background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="animated-gradient absolute inset-0 opacity-10 dark:opacity-5" 
+        <div
+          className="animated-gradient absolute inset-0 opacity-10 dark:opacity-5"
           style={{
-            background: "linear-gradient(270deg, #ff00cc, #3333ff, #00ccff, #33cc33)",
+            background:
+              "linear-gradient(270deg, #ff00cc, #3333ff, #00ccff, #33cc33)",
             backgroundSize: "800% 800%"
           }}
         />
       </div>
-      
-      {/* Floating bubbles with motion components */}
-      <div ref={bubblesRef} className="absolute inset-0 pointer-events-none">
-        {bubbleConfigs.map((config, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-white/5 dark:bg-secondary/10"
-            style={{
-              width: `${config.size}px`,
-              height: `${config.size}px`,
-              left: `${config.x}%`,
-              top: `${config.y}%`
-            }}
-            animate={{
-              x: [0, config.xMovement, 0],
-              y: [0, config.yMovement, 0],
-              rotate: [0, 180, 360]
-            }}
-            transition={{
-              duration: config.duration,
-              delay: config.delay,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut"
-            }}
-          />
-        ))}
-      </div>
-      
+
       {/* Enhanced mouse follower */}
-      <motion.div 
+      <motion.div
         className="mouse-follower fixed w-10 h-10 rounded-full bg-primary/20 pointer-events-none z-0 mix-blend-multiply dark:mix-blend-screen opacity-0 backdrop-blur-sm"
         initial={{ scale: 0.5 }}
         animate={{
@@ -313,90 +363,110 @@ function Aboutus() {
           repeatType: "loop"
         }}
       />
-      
+
       <div className="container section-content relative z-10">
         <div className="flex flex-col 2xl:flex-row gap-5 2xl:gap-18">
           {/* Left Side */}
-          <motion.div 
+          <motion.div
             ref={ref}
             initial={{ opacity: 0, x: -50 }}
-            animate={inView ? { 
-              opacity: 1, 
-              x: 0,
-              transition: { 
-                duration: 0.8,
-                ease: [0.16, 0.77, 0.47, 0.97]
-              }
-            } : {}}
+            animate={
+              inView
+                ? {
+                    opacity: 1,
+                    x: 0,
+                    transition: {
+                      duration: 0.8,
+                      ease: [0.16, 0.77, 0.47, 0.97]
+                    }
+                  }
+                : {}
+            }
             className="flex flex-col gap-5 2xl:gap-7 w-full 2xl:max-w-2xl 2xl:w-full"
           >
             {/* Top Row */}
-            <motion.div 
+            <motion.div
               className="flex items-center gap-4 md:gap-8"
               initial={{ opacity: 0 }}
-              animate={inView ? {
-                opacity: 1,
-                transition: { delay: 0.2 }
-              } : {}}
+              animate={
+                inView
+                  ? {
+                      opacity: 1,
+                      transition: { delay: 0.2 }
+                    }
+                  : {}
+              }
             >
-              <motion.span 
+              <motion.span
                 className="bg-primary py-1.5 px-2.5 text-base font-medium rounded-full dark:text-secondary"
                 initial={{ scale: 0 }}
-                animate={inView ? {
-                  scale: 1,
-                  transition: { 
-                    type: "spring",
-                    stiffness: 500,
-                    damping: 15
-                  }
-                } : {}}
+                animate={
+                  inView
+                    ? {
+                        scale: 1,
+                        transition: {
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 15
+                        }
+                      }
+                    : {}
+                }
               >
                 02
               </motion.span>
-              <motion.div 
+              <motion.div
                 className="h-px w-16 bg-secondary/12 dark:bg-white/12"
                 initial={{ scaleX: 0 }}
-                animate={inView ? {
-                  scaleX: 1,
-                  transition: { delay: 0.3 }
-                } : {}}
+                animate={
+                  inView
+                    ? {
+                        scaleX: 1,
+                        transition: { delay: 0.3 }
+                      }
+                    : {}
+                }
               />
-              <motion.p 
+              <motion.p
                 className="text-base font-medium text-white bg-secondary dark:bg-white/10 py-1.5 px-4 rounded-full"
                 initial={{ y: 20, opacity: 0 }}
-                animate={inView ? {
-                  y: 0,
-                  opacity: 1,
-                  transition: { delay: 0.4 }
-                } : {}}
+                animate={
+                  inView
+                    ? {
+                        y: 0,
+                        opacity: 1,
+                        transition: { delay: 0.4 }
+                      }
+                    : {}
+                }
               >
                 About Creditor
               </motion.p>
             </motion.div>
-            
+
             {/* Heading + Paragraph with stagger */}
-            <motion.div 
+            <motion.div
               className="flex flex-col gap-5 2xl:gap-7"
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
               variants={{
                 hidden: { opacity: 0 },
-                visible: { 
+                visible: {
                   opacity: 1,
                   transition: { staggerChildren: 0.15 }
                 }
               }}
             >
-              <motion.h2 
+              <motion.h2
                 className="2xl:max-w-3xl text-secondary dark:text-white"
                 variants={{
                   hidden: { y: 30, opacity: 0 },
                   visible: {
                     y: 0,
                     opacity: 1,
-                    transition: { 
+                    transition: {
                       duration: 0.6,
-                      ease: [0.34, 1.56, 0.64, 1] // back.out alternative
+                      ease: [0.34, 1.56, 0.64, 1]
                     }
                   }
                 }}
@@ -404,7 +474,7 @@ function Aboutus() {
                 Why Choose Us
               </motion.h2>
 
-              <motion.p 
+              <motion.p
                 className="2xl:max-w-sm text-secondary/70 dark:text-white/70 text-justify"
                 variants={{
                   hidden: { y: 30, opacity: 0 },
@@ -415,50 +485,52 @@ function Aboutus() {
                   }
                 }}
               >
-                At Creditor Academy, we equip individuals and entrepreneurs with the knowledge to unlock 
-                the full power of the "Private" operating outside the public system, which means more control, 
-                more protection, and more opportunity. 
+                At Creditor Academy, we equip individuals and entrepreneurs with the knowledge to unlock
+                the full power of the "Private" operating outside the public system, which means more control,
+                more protection, and more opportunity.
               </motion.p>
             </motion.div>
           </motion.div>
 
           {/* Right Side - 3 Columns */}
           <div className="grid md:grid-cols-3 gap-5 2xl:gap-7">
-
             {/* Card 1 */}
             <div className="flex flex-col gap-5 2xl:gap-7">
               <motion.div
                 initial={{ opacity: 0, y: 50, rotateX: -15 }}
-                whileInView={{ 
-                  opacity: 1, 
+                whileInView={{
+                  opacity: 1,
                   y: 0,
                   rotateX: 0,
-                  transition: { 
+                  transition: {
                     duration: 0.8,
                     delay: 0.2,
                     ease: [0.34, 1.56, 0.64, 1]
                   }
                 }}
-                whileHover={{ 
+                whileHover={{
                   scale: 1.03,
-                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+                  boxShadow:
+                    "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
                 }}
                 viewport={{ once: true, margin: "0px 0px -50px 0px" }}
                 className="interactive-card w-full h-full overflow-hidden rounded-lg cursor-pointer rounded-xl group"
                 onMouseEnter={() => {
-                  gsap.to(".mouse-follower", { 
+                  gsap.to(".mouse-follower", {
                     opacity: 1,
                     scale: 2,
                     backgroundColor: "rgba(0, 100, 255, 0.3)",
-                    backdropFilter: "blur(4px)"
+                    backdropFilter: "blur(4px)",
+                    overwrite: "auto"
                   });
                 }}
                 onMouseLeave={() => {
-                  gsap.to(".mouse-follower", { 
+                  gsap.to(".mouse-follower", {
                     opacity: 0,
                     scale: 1,
                     backgroundColor: "rgba(0, 0, 0, 0.1)",
-                    backdropFilter: "blur(2px)"
+                    backdropFilter: "blur(2px)",
+                    overwrite: "auto"
                   });
                 }}
                 onClick={openVideoModal}
@@ -471,71 +543,77 @@ function Aboutus() {
                     muted
                     playsInline
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    // poster="/images/home/services/video-poster.jpg" // Optional: add a poster frame
                   >
                     <source src="/video/intro.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
-                  
+
                   {/* Play button overlay */}
                   <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center">
-                      <svg className="w-8 h-8 text-secondary ml-1" viewBox="0 0 24 24" fill="currentColor">
+                      <svg
+                        className="w-8 h-8 text-secondary ml-1"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
                         <path d="M8 5v14l11-7z" />
                       </svg>
                     </div>
                   </div>
                 </div>
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 50, rotateX: 15 }}
-                whileInView={{ 
-                  opacity: 1, 
+                whileInView={{
+                  opacity: 1,
                   y: 0,
                   rotateX: 0,
-                  transition: { 
+                  transition: {
                     duration: 0.8,
                     delay: 0.3,
                     ease: [0.34, 1.56, 0.64, 1]
                   }
                 }}
-                whileHover={{ 
+                whileHover={{
                   scale: 1.0,
-                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+                  boxShadow:
+                    "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
                 }}
                 viewport={{ once: true, margin: "0px 0px -50px 0px" }}
                 className="interactive-card bg-secondary dark:bg-lightgray/10 p-5 2xl:p-7 flex flex-col justify-between gap-8 cursor-pointer rounded-xl"
                 onMouseEnter={() => {
-                  gsap.to(".mouse-follower", { 
+                  gsap.to(".mouse-follower", {
                     opacity: 1,
                     scale: 2,
                     backgroundColor: "rgba(100, 200, 255, 0.3)",
-                    backdropFilter: "blur(4px)"
+                    backdropFilter: "blur(4px)",
+                    overwrite: "auto"
                   });
                 }}
                 onMouseLeave={() => {
-                  gsap.to(".mouse-follower", { 
+                  gsap.to(".mouse-follower", {
                     opacity: 0,
                     scale: 1,
                     backgroundColor: "rgba(0, 0, 0, 0.1)",
-                    backdropFilter: "blur(2px)"
+                    backdropFilter: "blur(2px)",
+                    overwrite: "auto"
                   });
                 }}
               >
                 <motion.div
                   initial={{ opacity: 0 }}
-                  whileInView={{ 
+                  whileInView={{
                     opacity: 1,
                     transition: { delay: 0.4 }
                   }}
                 >
-                  <motion.h2 
+                  <motion.h2
                     className="text-white"
                     initial={{ scale: 0.9 }}
-                    whileInView={{ 
+                    whileInView={{
                       scale: 1,
-                      transition: { 
+                      transition: {
                         type: "spring",
                         stiffness: 300
                       }
@@ -547,39 +625,43 @@ function Aboutus() {
                     Students trained worldwide
                   </motion.p>
                 </motion.div>
-                
+
                 <motion.div
                   initial={{ opacity: 0 }}
-                  whileInView={{ 
+                  whileInView={{
                     opacity: 1,
                     transition: { delay: 0.5 }
                   }}
                 >
                   <ul className="avatar flex flex-row items-center">
-                    {avatarList?.map((items: any, index: any) => (
-                      <motion.li
-                        key={index}
-                        custom={index}
-                        animate={controls}
-                        className="-mr-2 z-1 hover:-translate-y-2 transition-transform duration-300"
-                        initial={{ x: 10, opacity: 0 }}
-                        whileHover={{ 
-                          y: -5,
-                          zIndex: 10,
-                          scale: 1.2,
-                          transition: { type: "spring", stiffness: 500 }
-                        }}
-                      >
-                        <Image
-                          src={items.image}
-                          alt="Image"
-                          width={44}
-                          height={44}
-                          quality={100}
-                          className="rounded-full border-2 border-secondary hover:border-primary transition-all duration-300"
-                        />
-                      </motion.li>
-                    ))}
+                    {Array.isArray(avatarList) &&
+                      avatarList.map((items: any, index: number) => (
+                        <motion.li
+                          key={index}
+                          custom={index}
+                          animate={controls}
+                          className="-mr-2 z-1 hover:-translate-y-2 transition-transform duration-300"
+                          initial={{ x: 10, opacity: 0 }}
+                          whileHover={{
+                            y: -5,
+                            zIndex: 10,
+                            scale: 1.2,
+                            transition: {
+                              type: "spring",
+                              stiffness: 500
+                            }
+                          }}
+                        >
+                          <Image
+                            src={items.image}
+                            alt="Image"
+                            width={44}
+                            height={44}
+                            quality={100}
+                            className="rounded-full border-2 border-secondary hover:border-primary transition-all duration-300"
+                          />
+                        </motion.li>
+                      ))}
                   </ul>
                 </motion.div>
               </motion.div>
@@ -588,47 +670,50 @@ function Aboutus() {
             {/* Card 2 */}
             <motion.div
               initial={{ opacity: 0, y: 50, rotateY: -15 }}
-              whileInView={{ 
-                opacity: 1, 
+              whileInView={{
+                opacity: 1,
                 y: 0,
                 rotateY: 0,
-                transition: { 
+                transition: {
                   duration: 0.8,
                   delay: 0.4,
                   ease: [0.34, 1.56, 0.64, 1]
                 }
               }}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.03,
-                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+                boxShadow:
+                  "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
               }}
               viewport={{ once: true, margin: "0px 0px -50px 0px" }}
               className="interactive-card relative overflow-hidden p-5 2xl:p-7 bg-white flex flex-col justify-between gap-8 md:gap-0 cursor-pointer rounded-xl"
               onMouseEnter={() => {
-                gsap.to(".mouse-follower", { 
+                gsap.to(".mouse-follower", {
                   opacity: 1,
                   scale: 2,
                   backgroundColor: "rgba(200, 100, 255, 0.3)",
                   backdropFilter: "blur(4px)",
                   duration: 0.3,
-                  ease: "power2.out"
+                  ease: "power2.out",
+                  overwrite: "auto"
                 });
               }}
               onMouseLeave={() => {
-                gsap.to(".mouse-follower", { 
+                gsap.to(".mouse-follower", {
                   opacity: 0,
                   scale: 1,
                   backgroundColor: "rgba(0, 0, 0, 0.1)",
                   backdropFilter: "blur(2px)",
                   duration: 0.3,
-                  ease: "power2.out"
+                  ease: "power2.out",
+                  overwrite: "auto"
                 });
               }}
             >
-              <motion.div 
+              <motion.div
                 className="relative z-10"
                 initial={{ opacity: 0 }}
-                whileInView={{ 
+                whileInView={{
                   opacity: 1,
                   transition: { delay: 0.5 }
                 }}
@@ -636,9 +721,9 @@ function Aboutus() {
                 <motion.h2
                   className="text-4xl font-bold text-gray-800"
                   initial={{ scale: 0.9 }}
-                  whileInView={{ 
+                  whileInView={{
                     scale: 1,
-                    transition: { 
+                    transition: {
                       type: "spring",
                       stiffness: 300,
                       damping: 15
@@ -651,17 +736,17 @@ function Aboutus() {
                   Exclusive credit & legal courses
                 </motion.p>
               </motion.div>
-              
-              <motion.div 
+
+              <motion.div
                 className="flex flex-col gap-4 relative z-10"
                 initial={{ opacity: 0 }}
-                whileInView={{ 
+                whileInView={{
                   opacity: 1,
                   transition: { delay: 0.6 }
                 }}
               >
                 <motion.div
-                  whileHover={{ 
+                  whileHover={{
                     rotate: [0, -2, 2, -2, 0],
                     transition: { duration: 0.5 }
                   }}
@@ -682,42 +767,42 @@ function Aboutus() {
                     className="hidden dark:block"
                   />
                 </motion.div>
-                
+
                 <motion.p
                   className="text-gray-600"
                   initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ 
+                  whileInView={{
                     opacity: 1,
                     y: 0,
                     transition: { delay: 0.7, duration: 0.5 }
                   }}
                 >
-                  Our educational platform & Instructors empower you to structure your life and business 
-                  for maximum privacy, asset protection, and true independence. This is where knowledge 
+                  Our educational platform & Instructors empower you to structure your life and business
+                  for maximum privacy, asset protection, and true independence. This is where knowledge
                   becomes sovereignty, because real freedom begins in the Private.
                 </motion.p>
               </motion.div>
-              
+
               {/* Subtle animated gradient background */}
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 -z-10 opacity-5 pointer-events-none"
                 initial={{ opacity: 0 }}
-                whileInView={{ 
+                whileInView={{
                   opacity: 0.05,
                   transition: { delay: 0.8, duration: 1 }
                 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-blue-500"></div>
               </motion.div>
-              
+
               {/* Thicker animated floating circles */}
-              <motion.div 
+              <motion.div
                 className="absolute -top-72 -right-24 border-2 border-gray-300 rounded-full w-[489px] h-[489px] opacity-40"
                 initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ 
+                whileInView={{
                   opacity: 0.4,
                   scale: 1,
-                  transition: { 
+                  transition: {
                     delay: 0.8,
                     duration: 1.2,
                     ease: "easeOut"
@@ -729,14 +814,14 @@ function Aboutus() {
                   transition: { duration: 0.5 }
                 }}
               />
-              
-              <motion.div 
+
+              <motion.div
                 className="absolute -bottom-36 -right-14 border-2 border-gray-300 rounded-full w-[489px] h-[489px] opacity-40"
                 initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ 
+                whileInView={{
                   opacity: 0.4,
                   scale: 1,
-                  transition: { 
+                  transition: {
                     delay: 0.9,
                     duration: 1.2,
                     ease: "easeOut"
@@ -748,24 +833,24 @@ function Aboutus() {
                   transition: { duration: 0.5 }
                 }}
               />
-              
+
               {/* Additional medium circle for depth */}
-              <motion.div 
+              <motion.div
                 className="absolute -top-40 -left-20 border border-gray-400 rounded-full w-[350px] h-[350px] opacity-20"
                 initial={{ opacity: 0, scale: 0.7 }}
-                whileInView={{ 
+                whileInView={{
                   opacity: 0.2,
                   scale: 1,
-                  transition: { 
+                  transition: {
                     delay: 1.0,
                     duration: 1.5,
                     ease: "easeOut"
                   }
                 }}
               />
-              
+
               {/* Subtle shimmer effect */}
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                 initial={{ x: "-100%", skewX: "-15deg" }}
                 whileHover={{
@@ -780,74 +865,74 @@ function Aboutus() {
             {/* Card 3 */}
             <motion.div
               initial={{ opacity: 0, y: 50, rotateY: 15 }}
-              whileInView={{ 
-                opacity: 1, 
+              whileInView={{
+                opacity: 1,
                 y: 0,
                 rotateY: 0,
-                transition: { 
+                transition: {
                   duration: 0.8,
                   delay: 0.1,
                   ease: [0.34, 1.56, 0.64, 1]
                 }
               }}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.03,
-                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+                boxShadow:
+                  "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
               }}
               viewport={{ once: true, margin: "0px 0px -50px 0px" }}
               className="interactive-card relative bg-primary p-4 2xl:p-7 flex flex-col justify-between gap-8 md:gap-0 cursor-pointer group rounded-xl overflow-hidden"
               onMouseEnter={() => {
-                gsap.to(".mouse-follower", { 
+                gsap.to(".mouse-follower", {
                   opacity: 1,
                   scale: 2,
                   backgroundColor: "rgba(255, 200, 0, 0.3)",
                   backdropFilter: "blur(4px)",
                   duration: 0.3,
-                  ease: "power2.out"
+                  ease: "power2.out",
+                  overwrite: "auto"
                 });
               }}
               onMouseLeave={() => {
-                gsap.to(".mouse-follower", { 
+                gsap.to(".mouse-follower", {
                   opacity: 0,
                   scale: 1,
                   backgroundColor: "rgba(0, 0, 0, 0.1)",
                   backdropFilter: "blur(2px)",
                   duration: 0.3,
-                  ease: "power2.out"
+                  ease: "power2.out",
+                  overwrite: "auto"
                 });
               }}
             >
-              <motion.div 
+              <motion.div
                 className="relative z-10 flex flex-col gap-2 lg:gap-4"
                 whileHover={{ transition: { staggerChildren: 0.1 } }}
               >
                 <motion.div whileHover={{ scale: 1.05 }}>
                   <StarRating count={5} color="#FFFFFF" />
                 </motion.div>
-                <motion.p 
-                  className="text-white"
-                  whileHover={{ x: 5 }}
-                >
+                <motion.p className="text-white" whileHover={{ x: 5 }}>
                   "Creditor Academy transformed my understanding of credit and
                   empowered me with strategies I never thought possible."
                 </motion.p>
               </motion.div>
-              
-              <motion.div 
+
+              <motion.div
                 className="relative z-10"
                 initial={{ opacity: 0 }}
-                whileInView={{ 
+                whileInView={{
                   opacity: 1,
                   transition: { delay: 0.3 }
                 }}
               >
                 <div className="relative border-b border-white/20 pb-5">
-                  <motion.h2 
+                  <motion.h2
                     className="text-white"
                     initial={{ scale: 0.9 }}
-                    whileInView={{ 
+                    whileInView={{
                       scale: 1,
-                      transition: { 
+                      transition: {
                         type: "spring",
                         stiffness: 300,
                         damping: 15
@@ -860,12 +945,16 @@ function Aboutus() {
                     Student satisfaction rate
                   </motion.p>
                 </div>
-                
+
                 <div className="flex items-center gap-2 lg:gap-5 pt-5">
                   <motion.div
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 10
+                    }}
                   >
                     <Image
                       src={"/images/home/aboutusIndex/avatar.svg"}
@@ -877,27 +966,25 @@ function Aboutus() {
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ 
+                    whileInView={{
                       opacity: 1,
                       x: 0,
                       transition: { delay: 0.4 }
                     }}
                   >
-                    <p className="font-medium text-white">
-                      Jordan Matthews
-                    </p>
+                    <p className="font-medium text-white">Jordan Matthews</p>
                     <p className="text-base text-white/80">
                       Academy Graduate
                     </p>
                   </motion.div>
                 </div>
               </motion.div>
-              
+
               {/* Optimized background element without extra space */}
-              <motion.div 
+              <motion.div
                 className="absolute bottom-0 right-0 w-40 h-40 opacity-10 pointer-events-none"
                 initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ 
+                whileInView={{
                   opacity: 0.1,
                   scale: 1,
                   transition: { delay: 0.5, duration: 0.8 }
@@ -905,9 +992,9 @@ function Aboutus() {
               >
                 <div className="w-full h-full rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 blur-xl"></div>
               </motion.div>
-              
+
               {/* Optimized decorative elements with reduced lag */}
-              <motion.div 
+              <motion.div
                 className="absolute -top-10 -left-10 w-20 h-20 rounded-full bg-white/5"
                 animate={{
                   scale: [1, 1.1, 1],
@@ -918,17 +1005,14 @@ function Aboutus() {
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                style={{
-                  willChange: "transform, opacity" // Performance optimization
-                }}
+                style={{ willChange: "transform, opacity" }}
               />
-              
+
               {/* Additional subtle glow for depth */}
               <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
                 <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl blur-lg opacity-20"></div>
               </div>
             </motion.div>
-
           </div>
         </div>
       </div>
@@ -957,14 +1041,25 @@ function Aboutus() {
                 onClick={closeVideoModal}
                 className="absolute -top-12 right-0 z-10 w-10 h-10 rounded-full bg-black/70 flex items-center justify-center text-white hover:bg-black/90 transition-colors"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
-              
+
               {/* Video player */}
               <div className="relative bg-black rounded-lg overflow-hidden">
-                <div className="relative pt-[56.25%]"> {/* 16:9 aspect ratio */}
+                <div className="relative pt-[56.25%]">
+                  {/* 16:9 aspect ratio */}
                   <iframe
                     src="https://drive.google.com/file/d/1jUjnrebq_Z6jy64RWnIZqAHjD6JEfW9Y/preview"
                     className="absolute inset-0 w-full h-full"

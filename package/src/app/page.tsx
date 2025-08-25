@@ -14,6 +14,7 @@ import Masterclass from "./components/home/masterclass";
 import MasterInfo from "./components/home/masterinfo";
 import Game from "./components/home/Game";
 import Commitment from "./components/home/Commitment";
+// import { AnimatedTestimonialsDemo } from "./components/home/testimonial/AnimatedDemo";
 
 export const metadata: Metadata = {
     title: "Creditor Academy",
@@ -30,6 +31,7 @@ export default function Home() {
       <Courses />
       <Services />
       <Testimonial />
+      {/* <AnimatedTestimonialsDemo /> */}
       {/* <Game /> */}
       {/* <Team teamdataNumber="06" /> */}
       <Commitment />

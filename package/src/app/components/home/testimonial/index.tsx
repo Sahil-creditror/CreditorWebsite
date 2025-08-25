@@ -1,4 +1,3 @@
-
 "use client";
 import Image from "next/image";
 import StarRating from "../../shared/star-rating";
@@ -6,20 +5,21 @@ import { useEffect, useState } from "react";
 
 function Testimonial() {
     const [testimonialData, setTestimonialData] = useState<any>(null);
+
     useEffect(() => {
-          const fetchData = async () => {
+        const fetchData = async () => {
             try {
-              const res = await fetch('/api/page-data')
-              if (!res.ok) throw new Error('Failed to fetch')
-              const data = await res.json()        
-              setTestimonialData(data?.testimonialData)
+                const res = await fetch('/api/page-data');
+                if (!res.ok) throw new Error('Failed to fetch');
+                const data = await res.json();
+                setTestimonialData(data?.testimonialData);
             } catch (error) {
-              console.error('Error fetching services:', error)
+                console.error('Error fetching services:', error);
             }
-          }
-          fetchData()
-        }, [])
-        
+        };
+        fetchData();
+    }, []);
+
     return (
         <section className="bg-lightgray dark:bg-secondary py-20 md:py-40">
             <div className="flex flex-col gap-24">
@@ -32,14 +32,19 @@ function Testimonial() {
                                 <p className="section-bedge py-1.5 px-4 rounded-full">Testimonial</p>
                             </div>
                             <div className="flex flex-col gap-11">
-                                <div className="flex flex-col gap-5 ">
+                                <div className="flex flex-col gap-5">
                                     <h2 className="max-w-3xl">Stories from clients</h2>
-                                    <p className="max-w-2xl text-secondary/70 dark:text-white/70">Real experiences, genuine feedback—discover how our creative solutions have transformed brands and elevated businesses.</p>
+                                    <p className="max-w-2xl text-secondary/70 dark:text-white/70">
+                                        Real experiences, genuine feedback—discover how our creative solutions have transformed brands and elevated businesses.
+                                    </p>
                                 </div>
                             </div>
                         </div>
+
                         <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-7">
-                            <div className="bg-primary p-4 lg:p-7 flex flex-col gap-32">
+                            {/* Card 1 */}
+                            <div className="bg-primary p-4 lg:p-7 flex flex-col gap-32 rounded-xl transition-all duration-400 ease-in-out 
+                                            hover:-translate-y-4 hover:scale-105 hover:shadow-2xl hover:ring-2 hover:ring-primary/40">
                                 <div className="flex flex-col gap-6">
                                     <p className="text-base text-secondary/70">{testimonialData?.data_1?.preTitle}</p>
                                     <h4 className="dark:text-secondary">{testimonialData?.data_1?.title}</h4>
@@ -52,7 +57,10 @@ function Testimonial() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="xl:col-span-2 bg-secondary dark:bg-lightgray/10 p-4 lg:p-7 flex flex-col justify-between gap-14">
+
+                            {/* Card 2 */}
+                            <div className="xl:col-span-2 bg-secondary dark:bg-lightgray/10 p-4 lg:p-7 flex flex-col justify-between gap-14 rounded-xl transition-all duration-400 ease-in-out
+                                            hover:-translate-y-4 hover:scale-105 hover:shadow-2xl hover:ring-2 hover:ring-secondary/40">
                                 <div className="flex flex-col gap-6">
                                     <p className="text-base text-white/70">{testimonialData?.data_2?.preTitle}</p>
                                     <h4 className="text-white">{testimonialData?.data_2?.title}</h4>
@@ -74,7 +82,10 @@ function Testimonial() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="bg-white dark:bg-black/20 p-4 lg:p-7 flex flex-col justify-between gap-32">
+
+                            {/* Card 3 */}
+                            <div className="bg-white dark:bg-black/20 p-4 lg:p-7 flex flex-col justify-between gap-32 rounded-xl transition-all duration-400 ease-in-out
+                                            hover:-translate-y-4 hover:scale-105 hover:shadow-2xl hover:ring-2 hover:ring-white/20">
                                 <div className="flex flex-col gap-6">
                                     <p className="text-base text-secondary/70 dark:text-white/70">{testimonialData?.data_3?.preTitle}</p>
                                     <h4>{testimonialData?.data_3?.title}</h4>
@@ -88,6 +99,7 @@ function Testimonial() {
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

@@ -1,8 +1,15 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
-const testimonials = [
+interface Testimonial {
+  name: string;
+  role: string;
+  feedback: string;
+  image: string;
+}
+
+const testimonials: Testimonial[] = [
   {
     name: "Olivia",
     role: "Student",
@@ -26,34 +33,33 @@ const testimonials = [
   },
 ];
 
-const AboutusTestimonials = () => {
-  // Variants for heading animation
-  const headingVariants = {
-    hidden: { opacity: 0, y: 40, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
+const headingVariants: Variants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
     },
-  };
+  },
+};
 
-  const wordVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.15,
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    }),
-  };
+const wordVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.15,
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  }),
+};
 
+const AboutusTestimonials = () => {
   return (
     <section className="py-16 md:py-24 bg-gray-50 dark:bg-background">
       <div className="container mx-auto text-center">

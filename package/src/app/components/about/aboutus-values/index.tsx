@@ -1,9 +1,18 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { FaHandshake, FaUserGraduate, FaLightbulb, FaGlobe } from "react-icons/fa";
+import { ReactNode, CSSProperties } from "react";
 
-const values = [
+interface ValueItem {
+  title: string;
+  desc: string;
+  icon: ReactNode;
+  color: string;
+  bgColor: string;
+}
+
+const values: ValueItem[] = [
   { 
     title: "Integrity", 
     desc: "We uphold transparency and honesty in everything we do.", 
@@ -34,7 +43,13 @@ const values = [
   },
 ];
 
-const FloatingShape = ({ delay, size, position }) => (
+interface FloatingShapeProps {
+  delay: number;
+  size: string;
+  position: CSSProperties;
+}
+
+const FloatingShape: React.FC<FloatingShapeProps> = ({ delay, size, position }) => (
   <motion.div
     className={`absolute rounded-full bg-gradient-to-r from-primary/10 to-primary/5 dark:from-primary/20 dark:to-primary/10 ${size}`}
     initial={{ opacity: 0, scale: 0 }}
@@ -54,8 +69,8 @@ const FloatingShape = ({ delay, size, position }) => (
   />
 );
 
-const AboutusValues = () => {
-  const containerVariants = {
+const AboutusValues: React.FC = () => {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -63,7 +78,7 @@ const AboutusValues = () => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
@@ -72,9 +87,8 @@ const AboutusValues = () => {
     },
   };
 
-  // Heading animation - reveal each word
   const headingWords = ["Our", "Core", "Values"];
-  const wordVariants = {
+  const wordVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: (i: number) => ({
       opacity: 1,
@@ -89,12 +103,12 @@ const AboutusValues = () => {
 
   return (
     <section className="relative py-20 md:py-28 bg-gradient-to-b from-gray-50 to-white dark:from-darkblack dark:to-secondary overflow-hidden">
-      {/* Background floating shapes */}
+      {/* Floating shapes */}
       <div className="absolute inset-0 overflow-hidden">
-        <FloatingShape delay={0} size="w-16 h-16" position={{ top: '15%', left: '10%' }} />
-        <FloatingShape delay={2} size="w-24 h-24" position={{ top: '25%', right: '15%' }} />
-        <FloatingShape delay={4} size="w-12 h-12" position={{ bottom: '20%', left: '20%' }} />
-        <FloatingShape delay={6} size="w-20 h-20" position={{ bottom: '30%', right: '10%' }} />
+        <FloatingShape delay={0} size="w-16 h-16" position={{ top: "15%", left: "10%" }} />
+        <FloatingShape delay={2} size="w-24 h-24" position={{ top: "25%", right: "15%" }} />
+        <FloatingShape delay={4} size="w-12 h-12" position={{ bottom: "20%", left: "20%" }} />
+        <FloatingShape delay={6} size="w-20 h-20" position={{ bottom: "30%", right: "10%" }} />
       </div>
       
       <div className="container mx-auto text-center relative z-10 px-4">
@@ -121,7 +135,7 @@ const AboutusValues = () => {
           <motion.div
             variants={itemVariants}
             className="h-1.5 w-24 bg-gradient-to-r from-primary to-blue-600 mx-auto rounded-full"
-          ></motion.div>
+          />
           <motion.p 
             variants={itemVariants}
             className="mt-6 text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
@@ -130,7 +144,7 @@ const AboutusValues = () => {
           </motion.p>
         </motion.div>
 
-        {/* Values Grid */}
+        {/* Values grid */}
         <motion.div 
           className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
           variants={containerVariants}
@@ -149,10 +163,8 @@ const AboutusValues = () => {
               }}
               className="group p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-800 relative overflow-hidden"
             >
-              {/* Hover background */}
-              <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-gradient-to-r ${value.color}`}></div>
+              <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-gradient-to-r ${value.color}`} />
               
-              {/* Main card */}
               <div className={`relative z-10 ${value.bgColor} p-6 rounded-xl`}>
                 <motion.div
                   className="flex justify-center mb-6"
@@ -169,8 +181,7 @@ const AboutusValues = () => {
                 </p>
               </div>
 
-              {/* Gradient border on hover */}
-              <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${value.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`}></div>
+              <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${value.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`} />
             </motion.div>
           ))}
         </motion.div>

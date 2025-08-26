@@ -1,9 +1,17 @@
 "use client";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence, Variants } from "framer-motion";
+import { useState, CSSProperties, ReactNode } from "react";
 import { FaArrowRight } from "react-icons/fa";
 
-const FloatingShape = ({ delay, size, position, color }) => (
+// ✅ Props typing for FloatingShape
+interface FloatingShapeProps {
+  delay: number;
+  size: string;
+  position: CSSProperties;
+  color: string;
+}
+
+const FloatingShape = ({ delay, size, position, color }: FloatingShapeProps) => (
   <motion.div
     className={`absolute rounded-full ${color} ${size}`}
     initial={{ opacity: 0, scale: 0 }}
@@ -23,8 +31,20 @@ const FloatingShape = ({ delay, size, position, color }) => (
   />
 );
 
-// SVGs
-const OfferSVG = (
+// ✅ Each card type
+interface CardType {
+  title: string;
+  desc: string;
+  long_desc: string;
+  icon: ReactNode;
+  image: string;
+  color: string;
+  bgColor: string;
+  fallbackColor: string;
+}
+
+// ✅ SVGs remain unchanged (ReactNode)
+const OfferSVG: ReactNode = (
   <svg width="48" height="48" fill="none" viewBox="0 0 48 48">
     <rect x="8" y="21" width="32" height="15" rx="5" fill="url(#offer-grad)" />
     <path d="M24 21V12" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" />
@@ -39,7 +59,7 @@ const OfferSVG = (
   </svg>
 );
 
-const DoSVG = (
+const DoSVG: ReactNode = (
   <svg width="48" height="48" fill="none" viewBox="0 0 48 48">
     <circle cx="24" cy="24" r="12" fill="url(#do-grad)" />
     <path d="M18 24h12M24 18v12" stroke="#a21caf" strokeWidth="2" strokeLinecap="round" />
@@ -53,7 +73,7 @@ const DoSVG = (
   </svg>
 );
 
-const WhySVG = (
+const WhySVG: ReactNode = (
   <svg width="48" height="48" fill="none" viewBox="0 0 48 48">
     <ellipse cx="24" cy="20" rx="11" ry="9" fill="url(#why-grad)" />
     <path d="M20 32h8M24 29.5v2.5" stroke="#f59e42" strokeWidth="2" strokeLinecap="round" />
@@ -72,9 +92,10 @@ const WhySVG = (
 );
 
 const AboutusDetail = () => {
-  const [expanded, setExpanded] = useState(false); // 🔥 global expand state
+  const [expanded, setExpanded] = useState<boolean>(false); // ✅ typed state
 
-  const containerVariants = {
+  // ✅ Motion variants typed
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -82,7 +103,7 @@ const AboutusDetail = () => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
@@ -96,7 +117,7 @@ const AboutusDetail = () => {
     },
   };
 
-  const wordVariants = {
+  const wordVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
@@ -105,7 +126,8 @@ const AboutusDetail = () => {
     },
   };
 
-  const cards = [
+  // ✅ Cards typed
+  const cards: CardType[] = [
     {
       title: "What We Offer",
       desc: "Structured programs, workshops, and resources designed to simplify credit, loans, and money management.",
@@ -152,33 +174,66 @@ const AboutusDetail = () => {
 
       <div className="container relative z-10 px-6 mx-auto">
         {/* Heading */}
-        <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center max-w-4xl mx-auto mb-12">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="text-center max-w-4xl mx-auto mb-12"
+        >
           <motion.h2
             className="text-5xl md:text-6xl font-extrabold tracking-tight text-darkblack dark:text-white"
             initial="hidden"
             animate="visible"
             variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
           >
-            <motion.span variants={wordVariants} className="inline-block mr-2">About</motion.span>
-            <motion.span variants={wordVariants} className="inline-block mr-2 text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">Creditor</motion.span>
-            <motion.span variants={wordVariants} className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">Academy</motion.span>
+            <motion.span variants={wordVariants} className="inline-block mr-2">
+              About
+            </motion.span>
+            <motion.span
+              variants={wordVariants}
+              className="inline-block mr-2 text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600"
+            >
+              Creditor
+            </motion.span>
+            <motion.span
+              variants={wordVariants}
+              className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600"
+            >
+              Academy
+            </motion.span>
           </motion.h2>
 
-          <motion.div variants={itemVariants} className="h-1.5 w-32 bg-gradient-to-r from-primary to-blue-600 mx-auto mt-6 rounded-full" />
-          <motion.p variants={itemVariants} className="mt-8 text-lg md:text-xl leading-relaxed text-gray-600 dark:text-gray-300">
+          <motion.div
+            variants={itemVariants}
+            className="h-1.5 w-32 bg-gradient-to-r from-primary to-blue-600 mx-auto mt-6 rounded-full"
+          />
+          <motion.p
+            variants={itemVariants}
+            className="mt-8 text-lg md:text-xl leading-relaxed text-gray-600 dark:text-gray-300"
+          >
             Transforming the way people understand and manage credit through{" "}
             <span className="font-semibold text-primary">practical education</span> and{" "}
-            <span className="font-semibold text-blue-600 dark:text-blue-400">real-world insights</span>.
+            <span className="font-semibold text-blue-600 dark:text-blue-400">
+              real-world insights
+            </span>
+            .
           </motion.p>
         </motion.div>
 
         {/* Cards */}
-        <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto relative">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto relative"
+        >
           {cards.map((card, i) => (
             <motion.div
               key={i}
               variants={itemVariants}
-              onClick={() => setExpanded(!expanded)} // 🔥 toggle all cards at once
+              onClick={() => setExpanded(!expanded)} // ✅ global expand
               whileHover={{
                 y: -10,
                 scale: 1.02,
@@ -187,7 +242,9 @@ const AboutusDetail = () => {
               className={`relative cursor-pointer p-8 rounded-3xl bg-gradient-to-b from-white to-gray-50 dark:from-darkblack dark:to-gray-900 shadow-xl hover:shadow-2xl border border-gray-100 dark:border-gray-800 transition-all duration-300 z-10 group h-full`}
             >
               {/* Hover glow */}
-              <div className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${card.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500 -z-10`} />
+              <div
+                className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${card.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500 -z-10`}
+              />
 
               {/* Top Accent */}
               <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${card.color} rounded-t-3xl`} />
@@ -201,10 +258,16 @@ const AboutusDetail = () => {
                   <div className="w-12 h-12 flex items-center justify-center">{card.icon}</div>
                 </motion.div>
 
-                <motion.h3 layout className="text-2xl font-bold text-darkblack dark:text-white mb-4 text-center">
+                <motion.h3
+                  layout
+                  className="text-2xl font-bold text-darkblack dark:text-white mb-4 text-center"
+                >
                   {card.title}
                 </motion.h3>
-                <motion.p layout className="text-gray-600 dark:text-gray-300 leading-relaxed text-center flex-grow">
+                <motion.p
+                  layout
+                  className="text-gray-600 dark:text-gray-300 leading-relaxed text-center flex-grow"
+                >
                   {card.desc}
                 </motion.p>
 
@@ -218,7 +281,9 @@ const AboutusDetail = () => {
                       transition={{ duration: 0.4, ease: "easeOut" }}
                       className="mt-6"
                     >
-                      <div className={`w-full h-40 rounded-xl mb-4 ${card.fallbackColor} flex items-center justify-center overflow-hidden`}>
+                      <div
+                        className={`w-full h-40 rounded-xl mb-4 ${card.fallbackColor} flex items-center justify-center overflow-hidden`}
+                      >
                         <motion.img
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
@@ -236,9 +301,14 @@ const AboutusDetail = () => {
                   )}
                 </AnimatePresence>
 
-                {/* Close button */}
-                {expanded && i === cards.length - 1 && ( // show button once at last card
-                  <motion.div className="flex justify-center mt-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
+                {/* Close button only on last card */}
+                {expanded && i === cards.length - 1 && (
+                  <motion.div
+                    className="flex justify-center mt-4"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                  >
                     <button
                       onClick={() => setExpanded(false)}
                       className={`flex items-center gap-2 px-4 py-2 rounded-full text-white bg-gradient-to-r ${card.color} text-sm font-medium`}

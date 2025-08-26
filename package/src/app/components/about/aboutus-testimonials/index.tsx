@@ -61,11 +61,11 @@ const wordVariants: Variants = {
 
 const AboutusTestimonials = () => {
   return (
-    <section className="py-16 md:py-24 bg-gray-50 dark:bg-background">
-      <div className="container mx-auto text-center">
+    <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900 transition-colors duration-500">
+      <div className="container mx-auto text-center px-6">
         {/* Animated Heading */}
         <motion.h2
-          className="text-4xl md:text-5xl font-bold mb-12"
+          className="text-4xl md:text-5xl font-bold mb-12 text-gray-900 dark:text-white"
           variants={headingVariants}
           initial="hidden"
           whileInView="visible"
@@ -96,7 +96,7 @@ const AboutusTestimonials = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: i * 0.2 }}
-              className="relative p-8 rounded-2xl shadow-lg bg-white dark:bg-secondary transition-transform transform hover:-translate-y-3 hover:shadow-2xl"
+              className="relative p-8 rounded-2xl shadow-lg bg-white dark:bg-gray-800 transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl"
             >
               <p className="text-lg italic mb-6 text-gray-700 dark:text-gray-300">
                 “{t.feedback}”
@@ -108,10 +108,12 @@ const AboutusTestimonials = () => {
                   className="w-14 h-14 rounded-full object-cover border-2 border-primary"
                 />
                 <div className="text-left">
-                  <h4 className="font-semibold text-darkblack dark:text-white">
+                  <h4 className="font-semibold text-gray-900 dark:text-white">
                     {t.name}
                   </h4>
-                  <span className="text-sm text-gray-500">{t.role}</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                    {t.role}
+                  </span>
                 </div>
               </div>
             </motion.div>

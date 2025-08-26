@@ -66,7 +66,7 @@ const AboutusMission: React.FC = () => {
   };
 
   return (
-    <section className="relative py-20 md:py-28 bg-gradient-to-b from-gray-100 to-white dark:from-background dark:to-secondary overflow-hidden">
+    <section className="relative py-20 md:py-28 bg-gradient-to-b from-gray-100 to-white dark:from-gray-900 dark:to-black overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <FloatingOrb
@@ -103,7 +103,7 @@ const AboutusMission: React.FC = () => {
               y: -8,
               transition: { type: "spring", stiffness: 300, damping: 15 },
             }}
-            className="bg-gradient-to-br from-white to-blue-50 dark:from-secondary dark:to-blue-900/10 rounded-2xl p-8 md:p-10 shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-100 dark:border-blue-800/30 h-full flex flex-col justify-center text-center md:text-left relative overflow-hidden group"
+            className="bg-gradient-to-br from-white to-blue-50 dark:from-gray-800 dark:to-blue-900/20 rounded-2xl p-8 md:p-10 shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-100 dark:border-blue-800/30 h-full flex flex-col justify-center text-center md:text-left relative overflow-hidden group"
           >
             {/* Decorative corner elements */}
             <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-primary/5 to-transparent rounded-bl-full"></div>
@@ -164,7 +164,7 @@ const AboutusMission: React.FC = () => {
               y: -8,
               transition: { type: "spring", stiffness: 300, damping: 15 },
             }}
-            className="bg-gradient-to-br from-white to-purple-50 dark:from-secondary dark:to-purple-900/10 rounded-2xl p-8 md:p-10 shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-100 dark:border-purple-800/30 h-full flex flex-col justify-center text-center md:text-left relative overflow-hidden group"
+            className="bg-gradient-to-br from-white to-purple-50 dark:from-gray-800 dark:to-purple-900/20 rounded-2xl p-8 md:p-10 shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-100 dark:border-purple-800/30 h-full flex flex-col justify-center text-center md:text-left relative overflow-hidden group"
           >
             {/* Decorative corner elements */}
             <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-primary/5 to-transparent rounded-br-full"></div>
@@ -219,5 +219,4 @@ const AboutusMission: React.FC = () => {
     </section>
   );
 };
-
 export default AboutusMission;

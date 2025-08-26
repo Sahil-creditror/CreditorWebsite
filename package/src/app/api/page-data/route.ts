@@ -278,7 +278,7 @@ const aboutusStats = [
 ]
 
 const servicesSliderData = [
-    "Branding", "Web development", "Agency","Content creation","SaaS","Motion & 3d modeling","Photography"
+    "Master class ", "Roadmap Series", "Private Business Credit","Operate Private","Sovereignity","Become Private"
 ]
 
 

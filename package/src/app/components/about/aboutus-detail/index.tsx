@@ -1,20 +1,259 @@
+"use client";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { FaArrowRight } from "react-icons/fa";
+
+const FloatingShape = ({ delay, size, position, color }) => (
+  <motion.div
+    className={`absolute rounded-full ${color} ${size}`}
+    initial={{ opacity: 0, scale: 0 }}
+    animate={{
+      opacity: [0, 0.2, 0],
+      scale: [0, 1, 0],
+      y: [0, -40, 0],
+      x: [0, 15, 0],
+    }}
+    transition={{
+      duration: 20,
+      repeat: Infinity,
+      delay,
+      ease: "easeInOut",
+    }}
+    style={position}
+  />
+);
+
+// SVGs
+const OfferSVG = (
+  <svg width="48" height="48" fill="none" viewBox="0 0 48 48">
+    <rect x="8" y="21" width="32" height="15" rx="5" fill="url(#offer-grad)" />
+    <path d="M24 21V12" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" />
+    <circle cx="16" cy="16" r="5" stroke="#155ee3" strokeWidth="2" fill="white" />
+    <circle cx="32" cy="16" r="5" stroke="#06b6d4" strokeWidth="2" fill="white" />
+    <defs>
+      <linearGradient id="offer-grad" x1="8" y1="21" x2="40" y2="36" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#3B82F6" />
+        <stop offset="1" stopColor="#06b6d4" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+const DoSVG = (
+  <svg width="48" height="48" fill="none" viewBox="0 0 48 48">
+    <circle cx="24" cy="24" r="12" fill="url(#do-grad)" />
+    <path d="M18 24h12M24 18v12" stroke="#a21caf" strokeWidth="2" strokeLinecap="round" />
+    <circle cx="24" cy="24" r="3" fill="#fff" />
+    <defs>
+      <linearGradient id="do-grad" x1="12" y1="12" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#a21caf" />
+        <stop offset="1" stopColor="#ec4899" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+const WhySVG = (
+  <svg width="48" height="48" fill="none" viewBox="0 0 48 48">
+    <ellipse cx="24" cy="20" rx="11" ry="9" fill="url(#why-grad)" />
+    <path d="M20 32h8M24 29.5v2.5" stroke="#f59e42" strokeWidth="2" strokeLinecap="round" />
+    <path
+      d="M24 28c-2.5-2-6-4-6-8a6 6 0 1 1 12 0c0 4-3.5 6-6 8z"
+      fill="#fff"
+      fillOpacity="0.7"
+    />
+    <defs>
+      <linearGradient id="why-grad" x1="13" y1="11" x2="35" y2="29" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#f59e42" />
+        <stop offset="1" stopColor="#fdba74" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
 
 const AboutusDetail = () => {
-    return (
-        <section className="py-10 md:py-20 xl:py-40 dark:bg-secondary">
-            <div className='container'>
-                <div className='flex flex-col xl:flex-row gap-8'>
-                    <div className='max-w-xl w-full'>
-                        <h2 className='text-56'>Creditor Academy.</h2>
-                    </div>
-                    <div className='flex flex-col gap-12'>
-                        <p className="text-secondary dark:text-white">It’s a canvas for your creativity. It’s your opportunity to transform bold ideas into dynamic, interactive experiences. Your work can shape identities, tell compelling stories, or spark meaningful change. As the digital landscape grows, so do the possibilities. And whether you thrive working remotely or in a buzzing agency space, the thrill of seeing your vision come to life is unmatched.</p>
-                        <p className='text-secondary dark:text-white'>At Creditor, we bring ideas to life through a range of services: branding, web development, agency solutions, content creation, SaaS, and motion & 3D modeling. As a web designer, you merge artistry and technology to craft "digital experiences" that inform, captivate, and inspire. Every day brings something new — one moment you’re sketching innovative concepts, the next you’re turning them into seamless, responsive designs. Web design keeps you pushing boundaries and creating at every turn!</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    )
-}
+  const [expanded, setExpanded] = useState(false); // 🔥 global expand state
 
-export default AboutusDetail
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.25 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: "easeOut",
+        type: "spring",
+        stiffness: 100,
+      },
+    },
+  };
+
+  const wordVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 100, damping: 10 },
+    },
+  };
+
+  const cards = [
+    {
+      title: "What We Offer",
+      desc: "Structured programs, workshops, and resources designed to simplify credit, loans, and money management.",
+      long_desc:
+        "Our comprehensive curriculum covers everything from the basics of credit scores to advanced investment strategies. We offer workshops, one-on-one coaching, and a rich library of resources.",
+      icon: OfferSVG,
+      image: "/images/about-us/offer.webp",
+      color: "from-blue-500 to-cyan-500",
+      bgColor: "bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20",
+      fallbackColor: "bg-blue-100 dark:bg-blue-900/30",
+    },
+    {
+      title: "What We Do",
+      desc: "We break down complex financial concepts into easy-to-grasp lessons with actionable guidance.",
+      long_desc:
+        "Our team of financial experts creates engaging learning experiences with real-world examples and practical exercises to ensure students can apply what they learn.",
+      icon: DoSVG,
+      image: "/images/about-us/do.webp",
+      color: "from-purple-500 to-pink-500",
+      bgColor: "bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20",
+      fallbackColor: "bg-purple-100 dark:bg-purple-900/30",
+    },
+    {
+      title: "Why We Do It",
+      desc: "Because financial literacy is the foundation for opportunity, independence, and long-term success.",
+      long_desc:
+        "We believe that everyone deserves financial freedom. By empowering individuals with knowledge, we help create a more equitable and prosperous society.",
+      icon: WhySVG,
+      image: "/images/about-us/why.webp",
+      color: "from-amber-500 to-orange-500",
+      bgColor: "bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20",
+      fallbackColor: "bg-amber-100 dark:bg-amber-900/30",
+    },
+  ];
+
+  return (
+    <section className="relative py-24 md:py-36 overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-darkblack dark:via-secondary dark:to-blue-900/10">
+      {/* Floating Background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <FloatingShape delay={0} size="w-32 h-32" position={{ top: "15%", left: "5%" }} color="bg-blue-200/30 dark:bg-blue-500/10" />
+        <FloatingShape delay={7} size="w-24 h-24" position={{ top: "25%", right: "10%" }} color="bg-purple-200/30 dark:bg-purple-500/10" />
+        <FloatingShape delay={14} size="w-28 h-28" position={{ bottom: "20%", left: "15%" }} color="bg-amber-200/30 dark:bg-amber-500/10" />
+      </div>
+
+      <div className="container relative z-10 px-6 mx-auto">
+        {/* Heading */}
+        <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center max-w-4xl mx-auto mb-12">
+          <motion.h2
+            className="text-5xl md:text-6xl font-extrabold tracking-tight text-darkblack dark:text-white"
+            initial="hidden"
+            animate="visible"
+            variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+          >
+            <motion.span variants={wordVariants} className="inline-block mr-2">About</motion.span>
+            <motion.span variants={wordVariants} className="inline-block mr-2 text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">Creditor</motion.span>
+            <motion.span variants={wordVariants} className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">Academy</motion.span>
+          </motion.h2>
+
+          <motion.div variants={itemVariants} className="h-1.5 w-32 bg-gradient-to-r from-primary to-blue-600 mx-auto mt-6 rounded-full" />
+          <motion.p variants={itemVariants} className="mt-8 text-lg md:text-xl leading-relaxed text-gray-600 dark:text-gray-300">
+            Transforming the way people understand and manage credit through{" "}
+            <span className="font-semibold text-primary">practical education</span> and{" "}
+            <span className="font-semibold text-blue-600 dark:text-blue-400">real-world insights</span>.
+          </motion.p>
+        </motion.div>
+
+        {/* Cards */}
+        <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto relative">
+          {cards.map((card, i) => (
+            <motion.div
+              key={i}
+              variants={itemVariants}
+              onClick={() => setExpanded(!expanded)} // 🔥 toggle all cards at once
+              whileHover={{
+                y: -10,
+                scale: 1.02,
+                transition: { type: "spring", stiffness: 300, damping: 15 },
+              }}
+              className={`relative cursor-pointer p-8 rounded-3xl bg-gradient-to-b from-white to-gray-50 dark:from-darkblack dark:to-gray-900 shadow-xl hover:shadow-2xl border border-gray-100 dark:border-gray-800 transition-all duration-300 z-10 group h-full`}
+            >
+              {/* Hover glow */}
+              <div className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${card.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500 -z-10`} />
+
+              {/* Top Accent */}
+              <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${card.color} rounded-t-3xl`} />
+
+              <motion.div layout className="flex flex-col h-full">
+                {/* Icon */}
+                <motion.div
+                  layout
+                  className={`flex items-center justify-center mb-6 p-4 rounded-2xl ${card.bgColor} w-16 h-16 mx-auto animate-pulse`}
+                >
+                  <div className="w-12 h-12 flex items-center justify-center">{card.icon}</div>
+                </motion.div>
+
+                <motion.h3 layout className="text-2xl font-bold text-darkblack dark:text-white mb-4 text-center">
+                  {card.title}
+                </motion.h3>
+                <motion.p layout className="text-gray-600 dark:text-gray-300 leading-relaxed text-center flex-grow">
+                  {card.desc}
+                </motion.p>
+
+                {/* Expanded content */}
+                <AnimatePresence>
+                  {expanded && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
+                      className="mt-6"
+                    >
+                      <div className={`w-full h-40 rounded-xl mb-4 ${card.fallbackColor} flex items-center justify-center overflow-hidden`}>
+                        <motion.img
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.5 }}
+                          src={card.image}
+                          alt={card.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-center">
+                        {card.long_desc}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Close button */}
+                {expanded && i === cards.length - 1 && ( // show button once at last card
+                  <motion.div className="flex justify-center mt-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
+                    <button
+                      onClick={() => setExpanded(false)}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-full text-white bg-gradient-to-r ${card.color} text-sm font-medium`}
+                    >
+                      Close <FaArrowRight className="text-xs" />
+                    </button>
+                  </motion.div>
+                )}
+              </motion.div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default AboutusDetail;

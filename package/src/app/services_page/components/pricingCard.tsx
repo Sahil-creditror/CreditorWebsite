@@ -3,8 +3,6 @@
 import Image from "next/image";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
-import Logoslider from "./Logoslider";
-import Slider from "react-infinite-logo-slider";
 import { useEffect, useState } from "react";
 
 function Pricing() {
@@ -16,7 +14,7 @@ function Pricing() {
         const res = await fetch('/api/page-data')
         if (!res.ok) throw new Error('Failed to fetch')
         const data = await res.json()
-        setPricingData(data?.pricingData)
+        setPricingData(data?.pricingData2)
       } catch (error) {
         console.error('Error fetching services:', error)
       }
@@ -111,50 +109,35 @@ function Pricing() {
                         </div>
                         
                         <div>
-                              <Link 
-                                  href={value.link || "#"} 
-                                  className="group relative flex justify-center items-center w-full bg-primary hover:bg-secondary rounded-full transition-all duration-300 ease-in-out"
-                                >
-                                  <span className="py-4 px-2 text-lg font-bold text-secondary group-hover:text-white transition-all duration-300 ease-in-out">
-                                    Subscribe now
-                                  </span>
-                                  <div className="absolute top-0.5 right-0.5 transition-all duration-300 ease-in-out group-hover:left-0">
-                                    <svg className="flex items-center transition-transform duration-300 ease-in-out group-hover:rotate-45" width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                      <g filter="url(#filter0_d_1_873)">
-                                        <rect x="3" y="2" width="52" height="52" rx="26" fill="white" />
-                                        <path d="M24 23H34M34 23V33M34 23L24 33" stroke="#1F2A2E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                      </g>
-                                      <defs>
-                                        <filter id="filter0_d_1_873" x="0" y="0" width="58" height="58" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                                          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                                          <feOffset dy="1" />
-                                          <feGaussianBlur stdDeviation="1.5" />
-                                          <feComposite in2="hardAlpha" operator="out" />
-                                          <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0" />
-                                          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_873" />
-                                          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_873" result="shape" />
-                                        </filter>
-                                      </defs>
-                                    </svg>
-                                  </div>
-                                </Link>
-
+                          <Link href="/" className="group relative flex justify-center items-center w-full bg-primary hover:bg-secondary rounded-full transition-all duration-300 ease-in-out">
+                            <span className="py-4 px-2 text-lg font-bold text-secondary group-hover:text-white transition-all duration-300 ease-in-out">Subscribe now</span>
+                            <div className="absolute top-0.5 right-0.5 transition-all duration-300 ease-in-out group-hover:left-0">
+                              <svg className="flex items-center transition-transform duration-300 ease-in-out group-hover:rotate-45" width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g filter="url(#filter0_d_1_873)">
+                                  <rect x="3" y="2" width="52" height="52" rx="26" fill="white" />
+                                  <path d="M24 23H34M34 23V33M34 23L24 33" stroke="#1F2A2E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </g>
+                                <defs>
+                                  <filter id="filter0_d_1_873" x="0" y="0" width="58" height="58" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                                    <feOffset dy="1" />
+                                    <feGaussianBlur stdDeviation="1.5" />
+                                    <feComposite in2="hardAlpha" operator="out" />
+                                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0" />
+                                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_873" />
+                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_873" result="shape" />
+                                  </filter>
+                                </defs>
+                              </svg>
+                            </div>
+                          </Link>
                         </div>
                       </div>
                     </div>
                   )
                 })}
               </div>
-            </div>
-
-            <div className="flex flex-col gap-10">
-              <p className="text-secondary dark:text-white text-center">More than 1000+ trusted Learners</p>
-              <Slider duration={20} pauseOnHover={true} blurBorders={false}>
-                {(pricingData?.partnerLogo || []).map((items: any, index: any) => (
-                  <Logoslider key={index} logo={items} />
-                ))}
-              </Slider>
             </div>
           </div>
         </div>

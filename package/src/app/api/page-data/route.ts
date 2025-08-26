@@ -191,7 +191,8 @@ const pricingData = {
             planPrice: "Website Service",
             planDescp: "Ideal for startups and small businesses taking their first steps online.",
             planIncludes: ["Competitive research & insights","Wireframing and prototyping","Basic tracking setup (Google Analytics, etc.)","Standard contact form integration"],
-            coverImage: "/images/pricing/Cover-1.png" // Optional
+            coverImage: "/images/pricing/Cover-1.png", // Optional
+            link: "/services_page/website-service"
         },
         {
             // planName: "Scale",
@@ -200,7 +201,8 @@ const pricingData = {
             // cancelPrice: "$2,199",
             planDescp: "Perfect for growing brands needing more customization and flexibility.",
             planIncludes: ["Everything in the Launch Plan","Custom design for up to 10 pages","Seamless social media integration","SEO enhancements for key pages"],
-            coverImage: "/images/pricing/Cover-2.jpg" // Optional
+            coverImage: "/images/pricing/Cover-2.jpg", // Optional
+            link : "/service-page/live-class"
         },
         {
             // planName: "Elevate", 
@@ -208,7 +210,8 @@ const pricingData = {
             planPrice: "Private Merchant Processing",
             planDescp: "Best suited for established businesses wanting a fully tailored experience.",
             planIncludes: ["Everything in the Scale Plan","E-commerce functionality (if needed)","Branded email template design","Priority support for six months after launch"],
-            coverImage: "/images/pricing/Cover-3.jpg" // Optional
+            coverImage: "/images/pricing/Cover-3.jpg" ,// Optional
+            link: "/service-page/private-merchant"
         },
     ],
     partnerLogo: [
@@ -221,6 +224,27 @@ const pricingData = {
       ],
 };
 
+const pricingData2 = {
+    data: [
+        {
+            // planName: "Laurich",
+            tag:"Website Launch",
+            planPrice: "Website Service",
+            planDescp: "Ideal for startups and small businesses taking their first steps online.",
+            planIncludes: ["Competitive research & insights","Wireframing and prototyping","Basic tracking setup (Google Analytics, etc.)","Standard contact form integration"],
+            coverImage: "/images/pricing/Cover-1.png" // Optional
+        },
+        {
+            // planName: "Scale",
+            tag: "Paul Michael's",
+            planPrice: "Live Class",
+            // cancelPrice: "$2,199",
+            planDescp: "Perfect for growing brands needing more customization and flexibility.",
+            planIncludes: ["Everything in the Launch Plan","Custom design for up to 10 pages","Seamless social media integration","SEO enhancements for key pages"],
+            coverImage: "/images/pricing/Cover-2.jpg" // Optional
+        },
+    ],
+};
 const faqData = {
     data: [
         {
@@ -294,6 +318,7 @@ export const GET = async () => {
         faqData,
         contactData,
         aboutusStats,
-        servicesSliderData
+        servicesSliderData,
+        pricingData2
     });
 };

@@ -34,7 +34,7 @@ export const ThreeDMarquee = ({
               <motion.div
                 animate={{ y: colIndex % 2 === 0 ? 100 : -100 }}
                 transition={{
-                  duration: colIndex % 2 === 0 ? 10 : 15,
+                  duration: colIndex % 2 === 0 ? 5 : 7.5, // Reduced from 10/15 to 5/7.5
                   repeat: Infinity,
                   repeatType: "reverse",
                 }}
@@ -82,7 +82,7 @@ const GridLineHorizontal = ({
     <div
       style={
         {
-          "--background": "#ffffff",
+          "--background": "#413f3fff",
           "--color": "rgba(0, 0, 0, 0.2)",
           "--height": "1px",
           "--width": "5px",

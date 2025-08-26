@@ -15,7 +15,7 @@ const MenuData = [
   },
   {
     id: 3,
-    title: "Projects",
+    title: "Membership",
     path: "/projects",
     newTab: false,
   },
@@ -52,12 +52,12 @@ const footerData = {
     info: [
         {
             icon: "/images/footer/email-arrow.svg",
-            link: "info@wrappixel.com",
-            href: "https://www.wrappixel.com/"
+            link: "creditoracademy@gmail.com",
+            href: "https://www.creditoracademy.com/"
         },
         {
             icon: "/images/footer/Location.svg",
-            link: "Zwolle Netherlands",
+            link: "USA",
             href: "https://maps.app.goo.gl/hpDp81fqzGt5y4bC8"
         }
     ],

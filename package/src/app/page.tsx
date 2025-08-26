@@ -28,16 +28,16 @@ export default function Home() {
       <Aboutus />
       <Masterclass />
       <MasterInfo />
-      <Courses />
-      <Services />
+      {/* <Courses />
+      <Services /> */}
       <Testimonial />
       {/* <AnimatedTestimonialsDemo /> */}
       {/* <Game /> */}
-      <Team teamdataNumber="06" />
+      {/* <Team teamdataNumber="06" /> */}
       <Commitment />
       <Pricing />
       <Faq />
-      <Resources />
+      {/* <Resources /> */}
       <Contact contactdataNumber="10" />
     </>
   );

@@ -49,7 +49,7 @@ const statsFactData = {
 
 const servicesData = {
     number: '05',
-    name: "Roadmap",
+    name: "Free Starter Course",
     heading: "Roadmap Series",
     description: "Begin your journey with Coach Paulmicheal as you’re introduced to Creditors Academy and its mission to guide you toward private, sovereign living. This orientation walks you through the complete Roadmap Series, giving you a clear view of what’s ahead.",
     data: [

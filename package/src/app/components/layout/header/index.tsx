@@ -209,14 +209,14 @@ const Header = () => {
                   {/* Footer inside menu */}
                   <div className="pt-4 sm:pt-0">
                     <Link
-                      href="tel:+1-212-456-7890"
+                      href="tel:+1-987-456-7890"
                       className="block text-sm sm:text-base text-secondary/60 dark:text-white/60 hover:text-secondary dark:hover:text-white"
                     >
-                      +1-212-456-7890
+                      +1-987-456-7890
                     </Link>
-                    <Link href="mailto:info@wrappixel.com">
+                    <Link href="mailto:creditoracademy.com">
                       <h4 className="text-sm sm:text-base">
-                        info@wrappixel.com
+                        creditoracademy.com
                       </h4>
                     </Link>
                   </div>

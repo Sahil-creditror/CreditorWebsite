@@ -1,9 +1,17 @@
 "use client";
 
-import { motion, useInView, useViewportScroll, useTransform } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, Variants } from "framer-motion";
 import { useRef } from "react";
 
-const Bubble = ({ size, x, y, delay }: { size: number; x: number; y: number; delay: number }) => (
+// ✅ Bubble props type
+interface BubbleProps {
+  size: number;
+  x: number;
+  y: number;
+  delay: number;
+}
+
+const Bubble = ({ size, x, y, delay }: BubbleProps) => (
   <motion.div
     className="absolute rounded-full bg-primary/10 dark:bg-primary/20"
     style={{
@@ -72,61 +80,48 @@ const AboutusStory = () => {
     },
   ];
 
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.2 });
 
-  const { scrollYProgress } = useViewportScroll();
+  // ✅ updated for framer-motion v7
+  const { scrollYProgress } = useScroll();
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
-  const timelineVariants = {
+  // ✅ FIXED: Explicitly typed as Variants
+  const timelineVariants: Variants = {
     hidden: { height: 0 },
     visible: {
       height: "100%",
-      transition: {
-        duration: 1,
-        ease: "easeOut",
-      },
+      transition: { duration: 1, ease: "easeOut" },
     },
   };
 
-  const milestoneVariants = {
+  const milestoneVariants: Variants = {
     hidden: { opacity: 0, x: -50, scale: 0.8 },
     visible: (i: number) => ({
       opacity: 1,
       x: 0,
       scale: 1,
-      transition: {
-        delay: i * 0.3,
-        duration: 0.5,
-        ease: "easeOut",
-      },
+      transition: { delay: i * 0.3, duration: 0.5, ease: "easeOut" },
     }),
   };
 
-  const milestoneVariantsRight = {
+  const milestoneVariantsRight: Variants = {
     hidden: { opacity: 0, x: 50, scale: 0.8 },
     visible: (i: number) => ({
       opacity: 1,
       x: 0,
       scale: 1,
-      transition: {
-        delay: i * 0.3,
-        duration: 0.5,
-        ease: "easeOut",
-      },
+      transition: { delay: i * 0.3, duration: 0.5, ease: "easeOut" },
     }),
   };
 
-  const textVariants = {
+  const textVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        delay: 0.5,
-        duration: 0.5,
-        ease: "easeOut",
-      },
+      transition: { delay: 0.5, duration: 0.5, ease: "easeOut" },
     },
   };
 
@@ -138,7 +133,8 @@ const AboutusStory = () => {
         style={{ y: backgroundY }}
       />
       <div ref={containerRef} className="container mx-auto px-4 relative z-20">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-20 relative z-30">
+        {/* ✅ Heading size increased */}
+        <h2 className="text-5xl md:text-7xl font-bold text-center mb-20 relative z-30">
           Our <span className="text-primary">Story</span>
         </h2>
 
@@ -149,7 +145,6 @@ const AboutusStory = () => {
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
           />
-
           <div className="space-y-16">
             {milestones.map((milestone, index) => (
               <motion.div
@@ -158,13 +153,13 @@ const AboutusStory = () => {
                 variants={index % 2 === 0 ? milestoneVariants : milestoneVariantsRight}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
-                className={`flex items-center w-full`}
+                className="flex items-center w-full relative"
               >
-                <div
-                  className={`w-full flex flex-col md:flex-row items-center justify-between`}
-                >
+                <div className="w-full flex flex-col md:flex-row items-center justify-between">
                   <motion.div
-                    className={`w-full md:w-5/12 ${ index % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}
+                    className={`w-full md:w-5/12 ${
+                      index % 2 === 0 ? "md:order-1" : "md:order-2"
+                    }`}
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
@@ -175,21 +170,19 @@ const AboutusStory = () => {
                       style={{ y: backgroundY }}
                     />
                   </motion.div>
-                  <div className={`w-full md:w-5/12 ${ index % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}>
+                  <div
+                    className={`w-full md:w-5/12 ${
+                      index % 2 === 0 ? "md:order-2" : "md:order-1"
+                    }`}
+                  >
                     <motion.div variants={textVariants} className="text-left">
-                      <div
-                        className={`text-2xl font-bold text-primary mb-2`}
-                      >
+                      <div className="text-2xl font-bold text-primary mb-2">
                         {milestone.year}
                       </div>
-                      <h3
-                        className={`text-xl font-semibold mb-2`}
-                      >
+                      <h3 className="text-xl font-semibold mb-2">
                         {milestone.title}
                       </h3>
-                      <p
-                        className={`text-secondary dark:text-white/70`}
-                      >
+                      <p className="text-secondary dark:text-white/70">
                         {milestone.description}
                       </p>
                     </motion.div>

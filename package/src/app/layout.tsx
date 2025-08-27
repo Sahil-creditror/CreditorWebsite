@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Header from "./components/layout/header";
 import Footer from "./components/layout/footer";
 import ScrollToTop from "./components/scroll-to-top";
+import PreloaderWrapper from "./preloader"; // ⬅️ your preloader component
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -40,7 +41,12 @@ export default function RootLayout({
         <SessionProvider>
           <ThemeProvider attribute="class" enableSystem={false} defaultTheme="light">
             {!hideLayout && <Header />}
-            {children}
+            
+            {/* ✅ Wrap children with Preloader */}
+            <PreloaderWrapper>
+              {children}
+            </PreloaderWrapper>
+
             {!hideLayout && <Footer />}
             <ScrollToTop />
           </ThemeProvider>

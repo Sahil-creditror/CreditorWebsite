@@ -73,13 +73,13 @@ const ProjectGrid = () => {
 
             {project.description && (
               Array.isArray(project.description) ? (
-                <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                <ul className="list-disc list-inside text-sm text-black-600 dark:text-black-300 space-y-1">
                   {project.description.map((point, idx) => (
                     <li key={idx}>{point}</li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
+                <p className="text-sm text-black-600 dark:text-gray-300 line-clamp-3">
                   {project.description}
                 </p>
               )

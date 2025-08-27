@@ -11,28 +11,28 @@ export default function MasterclassBenefits() {
       description:
         "Begin your journey with Roadmap Series, giving you a clear view of the path to private, sovereign living.",
       image:
-        "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80",
+        "/images/offers/roadmap.webp",
     },
     {
       title: "Start your Passive Income now",
       description:
         "A 3-phase journey from building trust, to optimizing Tier 1 business credit, and unlocking private merchant processing.",
       image:
-        "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80",
+        "/images/offers/launch.webp",
     },
     {
       title: "Expert Mentorship",
       description:
         "Receive one-on-one and group mentorship from experts who’ve handled thousands of real cases.",
       image:
-        "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80",
+        "/images/offers/mentor.webp",
     },
     {
       title: "Community Support",
       description:
         "Join a private, supportive community for feedback, accountability, and real-world tips.",
       image:
-        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+        "/images/offers/merchant.webp",
     },
   ];
 

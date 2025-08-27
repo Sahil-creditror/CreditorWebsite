@@ -139,8 +139,9 @@ const AboutusStory = () => {
         </h2>
 
         <div className="relative">
+          {/* ✅ Line hidden on mobile */}
           <motion.div
-            className="absolute left-1/2 -translate-x-1/2 top-0 w-1 bg-primary/30"
+            className="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 w-1 bg-primary/30"
             variants={timelineVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
@@ -188,8 +189,9 @@ const AboutusStory = () => {
                     </motion.div>
                   </div>
                 </div>
+                {/* ✅ Dot hidden on mobile */}
                 <motion.div
-                  className="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full z-10"
+                  className="hidden md:block absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full z-10"
                   animate={{
                     scale: [1, 1.2, 1],
                     boxShadow: [

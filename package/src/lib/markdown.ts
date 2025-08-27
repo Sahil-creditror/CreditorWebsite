@@ -15,7 +15,7 @@ export function getProjectsBySlug(slug: string, fields: string[] = []) {
   const { data, content } = matter(fileContents);
 
   type Items = {
-    [key: string]: string | string[] | object | null;
+    [key: string]: string | string[] | object | number | boolean | null;
   };
 
   const items: Items = {};
@@ -35,7 +35,7 @@ export function getProjectsBySlug(slug: string, fields: string[] = []) {
       items[field] = { ...data, coverImage: data.coverImage || null };
     }
     if (typeof data[field] !== "undefined") {
-      items[field] = data[field]; // ✅ arrays will stay arrays
+      items[field] = data[field] as string | string[] | object | number | boolean | null;
     }
   });
 

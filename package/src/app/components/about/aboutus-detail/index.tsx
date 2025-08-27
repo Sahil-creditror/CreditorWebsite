@@ -2,6 +2,8 @@
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useState, CSSProperties, ReactNode } from "react";
 import { FaArrowRight } from "react-icons/fa";
+import Image from 'next/image';
+
 
 // ✅ Props typing for FloatingShape
 interface FloatingShapeProps {
@@ -163,8 +165,37 @@ const AboutusDetail = () => {
     },
   ];
 
+  const Bubble = () => (
+    <motion.div
+      className="absolute rounded-full bg-blue-500/10 dark:bg-blue-400/10"
+      initial={{ y: '110vh', opacity: 0, scale: Math.random() * 0.5 + 0.5 }}
+      animate={{ y: '-10vh', opacity: [0, 1, 0], scale: Math.random() * 0.5 + 0.5 }}
+      transition={{
+        duration: Math.random() * 10 + 10,
+        repeat: Infinity,
+        ease: 'linear',
+        delay: Math.random() * 5,
+      }}
+      style={{
+        width: `${Math.random() * 100 + 50}px`,
+        height: `${Math.random() * 100 + 50}px`,
+        left: `${Math.random() * 100}%`,
+      }}
+    />
+  );
+
+  const BubblesBackground = () => (
+    <div className="absolute inset-0 overflow-hidden">
+      {Array.from({ length: 20 }).map((_, i) => (
+        <Bubble key={i} />
+      ))}
+    </div>
+  );
+
+
   return (
     <section className="relative py-24 md:py-36 overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-darkblack dark:via-secondary dark:to-blue-900/10">
+      <BubblesBackground />
       {/* Floating Background */}
       <div className="absolute inset-0 overflow-hidden">
         <FloatingShape delay={0} size="w-32 h-32" position={{ top: "15%", left: "5%" }} color="bg-blue-200/30 dark:bg-blue-500/10" />
@@ -320,6 +351,68 @@ const AboutusDetail = () => {
               </motion.div>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* Masterclass CTA */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="relative max-w-7xl mx-auto mt-24 rounded-3xl p-8 bg-gradient-to-br from-blue-50/80 via-white/80 to-blue-100/70 dark:from-blue-900/70 dark:via-darkblack/80 dark:to-blue-900/60 shadow-2xl overflow-hidden group"
+        >
+          <BubblesBackground />
+          <motion.div className="absolute inset-0 border-2 border-blue-300/50 dark:border-blue-500/50 rounded-3xl animate-pulse group-hover:border-blue-400 dark:group-hover:border-blue-600 transition-colors duration-500" />
+          
+          <div className="grid md:grid-cols-2 gap-8 items-center relative z-10">
+            {/* Left Column: Image */}
+            <motion.div
+              whileHover={{ scale: 1.05, rotateY: 10, transition: { type: "spring", stiffness: 300, damping: 20 } }}
+              className="w-full h-full relative"
+            >
+              <div className="absolute -inset-2 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-400 opacity-0 group-hover:opacity-75 transition-opacity duration-500 blur-lg animate-pulse" />
+              <Image
+                src="/images/about-us/masterclass.webp"
+                alt="Masterclass"
+                width={500}
+                height={500}
+                className="relative rounded-2xl shadow-xl object-cover w-full h-full"
+              />
+            </motion.div>
+
+            {/* Right Column: Text Content */}
+            <div className="text-center md:text-left">
+              <motion.h3
+                variants={itemVariants}
+                className="text-4xl md:text-5xl font-extrabold tracking-tight text-darkblack dark:text-white"
+              >
+                <motion.span
+                  animate={{ scale: [1, 1.02, 1] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-400 inline-block"
+                >
+                  Master Class
+                </motion.span>
+              </motion.h3>
+              <motion.p
+                variants={itemVariants}
+                className="mt-4 text-lg md:text-xl text-gray-600 dark:text-gray-300"
+              >
+                Ready to boost your credit score, get out of debt, and start building wealth? Our hands-on Master Class gives you the tools and strategies to achieve your financial goals faster than you ever thought possible.
+              </motion.p>
+              <motion.div variants={itemVariants} className="mt-8 flex items-center justify-center md:justify-start gap-4">
+                <p className="text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-400">Confirm you slot &rarr;</p>
+                <motion.a
+                  href="/projects"
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  className="inline-block px-10 py-4 text-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-cyan-500 rounded-full shadow-lg hover:scale-110 transform transition-transform duration-300"
+                >
+                  Join Now
+                </motion.a>
+              </motion.div>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

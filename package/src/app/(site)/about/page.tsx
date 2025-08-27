@@ -23,7 +23,7 @@ export default function Page() {
                 desc="We create <span>transformative credit education</span> that drives real financial freedom." 
             />
             <AboutusDetail />
-            <AboutusStory />
+            {/* <AboutusStory /> */}
             <AboutusMission />
             <AboutusValues />
             <AboutusStats />

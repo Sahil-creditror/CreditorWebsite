@@ -143,7 +143,7 @@ const AboutusMission: React.FC = () => {
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
               To simplify financial concepts and empower individuals with the
-              knowledge to make confident credit and money management decisions.
+              knowledge to make confident credit & money management decisions.
             </p>
 
             {/* Hover effect overlay */}

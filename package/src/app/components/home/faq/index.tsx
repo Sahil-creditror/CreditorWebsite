@@ -22,7 +22,7 @@ function Faq() {
             fetchData()
         }, [])
     return (
-        <section className="bg-white dark:bg-darkblack py-20 md:py-40">
+        <section className="bg-grey dark:bg-darkblack py-20 md:py-20">
             <div className="flex flex-col gap-24">
                 <div className="container">
                     <div className="flex flex-col gap-20">

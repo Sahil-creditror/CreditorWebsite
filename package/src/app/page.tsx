@@ -6,7 +6,7 @@ import HeroSection from "./components/home/hero";
 import Courses from "./components/home/courses";
 import Pricing from "./components/home/pricing";
 import Resources from "./components/home/resources";
-import Services from "./components/home/services";
+import Roadmap from "./components/home/services";
 import StatsFacts from "./components/home/stats-facts";
 import Team from "./components/home/team";
 import Testimonial from "./components/home/testimonial";
@@ -14,6 +14,7 @@ import Masterclass from "./components/home/masterclass";
 import MasterInfo from "./components/home/masterinfo";
 import Game from "./components/home/Game";
 import Commitment from "./components/home/Commitment";
+import Offer from "./components/home/Offer";
 // import { AnimatedTestimonialsDemo } from "./components/home/testimonial/AnimatedDemo";
 
 export const metadata: Metadata = {
@@ -25,11 +26,12 @@ export default function Home() {
     <>
       <HeroSection />
       <StatsFacts />
-      <Aboutus />
       <Masterclass />
-      <MasterInfo />
-      {/* <Courses />
-      <Services /> */}
+      <Aboutus />
+      {/* <MasterInfo /> */}
+      <Offer />
+      {/* <Roadmap /> */}
+      <Courses />
       <Testimonial />
       {/* <AnimatedTestimonialsDemo /> */}
       {/* <Game /> */}

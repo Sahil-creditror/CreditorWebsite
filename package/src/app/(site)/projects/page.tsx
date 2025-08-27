@@ -5,7 +5,7 @@ import Roadmap from "@/app/components/home/services"
 import Courses from "@/app/components/home/courses";
 import Intro from "@/app/components/masterclass/intro";
 import Learn from "@/app/components/masterclass/learn";
-import Get from "@/app/components/masterclass/getwithmaster"
+import Get from "@/app/components/masterclass/getwithmaster";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";

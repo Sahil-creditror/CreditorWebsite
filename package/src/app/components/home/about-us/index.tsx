@@ -413,7 +413,7 @@ function Aboutus() {
                     : {}
                 }
               >
-                02
+                03
               </motion.span>
               <motion.div
                 className="h-px w-16 bg-secondary/12 dark:bg-white/12"

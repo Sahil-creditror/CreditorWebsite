@@ -21,7 +21,7 @@ function Testimonial() {
     }, []);
 
     return (
-        <section className="bg-lightgray dark:bg-secondary py-20 md:py-40">
+        <section className="bg-lightgray dark:bg-secondary py-20 md:py-20">
             <div className="flex flex-col gap-24">
                 <div className="container">
                     <div className="flex flex-col gap-14 xl:gap-24">

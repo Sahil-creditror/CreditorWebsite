@@ -6,7 +6,7 @@ import Image from "next/image";
 
 function Courses() {
   return (
-    <section className="bg-lightgray dark:bg-darkblack py-20 md:py-40">
+    <section className="bg-grey dark:bg-darkblack py-20 md:py-20">
       <div className="flex flex-col gap-24">
         <div className="container">
           <div className="flex flex-col gap-24">
@@ -18,7 +18,7 @@ function Courses() {
                   04
                 </span> */}
                 <div className="h-px w-16 bg-black/12 dark:bg-white/12" />
-                <p className="section-bedge py-1.5 px-4 rounded-full">Paid Courses</p>
+                <p className="section-bedge py-1.5 px-4 rounded-full">Courses</p>
               </div>
 
               {/* Title + Tagline */}

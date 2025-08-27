@@ -8,9 +8,18 @@ const ProjectList = () => {
         ScopeOfWork: string[];
         industry?: string;
         coverImage: string;
+        description?: string;
     };
 
-    const projects: Project[] = getAllProjects(["title", "slug", "ScopeOfWork", "industry", "coverImage"]);
+    const items = getAllProjects(["title", "slug", "ScopeOfWork", "industry", "coverImage", "description"]);
+    const projects: Project[] = items.map((item: any) => ({
+        title: item.title,
+        slug: item.slug,
+        ScopeOfWork: item.ScopeOfWork,
+        industry: item.industry,
+        coverImage: item.coverImage,
+        description: item.description,
+    }));
 
 
     return (

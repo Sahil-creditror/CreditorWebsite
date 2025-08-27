@@ -475,7 +475,7 @@ function Aboutus() {
               </motion.h2>
 
               <motion.p
-                className="2xl:max-w-sm text-secondary/70 dark:text-white/70 text-justify"
+                className="2xl:max-w-sm text-black dark:text-white/70 text-justify"
                 variants={{
                   hidden: { y: 30, opacity: 0 },
                   visible: {
@@ -732,7 +732,7 @@ function Aboutus() {
                 >
                   35+
                 </motion.h2>
-                <motion.p className="text-gray-600 mt-2">
+                <motion.p className="text-black-600 mt-2">
                   Exclusive credit & legal courses
                 </motion.p>
               </motion.div>
@@ -769,7 +769,7 @@ function Aboutus() {
                 </motion.div>
 
                 <motion.p
-                  className="text-gray-600"
+                  className="text-black-600"
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{
                     opacity: 1,

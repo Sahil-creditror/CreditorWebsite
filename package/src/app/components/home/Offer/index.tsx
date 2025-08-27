@@ -159,7 +159,7 @@ export default function MasterclassBenefits() {
             {/* Subtitle */}
             <motion.p
               variants={headerVariants}
-              className="max-w-2xl text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-light"
+              className="max-w-2xl text-sm sm:text-base md:text-lg text-black-600 dark:text-slate-300 leading-relaxed font-light"
             >
               {subtitle}
             </motion.p>
@@ -247,7 +247,7 @@ export default function MasterclassBenefits() {
               <h3 className="font-semibold text-lg sm:text-xl text-slate-800 dark:text-white group-hover:text-blue-600 transition-colors duration-300">
                 {item.title}
               </h3>
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-white transition-colors duration-300 leading-relaxed">
+              <p className="text-sm sm:text-base text-black-600 dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-white transition-colors duration-300 leading-relaxed">
                 {item.description}
               </p>
 

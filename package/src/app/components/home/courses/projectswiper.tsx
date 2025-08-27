@@ -9,7 +9,7 @@ type Project = {
   ScopeOfWork: string[];
   industry?: string;
   coverImage: string;
-  description?: string;
+  description?: string | string[]; // ✅ allow both
 };
 
 const ProjectGrid = () => {
@@ -22,73 +22,77 @@ const ProjectGrid = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {projects.map((value, index) => (
-        <div key={index} className="relative group flex flex-col gap-3 lg:gap-5">
-          <div className="relative">
-            <div className="w-auto h-80">
-              <Image
-                src={value.coverImage}
-                alt={value.title}
-                width={530}
-                height={350}
-                style={{
-                  width: "100%",
-                  maxWidth: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              />
-            </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {projects.slice(0, 6).map((project, index) => (
+        <div
+          key={index}
+          className="group relative rounded-2xl overflow-hidden shadow-lg bg-white dark:bg-gray-900 hover:shadow-2xl transition-all duration-300 flex flex-col"
+        >
+          {/* Image with hover zoom */}
+          <div className="relative w-full h-64 overflow-hidden">
+            <Image
+              src={project.coverImage}
+              alt={project.title}
+              fill
+              className="object-cover group-hover:scale-110 transition-transform duration-500"
+            />
             <Link
-              href={`/projects/${value.slug}`}
-              className="absolute top-0 left-0 backdrop-blur-xs bg-black/70 w-full h-full hidden group-hover:flex"
+              href={`/projects/${project.slug}`}
+              className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition"
             >
-              <span className="flex justify-center items-center p-5 w-full">
-                <svg
-                  width="65"
+              <svg
+                width="60"
+                height="60"
+                viewBox="0 0 65 64"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="0.333374"
+                  width="64"
                   height="64"
-                  viewBox="0 0 65 64"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    x="0.333374"
-                    width="64"
-                    height="64"
-                    rx="32"
-                    fill="#026fe2"
-                  />
-                  <path
-                    d="M25.6667 25.3333H39M39 25.3333V38.6666M39 25.3333L25.6667 38.6666"
-                    stroke="#1F2A2E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
+                  rx="32"
+                  fill="#026fe2"
+                />
+                <path
+                  d="M25.6667 25.3333H39M39 25.3333V38.6666M39 25.3333L25.6667 38.6666"
+                  stroke="#1F2A2E"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </Link>
           </div>
 
-          <div className="flex flex-col gap-2 lg:gap-4">
-            <h3>{value.title}</h3>
+          {/* Content */}
+          <div className="p-5 flex flex-col gap-3">
+            <h3 className="text-xl font-semibold dark:text-white group-hover:text-primary transition">
+              {project.title}
+            </h3>
 
-            {value.description && (
-              <p
-                className="text-sm text-gray-600 dark:text-gray-300"
-                dangerouslySetInnerHTML={{ __html: value.description }}
-              />
+            {project.description && (
+              Array.isArray(project.description) ? (
+                <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                  {project.description.map((point, idx) => (
+                    <li key={idx}>{point}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
+                  {project.description}
+                </p>
+              )
             )}
 
-            <div className="flex gap-3 flex-wrap">
-              {value.ScopeOfWork.map((tag, idx) => (
-                <p
+            <div className="flex gap-2 flex-wrap mt-2">
+              {project.ScopeOfWork.slice(0, 3).map((tag, idx) => (
+                <span
                   key={idx}
-                  className="text-base dark:text-white dark:hover:text-secondary hover:bg-primary border border-secondary/12 dark:border-white/12 w-fit rounded-full py-1 px-3"
+                  className="text-xs bg-primary/10 dark:bg-white/10 dark:text-white px-3 py-1 rounded-full"
                 >
                   {tag}
-                </p>
+                </span>
               ))}
             </div>
           </div>

@@ -15,35 +15,27 @@ export function getProjectsBySlug(slug: string, fields: string[] = []) {
   const { data, content } = matter(fileContents);
 
   type Items = {
-    // [key: string]: string;
-    [key: string]: string | object;
+    [key: string]: string | string[] | object | null;
   };
 
-  const items: any = {};
+  const items: Items = {};
 
   function processImages(content: string) {
-    // You can modify this function to handle image processing
-    // For example, replace image paths with actual HTML image tags
     return content.replace(/!\[.*?\]\((.*?)\)/g, '<img src="$1" alt="" />');
   }
 
-  // Ensure only the minimal needed data is exposed
   fields.forEach((field) => {
     if (field === "slug") {
       items[field] = realSlug;
     }
     if (field === "content") {
-      // You can modify the content here to include images
       items[field] = processImages(content);
     }
-
     if (field === "metadata") {
-      // Include metadata, including the image information
       items[field] = { ...data, coverImage: data.coverImage || null };
     }
-
     if (typeof data[field] !== "undefined") {
-      items[field] = data[field];
+      items[field] = data[field]; // ✅ arrays will stay arrays
     }
   });
 
@@ -52,8 +44,5 @@ export function getProjectsBySlug(slug: string, fields: string[] = []) {
 
 export function getAllProjects(fields: string[] = []) {
   const slugs = getPostSlugs();
-  const posts = slugs
-    .map((slug) => getProjectsBySlug(slug, fields))
-
-  return posts;
+  return slugs.map((slug) => getProjectsBySlug(slug, fields));
 }

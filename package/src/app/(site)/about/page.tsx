@@ -18,7 +18,7 @@ export default function Page() {
     return (
         <main>
             <Herobanner
-                bannerimage="/images/about-us/banner/aboutus-banner.png"
+                bannerimage="/images/about-us/banner/aboutus-banner1.png"
                 heading="About us"
                 desc="We create <span>transformative credit education</span> that drives real financial freedom." 
             />

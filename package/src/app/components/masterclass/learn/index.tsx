@@ -281,7 +281,12 @@ export default function MasterclassRedesignPage() {
       </section>
 
       {/* ENROLL (form removed as requested) */}
-      <section id="enroll" className={`${container} ${sectionSpacing} bg-white dark:bg-[#151922]`}>
+      <section
+        id="enroll"
+        className={`${container} ${sectionSpacing} 
+          bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 
+          dark:from-[#0a0f1a] dark:via-[#101828] dark:to-[#1a2235]`}
+      >
         <div className="rounded-3xl overflow-hidden bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-950 border border-slate-200 dark:border-slate-700 shadow-lg">
             <div className="grid lg:grid-cols-2">
                 {/* Left Content */}
@@ -326,33 +331,33 @@ export default function MasterclassRedesignPage() {
 
                 {/* Right CTA */}
                 <div
-                    className="p-10 flex items-center justify-center"
-                    style={{
+                  className="p-10 flex items-center justify-center relative"
+                  style={{
                     backgroundImage: "url('/images/home/services/master.jpg')",
-                    }}
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
                 >
-                    <div className="w-full max-w-sm p-8 rounded-2xl border border-slate-200 dark:border-slate-700 text-center shadow-lg bg-cover bg-center bg-no-repeat relative transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
-                    {/* Optional overlay for better text visibility */}
-                    <div className="absolute inset-0 bg-white/30 dark:bg-black/60 rounded-2xl"></div>
+                  {/* Dark overlay covering the background */}
+                  <div className="absolute inset-0 bg-black/50"></div>
 
-                    {/* Content */}
-                    <div className="relative z-10">
-                        <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-                        Reserve your spot
-                        </h4>
-                        <p className="text-slate-700 dark:text-slate-300 mt-2 mb-6 text-lg leading-relaxed">
-                        No form here — click to go to the secure checkout / scheduled page.
-                        </p>
-                        <a
-                        href="#"
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#60A5FA] to-[#1E3A8A] text-white font-semibold transition-transform duration-300 hover:scale-105 hover:shadow-lg"
-                        >
-                        Reserve My Spot <FaArrowRight />
-                        </a>
-                    </div>
-                    </div>
+                  {/* Card content */}
+                  <div className="relative w-full max-w-sm p-8 rounded-2xl border border-slate-200 dark:border-slate-700 text-center shadow-lg bg-white/30 dark:bg-black/40 backdrop-blur-md transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
+                    <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+                      Reserve your spot
+                    </h4>
+                    <p className="text-slate-700 dark:text-slate-300 mt-2 mb-6 text-lg leading-relaxed">
+                      No form here — click to go to the secure checkout / scheduled page.
+                    </p>
+                    <a
+                      href="#"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#60A5FA] to-[#1E3A8A] text-white font-semibold transition-transform duration-300 hover:scale-105 hover:shadow-lg"
+                    >
+                      Reserve My Spot <FaArrowRight />
+                    </a>
+                  </div>
                 </div>
-                </div>
+            </div>
         </div>
       </section>
       {/* NOTE: footer/copyright removed as requested */}

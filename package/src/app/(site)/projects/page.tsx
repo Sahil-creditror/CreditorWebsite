@@ -6,6 +6,8 @@ import Courses from "@/app/components/home/courses";
 import Intro from "@/app/components/masterclass/intro";
 import Learn from "@/app/components/masterclass/learn";
 import Get from "@/app/components/masterclass/getwithmaster";
+import About from "@/app/components/masterclass/about";
+import Appoint from "@/app/components/masterclass/appointment";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -23,9 +25,11 @@ export default function Page() {
                 desc="Learn how to <span>set up your Trust</span>, your Private Identity, and Business Credit step-by-step." />
             <Intro />
             <Learn />
-            <Get />
+            <Appoint />
+            {/* <Get />
             <Roadmap />
-            <Courses />
+            <Courses /> */}
+            <About />
             {/* <ProjectList />*/}
         </main>
     );

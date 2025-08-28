@@ -15,7 +15,7 @@ const Herobanner = ({
   const splitDesc = desc.split(/<\/?span>/);
 
   return (
-    <section className="relative flex items-end text-white bg-black h-[80vh] sm:h-screen max-h-[650px]">
+    <section className="relative flex items-end text-white bg-black h-[100vh] bg-fixed sm:h-screen max-h-[650px]">
       {/* Background image */}
       <Image
         className="absolute inset-0 w-full h-full object-cover"

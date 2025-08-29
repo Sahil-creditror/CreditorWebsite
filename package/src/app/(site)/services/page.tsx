@@ -1,18 +1,18 @@
-import Contact from "@/app/components/home/contact";
+import Services from "@/app/components/home/pricing";
 import Herobanner from "@/app/components/shared/hero-banner";
 import { Metadata } from "next";
 export const metadata: Metadata = {
-    title: "Contact | Creditor",
+    title: "Services | Creditor",
 };
 
 export default function Page() {
     return (
         <main>
             <Herobanner
-                bannerimage="/images/contact/banner/you.webp"
-                heading="Contact"
+                bannerimage="/images/services/service-banner.webp"
+                heading="Services"
                 desc="Ready to <span>start something</span> great? Reach out  we’d love to hear from you." />
-            <Contact contactdataNumber="01"/>
+            <Services />
         </main>
     );
 };

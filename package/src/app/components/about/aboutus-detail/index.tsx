@@ -227,7 +227,7 @@ const MovingBorder = ({
   ry?: string;
   [key: string]: any;
 }) => {
-  const pathRef = useRef<SVGPathElement | null>(null);
+  const pathRef = useRef<SVGRectElement | null>(null);
 
   const progress = useMotionValue<number>(0);
 
@@ -527,14 +527,20 @@ const AboutusDetail = () => {
                       <div
                         className={`w-full h-40 rounded-xl mb-4 ${card.fallbackColor} flex items-center justify-center overflow-hidden`}
                       >
-                        <motion.img
+                        <motion.div
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.5 }}
-                          src={card.image}
-                          alt={card.title}
-                          className="w-full h-full object-cover"
-                        />
+                          className="w-full h-full"
+                        >
+                          <Image
+                            src={card.image}
+                            alt={card.title}
+                            width={500}
+                            height={500}
+                            className="w-full h-full object-cover"
+                          />
+                        </motion.div>
                       </div>
 
                       <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-center">

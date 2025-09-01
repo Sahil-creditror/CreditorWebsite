@@ -6,10 +6,11 @@ import Link from "next/link";
 type Project = {
   title: string;
   slug: string;
+  tagline?: string;
   ScopeOfWork: string[];
   industry?: string;
   coverImage: string;
-  description?: string | string[]; // ✅ allow both
+  description?: string | string[];
 };
 
 const ProjectGrid = () => {
@@ -66,35 +67,86 @@ const ProjectGrid = () => {
           </div>
 
           {/* Content */}
-          <div className="p-5 flex flex-col gap-3">
+          <div className="p-5 flex flex-col gap-4">
             <h3 className="text-xl font-semibold dark:text-white group-hover:text-primary transition">
               {project.title}
             </h3>
 
-            {project.description && (
-              Array.isArray(project.description) ? (
-                <ul className="list-disc list-inside text-sm text-black-600 dark:text-black-300 space-y-1">
-                  {project.description.map((point, idx) => (
-                    <li key={idx}>{point}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-sm text-black-600 dark:text-gray-300 line-clamp-3">
-                  {project.description}
-                </p>
-              )
+            {/* ✅ Tagline under title (italic + bold + blue) */}
+            {project.tagline && (
+              <p className="text-base font-bold italic text-blue-600">
+                {project.tagline}
+              </p>
             )}
 
-            <div className="flex gap-2 flex-wrap mt-2">
-              {project.ScopeOfWork.slice(0, 3).map((tag, idx) => (
-                <span
-                  key={idx}
-                  className="text-xs bg-primary/10 dark:bg-white/10 dark:text-white px-3 py-1 rounded-full"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+            {/* Description */}
+            {project.description && (
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2 flex items-center gap-2">
+                  {/* 🎓 Graduation Cap SVG */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5 text-primary"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 14l9-5-9-5-9 5 9 5zm0 0v7m0-7L3 9m9 5l9-5"
+                    />
+                  </svg>
+                  What you will learn
+                </h4>
+                {Array.isArray(project.description) ? (
+                  <ul className="list-disc list-inside text-base text-gray-700 dark:text-gray-300 space-y-2">
+                    {project.description.map((point, idx) => (
+                      <li key={idx}>{point}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-base text-gray-700 dark:text-gray-300">
+                    {project.description}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* Scope of Work */}
+            {project.ScopeOfWork.length > 0 && (
+              <div className="mt-3">
+                <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2 flex items-center gap-2">
+                  {/* 📊 Chart Bar SVG */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5 text-primary"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 17v-6h2v6H9zm-4 0v-2h2v2H5zm8 0v-10h2v10h-2zm4 0v-14h2v14h-2z"
+                    />
+                  </svg>
+                  Business Model
+                </h4>
+                <div className="flex gap-2 flex-wrap">
+                  {project.ScopeOfWork.slice(0, 3).map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="text-sm bg-primary/10 dark:bg-white/10 dark:text-white px-3 py-1 rounded-full"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       ))}

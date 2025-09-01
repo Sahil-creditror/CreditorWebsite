@@ -227,21 +227,24 @@ const pricingData = {
 const pricingData2 = {
     data: [
         {
-            // planName: "Laurich",
-            tag:"Website Launch",
-            planPrice: "Website Service",
+            planName: "Starter Plan",
+            tag:"Basic",
+            planPrice: "$100",
+            cancelPrice: "$500",
             planDescp: "Ideal for startups and small businesses taking their first steps online.",
             planIncludes: ["Competitive research & insights","Wireframing and prototyping","Basic tracking setup (Google Analytics, etc.)","Standard contact form integration"],
-            coverImage: "/images/pricing/Cover-1.png" // Optional
+            coverImage: "/images/pricing/Cover-1.png", // Optional,
+            // payLink: ""
         },
         {
-            // planName: "Scale",
-            tag: "Paul Michael's",
-            planPrice: "Live Class",
-            // cancelPrice: "$2,199",
+            planName: "Cadillac Plan",
+            tag: "Advance",
+            planPrice: "$1000",
+            cancelPrice: "$2,199",
             planDescp: "Perfect for growing brands needing more customization and flexibility.",
             planIncludes: ["Everything in the Launch Plan","Custom design for up to 10 pages","Seamless social media integration","SEO enhancements for key pages"],
-            coverImage: "/images/pricing/Cover-2.jpg" // Optional
+            coverImage: "/images/pricing/Cover-2.jpg", // Optional
+            // payLink: ""
         },
     ],
 };

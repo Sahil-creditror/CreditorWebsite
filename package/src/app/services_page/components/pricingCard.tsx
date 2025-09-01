@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 function Pricing() {
   const [pricingData, setPricingData] = useState<any>(null);
@@ -11,18 +11,17 @@ function Pricing() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('/api/page-data')
-        if (!res.ok) throw new Error('Failed to fetch')
-        const data = await res.json()
-        setPricingData(data?.pricingData2)
+        const res = await fetch('/api/page-data');
+        if (!res.ok) throw new Error('Failed to fetch');
+        const data = await res.json();
+        setPricingData(data?.pricingData2);
       } catch (error) {
-        console.error('Error fetching services:', error)
+        console.error('Error fetching services:', error);
       }
-    }
-    fetchData()
-  }, [])
-  
-  // Default cover images for each plan if none provided
+    };
+    fetchData();
+  }, []);
+
   const defaultCoverImages = [
     "/images/pricing/Cover-1.jpg",
     "/images/pricing/Cover-2.jpg",
@@ -30,116 +29,198 @@ function Pricing() {
   ];
 
   return (
-    <section className="bg-lightgray dark:bg-secondary py-20 md:py-40">
-      <div className="flex flex-col gap-24">
-        <div className="container">
-          <div className="flex flex-col gap-20">
-            <div className="flex flex-col gap-14 xl:gap-24">
-              <div className="flex flex-col xl:flex xl:flex-row items-start gap-8">
-                <div className="flex items-center py-3 gap-4 md:gap-8 w-full max-w-xl">
-                  <span className="bg-primary dark:text-secondary py-1.5 px-2.5 text-base font-medium rounded-full">07</span>
-                  <div className="h-px w-16 bg-black/12 dark:bg-white/12" />
-                  <p className="section-bedge py-1.5 px-4 rounded-full">Services</p>
-                </div>
-                <div className="flex flex-col gap-11">
-                  <div className="flex flex-col gap-5 ">
-                    <h2 className="max-w-3xl">Affordable Services</h2>
-                    <p className="max-w-2xl text-secondary/70 dark:text-white/70">A glimpse into our creativity—exploring innovative designs, successful collaborations, and transformative digital experiences.</p>
+    <section className="relative overflow-hidden py-30 md:py-44">
+      {/* Animated Background */}
+      <div className="absolute inset-0 z-0">
+        <motion.div 
+          className="absolute inset-0 opacity-30"
+          animate={{
+            background: [
+              "linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a1c4fd)",
+              "linear-gradient(135deg, #a1c4fd, #c2e9fb, #c2e9fb, #ff9a9e)",
+              "linear-gradient(225deg, #ff9a9e, #fad0c4, #fad0c4, #a1c4fd)",
+              "linear-gradient(315deg, #a1c4fd, #c2e9fb, #c2e9fb, #ff9a9e)",
+              "linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a1c4fd)",
+            ]
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        <motion.div 
+          className="absolute inset-0 opacity-10"
+          animate={{
+            background: [
+              "radial-gradient(circle at 20% 80%, #a1c4fd 0%, transparent 50%)",
+              "radial-gradient(circle at 80% 20%, #a1c4fd 0%, transparent 50%)",
+              "radial-gradient(circle at 20% 20%, #ff9a9e 0%, transparent 50%)",
+              "radial-gradient(circle at 80% 80%, #ff9a9e 0%, transparent 50%)",
+              "radial-gradient(circle at 20% 80%, #a1c4fd 0%, transparent 50%)",
+            ]
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
+        {/* Expanded Box Ripple Effect - Covering the whole container */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full border-4 border-blue-300/30 rounded-lg"
+          animate={{
+            scale: [1, 1.2, 1.5],
+            opacity: [0.7, 0.4, 0],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeOut",
+            times: [0, 0.7, 1]
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full border-4 border-pink-300/30 rounded-lg"
+          animate={{
+            scale: [1, 1.2, 1.5],
+            opacity: [0.7, 0.4, 0],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeOut",
+            delay: 1.5,
+            times: [0, 0.7, 1]
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full border-4 border-purple-300/30 rounded-lg"
+          animate={{
+            scale: [1, 1.2, 1.5],
+            opacity: [0.7, 0.4, 0],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeOut",
+            delay: 3,
+            times: [0, 0.7, 1]
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full border-4 border-teal-300/30 rounded-lg"
+          animate={{
+            scale: [1, 1.2, 1.5],
+            opacity: [0.7, 0.4, 0],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeOut",
+            delay: 4.5,
+            times: [0, 0.7, 1]
+          }}
+        />
+      </div>
+      
+      <div className="max-w-6xl mx-auto px-4 flex flex-col gap-16 relative z-10">
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white leading-tight">
+            Affordable Plan for Everyone
+          </h2>
+          <p className="mt-4 text-lg md:text-xl text-gray-600 dark:text-gray-300">
+            Explore our creative solutions, optimized workflows, and transformative digital experiences that empower your business.
+          </p>
+        </div>
+
+        {/* Aligned Grid */}
+        <div className="grid gap-10 md:grid-cols-2 xl:grid-cols-2">
+          {pricingData?.data?.map((value: any, index: number) => {
+            const coverImage = value.coverImage || defaultCoverImages[index] || defaultCoverImages[0];
+
+            return (
+              <motion.div
+                key={index}
+                className="bg-white dark:bg-lightgray/10 rounded-3xl shadow-2xl overflow-hidden cursor-pointer group flex flex-col h-full"
+                whileHover={{ y: -10, scale: 1.03 }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+              >
+                {/* Cover Image */}
+                <div className="relative h-72 w-full overflow-hidden rounded-t-3xl flex-shrink-0">
+                  <Image
+                    src={coverImage}
+                    alt={`${value?.planName} cover`}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/50 via-transparent to-transparent p-4 flex flex-col gap-2">
+                    <span className="text-white text-sm uppercase font-medium">
+                      {value?.tag || "Plan"}
+                    </span>
+                    <h3 className="text-2xl md:text-3xl font-bold text-blue-500">{value?.planName}</h3>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                    <div className="flex items-center gap-2">
+                      {value.cancelPrice && <del className="text-white/70">{value.cancelPrice}</del>}
+                      <span className="text-2xl font-bold">{value.planPrice}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-7">
-                {pricingData?.data?.map((value:any, index:any) => {
-                  // Use provided cover image or default
-                  const coverImage = value.coverImage || defaultCoverImages[index] || defaultCoverImages[0];
-                  
-                  return (
-                    <div key={index} className="bg-white dark:bg-lightgray/10 overflow-hidden rounded-lg shadow-lg">
-                      {/* Cover Image Section */}
-                      <div className="relative h-64 w-full">
-                        <Image
-                          src={coverImage}
-                          alt={`${value?.planName} cover`}
-                          fill
-                          className="object-cover"
-                        />
-                        {/* Plan details overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70 flex flex-col justify-center items-center text-white p-6">
-                          <div className="flex items-center gap-4 mb-2">
-                            <p className="font-medium text-lg">{value?.planName}</p>
-                            {value?.tag &&
-                              <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm w-fit py-1 px-3 rounded-full">
-                                <Icon icon="fluent:fire-20-regular" width="20" height="20" style={{ color: "#fff" }} />
-                                <span className="text-white text-base">{value?.tag}</span>
-                              </div>
-                            }
+                {/* Card Content */}
+                <div className="p-6 sm:p-8 xl:p-10 flex flex-col gap-6 flex-1 justify-between">
+                  <div>
+                    <motion.p
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 }}
+                      className="text-lg font-medium"
+                    >
+                      What's Included:
+                    </motion.p>
+                    <ul className="flex flex-col gap-3 mt-3">
+                      {value?.planIncludes?.map((item: any, i: number) => (
+                        <motion.li
+                          key={i}
+                          initial={{ opacity: 0, x: -10 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.1 }}
+                          className="flex items-center gap-3"
+                        >
+                          <div className="bg-primary w-6 h-6 flex items-center justify-center rounded-full flex-shrink-0">
+                            <Image src="/images/Icon/right-check.svg" alt="check" width={16} height={16} />
                           </div>
-                          <div className="flex items-center gap-3 mb-4">
-                            {value.cancelPrice &&
-                              <h3 className="text-white/70"><del>{value.cancelPrice}</del></h3>
-                            }
-                            <h3 className="text-white">{value.planPrice}</h3>
-                            <span className="text-base text-white/70"></span>
-                          </div>
-                          <p className="text-center text-white/90 text-m leading-relaxed max-w-md font-bold">
-                            {value.planDescp}
-                          </p>
-                        </div>
-                      </div>
-                      
-                      {/* Card Content */}
-                      <div className="p-3 sm:p-5 xl:p-12 flex flex-col gap-10">
-                        <div className="pt-10 border-t border-secondary/12 dark:border-white/12">
-                          <p className="text-base pb-5">What's Included:</p>
-                          <div>
-                            <ul className="flex flex-col gap-3">
-                              {value?.planIncludes?.map((item:any, itemIndex:any) => {
-                                return (
-                                  <li key={itemIndex} className="flex items-center gap-1.5 sm:gap-4">
-                                    <div className="bg-primary w-fit p-1 sm:p-1.5 rounded-full flex-shrink-0">
-                                      <Image src={"/images/Icon/right-check.svg"} alt="right-icon" width={20} height={20} />
-                                    </div>
-                                    <span className="flex-1">{item}</span>
-                                  </li>
-                                )
-                              })}
-                            </ul>
-                          </div>
-                        </div>
-                        
-                        <div>
-                          <Link href="/" className="group relative flex justify-center items-center w-full bg-primary hover:bg-secondary rounded-full transition-all duration-300 ease-in-out">
-                            <span className="py-4 px-2 text-lg font-bold text-secondary group-hover:text-white transition-all duration-300 ease-in-out">Subscribe now</span>
-                            <div className="absolute top-0.5 right-0.5 transition-all duration-300 ease-in-out group-hover:left-0">
-                              <svg className="flex items-center transition-transform duration-300 ease-in-out group-hover:rotate-45" width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g filter="url(#filter0_d_1_873)">
-                                  <rect x="3" y="2" width="52" height="52" rx="26" fill="white" />
-                                  <path d="M24 23H34M34 23V33M34 23L24 33" stroke="#1F2A2E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </g>
-                                <defs>
-                                  <filter id="filter0_d_1_873" x="0" y="0" width="58" height="58" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                                    <feOffset dy="1" />
-                                    <feGaussianBlur stdDeviation="1.5" />
-                                    <feComposite in2="hardAlpha" operator="out" />
-                                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0" />
-                                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_873" />
-                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_873" result="shape" />
-                                  </filter>
-                                </defs>
-                              </svg>
-                            </div>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-          </div>
+                          <span className="text-black-700 dark:text-gray-200">{item}</span>
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Subscribe Button */}
+                  <motion.div
+                    whileHover={{ y: -3, scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 200 }}
+                  >
+                    <a
+                      href={value?.paylink || "#"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 relative inline-flex justify-center items-center w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white font-bold py-4 rounded-full shadow-lg transition-all duration-300"
+                    >
+                      Subscribe Now
+                    </a>
+                  </motion.div>
+
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

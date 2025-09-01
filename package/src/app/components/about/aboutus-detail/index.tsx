@@ -1,7 +1,7 @@
 "use client";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useState, CSSProperties, ReactNode, useRef } from "react";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaArrowDown } from "react-icons/fa";
 import Image from "next/image";
 import {
   useAnimationFrame,
@@ -514,6 +514,13 @@ const AboutusDetail = () => {
                   {card.desc}
                 </motion.p>
 
+                {!showAllDescriptions && (
+                  <div className="mt-auto pt-4 flex items-center justify-center text-sm font-semibold text-primary">
+                    <span>Show More</span>
+                    <FaArrowDown className="ml-2" />
+                  </div>
+                )}
+
                 {/* Expanded content */}
                 <AnimatePresence>
                   {showAllDescriptions && ( // ✅ Conditional rendering based on showAllDescriptions
@@ -563,7 +570,8 @@ const AboutusDetail = () => {
           >
             <button
               onClick={() => setShowAllDescriptions(false)}
-              className="flex items-center gap-2 px-6 py-3 rounded-full text-white bg-gradient-to-r from-gray-500 to-gray-700 text-base font-medium hover:scale-105 transition-all duration-300"
+              className="flex items-center gap-2 px-6 py-3 rounded-full text-white bg-gradient-to-r from-blue-500 to-blue-700 text-base font-medium hover:scale-105 transition-all duration-300"
+
             >
               Show Less <FaArrowRight className="text-sm" />
             </button>

@@ -2,6 +2,7 @@
 
 import "swiper/css";
 import Projectswiper from "./projectswiper";
+import Premium from "./courses";
 import Image from "next/image";
 
 function Courses() {
@@ -37,7 +38,8 @@ function Courses() {
 
         {/* Swiper Section */}
         <div className="px-3.5">
-          <Projectswiper />
+          {/* <Projectswiper /> */}
+          <Premium />
         </div>
       </div>
     </section>

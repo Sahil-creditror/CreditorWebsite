@@ -68,7 +68,7 @@ const ProjectGrid = () => {
 
           {/* Content */}
           <div className="p-5 flex flex-col gap-4">
-            <h3 className="text-xl font-semibold dark:text-white group-hover:text-primary transition">
+            <h3 className="text-2xl font-semibold dark:text-white group-hover:text-primary transition">
               {project.title}
             </h3>
 
@@ -101,13 +101,13 @@ const ProjectGrid = () => {
                   What you will learn
                 </h4>
                 {Array.isArray(project.description) ? (
-                  <ul className="list-disc list-inside text-base text-gray-700 dark:text-gray-300 space-y-2">
+                  <ul className="list-disc list-inside text-base text-black dark:text-gray-200 space-y-2">
                     {project.description.map((point, idx) => (
                       <li key={idx}>{point}</li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-base text-gray-700 dark:text-gray-300">
+                  <p className="text-base text-black dark:text-gray-200">
                     {project.description}
                   </p>
                 )}

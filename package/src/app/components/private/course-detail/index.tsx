@@ -119,8 +119,8 @@ export default function CourseDetail() {
   };
 
   const features = [
-    { icon: '📜', text: 'Legal Status Correction' },
-    { icon: '⚖️', text: 'Sovereignty Framework' },
+    { icon: '💸', text: 'Improve personal Growth' },
+    { icon: '⚖️', text: 'Stack funding at 0% APR to launch and scale fast' },
     { icon: '🔐', text: 'Private Jurisdiction' },
     { icon: '🛡️', text: 'Asset Protection' }
   ];

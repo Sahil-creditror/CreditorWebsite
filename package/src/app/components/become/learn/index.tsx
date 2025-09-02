@@ -15,7 +15,7 @@ export default function WhatYouCanDo() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
-      className="mb-24 px-5 py-16 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden"
+      className="px-5 py-16 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden"
     >
       {/* Background decorative elements */}
       <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-blue-200/30 dark:bg-blue-900/20 blur-3xl"></div>

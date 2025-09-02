@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useSwipeable } from "react-swipeable";
 import { Parallax, ParallaxProvider } from "react-scroll-parallax";
@@ -21,7 +21,7 @@ const HeroSection = () => {
   const [direction, setDirection] = useState<Direction>("right");
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isInView, setIsInView] = useState<boolean>(true);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const videos: VideoSlide[] = [
@@ -32,11 +32,10 @@ const HeroSection = () => {
       description: "Protect What You Build. Pass On What Matters",
     },
     {
-      src: "/video/hero-2.mp4",
+      src: "/video/Banner.mp4",
       poster: "/images/hero/banner-2.png",
-      title: "Creditor Academy",
-      description:
-        '"When the people fear the government there is tyranny. When the government fears the people, there is liberty" - Thomas Jefferson',
+      title: "MASTERCLASS MEMBERSHIP",
+      description:"Reclaim Your Legal Identity and Exit the Public System",
     },
     {
       src: "/video/hero-3.mp4",
@@ -93,31 +92,34 @@ const HeroSection = () => {
     },
   };
 
-  // ✅ Navigation
-  const goToPrevious = (): void => {
+  // ✅ Navigation - using useCallback to prevent unnecessary recreations
+  const goToPrevious = useCallback((): void => {
     setDirection("left");
     setCurrentIndex((prev) => (prev === 0 ? videos.length - 1 : prev - 1));
-    resetInterval();
-  };
+  }, [videos.length]);
 
-  const goToNext = (): void => {
+  const goToNext = useCallback((): void => {
     setDirection("right");
     setCurrentIndex((prev) => (prev === videos.length - 1 ? 0 : prev + 1));
-    resetInterval();
-  };
+  }, [videos.length]);
 
   const goToSlide = (slideIndex: number): void => {
     setDirection(slideIndex > currentIndex ? "right" : "left");
     setCurrentIndex(slideIndex);
-    resetInterval();
   };
 
-  const resetInterval = (): void => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    if (!isHovered && isInView) {
-      intervalRef.current = setInterval(goToNext, 4000);
+  const scheduleNext = useCallback((): void => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
     }
-  };
+
+    if (!isHovered && isInView) {
+      timeoutRef.current = setTimeout(() => {
+        goToNext();
+      }, 4000);
+    }
+  }, [isHovered, isInView, goToNext]);
 
   // ✅ Swipe gestures
   const { ref: _swipeRef, ...swipeHandlers } = useSwipeable({
@@ -132,15 +134,6 @@ const HeroSection = () => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsInView(entry.isIntersecting);
-
-        if (entry.isIntersecting) {
-          resetInterval();
-        } else {
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-          }
-        }
       },
       { threshold: 0.5 }
     );
@@ -149,22 +142,24 @@ const HeroSection = () => {
 
     return () => {
       if (sectionRef.current) observer.unobserve(sectionRef.current);
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
     };
   }, []);
 
-  // ✅ Effect for auto-play
+  // ✅ Auto-advance every 4s when in view and not hovered
   useEffect(() => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-
-    if (!isHovered && isInView) {
-      intervalRef.current = setInterval(goToNext, 4000);
-    }
+    scheduleNext();
 
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
     };
-  }, [currentIndex, isHovered, isInView]);
+  }, [scheduleNext, currentIndex]);
 
   return (
     <ParallaxProvider>
@@ -173,11 +168,14 @@ const HeroSection = () => {
         className="relative flex items-end text-white bg-black min-h-screen overflow-hidden"
         onMouseEnter={() => {
           setIsHovered(true);
-          if (intervalRef.current) clearInterval(intervalRef.current);
+          if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+          }
         }}
         onMouseLeave={() => {
           setIsHovered(false);
-          resetInterval();
+          scheduleNext();
         }}
         {...swipeHandlers}
       >
@@ -212,7 +210,7 @@ const HeroSection = () => {
         </AnimatePresence>
 
         {/* Content */}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 text-left pb-10 sm:pb-20">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 text-left pb-0 sm:pb-20">
           <motion.div
             className="flex flex-col gap-4 sm:gap-6"
             initial="hidden"

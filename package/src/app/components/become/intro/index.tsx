@@ -144,7 +144,7 @@ export default function CourseOverviewSection() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative overflow-hidden rounded-2xl p-8 md:p-12 bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 shadow-xl border border-blue-100 dark:border-slate-700 mb-20 mt-20 mx-4 md:mx-8 lg:mx-16"
+        className="relative overflow-hidden rounded-2xl p-8 md:p-12 bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 shadow-xl border border-blue-100 dark:border-slate-700"
     >
 
       {/* Enhanced Ripple background */}

@@ -10,6 +10,9 @@ import About from "@/app/components/masterclass/about";
 import Appoint from "@/app/components/masterclass/appointment";
 import BecomeIntro from "@/app/components/become/cards";
 import Intro2 from "@/app/components/become/intro";
+import Learn2 from "@/app/components/become/learn";
+import CTA from "@/app/components/become/cta";
+import Content from "@/app/components/become/content";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -27,6 +30,9 @@ export default function Page() {
                 desc="Reclaim Your <span>Legal Identity</span> and Exit the Public System." />
             <BecomeIntro />
             <Intro2 />
+            <Content />
+            <Learn2 />
+            <CTA />
             {/* <Intro />
             <Learn />
             <Appoint />

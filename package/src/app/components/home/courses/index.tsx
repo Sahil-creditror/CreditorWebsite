@@ -16,7 +16,7 @@ function Courses() {
               {/* Left Badge */}
               <div className="flex items-center py-3 gap-4 md:gap-8 w-full max-w-xl">
                 <span className="bg-primary py-1.5 px-2.5 text-base font-medium rounded-full dark:text-secondary">
-                  05
+                  03
                 </span>
                 <div className="h-px w-16 bg-black/12 dark:bg-white/12" />
                 <p className="section-bedge py-1.5 px-4 rounded-full">Courses</p>

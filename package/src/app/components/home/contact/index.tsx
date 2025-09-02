@@ -127,7 +127,7 @@ export default function Contact(props: ContactProps) {
       whileInView="show"
       viewport={{ once: true, amount: 0.15 }}
       variants={container}
-      className="relative py-20 md:py-24 bg-gray-50 dark:bg-darkblack overflow-hidden"
+      className="relative py-20 md:py-24 bg-gradient-to-b from-slate-150 to-slate-200 dark:from-slate-900 dark:to-slate-800 overflow-hidden"
     >
       {/* ripple animation layer (purely decorative) */}
       <div ref={rippleRef} aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">

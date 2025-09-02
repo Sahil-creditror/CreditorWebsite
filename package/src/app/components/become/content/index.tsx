@@ -114,7 +114,7 @@ const SovSlider: React.FC = () => {
   const translatePercent = currentIndex * (100 / visibleCards);
 
   return (
-    <div className="w-full py-10 px-4 bg-[#f7f9fc] font-sans">
+    <div className="w-full py-10 px-4 bg-whitesmoke dark:bg-slate-900 font-sans">
       {/* Fade-in Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -123,12 +123,12 @@ const SovSlider: React.FC = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="flex items-center justify-center gap-3 mb-2">
-          <div className="text-center text-3xl md:text-5xl font-extrabold text-[#0b3d78]">
+          <div className="text-center text-3xl md:text-5xl font-extrabold text-[#0b3d78] dark:text-white">
             What You'll Learn
           </div>
         </div>
 
-        <div className="text-center text-sm text-gray-600 mb-10">
+        <div className="text-center text-sm text-gray-600 dark:text-gray-300 mb-10">
           Master these essential concepts to take control of your legal standing
         </div>
       </motion.div>
@@ -162,7 +162,7 @@ const SovSlider: React.FC = () => {
                 className="p-2 box-border"
                 style={{ flex: `0 0 ${100 / visibleCards}%` }}
               >
-                <div className="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col relative">
+                <div className="bg-white dark:bg-slate-950 rounded-xl shadow-lg overflow-hidden h-full flex flex-col relative">
                   <div className="h-44 overflow-hidden">
                     <img
                       src={card.img}
@@ -182,10 +182,10 @@ const SovSlider: React.FC = () => {
                   </div>
 
                   <div className="px-4 pt-10 pb-6 text-center mt-6 flex-1">
-                    <div className="text-lg font-semibold text-gray-800 mb-2">
+                    <div className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
                       {card.title}
                     </div>
-                    <div className="text-sm text-gray-600 leading-relaxed">
+                    <div className="text-sm text-gray-600 dark:text-white-300 leading-relaxed">
                       {card.desc}
                     </div>
                   </div>

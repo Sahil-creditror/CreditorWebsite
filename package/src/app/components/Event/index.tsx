@@ -15,7 +15,7 @@ interface TimeLeft {
   seconds: number;
 }
 
-export default function EventPromoSectionEnhanced(): JSX.Element {
+export default function EventPromoSectionEnhanced(): React.ReactElement {
   const cardRef = useRef<HTMLDivElement | null>(null);
   const speakerCardRef = useRef<HTMLDivElement | null>(null);
   const primaryCtaRef = useRef<HTMLButtonElement | null>(null);
@@ -51,7 +51,7 @@ export default function EventPromoSectionEnhanced(): JSX.Element {
 
   // Entrance reveal (IntersectionObserver)
   useEffect(() => {
-    const reveals = (cardRef.current?.querySelectorAll('.reveal') as NodeListOf<HTMLElement>) ?? ([] as NodeListOf<HTMLElement>);
+    const reveals = cardRef.current?.querySelectorAll('.reveal');
     if (!reveals || reveals.length === 0) return;
     const io = new IntersectionObserver((entries) => {
       entries.forEach((en) => {

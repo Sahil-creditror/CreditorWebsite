@@ -84,23 +84,23 @@ export default function ComparisonTable({
   const renderCell = (value: string | boolean | undefined, highlight = false) => {
     if (typeof value === "boolean") {
       return value ? (
-        <div className="flex items-center gap-2 text-base font-medium text-green-600 dark:text-green-400">
+        <div className="flex items-center gap-2 text-sm sm:text-base font-medium text-green-600 dark:text-green-400">
           <CheckIcon className="w-5 h-5" />
           <span>Included</span>
         </div>
       ) : (
-        <div className="flex items-center gap-2 text-base font-medium text-red-500 dark:text-red-400">
+        <div className="flex items-center gap-2 text-sm sm:text-base font-medium text-red-500 dark:text-red-400">
           <CrossIcon className="w-5 h-5" />
           <span>Not included</span>
         </div>
       );
     }
 
-    if (!value) return <span className="text-base text-gray-500 dark:text-gray-400">—</span>;
+    if (!value) return <span className="text-sm sm:text-base text-gray-500 dark:text-gray-400">—</span>;
 
     if (/https?/i.test(value) || /monthly/i.test(value)) {
       return (
-        <div className="flex items-center gap-2 text-base font-medium text-green-600 dark:text-green-400">
+        <div className="flex items-center gap-2 text-sm sm:text-base font-medium text-green-600 dark:text-green-400">
           <CheckIcon className="w-5 h-5" />
           <span>{value}</span>
         </div>
@@ -109,7 +109,7 @@ export default function ComparisonTable({
 
     return (
       <span
-        className={`text-base ${
+        className={`text-sm sm:text-base ${
           highlight ? "font-semibold text-indigo-700 dark:text-indigo-300" : "text-gray-700 dark:text-gray-200"
         }`}
       >
@@ -120,54 +120,57 @@ export default function ComparisonTable({
 
   return (
     <section className={`w-full ${className}`} aria-label="Plan comparison table">
-      <div className="max-w-7xl mx-auto p-6">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-5xl font-extrabold py-20 text-gray-900 dark:text-gray-100">
-              Starter vs Cadillac — at a glance
-              <p className="mt-4 text-lg md:text-xl text-black dark:text-gray-300">
-                Clear, responsive comparison so you can decide fast.
+      <div className="max-w-7xl mx-auto p-4 sm:p-6">
+        {/* Title */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+          <h2 className="text-3xl sm:text-5xl font-extrabold py-6 sm:py-20 text-gray-900 dark:text-gray-100">
+            Starter vs Cadillac — at a glance
+            <p className="mt-3 text-base sm:text-xl text-black dark:text-gray-300">
+              Clear, responsive comparison so you can decide fast.
             </p>
-            </h2>
-          </div>
-          <div className="hidden sm:flex items-center gap-3">
-            <span className="text-lg px-2 py-1 rounded bg-green-50 text-green-700 border border-green-100 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800">
+          </h2>
+
+          {/* Legend */}
+          <div className="flex items-center gap-3 mt-4 sm:mt-0">
+            <span className="text-sm sm:text-lg px-2 py-1 rounded bg-green-50 text-green-700 border border-green-100 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800">
               Included
             </span>
-            <span className="text-lg px-2 py-1 rounded bg-red-50 text-red-700 border border-red-100 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800">
+            <span className="text-sm sm:text-lg px-2 py-1 rounded bg-red-50 text-red-700 border border-red-100 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800">
               Not included
             </span>
           </div>
         </div>
 
+        {/* Table */}
         <div className="overflow-x-auto">
-          <div className="min-w-[720px] rounded-xl shadow-lg ring-1 ring-black/5 bg-gradient-to-b from-white to-indigo-50 dark:from-gray-900 dark:to-gray-800 p-1">
+          <div className="w-full rounded-xl shadow-lg ring-1 ring-black/5 bg-gradient-to-b from-white to-indigo-50 dark:from-gray-900 dark:to-gray-800">
             {/* Header */}
-            <div className="grid grid-cols-3 gap-2 items-stretch p-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-stretch p-4">
+              {/* Features Col */}
               <div className="flex items-center">
-                <div className="text-lg font-medium text-gray-600 dark:text-gray-300">Features</div>
+                <div className="text-base sm:text-lg font-medium text-gray-600 dark:text-gray-300">Features</div>
               </div>
 
-              <div className="group transition-transform duration-300 transform hover:-translate-y-1 hover:shadow-lg rounded-lg bg-white dark:bg-gray-800 p-4 flex flex-col justify-between">
+              {/* Starter Card */}
+              <div className="rounded-lg bg-white dark:bg-gray-800 p-4 flex flex-col justify-between border hover:shadow-lg transition">
                 <div>
-                  <div className="text-lg uppercase tracking-wide font-semibold text-indigo-600 dark:text-indigo-400">
+                  <div className="text-sm sm:text-lg uppercase tracking-wide font-semibold text-indigo-600 dark:text-indigo-400">
                     Starter
                   </div>
                   <div className="mt-2 flex items-baseline gap-2">
-                    <span className="text-2xl font-extrabold text-gray-900 dark:text-gray-100">$100</span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">Starter Plan</span>
+                    <span className="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-gray-100">$100</span>
+                    <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Starter Plan</span>
                   </div>
-                  <p className="mt-3 text-base text-gray-600 dark:text-gray-300">
+                  <p className="mt-3 text-sm sm:text-base text-gray-600 dark:text-gray-300">
                     Fast & lean website — ideal for smaller projects and quick launches.
                   </p>
                 </div>
-
-                <div className="mt-4 flex gap-2">
+                <div className="mt-4 flex flex-col sm:flex-row gap-2">
                   <a
                     href={starterPrototypeLink ?? "#"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`inline-flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium border ${
+                    className={`w-full text-center px-3 py-2 rounded-md text-sm font-medium border ${
                       starterPrototypeLink
                         ? "bg-indigo-600 text-white hover:bg-indigo-700"
                         : "bg-white dark:bg-gray-700 text-gray-500 border-gray-200 dark:border-gray-600 cursor-not-allowed opacity-60"
@@ -176,33 +179,32 @@ export default function ComparisonTable({
                   >
                     View Prototype
                   </a>
-
-                  <button className="inline-flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-600">
+                  <button className="w-full px-3 py-2 rounded-md text-sm font-medium bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-600">
                     Choose
                   </button>
                 </div>
               </div>
 
-              <div className="group transition-transform duration-300 transform hover:-translate-y-1 hover:shadow-xl rounded-lg bg-gradient-to-b from-white to-indigo-100 dark:from-gray-800 dark:to-gray-700 p-4 flex flex-col justify-between border border-indigo-100 dark:border-indigo-800">
+              {/* Cadillac Card */}
+              <div className="rounded-lg bg-gradient-to-b from-white to-indigo-100 dark:from-gray-800 dark:to-gray-700 p-4 flex flex-col justify-between border border-indigo-100 dark:border-indigo-800 hover:shadow-xl transition">
                 <div>
-                  <div className="text-lg uppercase tracking-wide font-semibold text-indigo-800 dark:text-indigo-300">
+                  <div className="text-sm sm:text-lg uppercase tracking-wide font-semibold text-indigo-800 dark:text-indigo-300">
                     Cadillac
                   </div>
                   <div className="mt-2 flex items-baseline gap-2">
-                    <span className="text-2xl font-extrabold text-gray-900 dark:text-gray-100">$1,000</span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">Cadillac Plan</span>
+                    <span className="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-gray-100">$1,000</span>
+                    <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Cadillac Plan</span>
                   </div>
-                  <p className="mt-3 text-base text-gray-700 dark:text-gray-300">
+                  <p className="mt-3 text-sm sm:text-base text-gray-700 dark:text-gray-300">
                     Full custom solution — premium design, integrations and enterprise-ready structure.
                   </p>
                 </div>
-
-                <div className="mt-4 flex gap-2">
+                <div className="mt-4 flex flex-col sm:flex-row gap-2">
                   <a
                     href={cadillacPrototypeLink ?? "#"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`inline-flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium border ${
+                    className={`w-full text-center px-3 py-2 rounded-md text-sm font-medium border ${
                       cadillacPrototypeLink
                         ? "bg-indigo-700 text-white hover:bg-indigo-800"
                         : "bg-white dark:bg-gray-700 text-gray-500 border-gray-200 dark:border-gray-600 cursor-not-allowed opacity-60"
@@ -211,8 +213,7 @@ export default function ComparisonTable({
                   >
                     View Prototype
                   </a>
-
-                  <button className="inline-flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium bg-indigo-600 text-white">
+                  <button className="w-full px-3 py-2 rounded-md text-sm font-medium bg-indigo-600 text-white">
                     Choose
                   </button>
                 </div>
@@ -229,62 +230,54 @@ export default function ComparisonTable({
                 return (
                   <div
                     key={f.key}
-                    className={`grid grid-cols-3 gap-4 items-center px-4 py-4 sm:px-6 ${
+                    className={`grid grid-cols-1 sm:grid-cols-3 gap-4 items-center px-4 py-4 sm:px-6 ${
                       idx % 2 === 0 ? "bg-white dark:bg-gray-900" : "bg-gray-50 dark:bg-gray-800"
                     }`}
                   >
                     <div>
-                      <div className="text-lg font-semibold text-gray-900 dark:text-gray-100">{f.label}</div>
-                      {f.note ? <div className="text-base text-gray-600 dark:text-gray-300 mt-1">{f.note}</div> : null}
+                      <div className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100">{f.label}</div>
+                      {f.note ? <div className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mt-1">{f.note}</div> : null}
                     </div>
 
-                    <div className="flex items-center">
-                      <div className="w-full">{renderCell(starterVal)}</div>
-                    </div>
+                    <div>{renderCell(starterVal)}</div>
 
                     <div
-                      className={`flex items-center ${
-                        cadillacBetter ? "bg-indigo-50 dark:bg-indigo-900/30 rounded py-2 px-3" : ""
-                      }`}
+                      className={`${cadillacBetter ? "bg-indigo-50 dark:bg-indigo-900/30 rounded py-2 px-3" : ""}`}
                     >
-                      <div className="w-full">{renderCell(cadillacVal, cadillacBetter)}</div>
+                      {renderCell(cadillacVal, cadillacBetter)}
                     </div>
                   </div>
                 );
               })}
 
               {/* Footer CTA */}
-              <div className="grid grid-cols-3 gap-4 items-center px-4 py-6 sm:px-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center px-4 py-6 sm:px-6">
                 <div />
-                <div className="flex gap-2">
-                  <a
-                    href={starterPrototypeLink ?? "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`w-full text-center px-4 py-2 rounded-md text-sm font-semibold ${
-                      starterPrototypeLink
-                        ? "bg-indigo-600 text-white"
-                        : "bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-600 cursor-not-allowed opacity-60"
-                    }`}
-                  >
-                    {starterPrototypeLink ? "Open Starter Prototype" : "Attach Starter Link"}
-                  </a>
-                </div>
+                <a
+                  href={starterPrototypeLink ?? "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-full text-center px-4 py-2 rounded-md text-sm font-semibold ${
+                    starterPrototypeLink
+                      ? "bg-indigo-600 text-white"
+                      : "bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-600 cursor-not-allowed opacity-60"
+                  }`}
+                >
+                  {starterPrototypeLink ? "Open Starter Prototype" : "Attach Starter Link"}
+                </a>
 
-                <div className="flex gap-2">
-                  <a
-                    href={cadillacPrototypeLink ?? "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`w-full text-center px-4 py-2 rounded-md text-sm font-semibold ${
-                      cadillacPrototypeLink
-                        ? "bg-indigo-700 text-white"
-                        : "bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-600 cursor-not-allowed opacity-60"
-                    }`}
-                  >
-                    {cadillacPrototypeLink ? "Open Cadillac Prototype" : "Attach Cadillac Link"}
-                  </a>
-                </div>
+                <a
+                  href={cadillacPrototypeLink ?? "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-full text-center px-4 py-2 rounded-md text-sm font-semibold ${
+                    cadillacPrototypeLink
+                      ? "bg-indigo-700 text-white"
+                      : "bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-600 cursor-not-allowed opacity-60"
+                  }`}
+                >
+                  {cadillacPrototypeLink ? "Open Cadillac Prototype" : "Attach Cadillac Link"}
+                </a>
               </div>
             </div>
           </div>

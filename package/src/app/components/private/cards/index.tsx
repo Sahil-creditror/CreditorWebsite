@@ -239,7 +239,7 @@ const PrivateBusinessCredit: React.FC = () => {
             {/* "Private Business Credit" Course Card - Green Theme */}
             <motion.div
               whileHover={{ y: -12, scale: 1.02 }}
-              className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-2xl p-0 w-full max-w-md shadow-xl border border-indigo-200 dark:border-indigo-700/50 relative overflow-hidden group"
+              className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-900/30 dark:to-sky-900/30 rounded-2xl p-0 w-full max-w-md shadow-xl border border-blue-200 dark:border-blue-700/50 relative overflow-hidden group"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
@@ -274,7 +274,7 @@ const PrivateBusinessCredit: React.FC = () => {
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h4 className="text-xl font-bold text-indigo-700 dark:text-indigo-300 m-0">Private Business Credit </h4>
+                      <h4 className="text-xl font-bold text-blue-700 dark:text-blue-300 m-0">Private Business Credit </h4>
                       <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">Foundations Mastery</p>
                     </div>
                   </div>

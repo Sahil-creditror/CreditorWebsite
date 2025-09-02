@@ -8,7 +8,8 @@ import Learn from "@/app/components/masterclass/learn";
 import Get from "@/app/components/masterclass/getwithmaster";
 import About from "@/app/components/masterclass/about";
 import Appoint from "@/app/components/masterclass/appointment";
-import BecomeIntro from "@/app/components/become";
+import BecomeIntro from "@/app/components/become/cards";
+import Intro2 from "@/app/components/become/intro";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -21,17 +22,18 @@ export default function Page() {
     return (
         <main>
             <Herobanner
-                bannerimage="/images/projects/banner/masterclass-banner.png"
-                heading="Masterclass Membership"
-                desc="Learn how to <span>set up your Trust</span>, your Private Identity, and Business Credit step-by-step." />
+                bannerimage="/images/courses/become/freshman.webp"
+                heading="Become Private + SOV101"
+                desc="Reclaim Your <span>Legal Identity</span> and Exit the Public System." />
             <BecomeIntro />
-            <Intro />
+            <Intro2 />
+            {/* <Intro />
             <Learn />
             <Appoint />
             {/* <Get />
             <Roadmap />
-            <Courses /> */}
-            <About />
+            <Courses />
+            <About /> */}
             {/* <ProjectList />*/}
         </main>
     );

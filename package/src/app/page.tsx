@@ -37,7 +37,7 @@ export default function Home() {
       {/* <Game /> */}
       {/* <Team teamdataNumber="06" /> */}
       <Commitment />
-      <Pricing />
+      {/* <Pricing /> */}
       <Faq />
       {/* <Resources /> */}
       <Contact contactdataNumber="10" />

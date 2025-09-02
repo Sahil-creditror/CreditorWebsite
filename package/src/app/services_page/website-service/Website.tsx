@@ -85,7 +85,10 @@ export function Website() {
       <HeroSectionOne  />
       <CardsCarouselSection />
       <Plan />
-      <Table />
+      <Table 
+        starterPrototypeLink="https://prototype.example.com/starter" 
+        cadillacPrototypeLink="https://prototype.example.com/cadillac"
+      />
     </>
   );
 }

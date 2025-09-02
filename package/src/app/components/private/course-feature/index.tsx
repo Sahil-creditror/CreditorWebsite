@@ -101,12 +101,12 @@ export default function CourseFeatures() {
               </p>
               
               {/* Action indicator */}
-              <div className="flex items-center text-sm font-medium" style={{ color: item.color }}>
+              {/* <div className="flex items-center text-sm font-medium" style={{ color: item.color }}>
                 <span>Learn how</span>
                 <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-              </div>
+              </div> */}
             </div>
             
             {/* Floating effect background */}

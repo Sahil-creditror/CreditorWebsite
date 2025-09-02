@@ -84,7 +84,7 @@ export default function MasterclassOverview({
   kicker = DEFAULT_KICKER,
   pitch = DEFAULT_PITCH,
   audience = DEFAULT_AUDIENCE,
-  primaryCtaText = "Join the Waitlist",
+  primaryCtaText = "Join Now",
   primaryCtaHref = "#apply",
   secondaryCtaText = "View Curriculum",
   secondaryCtaHref = "#curriculum",

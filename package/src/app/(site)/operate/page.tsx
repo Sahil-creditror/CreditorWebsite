@@ -1,4 +1,4 @@
-import Herobanner from "@/app/components/shared/hero-banner";
+import Herobanner from "@/app/components/operate/hero";
 import BecomeIntro from "@/app/components/operate/card";
 import Intro2 from "@/app/components/operate/intro";
 import BusinessCardsGrid from "@/app/components/operate/business";

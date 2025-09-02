@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 const Herobanner = ({
   bannerimage,
@@ -50,13 +51,20 @@ const Herobanner = ({
             </p>
           </div>
 
-          {/* Heading only */}
+          {/* Heading + Button */}
+          <div className="flex items-baseline gap-4 flex-wrap">
             <h1
-            className={`${headingClass ? headingClass : "medium-heading"} text-base sm:text-2xl md:text-3xl font-semibold`}
+              className={`${
+                headingClass ? headingClass : "medium-heading"
+              } text-base sm:text-2xl md:text-3xl font-semibold`}
             >
-            {heading}
+              {heading}
             </h1>
-
+            <button className="group flex items-center gap-2 px-5 py-2 rounded-2xl bg-primary text-white font-medium text-sm sm:text-base transition-all duration-300 shadow-md hover:bg-primary/90 hover:scale-105">
+              Enroll Now
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </button>
+          </div>
         </div>
       </div>
     </section>

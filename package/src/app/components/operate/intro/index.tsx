@@ -86,7 +86,7 @@ export default function MasterclassOverview({
   audience = DEFAULT_AUDIENCE,
   primaryCtaText = "Join Now",
   primaryCtaHref = "#apply",
-  secondaryCtaText = "View Curriculum",
+  secondaryCtaText = "Contact Us",
   secondaryCtaHref = "#curriculum",
   className = "",
 }: MasterclassOverviewProps) {

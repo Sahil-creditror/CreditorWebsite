@@ -330,7 +330,7 @@ function Aboutus() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-20 md:py-40 dark:bg-darkblack overflow-hidden"
+      className="relative py-20 md:py-40 dark:bg-darkblue overflow-hidden"
       style={{
         clipPath:
           "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
@@ -413,7 +413,7 @@ function Aboutus() {
                     : {}
                 }
               >
-                03
+                02
               </motion.span>
               <motion.div
                 className="h-px w-16 bg-secondary/12 dark:bg-white/12"

@@ -5,6 +5,7 @@ import { HeroSectionOne } from "../components/WebsiteHero"; // Hero section
 import { Carousel, Card } from "../components/apple"; // Carousel section
 import Plan from "../components/pricingCard"
 import Table from "../components/fetaure";
+import WhyChoose from "../components/webchoose";
 
 // ------------------------
 // Dummy content for Carousel
@@ -89,6 +90,7 @@ export function Website() {
         starterPrototypeLink="https://prototype.example.com/starter" 
         cadillacPrototypeLink="https://prototype.example.com/cadillac"
       />
+      <WhyChoose />
     </>
   );
 }

@@ -123,9 +123,12 @@ export default function ComparisonTable({
       <div className="max-w-7xl mx-auto p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h3 className="text-4xl font-bold py-10 text-gray-900 dark:text-gray-100">
+            <h2 className="text-5xl font-extrabold py-20 text-gray-900 dark:text-gray-100">
               Starter vs Cadillac — at a glance
-            </h3>
+              <p className="mt-4 text-lg md:text-xl text-black dark:text-gray-300">
+                Clear, responsive comparison so you can decide fast.
+            </p>
+            </h2>
           </div>
           <div className="hidden sm:flex items-center gap-3">
             <span className="text-lg px-2 py-1 rounded bg-green-50 text-green-700 border border-green-100 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800">

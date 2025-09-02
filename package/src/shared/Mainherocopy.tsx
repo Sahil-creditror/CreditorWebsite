@@ -67,12 +67,12 @@ const HeroSection = () => {
     center: {
       x: 0,
       opacity: 1,
-      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
     },
     exit: (direction: Direction) => ({
       x: direction === "right" ? "-100%" : "100%",
       opacity: 0,
-      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
     }),
   };
 
@@ -320,7 +320,7 @@ const HeroSection = () => {
             </p>
 
             {/* 📱 Mobile Thumbnails */}
-            {/* <div className="flex sm:hidden gap-2 mt-4 overflow-x-auto pb-2">
+            <div className="flex sm:hidden gap-2 mt-4 overflow-x-auto pb-2">
               {videos.map((video, index) => (
                 <motion.button
                   key={index}
@@ -352,7 +352,7 @@ const HeroSection = () => {
                   )}
                 </motion.button>
               ))}
-            </div> */}
+            </div>
           </motion.div>
         </div>
 
@@ -412,7 +412,7 @@ const HeroSection = () => {
           ))}
         </div>
 
-        {/* 💻 Desktop Thumbnails
+        {/* 💻 Desktop Thumbnails */}
         <div className="absolute right-2 sm:right-6 bottom-6 hidden sm:flex flex-col gap-3 z-20">
           {videos.map((video, index) => (
             <motion.button
@@ -445,7 +445,7 @@ const HeroSection = () => {
               )}
             </motion.button>
           ))}
-        </div> */}
+        </div>
       </div>
     </ParallaxProvider>
   );

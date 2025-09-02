@@ -35,7 +35,7 @@ const HeroSection = () => {
     },
     {
       src: "/video/Banner.mp4",
-      poster: "/images/hero/",
+      poster: "/images/hero/Banner.png",
       title: "Masterclass Membership",
       description: "Reclaim Your Legal Identity and Exit the Public System",
     },

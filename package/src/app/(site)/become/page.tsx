@@ -27,7 +27,9 @@ export default function Page() {
             <Herobanner
                 bannerimage="/images/courses/become/freshman.webp"
                 heading="Become Private + SOV101"
-                desc="Reclaim Your <span>Legal Identity</span> and Exit the Public System." />
+                desc="Reclaim Your <span>Legal Identity</span> and Exit the Public System."
+                buttonPath="/projects/become-private-sov101" // 👈 you now define the path here
+            />
             <BecomeIntro />
             <Intro2 />
             <Content />

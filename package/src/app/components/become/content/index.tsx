@@ -123,8 +123,7 @@ const SovSlider: React.FC = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="flex items-center justify-center gap-3 mb-2">
-          <GoGoal className="text-3xl" style={{ color: "#dd3447" }} />
-          <div className="text-center text-2xl md:text-3xl font-extrabold text-[#0b3d78]">
+          <div className="text-center text-3xl md:text-5xl font-extrabold text-[#0b3d78]">
             What You'll Learn
           </div>
         </div>

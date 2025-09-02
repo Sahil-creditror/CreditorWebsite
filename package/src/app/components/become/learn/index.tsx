@@ -131,9 +131,6 @@ export default function WhatYouCanDo() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
           </svg>
         </motion.button>
-        <p className="text-slate-500 dark:text-slate-400 mt-6 text-lg">
-          Join 2,500+ students who have transformed their lives
-        </p>
       </motion.div>
     </motion.div>
   );

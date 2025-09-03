@@ -102,7 +102,7 @@ const PrivateBusinessCredit: React.FC = () => {
             {/* "Become Private" Course Card - Blue Theme */}
             <motion.div
               whileHover={{ y: -12, scale: 1.02 }}
-              className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-900/30 dark:to-sky-900/30 rounded-2xl p-0 w-full max-w-md shadow-xl border border-blue-200 dark:border-blue-700/50 relative overflow-hidden group"
+              className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-900/30 dark:to-sky-900/30 rounded-2xl p-0 w-full max-w-sm shadow-xl border border-blue-200 dark:border-blue-700/50 relative overflow-hidden group"
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
@@ -115,7 +115,7 @@ const PrivateBusinessCredit: React.FC = () => {
 
               {/* Image container with hover effect */}
               <motion.div 
-                className="w-full h-52 overflow-hidden relative"
+                className="w-full h-40 overflow-hidden relative"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
@@ -127,7 +127,7 @@ const PrivateBusinessCredit: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent"></div>
               </motion.div>
 
-              <div className="p-8 relative">
+              <div className="p-6 relative">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-600 to-blue-700 clip-path-polygon opacity-10 dark:opacity-15"></div>
                 <div className="flex flex-col gap-5">
                   <div className="flex items-center gap-4">
@@ -138,7 +138,7 @@ const PrivateBusinessCredit: React.FC = () => {
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h4 className="text-xl font-bold text-blue-700 dark:text-blue-300 m-0">I Want Remedy Now</h4>
+                      <h4 className="text-lg font-bold text-blue-700 dark:text-blue-300 m-0">I Want Remedy Now</h4>
                       <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">Status Correction Masterclass</p>
                     </div>
                   </div>
@@ -171,7 +171,7 @@ const PrivateBusinessCredit: React.FC = () => {
             {/* New SOV 101 Course Card - Indigo Theme */}
             <motion.div
               whileHover={{ y: -12, scale: 1.02 }}
-              className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-2xl p-0 w-full max-w-md shadow-xl border border-indigo-200 dark:border-indigo-700/50 relative overflow-hidden group"
+              className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-2xl p-0 w-full max-w-sm shadow-xl border border-indigo-200 dark:border-indigo-700/50 relative overflow-hidden group"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
@@ -184,7 +184,7 @@ const PrivateBusinessCredit: React.FC = () => {
 
               {/* Image container with hover effect */}
               <motion.div 
-                className="w-full h-52 overflow-hidden relative"
+                className="w-full h-40 overflow-hidden relative"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
@@ -196,7 +196,7 @@ const PrivateBusinessCredit: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/20 to-transparent"></div>
               </motion.div>
 
-              <div className="p-8 relative">
+              <div className="p-6 relative">
                 <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-indigo-600 to-indigo-700 clip-path-polygon opacity-10 dark:opacity-15"></div>
                 <div className="flex flex-col gap-5">
                   <div className="flex items-center gap-4">
@@ -206,7 +206,7 @@ const PrivateBusinessCredit: React.FC = () => {
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h4 className="text-xl font-bold text-indigo-700 dark:text-indigo-300 m-0">Private Merchant Processing </h4>
+                      <h4 className="text-lg font-bold text-indigo-700 dark:text-indigo-300 m-0">Private Merchant Processing </h4>
                       <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">Foundations Mastery</p>
                     </div>
                   </div>
@@ -239,7 +239,7 @@ const PrivateBusinessCredit: React.FC = () => {
             {/* "Private Business Credit" Course Card - Green Theme */}
             <motion.div
               whileHover={{ y: -12, scale: 1.02 }}
-              className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-900/30 dark:to-sky-900/30 rounded-2xl p-0 w-full max-w-md shadow-xl border border-blue-200 dark:border-blue-700/50 relative overflow-hidden group"
+              className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-900/30 dark:to-sky-900/30 rounded-2xl p-0 w-full max-w-sm shadow-xl border border-blue-200 dark:border-blue-700/50 relative overflow-hidden group"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
@@ -252,7 +252,7 @@ const PrivateBusinessCredit: React.FC = () => {
 
               {/* Image container with hover effect */}
               <motion.div 
-                className="w-full h-52 overflow-hidden relative"
+                className="w-full h-40 overflow-hidden relative"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
@@ -264,7 +264,7 @@ const PrivateBusinessCredit: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/20 to-transparent"></div>
               </motion.div>
 
-              <div className="p-8 relative">
+              <div className="p-6 relative">
                 <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-indigo-600 to-indigo-700 clip-path-polygon opacity-10 dark:opacity-15"></div>
                 <div className="flex flex-col gap-5">
                   <div className="flex items-center gap-4">
@@ -274,7 +274,7 @@ const PrivateBusinessCredit: React.FC = () => {
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h4 className="text-xl font-bold text-blue-700 dark:text-blue-300 m-0">Private Business Credit </h4>
+                      <h4 className="text-lg font-bold text-blue-700 dark:text-blue-300 m-0">Private Business Credit </h4>
                       <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">Foundations Mastery</p>
                     </div>
                   </div>

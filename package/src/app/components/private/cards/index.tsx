@@ -120,7 +120,7 @@ const PrivateBusinessCredit: React.FC = () => {
                 transition={{ duration: 0.3 }}
               >
                 <img 
-                  src="/images/courses/become/Remedy_Result_3.webp"
+                  src="/images/courses/become/remedy.webp"
                   alt="Status Correction Illustration"
                   className="w-full h-full object-cover object-center group-hover:brightness-110 transition-all duration-500"
                 />

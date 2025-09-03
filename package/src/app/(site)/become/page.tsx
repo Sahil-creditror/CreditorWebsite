@@ -1,13 +1,4 @@
-
-// import ProjectList from "@/app/components/projects";
 import Herobanner from "@/app/components/shared/hero-banner";
-import Roadmap from "@/app/components/home/services"
-import Courses from "@/app/components/home/courses";
-import Intro from "@/app/components/masterclass/intro";
-import Learn from "@/app/components/masterclass/learn";
-import Get from "@/app/components/masterclass/getwithmaster";
-import About from "@/app/components/masterclass/about";
-import Appoint from "@/app/components/masterclass/appointment";
 import BecomeIntro from "@/app/components/become/cards";
 import Intro2 from "@/app/components/become/intro";
 import Learn2 from "@/app/components/become/learn";
@@ -35,14 +26,6 @@ export default function Page() {
             <Content />
             {/* <Learn2 /> */}
             <CTA />
-            {/* <Intro />
-            <Learn />
-            <Appoint />
-            {/* <Get />
-            <Roadmap />
-            <Courses />
-            <About /> */}
-            {/* <ProjectList />*/}
         </main>
     );
 };

@@ -229,6 +229,25 @@ const SovSlider: React.FC = () => {
           </div>
         )}
       </div>
+      {/* Call to Action */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        viewport={{ once: true }}
+        className="text-center mt-16 relative z-10"
+      >
+        <motion.button
+          whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(79, 70, 229, 0.3)" }}
+          whileTap={{ scale: 0.98 }}
+          className="bg-gradient-to-r from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 border-none rounded-full py-4 px-10 text-white font-semibold cursor-pointer shadow-lg text-lg group"
+        >
+          Start Your Transformation
+          <svg className="inline-block ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </motion.button>
+      </motion.div>
     </div>
   );
 };

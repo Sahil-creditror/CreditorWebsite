@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaLock, FaMoneyCheckAlt, FaRocket, FaShieldAlt, FaChartLine, FaUserLock } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,6 +28,7 @@ export default function MasterClassLaunchpad() {
   const marqueeRef = useRef<HTMLDivElement | null>(null);
   const bgRef = useRef<HTMLDivElement | null>(null);
   const particlesRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
 
   // small-screen detection (client-only)
   const [isMobile, setIsMobile] = useState(false);
@@ -306,47 +308,13 @@ export default function MasterClassLaunchpad() {
               transition={{ duration: 0.7, delay: 0.55 }}
               className="flex flex-col sm:flex-row sm:items-center sm:gap-4 justify-center lg:justify-start"
             >
-              <motion.button
-                onClick={createRipple}
-                className="signup-btn relative overflow-hidden inline-flex items-center gap-3 justify-center px-6 py-3 rounded-xl text-base sm:text-lg font-bold shadow-2xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] group"
-                style={{
-                  background: "linear-gradient(90deg, rgba(100, 113, 255, 0.92), rgba(44,129,255,0.88))",
-                  backdropFilter: "blur(10px)",
-                  WebkitBackdropFilter: "blur(10px)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  boxShadow: isMobile ? "0 6px 20px -8px rgba(44,129,255,0.45)" : "0 10px 40px -10px rgba(44,129,255,0.7)",
-                  minHeight: "48px",
-                }}
+              <button
+                onClick={() => router.push("/tncmasterclass")}
+                className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-lg font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-colors duration-200"
                 aria-label="Sign up for Master Class"
-                animate={isMobile ? {} : { scale: [1, 1.06, 1] }}
-                transition={isMobile ? {} : { duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
               >
-                {/* Shimmer overlay */}
-                <span className="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-[1.5s] before:ease-in-out" />
-
-                {/* Aura glow on hover */}
-                <span className="absolute -inset-2 rounded-xl opacity-0 group-hover:opacity-40 blur-2xl bg-gradient-to-r from-indigo-400 via-blue-500 to-indigo-600 transition-opacity duration-500" />
-
-                <span className="relative z-10">✨ Join the Private Launch</span>
-
-                {/* Rotating subtle circle effect: stop rotating on small screens */}
-                <motion.div
-                  animate={isMobile ? { rotate: 0 } : { rotate: 360 }}
-                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                  className="absolute -right-6 -top-6 opacity-20 w-20 h-20"
-                  aria-hidden
-                >
-                  <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" aria-hidden>
-                    <defs>
-                      <linearGradient id="g1" x1="0" x2="1">
-                        <stop offset="0" stopColor="#fff" stopOpacity="0.14" />
-                        <stop offset="1" stopColor="#fff" stopOpacity="0.03" />
-                      </linearGradient>
-                    </defs>
-                    <circle cx="50" cy="50" r="40" fill="url(#g1)" />
-                  </svg>
-                </motion.div>
-              </motion.button>
+                ✨ Join the Masterclass
+              </button>
 
               {/* small spacer for mobile */}
               <div className="mt-3 sm:mt-0" />

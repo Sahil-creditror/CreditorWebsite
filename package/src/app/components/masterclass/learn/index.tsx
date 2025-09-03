@@ -145,7 +145,7 @@ export default function MasterclassRedesignPage() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4">
-            <a href="#enroll" className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-[#60A5FA] to-[#1E3A8A] text-white font-semibold shadow hover:scale-[1.02] transition">
+            <a href="/tncmasterclass" className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-[#60A5FA] to-[#1E3A8A] text-white font-semibold shadow hover:scale-[1.02] transition">
                 Reserve Seat <FaArrowRight />
             </a>
             </div>
@@ -350,7 +350,7 @@ export default function MasterclassRedesignPage() {
                       No form here — click to go to the secure checkout / scheduled page.
                     </p>
                     <a
-                      href="#"
+                      href="/tncmasterclass"
                       className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#60A5FA] to-[#1E3A8A] text-white font-semibold transition-transform duration-300 hover:scale-105 hover:shadow-lg"
                     >
                       Reserve My Spot <FaArrowRight />

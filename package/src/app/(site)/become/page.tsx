@@ -2,8 +2,9 @@ import Herobanner from "@/app/components/shared/hero-banner";
 import BecomeIntro from "@/app/components/become/cards";
 import Intro2 from "@/app/components/become/intro";
 import Learn2 from "@/app/components/become/learn";
-import CTA from "@/app/components/become/cta";
 import Content from "@/app/components/become/content";
+import Appoint from "@/app/components/become/appointment";
+import CTA from "@/app/components/become/cta";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -23,6 +24,7 @@ export default function Page() {
             />
             <BecomeIntro />
             <Intro2 />
+            <Appoint />
             <Content />
             {/* <Learn2 /> */}
             <CTA />

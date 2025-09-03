@@ -38,7 +38,7 @@ export default function HeroSection() {
           transition={{ delay: 0.6, duration: 1 }}
           className="text-4xl md:text-5xl font-extrabold text-white mb-4"
         >
-          Master Debt Resolution & Credit Repair
+          The System is Presuming You're a Corporate Asset
         </motion.h1>
 
         <motion.p
@@ -47,7 +47,7 @@ export default function HeroSection() {
           transition={{ delay: 0.8, duration: 1 }}
           className="italic text-lg text-gray-200 mb-3"
         >
-          “Take control of your financial future with expert guidance.”
+          “Secure Your Freedom. Walk with Your Private ID & Badge.”
         </motion.p>
 
         <motion.p
@@ -56,7 +56,7 @@ export default function HeroSection() {
           transition={{ delay: 1, duration: 1 }}
           className="text-gray-300 mb-8"
         >
-          Gain exclusive access to strategies, templates, and insights trusted by professionals worldwide.
+          Go step-by-step through every lawful declaration, filing, and notarization to correct your status and secure your estate.
         </motion.p>
 
         {/* CTA Button */}

@@ -190,9 +190,10 @@ const pricingData = {
             tag:"Website Launch",
             planPrice: "Website Service",
             planDescp: "Ideal for startups and small businesses taking their first steps online.",
-            planIncludes: ["Competitive research & insights","Wireframing and prototyping","Basic tracking setup (Google Analytics, etc.)","Standard contact form integration"],
+            planIncludes: ["Custom design for up to 10 pages","Responsive and mobile-friendly layout","Fast page load and security optimizations","On-page SEO optimization for key pages"],
             coverImage: "/images/pricing/Cover-1.png", // Optional
-            link: "/services_page/website-service"
+            link: "/services_page/website-service",
+            
         },
         {
             // planName: "Scale",
@@ -200,7 +201,7 @@ const pricingData = {
             planPrice: "Live Class",
             // cancelPrice: "$2,199",
             planDescp: "Perfect for growing brands needing more customization and flexibility.",
-            planIncludes: ["Everything in the Launch Plan","Custom design for up to 10 pages","Seamless social media integration","SEO enhancements for key pages"],
+            planIncludes: ["Join our interactive live classes every Tuesday & Thursday","Interactive Sessions","Hands-on learning","Session Replays"],
             coverImage: "/images/pricing/Cover-2.jpg", // Optional
             link : "/service-page/live-class"
         },
@@ -209,7 +210,7 @@ const pricingData = {
             tag: "Private Merchant",   
             planPrice: "Private Merchant Processing",
             planDescp: "Best suited for established businesses wanting a fully tailored experience.",
-            planIncludes: ["Everything in the Scale Plan","E-commerce functionality (if needed)","Branded email template design","Priority support for six months after launch"],
+            planIncludes: ["Tailored payment solutions","Empower your business","Customized experience","Seamless Payment Solutions"],
             coverImage: "/images/pricing/Cover-3.jpg" ,// Optional
             link: "/service-page/private-merchant"
         },

@@ -10,7 +10,7 @@ export default function Page() {
         <main>
             <Herobanner
                 bannerimage="/images/services/service-banner.webp"
-                heading="Services"
+                heading="Creditor Academy Services"
                 desc="Ready to <span>start something</span> great? Reach out  we’d love to hear from you." />
             <Services />
         </main>

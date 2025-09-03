@@ -42,7 +42,7 @@ export default function Home() {
       {/* <Pricing /> */}
       {/* <Faq /> */}
       {/* <Resources /> */}
-      <Contact contactdataNumber="10" />
+      <Contact contactdataNumber="6" />
     </>
   );
 }

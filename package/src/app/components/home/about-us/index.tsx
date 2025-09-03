@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import StarRating from "../../shared/star-rating";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
@@ -9,14 +9,15 @@ import { useMousePosition } from "../../../../hooks/useMousePosition";
 import { useInView } from "react-intersection-observer";
 
 // Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 function Aboutus() {
   const [avatarList, setAvatarList] = useState<any>(null);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const modalVideoRef = useRef<HTMLVideoElement>(null);
   const { x, y } = useMousePosition();
   const controls = useAnimation();
   const [ref, inView] = useInView({
@@ -54,11 +55,79 @@ function Aboutus() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (!sectionRef.current) return;
+  // Handle video modal
+  const openVideoModal = useCallback(() => {
+    setIsVideoModalOpen(true);
+    if (typeof document !== "undefined") {
+      document.body.style.overflow = "hidden";
+    }
+  }, []);
 
-    // Scope all GSAP selectors/tweens/ScrollTriggers to this component
+  const closeVideoModal = useCallback(() => {
+    setIsVideoModalOpen(false);
+    if (typeof document !== "undefined") {
+      document.body.style.overflow = "auto";
+    }
+  }, []);
+
+  // Close modal when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: globalThis.MouseEvent) => {
+      const modal = document.querySelector(".video-modal");
+      if (modal && !modal.contains(event.target as Node)) {
+        closeVideoModal();
+      }
+    };
+
+    if (isVideoModalOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isVideoModalOpen, closeVideoModal]);
+
+  // Advanced mouse follower effect
+  useEffect(() => {
+    if (!sectionRef.current || x == null || y == null) return;
+    const follower = sectionRef.current.querySelector(
+      ".mouse-follower"
+    ) as HTMLElement | null;
+
+    if (follower) {
+      gsap.to(follower, {
+        x: x - 20,
+        y: y - 20,
+        duration: 0.8,
+        ease: "expo.out",
+        overwrite: "auto"
+      });
+    }
+  }, [x, y]);
+
+  // Avatar list stagger animation
+  useEffect(() => {
+    if (Array.isArray(avatarList) && avatarList.length > 0) {
+      controls.start((i) => ({
+        opacity: 1,
+        x: 0,
+        transition: {
+          delay: i * 0.15,
+          type: "spring",
+          stiffness: 100,
+          damping: 10
+        }
+      }));
+    }
+  }, [avatarList, controls]);
+
+  // GSAP animations setup
+  useEffect(() => {
+    if (!sectionRef.current || typeof window === "undefined") return;
+
     const ctx = gsap.context(() => {
+      const sectionEl = sectionRef.current as HTMLDivElement | null;
+      if (!sectionEl) return;
       // Clean up any existing animations
       if (masterTL.current) {
         masterTL.current.kill();
@@ -69,16 +138,16 @@ function Aboutus() {
       // Master timeline for coordinated animations
       masterTL.current = gsap.timeline({
         scrollTrigger: {
-          trigger: sectionRef.current,
+          trigger: sectionEl,
           start: "top 75%",
           toggleActions: "play none none none",
           markers: false
         }
       });
 
-      // Section entrance animation with morphing effect
+      // Section entrance animation
       masterTL.current.from(
-        sectionRef.current!.querySelectorAll(".section-content > *"),
+        sectionEl.querySelectorAll(".section-content > *"),
         {
           opacity: 0,
           y: 80,
@@ -86,11 +155,10 @@ function Aboutus() {
           stagger: 0.15,
           ease: "back.out(1.2)",
           onStart: () => {
-            gsap.to(sectionRef.current, {
+            gsap.to(sectionEl, {
               duration: 0.8,
               css: {
-                clipPath:
-                  "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"
+                clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"
               },
               ease: "power3.inOut"
             });
@@ -99,10 +167,9 @@ function Aboutus() {
       );
 
       // Card hover animations with 3D tilt effect
-      const cards =
-        sectionRef.current!.querySelectorAll<HTMLDivElement>(
-          ".interactive-card"
-        );
+      const cards = sectionEl.querySelectorAll<HTMLDivElement>(
+        ".interactive-card"
+      );
 
       cards?.forEach((card) => {
         // Set up transform perspective
@@ -121,8 +188,7 @@ function Aboutus() {
             rotateY: (x - cx) / 20,
             rotateX: (cy - y) / 20,
             scale: 1.03,
-            boxShadow:
-              "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
             ease: "power2.out",
             overwrite: "auto"
           });
@@ -136,14 +202,13 @@ function Aboutus() {
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
 
-          const tween = gsap.to(card, {
+          gsap.to(card, {
             duration: 0.5,
             rotateY: (x - cx) / 20,
             rotateX: (cy - y) / 20,
             ease: "power1.out",
             overwrite: "auto"
           });
-          cardAnimations.current.push(tween);
         };
 
         const handleMouseLeave = () => {
@@ -171,26 +236,8 @@ function Aboutus() {
         });
       });
 
-      // Parallax effect with depth (only if element exists)
-      const parallaxEl = sectionRef.current!.querySelector(
-        ".parallax-bg"
-      ) as HTMLElement | null;
-      if (parallaxEl) {
-        const parallaxTween = gsap.to(parallaxEl, {
-          y: 80,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.5
-          }
-        });
-        cardAnimations.current.push(parallaxTween);
-      }
-
-      // Floating circles animation (safe if none exist)
-      const circles =
-        sectionRef.current!.querySelectorAll(".floating-circle");
+      // Floating circles animation
+      const circles = sectionEl.querySelectorAll(".floating-circle");
       circles.forEach((circle, i) => {
         const circleTween = gsap.to(circle, {
           duration: 15 + i * 3,
@@ -204,8 +251,8 @@ function Aboutus() {
         cardAnimations.current.push(circleTween);
       });
 
-      // Animated gradient background (if exists)
-      const gradientEl = sectionRef.current!.querySelector(
+      // Animated gradient background
+      const gradientEl = sectionEl.querySelector(
         ".animated-gradient"
       ) as HTMLElement | null;
       if (gradientEl) {
@@ -220,7 +267,7 @@ function Aboutus() {
       }
     }, sectionRef);
 
-    // Cleanup function (scoped and tidy)
+    // Cleanup function
     return () => {
       // Remove card listeners safely
       cardHandlers.current.forEach((handlers, card) => {
@@ -230,7 +277,7 @@ function Aboutus() {
       });
       cardHandlers.current.clear();
 
-      // Kill local tweens
+      // Kill animations
       if (masterTL.current) {
         masterTL.current.kill();
         masterTL.current = null;
@@ -238,102 +285,17 @@ function Aboutus() {
       cardAnimations.current.forEach((anim) => anim.kill());
       cardAnimations.current = [];
 
-      // Revert GSAP context (kills ScrollTriggers created inside)
+      // Revert GSAP context
       ctx.revert();
     };
   }, []);
-
-  // Advanced mouse follower effect (do not treat 0 as falsy)
-  useEffect(() => {
-    if (!sectionRef.current || x == null || y == null) return;
-    const follower = sectionRef.current.querySelector(
-      ".mouse-follower"
-    ) as HTMLElement | null;
-
-    if (follower) {
-      gsap.to(follower, {
-        x: x - 20,
-        y: y - 20,
-        duration: 0.8,
-        ease: "expo.out",
-        overwrite: "auto"
-      });
-
-      // Pulse on movement
-      const prevX = (follower as any)._gsap?.x || 0;
-      const prevY = (follower as any)._gsap?.y || 0;
-      if (Math.abs(x - prevX) > 2 || Math.abs(y - prevY) > 2) {
-        gsap.to(follower, {
-          scale: 1.1,
-          duration: 0.3,
-          yoyo: true,
-          repeat: 1,
-          ease: "power1.inOut",
-          overwrite: "auto"
-        });
-      }
-    }
-  }, [x, y]);
-
-  // Avatar list stagger animation
-  useEffect(() => {
-    if (Array.isArray(avatarList) && avatarList.length > 0) {
-      controls.start((i) => ({
-        opacity: 1,
-        x: 0,
-        transition: {
-          delay: i * 0.15,
-          type: "spring",
-          stiffness: 100,
-          damping: 10
-        }
-      }));
-    }
-  }, [avatarList, controls]);
-
-  // Handle video modal
-  const openVideoModal = () => {
-    setIsVideoModalOpen(true);
-    if (typeof document !== "undefined") {
-      document.body.style.overflow = "hidden"; // Prevent background scrolling
-    }
-  };
-
-  const closeVideoModal = () => {
-    setIsVideoModalOpen(false);
-    if (typeof document !== "undefined") {
-      document.body.style.overflow = "auto"; // Re-enable scrolling
-    }
-    // Pause the modal video when closing (if using <video>; iframe won't pause here)
-    if (modalVideoRef.current) {
-      modalVideoRef.current.pause();
-    }
-  };
-
-  // Close modal when clicking outside (kept behavior, but the overlay already closes onClick)
-  useEffect(() => {
-    const handleClickOutside = (event: globalThis.MouseEvent) => {
-      const modal = document.querySelector(".video-modal");
-      if (modal && !modal.contains(event.target as Node)) {
-        closeVideoModal();
-      }
-    };
-
-    if (isVideoModalOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isVideoModalOpen]);
 
   return (
     <section
       ref={sectionRef}
       className="relative py-20 md:py-40 dark:bg-darkblue overflow-hidden"
       style={{
-        clipPath:
-          "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
         willChange: "clip-path"
       }}
     >
@@ -667,7 +629,7 @@ function Aboutus() {
               </motion.div>
             </div>
 
-            {/* Card 2 */}
+            {/* Card 2 - Text colors remain unchanged as requested */}
             <motion.div
               initial={{ opacity: 0, y: 50, rotateY: -15 }}
               whileInView={{
@@ -719,7 +681,7 @@ function Aboutus() {
                 }}
               >
                 <motion.h2
-                  className="text-4xl font-bold text-gray-800"
+                  className="text-4xl font-bold text-gray-800 dark:text-black"
                   initial={{ scale: 0.9 }}
                   whileInView={{
                     scale: 1,
@@ -732,7 +694,7 @@ function Aboutus() {
                 >
                   35+
                 </motion.h2>
-                <motion.p className="text-black-600 mt-2">
+                <motion.p className="text-gray-600 dark:text-black mt-2">
                   Exclusive credit & legal courses
                 </motion.p>
               </motion.div>
@@ -769,7 +731,7 @@ function Aboutus() {
                 </motion.div>
 
                 <motion.p
-                  className="text-black-600"
+                  className="text-gray-600 dark:text-black"
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{
                     opacity: 1,

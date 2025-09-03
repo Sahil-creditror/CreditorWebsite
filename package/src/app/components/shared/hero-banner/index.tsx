@@ -1,18 +1,27 @@
 "use client";
+import { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { motion, useInView } from "framer-motion";
 
 const Herobanner = ({
   bannerimage,
   heading,
   desc,
   headingClass = "large-heading",
+  buttonPath,
 }: {
   bannerimage: string;
   heading: string;
   desc: string;
   headingClass?: string;
+  buttonPath?: string;
 }) => {
   const splitDesc = desc.split(/<\/?span>/);
+
+  // for the in-view animation
+  const btnRef = useRef<HTMLDivElement | null>(null);
+  const inView = useInView(btnRef, { once: true, amount: 0.25 });
 
   return (
     <section className="relative flex items-end text-white bg-black h-[100vh] bg-fixed sm:h-screen max-h-[650px]">
@@ -50,33 +59,51 @@ const Herobanner = ({
             </p>
           </div>
 
-          {/* Heading + Button */}
+          {/* Heading + (Optional) Button */}
           <div className="flex flex-col sm:flex-row sm:items-end lg:items-baseline gap-4">
             <h1
               className={`${headingClass ? headingClass : "large-heading"} text-2xl sm:text-4xl md:text-5xl font-bold`}
             >
               {heading}
             </h1>
-            <div className="self-start sm:self-auto bg-primary rounded-full pl-6 sm:pl-8 p-1 sm:p-1.5">
-              <div className="bg-white p-2 sm:p-3 md:p-5 rounded-full">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5"
+
+            {/* Animated button only if buttonPath exists */}
+            {buttonPath && (
+              <motion.div
+                ref={btnRef}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="mt-2"
+              >
+                <Link
+                  href={buttonPath}
+                  aria-label={`Learn more about ${heading}`}
+                  className="group flex items-center w-fit bg-primary border border-primary hover:border-white/30 hover:bg-secondary rounded-full transition-all duration-300 ease-in-out overflow-hidden"
                 >
-                  <path
-                    d="M1.33337 1.33331H14.6667M14.6667 1.33331V14.6666M14.6667 1.33331L1.33337 14.6666"
-                    stroke="#1F2A2E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-            </div>
+                  <span className="pl-6 pr-2 py-3 text-lg font-bold text-secondary group-hover:text-white whitespace-nowrap transition-all duration-300 ease-in-out group-hover:translate-x-2">
+                    Start Now
+                  </span>
+                  <div className="w-12 h-12 flex items-center justify-center bg-white rounded-full m-1 transition-all duration-300 ease-in-out group-hover:rotate-45">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M7 17L17 7M17 7H7M17 7V17"
+                        stroke="#1F2A2E"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </Link>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>

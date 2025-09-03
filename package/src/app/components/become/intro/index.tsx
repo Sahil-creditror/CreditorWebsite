@@ -139,13 +139,14 @@ export default function CourseOverviewSection() {
   };
 
   return (
-    <motion.section
-        ref={containerRef}
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="relative overflow-hidden rounded-2xl p-8 md:p-12 bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 shadow-xl border border-blue-100 dark:border-slate-700"
-    >
+    <div className="w-full bg-slate-50 dark:bg-slate-800 px-4 md:px-6 py-12 md:py-16">
+      <motion.section
+          ref={containerRef}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl p-8 md:p-12 bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 shadow-xl border border-blue-100 dark:border-slate-700"
+      >
 
       {/* Enhanced Ripple background */}
       <div ref={rippleRef} aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -307,6 +308,7 @@ export default function CourseOverviewSection() {
           </motion.div>
         </div>
       </div>
-    </motion.section>
+      </motion.section>
+    </div>
   );
 }

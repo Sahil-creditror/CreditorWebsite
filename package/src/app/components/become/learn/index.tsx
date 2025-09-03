@@ -15,7 +15,7 @@ export default function WhatYouCanDo() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
-      className="mb-24 px-5 py-16 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden"
+      className="px-5 py-16 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden"
     >
       {/* Background decorative elements */}
       <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-blue-200/30 dark:bg-blue-900/20 blur-3xl"></div>
@@ -131,9 +131,6 @@ export default function WhatYouCanDo() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
           </svg>
         </motion.button>
-        <p className="text-slate-500 dark:text-slate-400 mt-6 text-lg">
-          Join 2,500+ students who have transformed their lives
-        </p>
       </motion.div>
     </motion.div>
   );

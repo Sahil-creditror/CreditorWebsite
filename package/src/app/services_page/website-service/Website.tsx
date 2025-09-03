@@ -6,6 +6,7 @@ import { Carousel, Card } from "../components/apple"; // Carousel section
 import Plan from "../components/pricingCard"
 import Table from "../components/fetaure";
 import WhyChoose from "../components/webchoose";
+import Appointment from "../components/appointment";
 
 // ------------------------
 // Dummy content for Carousel
@@ -85,6 +86,7 @@ export function Website() {
     <>
       <HeroSectionOne  />
       <CardsCarouselSection />
+      <Appointment />
       <Plan />
       <Table 
         starterPrototypeLink="https://prototype.example.com/starter" 

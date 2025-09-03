@@ -9,14 +9,6 @@ import {
   FaFileContract,
   FaShieldAlt
 } from 'react-icons/fa';
-import Banner from '../assets/BPSOV_Banner.webp';
-
-import Intro from "@/app/components/become/intro";
-
-// import GameBanner from '../components/GameBanner';
-// import SovSlider from '../components/SovSlider';
-// import Remedy from '../assets/Remedy_Result_3.webp';
-// import MP from '../assets/PMP2.webp';
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -64,10 +56,102 @@ const BecomePrivateCourse: React.FC = () => {
   
 
   return (
-    <div className="font-sans bg-gray-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 p-5">
+    <div className="font-sans bg-gray-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 p-5 relative overflow-hidden">
+
+      {/* Floating bubbles background */}
+      <div className="absolute inset-0 overflow-hidden z-0">
+        {/* Large blue bubble */}
+        <motion.div
+          className="absolute top-1/4 -left-20 w-72 h-72 rounded-full bg-blue-100 dark:bg-blue-900/30 opacity-40 dark:opacity-20"
+          animate={{
+            y: [0, -20, 0],
+            x: [0, 10, 0],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        
+        {/* Medium indigo bubble */}
+        <motion.div
+          className="absolute top-1/3 right-10 w-48 h-48 rounded-full bg-indigo-100 dark:bg-indigo-900/20 opacity-30 dark:opacity-15"
+          animate={{
+            y: [0, 15, 0],
+            x: [0, -5, 0],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
+        
+        {/* Small purple bubble */}
+        <motion.div
+          className="absolute bottom-1/4 left-1/4 w-24 h-24 rounded-full bg-purple-100 dark:bg-purple-900/20 opacity-30 dark:opacity-15"
+          animate={{
+            y: [0, -10, 0],
+            x: [0, 8, 0],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+        />
+        
+        {/* Medium teal bubble */}
+        <motion.div
+          className="absolute bottom-1/3 right-1/4 w-36 h-36 rounded-full bg-teal-100 dark:bg-teal-900/20 opacity-30 dark:opacity-15"
+          animate={{
+            y: [0, 12, 0],
+            x: [0, -7, 0],
+          }}
+          transition={{
+            duration: 14,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 0.5
+          }}
+        />
+        
+        {/* Small blue bubble */}
+        <motion.div
+          className="absolute top-1/5 right-1/3 w-20 h-20 rounded-full bg-blue-200 dark:bg-blue-800/20 opacity-30 dark:opacity-15"
+          animate={{
+            y: [0, -15, 0],
+            x: [0, 5, 0],
+          }}
+          transition={{
+            duration: 11,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1.5
+          }}
+        />
+        
+        {/* Medium cyan bubble */}
+        <motion.div
+          className="absolute bottom-1/5 left-1/3 w-40 h-40 rounded-full bg-cyan-100 dark:bg-cyan-900/20 opacity-25 dark:opacity-10"
+          animate={{
+            y: [0, 18, 0],
+            x: [0, -10, 0],
+          }}
+          transition={{
+            duration: 16,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 0.8
+          }}
+        />
+      </div>
 
       {/* Title Section */}
-      <div className="text-center px-5 max-w-7xl mx-auto mb-20 relative">
+      <div className="text-center px-5 max-w-7xl mx-auto mb-20 relative z-10">
 
         {/* Courses Section with Creative Layout */}
         <motion.section
@@ -76,10 +160,6 @@ const BecomePrivateCourse: React.FC = () => {
           viewport={{ once: false, amount: 0.3 }}
           className="my-10 relative"
         >
-          {/* Decorative elements */}
-          <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-36 h-36 rounded-full bg-blue-100 bg-opacity-70 blur-xl z-0 dark:bg-blue-900 dark:bg-opacity-30"></div>
-          <div className="absolute -bottom-20 right-20 w-24 h-24 rounded-full bg-indigo-100 bg-opacity-50 blur-lg z-0 dark:bg-indigo-900 dark:bg-opacity-20"></div>
-          
           {/* Section header */}
           <motion.h3 
             className="text-center text-3xl md:text-5xl mb-16 relative text-slate-800 dark:text-slate-100 font-bold"
@@ -120,7 +200,7 @@ const BecomePrivateCourse: React.FC = () => {
                 transition={{ duration: 0.3 }}
               >
                 <img 
-                  src="/images/courses/become/Remedy_Result_3.webp"
+                  src="/images/courses/become/sophomore.webp"
                   alt="Status Correction Illustration"
                   className="w-full h-full object-cover object-center group-hover:brightness-110 transition-all duration-500"
                 />
@@ -145,11 +225,11 @@ const BecomePrivateCourse: React.FC = () => {
                   <p className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left">
                     Reclaim your legal identity and exit the public system through proper status correction.
                   </p>
-                  <div className="mt-4">
+                  {/* <div className="mt-4">
                     <button className="w-full bg-blue-100 dark:bg-blue-800/40 hover:bg-blue-200 dark:hover:bg-blue-700/60 text-blue-700 dark:text-blue-300 font-medium py-3 rounded-lg transition-colors">
                       Explore Course
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </motion.div>
@@ -189,7 +269,7 @@ const BecomePrivateCourse: React.FC = () => {
                 transition={{ duration: 0.3 }}
               >
                 <img 
-                  src="/images/courses/become/PMP2.webp"
+                  src="/images/courses/become/sov.webp"
                   alt="Sovereignty Foundations Illustration"
                   className="w-full h-full object-cover object-center group-hover:brightness-110 transition-all duration-500"
                 />
@@ -213,11 +293,11 @@ const BecomePrivateCourse: React.FC = () => {
                   <p className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left">
                     Master the principles of sovereignty and how to rebut legal presumptions effectively.
                   </p>
-                  <div className="mt-4">
+                  {/* <div className="mt-4">
                     <button className="w-full bg-indigo-100 dark:bg-indigo-800/40 hover:bg-indigo-200 dark:hover:bg-indigo-700/60 text-indigo-700 dark:text-indigo-300 font-medium py-3 rounded-lg transition-colors">
                       Explore Course
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </motion.div>
@@ -247,7 +327,7 @@ const BecomePrivateCourse: React.FC = () => {
         <motion.button
           whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
           whileTap={{ scale: 0.98 }}
-          className="bg-gradient-to-r from-blue-700 to-indigo-700 dark:from-blue-600 dark:to-indigo-600 border-none rounded-full py-4 px-10 text-white font-semibold cursor-pointer shadow-lg mt-6 text-lg transition-all duration-300"
+          className="bg-gradient-to-r from-blue-700 to-indigo-700 dark:from-blue-600 dark:to-indigo-600 border-none rounded-full py-4 px-10 text-white font-semibold cursor-pointer shadow-lg mt-6 text-lg transition-all duration-300 relative z-10"
         >
           Start Your Journey Today <svg className="inline-block ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>

@@ -90,6 +90,38 @@ const Header = () => {
 
           <div className="flex items-center gap-5 sm:gap-7">
             <div className="flex items-center gap-2 sm:gap-3">
+              <Link
+                href="https://www.lmsathena.com/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex justify-center items-center gap-2 text-base sm:text-xl font-bold rounded-full py-1.5 px-4 transition-colors
+                  ${sticky 
+                    ? "bg-white text-secondary hover:bg-secondary hover:text-white dark:bg-white dark:text-secondary dark:hover:bg-secondary dark:hover:text-white" 
+                    : "bg-blue-600 text-white hover:bg-blue-700"}
+                `}
+              >
+                Sign In
+              </Link>
+              {user?.user || session?.user ? (
+                <div className="relative group flex items-center justify-center">
+                  <Image
+                    src="/images/avatar/avatar_1.jpg"
+                    alt="Image"
+                    width={32}
+                    height={32}
+                    quality={100}
+                    className="rounded-full cursor-pointer"
+                  />
+                  <p className="absolute w-fit text-xs sm:text-sm font-medium text-center z-10 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200 bg-gray text-white py-1 px-2 min-w-24 sm:min-w-28 rounded-full shadow-2xl top-full left-1/2 transform -translate-x-1/2 mt-3">
+                    {user?.user || session?.user?.name}
+                  </p>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+
+            <div className="flex items-center gap-2 sm:gap-3">
               <ThemeToggler />
               {user?.user || session?.user ? (
                 <div className="relative group flex items-center justify-center">

@@ -96,9 +96,21 @@ const Header = () => {
                 rel="noopener noreferrer"
                 className={`flex justify-center items-center gap-2 text-base sm:text-xl font-bold rounded-full py-1.5 px-4 transition-colors
                   ${sticky 
+                    ? "bg-gray text-white hover:bg-secondary hover:text-white" 
+                    : "bg-secondary text-white hover:bg-secondary/90"}
+                `}
+              >
+                Sign Up
+              </Link>
+              <Link
+                href="https://www.lmsathena.com/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex justify-center items-center gap-2 text-base sm:text-xl font-bold rounded-full py-1.5 px-4 transition-colors
+                  ${sticky 
                     ? "bg-white text-secondary hover:bg-secondary hover:text-white dark:bg-white dark:text-secondary dark:hover:bg-secondary dark:hover:text-white" 
                     : "bg-blue-600 text-white hover:bg-blue-700"}
-                `}
+                `}  
               >
                 Sign In
               </Link>
@@ -220,22 +232,7 @@ const Header = () => {
                           />
                         </button>
                       </div>
-                    ) : (
-                      <div className="flex flex-col sm:flex-row gap-3">
-                        <Link
-                          href={"/signin"}
-                          className="flex justify-center items-center gap-2 w-full text-secondary dark:text-white text-base sm:text-xl font-bold rounded-full border border-secondary/20 dark:border-white py-1.5 px-4 hover:bg-secondary/15"
-                        >
-                          Sign In
-                        </Link>
-                        <Link
-                          href={"/signup"}
-                          className="flex justify-center items-center gap-2 w-full text-white text-base sm:text-xl font-bold rounded-full bg-secondary py-2 px-4 hover:bg-secondary/90"
-                        >
-                          Sign Up
-                        </Link>
-                      </div>
-                    )}
+                    ) : null}
                   </div>
 
                   {/* Footer inside menu */}

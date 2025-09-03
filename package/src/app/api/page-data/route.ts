@@ -203,7 +203,7 @@ const pricingData = {
             planDescp: "Perfect for growing brands needing more customization and flexibility.",
             planIncludes: ["Join our interactive live classes every Tuesday & Thursday","Interactive Sessions","Hands-on learning","Session Replays"],
             coverImage: "/images/pricing/Cover-2.jpg", // Optional
-            link : "/service-page/live-class"
+            link: "/services_page/live-class",
         },
         {
             // planName: "Elevate", 

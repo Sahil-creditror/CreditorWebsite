@@ -195,19 +195,12 @@ export default function EnrollmentCTA() {
           >
             <Link href="/contact">
               <motion.button
-                whileHover={{ scale: 1.03 }}
+                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative inline-flex items-center gap-3 rounded-2xl px-8 py-4 text-base sm:text-lg font-semibold text-white cursor-pointer overflow-hidden border border-white/10 dark:border-white/10 bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 transition-all duration-300"
+                className="relative overflow-hidden rounded-xl px-6 py-3 font-semibold text-lg sm:text-xl text-white bg-gradient-to-r from-sky-500 to-sky-600 shadow-lg hover:brightness-105 transition-all duration-200"
                 aria-label="Contact Us"
               >
-                <span className="absolute inset-0 -z-10 rounded-[inherit] bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 opacity-60 blur-md transition-opacity duration-300 group-hover:opacity-90"></span>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 text-white/95">
-                  <path d="M1.5 6.75A2.25 2.25 0 0 1 3.75 4.5h16.5a2.25 2.25 0 0 1 2.25 2.25v7.5A2.25 2.25 0 0 1 20.25 16.5H7.06l-3.71 3.09c-.96.8-2.35.11-2.35-1.12V6.75Z"/>
-                </svg>
-                <span>Contact Us</span>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 transform transition-transform duration-300 group-hover:translate-x-1">
-                  <path fillRule="evenodd" d="M4.5 12a.75.75 0 0 1 .75-.75h11.69l-3.22-3.22a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.22-3.22H5.25A.75.75 0 0 1 4.5 12Z" clipRule="evenodd"/>
-                </svg>
+                <span className="relative z-10">Contact Us</span>
               </motion.button>
             </Link>
           </motion.div>

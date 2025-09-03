@@ -91,7 +91,7 @@ const Header = () => {
           <div className="flex items-center gap-5 sm:gap-7">
             <div className="flex items-center gap-2 sm:gap-3">
               <Link
-                href="https://www.lmsathena.com/login"
+                href="https://lmsathena.com/login"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`flex justify-center items-center gap-2 text-base sm:text-xl font-bold rounded-full py-1.5 px-4 transition-colors
@@ -103,7 +103,7 @@ const Header = () => {
                 Sign Up
               </Link>
               <Link
-                href="https://www.lmsathena.com/login"
+                href="https://lmsathena.com/login"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`flex justify-center items-center gap-2 text-base sm:text-xl font-bold rounded-full py-1.5 px-4 transition-colors

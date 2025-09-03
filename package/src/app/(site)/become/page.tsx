@@ -33,7 +33,7 @@ export default function Page() {
             <BecomeIntro />
             <Intro2 />
             <Content />
-            <Learn2 />
+            {/* <Learn2 /> */}
             <CTA />
             {/* <Intro />
             <Learn />

@@ -16,7 +16,7 @@ const PrivatePage = () => {
           bannerimage="/images/services/service-banner.webp"
         />
         <a
-          href="https://your-payment-gateway.com/enroll"
+          href=""
           target="_blank"
           rel="noopener noreferrer"
                     className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded-full text-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out z-20"

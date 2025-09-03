@@ -65,9 +65,10 @@ const footerData = {
         { name: "Home", href: "/" },
         { name: "About", href: "/about" },
         { name: "Services", href: "/#services" },
-        { name: "Work", href: "/projects" },
-        { name: "Terms", href: "/terms-and-conditions" },
+        { name: "Membership", href: "/projects" },
+        { name: "Terms & Conditions", href: "/terms-and-conditions" },
         { name: "Privacy Policy", href: "/privacy-policy" },
+        { name: "Return & Refund", href: "/return-refund" },
         { name: "Error 404", href: "/not-found" }
     ],
     socialLinks: [

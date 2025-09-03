@@ -55,8 +55,8 @@ export function HeroSectionOne() {
           transition={{ duration: 0.3, delay: 0.8 }}
           className="mt-4 max-w-3xl text-center text-lg font-normal text-white/90"
         >
-          With AI, you can launch your website in hours, not days. Try our best
-          in class, state of the art, cutting edge AI tools to get your website
+          With Creditor Academy, you can launch your websites. Try our best
+          in class, state of the art, cutting edge tools to get your website
           up.
         </motion.p>
 

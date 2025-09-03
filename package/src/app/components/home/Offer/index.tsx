@@ -158,7 +158,7 @@ export default function MasterclassBenefits() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              04
+              03
             </motion.span>
             <motion.div 
               className="h-px w-16 bg-black/12 dark:bg-white/12"

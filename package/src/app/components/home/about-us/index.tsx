@@ -375,7 +375,7 @@ function Aboutus() {
                     : {}
                 }
               >
-                02
+                01
               </motion.span>
               <motion.div
                 className="h-px w-16 bg-secondary/12 dark:bg-white/12"

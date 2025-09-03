@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <StatsFacts />
+      {/* <StatsFacts /> */}
       {/* <Masterclass /> */}
       <Aboutus />
       {/* <MasterInfo /> */}
@@ -34,7 +34,7 @@ export default function Home() {
       <Offer />
       <Event />
       {/* <Roadmap /> */}
-      <Testimonial />
+      {/* <Testimonial /> */}
       {/* <AnimatedTestimonialsDemo /> */}
       {/* <Game /> */}
       {/* <Team teamdataNumber="06" /> */}
@@ -42,7 +42,7 @@ export default function Home() {
       {/* <Pricing /> */}
       {/* <Faq /> */}
       {/* <Resources /> */}
-      <Contact contactdataNumber="6" />
+      <Contact contactdataNumber="4" />
     </>
   );
 }

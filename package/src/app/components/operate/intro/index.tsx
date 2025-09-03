@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion, Variants } from "framer-motion";
+import Link from "next/link";
 import {
   ShieldCheck,
   Building2,
@@ -87,7 +88,7 @@ export default function MasterclassOverview({
   primaryCtaText = "Join Now",
   primaryCtaHref = "#apply",
   secondaryCtaText = "Contact Us",
-  secondaryCtaHref = "#curriculum",
+  secondaryCtaHref = "/contact",
   className = "",
 }: MasterclassOverviewProps) {
   const titleWords = title.split(" ");
@@ -162,12 +163,12 @@ export default function MasterclassOverview({
               >
                 <PlayCircle className="h-4 w-4" /> {primaryCtaText}
               </a>
-              <a
+              <Link
                 href={secondaryCtaHref}
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-indigo-200 bg-white/70 px-4 py-2 text-sm sm:text-base font-semibold text-indigo-700 hover:bg-white shadow-sm backdrop-blur dark:border-indigo-800 dark:bg-gray-800/60 dark:text-indigo-300"
               >
                 <FileCheck className="h-4 w-4" /> {secondaryCtaText}
-              </a>
+              </Link>
             </motion.div>
 
             {/* Trust strip */}

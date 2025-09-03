@@ -52,8 +52,8 @@ const footerData = {
     info: [
         {
             icon: "/images/footer/email-arrow.svg",
-            link: "creditoracademy@gmail.com",
-            href: "https://www.creditoracademy.com/"
+            link: "counselor@creditoracademy.com",
+            href: "mailto:counselor@creditoracademy.com"
         },
         {
             icon: "/images/footer/Location.svg",

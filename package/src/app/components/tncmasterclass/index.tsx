@@ -209,20 +209,8 @@ export default function MasterclassMembershipTC() {
             <p className="mt-4 text-center text-base md:text-lg text-slate-600 dark:text-slate-300">
               By joining our Private Association, you acknowledge and agree to the following terms.
             </p>
-          </div>
-
-          {/* Sections */}
-          <div className="px-6 md:px-10 pb-10 md:pb-12">
-            <div className="divide-y divide-black/5 dark:divide-white/10">
-              {sections.map((s, i) => (
-                <Section key={i} index={i + 1} icon={s.icon} title={s.title}>
-                  {s.body}
-                </Section>
-              ))}
-            </div>
-
-            {/* Agree + CTA */}
-            <div className="mt-8 md:mt-10 pt-6 border-t border-black/5 dark:border-white/10">
+            {/* Agree + CTA moved here */}
+            <div className="mt-6 flex flex-col items-center gap-4">
               <label className="flex items-start gap-3 cursor-pointer select-none">
                 <input
                   type="checkbox"
@@ -233,25 +221,33 @@ export default function MasterclassMembershipTC() {
                 <span className="text-base md:text-lg">I have read and agree to the Terms and Conditions.</span>
               </label>
 
-              <div className="mt-6 flex flex-col sm:flex-row items-center gap-3">
-                <motion.button
-                  type="button"
-                  onClick={() => {
-                    if (!agreed) return;
-                    window.location.href = "https://quickclick.com/r/m7o5skh90z5o7s6x6bg9yeklf7ql3f";
-                  }}
-                  disabled={!agreed}
-                  whileTap={{ scale: agreed ? 0.98 : 1 }}
-                  className={`relative inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold transition focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-neutral-900 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-70 ${
-                    agreed
-                      ? "bg-gradient-to-tr from-indigo-600 via-blue-600 to-cyan-500 text-white shadow-lg hover:shadow-xl"
-                      : "bg-slate-200 dark:bg-neutral-800 text-slate-500 dark:text-slate-400"
-                  }`}
-                >
-                  <span>Enroll Now</span>
-                </motion.button>
+              <motion.button
+                type="button"
+                onClick={() => {
+                  if (!agreed) return;
+                  window.location.href = "https://quickclick.com/r/m7o5skh90z5o7s6x6bg9yeklf7ql3f";
+                }}
+                disabled={!agreed}
+                whileTap={{ scale: agreed ? 0.98 : 1 }}
+                className={`relative inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold transition focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-neutral-900 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-70 ${
+                  agreed
+                    ? "bg-gradient-to-tr from-indigo-600 via-blue-600 to-cyan-500 text-white shadow-lg hover:shadow-xl"
+                    : "bg-slate-200 dark:bg-neutral-800 text-slate-500 dark:text-slate-400"
+                }`}
+              >
+                <span>Enroll Now</span>
+              </motion.button>
+            </div>
+          </div>
 
-              </div>
+          {/* Sections */}
+          <div className="px-6 md:px-10 pb-10 md:pb-12">
+            <div className="divide-y divide-black/5 dark:divide-white/10">
+              {sections.map((s, i) => (
+                <Section key={i} index={i + 1} icon={s.icon} title={s.title}>
+                  {s.body}
+                </Section>
+              ))}
             </div>
           </div>
         </motion.div>

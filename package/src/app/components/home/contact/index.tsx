@@ -12,10 +12,7 @@ type ContactProps = { contactdataNumber?: string };
 
 export default function Contact(props: ContactProps) {
   const { contactdataNumber } = props;
-  const [submitted, setSubmitted] = useState(false);
-  const [loader, setLoader] = useState(false);
   const [contactData, setContactData] = useState<any>(null);
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const rippleRef = useRef<HTMLDivElement | null>(null);
@@ -69,47 +66,6 @@ export default function Contact(props: ContactProps) {
     return () => ctx.revert();
   }, []);
 
-  const reset = () => {
-    setFormData({ name: "", email: "", message: "" });
-  };
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    setLoader(true);
-    setSubmitted(false);
-
-    try {
-      const response = await fetch("https://formsubmit.co/ajax/niravjoshi87@gmail.com", {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-        }),
-      });
-
-      const data = await response.json();
-      // formsubmit returns { success: true } on success — fallback to truthy
-      if (data?.success || response.ok) {
-        setSubmitted(true);
-        reset();
-      } else {
-        setSubmitted(false);
-      }
-    } catch (error: any) {
-      console.error('Submit error:', error?.message || error);
-      setSubmitted(false);
-    } finally {
-      setLoader(false);
-    }
-  };
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
   // framer-motion variants
   const container = {
     hidden: { opacity: 0, y: 20 },
@@ -151,8 +107,8 @@ export default function Contact(props: ContactProps) {
                 Get in Touch
             </h2>
             <p className="mt-3 text-lg leading-relaxed text-gray-600 dark:text-gray-300 max-w-xl">
-                Let’s collaborate and craft something extraordinary together.  
-                Share your vision—I’m all ears and ready to help bring it to life.
+                Let's collaborate and craft something extraordinary together.  
+                Share your vision—I'm all ears and ready to help bring it to life.
             </p>
             </div>
           </motion.div>
@@ -212,6 +168,51 @@ export default function Contact(props: ContactProps) {
                   ))}
                 </ul>
 
+                {/* Feature Highlights */}
+                <div className="mt-8 relative z-10">
+                  <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                    <div className="w-2 h-2 bg-gradient-to-r from-primary to-blue-600 rounded-full"></div>
+                    Why Choose Us?
+                  </h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 border border-white/30 dark:border-white/5">
+                      <div className="bg-green-500/20 p-2 rounded-lg">
+                        <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-800 dark:text-gray-200 text-sm">Quick Response</p>
+                        <p className="text-gray-500 dark:text-gray-400 text-xs">Within 2 hours</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 border border-white/30 dark:border-white/5">
+                      <div className="bg-blue-500/20 p-2 rounded-lg">
+                        <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-800 dark:text-gray-200 text-sm">Secure</p>
+                        <p className="text-gray-500 dark:text-gray-400 text-xs">100% Protected</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 border border-white/30 dark:border-white/5">
+                      <div className="bg-purple-500/20 p-2 rounded-lg">
+                        <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-800 dark:text-gray-200 text-sm">24/7 Support</p>
+                        <p className="text-gray-500 dark:text-gray-400 text-xs">Always Available</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Manager Profile - Enhanced */}
                 <div className="mt-10 pt-8 border-t border-gray-200/50 dark:border-gray-700/30 relative z-10">
                   <div className="flex items-center gap-5 p-4 rounded-2xl bg-white/40 dark:bg-gray-800/30 hover:bg-white/70 dark:hover:bg-gray-800/50 transition-all duration-300">
@@ -248,91 +249,74 @@ export default function Contact(props: ContactProps) {
               </div>
             </motion.div>
 
-            {/* right form column */}
+            {/* right form column - WonderEngine Form */}
             <motion.div variants={item} className="w-full">
-              <motion.form onSubmit={handleSubmit} variants={container} className="relative bg-white/70 dark:bg-white/6 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-xl border border-black/4 dark:border-white/6 flex flex-col gap-4 md:gap-6">
-                <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input
-                    required
-                    className="w-full border-b border-secondary dark:border-white/20 focus:border-black dark:focus:border-white focus:outline-none py-3.5 bg-transparent"
-                    id="name"
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Name"
-                    aria-label="Name"
-                  />
-                  <input
-                    required
-                    className="w-full border-b border-secondary dark:border-white/20 focus:border-black dark:focus:border-white focus:outline-none py-3.5 bg-transparent"
-                    id="email"
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Email"
-                    aria-label="Email"
-                  />
-                </motion.div>
-
-                <motion.textarea
-                  variants={item}
-                  className="w-full border-b border-secondary dark:border-white/20 focus:border-black dark:focus:border-white focus:outline-none py-3.5 bg-transparent resize-none"
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Tell us about your project"
-                  rows={4}
-                  aria-label="Message"
-                />
-
-                {submitted && (
-                  <motion.div variants={item} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="flex items-center gap-2">
-                    <div className="bg-primary w-fit p-1.5 rounded-full">
-                      <Image src={'/images/Icon/right-check.svg'} alt="right-icon" width={18} height={18} />
-                    </div>
-                    <p className="text-secondary">Great! Email has been successfully sent. We will get in touch ASAP.</p>
-                  </motion.div>
-                )}
-
-                <div className="mt-2">
-                  {!loader ? (
-                    <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" className="group relative flex justify-center items-center w-full bg-primary hover:bg-secondary rounded-full transition-all duration-300 ease-in-out cursor-pointer py-3.5">
-                      <span className="text-lg font-bold text-secondary group-hover:text-white transition-all duration-300 ease-in-out">Submit message</span>
-                      <div className="absolute top-1 right-1 transition-all duration-300 ease-in-out">
-                        <svg className="flex items-center transition-transform duration-300 ease-in-out group-hover:rotate-45" width="46" height="46" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g filter="url(#filter0_d_1_873)">
-                            <rect x="3" y="2" width="52" height="52" rx="26" fill="white" />
-                            <path d="M24 23H34M34 23V33M34 23L24 33" stroke="#1F2A2E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                          </g>
-                          <defs>
-                            <filter id="filter0_d_1_873" x="0" y="0" width="58" height="58" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                              <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                              <feOffset dy="1" />
-                              <feGaussianBlur stdDeviation="1.5" />
-                              <feComposite in2="hardAlpha" operator="out" />
-                              <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0" />
-                              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_873" />
-                              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_873" result="shape" />
-                            </filter>
-                          </defs>
-                        </svg>
-                      </div>
-                    </motion.button>
-                  ) : (
-                    <button className="bg-gray-100 dark:bg-white/5 item-center flex gap-2 py-3 px-6 rounded w-full justify-center">
-                      <div className="animate-spin inline-block w-5 h-5 border-2 border-current border-t-transparent rounded-full text-primary" role="status" aria-label="loading">
-                        <span className="sr-only">Loading...</span>
-                      </div>
-                      Submitting
-                    </button>
-                  )}
+              <motion.div 
+                variants={container} 
+                className="relative bg-gradient-to-br from-white/90 via-white/80 to-white/70 dark:from-gray-900/90 dark:via-gray-800/80 dark:to-gray-900/70 backdrop-blur-2xl rounded-3xl p-8 md:p-10 shadow-2xl border border-white/20 dark:border-white/10 overflow-hidden group hover:shadow-3xl hover:-translate-y-1 transition-all duration-500"
+              >
+                {/* Enhanced decorative elements */}
+                <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl group-hover:bg-blue-500/30 group-hover:blur-2xl transition-all duration-700"></div>
+                <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-gradient-to-br from-green-500/20 to-blue-500/20 rounded-full blur-3xl group-hover:bg-green-500/30 group-hover:blur-2xl transition-all duration-700"></div>
+                
+                {/* Shimmer effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 dark:via-white/5 to-transparent -skew-x-12 group-hover:animate-shimmer transition-all duration-1000 opacity-0 group-hover:opacity-100"></div>
+                
+                {/* Form Header */}
+                <div className="relative z-10 mb-8 text-center">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary to-blue-600 rounded-2xl shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">
+                    Send us a Message
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-lg">
+                    We'd love to hear from you. Let's start a conversation!
+                  </p>
                 </div>
 
-              </motion.form>
+                {/* WonderEngine Form - Direct Integration */}
+                <div className="relative z-10 mb-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-2 h-2 bg-gradient-to-r from-primary to-blue-600 rounded-full animate-pulse"></div>
+                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Powered by WonderEngine</span>
+                  </div>
+                  
+                  {/* WonderEngine Form */}
+                  <iframe
+                    src="https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls"
+                    style={{ width: '100%', height: '402px', border: 'none', borderRadius: '12px' }}
+                    id="inline-o69tKOXv3NV8GnS4aGls" 
+                    data-layout="{'id':'INLINE'}"
+                    data-trigger-type="alwaysShow"
+                    data-trigger-value=""
+                    data-activation-type="alwaysActivated"
+                    data-activation-value=""
+                    data-deactivation-type="neverDeactivate"
+                    data-deactivation-value=""
+                    data-form-name="Contact us form"
+                    data-height="402"
+                    data-layout-iframe-id="inline-o69tKOXv3NV8GnS4aGls"
+                    data-form-id="o69tKOXv3NV8GnS4aGls"
+                    title="Contact us form"
+                  />
+                </div>
+
+                {/* Form Footer */}
+                <div className="relative z-10 text-center">
+                  <div className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    <span>Your information is secure and encrypted</span>
+                  </div>
+                </div>
+                
+                {/* WonderEngine Script */}
+                <script src="https://api.wonderengine.ai/js/form_embed.js"></script>
+              </motion.div>
             </motion.div>
 
           </motion.div>

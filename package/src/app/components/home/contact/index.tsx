@@ -13,6 +13,7 @@ type ContactProps = { contactdataNumber?: string };
 export default function Contact(props: ContactProps) {
   const { contactdataNumber } = props;
   const [contactData, setContactData] = useState<any>(null);
+  const [isFormLoaded, setIsFormLoaded] = useState(false);
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const rippleRef = useRef<HTMLDivElement | null>(null);
@@ -113,19 +114,22 @@ export default function Contact(props: ContactProps) {
             </div>
           </motion.div>
 
-          <motion.div variants={container} className="flex flex-col xl:flex-row gap-10 xl:gap-16">
+          <motion.div variants={container} className="flex flex-col xl:flex-row gap-10 xl:gap-16 xl:items-stretch">
 
-            {/* left info column */}
-            {/* Left info column - Enhanced */}
+            {/* left info column - Enhanced with more visual elements */}
             <motion.div
               variants={item}
-              className="max-w-md flex flex-col gap-10 md:gap-14"
+              className="max-w-md flex flex-col gap-10 md:gap-14 xl:flex-1"
             >
-              <div className="relative bg-gradient-to-br from-white/90 via-white/80 to-white/70 dark:from-gray-900/90 dark:via-gray-800/80 dark:to-gray-900/70 backdrop-blur-2xl rounded-3xl p-8 shadow-2xl border border-white/20 dark:border-white/10 transition-all duration-500 hover:shadow-3xl hover:-translate-y-1.5 overflow-hidden group">
+              <div className="relative bg-gradient-to-br from-white/90 via-white/80 to-white/70 dark:from-gray-900/90 dark:via-gray-800/80 dark:to-gray-900/70 backdrop-blur-2xl rounded-3xl p-8 shadow-2xl border border-white/20 dark:border-white/10 transition-all duration-500 hover:shadow-3xl hover:-translate-y-1.5 overflow-hidden group h-full">
                 
                 {/* Decorative elements */}
                 <div className="absolute -top-10 -right-10 w-28 h-28 bg-primary/10 rounded-full blur-xl group-hover:bg-primary/20 transition-all duration-700"></div>
                 <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-blue-500/10 rounded-full blur-xl group-hover:bg-blue-500/20 transition-all duration-700"></div>
+                
+                {/* Animated floating elements */}
+                <div className="absolute top-6 left-6 w-4 h-4 rounded-full bg-primary/30 animate-pulse"></div>
+                <div className="absolute bottom-10 right-8 w-3 h-3 rounded-full bg-blue-500/40 animate-ping"></div>
                 
                 {/* Shimmer effect on hover */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 dark:via-white/5 to-transparent -skew-x-12 group-hover:animate-shimmer transition-all duration-1000 opacity-0 group-hover:opacity-100"></div>
@@ -155,6 +159,7 @@ export default function Contact(props: ContactProps) {
                       key={index}
                       variants={item}
                       className="flex items-start gap-4 group p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 hover:bg-white/80 dark:hover:bg-gray-800/50 transition-all duration-300 border border-white/30 dark:border-white/5"
+                      whileHover={{ scale: 1.02 }}
                     >
                       <div className="bg-gradient-to-r from-primary to-blue-600 p-2.5 rounded-full flex-shrink-0 shadow-sm group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300 mt-0.5">
                         <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -171,11 +176,11 @@ export default function Contact(props: ContactProps) {
                 {/* Feature Highlights */}
                 <div className="mt-8 relative z-10">
                   <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-gradient-to-r from-primary to-blue-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gradient-to-r from-primary to-blue-600 rounded-full animate-pulse"></div>
                     Why Choose Us?
                   </h4>
                   <div className="space-y-3">
-                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 border border-white/30 dark:border-white/5">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 border border-white/30 dark:border-white/5 hover:bg-white/70 dark:hover:bg-gray-800/50 transition-all duration-300">
                       <div className="bg-green-500/20 p-2 rounded-lg">
                         <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -187,7 +192,7 @@ export default function Contact(props: ContactProps) {
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 border border-white/30 dark:border-white/5">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 border border-white/30 dark:border-white/5 hover:bg-white/70 dark:hover:bg-gray-800/50 transition-all duration-300">
                       <div className="bg-blue-500/20 p-2 rounded-lg">
                         <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -199,7 +204,7 @@ export default function Contact(props: ContactProps) {
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 border border-white/30 dark:border-white/5">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 border border-white/30 dark:border-white/5 hover:bg-white/70 dark:hover:bg-gray-800/50 transition-all duration-300">
                       <div className="bg-purple-500/20 p-2 rounded-lg">
                         <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
@@ -212,57 +217,27 @@ export default function Contact(props: ContactProps) {
                     </div>
                   </div>
                 </div>
-
-                {/* Manager Profile - Enhanced */}
-                <div className="mt-10 pt-8 border-t border-gray-200/50 dark:border-gray-700/30 relative z-10">
-                  <div className="flex items-center gap-5 p-4 rounded-2xl bg-white/40 dark:bg-gray-800/30 hover:bg-white/70 dark:hover:bg-gray-800/50 transition-all duration-300">
-                    {contactData?.managerProfile?.image && (
-                      <div className="relative">
-                        <Image
-                          src={contactData.managerProfile.image}
-                          alt="manager"
-                          width={72}
-                          height={72}
-                          className="rounded-full object-cover ring-4 ring-primary/20 group-hover:ring-primary/30 transition-all duration-500"
-                        />
-                        <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-1.5 ring-2 ring-white dark:ring-gray-900">
-                          <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                        </div>
-                      </div>
-                    )}
-                    <div>
-                      <p className="font-semibold text-gray-900 dark:text-white text-lg">
-                        {contactData?.managerProfile?.name}
-                      </p>
-                      <span className="text-sm text-gray-600 dark:text-gray-400 block mt-1">
-                        {contactData?.managerProfile?.position}
-                      </span>
-                      <div className="flex items-center mt-2">
-                        <svg className="w-4 h-4 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <span className="text-xs text-gray-500 dark:text-gray-400">Typically replies in 2 hours</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </motion.div>
 
             {/* right form column - WonderEngine Form */}
-            <motion.div variants={item} className="w-full">
+            <motion.div variants={item} className="w-full xl:flex-1">
               <motion.div 
                 variants={container} 
-                className="relative bg-gradient-to-br from-white/90 via-white/80 to-white/70 dark:from-gray-900/90 dark:via-gray-800/80 dark:to-gray-900/70 backdrop-blur-2xl rounded-3xl p-8 md:p-10 shadow-2xl border border-white/20 dark:border-white/10 overflow-hidden group hover:shadow-3xl hover:-translate-y-1 transition-all duration-500"
+                className="relative bg-gradient-to-br from-white/90 via-white/80 to-white/70 dark:from-gray-900/90 dark:via-gray-800/80 dark:to-gray-900/70 backdrop-blur-2xl rounded-3xl p-8 md:p-10 shadow-2xl border border-white/20 dark:border-white/10 overflow-hidden group hover:shadow-3xl hover:-translate-y-1 transition-all duration-500 h-full"
               >
                 {/* Enhanced decorative elements */}
                 <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl group-hover:bg-blue-500/30 group-hover:blur-2xl transition-all duration-700"></div>
                 <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-gradient-to-br from-green-500/20 to-blue-500/20 rounded-full blur-3xl group-hover:bg-green-500/30 group-hover:blur-2xl transition-all duration-700"></div>
                 
+                {/* Animated floating elements */}
+                <div className="absolute top-10 left-10 w-6 h-6 rounded-full bg-primary/20 animate-bounce"></div>
+                <div className="absolute bottom-12 right-12 w-5 h-5 rounded-full bg-blue-500/30 animate-ping"></div>
+                
                 {/* Shimmer effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 dark:via-white/5 to-transparent -skew-x-12 group-hover:animate-shimmer transition-all duration-1000 opacity-0 group-hover:opacity-100"></div>
                 
-                {/* Form Header */}
+                {/* Form Header
                 <div className="relative z-10 mb-8 text-center">
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary to-blue-600 rounded-2xl shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300">
                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -275,7 +250,7 @@ export default function Contact(props: ContactProps) {
                   <p className="text-gray-600 dark:text-gray-400 text-lg">
                     We'd love to hear from you. Let's start a conversation!
                   </p>
-                </div>
+                </div> */}
 
                 {/* WonderEngine Form - Direct Integration */}
                 <div className="relative z-10 mb-6">
@@ -284,10 +259,20 @@ export default function Contact(props: ContactProps) {
                     <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Powered by WonderEngine</span>
                   </div>
                   
+                  {/* Form loading state */}
+                  {!isFormLoaded && (
+                    <div className="w-full h-96 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-xl animate-pulse flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-gray-500 dark:text-gray-400">Loading form...</p>
+                      </div>
+                    </div>
+                  )}
+                  
                   {/* WonderEngine Form */}
                   <iframe
                     src="https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls"
-                    style={{ width: '100%', height: '402px', border: 'none', borderRadius: '12px' }}
+                    style={{ width: '100%', height: '380px', border: 'none', borderRadius: '12px', display: isFormLoaded ? 'block' : 'none' }}
                     id="inline-o69tKOXv3NV8GnS4aGls" 
                     data-layout="{'id':'INLINE'}"
                     data-trigger-type="alwaysShow"
@@ -301,6 +286,7 @@ export default function Contact(props: ContactProps) {
                     data-layout-iframe-id="inline-o69tKOXv3NV8GnS4aGls"
                     data-form-id="o69tKOXv3NV8GnS4aGls"
                     title="Contact us form"
+                    onLoad={() => setIsFormLoaded(true)}
                   />
                 </div>
 
@@ -323,6 +309,16 @@ export default function Contact(props: ContactProps) {
         </motion.div>
       </div>
 
+      {/* Custom animation styles */}
+      <style jsx>{`
+        @keyframes shimmer {
+          0% { transform: translateX(-100%) skewX(-12deg); }
+          100% { transform: translateX(200%) skewX(-12deg); }
+        }
+        .animate-shimmer {
+          animation: shimmer 1.5s infinite;
+        }
+      `}</style>
     </motion.section>
   );
 }

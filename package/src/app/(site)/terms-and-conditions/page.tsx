@@ -13,6 +13,7 @@ export default function Page() {
                 heading="Terms & Conditions"
                 desc="Understand the <span>Rules & Guidelines</span> Before Using Our Services" />
             <TermsAndCondition />
+            
         </main>
     );
 };

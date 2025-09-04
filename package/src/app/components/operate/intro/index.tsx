@@ -43,12 +43,12 @@ interface MasterclassOverviewProps {
 // ---------------------------------------------
 
 const DEFAULT_TITLE = "Launch a Private Business with Trusts & PMAs";
-const DEFAULT_KICKER = "Overview • 3-Month Journey";
+const DEFAULT_KICKER = "Overview • Self-paced Journey";
 const DEFAULT_PITCH =
-  "This 3-month Journey teaches you how to operate entirely outside the state-controlled system—by using private trusts, PMAs, and lawful commerce strategies. Ideal for healers, real estate pros, educators, freelancers, and freedom-seekers.";
+  "This Self-paced Journey teaches you how to operate entirely outside the state-controlled system—by using private trusts, PMAs, and lawful commerce strategies. Ideal for Entrepreneurs, Real estate, asset protection and Family legacy planning.";
 
 const DEFAULT_AUDIENCE = [
-  "Healers",
+  "Entrepreneurs",
   "Real estate pros",
   "Educators",
   "Freelancers",

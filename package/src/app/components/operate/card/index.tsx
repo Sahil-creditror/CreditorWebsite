@@ -23,7 +23,7 @@ const DEFAULT_ITEMS: LearnItem[] = [
     description:
       "Design robust UBOT frameworks to protect and compartmentalize assets from day one.",
     image:
-      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1600&auto=format&fit=crop",
+      "/images/operate/img2.webp",
     span: "wide",
   },
   {
@@ -31,14 +31,14 @@ const DEFAULT_ITEMS: LearnItem[] = [
     description:
       "Stand up Private Membership Associations to operate in the private with clarity.",
     image:
-      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1600&auto=format&fit=crop",
+      "/images/operate/img5.webp",
   },
   {
     title: "Acquire & hold real estate in trusts",
     description:
       "Structure acquisitions for privacy, continuity, and long-term stewardship.",
     image:
-      "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1600&auto=format&fit=crop",
+      "/images/operate/img6.webp",
     span: "tall",
   },
   {
@@ -46,14 +46,14 @@ const DEFAULT_ITEMS: LearnItem[] = [
     description:
       "Implement disciplined record-keeping and private accounting workflows.",
     image:
-      "https://images.unsplash.com/photo-1554224154-22dec7ec8818?q=80&w=1600&auto=format&fit=crop",
+      "/images/operate/img1.webp",
   },
   {
-    title: "Operate legally without UCC, LLCs, or statutory codes",
+    title: " Build intergenerational wealth in the private",
     description:
       "Navigate operations with private instruments and compliant governance.",
     image:
-      "https://images.unsplash.com/photo-1554224154-22dec7ec8818?q=80&w=1600&auto=format&fit=crop",
+      "/images/operate/img3.webp",
     span: "wide",
   },
 ];

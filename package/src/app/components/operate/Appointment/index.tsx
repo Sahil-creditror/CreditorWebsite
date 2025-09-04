@@ -66,7 +66,7 @@ export default function HeroSection() {
           whileTap={{ scale: 0.95 }}
           className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold shadow-lg transition-transform duration-300 hover:shadow-xl"
         >
-          Get Started <FaArrowRight />
+          Join Now <FaArrowRight />
         </motion.a>
       </motion.div>
     </section>

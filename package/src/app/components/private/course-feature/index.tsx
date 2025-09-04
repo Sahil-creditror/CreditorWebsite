@@ -43,9 +43,9 @@ export default function CourseFeatures() {
           transition={{ duration: 0.6 }}
           className="text-4xl md:text-5xl font-bold mb-6 text-slate-800 dark:text-white"
         >
-          What You'll Achieve
+          What You'll Learn
           <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 text-5xl md:text-6xl mt-2">
-            After This Course
+            In This Course
           </span>
         </motion.h2>
         <motion.p

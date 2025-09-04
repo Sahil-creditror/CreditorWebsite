@@ -99,7 +99,7 @@ const PrivateBusinessCredit: React.FC = () => {
 
           {/* Courses container */}
           <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-5 relative z-10">
-            {/* "Become Private" Course Card - Blue Theme */}
+            {/* "I WANT REMEDY NOW - Blue Theme */}
             <motion.div
               whileHover={{ y: -12, scale: 1.02 }}
               className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-900/30 dark:to-sky-900/30 rounded-2xl p-0 w-full max-w-sm shadow-xl border border-blue-200 dark:border-blue-700/50 relative overflow-hidden group"
@@ -109,9 +109,9 @@ const PrivateBusinessCredit: React.FC = () => {
               viewport={{ once: false, amount: 0.3 }}
             >
               {/* Premium Course Tag */}
-              <div className="absolute top-5 left-5 bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
+              {/* <div className="absolute top-5 left-5 bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
                 Foundation Course
-              </div>
+              </div> */}
 
               {/* Image container with hover effect */}
               <motion.div 
@@ -142,13 +142,17 @@ const PrivateBusinessCredit: React.FC = () => {
                       <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">Status Correction Masterclass</p>
                     </div>
                   </div>
-                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left">
-                    Fix your personal credit with our proven system. Remove negative items, boost your score, and gain financial control.
-                  </p>
+                 <ul className="list-disc list-inside text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2">
+  <li>Check credit reports</li>
+  <li>Dispute negative items</li>
+  <li>Pay bills on time</li>
+  <li>Reduce debt balances</li>
+</ul>
+
                   <div className="mt-4">
-                    <button className="w-full bg-blue-100 dark:bg-blue-800/40 hover:bg-blue-200 dark:hover:bg-blue-700/60 text-blue-700 dark:text-blue-300 font-medium py-3 rounded-lg transition-colors">
+                    {/* <button className="w-full bg-blue-100 dark:bg-blue-800/40 hover:bg-blue-200 dark:hover:bg-blue-700/60 text-blue-700 dark:text-blue-300 font-medium py-3 rounded-lg transition-colors">
                       Explore Course
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
@@ -168,7 +172,7 @@ const PrivateBusinessCredit: React.FC = () => {
               <span className="sr-only">Plus</span>
             </motion.div>
 
-            {/* New Sovereignty101 Course Card - Indigo Theme */}
+            {/* Private Merchant  - Indigo Theme */}
             <motion.div
               whileHover={{ y: -12, scale: 1.02 }}
               className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-2xl p-0 w-full max-w-sm shadow-xl border border-indigo-200 dark:border-indigo-700/50 relative overflow-hidden group"
@@ -178,9 +182,9 @@ const PrivateBusinessCredit: React.FC = () => {
               viewport={{ once: false, amount: 0.3 }}
             >
               {/* Premium Course Tag */}
-              <div className="absolute top-5 left-5 bg-gradient-to-r from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
+              {/* <div className="absolute top-5 left-5 bg-gradient-to-r from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
                 Advanced Course
-              </div>
+              </div> */}
 
               {/* Image container with hover effect */}
               <motion.div 
@@ -210,13 +214,17 @@ const PrivateBusinessCredit: React.FC = () => {
                       <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">Foundations Mastery</p>
                     </div>
                   </div>
-                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left">
-                    Process payments without banks. No KYC, no shutdowns. Take full control of your financial transactions.
-                  </p>
+                  <ul className="list-disc list-inside text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2">
+  <li>Process without banks</li>
+  <li>No KYC required</li>
+  <li>No shutdown risks</li>
+  <li>Full financial control</li>
+</ul>
+
                   <div className="mt-4">
-                    <button className="w-full bg-indigo-100 dark:bg-indigo-800/40 hover:bg-indigo-200 dark:hover:bg-indigo-700/60 text-indigo-700 dark:text-indigo-300 font-medium py-3 rounded-lg transition-colors">
+                    {/* <button className="w-full bg-indigo-100 dark:bg-indigo-800/40 hover:bg-indigo-200 dark:hover:bg-indigo-700/60 text-indigo-700 dark:text-indigo-300 font-medium py-3 rounded-lg transition-colors">
                       Explore Course
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
@@ -246,9 +254,9 @@ const PrivateBusinessCredit: React.FC = () => {
               viewport={{ once: false, amount: 0.3 }}
             >
               {/* Premium Course Tag */}
-              <div className="absolute top-5 left-5 bg-gradient-to-r from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
+              {/* <div className="absolute top-5 left-5 bg-gradient-to-r from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
                 Advanced Course
-              </div>
+              </div> */}
 
               {/* Image container with hover effect */}
               <motion.div 
@@ -270,21 +278,28 @@ const PrivateBusinessCredit: React.FC = () => {
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-md">
                       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                      </svg>
+  <rect x="3" y="5" width="18" height="14" rx="3" stroke="white" strokeWidth="2"/>
+  <path d="M8 9h8M8 13h5" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+  <circle cx="18" cy="17" r="1.5" stroke="white" strokeWidth="2"/>
+</svg>
+
                     </div>
                     <div className="text-left">
                       <h4 className="text-lg font-bold text-blue-700 dark:text-blue-300 m-0">Private Business Credit </h4>
                       <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">Foundations Mastery</p>
                     </div>
                   </div>
-                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left">
-                    Build business credit through UBOT Trusts and private processing and empower yourself with the financial freedom.
-                  </p>
+                 <ul className="list-disc list-inside text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2">
+  <li>Build business credit</li>
+  <li>Use UBOT Trusts</li>
+  <li>Leverage private processing</li>
+  <li>Empower financial freedom</li>
+</ul>
+
                   <div className="mt-4">
-                    <button className="w-full bg-indigo-100 dark:bg-indigo-800/40 hover:bg-indigo-200 dark:hover:bg-indigo-700/60 text-indigo-700 dark:text-indigo-300 font-medium py-3 rounded-lg transition-colors">
+                    {/* <button className="w-full bg-indigo-100 dark:bg-indigo-800/40 hover:bg-indigo-200 dark:hover:bg-indigo-700/60 text-indigo-700 dark:text-indigo-300 font-medium py-3 rounded-lg transition-colors">
                       Explore Course
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>

@@ -195,7 +195,7 @@ export default function InfographicTable({
         </div>
 
         {/* CTA */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
@@ -212,7 +212,7 @@ export default function InfographicTable({
             <span>{ctaLabel}</span>
             <ArrowRight className="h-4 w-4" />
           </motion.button>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

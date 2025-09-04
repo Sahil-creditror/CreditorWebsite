@@ -63,15 +63,16 @@ const Herobanner: React.FC<HeroBannerProps> = ({
             </p>
           </div>
 
-          {/* Heading + Button */}
-          <div className="flex flex-col sm:flex-row sm:items-end lg:items-baseline gap-4">
-            <h1
-              className={`${headingClass} text-2xl sm:text-4xl md:text-5xl font-bold`}
-            >
-              {heading}
-            </h1>
+          {/* Heading */}
+          <h1
+            className={`${headingClass} text-2xl sm:text-4xl md:text-5xl font-bold`}
+          >
+            {heading}
+          </h1>
 
-            {buttonPath && (
+          {/* Button */}
+          {buttonPath && (
+            <div className="flex justify-end">
               <motion.div
                 ref={btnRef}
                 initial={{ opacity: 0, y: 20 }}
@@ -105,8 +106,8 @@ const Herobanner: React.FC<HeroBannerProps> = ({
                   </div>
                 </Link>
               </motion.div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </section>

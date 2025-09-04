@@ -161,7 +161,7 @@ const BecomePrivateCourse: React.FC = () => {
       </div>
 
       {/* Title Section */}
-      <div className="text-center px-5 max-w-7xl mx-auto mb-20 relative z-10">
+      <div className="text-center px-5 max-w-7xl mx-auto relative z-10">
 
         {/* Courses Section with Creative Layout */}
         <motion.section

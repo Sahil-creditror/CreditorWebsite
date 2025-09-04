@@ -39,6 +39,11 @@ export default function HeroSection({
     hover: { rotateX: 2, rotateY: -2, scale: 1.01, transition: { type: 'spring', stiffness: 250, damping: 18 } }
   };
 
+  const arrowSlide: Variants = {
+    rest: { x: 0 },
+    hover: { x: 6, transition: { type: 'tween', duration: 0.2 } }
+  };
+
   return (
     <>
       {/* HERO */}
@@ -64,7 +69,8 @@ export default function HeroSection({
         <motion.div
           variants={staggerContainer}
           initial="hidden"
-          animate="show"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
           className="grid lg:grid-cols-2 gap-12 items-center my-15"
         >
           
@@ -75,7 +81,7 @@ export default function HeroSection({
             whileHover="hover"
             initial="rest"
             animate="rest"
-            className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-lg bg-slate-50 dark:bg-slate-800 will-change-transform"
+            className="group relative rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-lg bg-slate-50 dark:bg-slate-800 will-change-transform"
           >
             <motion.div
               variants={tiltOnHover}
@@ -90,10 +96,11 @@ export default function HeroSection({
                 allowFullScreen
               ></iframe>
             </motion.div>
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-sky-400/0 via-sky-400/0 to-indigo-500/0 group-hover:from-sky-400/15 group-hover:via-sky-400/10 group-hover:to-indigo-500/15 opacity-0 group-hover:opacity-100 transition-[opacity,background] duration-500" />
           </motion.div>
 
           {/* Content (Right) */}
-          <motion.div variants={riseAndFade}>
+          <motion.div variants={riseAndFade} whileInView="show" viewport={{ once: true, amount: 0.3 }}>
             <div className="max-w-2xl">
               {/* Badge */}
               <motion.div
@@ -126,7 +133,10 @@ export default function HeroSection({
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                   className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-[#60A5FA] to-[#1E3A8A] text-white font-semibold shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-400 dark:focus:ring-sky-600"
                 >
-                  Reserve Seat <FaArrowRight />
+                  Reserve Seat
+                  <motion.span variants={arrowSlide} initial="rest" whileHover="hover" className="inline-flex">
+                    <FaArrowRight />
+                  </motion.span>
                 </motion.a>
               </motion.div>
 

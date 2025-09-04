@@ -7,7 +7,17 @@ import {
   FaGavel,
   FaUserLock,
   FaFileContract,
-  FaShieldAlt
+  FaShieldAlt,
+  FaUserSecret,
+  FaFlag,
+  FaFileSignature,
+  FaIdCard,
+  FaHandsHelping,
+  FaBookOpen,
+  FaHistory,
+  FaCoins,
+  FaLock,
+  FaUserCheck
 } from 'react-icons/fa';
 
 const fadeInUp: Variants = {
@@ -222,9 +232,58 @@ const BecomePrivateCourse: React.FC = () => {
                       <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">Status Correction Masterclass</p>
                     </div>
                   </div>
-                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left">
-                    Reclaim your legal identity and exit the public system through proper status correction.
+                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left mb-4">
+                    Learn how to step out of the public and establish your affairs in the private.
                   </p>
+                  
+                  {/* Learning Points */}
+                  <div className="space-y-3 text-left">
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <FaUserSecret className="w-3 h-3 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 m-0 leading-relaxed text-left">
+                        Correct your status and reclaim your lawful standing
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <FaFlag className="w-3 h-3 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 m-0 leading-relaxed text-left">
+                        Establish yourself as an American National
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <FaFileSignature className="w-3 h-3 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 m-0 leading-relaxed text-left">
+                        Complete your Secured Party Creditor process
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <FaIdCard className="w-3 h-3 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 m-0 leading-relaxed text-left">
+                        Create your private identity and foundational documents
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <FaHandsHelping className="w-3 h-3 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 m-0 leading-relaxed text-left">
+                        Declare your political and legal autonomy
+                      </p>
+                    </div>
+                  </div>
+                  
                   {/* <div className="mt-4">
                     <button className="w-full bg-blue-100 dark:bg-blue-800/40 hover:bg-blue-200 dark:hover:bg-blue-700/60 text-blue-700 dark:text-blue-300 font-medium py-3 rounded-lg transition-colors">
                       Explore Course
@@ -290,9 +349,58 @@ const BecomePrivateCourse: React.FC = () => {
                       <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">Foundations Mastery</p>
                     </div>
                   </div>
-                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left">
-                    Master the principles of sovereignty and how to rebut legal presumptions effectively.
+                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left mb-4">
+                    Discover how America shifted from liberty to control—and what it takes to reclaim independence once again.
                   </p>
+                  
+                  {/* Learning Points */}
+                  <div className="space-y-3 text-left">
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <FaBookOpen className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 m-0 leading-relaxed text-left">
+                        Foundations of American sovereignty and law
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <FaHistory className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 m-0 leading-relaxed text-left">
+                        Evolution of legal identity post-Civil War
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <FaCoins className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 m-0 leading-relaxed text-left">
+                        Origins of commercial law and currency
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <FaLock className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 m-0 leading-relaxed text-left">
+                        Public system as a managed debt trap
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <FaUserCheck className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 m-0 leading-relaxed text-left">
+                        Understanding your lawful private standing
+                      </p>
+                    </div>
+                  </div>
+                  
                   {/* <div className="mt-4">
                     <button className="w-full bg-indigo-100 dark:bg-indigo-800/40 hover:bg-indigo-200 dark:hover:bg-indigo-700/60 text-indigo-700 dark:text-indigo-300 font-medium py-3 rounded-lg transition-colors">
                       Explore Course

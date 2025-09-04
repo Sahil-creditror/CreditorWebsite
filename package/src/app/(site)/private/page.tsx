@@ -4,6 +4,7 @@ import Cards from '@/app/components/private/cards'; // Import the Cards componen
 import CourseFeatures from '@/app/components/private/course-feature'; // Import the new CourseFeatures component
 import CourseDetail from '@/app/components/private/course-detail';
 import TenBusinesses from '@/app/components/private/ten-businesses';
+import Contact from '@/app/components/private/contact';
 
 
 const PrivatePage = () => {
@@ -26,7 +27,8 @@ const PrivatePage = () => {
       </div>
     <Cards/>
     <CourseDetail />
-      <CourseFeatures /> {/* Add the CourseFeatures component here */}
+    <CourseFeatures /> {/* Add the CourseFeatures component here */}
+    <Contact />
       
       {/* <TenBusinesses /> */}
     </div>

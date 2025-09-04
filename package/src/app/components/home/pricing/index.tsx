@@ -8,7 +8,26 @@ import Slider from "react-infinite-logo-slider";
 import { useEffect, useState } from "react";
 
 function Pricing() {
-  const [pricingData, setPricingData] = useState<any>(null);
+  interface PricingPlanItem {
+    planName: string;
+    tag?: string;
+    cancelPrice?: string;
+    planPrice: string;
+    planDescp?: string;
+    planIncludes?: string[];
+    link?: string;
+    coverImage?: string;
+  }
+
+  interface PartnerLogoItem { light: string; dark: string }
+  interface PricingPayload {
+    data?: PricingPlanItem[];
+    partnerLogo?: PartnerLogoItem[];
+  }
+
+  const [pricingData, setPricingData] = useState<PricingPayload | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,12 +35,14 @@ function Pricing() {
         const res = await fetch('/api/page-data')
         if (!res.ok) throw new Error('Failed to fetch')
         const data = await res.json()
-        setPricingData(data?.pricingData)
+        setPricingData(data?.pricingData ?? null)
+        setErrorMessage(null)
       } catch (error) {
         console.error('Error fetching services:', error)
+        setErrorMessage('Unable to load pricing at the moment. Please try again later.')
       }
     }
-    fetchData()
+    fetchData().finally(() => setIsLoading(false))
   }, [])
 
   const defaultCoverImages = [
@@ -51,16 +72,46 @@ function Pricing() {
               </div>
 
               <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-7">
-                {pricingData?.data?.map((value: any, index: any) => {
-                  const coverImage = value.coverImage || defaultCoverImages[index] || defaultCoverImages[0];
+                {isLoading && Array.from({ length: 3 }).map((_, idx) => (
+                  <div key={`skeleton-${idx}`} className="bg-white dark:bg-lightgray/10 overflow-hidden rounded-lg shadow-lg">
+                    <div className="relative h-64 w-full bg-black/10 dark:bg-white/10 animate-pulse" />
+                    <div className="p-3 sm:p-5 xl:p-12 flex flex-col gap-10">
+                      <div className="pt-10 border-t border-secondary/12 dark:border-white/12">
+                        <div className="h-5 w-40 bg-black/10 dark:bg-white/10 rounded mb-4 animate-pulse" />
+                        <ul className="flex flex-col gap-3">
+                          {Array.from({ length: 4 }).map((__, li) => (
+                            <li key={li} className="flex items-center gap-1.5 sm:gap-4">
+                              <div className="bg-primary w-6 h-6 sm:w-7 sm:h-7 rounded-full flex-shrink-0 opacity-50" />
+                              <span className="flex-1 h-4 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <div className="w-full h-12 bg-black/10 dark:bg-white/10 rounded-full animate-pulse" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                {!isLoading && errorMessage && (
+                  <div className="md:col-span-2 xl:col-span-3">
+                    <div className="bg-white dark:bg-lightgray/10 border border-secondary/12 dark:border-white/12 rounded-lg p-6 text-center">
+                      <p className="text-secondary/80 dark:text-white/80">{errorMessage}</p>
+                    </div>
+                  </div>
+                )}
+
+                {!isLoading && !errorMessage && (pricingData?.data ?? []).map((value: PricingPlanItem, index: number) => {
+                  const coverImage = value.coverImage || defaultCoverImages[index % defaultCoverImages.length] || defaultCoverImages[0];
 
                   return (
-                    <div key={index} className="bg-white dark:bg-lightgray/10 overflow-hidden rounded-lg shadow-lg relative">
+                    <div key={value.planName ? `${value.planName}-${index}` : index} className="bg-white dark:bg-lightgray/10 overflow-hidden rounded-lg shadow-lg relative">
                       {/* Cover Image Section */}
                       <div className="relative h-64 w-full">
                         <Image
                           src={coverImage}
-                          alt={`${value?.planName} cover`}
+                          alt={`${value?.planName ?? 'Plan'} cover`}
                           fill
                           className="object-cover"
                         />
@@ -82,7 +133,7 @@ function Pricing() {
                         {/* Plan details overlay */}
                         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70 flex flex-col justify-center items-center text-white p-6">
                           <div className="flex items-center gap-4 mb-2">
-                            <p className="font-medium text-lg">{value?.planName}</p>
+                            <p className="font-medium text-lg">{value?.planName ?? 'Plan'}</p>
                             {value?.tag &&
                               <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm w-fit py-1 px-3 rounded-full">
                                 <Icon icon="fluent:fire-20-regular" width="20" height="20" style={{ color: "#fff" }} />
@@ -97,7 +148,7 @@ function Pricing() {
                             <h3 className="text-white">{value.planPrice}</h3>
                           </div>
                           <p className="text-center text-white/90 text-m leading-relaxed max-w-md font-bold">
-                            {value.planDescp}
+                            {value.planDescp ?? ''}
                           </p>
                         </div>
                       </div>
@@ -107,10 +158,10 @@ function Pricing() {
                         <div className="pt-10 border-t border-secondary/12 dark:border-white/12">
                           <p className="text-base pb-5">What's Included:</p>
                           <ul className="flex flex-col gap-3">
-                            {value?.planIncludes?.map((item: any, itemIndex: any) => (
-                              <li key={itemIndex} className="flex items-center gap-1.5 sm:gap-4">
+                            {(value?.planIncludes ?? []).map((item: string, itemIndex: number) => (
+                              <li key={`${value.planName}-inc-${itemIndex}`} className="flex items-center gap-1.5 sm:gap-4">
                                 <div className="bg-primary w-fit p-1 sm:p-1.5 rounded-full flex-shrink-0">
-                                  <Image src={"/images/Icon/right-check.svg"} alt="right-icon" width={20} height={20} />
+                                  <Image src={"/images/Icon/right-check.svg"} alt="Included item" width={20} height={20} />
                                 </div>
                                 <span className="flex-1">{item}</span>
                               </li>
@@ -122,6 +173,7 @@ function Pricing() {
                           <Link
                             href={value.link || "#"}
                             className="group relative flex justify-center items-center w-full bg-primary hover:bg-secondary rounded-full transition-all duration-300 ease-in-out"
+                            aria-label={`Subscribe to ${value.planName ?? 'plan'}`}
                           >
                             <span className="py-4 px-2 text-lg font-bold text-secondary group-hover:text-white transition-all duration-300 ease-in-out">
                               Subscribe now
@@ -157,11 +209,17 @@ function Pricing() {
 
             <div className="flex flex-col gap-10">
               <p className="text-secondary dark:text-white text-center">More than 1000+ trusted Learners</p>
-              <Slider duration={20} pauseOnHover={true} blurBorders={false}>
-                {(pricingData?.partnerLogo || []).map((items: any, index: any) => (
-                  <Logoslider key={index} logo={items} />
-                ))}
-              </Slider>
+              {(pricingData?.partnerLogo?.length ?? 0) > 0 ? (
+                <Slider duration={20} pauseOnHover={true} blurBorders={false}>
+                  {(pricingData?.partnerLogo ?? []).map((items: PartnerLogoItem, index: number) => (
+                    <Logoslider key={`logo-${index}`} logo={items} />
+                  ))}
+                </Slider>
+              ) : (
+                <div className="flex justify-center">
+                  <div className="h-8 w-64 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
+                </div>
+              )}
             </div>
           </div>
         </div>

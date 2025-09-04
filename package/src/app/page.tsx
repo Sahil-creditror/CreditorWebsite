@@ -33,6 +33,7 @@ export default function Home() {
       <About />
       {/* <MasterInfo /> */}
       <Courses />
+      <Contact contactdataNumber="4" />
       <Offer />
       <Event />
       {/* <Roadmap /> */}
@@ -44,7 +45,7 @@ export default function Home() {
       {/* <Pricing /> */}
       {/* <Faq /> */}
       {/* <Resources /> */}
-      <Contact contactdataNumber="4" />
+      
     </>
   );
 }

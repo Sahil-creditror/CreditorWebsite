@@ -90,7 +90,7 @@ const Header = () => {
 
           <div className="flex items-center gap-5 sm:gap-7">
             <div className="flex items-center gap-2 sm:gap-3">
-              <Link
+              {/* <Link
                 href="https://lmsathena.com/login"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -101,7 +101,7 @@ const Header = () => {
                 `}
               >
                 Sign Up
-              </Link>
+              </Link> */}
               <Link
                 href="https://lmsathena.com/login"
                 target="_blank"
@@ -238,10 +238,10 @@ const Header = () => {
                   {/* Footer inside menu */}
                   <div className="pt-4 sm:pt-0">
                     <Link
-                      href="tel:+1-987-456-7890"
+                      href="tel:+1-425-400-9246"
                       className="block text-sm sm:text-base text-secondary/60 dark:text-white/60 hover:text-secondary dark:hover:text-white"
                     >
-                      +1-987-456-7890
+                      +1-425-400-9246
                     </Link>
                     <Link href="mailto:creditoracademy.com">
                       <h4 className="text-sm sm:text-base">

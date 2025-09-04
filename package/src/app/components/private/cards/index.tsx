@@ -1,17 +1,15 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, Variants } from 'framer-motion';
+import React, { useState, useEffect, useRef } from "react";
+import { motion, Variants } from "framer-motion";
 import {
   FaBalanceScale,
   FaGavel,
   FaUserLock,
   FaFileContract,
-  FaShieldAlt
-} from 'react-icons/fa';
-import Banner from '../assets/BPSOV_Banner.webp';
-
-
+  FaShieldAlt,
+} from "react-icons/fa";
+import Banner from "../assets/BPSOV_Banner.webp";
 
 // import GameBanner from '../components/GameBanner';
 // import SovSlider from '../components/SovSlider';
@@ -20,40 +18,49 @@ import Banner from '../assets/BPSOV_Banner.webp';
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
 const PrivateBusinessCredit: React.FC = () => {
   const colors = {
-    primary: '#0369a1',
-    primaryLight: '#e0f2fe',
-    secondary: '#0ea5e9',
-    dark: '#0c4a6e',
-    light: '#ffffff',
-    background: '#f8fafc',
-    text: '#334155',
-    accent: '#38bdf8',
-    mutedText: '#64748b',
-    success: '#10b981',
-    gradient: 'linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)',
-    gradientHover: 'linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%)'
+    primary: "#0369a1",
+    primaryLight: "#e0f2fe",
+    secondary: "#0ea5e9",
+    dark: "#0c4a6e",
+    light: "#ffffff",
+    background: "#f8fafc",
+    text: "#334155",
+    accent: "#38bdf8",
+    mutedText: "#64748b",
+    success: "#10b981",
+    gradient: "linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)",
+    gradientHover: "linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%)",
   };
 
   const fadeIn: Variants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
-      transition: { duration: 0.8, ease: "easeOut" as const }
-    }
+      transition: { duration: 0.8, ease: "easeOut" as const },
+    },
   };
 
   const hexToRgba = (hex: string, alpha: number = 1): string => {
-    hex = hex.replace('#', '');
-    
-    const r = parseInt(hex.length === 3 ? hex.slice(0, 1).repeat(2) : hex.slice(0, 2), 16);
-    const g = parseInt(hex.length === 3 ? hex.slice(1, 2).repeat(2) : hex.slice(2, 4), 16);
-    const b = parseInt(hex.length === 3 ? hex.slice(2, 3).repeat(2) : hex.slice(4, 6), 16);
-    
+    hex = hex.replace("#", "");
+
+    const r = parseInt(
+      hex.length === 3 ? hex.slice(0, 1).repeat(2) : hex.slice(0, 2),
+      16
+    );
+    const g = parseInt(
+      hex.length === 3 ? hex.slice(1, 2).repeat(2) : hex.slice(2, 4),
+      16
+    );
+    const b = parseInt(
+      hex.length === 3 ? hex.slice(2, 3).repeat(2) : hex.slice(4, 6),
+      16
+    );
+
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   };
 
@@ -61,14 +68,11 @@ const PrivateBusinessCredit: React.FC = () => {
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number>(0);
-  
 
   return (
     <div className="font-sans bg-gray-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 p-5">
-
       {/* Title Section */}
       <div className="text-center px-5 max-w-7xl mx-auto mb-20 relative">
-
         {/* Courses Section with Creative Layout */}
         <motion.section
           initial="hidden"
@@ -79,21 +83,22 @@ const PrivateBusinessCredit: React.FC = () => {
           {/* Decorative elements */}
           <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-36 h-36 rounded-full bg-blue-100 bg-opacity-70 blur-xl z-0 dark:bg-blue-900 dark:bg-opacity-30"></div>
           <div className="absolute -bottom-20 right-20 w-24 h-24 rounded-full bg-indigo-100 bg-opacity-50 blur-lg z-0 dark:bg-indigo-900 dark:bg-opacity-20"></div>
-          
+
           {/* Section header */}
-          <motion.h3 
+          <motion.h3
             className="text-center text-3xl md:text-5xl mb-16 relative text-slate-800 dark:text-slate-100 font-bold"
             variants={fadeIn}
           >
-            Your Path to <span className="text-blue-700 dark:text-blue-400 relative inline-block">
-            Financial Freedom
-            <motion.span 
-              className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 rounded-full"
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              viewport={{ once: false, amount: 0.3 }}
-            />
+            Your Path to{" "}
+            <span className="text-blue-700 dark:text-blue-400 relative inline-block">
+              Financial Freedom
+              <motion.span
+                className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 rounded-full"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                viewport={{ once: false, amount: 0.3 }}
+              />
             </span>
           </motion.h3>
 
@@ -114,12 +119,12 @@ const PrivateBusinessCredit: React.FC = () => {
               </div> */}
 
               {/* Image container with hover effect */}
-              <motion.div 
+              <motion.div
                 className="w-full h-40 overflow-hidden relative"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
-                <img 
+                <img
                   src="/images/courses/become/remedy.webp"
                   alt="Status Correction Illustration"
                   className="w-full h-full object-cover object-center group-hover:brightness-110 transition-all duration-500"
@@ -132,22 +137,104 @@ const PrivateBusinessCredit: React.FC = () => {
                 <div className="flex flex-col gap-5">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 flex items-center justify-center flex-shrink-0 shadow-md">
-                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                      <svg
+                        width="26"
+                        height="26"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="white"
+                        strokeWidth="2"
+                      >
                         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                         <path d="M12 7v6l3 3"></path>
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h4 className="text-lg font-bold text-blue-700 dark:text-blue-300 m-0">I Want Remedy Now</h4>
-                      <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">Status Correction Masterclass</p>
+                      <h4 className="text-lg font-bold text-blue-700 dark:text-blue-300 m-0">
+                        I Want Remedy Now
+                      </h4>
+                      <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">
+                        Status Correction Masterclass
+                      </p>
                     </div>
                   </div>
-                 <ul className="list-disc list-inside text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2">
-  <li>Check credit reports</li>
-  <li>Dispute negative items</li>
-  <li>Pay bills on time</li>
-  <li>Reduce debt balances</li>
-</ul>
+                  <ul className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2">
+                    <li className="flex items-center gap-2">
+                      {/* Document Icon (Credit Report) */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M9 12h6m-6 4h6M9 8h6M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z"
+                        />
+                      </svg>
+                      Check credit reports
+                    </li>
+
+                    <li className="flex items-center gap-2">
+                      {/* Shield Check Icon (Dispute) */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M9 12l2 2 4-4m5-2.586V6a2 2 0 00-2-2h-3.586a2 2 0 01-1.414-.586l-1.414-1.414A2 2 0 0010.586 2H7a2 2 0 00-2 2v1.414A2 2 0 014.586 6L3.172 7.414A2 2 0 002 8.828V12a2 2 0 002 2h1.172a2 2 0 011.414.586l1.414 1.414A2 2 0 008.828 18H12a2 2 0 002-2v-1.172a2 2 0 01.586-1.414l1.414-1.414A2 2 0 0018 12h1.172a2 2 0 001.414-.586l1.414-1.414A2 2 0 0022 8.828V8a2 2 0 00-2-2h-1z"
+                        />
+                      </svg>
+                      Dispute negative items
+                    </li>
+
+                    <li className="flex items-center gap-2">
+                      {/* Clock Icon (Pay on time) */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z"
+                        />
+                      </svg>
+                      Pay bills on time
+                    </li>
+
+                    <li className="flex items-center gap-2">
+                      {/* Trending Down Icon (Reduce Debt) */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M19 15l-7-7-4 4-6-6"
+                        />
+                      </svg>
+                      Reduce debt balances
+                    </li>
+                  </ul>
 
                   <div className="mt-4">
                     {/* <button className="w-full bg-blue-100 dark:bg-blue-800/40 hover:bg-blue-200 dark:hover:bg-blue-700/60 text-blue-700 dark:text-blue-300 font-medium py-3 rounded-lg transition-colors">
@@ -163,7 +250,12 @@ const PrivateBusinessCredit: React.FC = () => {
               className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 flex items-center justify-center relative flex-shrink-0 my-6 lg:my-0 shadow-lg"
               initial={{ scale: 0, rotate: 180 }}
               whileInView={{ scale: 1, rotate: 0 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.2 }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 20,
+                delay: 0.2,
+              }}
               viewport={{ once: false, amount: 0.3 }}
             >
               <div className="absolute w-7 h-1 bg-white rounded"></div>
@@ -187,12 +279,12 @@ const PrivateBusinessCredit: React.FC = () => {
               </div> */}
 
               {/* Image container with hover effect */}
-              <motion.div 
+              <motion.div
                 className="w-full h-40 overflow-hidden relative"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
-                <img 
+                <img
                   src="/images/courses/become/PMP2.webp"
                   alt="Sovereignty Foundations Illustration"
                   className="w-full h-full object-cover object-center group-hover:brightness-110 transition-all duration-500"
@@ -205,21 +297,103 @@ const PrivateBusinessCredit: React.FC = () => {
                 <div className="flex flex-col gap-5">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-md">
-                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                      <svg
+                        width="26"
+                        height="26"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="white"
+                        strokeWidth="2"
+                      >
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h4 className="text-lg font-bold text-indigo-700 dark:text-indigo-300 m-0">Private Merchant Processing </h4>
-                      <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">Foundations Mastery</p>
+                      <h4 className="text-lg font-bold text-indigo-700 dark:text-indigo-300 m-0">
+                        Private Merchant Processing{" "}
+                      </h4>
+                      <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">
+                        Foundations Mastery
+                      </p>
                     </div>
                   </div>
-                  <ul className="list-disc list-inside text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2">
-  <li>Process without banks</li>
-  <li>No KYC required</li>
-  <li>No shutdown risks</li>
-  <li>Full financial control</li>
-</ul>
+                  <ul className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2">
+                    <li className="flex items-center gap-2">
+                      {/* Bank Slash Icon (Process without banks) */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M3 10h18M3 6h18M3 14h18M4 19h16M2 2l20 20"
+                        />
+                      </svg>
+                      Process without banks
+                    </li>
+
+                    <li className="flex items-center gap-2">
+                      {/* ID Card Slash Icon (No KYC required) */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M4 6h16v12H4zM2 2l20 20"
+                        />
+                      </svg>
+                      No KYC required
+                    </li>
+
+                    <li className="flex items-center gap-2">
+                      {/* Shield X Icon (No shutdown risks) */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 22s8-4 8-10V6l-8-4-8 4v6c0 6 8 10 8 10zM15 9l-6 6m0-6l6 6"
+                        />
+                      </svg>
+                      No shutdown risks
+                    </li>
+
+                    <li className="flex items-center gap-2">
+                      {/* Key Icon (Full financial control) */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15 7a5 5 0 11-9.9 1M10 14l2 2m-2-2l-2 2m2-2l2-2"
+                        />
+                      </svg>
+                      Full financial control
+                    </li>
+                  </ul>
 
                   <div className="mt-4">
                     {/* <button className="w-full bg-indigo-100 dark:bg-indigo-800/40 hover:bg-indigo-200 dark:hover:bg-indigo-700/60 text-indigo-700 dark:text-indigo-300 font-medium py-3 rounded-lg transition-colors">
@@ -235,7 +409,12 @@ const PrivateBusinessCredit: React.FC = () => {
               className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 flex items-center justify-center relative flex-shrink-0 my-6 lg:my-0 shadow-lg"
               initial={{ scale: 0, rotate: 180 }}
               whileInView={{ scale: 1, rotate: 0 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.4 }} // Increased delay
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 20,
+                delay: 0.4,
+              }} // Increased delay
               viewport={{ once: false, amount: 0.3 }}
             >
               <div className="absolute w-7 h-1 bg-white rounded"></div>
@@ -259,12 +438,12 @@ const PrivateBusinessCredit: React.FC = () => {
               </div> */}
 
               {/* Image container with hover effect */}
-              <motion.div 
+              <motion.div
                 className="w-full h-40 overflow-hidden relative"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
-                <img 
+                <img
                   src="/images/courses/become/PBC.webp"
                   alt="Sovereignty Foundations Illustration"
                   className="w-full h-full object-cover object-center group-hover:brightness-110 transition-all duration-500"
@@ -277,24 +456,124 @@ const PrivateBusinessCredit: React.FC = () => {
                 <div className="flex flex-col gap-5">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-md">
-                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-  <rect x="3" y="5" width="18" height="14" rx="3" stroke="white" strokeWidth="2"/>
-  <path d="M8 9h8M8 13h5" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-  <circle cx="18" cy="17" r="1.5" stroke="white" strokeWidth="2"/>
-</svg>
-
+                      <svg
+                        width="26"
+                        height="26"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="white"
+                        strokeWidth="2"
+                      >
+                        <rect
+                          x="3"
+                          y="5"
+                          width="18"
+                          height="14"
+                          rx="3"
+                          stroke="white"
+                          strokeWidth="2"
+                        />
+                        <path
+                          d="M8 9h8M8 13h5"
+                          stroke="white"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        />
+                        <circle
+                          cx="18"
+                          cy="17"
+                          r="1.5"
+                          stroke="white"
+                          strokeWidth="2"
+                        />
+                      </svg>
                     </div>
                     <div className="text-left">
-                      <h4 className="text-lg font-bold text-blue-700 dark:text-blue-300 m-0">Private Business Credit </h4>
-                      <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">Foundations Mastery</p>
+                      <h4 className="text-lg font-bold text-blue-700 dark:text-blue-300 m-0">
+                        Private Business Credit{" "}
+                      </h4>
+                      <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">
+                        Foundations Mastery
+                      </p>
                     </div>
                   </div>
-                 <ul className="list-disc list-inside text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2">
-  <li>Build business credit</li>
-  <li>Use UBOT Trusts</li>
-  <li>Leverage private processing</li>
-  <li>Empower financial freedom</li>
-</ul>
+                  <ul className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2">
+                    <li className="flex items-center gap-2">
+                      {/* Briefcase Icon (Build business credit) */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M9 6V4a2 2 0 012-2h2a2 2 0 012 2v2m4 0h-12a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2z"
+                        />
+                      </svg>
+                      Build business credit
+                    </li>
+
+                    <li className="flex items-center gap-2">
+                      {/* Layers Icon (Use UBOT Trusts) */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 3l9 5-9 5-9-5 9-5zm0 8l9 5-9 5-9-5 9-5z"
+                        />
+                      </svg>
+                      Use UBOT Trusts
+                    </li>
+
+                    <li className="flex items-center gap-2">
+                      {/* Server Icon (Leverage private processing) */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M4 6h16M4 12h16M4 18h16M6 6v12M18 6v12"
+                        />
+                      </svg>
+                      Leverage private processing
+                    </li>
+
+                    <li className="flex items-center gap-2">
+                      {/* Rocket Icon (Empower financial freedom) */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M5 13l4 4L19 7M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z"
+                        />
+                      </svg>
+                      Empower financial freedom
+                    </li>
+                  </ul>
 
                   <div className="mt-4">
                     {/* <button className="w-full bg-indigo-100 dark:bg-indigo-800/40 hover:bg-indigo-200 dark:hover:bg-indigo-700/60 text-indigo-700 dark:text-indigo-300 font-medium py-3 rounded-lg transition-colors">
@@ -314,15 +593,16 @@ const PrivateBusinessCredit: React.FC = () => {
             transition={{ delay: 0.4 }}
             viewport={{ once: true }}
           >
-            Plus learn to establish your <strong className="text-blue-700 dark:text-blue-400 font-semibold relative">
-            Financial Status
-            <motion.span 
-              className="absolute -bottom-1 left-0 w-full h-0.5 bg-blue-700 dark:bg-blue-400 rounded-full"
-              initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            viewport={{ once: true }}
-            />
+            Plus learn to establish your{" "}
+            <strong className="text-blue-700 dark:text-blue-400 font-semibold relative">
+              Financial Status
+              <motion.span
+                className="absolute -bottom-1 left-0 w-full h-0.5 bg-blue-700 dark:bg-blue-400 rounded-full"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                viewport={{ once: true }}
+              />
             </strong>
           </motion.p>
         </motion.section>
@@ -338,14 +618,11 @@ const PrivateBusinessCredit: React.FC = () => {
         </motion.button> */}
       </div>
 
-      
-      
       {/* Game Banner Section */}
       {/* <SovSlider />
       <GameBanner /> */}
 
       {/* What You Can Do Section */}
-      
 
       {/* Enrollment CTA Section */}
       {/* <motion.div

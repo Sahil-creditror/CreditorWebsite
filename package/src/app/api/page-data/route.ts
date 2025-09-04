@@ -62,8 +62,8 @@ const servicesData = {
         {
             id: 2,
             image: "/images/home/services/services_2.webp",
-            heading: "2. Become Private & New SOV 101",
-            descp: "Get an introduction to the SOV 101 and Become Private courses Access the official readiness checklist and scorecard system to assess your eligibility with a counsellor"
+            heading: "2. Become Private & New Sovereignty101",
+            descp: "Get an introduction to the Sovereignty101 and Become Private courses Access the official readiness checklist and scorecard system to assess your eligibility with a counsellor"
         },
         {
             id: 3,

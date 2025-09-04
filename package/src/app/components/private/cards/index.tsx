@@ -168,7 +168,7 @@ const PrivateBusinessCredit: React.FC = () => {
               <span className="sr-only">Plus</span>
             </motion.div>
 
-            {/* New SOV 101 Course Card - Indigo Theme */}
+            {/* New Sovereignty101 Course Card - Indigo Theme */}
             <motion.div
               whileHover={{ y: -12, scale: 1.02 }}
               className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-2xl p-0 w-full max-w-sm shadow-xl border border-indigo-200 dark:border-indigo-700/50 relative overflow-hidden group"

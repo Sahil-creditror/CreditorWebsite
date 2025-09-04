@@ -173,7 +173,7 @@ const CourseRoadmap: React.FC = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <CourseCard
-            title="Become Private + SOV 101"
+            title="Become Private + Sovereignty101"
             image="/images/projects/projectlist/freshman.webp"
             subtitle="Reclaim Your Legal Identity"
             description="Correct your status and exit public contracts to reclaim sovereignty"

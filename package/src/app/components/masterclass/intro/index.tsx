@@ -78,9 +78,22 @@ export default function MasterClassLaunchpad() {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Background animation
-      if (bgRef.current) {
-        gsap.to(bgRef.current, {
+      // Background animation for both light and dark modes
+      const lightBg = bgRef.current;
+      const darkBg = sectionRef.current?.querySelector('.dark-bg') as HTMLElement;
+      
+      if (lightBg) {
+        gsap.to(lightBg, {
+          duration: 30,
+          backgroundPosition: "0% 100%",
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
+      
+      if (darkBg) {
+        gsap.to(darkBg, {
           duration: 30,
           backgroundPosition: "0% 100%",
           repeat: -1,
@@ -140,8 +153,10 @@ export default function MasterClassLaunchpad() {
 
       const media = window.matchMedia("(prefers-reduced-motion: reduce)");
       if (media.matches) {
-        marqueeEl.style.setProperty("--marquee-play-state", "paused");
-        marqueeEl.style.setProperty("--marquee-duration", "0s");
+        // Respect reduced motion by slowing, not pausing
+        const slower = Math.round(baseDuration * 1.8);
+        marqueeEl.style.setProperty("--marquee-play-state", "running");
+        marqueeEl.style.setProperty("--marquee-duration", `${slower}s`);
       }
 
       const slowDuration = Math.max(8, baseDuration / 0.3);
@@ -239,9 +254,17 @@ export default function MasterClassLaunchpad() {
       {/* Animated gradient background */}
       <div
         ref={bgRef}
-        className="pointer-events-none absolute inset-0 -z-10 opacity-95"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-95 dark:hidden"
         style={{
           background: "linear-gradient(125deg, #f8fafc 0%, #e0f2fe 33%, #bae6fd 66%, #f1f5f9 100%)",
+          backgroundSize: "400% 400%",
+        }}
+      />
+      {/* Dark mode background */}
+      <div
+        className="dark-bg pointer-events-none absolute inset-0 -z-10 opacity-95 dark:block hidden"
+        style={{
+          background: "linear-gradient(125deg, #0f1320 0%, #1c2a53 33%, #2b5fc8 66%, #071021 100%)",
           backgroundSize: "400% 400%",
         }}
       />
@@ -280,7 +303,7 @@ export default function MasterClassLaunchpad() {
           {/* left column - headline + CTA */}
           <div className="w-full lg:w-6/12 text-center lg:text-left">
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }} className="inline-block mb-5">
-              <div className="rounded-full bg-gradient-to-r from-blue-900 via-indigo-800 to-blue-700 px-4 py-2 text-sm font-bold tracking-wider text-white shadow">
+              <div className="inline-flex items-center rounded-full border px-3.5 py-1.5 text-sm font-semibold tracking-wide text-blue-700 bg-blue-50 border-blue-200 dark:text-amber-300 dark:bg-white/10 dark:border-white/20">
                 Master Class • 90-Day Private Launchpad
               </div>
             </motion.div>
@@ -289,13 +312,13 @@ export default function MasterClassLaunchpad() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.75, delay: 0.2 }}
-              className="font-display mb-4 text-white leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-pink-400 to-purple-400"
+              className="font-display mb-4 text-slate-800 dark:text-white leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-amber-300 dark:via-pink-400 dark:to-purple-400"
               style={{ fontWeight: 800, WebkitFontSmoothing: "antialiased" }}
             >
               Structure Legally. Fund Privately. Operate Sovereignly.
             </motion.h1>
 
-            <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.35 }} className="text-slate-200 max-w-xl mx-auto lg:mx-0 text-sm sm:text-base md:text-lg mb-6 leading-relaxed">
+            <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.35 }} className="text-slate-600 dark:text-slate-200 max-w-xl mx-auto lg:mx-0 text-sm sm:text-base md:text-lg mb-6 leading-relaxed">
               The Creditor Academy Master Class is more than a course — it's a private
               business launch system. In 90 days you'll set up trust structures, build
               Tier 1 business credit, and activate private merchant processing so you can
@@ -326,20 +349,20 @@ export default function MasterClassLaunchpad() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.95 }}
               ref={marqueeRef}
-              className="mt-10 overflow-hidden rounded-2xl border border-white/8 bg-gradient-to-r from-purple-900/25 to-pink-900/20 p-3 backdrop-blur-md marquee-container"
+              className="mt-10 overflow-hidden rounded-2xl border border-slate-200/50 dark:border-white/8 bg-gradient-to-r from-blue-50/80 to-indigo-50/80 dark:from-purple-900/25 dark:to-pink-900/20 p-3 backdrop-blur-md marquee-container"
               aria-hidden={false}
               aria-label="Program highlights"
             >
               <div className="flex marquee-track" style={{ gap: isMobile ? "1.25rem" : "2.5rem", alignItems: "center" }} role="list">
                 {items.map((item, i) => (
-                  <span key={i} role="listitem" className="flex items-center text-sm sm:text-base md:text-lg text-slate-200 font-semibold">
-                    <span className="text-amber-400 mr-2">✦</span> {item}
+                  <span key={i} role="listitem" className="flex items-center text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-200 font-semibold">
+                    <span className="text-blue-500 dark:text-amber-400 mr-2">✦</span> {item}
                   </span>
                 ))}
                 {/* Duplicate set for smooth looping; mark duplicate as aria-hidden to avoid repeated screen reader output */}
                 {items.map((item, i) => (
-                  <span key={i + 100} aria-hidden="true" role="presentation" className="flex items-center text-sm sm:text-base md:text-lg text-slate-200 font-semibold">
-                    <span className="text-amber-400 mr-2">✦</span> {item}
+                  <span key={i + 100} aria-hidden="true" role="presentation" className="flex items-center text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-200 font-semibold">
+                    <span className="text-blue-500 dark:text-amber-400 mr-2">✦</span> {item}
                   </span>
                 ))}
               </div>
@@ -348,14 +371,14 @@ export default function MasterClassLaunchpad() {
 
           {/* right column - feature panel */}
           <div className="w-full lg:w-6/12">
-            <motion.div initial={{ opacity: 0, scale: 0.98, y: 12 }} whileInView={{ opacity: 1, scale: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.65 }} className="rounded-3xl bg-gradient-to-br from-purple-900/40 via-blue-900/24 to-pink-900/30 backdrop-blur-xl border border-white/10 p-6 sm:p-8 shadow-2xl">
+            <motion.div initial={{ opacity: 0, scale: 0.98, y: 12 }} whileInView={{ opacity: 1, scale: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.65 }} className="rounded-3xl bg-gradient-to-br from-white/80 via-blue-50/60 to-indigo-50/70 dark:from-purple-900/40 dark:via-blue-900/24 dark:to-pink-900/30 backdrop-blur-xl border border-slate-200/50 dark:border-white/10 p-6 sm:p-8 shadow-2xl">
               <motion.div className="flex items-start gap-4 mb-6" whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 400, damping: 10 }}>
                 <motion.div className="flex-shrink-0 bg-gradient-to-br from-amber-400 via-pink-500 to-purple-600 p-3 rounded-xl shadow-lg" animate={{ rotate: [0, -5, 0, 5, 0], scale: [1, 1.03, 1] }} transition={{ duration: 5, repeat: Infinity }}>
                   <FaRocket className="w-6 h-6 text-white" />
                 </motion.div>
                 <div>
-                  <h3 className="text-white text-lg font-bold mb-1">Launch in 90 Days</h3>
-                  <p className="text-slate-300 text-sm">A step-by-step pipeline to a functioning private business.</p>
+                  <h3 className="text-slate-800 dark:text-white text-lg font-bold mb-1">Launch in 90 Days</h3>
+                  <p className="text-slate-600 dark:text-slate-300 text-sm">A step-by-step pipeline to a functioning private business.</p>
                 </div>
               </motion.div>
 
@@ -366,13 +389,13 @@ export default function MasterClassLaunchpad() {
                 <FeatureCard Icon={FaChartLine} title="Grow Exponentially" desc="Scale your business with advanced financial strategies." color="from-pink-500 to-rose-500" />
               </div>
 
-              <motion.div className="mt-6 pt-5 border-t border-white/10" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.3 }} viewport={{ once: true }}>
-                <h4 className="text-slate-200 text-sm font-bold mb-3 flex items-center gap-2">
-                  <FaUserLock className="text-amber-400" /> Who it's for
+              <motion.div className="mt-6 pt-5 border-t border-slate-200/30 dark:border-white/10" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.3 }} viewport={{ once: true }}>
+                <h4 className="text-slate-700 dark:text-slate-200 text-sm font-bold mb-3 flex items-center gap-2">
+                  <FaUserLock className="text-blue-500 dark:text-amber-400" /> Who it's for
                 </h4>
                 <div className="flex gap-2 flex-wrap">
                   {["Entrepreneurs", "Freelancers", "Consultants", "Investors", "Creators", "Business Owners"].map((t) => (
-                    <motion.span key={t} className="text-xs px-3 py-1.5 rounded-full bg-white/5 text-slate-200 border border-white/8" whileHover={{ scale: 1.05 }}>
+                    <motion.span key={t} className="text-xs px-3 py-1.5 rounded-full bg-slate-100/80 dark:bg-white/5 text-slate-700 dark:text-slate-200 border border-slate-200/50 dark:border-white/8" whileHover={{ scale: 1.05 }}>
                       {t}
                     </motion.span>
                   ))}
@@ -495,6 +518,13 @@ export default function MasterClassLaunchpad() {
             animation: none !important;
           }
         }
+
+        /* Force marquee to honor JS-controlled var even in reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+          .marquee-container .marquee-track {
+            animation-play-state: var(--marquee-play-state) !important;
+          }
+        }
       `}</style>
     </section>
   );
@@ -502,13 +532,13 @@ export default function MasterClassLaunchpad() {
 
 function FeatureCard({ Icon, title, desc, color }: { Icon: any; title: string; desc: string; color: string; }) {
   return (
-    <motion.div className="flex gap-3 items-start p-3 sm:p-4 rounded-xl bg-gradient-to-br from-white/5 to-white/10 border border-white/8 backdrop-blur-sm" whileHover={{ y: -4, boxShadow: "0 8px 22px -8px rgba(0, 0, 0, 0.18)", transition: { duration: 0.28 } }}>
+    <motion.div className="flex gap-3 items-start p-3 sm:p-4 rounded-xl bg-gradient-to-br from-slate-50/80 to-white/60 dark:from-white/5 dark:to-white/10 border border-slate-200/50 dark:border-white/8 backdrop-blur-sm" whileHover={{ y: -4, boxShadow: "0 8px 22px -8px rgba(0, 0, 0, 0.18)", transition: { duration: 0.28 } }}>
       <motion.div className={`p-2.5 rounded-lg bg-gradient-to-r ${color} shadow-md`} whileHover={{ rotate: 6 }} transition={{ type: "spring", stiffness: 300, damping: 12 }}>
         <Icon className="w-5 h-5 text-white" />
       </motion.div>
       <div>
-        <div className="text-white text-sm font-semibold mb-1">{title}</div>
-        <div className="text-slate-300 text-xs">{desc}</div>
+        <div className="text-slate-800 dark:text-white text-sm font-semibold mb-1">{title}</div>
+        <div className="text-slate-600 dark:text-slate-300 text-xs">{desc}</div>
       </div>
     </motion.div>
   );
@@ -516,11 +546,11 @@ function FeatureCard({ Icon, title, desc, color }: { Icon: any; title: string; d
 
 function StripCard({ step, title, desc, color }: { step: string; title: string; desc: string; color: string; }) {
   return (
-    <motion.div className="p-3 rounded-xl bg-gradient-to-br from-white/5 to-white/10 border border-white/8 flex items-start gap-3 backdrop-blur-sm" whileHover={{ y: -3 }} transition={{ duration: 0.18 }}>
+    <motion.div className="p-3 rounded-xl bg-gradient-to-br from-slate-50/80 to-white/60 dark:from-white/5 dark:to-white/10 border border-slate-200/50 dark:border-white/8 flex items-start gap-3 backdrop-blur-sm" whileHover={{ y: -3 }} transition={{ duration: 0.18 }}>
       <div className={`${color} h-10 w-10 rounded-full flex items-center justify-center text-white font-bold shadow-md`}>{step}</div>
       <div>
-        <div className="text-white text-sm font-semibold">{title}</div>
-        <div className="text-slate-300 text-xs mt-1">{desc}</div>
+        <div className="text-slate-800 dark:text-white text-sm font-semibold">{title}</div>
+        <div className="text-slate-600 dark:text-slate-300 text-xs mt-1">{desc}</div>
       </div>
     </motion.div>
   );

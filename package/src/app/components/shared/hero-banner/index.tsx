@@ -4,22 +4,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 
-const Herobanner = ({
-  bannerimage,
-  heading,
-  desc,
-  headingClass = "large-heading",
-  buttonPath,
-}: {
+interface HeroBannerProps {
   bannerimage: string;
   heading: string;
   desc: string;
   headingClass?: string;
   buttonPath?: string;
+  buttonText?: string;
+}
+
+const Herobanner: React.FC<HeroBannerProps> = ({
+  bannerimage,
+  heading,
+  desc,
+  headingClass = "large-heading",
+  buttonPath,
+  buttonText = "Start Now",
 }) => {
   const splitDesc = desc.split(/<\/?span>/);
 
-  // for the in-view animation
+  // For button animation
   const btnRef = useRef<HTMLDivElement | null>(null);
   const inView = useInView(btnRef, { once: true, amount: 0.25 });
 
@@ -59,30 +63,28 @@ const Herobanner = ({
             </p>
           </div>
 
-          {/* Heading + (Optional) Button */}
+          {/* Heading + Button */}
           <div className="flex flex-col sm:flex-row sm:items-end lg:items-baseline gap-4">
             <h1
-              className={`${headingClass ? headingClass : "large-heading"} text-2xl sm:text-4xl md:text-5xl font-bold`}
+              className={`${headingClass} text-2xl sm:text-4xl md:text-5xl font-bold`}
             >
               {heading}
             </h1>
 
-            {/* Animated button only if buttonPath exists */}
             {buttonPath && (
               <motion.div
                 ref={btnRef}
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="mt-2"
               >
                 <Link
                   href={buttonPath}
-                  aria-label={`Learn more about ${heading}`}
+                  aria-label={`Navigate to ${heading}`}
                   className="group flex items-center w-fit bg-primary border border-primary hover:border-white/30 hover:bg-secondary rounded-full transition-all duration-300 ease-in-out overflow-hidden"
                 >
                   <span className="pl-6 pr-2 py-3 text-lg font-bold text-secondary group-hover:text-white whitespace-nowrap transition-all duration-300 ease-in-out group-hover:translate-x-2">
-                    Start Now
+                    {buttonText}
                   </span>
                   <div className="w-12 h-12 flex items-center justify-center bg-white rounded-full m-1 transition-all duration-300 ease-in-out group-hover:rotate-45">
                     <svg

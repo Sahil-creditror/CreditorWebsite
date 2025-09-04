@@ -11,6 +11,7 @@ import Appoint from "@/app/components/masterclass/appointment";
 import CTA from "@/app/components/masterclass/cta";
 import Event from "@/app/components/Event";
 import Join from "@/app/components/masterclass/Join";
+import Preview from "@/app/components/masterclass/preview";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -29,9 +30,10 @@ export default function Page() {
                 buttonPath="/tncmasterclass" // 👈 you now define the path here
             />
             <Intro />
+            <Preview />
             <Learn />
-            <Join />
             <Appoint />
+            <Join />
             <About />
             <Event />
             <CTA />

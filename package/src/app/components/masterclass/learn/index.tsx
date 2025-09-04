@@ -88,97 +88,14 @@ export default function MasterclassRedesignPage() {
   };
 
   const container = "max-w-8xl mx-auto px-10";
-  const sectionSpacing = "py-16"; // consistent vertical rhythm
+  const sectionSpacing = "py-10"; // consistent vertical rhythm
   const primaryGradient = "from-[#60A5FA] to-[#1E3A8A]";
 
   // --- NEW: use Courses page colors for the "What you'll learn" (phases) section ---
-  const phasesWrapper = "bg-lightgray dark:bg-darkblack py-20 md:py-40";
+  const phasesWrapper = "bg-lightgray dark:bg-darkblack pt-8 md:pt-16 pb-20 md:pb-40";
 
   return (
     <main className={`min-h-screen bg-white text-slate-900 antialiased`}> 
-      {/* HERO */}
-        <section className={`${container} ${sectionSpacing} bg-white dark:bg-[#151922]`}>
-    <div className="grid lg:grid-cols-2 gap-12 items-center">
-        
-        {/* VIDEO (Left) */}
-        <motion.div
-        id="video-section"
-        initial={{ opacity: 0, scale: 0.98 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6 }}
-        className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-lg bg-slate-50 dark:bg-slate-800"
-        >
-        <div className="w-full max-w-4xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-lg">
-            <iframe
-            className="w-full h-full"
-            src="https://drive.google.com/file/d/1KKlV8_rSO7eW0oMmPRUjc6tuf-X4bUnL/preview"
-            title="Intro Video"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            ></iframe>
-        </div>
-        </motion.div>
-
-        {/* Content (Right) */}
-        <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6 }}
-        >
-        <div className="max-w-2xl">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300 text-xs font-semibold mb-4">
-            <span className="w-2 h-2 rounded-full bg-blue-600 block" />
-            Exclusive • Limited Seats
-            </div>
-
-            {/* Heading */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl leading-tight font-extrabold mb-6 text-slate-900 dark:text-white">
-            Build your <span className={`bg-clip-text text-transparent bg-gradient-to-r ${primaryGradient}`}>Private Business</span> Empire — modern, compliant, and sovereign.
-            </h1>
-
-            {/* Subtext */}
-            <p className="text-slate-700 dark:text-slate-300 mb-6">
-            A refined three-phase system for founders who want legal protection, fundable credit, and private payment flows. Templates, walkthroughs, and proven playbooks included.
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4">
-            <a href="/tncmasterclass" className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-[#60A5FA] to-[#1E3A8A] text-white font-semibold shadow hover:scale-[1.02] transition">
-                Reserve Seat <FaArrowRight />
-            </a>
-            </div>
-
-            {/* Features */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-            <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                <div className="p-3 rounded-full bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300">
-                <FaFileDownload />
-                </div>
-                <div>
-                <div className="font-semibold text-slate-900 dark:text-white">Templates + Checklists</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">Contracts, trust docs, and vendor lists</div>
-                </div>
-            </div>
-
-            <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                <div className="p-3 rounded-full bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300">
-                <FaLock />
-                </div>
-                <div>
-                <div className="font-semibold text-slate-900 dark:text-white">Private Payments</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">Gateways, flow design, fraud avoidance</div>
-                </div>
-            </div>
-            </div>
-        </div>
-        </motion.div>
-
-    </div>
-    </section>
-
-      {/* PHASES - updated with colorful accents & hover animations */}
       <section className={phasesWrapper}>
         <div className={container}>
             <motion.div

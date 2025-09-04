@@ -312,7 +312,7 @@ export default function MasterClassLaunchpad() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.75, delay: 0.2 }}
-              className="font-display mb-4 text-slate-800 dark:text-white leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-amber-300 dark:via-pink-400 dark:to-purple-400"
+              className="font-display mb-4 text-slate-800 dark:text-white leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-sky-600 to-blue-800 dark:from-blue-300 dark:via-sky-400 dark:to-cyan-400"
               style={{ fontWeight: 800, WebkitFontSmoothing: "antialiased" }}
             >
               Structure Legally. Fund Privately. Operate Sovereignly.
@@ -333,7 +333,7 @@ export default function MasterClassLaunchpad() {
             >
               <button
                 onClick={() => router.push("/tncmasterclass")}
-                className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-lg font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-colors duration-200"
+                className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-lg font-bold text-white bg-gradient-to-r from-blue-600 via-sky-600 to-blue-800 hover:from-blue-700 hover:via-sky-700 hover:to-blue-900 shadow-lg hover:shadow-xl transition-colors duration-200"
                 aria-label="Sign up for Master Class"
               >
                 ✨ Join the Masterclass

@@ -48,7 +48,7 @@ body {
   }
 
   .large-heading {
-    @apply text-6xl md:text-9xl 2xl:text-[290px] leading-none;
+    @apply text-6xl md:text-7xl 2xl:text-8xl leading-none;
   }
 
   .blog-heading{

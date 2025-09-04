@@ -1,7 +1,6 @@
 "use client";
 
 import "swiper/css";
-import Projectswiper from "./projectswiper";
 import Premium from "./courses";
 
 function Courses() {
@@ -51,8 +50,8 @@ function Courses() {
               {/* Title + Tagline */}
               <div className="flex flex-col gap-11">
                 <div className="flex flex-col gap-5">
-                  <h2 className="max-w-3xl text-white dark:text-white">Premium Courses</h2>
-                  <p className="max-w-2xl text-secondary/70 dark:text-white/70 leading-relaxed">
+                  <h2 className="max-w-3xl text-white dark:text-white">Explore Our Premium Courses</h2>
+                  <p className="max-w-2xl text-white/70 dark:text-white/70 leading-relaxed">
                     Learn Differently. Grow Distinctively. <br />
                     Become Private with Our Premium Courses.
                   </p>

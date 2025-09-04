@@ -241,7 +241,7 @@ export default function MasterClassLaunchpad() {
         ref={bgRef}
         className="pointer-events-none absolute inset-0 -z-10 opacity-95"
         style={{
-          background: "linear-gradient(125deg, #0f1320 0%, #1c2a53 33%, #2b5fc8 66%, #071021 100%)",
+          background: "linear-gradient(125deg, #f8fafc 0%, #e0f2fe 33%, #bae6fd 66%, #f1f5f9 100%)",
           backgroundSize: "400% 400%",
         }}
       />

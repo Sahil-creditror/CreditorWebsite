@@ -47,7 +47,7 @@ export default function HeroSection() {
           transition={{ delay: 0.8, duration: 1 }}
           className="italic text-lg text-gray-200 mb-3"
         >
-          “Secure Your Freedom. Walk with Your Private ID & Badge.”
+          “Secure Your Freedom.”
         </motion.p>
 
         <motion.p
@@ -61,12 +61,12 @@ export default function HeroSection() {
 
         {/* CTA Button */}
         <motion.a
-          href="/contact"
+          href="/"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold shadow-lg transition-transform duration-300 hover:shadow-xl"
         >
-          Contact Us <FaArrowRight />
+          Enroll Now <FaArrowRight />
         </motion.a>
       </motion.div>
     </section>

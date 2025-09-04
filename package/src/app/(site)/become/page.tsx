@@ -5,6 +5,7 @@ import Learn2 from "@/app/components/become/learn";
 import Content from "@/app/components/become/content";
 import Appoint from "@/app/components/become/appointment";
 import CTA from "@/app/components/become/cta";
+import Event from "@/app/components/Event";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -26,6 +27,7 @@ export default function Page() {
             <Intro2 />
             <Appoint />
             <Content />
+            <Event />
             {/* <Learn2 /> */}
             <CTA />
         </main>

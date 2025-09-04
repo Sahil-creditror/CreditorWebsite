@@ -9,6 +9,8 @@ import Get from "@/app/components/masterclass/getwithmaster";
 import About from "@/app/components/masterclass/about";
 import Appoint from "@/app/components/masterclass/appointment";
 import CTA from "@/app/components/masterclass/cta";
+import Event from "@/app/components/Event";
+import Join from "@/app/components/masterclass/Join";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -28,8 +30,10 @@ export default function Page() {
             />
             <Intro />
             <Learn />
+            <Join />
             <Appoint />
             <About />
+            <Event />
             <CTA />
         </main>
     );

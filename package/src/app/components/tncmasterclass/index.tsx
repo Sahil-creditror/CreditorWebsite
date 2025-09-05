@@ -103,16 +103,16 @@ const sections = [
     body: (
       <>
         <p>
-          A member may cancel their membership. However, if a member cancels within the first year, a cancellation fee will be applied. The fee will be the lesser of:
+          A member may cancel their membership.
         </p>
-        <ul className="mt-3 space-y-2">
+        {/* <ul className="mt-3 space-y-2">
           <Li>$399 (USD)</Li>
           <Li>The sum of the remaining monthly fees for the remainder of what would have been the first 12 months of membership.</Li>
         </ul>
         <p className="mt-3">
           For example, if a member cancels after six months, the cancellation fee would be the lesser of $399 or (6 months × $69 = $414). In this case, the cancellation fee would be $399.
         </p>
-        <p className="mt-3">This fee compensates the Association for costs incurred due to early termination. Members acknowledge and agree that this cancellation fee is a reasonable estimate of damages that the Association will incur in the event of early termination.</p>
+        <p className="mt-3">This fee compensates the Association for costs incurred due to early termination. Members acknowledge and agree that this cancellation fee is a reasonable estimate of damages that the Association will incur in the event of early termination.</p> */}
       </>
     ),
   },
@@ -171,6 +171,7 @@ const sections = [
 export default function MasterclassMembershipTC() {
   const [agreed, setAgreed] = useState(false);
   const [darkHint, setDarkHint] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
 
   // Reduced-motion preference
   const prefersReduced = useMemo(
@@ -218,7 +219,17 @@ export default function MasterclassMembershipTC() {
                   checked={agreed}
                   onChange={(e) => setAgreed(e.target.checked)}
                 />
-                <span className="text-base md:text-lg">I have read and agree to the Terms and Conditions.</span>
+                <span className="text-base md:text-lg">
+                  I have read and agree to the{" "}
+                  <button
+                    type="button"
+                    onClick={() => setShowTerms(!showTerms)}
+                    className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 underline underline-offset-2 hover:underline-offset-4 transition-all duration-200 font-medium"
+                  >
+                    Terms and Conditions
+                  </button>
+                  .
+                </span>
               </label>
 
               <motion.button
@@ -240,16 +251,24 @@ export default function MasterclassMembershipTC() {
             </div>
           </div>
 
-          {/* Sections */}
-          <div className="px-6 md:px-10 pb-10 md:pb-12">
-            <div className="divide-y divide-black/5 dark:divide-white/10">
-              {sections.map((s, i) => (
-                <Section key={i} index={i + 1} icon={s.icon} title={s.title}>
-                  {s.body}
-                </Section>
-              ))}
-            </div>
-          </div>
+          {/* Sections - Only show when showTerms is true */}
+          {showTerms && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="px-6 md:px-10 pb-10 md:pb-12"
+            >
+              <div className="divide-y divide-black/5 dark:divide-white/10">
+                {sections.map((s, i) => (
+                  <Section key={i} index={i + 1} icon={s.icon} title={s.title}>
+                    {s.body}
+                  </Section>
+                ))}
+              </div>
+            </motion.div>
+          )}
         </motion.div>
       </section>
 

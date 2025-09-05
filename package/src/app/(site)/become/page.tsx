@@ -21,7 +21,7 @@ export default function Page() {
                 bannerimage="/images/courses/become/freshman.webp"
                 heading="Become Private + Sovereignty 101"
                 desc="Reclaim Your <span>Legal Identity</span> and Exit the Public System."
-                buttonPath="/projects/become-private-Sovereignty 101" // 👈 you now define the path here
+                buttonPath="/course-tnc" // 👈 you now define the path here
             />
             <BecomeIntro />
             <Intro2 />

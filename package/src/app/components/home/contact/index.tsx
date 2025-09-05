@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
@@ -14,6 +15,7 @@ export default function Contact(props: ContactProps) {
   const { contactdataNumber } = props;
   const [contactData, setContactData] = useState<any>(null);
   const [isFormLoaded, setIsFormLoaded] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const rippleRef = useRef<HTMLDivElement | null>(null);
@@ -30,6 +32,11 @@ export default function Contact(props: ContactProps) {
       }
     };
     fetchData();
+  }, []);
+
+  // Ensure iframe/script render only on client to avoid hydration mismatches
+  useEffect(() => {
+    setIsMounted(true);
   }, []);
 
   // GSAP: ripple background + subtle entrance parallax
@@ -269,25 +276,27 @@ export default function Contact(props: ContactProps) {
                     </div>
                   )}
                   
-                  {/* WonderEngine Form */}
-                  <iframe
-                    src="https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls"
-                    style={{ width: '100%', height: '380px', border: 'none', borderRadius: '12px', display: isFormLoaded ? 'block' : 'none' }}
-                    id="inline-o69tKOXv3NV8GnS4aGls" 
-                    data-layout="{'id':'INLINE'}"
-                    data-trigger-type="alwaysShow"
-                    data-trigger-value=""
-                    data-activation-type="alwaysActivated"
-                    data-activation-value=""
-                    data-deactivation-type="neverDeactivate"
-                    data-deactivation-value=""
-                    data-form-name="Contact us form"
-                    data-height="402"
-                    data-layout-iframe-id="inline-o69tKOXv3NV8GnS4aGls"
-                    data-form-id="o69tKOXv3NV8GnS4aGls"
-                    title="Contact us form"
-                    onLoad={() => setIsFormLoaded(true)}
-                  />
+                  {/* WonderEngine Form (client-only) */}
+                  {isMounted && (
+                    <iframe
+                      src="https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls"
+                      style={{ width: '100%', height: '380px', border: 'none', borderRadius: '12px', display: isFormLoaded ? 'block' : 'none' }}
+                      id="inline-o69tKOXv3NV8GnS4aGls"
+                      data-layout="{'id':'INLINE'}"
+                      data-trigger-type="alwaysShow"
+                      data-trigger-value=""
+                      data-activation-type="alwaysActivated"
+                      data-activation-value=""
+                      data-deactivation-type="neverDeactivate"
+                      data-deactivation-value=""
+                      data-form-name="Contact us form"
+                      data-height="402"
+                      data-layout-iframe-id="inline-o69tKOXv3NV8GnS4aGls"
+                      data-form-id="o69tKOXv3NV8GnS4aGls"
+                      title="Contact us form"
+                      onLoad={() => setIsFormLoaded(true)}
+                    />
+                  )}
                 </div>
 
                 {/* Form Footer */}
@@ -300,8 +309,10 @@ export default function Contact(props: ContactProps) {
                   </div>
                 </div>
                 
-                {/* WonderEngine Script */}
-                <script src="https://api.wonderengine.ai/js/form_embed.js"></script>
+                {/* WonderEngine Script (client-only) */}
+                {isMounted && (
+                  <Script src="https://api.wonderengine.ai/js/form_embed.js" strategy="afterInteractive" />
+                )}
               </motion.div>
             </motion.div>
 

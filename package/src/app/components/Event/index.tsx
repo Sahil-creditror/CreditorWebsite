@@ -42,9 +42,12 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
     return { expired: false, days, hours, minutes, seconds };
   };
 
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(() => calcTimeLeft(TARGET_TS));
+  // Initialize with stable values to avoid SSR/CSR hydration mismatches
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({ expired: false, days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
+    // Prime immediately on mount, then tick every second
+    setTimeLeft(calcTimeLeft(TARGET_TS));
     const t = window.setInterval(() => setTimeLeft(calcTimeLeft(TARGET_TS)), 1000);
     return () => window.clearInterval(t);
   }, []);
@@ -198,7 +201,10 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
   const modalCloseRef = useRef<HTMLButtonElement | null>(null);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
-  const pad = (n: number) => String(n).padStart(2, '0');
+  const pad = (n: number) => {
+    const value = Number.isFinite(n) ? Math.max(0, Math.floor(n)) : 0;
+    return ('0' + value).slice(-2);
+  };
 
   const handleWidgetOpen = () => {
     if (timeLeft.expired) return;

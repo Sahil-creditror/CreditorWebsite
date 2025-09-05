@@ -17,47 +17,103 @@ export default function PreloaderWrapper({ children }: { children: React.ReactNo
   ];
 
   useEffect(() => {
-    // Set mounted to true immediately to prevent hydration mismatch
     setMounted(true);
-    // Show preloader only once per session
     const hasSeenPreloader = typeof window !== 'undefined' && sessionStorage.getItem('hasSeenPreloader') === 'true';
     if (hasSeenPreloader) {
       setLoading(false);
       return;
     }
-    
-    // Simulate progress with more realistic increments
-    const progressInterval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(progressInterval);
-          return 100;
-        }
-        return prev + Math.random() * 8 + 2; // More gradual progress
-      });
-    }, 80);
 
-    // Simulate loading steps
-    const stepInterval = setInterval(() => {
-      setCurrentStep(prev => {
-        const nextStep = (prev + 1) % loadingSteps.length;
-        setLoadingText(loadingSteps[nextStep]);
-        return nextStep;
-      });
-    }, 600);
+    let isCancelled = false;
+    const tasks: Array<Promise<void>> = [];
+    const incrementTextStages = [
+      "Loading Assets",
+      "Optimizing Media",
+      "Preparing Interface",
+      "Finalizing",
+    ];
 
-    // Complete loading after 3 seconds
-    const timer = setTimeout(() => {
+    const updateProgress = (completed: number, total: number) => {
+      const pct = Math.round((completed / Math.max(total, 1)) * 100);
+      setProgress(pct);
+      const stageIndex = Math.min(
+        incrementTextStages.length - 1,
+        Math.floor((pct / 100) * incrementTextStages.length)
+      );
+      setCurrentStep(stageIndex);
+      setLoadingText(incrementTextStages[stageIndex]);
+    };
+
+    // Collect resources
+    const images = Array.from(document.images || []);
+    const videos = Array.from(document.querySelectorAll('video')) as HTMLVideoElement[];
+    const totalPlanned = images.length + videos.length + 2; // + fonts + window load
+
+    let completed = 0;
+    const markDone = () => {
+      completed += 1;
+      if (!isCancelled) updateProgress(completed, totalPlanned);
+    };
+
+    // Images
+    images.forEach((img) => {
+      if (img.complete && img.naturalWidth > 0) {
+        markDone();
+      } else {
+        const onLoad = () => { img.removeEventListener('load', onLoad); img.removeEventListener('error', onError); markDone(); };
+        const onError = () => { img.removeEventListener('load', onLoad); img.removeEventListener('error', onError); markDone(); };
+        img.addEventListener('load', onLoad, { once: true });
+        img.addEventListener('error', onError, { once: true });
+      }
+    });
+
+    // Videos
+    videos.forEach((vid) => {
+      if (vid.readyState >= 3) { // HAVE_FUTURE_DATA
+        markDone();
+      } else {
+        const onReady = () => { vid.removeEventListener('canplaythrough', onReady); vid.removeEventListener('error', onError); markDone(); };
+        const onError = () => { vid.removeEventListener('canplaythrough', onReady); vid.removeEventListener('error', onError); markDone(); };
+        vid.addEventListener('canplaythrough', onReady, { once: true });
+        vid.addEventListener('error', onError, { once: true });
+      }
+    });
+
+    // Fonts
+    const fontsReady = (document as any).fonts?.ready instanceof Promise
+      ? (document as any).fonts.ready.then(() => { if (!isCancelled) markDone(); })
+      : Promise.resolve().then(() => { if (!isCancelled) markDone(); });
+    tasks.push(fontsReady);
+
+    // Window load (all subresources)
+    const windowLoad = new Promise<void>((resolve) => {
+      if (document.readyState === 'complete') {
+        resolve();
+      } else {
+        const handler = () => { window.removeEventListener('load', handler); resolve(); };
+        window.addEventListener('load', handler, { once: true });
+      }
+    }).then(() => { if (!isCancelled) markDone(); });
+    tasks.push(windowLoad);
+
+    // Fallback timeout to avoid infinite waiting
+    const timeout = new Promise<void>((resolve) => setTimeout(resolve, 12000));
+
+    Promise.race([
+      Promise.all(tasks),
+      timeout,
+    ]).then(() => {
+      if (isCancelled) return;
+      setProgress(100);
       setLoading(false);
       try { sessionStorage.setItem('hasSeenPreloader', 'true'); } catch {}
-      clearInterval(progressInterval);
-      clearInterval(stepInterval);
-    }, 3000);
+    });
+
+    // Initial progress paint
+    updateProgress(0, totalPlanned);
 
     return () => {
-      clearTimeout(timer);
-      clearInterval(progressInterval);
-      clearInterval(stepInterval);
+      isCancelled = true;
     };
   }, []);
 

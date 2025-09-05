@@ -158,7 +158,7 @@ export default function MasterclassBenefits() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              03
+              04
             </motion.span>
             <motion.div 
               className="h-px w-16 bg-black/12 dark:bg-white/12"
@@ -192,14 +192,14 @@ export default function MasterclassBenefits() {
             className="flex flex-col items-center gap-4"
           >
             <motion.span
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-gradient-to-r from-yellow-100 to-yellow-50 text-yellow-700 border border-yellow-200"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm md:text-base font-medium bg-gradient-to-r from-yellow-100 to-yellow-50 text-yellow-700 border border-yellow-200"
               initial={{ y: -6, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
+                className="h-5 w-5 md:h-6 md:w-6"
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 aria-hidden
@@ -322,17 +322,17 @@ export default function MasterclassBenefits() {
               
               {/* Image Section */}
               <motion.div 
-                className="relative w-full h-52 rounded-xl overflow-hidden shadow-inner mb-5"
+                className="relative h-52 overflow-hidden -ml-6 w-[calc(100%+3rem)] -mt-6 mb-6 rounded-t-2xl"
                 variants={imageVariants}
               >
                 <Image
                   src={item.image}
                   alt={item.title}
                   fill
-                  className="object-cover"
+                  className="object-cover object-center"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-black/10 dark:bg-black/20 group-hover:bg-black/5 transition-colors duration-500 rounded-xl" />
+                <div className="absolute inset-0 bg-black/10 dark:bg-black/20 group-hover:bg-black/5 transition-colors duration-500" />
               </motion.div>
 
               {/* Text Content */}

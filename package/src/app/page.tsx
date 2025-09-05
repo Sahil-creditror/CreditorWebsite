@@ -33,7 +33,7 @@ export default function Home() {
       <About />
       {/* <MasterInfo /> */}
       <Courses />
-      <Contact contactdataNumber="4" />
+      <Contact contactdataNumber="3" />
       <Offer />
       <Event />
       {/* <Roadmap /> */}

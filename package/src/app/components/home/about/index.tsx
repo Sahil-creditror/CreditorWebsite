@@ -538,32 +538,7 @@ function About() {
                 });
               }}
             >
-              <motion.div
-                className="relative z-10"
-                initial={{ opacity: 0 }}
-                whileInView={{
-                  opacity: 1,
-                  transition: { delay: 0.5 }
-                }}
-              >
-                <motion.h2
-                  className="text-4xl font-bold text-gray-800 dark:text-black"
-                  initial={{ scale: 0.9 }}
-                  whileInView={{
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 15
-                    }
-                  }}
-                >
-                  35+
-                </motion.h2>
-                <motion.p className="text-gray-600 dark:text-black mt-2">
-                  Exclusive credit & legal courses
-                </motion.p>
-              </motion.div>
+              
 
               <motion.div
                 className="flex flex-col gap-4 relative z-10"

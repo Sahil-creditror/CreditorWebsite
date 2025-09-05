@@ -128,6 +128,31 @@ export default function LiveJoinHero({
 
   const [isHovering, setIsHovering] = useState(false);
 
+  // ---------- stable particles (seeded RNG to avoid hydration mismatch) ----------
+  const particles = useMemo(() => {
+    const createRng = (seed: number) => {
+      let t = seed >>> 0;
+      return () => {
+        t += 0x6d2b79f5;
+        let r = Math.imul(t ^ (t >>> 15), 1 | t);
+        r ^= r + Math.imul(r ^ (r >>> 7), 61 | r);
+        return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+      };
+    };
+
+    return Array.from({ length: 15 }, (_, i) => {
+      const rng = createRng(1337 + i * 1013904223);
+      const top = rng() * 100;
+      const left = rng() * 100;
+      const width = rng() * 10 + 2;
+      const height = rng() * 10 + 2;
+      const dx = rng() * 20 - 10;
+      const duration = rng() * 10 + 10;
+      const delay = rng() * 5;
+      return { top, left, width, height, dx, duration, delay };
+    });
+  }, []);
+
   return (
     <section
       className={`relative overflow-hidden bg-fixed bg-center bg-cover ${className}`}
@@ -139,25 +164,25 @@ export default function LiveJoinHero({
 
       {/* Floating particles */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(15)].map((_, i) => (
+        {particles.map((p, i) => (
           <motion.div
             key={i}
             className="absolute rounded-full bg-white/10"
             style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              width: `${Math.random() * 10 + 2}px`,
-              height: `${Math.random() * 10 + 2}px`,
+              top: `${p.top}%`,
+              left: `${p.left}%`,
+              width: `${p.width}px`,
+              height: `${p.height}px`,
             }}
             animate={{
               y: [0, -20, 0],
-              x: [0, Math.random() * 20 - 10, 0],
+              x: [0, p.dx, 0],
               opacity: [0, 0.5, 0],
             }}
             transition={{
-              duration: Math.random() * 10 + 10,
+              duration: p.duration,
               repeat: Infinity,
-              delay: Math.random() * 5,
+              delay: p.delay,
             }}
           />
         ))}
@@ -166,7 +191,7 @@ export default function LiveJoinHero({
       {/* Content */}
       <motion.div
         style={{ y: prefersReducedMotion ? 0 : y, willChange: "transform" }}
-        className="relative z-10 min-h-[80vh] lg:min-h-[88vh] flex items-center justify-center"
+        className="relative z-10 min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center"
       >
         <div className="container mx-auto px-6 text-center">
           <motion.h1
@@ -250,22 +275,7 @@ export default function LiveJoinHero({
         transition={{ duration: 6, repeat: Infinity }}
       />
 
-      {/* Scroll cue */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 0.8, y: 0 }}
-        transition={{ delay: 0.8, duration: 0.6 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2"
-        aria-hidden
-      >
-        <div className="flex h-10 w-6 items-start justify-center rounded-full border border-white/30 p-1">
-          <motion.span
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-            className="mt-1 h-2 w-1 rounded-full bg-white/80"
-          />
-        </div>
-      </motion.div>
+      
     </section>
   );
 }

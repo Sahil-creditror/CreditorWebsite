@@ -31,6 +31,8 @@ const LiveHero: React.FC<LiveHeroProps> = ({ channelUrl, className }) => {
 
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/20" />
+      {/* Additional dark overlay for better text contrast */}
+      <div className="absolute inset-0 bg-black/40" aria-hidden />
 
       {/* *** CENTERED CONTENT: absolute inset-0 ensures true centering *** */}
       <div className="absolute inset-0 z-10 flex items-center justify-center px-6">

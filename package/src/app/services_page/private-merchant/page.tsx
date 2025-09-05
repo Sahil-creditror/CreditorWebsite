@@ -1,9 +1,10 @@
-import React from 'react'
+import { PrivateMerchant } from './privatemerchant'
+import type { Metadata } from "next";
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
+export const metadata: Metadata = {
+  title: "Private Merchant | Creditor Academy",
+};
+
+export default function PrivateMerchantPage() {
+  return <PrivateMerchant />;
 }
-
-export default page

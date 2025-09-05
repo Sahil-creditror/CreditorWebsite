@@ -212,7 +212,7 @@ const pricingData = {
             planDescp: "Best suited for established businesses wanting a fully tailored experience.",
             planIncludes: ["Tailored payment solutions","Empower your business","Customized experience","Seamless Payment Solutions"],
             coverImage: "/images/pricing/Cover-3.jpg" ,// Optional
-            link: "/service-page/private-merchant"
+            link: "/services_page/private-merchant"
         },
     ],
     partnerLogo: [

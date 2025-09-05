@@ -19,6 +19,12 @@ export default function PreloaderWrapper({ children }: { children: React.ReactNo
   useEffect(() => {
     // Set mounted to true immediately to prevent hydration mismatch
     setMounted(true);
+    // Show preloader only once per session
+    const hasSeenPreloader = typeof window !== 'undefined' && sessionStorage.getItem('hasSeenPreloader') === 'true';
+    if (hasSeenPreloader) {
+      setLoading(false);
+      return;
+    }
     
     // Simulate progress with more realistic increments
     const progressInterval = setInterval(() => {
@@ -43,6 +49,7 @@ export default function PreloaderWrapper({ children }: { children: React.ReactNo
     // Complete loading after 3 seconds
     const timer = setTimeout(() => {
       setLoading(false);
+      try { sessionStorage.setItem('hasSeenPreloader', 'true'); } catch {}
       clearInterval(progressInterval);
       clearInterval(stepInterval);
     }, 3000);
@@ -57,11 +64,12 @@ export default function PreloaderWrapper({ children }: { children: React.ReactNo
   if (loading && mounted) {
     return (
       <div className="fixed inset-0 w-screen h-screen flex items-center justify-center z-[9999] overflow-hidden font-['Inter',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif]">
-        {/* Professional single-color background */}
-        <div className="absolute inset-0 w-full h-full bg-[#005A9C] bg-cover bg-center"></div>
+        {/* Background with light gradient and glass overlay */}
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-[#e7f3fb] via-[#d5ecfa] to-[#bfe3f7]"></div>
+        <div className="absolute inset-0 w-full h-full bg-white/30 backdrop-blur-md"></div>
         
         {/* Main content with glassmorphism */}
-        <div className="relative z-10 flex flex-col items-center gap-10 bg-white/95 rounded-[20px] px-16 py-12 shadow-[0_20px_40px_rgba(0,0,0,0.15)] border border-white/30 w-[400px] md:w-[350px] md:px-10 md:py-8 md:gap-8 sm:w-[320px] sm:px-8 sm:py-6 sm:gap-6">
+        <div className="relative z-10 flex flex-col items-center gap-10 bg-white/95 rounded-[20px] px-16 py-12 shadow-[0_20px_40px_rgba(0,0,0,0.15)] border border-white/30 w-[400px] md:w-[350px] sm:w-[320px] max-w-[90vw] min-h-[420px] md:min-h-[380px] sm:min-h-[340px] md:px-10 md:py-8 md:gap-8 sm:px-8 sm:py-6 sm:gap-6">
           {/* Professional logo section */}
           <div className="relative mb-4">
             <div className="relative w-[180px] h-[180px] rounded-full bg-gradient-to-br from-[#005A9C] to-[#00A8CC] flex items-center justify-center shadow-[0_10px_25px_rgba(0,90,156,0.3)] md:w-[160px] md:h-[160px] sm:w-[140px] sm:h-[140px]">

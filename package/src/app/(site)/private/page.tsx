@@ -3,24 +3,28 @@ import Herobanner from '@/app/components/shared/hero-banner';
 import Cards from '@/app/components/private/cards';
 import CourseFeatures from '@/app/components/private/course-feature';
 import CourseDetail from '@/app/components/private/course-detail';
-import TenBusinesses from '@/app/components/private/ten-businesses';
-import Contact from '@/app/components/private/contact';
+import Contact from '@/app/components/shared/cta';
+
+import { getAllProjects } from "@/lib/markdown";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+    title: "Private Business | Creditor",
+};
 
 const PrivatePage = () => {
+  const become = getAllProjects();
   return (
     <div>
       <Herobanner
         heading="Private business credit"
         desc="Your gateway to <span>financial sovereignty</span>."
         bannerimage="/images/services/service-banner.webp"
-        buttonPath="/"
-        buttonText="Enroll Now"
+        buttonPath="/course-tnc"
       />
       <Cards />
       <CourseDetail />
       <CourseFeatures />
       <Contact />
-      {/* <TenBusinesses /> */}
     </div>
   );
 };

@@ -215,7 +215,7 @@ export default function CourseTNC() {
                 type="button"
                 onClick={() => {
                   if (!agreed) return;
-                  window.location.href = "https://quickclick.com/r/m7o5skh90z5o7s6x6bg9yeklf7ql3f";
+                  window.location.href = "https://quickclick.com/r/06k6zonz2prrxt1pqknxgwgi2jsbtr";
                 }}
                 disabled={!agreed}
                 whileTap={{ scale: agreed ? 0.98 : 1 }}

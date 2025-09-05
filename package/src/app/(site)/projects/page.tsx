@@ -4,7 +4,7 @@ import Learn from "@/app/components/masterclass/learn";
 import Get from "@/app/components/masterclass/getwithmaster";
 import About from "@/app/components/masterclass/about";
 import Appoint from "@/app/components/masterclass/appointment";
-import CTA from "@/app/components/masterclass/cta";
+import CTA from "@/app/components/shared/cta";
 import Event from "@/app/components/Event";
 import Join from "@/app/components/masterclass/Join";
 import Preview from "@/app/components/masterclass/preview";

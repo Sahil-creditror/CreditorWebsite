@@ -141,7 +141,7 @@ export default function TermsAndCondition() {
                 <FaInfoCircle className="text-blue-500 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-sm text-blue-700 dark:text-blue-300">
-                    <strong>Last Updated:</strong> January 1, 2023
+                    <strong>Last Updated:</strong> September 26, 2024
                   </p>
                   <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
                     Estimated reading time: 10-15 minutes
@@ -349,12 +349,15 @@ export default function TermsAndCondition() {
                   </ul>
                 )}
                 {index === 9 && (
-                  <p className="text-base">
-                    These terms are governed by the laws of <strong>[Insert Jurisdiction]</strong>. Any
-                    disputes will be resolved via binding arbitration in <strong>[Insert Location]</strong>.
-                    Please replace these placeholders with your preferred jurisdiction and arbitration
-                    location.
-                  </p>
+                  <>
+                    <p className="text-base mb-3">
+                      Since the Association is protected by the First, Fourth, Fifth, Ninth, and Tenth Amendments of the U.S. Constitution, it is outside the jurisdiction of federal and state authorities regarding complaints or grievances against its members.
+                    </p>
+                    <p className="text-base">
+                      These terms are governed by the laws of <strong>The United States of America</strong>. Any
+                      disputes will be resolved via binding arbitration in <strong>The United States of America</strong>.
+                    </p>
+                  </>
                 )}
                 {index === 10 && (
                   <p className="text-base">

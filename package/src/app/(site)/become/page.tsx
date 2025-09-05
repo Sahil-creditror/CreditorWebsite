@@ -1,10 +1,9 @@
 import Herobanner from "@/app/components/shared/hero-banner";
 import BecomeIntro from "@/app/components/become/cards";
 import Intro2 from "@/app/components/become/intro";
-import Learn2 from "@/app/components/become/learn";
 import Content from "@/app/components/become/content";
 import Appoint from "@/app/components/become/appointment";
-import CTA from "@/app/components/become/cta";
+import CTA from "@/app/components/shared/cta";
 import Event from "@/app/components/Event";
 
 import { getAllProjects } from "@/lib/markdown";

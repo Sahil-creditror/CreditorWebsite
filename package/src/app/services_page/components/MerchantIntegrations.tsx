@@ -13,31 +13,31 @@ const defaultCards: IntegrationCard[] = [
     title: "Private Merchant Accounts",
     description:
       "You're not renting access to a third-party processor. Operate through your own secure, fully underwritten account.",
-    image: "/images/home/services/services_1.webp",
+    image: "/images/services/PMP1.webp",
   },
   {
     title: "Full Shopify Integration",
     description:
       "Our platform syncs with Shopify, WooCommerce, and other major platforms while keeping your data in your hands.",
-    image: "/images/home/services/services_2.webp",
+    image: "/images/services/PMP2.webp",
   },
   {
     title: "No Freezes, No Holds",
     description:
       "We aren't Stripe. We aren't PayPal. You won't wake up one day with your funds frozen.",
-    image: "/images/home/services/services_3.webp",
+    image: "/images/services/PMP3.webp",
   },
   {
     title: "Total Privacy & Security",
     description:
       "Encrypted payment flows, fraud prevention, and private settlement rails by design.",
-    image: "/images/home/services/services_4.webp",
+    image: "/images/services/PMP4.webp",
   },
   {
-    title: "Flexible Settlement Options",
+    title: "Custom Rates, Human Support",
     description:
-      "Card, ACH, and alternative rails with configurable settlement schedules for cash-flow control.",
-    image: "/images/pricing/Cover-3.jpg",
+      "We offer custom pricing and real human support based on your private business structure",
+    image: "/images/services/PMP5.webp",
   },
 ];
 

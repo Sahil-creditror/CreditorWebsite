@@ -13,7 +13,7 @@ type MerchantFeaturesProps = {
 export default function MerchantFeatures({
   title = "Creditor Academy Private Merchant Processing",
   subtitle = "Process Payments Privately. Get Paid Securely. Stay in Control.",
-  sideImageSrc = "http://localhost:5173/src/assets/PMP_Flex.webp",
+  sideImageSrc = "/images/services//PMP_Flex.webp",
   highlightedPhrase = "private operators",
 }: MerchantFeaturesProps) {
   const sectionRef = useRef<HTMLDivElement>(null);

@@ -237,7 +237,7 @@ export default function LiveSessionCTA({
 
               <div>
                 <h2 className="text-2xl md:text-3xl font-extrabold leading-tight text-gray-900 dark:text-white">
-                  Don't Miss the Live Masterclass
+                  Don't Miss the Live Class
                 </h2>
                 <p className="mt-2 text-gray-700 dark:text-gray-300 max-w-xl">
                   Every Tuesday &amp; Thursday at <span className="font-semibold">6:00 PM ET</span>. Join

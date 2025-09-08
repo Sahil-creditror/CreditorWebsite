@@ -1,11 +1,11 @@
 import Herobanner from "@/app/components/shared/hero-banner";
-import TnC from "@/app/components/shared/course-tnc";
+import TnC from "@/app/components/enterprise-tnc";
 
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
 export const metadata: Metadata = {
-    title: "Enroll Course | Creditor",
+    title: "Enterprise Plan | Creditor",
 };
 
 export default function Page() {
@@ -14,7 +14,7 @@ export default function Page() {
         <main>
             <Herobanner
                 bannerimage="/images/courses/banner-tnc.webp"
-                heading="Course Bundle Plan"
+                heading="Enterprise Plan"
                 desc="Reclaim Your <span>Legal Identity</span> and Exit the Public System."
                 // buttonPath="/terms-and-conditions" //
             />

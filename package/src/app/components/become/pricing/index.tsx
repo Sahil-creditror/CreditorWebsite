@@ -214,11 +214,11 @@ export default function Pricing() {
                   whileHover={{ scale: 1.01 }}
                   href={
                     plan.id === "masterclass"
-                      ? "https://quickclick.com/r/m7o5skh90z5o7s6x6bg9yeklf7ql3f"
+                      ? "/tncmasterclass"
                       : plan.id === "bundle"
-                      ? "https://quickclick.com/r/o0h2bwvcumvpwgot6qxsm6moukluyn"
+                      ? "/course-tnc"
                       : plan.id === "enterprise"
-                      ? "https://quickclick.com/r/06k6zonz2prrxt1pqknxgwgi2jsbtr"
+                      ? "/enterprise-tnc"
                       : "#"
                   }
                   target="_blank"

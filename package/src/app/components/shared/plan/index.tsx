@@ -15,13 +15,13 @@ const plans = [
     priceYearly: Math.round(69 * 12 * 0.8), // 20% off yearly
     cadenceMonthly: "/month",
     cadenceYearly: "/year",
-    short: "Access to Masterclass",
+    short: "Ongoing training for credit repair professionals",
     badge: "Popular",
     features: [
-      "Unlimited access to live masterclasses",
-      "Community & office hours",
-      "Workbooks and templates",
-      "Certificate of completion",
+      "Weekly live masterclasses on dispute strategies & compliance",
+      "Community access to peer support & case clinics",
+      "Templates: dispute letters, scripts & SOPs",
+      "Certificate from Creditors Academy",
     ],
     cta: "Join Masterclass",
     featured: false,
@@ -31,13 +31,13 @@ const plans = [
     name: "Course Bundle",
     price: "$500",
     cadence: "one-time",
-    short: "15 modules · Recorded lessons",
+    short: "15 modules · Lifetime access · Creditors-focused",
     badge: "Best value",
     features: [
-      "15 recorded modules (lifetime access)",
-      "Downloadable resources & transcripts",
-      "Project files and templates",
-      "1:1 review session (first 30 days)",
+      "15 comprehensive modules: consumer law, disputes, negotiations",
+      "Downloadable resources, sample letters & checklists",
+      "Case studies and replayable lesson recordings",
+      "1:1 onboarding review session (first 30 days)",
     ],
     cta: "Buy Bundle",
     featured: true,
@@ -47,13 +47,13 @@ const plans = [
     name: "Enterprise",
     price: "$2,800",
     cadence: "Full access",
-    short: "Team & priority support",
+    short: "Team training, compliance & onboarding",
     badge: "Enterprise",
     features: [
-      "Unlimited seats & team onboarding",
-      "Dedicated account manager",
-      "SLA & priority support",
-      "Custom integrations & reporting",
+      "Unlimited seats, team onboarding & training roadmaps",
+      "Dedicated account manager for implementation",
+      "SLA & priority support for large practices",
+      "Custom integrations, reporting and agency workflows",
     ],
     cta: "Purchase Now",
     featured: false,
@@ -91,7 +91,7 @@ export default function Pricing() {
         <div className="max-w-3xl mx-auto text-center mb-8">
           <h2 className="text-4xl font-extrabold tracking-tight">Pricing & Plans</h2>
           <p className="mt-3 text-slate-600 dark:text-slate-300">
-            Choose a simple plan — monthly membership, one-time bundle, or enterprise access for teams.
+            Choose the Creditors Academy plan that fits your goals — monthly membership for ongoing learning, a one-time course bundle for complete self-study, or enterprise access for teams and agencies.
           </p>
         </div>
 
@@ -228,9 +228,9 @@ export default function Pricing() {
 
                 <p className={`mt-4 text-xs ${plan.featured ? "text-blue-100/90" : "text-slate-500 dark:text-slate-400"}`}>
                   {plan.id === "enterprise"
-                    ? "Custom contracts, billing and onboarding."
+                    ? "Custom contracts, billing and onboarding for teams."
                     : plan.id === "bundle"
-                    ? "One-time purchase — lifetime access to recorded lessons."
+                    ? "One-time purchase — lifetime access to Creditors Academy recorded lessons."
                     : isYearly
                     ? "Billed annually. Cancel anytime before renewal."
                     : "Cancel anytime. Access renews monthly."}

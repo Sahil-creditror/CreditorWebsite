@@ -1,128 +1,265 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import {
+  FaBalanceScale,
+  FaGavel,
+  FaUserLock,
+  FaFileContract,
+  FaShieldAlt,
+  FaChevronLeft,
+  FaChevronRight,
+} from "react-icons/fa";
 
 export default function CourseFeatures() {
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  const sliderRef = useRef<HTMLDivElement | null>(null);
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
+
   const cardData = [
     {
       title: "Comprehensive Curriculum",
       description: "In-depth modules covering all aspects of business credit building, from basics to advanced strategies.",
-      icon: "📚",
+      icon: FaBalanceScale,
       color: "#4f46e5",
-      gradient: "from-indigo-500 to-indigo-600"
+      gradient: "from-indigo-500 to-indigo-600",
+      img: "/images/courses/become/status.png"
     },
     {
       title: "Expert Guidance",
       description: "Learn from industry professionals with years of experience in business finance and credit.",
-      icon: "👨‍🏫",
+      icon: FaGavel,
       color: "#7c3aed",
-      gradient: "from-purple-500 to-purple-600"
+      gradient: "from-purple-500 to-purple-600",
+      img: "/images/courses/become/judiciary.png"
     },
     {
       title: "Practical Tools & Resources",
       description: "Access templates, checklists, and actionable steps to implement your credit building plan effectively.",
-      icon: "🛠️",
+      icon: FaFileContract,
       color: "#059669",
-      gradient: "from-emerald-500 to-emerald-600"
+      gradient: "from-emerald-500 to-emerald-600",
+      img: "/images/courses/become/document.png"
     },
     {
       title: "Community Support",
       description: "Join a thriving community of entrepreneurs for networking, support, and shared learning experiences.",
-      icon: "🤝",
+      icon: FaShieldAlt,
       color: "#ea580c",
-      gradient: "from-orange-500 to-orange-600"
+      gradient: "from-orange-500 to-orange-600",
+      img: "/images/courses/become/asset.png"
     }
   ];
 
+  // Responsive logic
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 800);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const visibleCards = isMobile ? 1 : 4;
+  const totalSlides = Math.max(1, cardData.length - visibleCards + 1);
+
+  const nextSlide = () => {
+    setCurrentIndex((i) => Math.min(i + 1, totalSlides - 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((i) => Math.max(i - 1, 0));
+  };
+
+  // Swipe handling
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+
+    const distance = touchStartX.current - touchEndX.current;
+    const minSwipe = 50;
+
+    if (distance > minSwipe) {
+      nextSlide();
+    } else if (distance < -minSwipe) {
+      prevSlide();
+    }
+
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+  };
+
+  const translatePercent = currentIndex * (100 / visibleCards);
+
   return (
-    <section className="container mx-auto px-4 py-16">
-      <div className="text-center mb-16 relative z-10">
-        <motion.h2
-          initial={{ y: 20, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-bold mb-6 text-slate-800 dark:text-white"
-        >
-          What You'll Learn
-          <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 text-5xl md:text-6xl mt-2">
-            In This Course
-          </span>
-        </motion.h2>
+    <div className="w-full py-10 px-4 bg-whitesmoke dark:bg-slate-900 font-sans">
+      {/* Fade-in Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <div className="text-center text-3xl md:text-5xl font-extrabold text-slate-800 dark:text-white">
+            What You'll Learn
+          </div>
+        </div>
+
         <motion.p
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed font-light"
+          className="text-center text-xl text-slate-600 dark:text-slate-300 mb-10 max-w-3xl mx-auto leading-relaxed font-light"
         >
           Transform theoretical knowledge into powerful real-world applications
         </motion.p>
+      </motion.div>
+
+      {/* Slider */}
+      <div
+        className="relative px-4 md:px-12"
+        ref={sliderRef}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        {currentIndex > 0 && (
+          <button
+            aria-label="Previous"
+            onClick={prevSlide}
+            className="absolute left-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 w-11 h-11 rounded-full shadow-md flex items-center justify-center z-10 text-gray-700 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+          >
+            <FaChevronLeft />
+          </button>
+        )}
+
+        <div className="overflow-hidden">
+          <div
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${translatePercent}%)` }}
+          >
+            {cardData.map((item, i) => (
+              <div
+                key={i}
+                className="p-2 box-border"
+                style={{ flex: `0 0 ${100 / visibleCards}%` }}
+              >
+                <motion.div
+                  initial={{ y: 60, opacity: 0, rotate: 2 }}
+                  whileInView={{ y: 0, opacity: 1, rotate: 0 }}
+                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                  whileHover={{ y: -15, scale: 1.02 }}
+                  viewport={{ once: true, margin: "0px" }}
+                  className="group relative"
+                >
+                  {/* Card */}
+                  <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-2xl border border-slate-200 dark:border-slate-700 relative overflow-hidden transition-all duration-300 h-full flex flex-col">
+                    {/* Image section */}
+                    <div className="h-44 overflow-hidden">
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    {/* Icon container */}
+                    <div
+                      className="absolute left-1/2 -translate-x-1/2 top-36 w-14 h-14 rounded-lg flex items-center justify-center shadow-md"
+                      style={{
+                        backgroundColor: item.color,
+                        boxShadow: `${item.color}55 0px 6px 18px`,
+                      }}
+                    >
+                      <item.icon className="text-white text-xl" />
+                    </div>
+
+                    {/* Content */}
+                    <div className="px-4 pt-10 pb-6 text-center mt-6 flex-1">
+                      <h3 className="text-lg font-semibold text-slate-800 dark:text-white mb-2 group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-300">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+
+                    {/* Gradient accent */}
+                    <div className={`absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r ${item.gradient}`}></div>
+                  </div>
+                  
+                  {/* Floating effect background */}
+                  <div className={`absolute inset-0 bg-gradient-to-r ${item.gradient} rounded-xl opacity-20 blur-md group-hover:opacity-30 transition-opacity duration-300 -z-10 translate-y-4 group-hover:translate-y-6`}></div>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {currentIndex < totalSlides - 1 && (
+          <button
+            aria-label="Next"
+            onClick={nextSlide}
+            className="absolute right-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 w-11 h-11 rounded-full shadow-md flex items-center justify-center z-10 text-gray-700 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+          >
+            <FaChevronRight />
+          </button>
+        )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto relative z-10">
-        {cardData.map((item, i) => (
-          <motion.div
-            key={i}
-            initial={{ y: 60, opacity: 0, rotate: 2 }}
-            whileInView={{ y: 0, opacity: 1, rotate: 0 }}
-            transition={{ duration: 0.6, delay: i * 0.1 }}
-            whileHover={{ y: -15, scale: 1.02 }}
-            viewport={{ once: true, margin: "0px" }}
-            className="group relative"
-          >
-            {/* Card */}
-            <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-xl hover:shadow-2xl border border-slate-200 dark:border-slate-700 relative overflow-hidden transition-all duration-300 h-full flex flex-col">
-              {/* Gradient accent */}
-              <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${item.gradient}`}></div>
-              
-              {/* Hover effect overlay */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
-              
-              {/* Corner accent */}
-              <div className="absolute top-4 right-4 w-12 h-12 rounded-bl-2xl opacity-10 group-hover:opacity-20 transition-opacity duration-300" style={{ backgroundColor: item.color }}></div>
-              
-              {/* Icon container */}
-              <div className="relative mb-6">
-                <div className="w-16 h-16 rounded-xl flex items-center justify-center text-2xl mb-2 relative overflow-hidden">
-                  {/* Icon background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-10 rounded-xl`}></div>
-                  {/* Icon */}
-                  <span className="relative z-10 text-3xl">{item.icon}</span>
-                </div>
-                {/* Animated underline */}
-                <div className={`w-12 h-1 bg-gradient-to-r ${item.gradient} rounded-full mt-2 group-hover:w-16 transition-all duration-300`}></div>
-              </div>
-              
-              {/* Content */}
-              <h3 className="text-xl font-bold mb-4 text-slate-800 dark:text-white group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-300">
-                {item.title}
-              </h3>
-              <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6 flex-grow">
-                {item.description}
-              </p>
-              
-              {/* Action indicator */}
-              {/* <div className="flex items-center text-sm font-medium" style={{ color: item.color }}>
-                <span>Learn how</span>
-                <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-              </div> */}
-            </div>
-            
-            {/* Floating effect background */}
-            <div className={`absolute inset-0 bg-gradient-to-r ${item.gradient} rounded-2xl opacity-20 blur-md group-hover:opacity-30 transition-opacity duration-300 -z-10 translate-y-4 group-hover:translate-y-6`}></div>
-          </motion.div>
-        ))}
+      {/* Dots + Swipe Indicator */}
+      <div className="mt-6 text-center">
+        <div className="flex items-center justify-center gap-3">
+          {Array.from({ length: totalSlides }).map((_, i) => (
+            <button
+              key={i}
+              aria-label={`Go to slide ${i + 1}`}
+              onClick={() => setCurrentIndex(i)}
+              className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                currentIndex === i ? "bg-indigo-600" : "bg-gray-300 dark:bg-slate-600"
+              }`}
+            />
+          ))}
+        </div>
+
+        {isMobile && (
+          <div className="flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-slate-400 mt-3">
+            <FaChevronLeft className="text-sm" />
+            <span>Swipe or use arrows</span>
+            <FaChevronRight className="text-sm" />
+          </div>
+        )}
       </div>
-    <div className="text-center mt-16 mb-16">
-        {/* <motion.button
-          whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
+
+      {/* Call to Action */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        viewport={{ once: true }}
+        className="text-center mt-16 relative z-10"
+      >
+        <motion.button
+          whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(79, 70, 229, 0.3)" }}
           whileTap={{ scale: 0.98 }}
-          className="bg-gradient-to-r from-blue-700 to-indigo-700 dark:from-blue-600 dark:to-indigo-600 border-none rounded-full py-4 px-10 text-white font-semibold cursor-pointer shadow-lg mt-6 text-lg transition-all duration-300"
+          className="bg-gradient-to-r from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 border-none rounded-full py-4 px-10 text-white font-semibold cursor-pointer shadow-lg text-lg group"
         >
           Enroll Now
-        </motion.button> */}
-      </div>
-    </section>
+          <svg className="inline-block ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </motion.button>
+      </motion.div>
+    </div>
   );
 }

@@ -1,171 +1,250 @@
 "use client";
 
-import { motion, cubicBezier } from "framer-motion";
-import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { motion } from "framer-motion";
 
-export type LearnItem = {
+type CardType = {
   title: string;
-  description: string;
-  image: string;
-  span?: "normal" | "wide" | "tall" | "big";
+  desc: string;
+  img: string;
+  color: string;
 };
 
-interface WhatYoullLearnBentoProps {
-  items?: LearnItem[];
-  className?: string;
-  onCardClick?: (item: LearnItem, index: number) => void;
-}
+const WhatYoullLearnSlider: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
 
-const DEFAULT_ITEMS: LearnItem[] = [
-  {
-    title: "Set up your UBOT Trust & asset-holding structure",
-    description:
-      "Design robust UBOT frameworks to protect and compartmentalize assets from day one.",
-    image:
-      "/images/operate/img2.webp",
-    span: "wide",
-  },
-  {
-    title: "Form PMAs for coaching, services, education, or trades",
-    description:
-      "Stand up Private Membership Associations to operate in the private with clarity.",
-    image:
-      "/images/operate/img5.webp",
-  },
-  {
-    title: "Acquire & hold real estate in trusts",
-    description:
-      "Structure acquisitions for privacy, continuity, and long-term stewardship.",
-    image:
-      "/images/operate/img6.webp",
-    span: "tall",
-  },
-  {
-    title: "Handle bookkeeping + taxes privately",
-    description:
-      "Implement disciplined record-keeping and private accounting workflows.",
-    image:
-      "/images/operate/img1.webp",
-  },
-  {
-    title: " Build intergenerational wealth in the private",
-    description:
-      "Navigate operations with private instruments and compliant governance.",
-    image:
-      "/images/operate/img3.webp",
-    span: "wide",
-  },
-];
+  const sliderRef = useRef<HTMLDivElement | null>(null);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
-const fadeIn = {
-  hidden: { opacity: 0, y: 12 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: i * 0.08,
-      duration: 0.6,
-      ease: cubicBezier(0.22, 1, 0.36, 1),
+  const cards: CardType[] = [
+    {
+      title: "Set up your UBOT Trust & asset-holding structure",
+      desc: "Design robust UBOT frameworks to protect and compartmentalize assets from day one.",
+      color: "#426be6",
+      img: "/images/operate/img2.webp",
     },
-  }),
+    {
+      title: "Form PMAs for coaching, services, education, or trades",
+      desc: "Stand up Private Membership Associations to operate in the private with clarity.",
+      color: "#7648be",
+      img: "/images/operate/img5.webp",
+    },
+    {
+      title: "Acquire & hold real estate in trusts",
+      desc: "Structure acquisitions for privacy, continuity, and long-term stewardship.",
+      color: "#23a26c",
+      img: "/images/operate/img6.webp",
+    },
+    {
+      title: "Handle bookkeeping + taxes privately",
+      desc: "Implement disciplined record-keeping and private accounting workflows.",
+      color: "#e28019",
+      img: "/images/operate/img1.webp",
+    },
+    {
+      title: "Build intergenerational wealth in the private",
+      desc: "Navigate operations with private instruments and compliant governance.",
+      color: "#e14040",
+      img: "/images/operate/img3.webp",
+    },
+  ];
+
+  // ✅ Only run resize logic after mount (avoids SSR mismatch)
+  useEffect(() => {
+    setHasMounted(true);
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 800);
+    };
+
+    handleResize(); // run once at mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // 🚀 Don’t render until mounted → fixes hydration errors
+  if (!hasMounted) return null;
+
+  const visibleCards = isMobile ? 1 : 4;
+  const totalSlides = Math.max(1, cards.length - visibleCards + 1);
+
+  const nextSlide = () => setCurrentIndex((i) => Math.min(i + 1, totalSlides - 1));
+  const prevSlide = () => setCurrentIndex((i) => Math.max(i - 1, 0));
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    const distance = touchStartX.current - touchEndX.current;
+    const minSwipe = 50;
+    if (distance > minSwipe) nextSlide();
+    else if (distance < -minSwipe) prevSlide();
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+  };
+
+  const translatePercent = currentIndex * (100 / visibleCards);
+
+  return (
+    <div className="w-full py-10 px-4 bg-whitesmoke dark:bg-slate-900 font-sans">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <div className="text-center text-3xl md:text-5xl font-extrabold text-[#0b3d78] dark:text-white">
+            What You'll Learn
+          </div>
+        </div>
+        <div className="text-center text-sm text-gray-600 dark:text-gray-300 mb-10">
+          A concise, real-world curriculum for operating in the private—built for clarity, compliance, and longevity.
+        </div>
+      </motion.div>
+
+      {/* Slider */}
+      <div
+        className="relative px-4 md:px-12"
+        ref={sliderRef}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        {currentIndex > 0 && (
+          <button
+            aria-label="Previous"
+            onClick={prevSlide}
+            className="absolute left-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 w-11 h-11 rounded-full shadow-md flex items-center justify-center z-10 text-gray-700 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+          >
+            <FaChevronLeft />
+          </button>
+        )}
+
+        <div className="overflow-hidden">
+          <div
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${translatePercent}%)` }}
+          >
+            {cards.map((card, i) => (
+              <div
+                key={i}
+                className="p-2 box-border"
+                style={{ flex: `0 0 ${100 / visibleCards}%` }}
+              >
+                <div className="bg-white dark:bg-slate-950 rounded-xl shadow-lg overflow-hidden h-full flex flex-col relative">
+                  <div className="h-44 overflow-hidden">
+                    <img
+                      src={card.img}
+                      alt={card.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  <div
+                    className="absolute left-1/2 -translate-x-1/2 top-36 w-14 h-14 rounded-lg flex items-center justify-center shadow-md"
+                    style={{
+                      backgroundColor: card.color,
+                      boxShadow: `${card.color}55 0px 6px 18px`,
+                    }}
+                  >
+                    <div className="text-white text-xl font-bold">{i + 1}</div>
+                  </div>
+
+                  <div className="px-4 pt-10 pb-6 text-center mt-6 flex-1">
+                    <div className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+                      {card.title}
+                    </div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                      {card.desc}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {currentIndex < totalSlides - 1 && (
+          <button
+            aria-label="Next"
+            onClick={nextSlide}
+            className="absolute right-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 w-11 h-11 rounded-full shadow-md flex items-center justify-center z-10 text-gray-700 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+          >
+            <FaChevronRight />
+          </button>
+        )}
+      </div>
+
+      {/* Dots + Swipe */}
+      <div className="mt-6 text-center">
+        <div className="flex items-center justify-center gap-3">
+          {Array.from({ length: totalSlides }).map((_, i) => (
+            <button
+              key={i}
+              aria-label={`Go to slide ${i + 1}`}
+              onClick={() => setCurrentIndex(i)}
+              className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                currentIndex === i ? "bg-[#426be6]" : "bg-gray-300"
+              }`}
+            />
+          ))}
+        </div>
+
+        {isMobile && (
+          <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mt-3 dark:text-gray-400">
+            <FaChevronLeft className="text-sm" />
+            <span>Swipe or use arrows</span>
+            <FaChevronRight className="text-sm" />
+          </div>
+        )}
+      </div>
+
+      {/* CTA */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        viewport={{ once: true }}
+        className="text-center mt-16 relative z-10"
+      >
+        <motion.button
+          whileHover={{
+            scale: 1.05,
+            boxShadow: "0 10px 25px rgba(79, 70, 229, 0.3)",
+          }}
+          whileTap={{ scale: 0.98 }}
+          className="bg-gradient-to-r from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 border-none rounded-full py-4 px-10 text-white font-semibold cursor-pointer shadow-lg text-lg group"
+        >
+          Start Your Transformation
+          <svg
+            className="inline-block ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M17 8l4 4m0 0l-4 4m4-4H3"
+            />
+          </svg>
+        </motion.button>
+      </motion.div>
+    </div>
+  );
 };
 
-function spans(span?: LearnItem["span"]) {
-  switch (span) {
-    case "wide":
-      return "sm:col-span-2";
-    case "tall":
-      return "sm:row-span-2";
-    case "big":
-      return "sm:col-span-2 sm:row-span-2";
-    default:
-      return "";
-  }
-}
-
-export default function WhatYoullLearnBento({
-  items = DEFAULT_ITEMS,
-  className,
-  onCardClick,
-}: WhatYoullLearnBentoProps) {
-  return (
-    <section
-      className={cn("relative mx-auto max-w-7xl px-4 py-12 md:py-16", className)}
-      aria-labelledby="wyl-heading"
-    >
-      {/* Heading */}
-      <div className="mb-8 md:mb-12">
-        <motion.h2
-          id="wyl-heading"
-          className="text-xl font-extrabold tracking-tight md:text-5xl text-blue-600"
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-20%" }}
-          transition={{ duration: 0.6, ease: cubicBezier(0.22, 1, 0.36, 1) }}
-        >
-          What You’ll Learn
-        </motion.h2>
-        <motion.p
-          className="mt-2 max-w-2xl text-sm text-muted-foreground md:text-base"
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.06, duration: 0.5 }}
-        >
-          A concise, real-world curriculum for operating in the private—built for
-          clarity, compliance, and longevity.
-        </motion.p>
-      </div>
-
-      {/* Grid */}
-      <div className="grid auto-rows-[14rem] grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {items.map((item, i) => (
-          <motion.button
-            key={i}
-            type="button"
-            onClick={() => onCardClick?.(item, i)}
-            className={cn(
-              "group relative overflow-hidden rounded-3xl text-left outline-none shadow-lg hover:shadow-2xl transition-shadow duration-500",
-              spans(item.span)
-            )}
-            initial="hidden"
-            whileInView="visible"
-            variants={fadeIn}
-            viewport={{ once: true, amount: 0.2 }}
-            custom={i}
-          >
-            {/* Card Inner */}
-            <div className="relative h-full w-full rounded-3xl bg-gray-900/80 backdrop-blur-sm overflow-hidden">
-              {/* Image */}
-              <div className="absolute inset-0">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-              </div>
-
-              {/* Content */}
-              <div className="relative z-10 flex h-full flex-col justify-end p-6 transition-transform duration-500 group-hover:-translate-y-2">
-                <h3 className="text-lg font-semibold leading-snug text-white md:text-xl">
-                  {item.title}
-                </h3>
-                <p className="mt-2 line-clamp-3 text-sm text-white/80">
-                  {item.description}
-                </p>
-              </div>
-
-              {/* Hover shine */}
-              <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500">
-                <div className="absolute inset-0 bg-[radial-gradient(40rem_20rem_at_50%_120%,white/15,transparent_60%)]" />
-              </div>
-            </div>
-          </motion.button>
-        ))}
-      </div>
-    </section>
-  );
-}
+export default WhatYoullLearnSlider;

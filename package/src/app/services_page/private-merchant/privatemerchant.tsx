@@ -12,7 +12,8 @@ import PMPOffers from "../components/pmpOffer";
 export function PrivateMerchant() {
   return (
     <>
-      <MerchantHero ctaHref="https://dashboard.elitepay.pro/form/creditor-academy-paulr-prevet" />
+      <MerchantHero />
+      {/* <MerchantHero ctaHref="" /> */}
       <MerchantFeatures />
       <MerchantIntegrations />
       <MerchantSteps />

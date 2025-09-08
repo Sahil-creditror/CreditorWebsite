@@ -5,7 +5,7 @@ import Content from "@/app/components/become/content";
 import Appoint from "@/app/components/become/appointment";
 import CTA from "@/app/components/shared/cta";
 import Event from "@/app/components/Event";
-import Pricing from "@/app/components/become/pricing";
+import Pricing from "@/app/components/shared/plan";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -21,7 +21,7 @@ export default function Page() {
                 bannerimage="/images/courses/become/freshman.webp"
                 heading="Become Private + Sovereignty 101"
                 desc="Reclaim Your <span>Legal Identity</span> and Exit the Public System."
-                buttonPath="/course-tnc" // 👈 you now define the path here
+                // buttonPath="/course-tnc" // 👈 you now define the path here
             />
             <BecomeIntro />
             <Pricing />

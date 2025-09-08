@@ -11,10 +11,6 @@ import {
 } from "react-icons/fa";
 import Banner from "../assets/BPSOV_Banner.webp";
 
-// import GameBanner from '../components/GameBanner';
-// import SovSlider from '../components/SovSlider';
-// import Remedy from '../assets/Remedy_Result_3.webp';
-// import MP from '../assets/PMP2.webp';
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -585,7 +581,7 @@ const PrivateBusinessCredit: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* Bottom mention */}
+          {/* Bottom mention
           <motion.p
             className="text-center mt-16 text-xl text-slate-700 dark:text-slate-300 font-medium"
             initial={{ opacity: 0, y: 20 }}
@@ -604,7 +600,7 @@ const PrivateBusinessCredit: React.FC = () => {
                 viewport={{ once: true }}
               />
             </strong>
-          </motion.p>
+          </motion.p> */}
         </motion.section>
 
         {/* <motion.button

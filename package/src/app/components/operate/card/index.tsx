@@ -219,7 +219,7 @@ const WhatYoullLearnSlider: React.FC = () => {
         viewport={{ once: true }}
         className="text-center mt-16 relative z-10"
       >
-        <motion.button
+        {/* <motion.button
           whileHover={{
             scale: 1.05,
             boxShadow: "0 10px 25px rgba(79, 70, 229, 0.3)",
@@ -241,7 +241,7 @@ const WhatYoullLearnSlider: React.FC = () => {
               d="M17 8l4 4m0 0l-4 4m4-4H3"
             />
           </svg>
-        </motion.button>
+        </motion.button> */}
       </motion.div>
     </div>
   );

@@ -331,13 +331,13 @@ export default function CourseOverviewSection() {
             transition={{ ...transition, delay: 0.6 }}
             className="mt-8"
           >
-            <motion.button 
+            {/* <motion.button 
               whileHover={{ scale: 1.03, boxShadow: "0 10px 25px -5px rgba(79, 70, 229, 0.4)" }}
               whileTap={{ scale: 0.97 }}
               className="w-full py-3 px-6 bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-700 hover:to-blue-600 text-white font-medium rounded-lg shadow-md transition-all duration-300"
             >
               Enroll Now
-            </motion.button>
+            </motion.button> */}
           </motion.div>
         </div>
       </div>

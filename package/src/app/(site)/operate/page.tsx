@@ -4,6 +4,7 @@ import Intro2 from "@/app/components/operate/intro";
 import BusinessCardsGrid from "@/app/components/operate/business";
 import Appointment from "@/app/components/operate/Appointment";
 import Contact from "@/app/components/shared/cta";
+import Pricing from "@/app/components/shared/plan";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -19,9 +20,10 @@ export default function Page() {
                 bannerimage="/images/courses/become/junior.webp"
                 heading="Operate Private"
                 desc="Build <span> Wealth & Privacy Through </span> Private Business Structures"
-                buttonPath="/course-tnc"
+                // buttonPath="/course-tnc"
             />
             <Intro2 />
+            <Pricing />
             <BecomeIntro />
             <Appointment />
             <BusinessCardsGrid />

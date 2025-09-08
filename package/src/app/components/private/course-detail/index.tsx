@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useMemo } from "react";
 import { motion, Variants, Transition } from "framer-motion";
 import { gsap } from "gsap";
 
@@ -130,6 +130,24 @@ export default function CourseDetail() {
     ease: [0.43, 0.13, 0.23, 0.96]
   };
 
+  // Deterministic particle positions to avoid hydration mismatches
+  const particlePositions = useMemo(() => {
+    const count = 15;
+    const seed = 123456789; // fixed seed so SSR and CSR match
+    // Linear congruential generator (deterministic across environments)
+    let state = seed >>> 0;
+    const next = () => {
+      // Values from Numerical Recipes LCG
+      state = (1664525 * state + 1013904223) >>> 0;
+      return state / 0xffffffff;
+    };
+
+    return Array.from({ length: count }, () => ({
+      left: `${next() * 100}%`,
+      top: `${next() * 100}%`
+    }));
+  }, []);
+
   return (
     <motion.section
         ref={containerRef}
@@ -146,16 +164,13 @@ export default function CourseDetail() {
         <div className="ripple absolute left-1/3 bottom-1/3 w-88 h-88 rounded-full" style={{ background: 'radial-gradient(circle at 40% 60%, rgba(99,102,241,0.18), rgba(79,70,229,0.04) 40%, transparent 72%)' }} />
       </div>
 
-      {/* Floating particles */}
+      {/* Floating particles (deterministic positions) */}
       <div aria-hidden className="absolute inset-0 pointer-events-none">
-        {[...Array(15)].map((_, i) => (
+        {particlePositions.map((pos, i) => (
           <div
             key={i}
             className="particle absolute w-2 h-2 rounded-full bg-indigo-400/30 dark:bg-indigo-500/40"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
+            style={pos}
           />
         ))}
       </div>
@@ -285,13 +300,13 @@ export default function CourseDetail() {
             transition={{ ...transition, delay: 0.6 }}
             className="mt-8"
           >
-            <motion.button 
+            {/* <motion.button 
               whileHover={{ scale: 1.03, boxShadow: "0 10px 25px -5px rgba(79, 70, 229, 0.4)" }}
               whileTap={{ scale: 0.97 }}
               className="w-full py-3 px-6 bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-700 hover:to-blue-600 text-white font-medium rounded-lg shadow-md transition-all duration-300"
             >
               Enroll Now
-            </motion.button>
+            </motion.button> */}
           </motion.div>
         </div>
       </div>

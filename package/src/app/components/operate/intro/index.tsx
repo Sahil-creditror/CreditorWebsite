@@ -390,7 +390,7 @@ export default function MasterclassOverview({
               ))}
             </motion.div>
 
-            {/* CTAs */}
+            {/* CTAs
             <motion.div
               variants={fadeUp}
               custom={4}
@@ -418,7 +418,7 @@ export default function MasterclassOverview({
                   <FileCheck className="h-4 w-4" /> {secondaryCtaText}
                 </Link>
               </motion.div>
-            </motion.div>
+            </motion.div> */}
 
             {/* Trust strip */}
             <motion.div

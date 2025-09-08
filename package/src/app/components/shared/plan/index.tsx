@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import { FiCheck, FiStar } from "react-icons/fi";
 
-// Install: npm i framer-motion react-icons
-
 const plans = [
   {
     id: "masterclass",

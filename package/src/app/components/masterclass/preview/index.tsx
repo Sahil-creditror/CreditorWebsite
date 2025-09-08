@@ -68,7 +68,7 @@ export default function HeroSection({
 
         <motion.div
           variants={staggerContainer}
-          initial="hidden"
+          initial="hidden"  
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
           className="grid lg:grid-cols-2 gap-12 items-center my-15"
@@ -125,7 +125,7 @@ export default function HeroSection({
               </motion.p>
 
               {/* CTAs */}
-              <motion.div variants={riseAndFade} className="flex flex-col sm:flex-row gap-4">
+              {/* <motion.div variants={riseAndFade} className="flex flex-col sm:flex-row gap-4">
                 <motion.a
                   href="/tncmasterclass"
                   whileHover={{ scale: 1.05, y: -1 }}
@@ -138,7 +138,7 @@ export default function HeroSection({
                     <FaArrowRight />
                   </motion.span>
                 </motion.a>
-              </motion.div>
+              </motion.div> */}
 
               {/* Features */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">

@@ -331,13 +331,13 @@ export default function MasterClassLaunchpad() {
               transition={{ duration: 0.7, delay: 0.55 }}
               className="flex flex-col sm:flex-row sm:items-center sm:gap-4 justify-center lg:justify-start"
             >
-              <button
+              {/* <button
                 onClick={() => router.push("/tncmasterclass")}
                 className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-lg font-bold text-white bg-gradient-to-r from-blue-600 via-sky-600 to-blue-800 hover:from-blue-700 hover:via-sky-700 hover:to-blue-900 shadow-lg hover:shadow-xl transition-colors duration-200"
                 aria-label="Sign up for Master Class"
               >
                 ✨ Join the Masterclass
-              </button>
+              </button> */}
 
               {/* small spacer for mobile */}
               <div className="mt-3 sm:mt-0" />

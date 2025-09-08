@@ -8,6 +8,7 @@ import CTA from "@/app/components/shared/cta";
 import Event from "@/app/components/Event";
 import Join from "@/app/components/masterclass/Join";
 import Preview from "@/app/components/masterclass/preview";
+import Pricing from "@/app/components/shared/plan";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -23,9 +24,10 @@ export default function Page() {
                 bannerimage="/images/projects/banner/masterclass-banner.png"
                 heading="Masterclass Membership"
                 desc="Learn how to <span>set up your Trust</span>, your Private Identity, and Business Credit step-by-step."
-                buttonPath="/tncmasterclass" 
+                // buttonPath="/tncmasterclass" 
             />
             <Intro />
+            <Pricing />
             <Preview />
             <Learn />
             <Appoint />

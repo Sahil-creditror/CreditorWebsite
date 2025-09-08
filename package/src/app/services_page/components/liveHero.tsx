@@ -52,7 +52,7 @@ const LiveHero: React.FC<LiveHeroProps> = ({ channelUrl, className }) => {
 
           <p className="mx-auto mt-4 max-w-2xl text-base sm:text-lg md:text-xl text-white/85 leading-relaxed">
             Every <span className="font-semibold text-red-400">Tuesday</span> and <span className="font-semibold text-red-400">Thursday</span> 
-            at <span className="font-semibold text-red-400">6:00 PM EST</span>.  
+            at <span className="font-semibold text-red-400">6:00 PM ET</span>.  
             Be part of an engaging community experience!
           </p>
 

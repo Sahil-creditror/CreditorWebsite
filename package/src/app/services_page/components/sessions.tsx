@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 // LiveSessionCTA.jsx
 // - Requires: Tailwind CSS + Framer Motion installed in your Next.js project
@@ -14,87 +14,116 @@ export default function LiveSessionCTA({
   tuesdayUrl?: string;
   thursdayUrl?: string;
 }) {
-  // Compute the next Tue/Thu at 6:00 PM in the user's local timezone
+  // Compute the next Tue/Thu at 6:00 PM Eastern Time (handles DST) and return Date in local timezone
   const getNextSessionDate = useMemo(() => {
-    return () => {
-      const targetHours = 18; // 6 PM local time (copy clarifies ET auto-adjust)
-      const now = new Date();
-      const todayDay = now.getDay(); // 0-6 (Sun-Sat)
-      const isTuesday = todayDay === 2;
-      const isThursday = todayDay === 4;
-      const candidateToday = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate(),
-        targetHours,
-        0,
-        0,
-        0
-      );
-      const nowMs = now.getTime();
-      const candidateMs = candidateToday.getTime();
+    const NEW_YORK_TZ = "America/New_York";
 
-      // Helper to add days
-      const addDays = (date: Date, days: number) => {
-        const d = new Date(date);
-        d.setDate(d.getDate() + days);
-        return d;
+    const getNewYorkParts = (date: Date) => {
+      const formatter = new Intl.DateTimeFormat("en-US", {
+        timeZone: NEW_YORK_TZ,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        weekday: "short",
+        hour12: false,
+      });
+      const parts = formatter.formatToParts(date);
+      const lookup = (type: string) => parts.find((p) => p.type === type)?.value ?? "0";
+      const weekdayText = (parts.find((p) => p.type === "weekday")?.value ?? "Sun");
+      const weekdayIndexMap: Record<string, number> = {
+        Sun: 0,
+        Mon: 1,
+        Tue: 2,
+        Wed: 3,
+        Thu: 4,
+        Fri: 5,
+        Sat: 6,
+      };
+      return {
+        year: Number(lookup("year")),
+        month: Number(lookup("month")),
+        day: Number(lookup("day")),
+        hour: Number(lookup("hour")),
+        minute: Number(lookup("minute")),
+        second: Number(lookup("second")),
+        weekdayIndex: weekdayIndexMap[weekdayText] ?? 0,
+      };
+    };
+
+    const getNewYorkOffsetMinutes = (dateUTC: Date) => {
+      const fmt = new Intl.DateTimeFormat("en-US", {
+        timeZone: NEW_YORK_TZ,
+        timeZoneName: "shortOffset",
+      });
+      const text = fmt.format(dateUTC); // e.g., "... GMT-4"
+      const match = text.match(/GMT([+-]?\d{1,2})(?::?(\d{2}))?/);
+      if (!match) return 0;
+      const sign = match[1].startsWith("-") ? -1 : 1;
+      const hours = Math.abs(parseInt(match[1], 10));
+      const minutes = match[2] ? parseInt(match[2], 10) : 0;
+      // Parsed value is the UTC offset in hours (e.g., GMT-4 => -240).
+      // For converting local NY time to UTC: UTC = local - offset.
+      // So return the NEGATED offset minutes to add to local to get UTC.
+      return -(sign * (hours * 60 + minutes));
+    };
+
+    return () => {
+      const now = new Date();
+      const nyNow = getNewYorkParts(now);
+      const isTuesday = nyNow.weekdayIndex === 2;
+      const isThursday = nyNow.weekdayIndex === 4;
+      const targetHourNY = 18; // 6 PM ET
+
+      const addDaysCalendar = (year: number, month: number, day: number, daysToAdd: number) => {
+        const ms = Date.UTC(year, month - 1, day) + daysToAdd * 24 * 60 * 60 * 1000;
+        const d = new Date(ms);
+        return {
+          year: d.getUTCFullYear(),
+          month: d.getUTCMonth() + 1,
+          day: d.getUTCDate(),
+        };
       };
 
-      if ((isTuesday || isThursday) && nowMs < candidateMs) {
-        return candidateToday;
+      // Decide how many days to add from NY perspective
+      let daysToAdd = 0;
+      if ((isTuesday || isThursday) && nyNow.hour < targetHourNY) {
+        daysToAdd = 0;
+      } else if (isTuesday && nyNow.hour >= targetHourNY) {
+        daysToAdd = 2; // Tue after 6pm -> Thu
+      } else if (isThursday && nyNow.hour >= targetHourNY) {
+        daysToAdd = 5; // Thu after 6pm -> next Tue
+      } else {
+        const distances = [2, 4].map((target) => (target - nyNow.weekdayIndex + 7) % 7);
+        daysToAdd = Math.min(...distances);
       }
 
-      // If today is Tue/Thu and it's already past 6 PM, jump correctly:
-      // Tue -> Thu (2 days), Thu -> Tue (5 days)
-      if (isTuesday && nowMs >= candidateMs) {
-        const nextDay = new Date(now);
-        nextDay.setDate(nextDay.getDate() + 2);
-        return new Date(
-          nextDay.getFullYear(),
-          nextDay.getMonth(),
-          nextDay.getDate(),
-          targetHours,
-          0,
-          0,
-          0
-        );
-      }
-      if (isThursday && nowMs >= candidateMs) {
-        const nextDay = new Date(now);
-        nextDay.setDate(nextDay.getDate() + 5);
-        return new Date(
-          nextDay.getFullYear(),
-          nextDay.getMonth(),
-          nextDay.getDate(),
-          targetHours,
-          0,
-          0,
-          0
-        );
-      }
+      const nyTargetDate = addDaysCalendar(nyNow.year, nyNow.month, nyNow.day, daysToAdd);
 
-      // Find the next Tuesday or Thursday from other days
-      const daysUntilNext = (() => {
-        const distances = [2, 4].map((target) => (target - todayDay + 7) % 7);
-        return Math.min(...distances);
-      })();
-
-      const nextDay = addDays(now, daysUntilNext);
-      return new Date(
-        nextDay.getFullYear(),
-        nextDay.getMonth(),
-        nextDay.getDate(),
-        targetHours,
-        0,
-        0,
-        0
+      // Use noon to determine offset safely (avoid DST transition hour)
+      const offsetMinutes = getNewYorkOffsetMinutes(
+        new Date(Date.UTC(nyTargetDate.year, nyTargetDate.month - 1, nyTargetDate.day, 12, 0, 0))
       );
+
+      // 18:00 in New York corresponds to UTC = local + offset
+      const utcMillis =
+        Date.UTC(nyTargetDate.year, nyTargetDate.month - 1, nyTargetDate.day, targetHourNY, 0, 0) +
+        offsetMinutes * 60 * 1000;
+
+      return new Date(utcMillis);
     };
   }, []);
 
   const [nextSession, setNextSession] = useState<Date>(getNextSessionDate());
   const [timeLeft, setTimeLeft] = useState<string>("");
+  const [timeParts, setTimeParts] = useState<{ days: number; hours: number; minutes: number; seconds: number }>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
 
   useEffect(() => {
     // Update countdown every second
@@ -115,6 +144,7 @@ export default function LiveSessionCTA({
       const seconds = totalSeconds % 60;
       const pad = (n: number) => String(n).padStart(2, "0");
       setTimeLeft(`${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`);
+      setTimeParts({ days, hours, minutes, seconds });
     };
 
     updateCountdown();
@@ -210,7 +240,7 @@ export default function LiveSessionCTA({
                   Don't Miss the Live Masterclass
                 </h2>
                 <p className="mt-2 text-gray-700 dark:text-gray-300 max-w-xl">
-                  Every Tuesday &amp; Thursday at <span className="font-semibold">6:00 PM ET</span> (auto-adjusts to your timezone). Join
+                  Every Tuesday &amp; Thursday at <span className="font-semibold">6:00 PM ET</span>. Join
                   PaulMichael for real-world strategies, case studies and live Q&amp;A to help you reclaim and protect credit power. Seats
                   fill fast — reserve yours now.
                 </p>
@@ -238,17 +268,67 @@ export default function LiveSessionCTA({
               </div>
 
               {/* Countdown */}
-              <div className="mt-4">
-                <div className="inline-flex items-center gap-2 rounded-xl px-3 py-2 bg-indigo-50 text-indigo-800 ring-1 ring-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-200 dark:ring-indigo-900/50">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden>
+              <div className="mt-3" aria-live="polite">
+                <div className="inline-flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 bg-indigo-50 text-indigo-800 ring-1 ring-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-200 dark:ring-indigo-900/50">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5" aria-hidden>
                     <path fillRule="evenodd" d="M6.75 3a.75.75 0 01.75.75V5h9V3.75a.75.75 0 011.5 0V5h.75A2.25 2.25 0 0121 7.25v10.5A2.25 2.25 0 0118.75 20H5.25A2.25 2.25 0 013 17.75V7.25A2.25 2.25 0 015.25 5H6V3.75a.75.75 0 01.75-.75zm0 3h10.5a.75.75 0 01.75.75V9H6V6.75a.75.75 0 01.75-.75zM6 10.5h12v7.25a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V10.5z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-sm font-semibold">Next session starts in:</span>
-                  <span className="text-sm tabular-nums font-mono" aria-live="polite">{timeLeft}</span>
+                  <span className="text-xs font-semibold">Next session starts in</span>
                 </div>
-                <p className="sr-only" aria-hidden={false}>
-                  Countdown to the next live masterclass
-                </p>
+
+                {/* Enhanced segmented display with glow and flip animation */}
+                <motion.div
+                  className="relative mt-2.5 max-w-sm"
+                  initial={{ scale: 0.98, boxShadow: "0 0 0 rgba(79,70,229,0)" }}
+                  animate={{
+                    scale: [0.98, 1, 0.98],
+                    boxShadow: [
+                      "0 0 0 rgba(79,70,229,0)",
+                      "0 0 24px rgba(79,70,229,0.22)",
+                      "0 0 0 rgba(79,70,229,0)",
+                    ],
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-indigo-500/15 via-fuchsia-400/15 to-indigo-500/15 blur-lg" aria-hidden />
+                  <div className="relative grid grid-cols-4 gap-2 sm:gap-2.5 bg-white/40 dark:bg-white/0 rounded-2xl p-1.5">
+                  {[
+                    { label: "Days", value: timeParts.days },
+                    { label: "Hours", value: timeParts.hours },
+                    { label: "Minutes", value: timeParts.minutes },
+                    { label: "Seconds", value: timeParts.seconds },
+                  ].map((item, idx) => (
+                    <motion.div
+                      key={item.label}
+                      initial={{ y: 6, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.3, delay: idx * 0.05 }}
+                      className="relative rounded-xl p-2.5 sm:p-3 bg-white/80 dark:bg-white/5 ring-1 ring-indigo-200/60 dark:ring-indigo-800/50 shadow-sm backdrop-blur-md"
+                    >
+                      <div className="absolute inset-x-0 -top-px h-[2px] bg-gradient-to-r from-indigo-500 via-fuchsia-400 to-indigo-500 rounded-full opacity-70" />
+                      <div className="text-center [perspective:600px]">
+                        <div className="relative h-[26px] sm:h-[32px]">
+                          <AnimatePresence mode="popLayout" initial={false}>
+                            <motion.span
+                              key={item.value}
+                              initial={{ rotateX: -90, opacity: 0, y: -6 }}
+                              animate={{ rotateX: 0, opacity: 1, y: 0 }}
+                              exit={{ rotateX: 90, opacity: 0, y: 6 }}
+                              transition={{ duration: 0.28, ease: "easeOut" }}
+                              className="absolute inset-0 grid place-items-center text-xl sm:text-2xl font-extrabold tracking-tight tabular-nums"
+                            >
+                              {String(item.value).padStart(2, "0")}
+                            </motion.span>
+                          </AnimatePresence>
+                        </div>
+                        <div className="mt-0.5 text-[9px] sm:text-[10px] uppercase tracking-wider text-gray-600 dark:text-gray-300">
+                          {item.label}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                  </div>
+                </motion.div>
               </div>
             </div>
 
@@ -264,7 +344,7 @@ export default function LiveSessionCTA({
                   <div>
                     <p className="text-xs font-semibold text-gray-600 dark:text-gray-400">Next live classes</p>
                     <h4 className="mt-1 text-lg font-bold text-gray-900 dark:text-white">Weekly — Tue &amp; Thu</h4>
-                    <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">6:00 PM EST • Live on Google Meet</p>
+                    <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">6:00 PM ET • Live on Google Meet</p>
                   </div>
 
                   <div className="flex flex-col items-end">

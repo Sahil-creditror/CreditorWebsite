@@ -256,7 +256,7 @@ export default function MasterclassBenefits() {
               className="mt-6"
             >
               <motion.a
-                href="/signup"
+                href="https://lmsathena.com/login"
                 className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-blue-600 text-white font-medium shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 transition-colors duration-300"
                 aria-label="Enroll free"
                 whileHover={{ 

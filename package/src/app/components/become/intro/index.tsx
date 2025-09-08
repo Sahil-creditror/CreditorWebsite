@@ -8,6 +8,7 @@ export default function CourseOverviewSection() {
   const rippleRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [particlePositions, setParticlePositions] = useState<Array<{ left: number; top: number }>>([]);
 
   // --- GSAP ripple + blob animation ---
   useEffect(() => {
@@ -47,15 +48,17 @@ export default function CourseOverviewSection() {
 
       // Particle animation
       const particles = containerRef.current?.querySelectorAll(".particle") ?? [];
-      gsap.to(particles, {
-        y: -40,
-        opacity: 0,
-        duration: 6,
-        stagger: 0.2,
-        repeat: -1,
-        ease: "power1.out",
-        delay: 1
-      });
+      if (particles.length > 0) {
+        gsap.to(particles, {
+          y: -40,
+          opacity: 0,
+          duration: 6,
+          stagger: 0.2,
+          repeat: -1,
+          ease: "power1.out",
+          delay: 1
+        });
+      }
 
       // Section entrance animation
       gsap.fromTo(containerRef.current, 
@@ -74,6 +77,36 @@ export default function CourseOverviewSection() {
 
     return () => mm.revert();
   }, []);
+
+  // Generate particle positions on client only to avoid SSR/CSR mismatch
+  useEffect(() => {
+    setParticlePositions(
+      Array.from({ length: 15 }, () => ({ left: Math.random() * 100, top: Math.random() * 100 }))
+    );
+  }, []);
+
+  // Start particle animation once particles are present
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (particlePositions.length === 0) return;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    const particles = containerRef.current?.querySelectorAll(".particle") ?? [];
+    if (particles.length === 0) return;
+
+    const tween = gsap.to(particles, {
+      y: -40,
+      opacity: 0,
+      duration: 6,
+      stagger: 0.2,
+      repeat: -1,
+      ease: "power1.out",
+      delay: 1
+    });
+
+    return () => { tween.kill(); };
+  }, [particlePositions.length]);
 
   // Play button animation
   const handlePlay = () => {
@@ -157,13 +190,13 @@ export default function CourseOverviewSection() {
 
       {/* Floating particles */}
       <div aria-hidden className="absolute inset-0 pointer-events-none">
-        {[...Array(15)].map((_, i) => (
+        {particlePositions.map((pos, i) => (
           <div
             key={i}
             className="particle absolute w-2 h-2 rounded-full bg-indigo-400/30 dark:bg-indigo-500/40"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: `${pos.left}%`,
+              top: `${pos.top}%`,
             }}
           />
         ))}

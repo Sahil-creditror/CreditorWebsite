@@ -5,6 +5,7 @@ import Content from "@/app/components/become/content";
 import Appoint from "@/app/components/become/appointment";
 import CTA from "@/app/components/shared/cta";
 import Event from "@/app/components/Event";
+import Pricing from "@/app/components/become/pricing";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -23,6 +24,7 @@ export default function Page() {
                 buttonPath="/course-tnc" // 👈 you now define the path here
             />
             <BecomeIntro />
+            <Pricing />
             <Intro2 />
             <Appoint />
             <Content />

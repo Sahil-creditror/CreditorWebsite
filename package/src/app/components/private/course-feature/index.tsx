@@ -217,7 +217,7 @@ export default function CourseFeatures() {
         )}
       </div>
 
-      {/* Dots + Swipe Indicator */}
+      {/* Dots + Swipe Indicator
       <div className="mt-6 text-center">
         <div className="flex items-center justify-center gap-3">
           {Array.from({ length: totalSlides }).map((_, i) => (
@@ -239,7 +239,7 @@ export default function CourseFeatures() {
             <FaChevronRight className="text-sm" />
           </div>
         )}
-      </div>
+      </div> */}
 
       {/* Call to Action */}
       <motion.div

@@ -80,7 +80,7 @@ function StatsFacts() {
         const yt = await res.json();
 
         const data: StatsFactData = {
-          number: "01",
+          number: "📜",
           name: "Stats & Facts",
           heading: "Trusted numbers from Creditor Academy",
           description:
@@ -181,7 +181,7 @@ function StatsFacts() {
       {/* Gradient fade at bottom for seamless transition */}
       <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-white to-transparent dark:from-secondary z-20 pointer-events-none"></div>
       
-      <div className="relative py-20 md:py-40 z-10">
+      <div className="relative py-20 md:py-20 z-10">
         <div className="container">
           <div className="flex flex-col xl:flex-row items-start gap-8">
             {/* Left Badge */}
@@ -263,13 +263,13 @@ function StatsFacts() {
                 ))}
               </div>
 
-              <div className={`transition-opacity duration-700 delay-700 ${hasAnimated ? 'opacity-100' : 'opacity-0'}`}>
+              {/* <div className={`transition-opacity duration-700 delay-700 ${hasAnimated ? 'opacity-100' : 'opacity-0'}`}>
                 <NavigationLink
                   navigationTitle="Who we are"
                   navigationLink="/about"
                   transform={true}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

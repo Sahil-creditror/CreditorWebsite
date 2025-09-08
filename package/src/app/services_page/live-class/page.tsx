@@ -1,9 +1,10 @@
-import React from 'react'
+import { Liveclass } from "./Live"
+import type { Metadata } from "next";
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
+export const metadata: Metadata = {
+  title: "Live Class | Creditor Academy",
+};
+
+export default function LiveClass() {
+  return <Liveclass />;
 }
-
-export default page

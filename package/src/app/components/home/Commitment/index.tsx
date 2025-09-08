@@ -219,7 +219,7 @@ export default function CommitmentSection() {
               <p className="text-xs sm:text-sm font-semibold tracking-widest uppercase text-[#026FE2]/70 mb-4 sm:mb-6">
                 Creditor Academy
               </p>
-              <h2 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-relaxed text-[#026FE2] dark:text-white/90">
+              <h2 className="font-extrabold text-4xl sm:text-5xl lg:text-5xl xl:text-5xl leading-relaxed text-[#000000] dark:text-white/90">
                 Our Commitment <br />
                 {/* <motion.span
                   className="inline-block mt-2 sm:mt-3 text-[#013a75] dark:text-[#026FE2]"

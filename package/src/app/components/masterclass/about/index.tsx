@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRouter } from "next/navigation";
 
 // Register GSAP plugin safely (no-op on server)
 if (typeof window !== "undefined") {
@@ -23,6 +24,7 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
   const rippleRef = useRef<SVGSVGElement | null>(null);
   const priceRef = useRef<HTMLSpanElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const prefersReducedMotion =
@@ -373,7 +375,13 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
                 {/* Buttons */}
                 <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-3">
                 <motion.button
-                    onClick={() => onEnroll?.()}
+                    onClick={() => {
+                      if (onEnroll) {
+                        onEnroll();
+                      } else {
+                        router.push("/tncmasterclass");
+                      }
+                    }}
                     className="relative overflow-hidden rounded-xl px-6 py-3 font-semibold text-lg sm:text-xl text-white bg-gradient-to-r from-sky-500 to-sky-600 shadow-lg hover:brightness-105 transition-all duration-200"
                     aria-label="Enroll now"
                     whileHover={{ scale: 1.02 }}
@@ -382,13 +390,13 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
                     <span className="relative z-10">Join Now — $69/mo</span>
                 </motion.button>
 
-                <motion.a
+                {/* <motion.a
                     href="#book"
                     className="text-base inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-slate-200/10 bg-white/70 dark:bg-transparent text-slate-800 dark:text-slate-100 hover:bg-white/80 transition-all duration-200"
                     whileHover={{ x: 4 }}
                 >
                     Book an appointment
-                </motion.a>
+                </motion.a> */}
                 </div>
 
                 {/* Fine Print */}

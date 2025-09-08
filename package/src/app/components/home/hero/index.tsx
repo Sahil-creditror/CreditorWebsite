@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useSwipeable } from "react-swipeable";
 import { Parallax, ParallaxProvider } from "react-scroll-parallax";
@@ -20,9 +20,11 @@ const HeroSection = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [direction, setDirection] = useState<Direction>("right");
   const [isHovered, setIsHovered] = useState<boolean>(false);
-  const [isInView, setIsInView] = useState<boolean>(true);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState<boolean>(false); // start false, will flip when intersecting
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+
+  // intervalRef holds the interval id so we can clear it immediately when needed
+  const intervalRef = useRef<number | null>(null);
 
   const videos: VideoSlide[] = [
     {
@@ -32,34 +34,33 @@ const HeroSection = () => {
       description: "Protect What You Build. Pass On What Matters",
     },
     {
-      src: "/video/hero-2.mp4",
-      poster: "/images/hero/banner-2.png",
-      title: "Creditor Academy",
-      description:
-        '"When the people fear the government there is tyranny. When the government fears the people, there is liberty" - Thomas Jefferson',
+      src: "/video/Banner.mp4",
+      poster: "/images/hero/Banner.png",
+      title: "Masterclass Membership",
+      description: "Reclaim Your Legal Identity and Exit the Public System",
     },
-    {
-      src: "/video/hero-3.mp4",
-      poster: "/images/hero/banner-3.png",
-      title: "Creditor Academy",
-      description: "Board as a Student. Land as a Sovereign.",
-    },
-    {
-      src: "/video/hero-4.mp4",
-      poster: "/images/hero/banner-4.png",
-      title: "Creditor Academy",
-      description: "Operate Private. Take Control. Live Sovereign",
-    },
-    {
-      src: "/video/hero-5.mp4",
-      poster: "/images/hero/banner-5.png",
-      title: "Creditor Academy",
-      description:
-        "Restore Your Credit. Discharge Debt. Take Your Power Back.",
-    },
+    // {
+    //   src: "/video/hero-3.mp4",
+    //   poster: "/images/hero/banner-3.png",
+    //   title: "Creditor Academy",
+    //   description: "Board as a Student. Land as a Sovereign.",
+    // },
+    // {
+    //   src: "/video/hero-4.mp4",
+    //   poster: "/images/hero/banner-4.png",
+    //   title: "Creditor Academy",
+    //   description: "Operate Private. Take Control. Live Sovereign",
+    // },
+    // {
+    //   src: "/video/hero-5.mp4",
+    //   poster: "/images/hero/banner-5.png",
+    //   title: "Creditor Academy",
+    //   description:
+    //     "Restore Your Credit. Discharge Debt. Take Your Power Back.",
+    // },
   ];
 
-  // ✅ Animation variants
+  // animation variants (unchanged)
   const slideVariants: Variants = {
     enter: (direction: Direction) => ({
       x: direction === "right" ? "100%" : "-100%",
@@ -68,12 +69,12 @@ const HeroSection = () => {
     center: {
       x: 0,
       opacity: 1,
-      transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
     },
     exit: (direction: Direction) => ({
       x: direction === "right" ? "-100%" : "100%",
       opacity: 0,
-      transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
     }),
   };
 
@@ -93,53 +94,33 @@ const HeroSection = () => {
     },
   };
 
-  // ✅ Navigation
-  const goToPrevious = (): void => {
+  // stable navigation functions
+  const goToPrevious = useCallback((): void => {
     setDirection("left");
     setCurrentIndex((prev) => (prev === 0 ? videos.length - 1 : prev - 1));
-    resetInterval();
-  };
+  }, [videos.length]);
 
-  const goToNext = (): void => {
+  const goToNext = useCallback((): void => {
     setDirection("right");
     setCurrentIndex((prev) => (prev === videos.length - 1 ? 0 : prev + 1));
-    resetInterval();
-  };
+  }, [videos.length]);
 
   const goToSlide = (slideIndex: number): void => {
     setDirection(slideIndex > currentIndex ? "right" : "left");
     setCurrentIndex(slideIndex);
-    resetInterval();
   };
 
-  const resetInterval = (): void => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    if (!isHovered && isInView) {
-      intervalRef.current = setInterval(goToNext, 4000);
-    }
-  };
-
-  // ✅ Swipe gestures
-  const { ref: _swipeRef, ...swipeHandlers } = useSwipeable({
-    onSwipedLeft: () => goToNext(),
-    onSwipedRight: () => goToPrevious(),
-    preventScrollOnSwipe: true,
-    trackMouse: true,
-  });
-
-  // ✅ Intersection Observer
+  // Intersection Observer: sets isInView and resets to first slide when entering
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsInView(entry.isIntersecting);
-
         if (entry.isIntersecting) {
-          resetInterval();
+          // user came into view -> reset to first video and mark in-view
+          setCurrentIndex(0);
+          setDirection("right");
+          setIsInView(true);
         } else {
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-          }
+          setIsInView(false);
         }
       },
       { threshold: 0.5 }
@@ -149,22 +130,41 @@ const HeroSection = () => {
 
     return () => {
       if (sectionRef.current) observer.unobserve(sectionRef.current);
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      observer.disconnect();
     };
   }, []);
 
-  // ✅ Effect for auto-play
+  // Autoplay interval: runs only when in view and not hovered
   useEffect(() => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-
-    if (!isHovered && isInView) {
-      intervalRef.current = setInterval(goToNext, 4000);
+    // clear any previous interval before creating a new one
+    if (intervalRef.current) {
+      window.clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
 
+    if (isInView && !isHovered) {
+      // start interval
+      intervalRef.current = window.setInterval(() => {
+        goToNext();
+      }, 4000) as unknown as number; // cast for TS in browser env
+    }
+
+    // cleanup on dependency change / unmount
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (intervalRef.current) {
+        window.clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
     };
-  }, [currentIndex, isHovered, isInView]);
+  }, [isInView, isHovered, goToNext]);
+
+  // swipe handlers (unchanged)
+  const { ref: _swipeRef, ...swipeHandlers } = useSwipeable({
+    onSwipedLeft: () => goToNext(),
+    onSwipedRight: () => goToPrevious(),
+    preventScrollOnSwipe: true,
+    trackMouse: true,
+  });
 
   return (
     <ParallaxProvider>
@@ -173,11 +173,9 @@ const HeroSection = () => {
         className="relative flex items-end text-white bg-black min-h-screen overflow-hidden"
         onMouseEnter={() => {
           setIsHovered(true);
-          if (intervalRef.current) clearInterval(intervalRef.current);
         }}
         onMouseLeave={() => {
           setIsHovered(false);
-          resetInterval();
         }}
         {...swipeHandlers}
       >
@@ -212,7 +210,7 @@ const HeroSection = () => {
         </AnimatePresence>
 
         {/* Content */}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 text-left pb-10 sm:pb-20">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 text-left pb-0 sm:pb-20">
           <motion.div
             className="flex flex-col gap-4 sm:gap-6"
             initial="hidden"
@@ -244,76 +242,76 @@ const HeroSection = () => {
             </div>
 
             {/* Title */}
-            <h1 className="text-3xl sm:text-5xl md:text-7xl xl:text-9xl font-extrabold tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-3xl md:text-6xl xl:text-7xl font-extrabold tracking-tight leading-tight">
               {videos[currentIndex].title}
             </h1>
 
             {/* 🔘 Button directly under the title */}
             <div className="mt-2">
               <Link
-                  href="/projects"
-                  className="group flex gap-4 items-center w-fit bg-primary border border-primary hover:border hover:border-white/30 hover:bg-secondary rounded-full transition-all duration-200 ease-in-out"
+                href="/projects"
+                className="group flex gap-4 items-center w-fit bg-primary border border-primary hover:border hover:border-white/30 hover:bg-secondary rounded-full transition-all duration-200 ease-in-out"
+              >
+                <span className="pl-6 text-lg font-bold text-secondary group-hover:text-white group-hover:translate-x-12 transform transition-transform duration-200 ease-in-out">
+                  Start Now
+                </span>
+                <svg
+                  className="py-1 group-hover:-translate-x-37 group-hover:rotate-45 transition-all duration-300 ease-in-out"
+                  width="58"
+                  height="58"
+                  viewBox="0 0 58 58"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <span className="pl-6 text-lg font-bold text-secondary group-hover:text-white group-hover:translate-x-12 transform transition-transform duration-200 ease-in-out">
-                    Start Now
-                  </span>
-                  <svg
-                    className="py-1 group-hover:-translate-x-37 group-hover:rotate-45 transition-all duration-300 ease-in-out"
-                    width="58"
-                    height="58"
-                    viewBox="0 0 58 58"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g filter="url(#filter0_d_1_873)">
-                      <rect x="3" y="2" width="52" height="52" rx="26" fill="white" />
-                      <path
-                        d="M24 23H34M34 23V33M34 23L24 33"
-                        stroke="#1F2A2E"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                  <g filter="url(#filter0_d_1_873)">
+                    <rect x="3" y="2" width="52" height="52" rx="26" fill="white" />
+                    <path
+                      d="M24 23H34M34 23V33M34 23L24 33"
+                      stroke="#1F2A2E"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </g>
+                  <defs>
+                    <filter
+                      id="filter0_d_1_873"
+                      x="0"
+                      y="0"
+                      width="58"
+                      height="58"
+                      filterUnits="userSpaceOnUse"
+                      colorInterpolationFilters="sRGB"
+                    >
+                      <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                      <feColorMatrix
+                        in="SourceAlpha"
+                        type="matrix"
+                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                        result="hardAlpha"
                       />
-                    </g>
-                    <defs>
-                      <filter
-                        id="filter0_d_1_873"
-                        x="0"
-                        y="0"
-                        width="58"
-                        height="58"
-                        filterUnits="userSpaceOnUse"
-                        colorInterpolationFilters="sRGB"
-                      >
-                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                        <feColorMatrix
-                          in="SourceAlpha"
-                          type="matrix"
-                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                          result="hardAlpha"
-                        />
-                        <feOffset dy="1" />
-                        <feGaussianBlur stdDeviation="1.5" />
-                        <feComposite in2="hardAlpha" operator="out" />
-                        <feColorMatrix
-                          type="matrix"
-                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
-                        />
-                        <feBlend
-                          mode="normal"
-                          in2="BackgroundImageFix"
-                          result="effect1_dropShadow_1_873"
-                        />
-                        <feBlend
-                          mode="normal"
-                          in="SourceGraphic"
-                          in2="effect1_dropShadow_1_873"
-                          result="shape"
-                        />
-                      </filter>
-                    </defs>
-                  </svg>
-                </Link>
+                      <feOffset dy="1" />
+                      <feGaussianBlur stdDeviation="1.5" />
+                      <feComposite in2="hardAlpha" operator="out" />
+                      <feColorMatrix
+                        type="matrix"
+                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
+                      />
+                      <feBlend
+                        mode="normal"
+                        in2="BackgroundImageFix"
+                        result="effect1_dropShadow_1_873"
+                      />
+                      <feBlend
+                        mode="normal"
+                        in="SourceGraphic"
+                        in2="effect1_dropShadow_1_873"
+                        result="shape"
+                      />
+                    </filter>
+                  </defs>
+                </svg>
+              </Link>
             </div>
 
             {/* Description */}
@@ -322,7 +320,7 @@ const HeroSection = () => {
             </p>
 
             {/* 📱 Mobile Thumbnails */}
-            <div className="flex sm:hidden gap-2 mt-4 overflow-x-auto pb-2">
+            {/* <div className="flex sm:hidden gap-2 mt-4 overflow-x-auto pb-2">
               {videos.map((video, index) => (
                 <motion.button
                   key={index}
@@ -354,7 +352,7 @@ const HeroSection = () => {
                   )}
                 </motion.button>
               ))}
-            </div>
+            </div> */}
           </motion.div>
         </div>
 
@@ -414,7 +412,7 @@ const HeroSection = () => {
           ))}
         </div>
 
-        {/* 💻 Desktop Thumbnails */}
+        {/* 💻 Desktop Thumbnails
         <div className="absolute right-2 sm:right-6 bottom-6 hidden sm:flex flex-col gap-3 z-20">
           {videos.map((video, index) => (
             <motion.button
@@ -447,7 +445,7 @@ const HeroSection = () => {
               )}
             </motion.button>
           ))}
-        </div>
+        </div> */}
       </div>
     </ParallaxProvider>
   );

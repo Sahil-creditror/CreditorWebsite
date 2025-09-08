@@ -62,8 +62,8 @@ const servicesData = {
         {
             id: 2,
             image: "/images/home/services/services_2.webp",
-            heading: "2. Become Private & New SOV 101",
-            descp: "Get an introduction to the SOV 101 and Become Private courses Access the official readiness checklist and scorecard system to assess your eligibility with a counsellor"
+            heading: "2. Become Private & New Sovereignty101",
+            descp: "Get an introduction to the Sovereignty101 and Become Private courses Access the official readiness checklist and scorecard system to assess your eligibility with a counsellor"
         },
         {
             id: 3,
@@ -190,9 +190,10 @@ const pricingData = {
             tag:"Website Launch",
             planPrice: "Website Service",
             planDescp: "Ideal for startups and small businesses taking their first steps online.",
-            planIncludes: ["Competitive research & insights","Wireframing and prototyping","Basic tracking setup (Google Analytics, etc.)","Standard contact form integration"],
+            planIncludes: ["Custom design for up to 10 pages","Responsive and mobile-friendly layout","Fast page load and security optimizations","On-page SEO optimization for key pages"],
             coverImage: "/images/pricing/Cover-1.png", // Optional
-            link: "/services_page/website-service"
+            link: "/services_page/website-service",
+            
         },
         {
             // planName: "Scale",
@@ -200,18 +201,18 @@ const pricingData = {
             planPrice: "Live Class",
             // cancelPrice: "$2,199",
             planDescp: "Perfect for growing brands needing more customization and flexibility.",
-            planIncludes: ["Everything in the Launch Plan","Custom design for up to 10 pages","Seamless social media integration","SEO enhancements for key pages"],
+            planIncludes: ["Join our interactive live classes every Tuesday & Thursday","Interactive Sessions","Hands-on learning","Session Replays"],
             coverImage: "/images/pricing/Cover-2.jpg", // Optional
-            link : "/service-page/live-class"
+            link: "/services_page/live-class",
         },
         {
             // planName: "Elevate", 
             tag: "Private Merchant",   
             planPrice: "Private Merchant Processing",
             planDescp: "Best suited for established businesses wanting a fully tailored experience.",
-            planIncludes: ["Everything in the Scale Plan","E-commerce functionality (if needed)","Branded email template design","Priority support for six months after launch"],
+            planIncludes: ["Tailored payment solutions","Empower your business","Customized experience","Seamless Payment Solutions"],
             coverImage: "/images/pricing/Cover-3.jpg" ,// Optional
-            link: "/service-page/private-merchant"
+            link: "/services_page/private-merchant"
         },
     ],
     partnerLogo: [
@@ -227,21 +228,24 @@ const pricingData = {
 const pricingData2 = {
     data: [
         {
-            // planName: "Laurich",
-            tag:"Website Launch",
-            planPrice: "Website Service",
+            planName: "Starter Plan",
+            tag:"Basic",
+            planPrice: "$100",
+            cancelPrice: "$500",
             planDescp: "Ideal for startups and small businesses taking their first steps online.",
             planIncludes: ["Competitive research & insights","Wireframing and prototyping","Basic tracking setup (Google Analytics, etc.)","Standard contact form integration"],
-            coverImage: "/images/pricing/Cover-1.png" // Optional
+            coverImage: "/images/pricing/Cover-1.png", // Optional,
+            // payLink: ""
         },
         {
-            // planName: "Scale",
-            tag: "Paul Michael's",
-            planPrice: "Live Class",
-            // cancelPrice: "$2,199",
+            planName: "Cadillac Plan",
+            tag: "Advance",
+            planPrice: "$1000",
+            cancelPrice: "$2,199",
             planDescp: "Perfect for growing brands needing more customization and flexibility.",
             planIncludes: ["Everything in the Launch Plan","Custom design for up to 10 pages","Seamless social media integration","SEO enhancements for key pages"],
-            coverImage: "/images/pricing/Cover-2.jpg" // Optional
+            coverImage: "/images/pricing/Cover-2.jpg", // Optional
+            // payLink: ""
         },
     ],
 };

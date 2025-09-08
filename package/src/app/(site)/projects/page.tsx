@@ -1,13 +1,14 @@
-
-// import ProjectList from "@/app/components/projects";
 import Herobanner from "@/app/components/shared/hero-banner";
-import Roadmap from "@/app/components/home/services"
-import Courses from "@/app/components/home/courses";
 import Intro from "@/app/components/masterclass/intro";
 import Learn from "@/app/components/masterclass/learn";
 import Get from "@/app/components/masterclass/getwithmaster";
 import About from "@/app/components/masterclass/about";
 import Appoint from "@/app/components/masterclass/appointment";
+import CTA from "@/app/components/shared/cta";
+import Event from "@/app/components/Event";
+import Join from "@/app/components/masterclass/Join";
+import Preview from "@/app/components/masterclass/preview";
+import Pricing from "@/app/components/shared/plan";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -22,15 +23,19 @@ export default function Page() {
             <Herobanner
                 bannerimage="/images/projects/banner/masterclass-banner.png"
                 heading="Masterclass Membership"
-                desc="Learn how to <span>set up your Trust</span>, your Private Identity, and Business Credit step-by-step." />
+                desc="Learn how to <span>set up your Trust</span>, your Private Identity, and Business Credit step-by-step."
+                // buttonPath="/tncmasterclass" 
+            />
             <Intro />
+            <Pricing />
+            <Preview />
             <Learn />
             <Appoint />
-            {/* <Get />
-            <Roadmap />
-            <Courses /> */}
+            <Join />
+            <Get />
             <About />
-            {/* <ProjectList />*/}
+            <Event />
+            <CTA />
         </main>
     );
 };

@@ -16,6 +16,8 @@ import Game from "./components/home/Game";
 import Commitment from "./components/home/Commitment";
 import Offer from "./components/home/Offer";
 // import { AnimatedTestimonialsDemo } from "./components/home/testimonial/AnimatedDemo";
+import Event from "./components/Event";
+import About from "./components/home/about";
 
 export const metadata: Metadata = {
     title: "Creditor Academy",
@@ -25,22 +27,25 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <StatsFacts />
-      <Masterclass />
-      <Aboutus />
+      {/* <StatsFacts /> */}
+      {/* <Masterclass /> */}
+      {/* <Aboutus /> */}
+      <About />
       {/* <MasterInfo /> */}
-      <Offer />
-      {/* <Roadmap /> */}
       <Courses />
-      <Testimonial />
+      <Contact contactdataNumber="3" />
+      <Offer />
+      <Event />
+      {/* <Roadmap /> */}
+      {/* <Testimonial /> */}
       {/* <AnimatedTestimonialsDemo /> */}
       {/* <Game /> */}
       {/* <Team teamdataNumber="06" /> */}
-      <Commitment />
-      <Pricing />
-      <Faq />
+      {/* <Commitment /> */}
+      {/* <Pricing */}
+      {/* <Faq /> */}
       {/* <Resources /> */}
-      <Contact contactdataNumber="10" />
+      
     </>
   );
 }

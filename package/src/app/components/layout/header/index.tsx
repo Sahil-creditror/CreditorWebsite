@@ -90,6 +90,50 @@ const Header = () => {
 
           <div className="flex items-center gap-5 sm:gap-7">
             <div className="flex items-center gap-2 sm:gap-3">
+              {/* <Link
+                href="https://lmsathena.com/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex justify-center items-center gap-2 text-base sm:text-xl font-bold rounded-full py-1.5 px-4 transition-colors
+                  ${sticky 
+                    ? "bg-gray text-white hover:bg-secondary hover:text-white" 
+                    : "bg-secondary text-white hover:bg-secondary/90"}
+                `}
+              >
+                Sign Up
+              </Link> */}
+              <Link
+                href="https://lmsathena.com/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex justify-center items-center gap-2 text-base sm:text-xl font-bold rounded-full py-1.5 px-4 transition-colors
+                  ${sticky 
+                    ? "bg-white text-secondary hover:bg-secondary hover:text-white dark:bg-white dark:text-secondary dark:hover:bg-secondary dark:hover:text-white" 
+                    : "bg-blue-600 text-white hover:bg-blue-700"}
+                `}  
+              >
+                Sign In
+              </Link>
+              {user?.user || session?.user ? (
+                <div className="relative group flex items-center justify-center">
+                  <Image
+                    src="/images/avatar/avatar_1.jpg"
+                    alt="Image"
+                    width={32}
+                    height={32}
+                    quality={100}
+                    className="rounded-full cursor-pointer"
+                  />
+                  <p className="absolute w-fit text-xs sm:text-sm font-medium text-center z-10 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200 bg-gray text-white py-1 px-2 min-w-24 sm:min-w-28 rounded-full shadow-2xl top-full left-1/2 transform -translate-x-1/2 mt-3">
+                    {user?.user || session?.user?.name}
+                  </p>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+
+            <div className="flex items-center gap-2 sm:gap-3">
               <ThemeToggler />
               {user?.user || session?.user ? (
                 <div className="relative group flex items-center justify-center">
@@ -188,31 +232,16 @@ const Header = () => {
                           />
                         </button>
                       </div>
-                    ) : (
-                      <div className="flex flex-col sm:flex-row gap-3">
-                        <Link
-                          href={"/signin"}
-                          className="flex justify-center items-center gap-2 w-full text-secondary dark:text-white text-base sm:text-xl font-bold rounded-full border border-secondary/20 dark:border-white py-1.5 px-4 hover:bg-secondary/15"
-                        >
-                          Sign In
-                        </Link>
-                        <Link
-                          href={"/signup"}
-                          className="flex justify-center items-center gap-2 w-full text-white text-base sm:text-xl font-bold rounded-full bg-secondary py-2 px-4 hover:bg-secondary/90"
-                        >
-                          Sign Up
-                        </Link>
-                      </div>
-                    )}
+                    ) : null}
                   </div>
 
                   {/* Footer inside menu */}
                   <div className="pt-4 sm:pt-0">
                     <Link
-                      href="tel:+1-987-456-7890"
+                      href="tel:+1-425-400-9246"
                       className="block text-sm sm:text-base text-secondary/60 dark:text-white/60 hover:text-secondary dark:hover:text-white"
                     >
-                      +1-987-456-7890
+                      +1-425-400-9246
                     </Link>
                     <Link href="mailto:creditoracademy.com">
                       <h4 className="text-sm sm:text-base">

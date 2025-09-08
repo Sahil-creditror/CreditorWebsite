@@ -88,97 +88,14 @@ export default function MasterclassRedesignPage() {
   };
 
   const container = "max-w-8xl mx-auto px-10";
-  const sectionSpacing = "py-16"; // consistent vertical rhythm
+  const sectionSpacing = "py-10"; // consistent vertical rhythm
   const primaryGradient = "from-[#60A5FA] to-[#1E3A8A]";
 
   // --- NEW: use Courses page colors for the "What you'll learn" (phases) section ---
-  const phasesWrapper = "bg-lightgray dark:bg-darkblack py-20 md:py-40";
+  const phasesWrapper = "bg-lightgray dark:bg-darkblack pt-8 md:pt-16 pb-20 md:pb-40";
 
   return (
     <main className={`min-h-screen bg-white text-slate-900 antialiased`}> 
-      {/* HERO */}
-        <section className={`${container} ${sectionSpacing} bg-white dark:bg-[#151922]`}>
-    <div className="grid lg:grid-cols-2 gap-12 items-center">
-        
-        {/* VIDEO (Left) */}
-        <motion.div
-        id="video-section"
-        initial={{ opacity: 0, scale: 0.98 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6 }}
-        className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-lg bg-slate-50 dark:bg-slate-800"
-        >
-        <div className="w-full max-w-4xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-lg">
-            <iframe
-            className="w-full h-full"
-            src="https://drive.google.com/file/d/1KKlV8_rSO7eW0oMmPRUjc6tuf-X4bUnL/preview"
-            title="Intro Video"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            ></iframe>
-        </div>
-        </motion.div>
-
-        {/* Content (Right) */}
-        <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6 }}
-        >
-        <div className="max-w-2xl">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300 text-xs font-semibold mb-4">
-            <span className="w-2 h-2 rounded-full bg-blue-600 block" />
-            Exclusive • Limited Seats
-            </div>
-
-            {/* Heading */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl leading-tight font-extrabold mb-6 text-slate-900 dark:text-white">
-            Build your <span className={`bg-clip-text text-transparent bg-gradient-to-r ${primaryGradient}`}>Private Business</span> Empire — modern, compliant, and sovereign.
-            </h1>
-
-            {/* Subtext */}
-            <p className="text-slate-700 dark:text-slate-300 mb-6">
-            A refined three-phase system for founders who want legal protection, fundable credit, and private payment flows. Templates, walkthroughs, and proven playbooks included.
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4">
-            <a href="#enroll" className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-[#60A5FA] to-[#1E3A8A] text-white font-semibold shadow hover:scale-[1.02] transition">
-                Reserve Seat <FaArrowRight />
-            </a>
-            </div>
-
-            {/* Features */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-            <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                <div className="p-3 rounded-full bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300">
-                <FaFileDownload />
-                </div>
-                <div>
-                <div className="font-semibold text-slate-900 dark:text-white">Templates + Checklists</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">Contracts, trust docs, and vendor lists</div>
-                </div>
-            </div>
-
-            <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                <div className="p-3 rounded-full bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300">
-                <FaLock />
-                </div>
-                <div>
-                <div className="font-semibold text-slate-900 dark:text-white">Private Payments</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">Gateways, flow design, fraud avoidance</div>
-                </div>
-            </div>
-            </div>
-        </div>
-        </motion.div>
-
-    </div>
-    </section>
-
-      {/* PHASES - updated with colorful accents & hover animations */}
       <section className={phasesWrapper}>
         <div className={container}>
             <motion.div
@@ -276,87 +193,6 @@ export default function MasterclassRedesignPage() {
                 </motion.div>
                 </AnimatePresence>
             </div>
-            </div>
-        </div>
-      </section>
-
-      {/* ENROLL (form removed as requested) */}
-      <section
-        id="enroll"
-        className={`${container} ${sectionSpacing} 
-          bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 
-          dark:from-[#0a0f1a] dark:via-[#101828] dark:to-[#1a2235]`}
-      >
-        <div className="rounded-3xl overflow-hidden bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-950 border border-slate-200 dark:border-slate-700 shadow-lg">
-            <div className="grid lg:grid-cols-2">
-                {/* Left Content */}
-                <div className="p-10 bg-white dark:bg-slate-900">
-                    <div className="max-w-lg">
-                    <h3 className="text-4xl font-extrabold mb-4 text-slate-900 dark:text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500">
-                        Join the Masterclass
-                    </h3>
-                    <p className="text-slate-700 dark:text-slate-300 mb-6 text-lg leading-relaxed">
-                        Secure lifetime access to recordings, templates, and private guides. Designed for real operators — <span className="font-semibold text-blue-500 dark:text-blue-400">builders, sellers, and founders</span> who want control.
-                    </p>
-
-                    <div className="space-y-4 mb-8">
-                        {[
-                        { icon: <FaLock />, title: "Lifetime Access", subtitle: "Return anytime — materials updated" },
-                        { icon: <FaFileDownload />, title: "All Templates", subtitle: "Trusts, contracts, vendor lists" },
-                        { icon: <FaClock />, title: "Private Payment Flows", subtitle: "Resilient, low-risk payment design" },
-                        ].map((item, idx) => (
-                        <div
-                            key={idx}
-                            className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-transform duration-300 hover:scale-105 hover:shadow-lg"
-                        >
-                            <div className={`p-3 rounded-full bg-gradient-to-tr from-blue-100 to-indigo-200 dark:from-blue-900/30 dark:to-indigo-900/30 text-blue-600 dark:text-blue-300 transition-all duration-300 hover:from-blue-200 hover:to-indigo-300`}>
-                            {item.icon}
-                            </div>
-                            <div>
-                            <div className="font-semibold text-slate-900 dark:text-white">{item.title}</div>
-                            <div className="text-sm text-slate-600 dark:text-slate-400">{item.subtitle}</div>
-                            </div>
-                        </div>
-                        ))}
-                    </div>
-
-                    <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700 text-sm inline-flex items-center gap-3">
-                        <FaHeart className="text-blue-600 dark:text-blue-400" />
-                        <div className="text-slate-700 dark:text-slate-400">
-                        Secure enrollment. We respect your privacy and protect your data.
-                        </div>
-                    </div>
-                    </div>
-                </div>
-
-                {/* Right CTA */}
-                <div
-                  className="p-10 flex items-center justify-center relative"
-                  style={{
-                    backgroundImage: "url('/images/home/services/master.jpg')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                >
-                  {/* Dark overlay covering the background */}
-                  <div className="absolute inset-0 bg-black/50"></div>
-
-                  {/* Card content */}
-                  <div className="relative w-full max-w-sm p-8 rounded-2xl border border-slate-200 dark:border-slate-700 text-center shadow-lg bg-white/30 dark:bg-black/40 backdrop-blur-md transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
-                    <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-                      Reserve your spot
-                    </h4>
-                    <p className="text-slate-700 dark:text-slate-300 mt-2 mb-6 text-lg leading-relaxed">
-                      No form here — click to go to the secure checkout / scheduled page.
-                    </p>
-                    <a
-                      href="#"
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#60A5FA] to-[#1E3A8A] text-white font-semibold transition-transform duration-300 hover:scale-105 hover:shadow-lg"
-                    >
-                      Reserve My Spot <FaArrowRight />
-                    </a>
-                  </div>
-                </div>
             </div>
         </div>
       </section>

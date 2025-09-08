@@ -1,7 +1,7 @@
 "use client";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useState, CSSProperties, ReactNode, useRef } from "react";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaArrowDown } from "react-icons/fa";
 import Image from "next/image";
 import {
   useAnimationFrame,
@@ -227,7 +227,7 @@ const MovingBorder = ({
   ry?: string;
   [key: string]: any;
 }) => {
-  const pathRef = useRef<SVGPathElement | null>(null);
+  const pathRef = useRef<SVGRectElement | null>(null);
 
   const progress = useMotionValue<number>(0);
 
@@ -514,6 +514,13 @@ const AboutusDetail = () => {
                   {card.desc}
                 </motion.p>
 
+                {!showAllDescriptions && (
+                  <div className="mt-auto pt-4 flex items-center justify-center text-sm font-semibold text-primary">
+                    <span>Show More</span>
+                    <FaArrowDown className="ml-2" />
+                  </div>
+                )}
+
                 {/* Expanded content */}
                 <AnimatePresence>
                   {showAllDescriptions && ( // ✅ Conditional rendering based on showAllDescriptions
@@ -527,14 +534,20 @@ const AboutusDetail = () => {
                       <div
                         className={`w-full h-40 rounded-xl mb-4 ${card.fallbackColor} flex items-center justify-center overflow-hidden`}
                       >
-                        <motion.img
+                        <motion.div
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.5 }}
-                          src={card.image}
-                          alt={card.title}
-                          className="w-full h-full object-cover"
-                        />
+                          className="w-full h-full"
+                        >
+                          <Image
+                            src={card.image}
+                            alt={card.title}
+                            width={500}
+                            height={500}
+                            className="w-full h-full object-cover"
+                          />
+                        </motion.div>
                       </div>
 
                       <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-center">
@@ -557,7 +570,8 @@ const AboutusDetail = () => {
           >
             <button
               onClick={() => setShowAllDescriptions(false)}
-              className="flex items-center gap-2 px-6 py-3 rounded-full text-white bg-gradient-to-r from-gray-500 to-gray-700 text-base font-medium hover:scale-105 transition-all duration-300"
+              className="flex items-center gap-2 px-6 py-3 rounded-full text-white bg-gradient-to-r from-blue-500 to-blue-700 text-base font-medium hover:scale-105 transition-all duration-300"
+
             >
               Show Less <FaArrowRight className="text-sm" />
             </button>

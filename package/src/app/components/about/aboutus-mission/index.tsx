@@ -203,13 +203,16 @@ const AboutusMission: React.FC = () => {
               className="absolute hidden lg:flex items-center justify-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
               initial={{ opacity: 0, scale: 0.5, rotate: 0 }}
               whileInView={{ opacity: 1, scale: 1, rotate: 360 }}
-              transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
               viewport={{ once: true }}
               animate={{
                 y: ["-50%", "-60%", "-50%"], // Floating effect
                 rotate: [0, 5, 0, -5, 0], // Subtle rotation
               }}
-               transition={{ duration: 8, repeat: Infinity }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
             >
               <div className="relative w-28 h-28 bg-gradient-to-br from-indigo-500 to-teal-400 rounded-full flex items-center justify-center shadow-xl shadow-indigo-500/40">
                 <FaRocket className="text-white text-5xl transform -rotate-45" />

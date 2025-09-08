@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 type IntegrationCard = {
   title: string;
@@ -42,48 +42,50 @@ const defaultCards: IntegrationCard[] = [
 ];
 
 export default function MerchantIntegrations({ cards = defaultCards }: { cards?: IntegrationCard[] }) {
-  const [visibleCards, setVisibleCards] = useState(3);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [maxScroll, setMaxScroll] = useState(0);
-  
+  const [isMounted, setIsMounted] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setVisibleCards(1);
-      } else if (window.innerWidth < 1024) {
-        setVisibleCards(2);
-      } else {
-        setVisibleCards(3);
-      }
-    };
-    
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    
-    return () => window.removeEventListener('resize', handleResize);
+    setIsMounted(true);
   }, []);
 
-  const scrollContainerRef = (node: HTMLDivElement) => {
-    if (node) {
-      setMaxScroll(node.scrollWidth - node.clientWidth);
-    }
-  };
+  useEffect(() => {
+    if (!isMounted || !containerRef.current) return;
+
+    const calculateMetrics = () => {
+      if (containerRef.current) {
+        setMaxScroll(containerRef.current.scrollWidth - containerRef.current.clientWidth);
+      }
+    };
+
+    calculateMetrics();
+    window.addEventListener('resize', calculateMetrics);
+
+    return () => {
+      window.removeEventListener('resize', calculateMetrics);
+    };
+  }, [isMounted, cards]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     setScrollPosition(e.currentTarget.scrollLeft);
   };
 
   const scrollTo = (direction: 'left' | 'right') => {
-    const container = document.getElementById('cards-container');
-    if (container) {
-      const scrollAmount = 320; // Approximate card width + gap
+    if (containerRef.current) {
+      const scrollAmount = containerRef.current.clientWidth * 0.8;
       const newPosition = direction === 'right' 
         ? Math.min(scrollPosition + scrollAmount, maxScroll)
         : Math.max(scrollPosition - scrollAmount, 0);
       
-      container.scrollTo({ left: newPosition, behavior: 'smooth' });
+      containerRef.current.scrollTo({ left: newPosition, behavior: 'smooth' });
     }
   };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <section className="py-16 bg-white dark:bg-gray-900 relative">
@@ -102,7 +104,6 @@ export default function MerchantIntegrations({ cards = defaultCards }: { cards?:
         </div>
 
         <div className="relative">
-          {/* Navigation arrows for larger screens */}
           {maxScroll > 0 && (
             <>
               <button 
@@ -129,15 +130,14 @@ export default function MerchantIntegrations({ cards = defaultCards }: { cards?:
           )}
 
           <div 
-            id="cards-container"
-            ref={scrollContainerRef}
+            ref={containerRef}
             onScroll={handleScroll}
             className="flex overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide gap-6 scroll-smooth"
           >
             {cards.map((c, idx) => (
               <div
                 key={`${c.title}-${idx}`}
-                className="flex-shrink-0 w-[calc(100%-2rem)] sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-1.5rem)] xl:w-[calc(25%-1.5rem)] 2xl:w-[calc(20%-1.5rem)] snap-start group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 transition-all duration-300 hover:shadow-lg hover:border-blue-100 dark:hover:border-blue-900/50"
+                className="flex-shrink-0 w-[calc(100%-2rem)] sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-1.5rem)] snap-start group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 transition-all duration-300 hover:shadow-lg hover:border-blue-100 dark:hover:border-blue-900/50"
               >
                 <div className="relative w-full h-48 overflow-hidden">
                   <Image 
@@ -155,21 +155,23 @@ export default function MerchantIntegrations({ cards = defaultCards }: { cards?:
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                     {c.description}
                   </p>
-                  
                 </div>
               </div>
             ))}
           </div>
           
-          {/* Scroll indicator for mobile */}
           <div className="flex justify-center mt-4 lg:hidden">
             <div className="flex space-x-2">
-              {cards.map((_, idx) => (
-                <div 
-                  key={idx} 
-                  className={`w-2 h-2 rounded-full transition-all ${Math.floor(scrollPosition / 320) === idx ? 'bg-blue-600 w-4' : 'bg-gray-300 dark:bg-gray-700'}`}
-                ></div>
-              ))}
+              {cards.map((_, idx) => {
+                const cardWidth = containerRef.current ? (containerRef.current.scrollWidth / cards.length) : 320;
+                const activeIndex = Math.round(scrollPosition / cardWidth);
+                return (
+                  <div 
+                    key={idx} 
+                    className={`w-2 h-2 rounded-full transition-all ${activeIndex === idx ? 'bg-blue-600 w-4' : 'bg-gray-300 dark:bg-gray-700'}`}
+                  ></div>
+                );
+              })}
             </div>
           </div>
         </div>

@@ -347,9 +347,9 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
             <span className="title-sheen" aria-hidden="true" />
           </h1>
 
-          <div className="sub reveal" data-delay="220">Are You Ready To Become Private? <div className="winners-pill" aria-hidden="true"><span className="winners-number">$1000</span><span className="winners-text">Giveaway</span></div></div>
+          <div className="sub reveal" data-delay="220">Are You Ready To Become Private? <div className="winners-pill" aria-hidden="true"><span className="winners-number">$800</span><span className="winners-text">Giveaway</span></div></div>
 
-          <p className="desc reveal" data-delay="300">Join Creditor Academy for your chance to win $1000 and unlock exclusive insights into becoming private.</p>
+          <p className="desc reveal" data-delay="300">Join Creditor Academy for your chance to win $800 and unlock exclusive insights into becoming private.</p>
 
           <div className="cta-row">
             <button

@@ -32,27 +32,21 @@ export default function MasterclassBenefits() {
     },
   ];
 
-  // Variants
+  // Animation variants
   const sectionVariants: Variants = {
     hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1, 
-      transition: { 
-        staggerChildren: 0.15,
-        delayChildren: 0.2
-      } 
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
     },
   };
 
   const headerVariants: Variants = {
     hidden: { opacity: 0, y: 18 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { 
-        duration: 0.8, 
-        ease: [0.25, 0.46, 0.45, 0.94] 
-      } 
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
     },
   };
 
@@ -61,23 +55,19 @@ export default function MasterclassBenefits() {
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: { 
-        delay: i * 0.06, 
+      transition: {
+        delay: i * 0.06,
         duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94]
+        ease: [0.25, 0.46, 0.45, 0.94],
       },
     }),
   };
 
   const underlineVariants: Variants = {
     hidden: { scaleX: 0, originX: 0 },
-    visible: { 
-      scaleX: 1, 
-      transition: { 
-        duration: 0.8, 
-        ease: [0.25, 0.46, 0.45, 0.94],
-        delay: 0.4
-      } 
+    visible: {
+      scaleX: 1,
+      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.4 },
     },
   };
 
@@ -86,29 +76,20 @@ export default function MasterclassBenefits() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { 
-        duration: 0.7, 
-        ease: [0.25, 0.46, 0.45, 0.94]
-      },
+      transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
     },
     hover: {
       y: -10,
-      transition: {
-        duration: 0.4,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    }
+      transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] },
+    },
   };
 
   const imageVariants: Variants = {
     hidden: { scale: 1 },
     hover: {
       scale: 1.08,
-      transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    }
+      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+    },
   };
 
   const iconVariants: Variants = {
@@ -116,29 +97,24 @@ export default function MasterclassBenefits() {
     hover: {
       rotate: 90,
       scale: 1.1,
-      transition: {
-        duration: 0.4,
-        ease: "easeOut"
-      }
-    }
+      transition: { duration: 0.4, ease: "easeOut" },
+    },
   };
 
   const title = "Join Creditor Academy";
   const subtitle =
     "Unlock expert-led courses, real mentorship, and an active community — everything you need to rebuild and protect your financial future.";
-
   const titleWords = title.split(" ");
 
   return (
     <section className="relative overflow-hidden py-20 md:py-24 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-      {/* Background elements */}
+      {/* Background Elements */}
       <motion.div
         aria-hidden
         className="pointer-events-none absolute -left-24 -top-32 w-96 h-96 rounded-full blur-3xl bg-gradient-to-br from-indigo-400 to-blue-400 opacity-12"
         animate={{ rotate: 360 }}
         transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
       />
-      
       <motion.div
         aria-hidden
         className="pointer-events-none absolute -right-24 -bottom-32 w-80 h-80 rounded-full blur-3xl bg-gradient-to-br from-purple-400 to-pink-400 opacity-10"
@@ -146,12 +122,14 @@ export default function MasterclassBenefits() {
         transition={{ repeat: Infinity, duration: 35, ease: "linear" }}
       />
 
+      
+
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col xl:flex-row items-start gap-8 px-4 mb-12">
           {/* Left Badge */}
           <div className="flex items-center py-3 gap-4 md:gap-8 w-full max-w-xl">
-            <motion.span 
+            <motion.span
               className="bg-primary py-1.5 px-2.5 text-base font-medium rounded-full dark:text-secondary"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -160,14 +138,14 @@ export default function MasterclassBenefits() {
             >
               04
             </motion.span>
-            <motion.div 
+            <motion.div
               className="h-px w-16 bg-black/12 dark:bg-white/12"
               initial={{ width: 0 }}
               whileInView={{ width: 64 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             />
-            <motion.p 
+            <motion.p
               className="section-bedge py-1.5 px-4 rounded-full border border-black/10 dark:border-white/10"
               initial={{ opacity: 0, x: -10 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -187,10 +165,7 @@ export default function MasterclassBenefits() {
           className="flex flex-col items-center gap-6 md:gap-8 text-center max-w-4xl mx-auto"
         >
           {/* Badge + Title row */}
-          <motion.div
-            variants={headerVariants}
-            className="flex flex-col items-center gap-4"
-          >
+          <motion.div variants={headerVariants} className="flex flex-col items-center gap-4">
             <motion.span
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm md:text-base font-medium bg-gradient-to-r from-yellow-100 to-yellow-50 text-yellow-700 border border-yellow-200"
               initial={{ y: -6, opacity: 0 }}
@@ -222,7 +197,6 @@ export default function MasterclassBenefits() {
                   </motion.span>
                 ))}
               </span>
-
               <motion.span
                 className="block mt-2 text-xl md:text-2xl font-semibold text-slate-700 dark:text-slate-300"
                 initial={{ opacity: 0, y: 8 }}
@@ -231,7 +205,6 @@ export default function MasterclassBenefits() {
               >
                 Enroll free today and start your transformation.
               </motion.span>
-
               <motion.span className="block mt-4 h-1 overflow-hidden">
                 <motion.span
                   className="block h-1 w-full bg-gradient-to-r from-blue-600 to-blue-400 origin-left"
@@ -239,16 +212,48 @@ export default function MasterclassBenefits() {
                 />
               </motion.span>
             </h2>
+      {/* Animated Images Banner */}
+<div className="w-full flex justify-center mb-6">   {/* ↓ reduced from mb-14 */}
+  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-5xl">
+    {["Get your account.png", "Refer and earn.png", "unlock premium.png"].map((img, i) => (
+      <motion.div
+        key={img}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        whileHover={{
+          scale: 1.05,
+          boxShadow: "0 8px 36px rgba(37,99,235,0.12)",
+        }}
+        viewport={{ once: true }}
+        transition={{
+          duration: 0.5 + i * 0.15,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        }}
+        className="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center"
+        style={{ minHeight: 170 }}
+      >
+        <Image
+          src={`/images/event/${img}`}
+          alt={`Event ${i + 1}`}
+          width={420}
+          height={170}
+          className="object-cover w-full h-full"
+          sizes="(max-width: 768px) 96vw, 32vw"
+        />
+      </motion.div>
+    ))}
+  </div>
+</div>
+{/* End Images Banner */}
 
-            {/* Subtitle */}
-            <motion.p
-              variants={headerVariants}
-              className="max-w-2xl text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-light mt-4"
-            >
-              {subtitle}
-            </motion.p>
+{/* Subtitle */}
+<motion.p
+  variants={headerVariants}
+  className="max-w-2xl text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-light mt-2" 
+>
+  {subtitle}
+</motion.p>
 
-            {/* CTA */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -259,9 +264,9 @@ export default function MasterclassBenefits() {
                 href="https://lmsathena.com/login"
                 className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-blue-600 text-white font-medium shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 transition-colors duration-300"
                 aria-label="Enroll free"
-                whileHover={{ 
+                whileHover={{
                   scale: 1.05,
-                  transition: { duration: 0.3 }
+                  transition: { duration: 0.3 },
                 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -302,7 +307,7 @@ export default function MasterclassBenefits() {
           </h3>
         </motion.div>
 
-        {/* Modern Benefits Grid */}
+        {/* Benefits Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
           {benefits.map((item, idx) => (
             <motion.div
@@ -312,16 +317,13 @@ export default function MasterclassBenefits() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.4 }}
               whileHover="hover"
-              className="relative flex flex-col justify-between bg-white dark:bg-slate-800/70
-                        border border-slate-200 dark:border-slate-700 
-                        backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl
-                        overflow-hidden p-6 transition-all duration-300 group h-full"
+              className="relative flex flex-col justify-between bg-white dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl overflow-hidden p-6 transition-all duration-300 group h-full"
             >
               {/* Decorative Gradient Blob */}
               <div className="absolute -top-10 -right-10 w-36 h-36 bg-blue-200/20 dark:bg-blue-700/30 rounded-full blur-3xl pointer-events-none transition-opacity duration-500 group-hover:opacity-60" />
-              
-              {/* Image Section */}
-              <motion.div 
+
+              {/* Image */}
+              <motion.div
                 className="relative h-52 overflow-hidden -ml-6 w-[calc(100%+3rem)] -mt-6 mb-6 rounded-t-2xl"
                 variants={imageVariants}
               >
@@ -335,7 +337,7 @@ export default function MasterclassBenefits() {
                 <div className="absolute inset-0 bg-black/10 dark:bg-black/20 group-hover:bg-black/5 transition-colors duration-500" />
               </motion.div>
 
-              {/* Text Content */}
+              {/* Text */}
               <div className="flex flex-col gap-3 flex-grow">
                 <h3 className="text-xl font-bold text-slate-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                   {item.title}

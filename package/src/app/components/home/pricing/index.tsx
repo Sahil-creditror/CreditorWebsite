@@ -124,7 +124,7 @@ function Pricing() {
                                       icon="mdi:youtube"
                                       width={40}
                                       height={40}
-                                      style={{ color: "#FF0000" }} // exact YouTube red
+                                      style={{ color: "#FF0000", filter: "brightness(1.2) saturate(1.3)" }} // more vibrant YouTube red
                                     />
                                   </span>
                                 )}
@@ -133,7 +133,6 @@ function Pricing() {
                         {/* Plan details overlay */}
                         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70 flex flex-col justify-center items-center text-white p-6">
                           <div className="flex items-center gap-4 mb-2">
-                            <p className="font-medium text-lg">{value?.planName ?? 'Plan'}</p>
                             {value?.tag &&
                               <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm w-fit py-1 px-3 rounded-full">
                                 <Icon icon="fluent:fire-20-regular" width="20" height="20" style={{ color: "#fff" }} />
@@ -176,7 +175,7 @@ function Pricing() {
                             aria-label={`Subscribe to ${value.planName ?? 'plan'}`}
                           >
                             <span className="py-4 px-2 text-lg font-bold text-secondary group-hover:text-white transition-all duration-300 ease-in-out">
-                              Subscribe now
+                              Learn More
                             </span>
                             <div className="absolute top-0.5 right-0.5 transition-all duration-300 ease-in-out group-hover:left-0">
                               <svg className="flex items-center transition-transform duration-300 ease-in-out group-hover:rotate-45" width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">

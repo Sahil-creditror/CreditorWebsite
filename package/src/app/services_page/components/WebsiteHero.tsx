@@ -30,7 +30,7 @@ export function HeroSectionOne() {
       {/* Content container */}
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center justify-center px-4">
         <h1 className="text-center text-2xl font-bold text-white md:text-4xl lg:text-7xl max-w-5xl">
-          {"Launch your website in hours, not days"
+          {"Launch Your Private Dream Website Today"
             .split(" ")
             .map((word, index) => (
               <motion.span
@@ -55,9 +55,7 @@ export function HeroSectionOne() {
           transition={{ duration: 0.3, delay: 0.8 }}
           className="mt-4 max-w-3xl text-center text-lg font-normal text-white/90"
         >
-          With Creditor Academy, you can launch your websites. Try our best
-          in class, state of the art, cutting edge tools to get your website
-          up.
+          Elevate your brand with a stunning, high-performance website designed for success.
         </motion.p>
 
         <motion.div

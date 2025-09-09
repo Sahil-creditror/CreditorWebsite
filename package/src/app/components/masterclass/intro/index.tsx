@@ -315,7 +315,7 @@ export default function MasterClassLaunchpad() {
               className="font-display mb-4 text-slate-800 dark:text-white leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-sky-600 to-blue-800 dark:from-blue-300 dark:via-sky-400 dark:to-cyan-400"
               style={{ fontWeight: 800, WebkitFontSmoothing: "antialiased" }}
             >
-              Structure Legally. Fund Privately. Operate Sovereignly.
+              Structure Lawfully. Fund Privately. Operate Autonomously.
             </motion.h1>
 
             <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.35 }} className="text-slate-600 dark:text-slate-200 max-w-xl mx-auto lg:mx-0 text-sm sm:text-base md:text-lg mb-6 leading-relaxed">

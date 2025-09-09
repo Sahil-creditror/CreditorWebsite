@@ -25,43 +25,47 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
   // Widget URL
   const WIDGET_URL = 'https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls';
 
+  // Function to get current PST time
+  const getPSTTime = (): Date => {
+    const now = new Date();
+    // Convert to PST (UTC-8)
+    const pstTime = new Date(now.getTime() - (8 * 60 * 60 * 1000));
+    return pstTime;
+  };
+
   // Function to get next Saturday at 11:15 AM PST
   const getNextSaturdayEvent = (): number => {
-    const now = new Date();
-    const currentDay = now.getDay(); // 0 = Sunday, 6 = Saturday
+    const pstNow = getPSTTime();
+    const currentDay = pstNow.getDay(); // 0 = Sunday, 6 = Saturday
     
-    // Create a date for next Saturday at 11:15 AM PST
-    // PST is UTC-8, so we need to account for this
-    const getNextSaturday = (fromDate: Date): Date => {
-      const nextSaturday = new Date(fromDate);
-      const daysUntilSaturday = currentDay === 6 ? 7 : (6 - currentDay) % 7;
-      nextSaturday.setDate(fromDate.getDate() + daysUntilSaturday);
-      
-      // Set to 11:15 AM PST (UTC-8)
-      // We'll use a fixed UTC-8 offset for simplicity (PST, not PDT)
-      const pstDate = new Date(nextSaturday);
-      pstDate.setUTCHours(19, 15, 0, 0); // 11:15 AM PST = 19:15 UTC (11 + 8 = 19)
-      
-      return pstDate;
-    };
-    
-    // If it's Saturday, check if today's event has passed
-    if (currentDay === 6) {
-      const todayEvent = getNextSaturday(new Date(now.getFullYear(), now.getMonth(), now.getDate()));
-      
-      if (now.getTime() > todayEvent.getTime()) {
-        // Event has passed today, get next Saturday
-        const nextWeek = new Date(now);
-        nextWeek.setDate(now.getDate() + 7);
-        return getNextSaturday(nextWeek).getTime();
-      } else {
-        // Event is today but hasn't happened yet
-        return todayEvent.getTime();
-      }
+    // Calculate days until next Saturday in PST
+    let daysUntilSaturday;
+    if (currentDay === 6) { // If it's Saturday
+      daysUntilSaturday = 0; // Today is Saturday
+    } else if (currentDay === 0) { // If it's Sunday
+      daysUntilSaturday = 6; // 6 days until next Saturday
+    } else { // Monday through Friday
+      daysUntilSaturday = 6 - currentDay; // Calculate days until Saturday
     }
     
-    // Get next Saturday
-    return getNextSaturday(now).getTime();
+    // Create the target Saturday date in PST
+    const targetDate = new Date(pstNow);
+    targetDate.setDate(pstNow.getDate() + daysUntilSaturday);
+    targetDate.setHours(11, 15, 0, 0); // 11:15 AM PST
+    
+    // Convert PST date back to UTC for comparison
+    const utcTargetDate = new Date(targetDate.getTime() + (8 * 60 * 60 * 1000));
+    
+    // If it's Saturday and the event has already passed today, get next Saturday
+    if (currentDay === 6 && pstNow.getTime() > targetDate.getTime()) {
+      const nextSaturday = new Date(targetDate);
+      nextSaturday.setDate(targetDate.getDate() + 7);
+      nextSaturday.setHours(11, 15, 0, 0);
+      // Convert back to UTC
+      return new Date(nextSaturday.getTime() + (8 * 60 * 60 * 1000)).getTime();
+    }
+    
+    return utcTargetDate.getTime();
   };
 
   const calcTimeLeft = (target: number): TimeLeft => {
@@ -86,6 +90,12 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
     const nextEvent = getNextSaturdayEvent();
     setCurrentEventDate(nextEvent);
     
+    // Debug: Log the calculated date
+    const pstEventDate = new Date(nextEvent - (8 * 60 * 60 * 1000));
+    console.log('Next Saturday event date (PST):', pstEventDate.toLocaleString());
+    console.log('Day of week (PST):', pstEventDate.toLocaleDateString('en-US', { weekday: 'long' }));
+    console.log('Current PST time:', getPSTTime().toLocaleString());
+    
     // Prime immediately on mount, then tick every second
     setTimeLeft(calcTimeLeft(nextEvent));
     
@@ -98,7 +108,9 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
         if (timeLeftResult.expired) {
           const newEventDate = getNextSaturdayEvent();
           setCurrentEventDate(newEventDate);
-          console.log('Event expired, restarting countdown for next Saturday:', new Date(newEventDate).toLocaleString());
+          const pstNewEventDate = new Date(newEventDate - (8 * 60 * 60 * 1000));
+          console.log('Event expired, restarting countdown for next Saturday (PST):', pstNewEventDate.toLocaleString());
+          console.log('New day of week (PST):', pstNewEventDate.toLocaleDateString('en-US', { weekday: 'long' }));
           return calcTimeLeft(newEventDate);
         }
         
@@ -263,14 +275,17 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
     return ('0' + value).slice(-2);
   };
 
-  // Function to format the event date for display
+  // Function to format the event date for display in PST
   const formatEventDate = (timestamp: number): string => {
-    const date = new Date(timestamp);
+    // Convert UTC timestamp to PST for display
+    const utcDate = new Date(timestamp);
+    const pstDate = new Date(utcDate.getTime() - (8 * 60 * 60 * 1000));
+    
     const months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 
                    'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
-    const day = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
+    const day = pstDate.getDate();
+    const month = months[pstDate.getMonth()];
+    const year = pstDate.getFullYear();
     return `${day} ${month} ${year}`;
   };
 

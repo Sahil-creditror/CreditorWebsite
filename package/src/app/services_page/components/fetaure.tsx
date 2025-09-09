@@ -60,10 +60,10 @@ const DEFAULT_FEATURES: FeatureRow[] = [
   { key: "contact", label: "Contact Form", starter: "Basic with auto-email", cadillac: "Advanced with CRM sync" },
   { key: "uiux", label: "UI/UX Design", starter: "Clean layout", cadillac: "Brand-aligned premium design" },
   { key: "security", label: "Security (SSL)", starter: "HTTPS", cadillac: "HTTPS + Extra layers" },
-  { key: "dashboard", label: "Detail User Dashboard", starter: false, cadillac: true },
-  { key: "underwriter", label: "Underwriter-Ready Structure", starter: false, cadillac: true },
   { key: "mobile", label: "Mobile Responsive", starter: true, cadillac: true },
   { key: "hosting", label: "Hosting & Maintenance", starter: "Monthly", cadillac: "Monthly" },
+  { key: "dashboard", label: "Detail User Dashboard", starter: false, cadillac: true },
+  { key: "underwriter", label: "Underwriter-Ready Structure", starter: false, cadillac: true },
   { key: "member", label: "Member Login / Portal", starter: false, cadillac: true },
   { key: "backend", label: "Backend Integration", starter: false, cadillac: true },
   { key: "blog", label: "Blog / Resource Section", starter: false, cadillac: true },
@@ -158,7 +158,7 @@ export default function ComparisonTable({
                     Starter
                   </div>
                   <div className="mt-2 flex items-baseline gap-2">
-                    <span className="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-gray-100">$100</span>
+                    <span className="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-gray-100">$99</span>
                     <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Starter Plan</span>
                   </div>
                   {/* Maintenance Charge */}
@@ -196,7 +196,7 @@ export default function ComparisonTable({
                     Cadillac
                   </div>
                   <div className="mt-2 flex items-baseline gap-2">
-                    <span className="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-gray-100">$1,000</span>
+                    <span className="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-gray-100">$998</span>
                     <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Cadillac Plan</span>
                   </div>
                   {/* Maintenance Charge */}

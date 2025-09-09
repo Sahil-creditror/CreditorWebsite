@@ -168,8 +168,8 @@ export default function TenBusinesses() {
                   {business.name}
                 </h3>
                 
-                {/* Subtle hover indicator with dynamic color
-                <div className={`w-8 h-1 ${business.color.replace('text', 'bg')} rounded-full mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div> */}
+                {/* Subtle hover indicator with dynamic color */}
+                <div className={`w-8 h-1 ${business.color.replace('text', 'bg')} rounded-full mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
               </div>
             </motion.div>
           ))}

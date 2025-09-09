@@ -230,7 +230,7 @@ const pricingData2 = {
         {
             planName: "Starter Plan",
             tag:"Basic",
-            planPrice: "$100",
+            planPrice: "$99",
             cancelPrice: "$500",
             planDescp: "Ideal for startups and small businesses taking their first steps online.",
             planIncludes: ["Competitive research & insights","Wireframing and prototyping","Basic tracking setup (Google Analytics, etc.)","Standard contact form integration"],
@@ -240,7 +240,7 @@ const pricingData2 = {
         {
             planName: "Cadillac Plan",
             tag: "Advance",
-            planPrice: "$1000",
+            planPrice: "$998",
             cancelPrice: "$2,199",
             planDescp: "Perfect for growing brands needing more customization and flexibility.",
             planIncludes: ["Everything in the Launch Plan","Custom design for up to 10 pages","Seamless social media integration","SEO enhancements for key pages"],

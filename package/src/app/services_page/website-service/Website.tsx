@@ -120,8 +120,8 @@ export function Website() {
       <Appointment />
       <Plan />
       <Table 
-        starterPrototypeLink="https://prototype.example.com/starter" 
-        cadillacPrototypeLink="https://prototype.example.com/cadillac"
+        starterPrototypeLink="https://digi-market-simple.vercel.app/" 
+        cadillacPrototypeLink="https://rhythmic-vibe.vercel.app/"
       />
       <WhyChoose />
     </>

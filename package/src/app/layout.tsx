@@ -32,7 +32,7 @@ export default function RootLayout({
     });
   }, [pathname]);
 
-  const excludedRoutes = ["/signin", "/signup", "/forgot-password","/documentation", "/become-wonder", "/operate-wonder", "/private"];
+  const excludedRoutes = ["/signin", "/signup", "/forgot-password","/documentation", "/become-wonder", "/operate-wonder", "/private-wonder", "/projects-wonder"];
   const hideLayout = excludedRoutes.includes(pathname) || is404;
 
   return (

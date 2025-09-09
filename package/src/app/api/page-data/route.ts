@@ -235,7 +235,7 @@ const pricingData2 = {
             planDescp: "Ideal for startups and small businesses taking their first steps online.",
             planIncludes: ["Competitive research & insights","Wireframing and prototyping","Basic tracking setup (Google Analytics, etc.)","Standard contact form integration"],
             coverImage: "/images/pricing/Cover-1.png", // Optional,
-            // payLink: ""
+            payLink: "https://quickclick.com/r/mq0rtcnac7tng6qnl2wk009ddrgrly"
         },
         {
             planName: "Cadillac Plan",
@@ -245,7 +245,7 @@ const pricingData2 = {
             planDescp: "Perfect for growing brands needing more customization and flexibility.",
             planIncludes: ["Everything in the Launch Plan","Custom design for up to 10 pages","Seamless social media integration","SEO enhancements for key pages"],
             coverImage: "/images/pricing/Cover-2.jpg", // Optional
-            // payLink: ""
+            payLink: "https://quickclick.com/r/ktwk1pon618kihkfhnfioqm9n1caap"
         },
     ],
 };

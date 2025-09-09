@@ -116,9 +116,9 @@ export function Website() {
   return (
     <>
       <HeroSectionOne  />
+      <Plan />
       <CardsCarouselSection />
       <Appointment />
-      <Plan />
       <Table 
         starterPrototypeLink="https://digi-market-simple.vercel.app/" 
         cadillacPrototypeLink="https://rhythmic-vibe.vercel.app/"

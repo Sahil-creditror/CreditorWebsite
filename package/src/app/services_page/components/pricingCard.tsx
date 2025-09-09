@@ -29,7 +29,7 @@ function Pricing() {
   ];
 
   return (
-    <section className="relative overflow-hidden py-30 md:py-44">
+    <section className="relative overflow-hidden py-30 md:py-20">
       {/* Animated decorative background (behind everything) */}
       <div className="absolute inset-0 -z-20 pointer-events-none">
         {/* Subtle base gradient */}

@@ -20,24 +20,32 @@ export const metadata: Metadata = {
 export default function Page() {
     const projects = getAllProjects();
     return (
-        <main>
+        <>
             <Script
-                id="affiliate-manager-sdk"
-                src="https://link.msgsndr.com/js/am.js"
+                id="wonderengine-affiliate"
                 strategy="afterInteractive"
-                onLoad={() => {
-                    try {
-                        const manager = (window as any).affiliateManager;
-                        if (manager && typeof manager.init === "function") {
-                            manager.init(
-                                "psaD1vtsVB3b1PyW2P6i",
-                                "https://backend.leadconnectorhq.com",
-                                ".www.creditoracademy.com"
-                            );
-                        }
-                    } catch (e) {}
+                dangerouslySetInnerHTML={{
+                    __html: `(
+  function() {
+    var t = document.createElement("script");
+    t.type = "text/javascript";
+    t.async = true;
+    t.src = 'https://link.msgsndr.com/js/am.js';
+    t.onload = t.onreadystatechange = function() {
+      var tstate = this.readyState;
+      if (!tstate || tstate === "complete" || tstate === "loaded") {
+        try {
+          affiliateManager.init('psaD1vtsVB3b1PyW2P6i', 'https://backend.leadconnectorhq.com', '.www.creditoracademy.com');
+        } catch (e) {}
+      }
+    };
+    var e = document.getElementsByTagName("script")[0];
+    e.parentNode.insertBefore(t, e);
+  }
+)();`,
                 }}
             />
+            <main>
             <Herobanner
                 bannerimage="/images/projects/banner/masterclass-banner.png"
                 heading="Masterclass Membership"
@@ -54,6 +62,7 @@ export default function Page() {
             <About />
             <Event />
             <CTA />
-        </main>
+            </main>
+        </>
     );
 };

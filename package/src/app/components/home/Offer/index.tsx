@@ -105,6 +105,18 @@ export default function MasterclassBenefits() {
   const subtitle =
     "Unlock expert-led courses, real mentorship, and an active community — everything you need to rebuild and protect your financial future.";
   const titleWords = title.split(" ");
+  const eventImages = [
+    "Get your account.png",
+    "Refer and earn.png",
+    "unlock premium.png",
+  ];
+  const [currentEventIndex, setCurrentEventIndex] = React.useState(0);
+  React.useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentEventIndex((prev) => (prev + 1) % eventImages.length);
+    }, 4000);
+    return () => clearInterval(intervalId);
+  }, [eventImages.length]);
 
   return (
     <section className="relative overflow-hidden py-20 md:py-24 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
@@ -162,133 +174,137 @@ export default function MasterclassBenefits() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={sectionVariants}
-          className="flex flex-col items-center gap-6 md:gap-8 text-center max-w-4xl mx-auto"
+          className="flex flex-col xl:flex-row items-start gap-8 md:gap-10 max-w-6xl mx-auto"
         >
-          {/* Badge + Title row */}
-          <motion.div variants={headerVariants} className="flex flex-col items-center gap-4">
-            <motion.span
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm md:text-base font-medium bg-gradient-to-r from-yellow-100 to-yellow-50 text-yellow-700 border border-yellow-200"
-              initial={{ y: -6, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 md:h-6 md:w-6"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden
-              >
-                <path d="M10 2a1 1 0 01.894.553L12.382 5H15a1 1 0 01.832 1.555l-1.68 2.52.447 3.07a1 1 0 01-.29.882L12.5 14.5 10 16l-2.5-1.5-1.279-.913a1 1 0 01-.29-.882l.447-3.07L4.879 6.555A1 1 0 015.71 5H8.618l1.488-2.447A1 1 0 0110 2z" />
-              </svg>
-              <span>Free enrollment • Limited seats</span>
-            </motion.span>
-
-            <h2 className="text-3xl md:text-5xl font-extrabold leading-tight">
-              <span className="block">
-                {titleWords.map((w, i) => (
-                  <motion.span
-                    key={w + i}
-                    custom={i}
-                    variants={wordVariants}
-                    className="inline-block mr-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400"
-                  >
-                    {w}
-                  </motion.span>
-                ))}
-              </span>
-              <motion.span
-                className="block mt-2 text-xl md:text-2xl font-semibold text-slate-700 dark:text-slate-300"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-              >
-                Enroll free today and start your transformation.
-              </motion.span>
-              <motion.span className="block mt-4 h-1 overflow-hidden">
-                <motion.span
-                  className="block h-1 w-full bg-gradient-to-r from-blue-600 to-blue-400 origin-left"
-                  variants={underlineVariants}
-                />
-              </motion.span>
-            </h2>
-      {/* Animated Images Banner */}
-<div className="w-full flex justify-center mb-6">   {/* ↓ reduced from mb-14 */}
-  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-5xl">
-    {["Get your account.png", "Refer and earn.png", "unlock premium.png"].map((img, i) => (
-      <motion.div
-        key={img}
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        whileHover={{
-          scale: 1.05,
-          boxShadow: "0 8px 36px rgba(37,99,235,0.12)",
-        }}
-        viewport={{ once: true }}
-        transition={{
-          duration: 0.5 + i * 0.15,
-          ease: [0.25, 0.46, 0.45, 0.94],
-        }}
-        className="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center"
-        style={{ minHeight: 170 }}
-      >
-        <Image
-          src={`/images/event/${img}`}
-          alt={`Event ${i + 1}`}
-          width={420}
-          height={170}
-          className="object-cover w-full h-full"
-          sizes="(max-width: 768px) 96vw, 32vw"
-        />
-      </motion.div>
-    ))}
-  </div>
-</div>
-{/* End Images Banner */}
-
-{/* Subtitle */}
-<motion.p
-  variants={headerVariants}
-  className="max-w-2xl text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-light mt-2" 
->
-  {subtitle}
-</motion.p>
-
+          {/* Left: Auto sliding single banner card */}
+          <div className="w-full xl:w-1/2">
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.6 }}
-              className="mt-6"
+              key={currentEventIndex}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-200 dark:border-slate-700 w-full"
+              style={{ minHeight: 220 }}
             >
-              <motion.a
-                href="https://lmsathena.com/login"
-                className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-blue-600 text-white font-medium shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 transition-colors duration-300"
-                aria-label="Enroll free"
-                whileHover={{
-                  scale: 1.05,
-                  transition: { duration: 0.3 },
-                }}
-                whileTap={{ scale: 0.98 }}
+              <Image
+                src={`/images/event/${eventImages[currentEventIndex]}`}
+                alt={`Event ${currentEventIndex + 1}`}
+                width={900}
+                height={220}
+                className="object-cover w-full h-full"
+                sizes="(max-width: 1280px) 100vw, 50vw"
+                priority
+              />
+            </motion.div>
+            {/* Dots */}
+            <div className="flex items-center justify-center gap-2 mt-4">
+              {eventImages.map((_, i) => (
+                <button
+                  key={i}
+                  aria-label={`Go to slide ${i + 1}`}
+                  onClick={() => setCurrentEventIndex(i)}
+                  className={`h-2.5 rounded-full transition-all duration-300 ${
+                    i === currentEventIndex ? "w-6 bg-blue-600" : "w-2.5 bg-slate-300 dark:bg-slate-600"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Right: Badge, Heading, Subtitle, CTA */}
+          <div className="w-full xl:w-1/2 text-center">
+            <motion.div variants={headerVariants} className="flex flex-col items-center gap-4">
+              <motion.span
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm md:text-base font-medium bg-gradient-to-r from-yellow-100 to-yellow-50 text-yellow-700 border border-yellow-200"
+                initial={{ y: -6, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
               >
-                Enroll free
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+                  className="h-5 w-5 md:h-6 md:w-6"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
                   aria-hidden
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
+                  <path d="M10 2a1 1 0 01.894.553L12.382 5H15a1 1 0 01.832 1.555l-1.68 2.52.447 3.07a1 1 0 01-.29.882L12.5 14.5 10 16l-2.5-1.5-1.279-.913a1 1 0 01-.29-.882l.447-3.07L4.879 6.555A1 1 0 015.71 5H8.618l1.488-2.447A1 1 0 0110 2z" />
                 </svg>
-              </motion.a>
+                <span>Free enrollment • Limited seats</span>
+              </motion.span>
+
+              <h2 className="text-3xl md:text-5xl font-extrabold leading-tight">
+                <span className="block">
+                  {titleWords.map((w, i) => (
+                    <motion.span
+                      key={w + i}
+                      custom={i}
+                      variants={wordVariants}
+                      className="inline-block mr-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400"
+                    >
+                      {w}
+                    </motion.span>
+                  ))}
+                </span>
+                <motion.span
+                  className="block mt-2 text-xl md:text-2xl font-semibold text-slate-700 dark:text-slate-300"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.6 }}
+                >
+                  Enroll free today and start your transformation.
+                </motion.span>
+                <motion.span className="block mt-4 h-1 overflow-hidden">
+                  <motion.span
+                    className="block h-1 w-full bg-gradient-to-r from-blue-600 to-blue-400 origin-left"
+                    variants={underlineVariants}
+                  />
+                </motion.span>
+              </h2>
+
+              {/* Subtitle */}
+              <motion.p
+                variants={headerVariants}
+                className="max-w-2xl text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-light mt-2"
+              >
+                {subtitle}
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.6 }}
+                className="mt-6"
+              >
+                <motion.a
+                  href="https://lmsathena.com/login"
+                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-blue-600 text-white font-medium shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 transition-colors duration-300"
+                  aria-label="Enroll free"
+                  whileHover={{
+                    scale: 1.05,
+                    transition: { duration: 0.3 },
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Enroll free
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                  </svg>
+                </motion.a>
+              </motion.div>
             </motion.div>
-          </motion.div>
+          </div>
         </motion.div>
 
         {/* Heading before benefits */}

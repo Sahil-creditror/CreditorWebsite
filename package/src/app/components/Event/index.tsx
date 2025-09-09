@@ -25,9 +25,44 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
   // Widget URL
   const WIDGET_URL = 'https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls';
 
-  // Countdown target: 11:15 AM Pacific Standard Time (PST, fixed UTC-8) on Sep 6, 2025
-  // Using a fixed -08:00 offset so the timestamp always represents "PST" rather than DST-aware zones.
-  const TARGET_TS = new Date('2025-09-06T11:15:00-08:00').getTime();
+  // Function to get next Saturday at 11:15 AM PST
+  const getNextSaturdayEvent = (): number => {
+    const now = new Date();
+    const currentDay = now.getDay(); // 0 = Sunday, 6 = Saturday
+    
+    // Create a date for next Saturday at 11:15 AM PST
+    // PST is UTC-8, so we need to account for this
+    const getNextSaturday = (fromDate: Date): Date => {
+      const nextSaturday = new Date(fromDate);
+      const daysUntilSaturday = currentDay === 6 ? 7 : (6 - currentDay) % 7;
+      nextSaturday.setDate(fromDate.getDate() + daysUntilSaturday);
+      
+      // Set to 11:15 AM PST (UTC-8)
+      // We'll use a fixed UTC-8 offset for simplicity (PST, not PDT)
+      const pstDate = new Date(nextSaturday);
+      pstDate.setUTCHours(19, 15, 0, 0); // 11:15 AM PST = 19:15 UTC (11 + 8 = 19)
+      
+      return pstDate;
+    };
+    
+    // If it's Saturday, check if today's event has passed
+    if (currentDay === 6) {
+      const todayEvent = getNextSaturday(new Date(now.getFullYear(), now.getMonth(), now.getDate()));
+      
+      if (now.getTime() > todayEvent.getTime()) {
+        // Event has passed today, get next Saturday
+        const nextWeek = new Date(now);
+        nextWeek.setDate(now.getDate() + 7);
+        return getNextSaturday(nextWeek).getTime();
+      } else {
+        // Event is today but hasn't happened yet
+        return todayEvent.getTime();
+      }
+    }
+    
+    // Get next Saturday
+    return getNextSaturday(now).getTime();
+  };
 
   const calcTimeLeft = (target: number): TimeLeft => {
     const diff = target - Date.now();
@@ -44,11 +79,33 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
 
   // Initialize with stable values to avoid SSR/CSR hydration mismatches
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ expired: false, days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [currentEventDate, setCurrentEventDate] = useState<number>(0);
 
   useEffect(() => {
+    // Get the next Saturday event date
+    const nextEvent = getNextSaturdayEvent();
+    setCurrentEventDate(nextEvent);
+    
     // Prime immediately on mount, then tick every second
-    setTimeLeft(calcTimeLeft(TARGET_TS));
-    const t = window.setInterval(() => setTimeLeft(calcTimeLeft(TARGET_TS)), 1000);
+    setTimeLeft(calcTimeLeft(nextEvent));
+    
+    const t = window.setInterval(() => {
+      setTimeLeft(prevTimeLeft => {
+        const currentEvent = getNextSaturdayEvent();
+        const timeLeftResult = calcTimeLeft(currentEvent);
+        
+        // If event has expired, get the next Saturday event and restart countdown
+        if (timeLeftResult.expired) {
+          const newEventDate = getNextSaturdayEvent();
+          setCurrentEventDate(newEventDate);
+          console.log('Event expired, restarting countdown for next Saturday:', new Date(newEventDate).toLocaleString());
+          return calcTimeLeft(newEventDate);
+        }
+        
+        return timeLeftResult;
+      });
+    }, 1000);
+    
     return () => window.clearInterval(t);
   }, []);
 
@@ -206,6 +263,17 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
     return ('0' + value).slice(-2);
   };
 
+  // Function to format the event date for display
+  const formatEventDate = (timestamp: number): string => {
+    const date = new Date(timestamp);
+    const months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 
+                   'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
+  };
+
   const handleWidgetOpen = () => {
     if (timeLeft.expired) return;
     setIframeLoaded(false);
@@ -315,7 +383,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
 
           <div className="info-row reveal" data-delay="480">
             <div>
-              <div className="date">6 SEPTEMBER 2025</div>
+              <div className="date">{currentEventDate ? formatEventDate(currentEventDate) : 'Loading...'}</div>
               <div className="time">11:15 AM Pacific Time (PST)</div>
             </div>
             <div style={{ marginLeft: 'auto' }}>
@@ -332,7 +400,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
             <div className="stripe" aria-hidden="true"></div>
 
             <div className="speaker-photo-wrap">
-              <img src='/images/event/event.png' alt="Paul Michael Rowland" className="speaker-photo" />
+              <img src='/images/event/sat-event.png' alt="Paul Michael Rowland" className="speaker-photo" />
             </div>
 
             <div className="speaker-overlay" aria-hidden="true">

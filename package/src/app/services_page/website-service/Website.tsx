@@ -7,6 +7,7 @@ import Plan from "../components/pricingCard"
 import Table from "../components/fetaure";
 import WhyChoose from "../components/webchoose";
 import Appointment from "../components/appointment";
+import WebsiteUpperSection from "../components/webintro";
 
 // ------------------------
 // Dummy content for Carousel
@@ -117,6 +118,7 @@ export function Website() {
     <>
       <HeroSectionOne  />
       <Plan />
+      {/* <WebsiteUpperSection /> */}
       <CardsCarouselSection />
       <Appointment />
       <Table 

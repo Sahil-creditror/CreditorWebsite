@@ -89,8 +89,8 @@ export default function Pricing() {
       </div>
       <div className="relative container mx-auto px-6">
         <div className="max-w-3xl mx-auto text-center mb-8">
-          <h2 className="text-4xl font-extrabold tracking-tight">Pricing & Plans</h2>
-          <p className="mt-3 text-slate-600 dark:text-slate-300">
+          <h2 className="text-4xl font-black tracking-tight text-black dark:text-white" style={{ fontWeight: 900 }}>Pricing & Plans</h2>
+          <p className="mt-3 text-black dark:text-slate-300">
             Choose the Creditors Academy plan that fits your goals — monthly membership for ongoing learning, a one-time course bundle for complete self-study, or enterprise access for teams and agencies.
           </p>
         </div>
@@ -130,7 +130,7 @@ export default function Pricing() {
         </div> */}
 
         <motion.div
-          className="grid gap-8 md:grid-cols-3 items-stretch"
+          className="grid gap-6 sm:gap-8 grid-cols-1 md:grid-cols-3 items-stretch"
           variants={container}
           initial="hidden"
           whileInView="visible"
@@ -159,8 +159,8 @@ export default function Pricing() {
               <div>
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className={`text-2xl font-semibold ${plan.featured ? "text-white" : "text-slate-900 dark:text-white"}`}>{plan.name}</h3>
-                    <p className={`text-sm mt-1 ${plan.featured ? "text-blue-100/90" : "text-slate-500 dark:text-slate-300"}`}>{plan.short}</p>
+                    <h3 className={`text-2xl font-black ${plan.featured ? "text-white" : "text-slate-900 dark:text-white"}`}>{plan.name}</h3>
+                    <p className={`text-sm mt-1 ${plan.featured ? "text-blue-100/90" : "text-black dark:text-white"}`}>{plan.short}</p>
                   </div>
 
                   <div className="text-right">
@@ -198,7 +198,7 @@ export default function Pricing() {
                         <span className={`${plan.featured ? "text-blue-200" : "text-blue-600 dark:text-blue-400 mt-1"}`}>
                           <FiCheck />
                         </span>
-                        <span className={`${plan.featured ? "text-blue-50" : "text-slate-700 dark:text-slate-300 text-sm"}`}>{f}</span>
+                        <span className={`${plan.featured ? "text-blue-50" : "text-black dark:text-white text-sm"}`}>{f}</span>
                       </li>
                     ))}
                   </ul>

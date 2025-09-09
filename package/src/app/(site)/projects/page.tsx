@@ -20,23 +20,6 @@ export default function Page() {
     const projects = getAllProjects();
     return (
         <main>
-            {/* Added script here */}
-            <script
-                dangerouslySetInnerHTML={{
-                    __html: `(function() {
-                        var t = document.createElement("script");
-                        t.type = "text/javascript", t.async = !0, t.src = 'https://link.msgsndr.com/js/am.js', t.onload = t.onreadystatechange = function() {
-                            var t = this.readyState;
-                            if (!t || "complete" == t || "loaded" == t) try {
-                                affiliateManager.init('psaD1vtsVB3b1PyW2P6i', 'https://backend.leadconnectorhq.com', '.creditoracademy.com')
-                            } catch (t) {}
-                        };
-                        var e = document.getElementsByTagName("script")[0];
-                        e.parentNode.insertBefore(t, e)
-                    })();`
-                }}
-            />
-            
             <Herobanner
                 bannerimage="/images/projects/banner/masterclass-banner.png"
                 heading="Masterclass Membership"

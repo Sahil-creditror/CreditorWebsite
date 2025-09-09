@@ -5,6 +5,7 @@ import BusinessCardsGrid from "@/app/components/operate/business";
 import Appointment from "@/app/components/operate/Appointment";
 import Contact from "@/app/components/shared/cta";
 import Pricing from "@/app/components/shared/plan";
+import Script from "next/script";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -15,19 +16,39 @@ export const metadata: Metadata = {
 export default function Page() {
     const operate = getAllProjects();
     return (
-        <main>
-            <HeroBanner
-                bannerimage="/images/courses/become/junior.webp"
-                heading="Operate Private"
-                desc="Build <span> Wealth & Privacy Through </span> Private Business Structures"
-                // buttonPath="/course-tnc"
+        <>
+            <Script
+                id="affiliate-manager"
+                strategy="afterInteractive"
+                dangerouslySetInnerHTML={{
+                    __html: `(function() {
+      var t = document.createElement("script");
+      t.type = "text/javascript", t.async = !0, t.src = 'https://link.msgsndr.com/js/am.js', t.onload = t.onreadystatechange = function() {
+          var t = this.readyState;
+          if (!t || "complete" == t || "loaded" == t) try {
+            affiliateManager.init('psaD1vtsVB3b1PyW2P6i', 'https://backend.leadconnectorhq.com', '.www.creditoracademy.com')
+          } catch (t) {}
+      };
+      var e = document.getElementsByTagName("script")[0];
+      e.parentNode.insertBefore(t, e)
+  })();`,
+                }}
             />
-            <Intro2 />
-            <Pricing />
-            <BecomeIntro />
-            <Appointment />
-            <BusinessCardsGrid />
-            <Contact />
-        </main>
+        
+            <main>
+                <HeroBanner
+                    bannerimage="/images/courses/become/junior.webp"
+                    heading="Operate Private"
+                    desc="Build <span> Wealth & Privacy Through </span> Private Business Structures"
+                    // buttonPath="/course-tnc"
+                />
+                <Intro2 />
+                <Pricing />
+                <BecomeIntro />
+                <Appointment />
+                <BusinessCardsGrid />
+                <Contact />
+            </main>
+        </>
     ); 
 }

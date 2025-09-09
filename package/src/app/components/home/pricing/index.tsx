@@ -73,10 +73,10 @@ function Pricing() {
 
               <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-7">
                 {isLoading && Array.from({ length: 3 }).map((_, idx) => (
-                  <div key={`skeleton-${idx}`} className="bg-white dark:bg-lightgray/10 overflow-hidden rounded-lg shadow-lg">
+                  <div key={`skeleton-${idx}`} className="bg-white dark:bg-lightgray/10 overflow-hidden rounded-lg shadow-lg flex flex-col">
                     <div className="relative h-64 w-full bg-black/10 dark:bg-white/10 animate-pulse" />
-                    <div className="p-3 sm:p-5 xl:p-12 flex flex-col gap-10">
-                      <div className="pt-10 border-t border-secondary/12 dark:border-white/12">
+                    <div className="p-3 sm:p-5 xl:p-12 flex flex-col gap-10 flex-1">
+                      <div className="pt-10 border-t border-secondary/12 dark:border-white/12 flex-1">
                         <div className="h-5 w-40 bg-black/10 dark:bg-white/10 rounded mb-4 animate-pulse" />
                         <ul className="flex flex-col gap-3">
                           {Array.from({ length: 4 }).map((__, li) => (
@@ -106,7 +106,7 @@ function Pricing() {
                   const coverImage = value.coverImage || defaultCoverImages[index % defaultCoverImages.length] || defaultCoverImages[0];
 
                   return (
-                    <div key={value.planName ? `${value.planName}-${index}` : index} className="bg-white dark:bg-lightgray/10 overflow-hidden rounded-lg shadow-lg relative">
+                    <div key={value.planName ? `${value.planName}-${index}` : index} className="bg-white dark:bg-lightgray/10 overflow-hidden rounded-lg shadow-lg relative flex flex-col">
                       {/* Cover Image Section */}
                       <div className="relative h-64 w-full">
                         <Image
@@ -154,8 +154,8 @@ function Pricing() {
                       </div>
 
                       {/* Card Content */}
-                      <div className="p-3 sm:p-5 xl:p-12 flex flex-col gap-10">
-                        <div className="pt-10 border-t border-secondary/12 dark:border-white/12">
+                      <div className="p-3 sm:p-5 xl:p-12 flex flex-col gap-10 flex-1">
+                        <div className="pt-10 border-t border-secondary/12 dark:border-white/12 flex-1">
                           <p className="text-base pb-5">What's Included:</p>
                           <ul className="flex flex-col gap-3">
                             {(value?.planIncludes ?? []).map((item: string, itemIndex: number) => (

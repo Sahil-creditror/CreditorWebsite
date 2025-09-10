@@ -29,7 +29,7 @@ function Pricing() {
   ];
 
   return (
-    <section className="relative overflow-hidden py-30 md:py-20">
+    <section className="relative overflow-hidden py-30 md:py-44">
       {/* Animated decorative background (behind everything) */}
       <div className="absolute inset-0 -z-20 pointer-events-none">
         {/* Subtle base gradient */}
@@ -118,7 +118,7 @@ function Pricing() {
                   <div className="relative h-72 w-full overflow-hidden rounded-t-3xl flex-shrink-0">
                     <Image
                       src={coverImage}
-                      alt={`${value?.planName} cover`}
+                      alt={`${value.planName} cover`}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
                     />
@@ -172,7 +172,7 @@ function Pricing() {
                       className="mt-4"
                     >
                       <a
-                        href={value?.payLink || "#"}
+                        href={value?.paylink || "#"}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="relative inline-flex justify-center items-center w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white font-bold py-4 rounded-full shadow-lg transition-all duration-300"

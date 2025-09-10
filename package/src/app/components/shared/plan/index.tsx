@@ -171,14 +171,19 @@ export default function Pricing() {
                     <div className="flex items-center gap-2">
                       {plan.id === "masterclass" ? (
                         <>
-                          <span className={`text-3xl font-extrabold ${plan.featured ? "text-white" : "text-blue-700 dark:text-blue-400"}`}>
-                            {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(
-                              isYearly ? (plan as any).priceYearly : (plan as any).priceMonthly
-                            )}
-                          </span>
-                          <span className={`text-sm ${plan.featured ? "text-blue-100/90" : "text-black dark:text-white"}`}>
-                            {isYearly ? (plan as any).cadenceYearly : (plan as any).cadenceMonthly}
-                          </span>
+                          <div className="flex flex-col items-end">
+                            <div className="flex items-center gap-2">
+                              <span className={`text-lg font-bold line-through ${plan.featured ? "text-white/60" : "text-slate-400 dark:text-slate-500"}`}>
+                                $147
+                              </span>
+                              <span className={`text-3xl font-extrabold ${plan.featured ? "text-white" : "text-blue-700 dark:text-blue-400"}`}>
+                                $69
+                              </span>
+                            </div>
+                            <span className={`text-sm ${plan.featured ? "text-blue-100/90" : "text-black dark:text-white"}`}>
+                              /month
+                            </span>
+                          </div>
                         </>
                       ) : (
                         <>

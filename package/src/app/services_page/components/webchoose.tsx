@@ -135,7 +135,7 @@ export default function WhyChooseUs({
               — same quality, tailored to your goals.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            {/* <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href={ctaHref}
                 className="inline-flex items-center gap-3 rounded-full bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-transform transform hover:-translate-y-0.5"
@@ -171,7 +171,7 @@ export default function WhyChooseUs({
               >
                 {secondaryText}
               </a>
-            </div>
+            </div> */}
 
             <div className="mt-6 flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
               <span className="inline-flex items-center gap-2">
@@ -285,14 +285,14 @@ export default function WhyChooseUs({
               </svg>
             </div>
 
-            <div>
+            {/* <div>
               <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                 Trusted by teams worldwide
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 Fintechs, marketplaces, and agencies.
               </p>
-            </div>
+            </div> */}
           </div>
 
           {/* <div className="flex items-center gap-6">

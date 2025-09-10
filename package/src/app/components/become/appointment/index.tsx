@@ -8,7 +8,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative h-[60vh] flex items-center justify-center text-center bg-fixed bg-cover bg-center"
+      className="relative min-h-[60vh] flex items-center justify-center text-center bg-fixed bg-cover bg-center py-8 sm:py-12 md:py-16 lg:py-20"
       style={{
         backgroundImage: "url('/images/masterclass/consult.jpg')", // Replace with your Creditor Academy image
       }}
@@ -45,16 +45,16 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 1 }}
-          className="italic text-lg text-gray-200 mb-3"
+          className="italic text-base sm:text-lg text-gray-200 mb-3"
         >
-          “Secure Your Freedom.”
+          "Secure Your Freedom."
         </motion.p>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
-          className="text-gray-300 mb-8"
+          className="text-sm sm:text-base text-gray-300 mb-6 sm:mb-8"
         >
           Go step-by-step through every lawful declaration, filing, and notarization to correct your status and secure your estate.
         </motion.p>
@@ -64,7 +64,7 @@ export default function HeroSection() {
           href="https://lmsathena.com/login"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold shadow-lg transition-transform duration-300 hover:shadow-xl"
+          className="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-white text-sm sm:text-base font-semibold shadow-lg transition-transform duration-300 hover:shadow-xl"
         >
           Free SIgnup Now <FaArrowRight />
         </motion.a>

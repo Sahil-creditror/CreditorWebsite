@@ -8,6 +8,7 @@ import Table from "../components/fetaure";
 import WhyChoose from "../components/webchoose";
 import Appointment from "../components/appointment";
 import WebsiteUpperSection from "../components/webintro";
+import Template from "../components/template";
 
 // ------------------------
 // Dummy content for Carousel
@@ -125,6 +126,7 @@ export function Website() {
         starterPrototypeLink="https://digi-market-simple.vercel.app/" 
         cadillacPrototypeLink="https://rhythmic-vibe.vercel.app/"
       />
+      <Template />
       <WhyChoose />
     </>
   );

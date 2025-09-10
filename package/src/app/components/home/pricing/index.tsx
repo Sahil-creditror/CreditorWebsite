@@ -207,7 +207,7 @@ function Pricing() {
             </div>
 
             <div className="flex flex-col gap-10">
-              <p className="text-secondary dark:text-white text-center">More than 1000+ trusted Learners</p>
+              <p className="text-secondary dark:text-white text-center">More than 100+ trusted Learners</p>
               {(pricingData?.partnerLogo?.length ?? 0) > 0 ? (
                 <Slider duration={20} pauseOnHover={true} blurBorders={false}>
                   {(pricingData?.partnerLogo ?? []).map((items: PartnerLogoItem, index: number) => (

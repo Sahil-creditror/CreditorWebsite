@@ -26,7 +26,7 @@ export default function Page() {
             <Pricing />
             <BecomeIntro />
             <Appointment />
-            <BusinessCardsGrid />
+            {/* <BusinessCardsGrid /> */}
             <Contact />
         </main>
     ); 

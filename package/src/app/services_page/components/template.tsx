@@ -68,7 +68,7 @@ export default function WebsiteCreationSection() {
         {/* Heading */}
         <div className="max-w-3xl mx-auto text-center mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-slate-900 dark:text-slate-100">
-            Beautiful websites that convert — tailored for your industry
+            Amazingly websites that convert — tailored for your industry
           </h2>
           <p className="mt-4 text-slate-600 dark:text-slate-300 text-base sm:text-lg">
             Choose a starter layout to launch fast, or go premium with our Cadillac Template — each service card
@@ -119,21 +119,50 @@ export default function WebsiteCreationSection() {
                 </div>
 
                 <div className="flex gap-3 items-center">
-                  <Link
-                    href={`/templates/starter/${s.id}`}
-                    className="inline-flex items-center gap-2 rounded-full px-4 py-2 bg-white/90 text-slate-900 text-sm font-medium shadow hover:scale-105 transform transition-transform duration-200"
-                    aria-label={`View Starter Template for ${s.title}`}
-                  >
-                    View Starter Template
-                  </Link>
+                  {s.id !== "e-commerce" && (
+                    <Link
+                      href={
+                        s.id === "digital-marketing"
+                          ? "https://rccreditor.github.io/DigiMarketSimple/"
+                          : s.id === "music-studio"
+                          ? "https://ankitcreditor.github.io/EchoVerse/"
+                          : s.id === "health-care"
+                          ? "https://prernacreditor.github.io/Healthcare/"
+                          : s.id === "real-estate"
+                          ? "https://prernacreditor.github.io/Real-estate-new/"
+                          : s.id === "business-consulting"
+                          ? "https://ankitcreditor.github.io/ConsultXpert/"
+                          : `/templates/starter/${s.id}`
+                      }
+                      className="inline-flex items-center gap-2 rounded-full px-4 py-2 bg-white/90 text-slate-900 text-sm font-medium shadow hover:scale-105 transform transition-transform duration-200"
+                      aria-label={`View Starter Template for ${s.title}`}
+                    >
+                      View Starter Template
+                    </Link>
+                  )}
 
                   <Link
-                    href={`/templates/cadillac/${s.id}`}
+                    href={
+                      s.id === "digital-marketing"
+                        ? "https://digital99-nloo.vercel.app/"
+                        : s.id === "music-studio"
+                        ? "https://princliv.github.io/RhythmicVibe/"
+                        : s.id === "health-care"
+                        ? "https://healthtemplate-1-93zk.vercel.app/"
+                        : s.id === "real-estate"
+                        ? "https://prernacreditor.github.io/Real-Estate/"
+                        : s.id === "business-consulting"
+                        ? "https://prernamishra29.github.io/Illuminant/"
+                        : s.id === "e-commerce"
+                        ? "https://prernacreditor.github.io/E_Commerce"
+                        : `/templates/cadillac/${s.id}`
+                    }
                     className="inline-flex items-center gap-2 rounded-full px-4 py-2 border border-white/40 text-white text-sm font-semibold backdrop-blur-sm hover:scale-105 transform transition-transform duration-200"
                     aria-label={`View Cadillac Template for ${s.title}`}
                   >
                     View Cadillac Template
                   </Link>
+                  
                 </div>
               </div>
 

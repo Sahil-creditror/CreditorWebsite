@@ -58,7 +58,7 @@ export function HeroSectionOne() {
           Elevate your brand with a stunning, high-performance website designed for success.
         </motion.p>
 
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 1 }}
@@ -70,7 +70,7 @@ export function HeroSectionOne() {
           <button className="w-60 transform rounded-lg border border-gray-300 bg-white/90 px-6 py-2 font-medium text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100/90">
             Contact Support
           </button>
-        </motion.div>
+        </motion.div> */}
 
         <motion.div
           initial={{ opacity: 0, y: 10 }}

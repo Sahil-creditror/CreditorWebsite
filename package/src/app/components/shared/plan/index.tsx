@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import { FiCheck, FiStar } from "react-icons/fi";
+import { FiCheck, FiStar, FiUsers, FiBookOpen, FiGift, FiCreditCard, FiMessageCircle, FiBook, FiPercent, FiCalendar, FiFileText, FiAward, FiHeadphones, FiShield, FiSettings, FiTrendingUp } from "react-icons/fi";
 
 const plans = [
   {
@@ -15,13 +15,17 @@ const plans = [
     priceYearly: Math.round(69 * 12 * 0.8), // 20% off yearly
     cadenceMonthly: "/month",
     cadenceYearly: "/year",
-    short: "Ongoing training for credit repair professionals",
-    badge: "Popular",
+    short: "🚀 Start Your Journey into the Private - Gain the tools, mentorship, and community to start operating privately today.",
+    badge: "Limited-Time",
     features: [
-      "Weekly live masterclasses on dispute strategies & compliance",
-      "Community access to peer support & case clinics",
-      "Templates: dispute letters, scripts & SOPs",
-      "Certificate from Creditors Academy",
+      { text: "Live Classes, Monday–Friday", icon: FiCalendar },
+      { text: "Step-by-Step Private Plan", icon: FiFileText },
+      { text: "Connect with a Like-Minded Community", icon: FiUsers },
+      { text: "Access to Intro Lessons Across All Premium Courses", icon: FiBookOpen },
+      { text: "Pay-As-You-Go Flexibility", icon: FiCreditCard },
+      { text: "Private Community Groups", icon: FiMessageCircle },
+      { text: "Starter Library", icon: FiBook },
+      { text: "Member Discounts", icon: FiPercent },
     ],
     cta: "Join Masterclass",
     featured: false,
@@ -34,10 +38,10 @@ const plans = [
     short: "15 modules · Lifetime access · Creditors-focused",
     badge: "Best value",
     features: [
-      "15 comprehensive modules: consumer law, disputes, negotiations",
-      "Downloadable resources, sample letters & checklists",
-      "Case studies and replayable lesson recordings",
-      "1:1 onboarding review session (first 30 days)",
+      { text: "15 comprehensive modules: consumer law, disputes, negotiations", icon: FiBookOpen },
+      { text: "Downloadable resources, sample letters & checklists", icon: FiFileText },
+      { text: "Case studies and replayable lesson recordings", icon: FiHeadphones },
+      { text: "1:1 onboarding review session (first 30 days)", icon: FiUsers },
     ],
     cta: "Buy Bundle",
     featured: true,
@@ -50,10 +54,10 @@ const plans = [
     short: "Team training, compliance & onboarding",
     badge: "Enterprise",
     features: [
-      "Unlimited seats, team onboarding & training roadmaps",
-      "Dedicated account manager for implementation",
-      "SLA & priority support for large practices",
-      "Custom integrations, reporting and agency workflows",
+      { text: "Unlimited seats, team onboarding & training roadmaps", icon: FiUsers },
+      { text: "Dedicated account manager for implementation", icon: FiAward },
+      { text: "SLA & priority support for large practices", icon: FiShield },
+      { text: "Custom integrations, reporting and agency workflows", icon: FiSettings },
     ],
     cta: "Purchase Now",
     featured: false,
@@ -172,20 +176,20 @@ export default function Pricing() {
                               isYearly ? (plan as any).priceYearly : (plan as any).priceMonthly
                             )}
                           </span>
-                          <span className={`text-sm ${plan.featured ? "text-blue-100/90" : "text-slate-500 dark:text-slate-400"}`}>
+                          <span className={`text-sm ${plan.featured ? "text-blue-100/90" : "text-black dark:text-white"}`}>
                             {isYearly ? (plan as any).cadenceYearly : (plan as any).cadenceMonthly}
                           </span>
                         </>
                       ) : (
                         <>
                           <span className={`text-3xl font-extrabold ${plan.featured ? "text-white" : "text-blue-700 dark:text-blue-400"}`}>{(plan as any).price}</span>
-                          <span className={`text-sm ${plan.featured ? "text-blue-100/90" : "text-slate-500 dark:text-slate-400"}`}>{(plan as any).cadence}</span>
+                          <span className={`text-sm ${plan.featured ? "text-blue-100/90" : "text-black dark:text-white"}`}>{(plan as any).cadence}</span>
                         </>
                       )}
                     </div>
                     {plan.badge && (
-                      <span className={`mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs ${plan.featured ? "bg-white/12 text-white" : "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"}`}>
-                        <FiStar className={`${plan.featured ? "text-white" : "text-blue-600 dark:text-blue-400"}`} /> {plan.badge}
+                      <span className={`mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs whitespace-nowrap ${plan.featured ? "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300" : "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300"}`}>
+                        <FiStar className={`text-green-600 dark:text-green-400 w-4 h-4 flex-shrink-0`} /> {plan.badge}
                       </span>
                     )}
                   </div>
@@ -193,14 +197,17 @@ export default function Pricing() {
 
                 <div className="mt-6">
                   <ul className="space-y-3">
-                    {plan.features.map((f) => (
-                      <li key={f} className="flex items-start gap-3">
-                        <span className={`${plan.featured ? "text-blue-200" : "text-blue-600 dark:text-blue-400 mt-1"}`}>
-                          <FiCheck />
-                        </span>
-                        <span className={`${plan.featured ? "text-blue-50" : "text-black dark:text-white text-sm"}`}>{f}</span>
-                      </li>
-                    ))}
+                    {plan.features.map((feature, index) => {
+                      const IconComponent = feature.icon;
+                      return (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className={`${plan.featured ? "text-blue-200" : "text-blue-600 dark:text-blue-400 mt-1"}`}>
+                            <IconComponent className="w-4 h-4 flex-shrink-0" />
+                          </span>
+                          <span className={`${plan.featured ? "text-blue-50" : "text-black dark:text-white text-sm"}`}>{feature.text}</span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               </div>
@@ -231,17 +238,46 @@ export default function Pricing() {
                     ? "Custom contracts, billing and onboarding for teams."
                     : plan.id === "bundle"
                     ? "One-time purchase — lifetime access to Creditors Academy recorded lessons."
+                    : plan.id === "masterclass"
+                    ? "⚠️ WARNING: The price will increase to $147/month soon. Join now to lock in your $69/month rate forever — and cancel anytime."
                     : isYearly
                     ? "Billed annually. Cancel anytime before renewal."
                     : "Cancel anytime. Access renews monthly."}
                 </p>
               </div>
 
-              {/* Decorative absolute */}
-              <div className="pointer-events-none absolute -right-10 -top-10 opacity-10">
-                <svg width="220" height="220" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="3" />
-                </svg>
+              {/* Decorative curves and shapes */}
+              <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                {/* Main curved circle */}
+                <div className="absolute -right-10 -top-10 opacity-10">
+                  <svg width="220" height="220" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="3" />
+                  </svg>
+                </div>
+                
+                {/* Additional curved elements */}
+                <div className="absolute -left-8 -bottom-8 opacity-5">
+                  <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 20 Q50 5 80 20 Q95 50 80 80 Q50 95 20 80 Q5 50 20 20" stroke="currentColor" strokeWidth="2" fill="none" />
+                  </svg>
+                </div>
+                
+                {/* Small curved accent */}
+                <div className="absolute top-4 right-4 opacity-8">
+                  <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 10 Q30 5 50 10 Q70 15 90 10" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                  </svg>
+                </div>
+                
+                {/* Bottom curve accent */}
+                <div className="absolute bottom-4 left-4 opacity-6">
+                  <svg width="60" height="30" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 25 Q25 10 50 25 Q75 40 100 25" stroke="currentColor" strokeWidth="1" fill="none" />
+                  </svg>
+                </div>
+                
+                {/* Gradient overlay for depth */}
+                <div className={`absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-${plan.featured ? 'white/5' : 'blue-500/5'} dark:to-${plan.featured ? 'white/5' : 'blue-400/5'}`} />
               </div>
             </motion.div>
           ))}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { motion, Variants, Transition } from "framer-motion";
 import Link from "next/link";
 import { gsap } from "gsap";
@@ -11,7 +11,6 @@ import {
   Sprout,
   Sparkles,
   CalendarClock,
-  PlayCircle,
   FileCheck,
   Users,
 } from "lucide-react";
@@ -69,8 +68,6 @@ export default function MasterclassOverview({
 }: MasterclassOverviewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rippleRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLDivElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const titleWords = title.split(" ");
 
   // --- GSAP ripple + blob animation ---
@@ -139,29 +136,7 @@ export default function MasterclassOverview({
     return () => mm.revert();
   }, []);
 
-  // Play button animation
-  const handlePlay = () => {
-    setIsPlaying(true);
-    if (videoRef.current) {
-      gsap.to(videoRef.current, {
-        scale: 1.02,
-        boxShadow: "0 25px 50px -12px rgba(79, 70, 229, 0.4)",
-        duration: 0.5
-      });
-      
-      // Simulate video playing (in a real app, this would trigger actual video playback)
-      setTimeout(() => {
-        setIsPlaying(false);
-        if (videoRef.current) {
-          gsap.to(videoRef.current, {
-            scale: 1,
-            boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-            duration: 0.5
-          });
-        }
-      }, 3000);
-    }
-  };
+  // --- Video placeholder removed; embedding Google Drive preview directly ---
 
   // --- Framer Motion Variants ---
   const containerVariants: Variants = {
@@ -263,65 +238,18 @@ export default function MasterclassOverview({
         <div aria-hidden className="absolute top-1/4 -left-20 w-64 h-64 rounded-full blob bg-gradient-to-br from-blue-300/15 to-cyan-300/10 dark:from-blue-700/15 dark:to-cyan-600/10 mix-blend-screen blur-2xl transform-gpu" />
 
         <div className="flex flex-wrap gap-10 items-center relative z-10">
-          {/* Enhanced Video Preview */}
-          <motion.div 
-            ref={videoRef}
-            whileHover={{ scale: 1.01 }} 
-            className="flex-1 min-w-[18rem] max-w-3xl relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer"
-            onClick={handlePlay}
-          >
-            <div className="w-full aspect-video rounded-2xl relative overflow-hidden bg-gradient-to-br from-blue-900 to-indigo-900 flex items-center justify-center text-white">
-              <motion.div 
-                initial={{ opacity: 0.15 }} 
-                whileHover={{ opacity: 0.3 }} 
-                transition={{ duration: 0.45 }} 
-                className="absolute inset-0 mix-blend-overlay" 
-                style={{ background: 'linear-gradient(45deg, rgba(79,70,229,0.18), rgba(99,102,241,0.12))' }} 
+          {/* Embedded Video Preview (Google Drive) */}
+          <div className="flex-1 min-w-[18rem] max-w-3xl relative rounded-2xl overflow-hidden shadow-2xl">
+            <div className="w-full aspect-video">
+              <iframe
+                src="https://drive.google.com/file/d/1JDzWkLSFtHMuuRceyogbfCTdM3o2NgJp/preview"
+                className="w-full h-full"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                title="Course preview video"
               />
-
-              {!isPlaying ? (
-                <motion.button 
-                  whileTap={{ scale: 0.96 }} 
-                  whileHover={{ scale: 1.08 }} 
-                  aria-label="Play course preview" 
-                  className="relative z-10 flex flex-col items-center"
-                >
-                  <motion.div 
-                    initial={{ scale: 0.8, opacity: 0.7 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ 
-                      repeat: Infinity, 
-                      repeatType: "reverse", 
-                      duration: 1.5,
-                      ease: "easeOut"
-                    }}
-                    className="absolute w-24 h-24 bg-white/20 rounded-full"
-                  />
-                  <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center mb-4 border border-white/30 transition-all duration-300 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50">
-                    <PlayCircle className="h-8 w-8" />
-                  </div>
-                  <div className="text-center">
-                    <p className="text-lg font-semibold">Preview this course</p>
-                    <p className="text-sm opacity-80">2:34 min introduction</p>
-                  </div>
-                </motion.button>
-              ) : (
-                <div className="relative z-10 flex flex-col items-center">
-                  <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center mb-4 border border-white/30">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                      <rect x="6" y="6" width="4" height="12" fill="white" />
-                      <rect x="14" y="6" width="4" height="12" fill="white" />
-                    </svg>
-                  </div>
-                  <p className="text-lg font-semibold">Playing preview...</p>
-                </div>
-              )}
-
-              <div className="absolute w-48 h-48 bg-blue-500/20 rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0" />
-              <div className="absolute w-32 h-32 bg-indigo-400/15 rounded-full top-1/3 left-1/4 transform -translate-x-1/2 -translate-y-1/2 z-0" />
-              <div className="absolute w-40 h-40 bg-blue-400/10 rounded-full bottom-1/4 right-1/4 transform translate-x-1/2 translate-y-1/2 z-0" />
             </div>
-          </motion.div>
+          </div>
 
           {/* Enhanced Course Description */}
           <div className="flex-1 min-w-[18rem] p-5 relative z-10">

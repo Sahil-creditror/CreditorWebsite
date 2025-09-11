@@ -6,6 +6,7 @@ import LiveFeature from "../components/liveFeatures"
 import LiveClass from "../components/liveclass";
 import Stats from "@/app/components/home/stats-facts";
 import Sessions from "../components/sessions";
+import Event from "@/app/components/Event";
 
 
 
@@ -17,6 +18,7 @@ export function Liveclass() {
       <LiveClass />
       <Stats />
       <Sessions />
+      <Event />
     </>
   );
 }

@@ -231,13 +231,6 @@ export default function WhyChooseUs({
                             <CheckCircle className="w-3 h-3" aria-hidden />
                             Proven
                           </span>
-
-                          <a
-                            href="#"
-                            className="text-xs font-medium text-indigo-600 dark:text-indigo-300 hover:underline"
-                          >
-                            Learn more
-                          </a>
                         </div>
                       </div>
                     </div>

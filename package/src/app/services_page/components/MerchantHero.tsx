@@ -39,30 +39,6 @@ export default function MerchantHero({
           <p className="text-base md:text-lg text-white/85 mb-6">
             {subheading}
           </p>
-          {/* Added mb-4 so button floats a bit above bottom */}
-          <a
-            href={ctaHref}
-            className="inline-flex items-center bg-primary text-secondary hover:bg-secondary hover:text-white rounded-full font-bold px-6 py-3 transition-colors mb-4"
-          >
-            {ctaText}
-            <span className="ml-3 inline-flex w-8 h-8 items-center justify-center bg-white rounded-full">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M7 17L17 7M17 7H7M17 7V17"
-                  stroke="#1F2A2E"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-          </a>
         </div>
       </div>
     </section>

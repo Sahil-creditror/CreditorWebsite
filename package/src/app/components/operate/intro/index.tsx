@@ -69,7 +69,30 @@ export default function MasterclassOverview({
   const containerRef = useRef<HTMLDivElement>(null);
   const rippleRef = useRef<HTMLDivElement>(null);
   const titleWords = title.split(" ");
+  // Deterministic PRNG (mulberry32) to avoid SSR/client mismatches for particles
+  const mulberry32 = (seed: number) => {
+    let state = seed >>> 0;
+    return () => {
+      state |= 0;
+      state = (state + 0x6D2B79F5) | 0;
+      let t = Math.imul(state ^ (state >>> 15), 1 | state);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  };
 
+  // Precompute particle positions deterministically so SSR === CSR
+  const PARTICLE_POSITIONS = React.useMemo(() => {
+    const baseSeed = 0xC0FFEE; // fixed seed for stability
+    return Array.from({ length: 15 }, (_, i) => {
+      const rand = mulberry32(baseSeed + i * 97);
+      const leftPercent = `${rand() * 100}%`;
+      const topPercent = `${rand() * 100}%`;
+      return { left: leftPercent, top: topPercent } as const;
+    });
+  }, []);
+
+  
   // --- GSAP ripple + blob animation ---
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -218,16 +241,13 @@ export default function MasterclassOverview({
           <div className="ripple absolute left-1/3 bottom-1/3 w-88 h-88 rounded-full" style={{ background: 'radial-gradient(circle at 40% 60%, rgba(99,102,241,0.18), rgba(79,70,229,0.04) 40%, transparent 72%)' }} />
         </div>
 
-        {/* Floating particles */}
+        {/* Floating particles (deterministic positions to avoid SSR hydration mismatches) */}
         <div aria-hidden className="absolute inset-0 pointer-events-none">
-          {[...Array(15)].map((_, i) => (
+          {PARTICLE_POSITIONS.map((pos, i) => (
             <div
               key={i}
               className="particle absolute w-2 h-2 rounded-full bg-indigo-400/30 dark:bg-indigo-500/40"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
+              style={{ left: pos.left, top: pos.top }}
             />
           ))}
         </div>

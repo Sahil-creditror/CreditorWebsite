@@ -15,37 +15,37 @@ const SERVICES: ServiceCard[] = [
     id: "digital-marketing",
     title: "Digital Marketing",
     image: "/images/services/template/digital.jpg",
-    gradient: "from-[#6EE7B7]/60 via-[#3B82F6]/40 to-[#9333EA]/40",
+    gradient: "from-slate-800/80 via-slate-700/70 to-slate-900/80",
   },
   {
     id: "music-studio",
     title: "Music & Studio",
     image: "/images/services/template/music.jpg",
-    gradient: "from-[#FDBA74]/50 via-[#FB7185]/40 to-[#A78BFA]/40",
+    gradient: "from-gray-800/80 via-gray-700/70 to-gray-900/80",
   },
   {
     id: "health-care",
     title: "Health Care",
     image: "/images/services/template/health.jpg",
-    gradient: "from-[#A7F3D0]/50 via-[#FDE68A]/40 to-[#60A5FA]/30",
+    gradient: "from-zinc-800/80 via-zinc-700/70 to-zinc-900/80",
   },
   {
     id: "real-estate",
     title: "Real Estate",
     image: "/images/services/template/estate.jpg",
-    gradient: "from-[#FFD6A5]/50 via-[#FF7EB6]/40 to-[#7C3AED]/30",
+    gradient: "from-neutral-800/80 via-neutral-700/70 to-neutral-900/80",
   },
   {
     id: "business-consulting",
     title: "Business Consulting",
     image: "/images/services/template/business.jpg",
-    gradient: "from-[#C4B5FD]/50 via-[#93C5FD]/40 to-[#FCA5A5]/30",
+    gradient: "from-stone-800/80 via-stone-700/70 to-stone-900/80",
   },
   {
     id: "e-commerce",
     title: "E‑Commerce",
     image: "/images/services/template/ecommerce.jpg",
-    gradient: "from-[#A7F3D0]/50 via-[#34D399]/40 to-[#60A5FA]/30",
+    gradient: "from-slate-900/80 via-gray-800/70 to-slate-800/80",
   },
 ];
 
@@ -59,6 +59,19 @@ const containerVariants = {
 const cardVariants = {
   hidden: { opacity: 0, y: 20, scale: 0.98 },
   visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: easeOut } },
+};
+
+// Inner content animations: slide up items when card becomes visible
+const contentContainerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+  },
+};
+
+const contentItemVariants = {
+  hidden: { opacity: 0, y: 22 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: easeOut } },
 };
 
 export default function WebsiteCreationSection() {
@@ -101,24 +114,28 @@ export default function WebsiteCreationSection() {
                   priority={false}
                 />
 
-                {/* Gradient overlay */}
+                {/* Simple gradient overlay */}
                 <div
                   aria-hidden
-                  className={`absolute inset-0 bg-gradient-to-tr ${s.gradient} mix-blend-multiply`}
+                  className={`absolute inset-0 bg-gradient-to-tr ${s.gradient} opacity-80`}
                 />
 
-                {/* Soft glass layer for contrast */}
-                <div className="absolute inset-0 bg-black/25 backdrop-blur-sm" />
               </div>
 
               {/* Card content */}
-              <div className="relative p-6 sm:p-8 h-56 flex flex-col justify-between">
-                <div>
+              <motion.div
+                variants={contentContainerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                className="relative p-6 sm:p-8 h-56 flex flex-col justify-between"
+              >
+                <motion.div variants={contentItemVariants}>
                   <h3 className="text-xl sm:text-2xl font-semibold text-white drop-shadow-lg">{s.title}</h3>
                   <p className="mt-2 text-sm text-white/90 max-w-prose drop-shadow">Designed for {s.title.toLowerCase()} businesses — modern layout, speed optimized, and easy to edit.</p>
-                </div>
+                </motion.div>
 
-                <div className="flex gap-3 items-center">
+                <motion.div variants={contentItemVariants} className="flex gap-3 items-center">
                   {s.id !== "e-commerce" && (
                     <Link
                       href={
@@ -163,8 +180,8 @@ export default function WebsiteCreationSection() {
                     View Cadillac Template
                   </Link>
                   
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
               {/* Hover accent */}
               <div className="absolute -bottom-8 right-6 w-28 h-28 rounded-full bg-white/10 blur-2xl opacity-0 transform rotate-12 transition-all duration-500 pointer-events-none group-hover:opacity-100"></div>

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import { FiCheck, FiStar, FiUsers, FiBookOpen, FiGift, FiCreditCard, FiMessageCircle, FiBook, FiPercent, FiCalendar, FiFileText, FiAward, FiHeadphones, FiShield, FiSettings, FiTrendingUp } from "react-icons/fi";
+import { FiCheck, FiStar, FiUsers, FiBookOpen, FiGift, FiCreditCard, FiMessageCircle, FiBook, FiPercent, FiCalendar, FiFileText, FiAward, FiHeadphones, FiShield, FiSettings, FiTrendingUp, FiAlertTriangle } from "react-icons/fi";
 
 const plans = [
   {
@@ -38,10 +38,11 @@ const plans = [
     short: "15 modules · Lifetime access · Creditors-focused",
     badge: "Best value",
     features: [
-      { text: "15 comprehensive modules: consumer law, disputes, negotiations", icon: FiBookOpen },
-      { text: "Downloadable resources, sample letters & checklists", icon: FiFileText },
-      { text: "Case studies and replayable lesson recordings", icon: FiHeadphones },
-      { text: "1:1 onboarding review session (first 30 days)", icon: FiUsers },
+      { text: "Receive 500 credits to spend on any premium course", icon: FiGift },
+      { text: "Unlocks 15 premium courses & 15 live instructor lectures (500 credits)", icon: FiBookOpen },
+      { text: "Bonus Value — 100 bonus credits added to your account", icon: FiPercent },
+      { text: "Masterclass Access — 1 month of Masterclass included (live classes + community)", icon: FiCalendar },
+      { text: "Exclusive Community — Unlock 1 exclusive Private Group for advanced discussions", icon: FiUsers },
     ],
     cta: "Buy Bundle",
     featured: true,
@@ -206,10 +207,10 @@ export default function Pricing() {
                       const IconComponent = feature.icon;
                       return (
                         <li key={index} className="flex items-start gap-3">
-                          <span className={`${plan.featured ? "text-blue-200" : "text-blue-600 dark:text-blue-400 mt-1"}`}>
-                            <IconComponent className="w-4 h-4 flex-shrink-0" />
+                          <span className={`${plan.featured ? "text-blue-200" : "text-blue-600 dark:text-blue-400"} flex-shrink-0 mt-0.5`}>
+                            <IconComponent className="w-4 h-4" />
                           </span>
-                          <span className={`${plan.featured ? "text-blue-50" : "text-black dark:text-white text-sm"}`}>{feature.text}</span>
+                          <span className={`${plan.featured ? "text-blue-50" : "text-black dark:text-white text-sm"} leading-relaxed`}>{feature.text}</span>
                         </li>
                       );
                     })}
@@ -244,7 +245,12 @@ export default function Pricing() {
                     : plan.id === "bundle"
                     ? "One-time purchase — lifetime access to Creditors Academy recorded lessons."
                     : plan.id === "masterclass"
-                    ? "⚠️ WARNING: The price will increase to $147/month soon. Join now to lock in your $69/month rate forever — and cancel anytime."
+                    ? (
+                        <span className="flex items-center gap-2">
+                          <FiAlertTriangle className="w-6 h-6 text-amber-500 flex-shrink-0" />
+                          <span>WARNING: The price will increase to $147/month soon. Join now to lock in your $69/month rate forever — and cancel anytime.</span>
+                        </span>
+                      )
                     : isYearly
                     ? "Billed annually. Cancel anytime before renewal."
                     : "Cancel anytime. Access renews monthly."}

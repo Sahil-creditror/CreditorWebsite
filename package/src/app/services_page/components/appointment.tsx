@@ -8,7 +8,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative h-[60vh] flex items-center justify-center text-center bg-fixed bg-cover bg-center"
+      className="relative min-h-[60vh] flex items-center justify-center text-center bg-fixed bg-cover bg-center overflow-hidden py-16"
       style={{
         backgroundImage: "url('/images/masterclass/consult.jpg')", // Replace with your Creditor Academy image
       }}
@@ -21,7 +21,7 @@ export default function HeroSection() {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className="relative z-10 max-w-3xl mx-auto px-6"
+        className="relative z-10 max-w-3xl mx-auto px-6 w-full h-full flex flex-col items-center justify-center"
       >
         <motion.p
           initial={{ opacity: 0 }}

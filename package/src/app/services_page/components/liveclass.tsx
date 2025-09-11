@@ -130,6 +130,10 @@ export default function LiveJoinHero({
 
   // ---------- stable particles (seeded RNG to avoid hydration mismatch) ----------
   const particles = useMemo(() => {
+    // Reduce particle count on mobile for better performance
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const particleCount = isMobile ? 8 : 15;
+    
     const createRng = (seed: number) => {
       let t = seed >>> 0;
       return () => {
@@ -140,14 +144,14 @@ export default function LiveJoinHero({
       };
     };
 
-    return Array.from({ length: 15 }, (_, i) => {
+    return Array.from({ length: particleCount }, (_, i) => {
       const rng = createRng(1337 + i * 1013904223);
       const top = rng() * 100;
       const left = rng() * 100;
-      const width = rng() * 10 + 2;
-      const height = rng() * 10 + 2;
-      const dx = rng() * 20 - 10;
-      const duration = rng() * 10 + 10;
+      const width = rng() * (isMobile ? 6 : 10) + 2;
+      const height = rng() * (isMobile ? 6 : 10) + 2;
+      const dx = rng() * (isMobile ? 10 : 20) - (isMobile ? 5 : 10);
+      const duration = rng() * (isMobile ? 8 : 10) + (isMobile ? 8 : 10);
       const delay = rng() * 5;
       return { top, left, width, height, dx, duration, delay };
     });
@@ -155,19 +159,19 @@ export default function LiveJoinHero({
 
   return (
     <section
-      className={`relative overflow-hidden bg-fixed bg-center bg-cover ${className}`}
+      className={`relative overflow-hidden bg-cover bg-center sm:bg-fixed ${className}`}
       style={{ backgroundImage: `url(${backgroundImage})` }}
       aria-label="Live classes hero"
     >
-      {/* Reduced overlay for visibility */}
-      <div className="absolute inset-0 bg-black/25" />
+      {/* Responsive overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/20 sm:bg-black/25" />
 
-      {/* Floating particles */}
+      {/* Floating particles - responsive */}
       <div className="absolute inset-0 overflow-hidden">
         {particles.map((p, i) => (
           <motion.div
             key={i}
-            className="absolute rounded-full bg-white/10"
+            className="absolute rounded-full bg-white/10 hidden sm:block"
             style={{
               top: `${p.top}%`,
               left: `${p.left}%`,
@@ -186,16 +190,40 @@ export default function LiveJoinHero({
             }}
           />
         ))}
+        {/* Simplified particles for mobile */}
+        <div className="absolute inset-0 sm:hidden">
+          {particles.slice(0, 3).map((p, i) => (
+            <motion.div
+              key={`mobile-${i}`}
+              className="absolute rounded-full bg-white/5"
+              style={{
+                top: `${p.top}%`,
+                left: `${p.left}%`,
+                width: `${Math.max(p.width, 4)}px`,
+                height: `${Math.max(p.height, 4)}px`,
+              }}
+              animate={{
+                y: [0, -10, 0],
+                opacity: [0, 0.3, 0],
+              }}
+              transition={{
+                duration: p.duration * 1.5,
+                repeat: Infinity,
+                delay: p.delay,
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Content */}
       <motion.div
         style={{ y: prefersReducedMotion ? 0 : y, willChange: "transform" }}
-        className="relative z-10 min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center"
+        className="relative z-10 min-h-[50vh] sm:min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center"
       >
-        <div className="container mx-auto px-6 text-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-7xl">
           <motion.h1
-            className="text-6xl sm:text-7xl lg:text-8xl font-extrabold text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]"
+            className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)] leading-tight"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.5 }}
@@ -204,7 +232,7 @@ export default function LiveJoinHero({
           </motion.h1>
 
           <motion.p
-            className="mt-4 text-xl sm:text-2xl text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]"
+            className="mt-3 sm:mt-4 md:mt-6 text-base sm:text-lg md:text-xl lg:text-2xl text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)] max-w-4xl mx-auto leading-relaxed px-2"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
@@ -214,22 +242,22 @@ export default function LiveJoinHero({
           </motion.p>
 
           {/* CTA Button */}
-          <div className="mt-8 flex justify-center">
+          <div className="mt-6 sm:mt-8 md:mt-10 flex justify-center px-4">
             {isActive ? (
               <motion.a
                 href={todayLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative inline-flex items-center gap-3 rounded-xl px-8 py-4 font-semibold text-white focus:outline-none focus-visible:ring-4 focus-visible:ring-red-400"
+                className="group relative inline-flex items-center gap-2 sm:gap-3 rounded-lg sm:rounded-xl px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-4 text-sm sm:text-base md:text-lg font-semibold text-white focus:outline-none focus-visible:ring-4 focus-visible:ring-red-400 transition-all duration-200 hover:scale-105 active:scale-95"
                 onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
               >
                 {/* Gradient + glow */}
-                <span className="absolute inset-0 rounded-xl bg-gradient-to-b from-red-600 to-red-500 shadow-[0_0_25px_rgba(255,0,0,0.6)]"></span>
+                <span className="absolute inset-0 rounded-lg sm:rounded-xl bg-gradient-to-b from-red-600 to-red-500 shadow-[0_0_15px_rgba(255,0,0,0.4)] sm:shadow-[0_0_25px_rgba(255,0,0,0.6)]"></span>
 
                 {/* Hover shimmer */}
                 <motion.span
-                  className="absolute inset-0 rounded-xl opacity-0"
+                  className="absolute inset-0 rounded-lg sm:rounded-xl opacity-0"
                   animate={{ opacity: isHovering ? 0.25 : 0 }}
                   style={{
                     background:
@@ -238,40 +266,40 @@ export default function LiveJoinHero({
                   }}
                 />
 
-                <span className="relative flex items-center gap-3">
-                  <svg className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                <span className="relative flex items-center gap-2 sm:gap-3">
+                  <svg className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
                     <path d="M10 3v12l8-6-8-6z" />
                   </svg>
-                  Join Live now
+                  <span className="whitespace-nowrap">Join Live now</span>
                 </span>
 
                 {/* Outer glow */}
-                <span className="pointer-events-none absolute -inset-px rounded-xl ring-1 ring-white/20 group-hover:ring-white/30"></span>
+                <span className="pointer-events-none absolute -inset-px rounded-lg sm:rounded-xl ring-1 ring-white/20 group-hover:ring-white/30"></span>
               </motion.a>
             ) : (
               <motion.button
                 disabled
-                className="group relative inline-flex cursor-not-allowed items-center gap-3 rounded-xl px-8 py-4 font-semibold text-white/90"
+                className="group relative inline-flex cursor-not-allowed items-center gap-2 sm:gap-3 rounded-lg sm:rounded-xl px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-4 text-sm sm:text-base md:text-lg font-semibold text-white/90"
                 title={`Available ${humanMeetingLabel}`}
               >
-                <span className="absolute inset-0 rounded-xl bg-gradient-to-b from-red-600 to-red-500 shadow-[0_0_25px_rgba(255,0,0,0.4)]"></span>
-                <span className="relative flex items-center gap-3">
-                  <svg className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                <span className="absolute inset-0 rounded-lg sm:rounded-xl bg-gradient-to-b from-red-600 to-red-500 shadow-[0_0_15px_rgba(255,0,0,0.3)] sm:shadow-[0_0_25px_rgba(255,0,0,0.4)]"></span>
+                <span className="relative flex items-center gap-2 sm:gap-3">
+                  <svg className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
                     <path d="M10 3v12l8-6-8-6z" />
                   </svg>
-                  Join Live now
+                  <span className="whitespace-nowrap">Join Live now</span>
                 </span>
-                <span className="pointer-events-none absolute -inset-px rounded-xl ring-1 ring-white/10"></span>
+                <span className="pointer-events-none absolute -inset-px rounded-lg sm:rounded-xl ring-1 ring-white/10"></span>
               </motion.button>
             )}
           </div>
         </div>
       </motion.div>
 
-      {/* Bottom gradient ribbon */}
+      {/* Bottom gradient ribbon - responsive */}
       <motion.div 
-        className="pointer-events-none absolute -bottom-48 left-1/2 -translate-x-1/2 h-[560px] w-[1200px] bg-gradient-to-r from-transparent via-red-500/25 to-transparent blur-3xl opacity-40"
-        animate={{ opacity: [0.3, 0.5, 0.3] }}
+        className="pointer-events-none absolute -bottom-24 sm:-bottom-32 md:-bottom-48 left-1/2 -translate-x-1/2 h-[280px] sm:h-[400px] md:h-[560px] w-[300px] sm:w-[600px] md:w-[800px] lg:w-[1200px] bg-gradient-to-r from-transparent via-red-500/20 sm:via-red-500/25 to-transparent blur-2xl sm:blur-3xl opacity-30 sm:opacity-40"
+        animate={{ opacity: [0.2, 0.4, 0.2] }}
         transition={{ duration: 6, repeat: Infinity }}
       />
 

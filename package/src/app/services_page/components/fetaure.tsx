@@ -183,9 +183,9 @@ export default function ComparisonTable({
                   >
                     View Prototype
                   </a>
-                  <button className="w-full px-3 py-2 rounded-md text-sm font-medium bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-600">
+                  {/* <button className="w-full px-3 py-2 rounded-md text-sm font-medium bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-600">
                     Choose
-                  </button>
+                  </button> */}
                 </div>
               </div>
 
@@ -221,9 +221,9 @@ export default function ComparisonTable({
                   >
                     View Prototype
                   </a>
-                  <button className="w-full px-3 py-2 rounded-md text-sm font-medium bg-indigo-600 text-white">
+                  {/* <button className="w-full px-3 py-2 rounded-md text-sm font-medium bg-indigo-600 text-white">
                     Choose
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

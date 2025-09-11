@@ -92,7 +92,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
     >
       <div className="relative w-full">
         <div
-          className="flex w-full overflow-x-scroll overscroll-x-auto scroll-smooth py-10 [scrollbar-width:none] md:py-20"
+          className="flex w-full overflow-x-scroll overscroll-x-contain scroll-smooth py-10 [scrollbar-width:none] md:py-20 snap-x snap-mandatory"
           ref={carouselRef}
           onScroll={checkScrollability}
         >
@@ -104,7 +104,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
 
           <div
             className={cn(
-              "flex flex-row justify-start gap-4 pl-4",
+              "flex flex-row justify-start gap-4 pl-4 pr-4",
             //   "mx-auto max-w-7xl", // remove max-w-4xl if you want the carousel to span the full width of its container
             )}
           >
@@ -124,28 +124,34 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
                   },
                 }}
                 key={"card" + index}
-                className="rounded-3xl last:pr-[5%] md:last:pr-[33%]"
+                className="rounded-3xl snap-start mx-2"
               >
                 {item}
               </motion.div>
             ))}
           </div>
         </div>
-        <div className="mr-10 flex justify-end gap-2">
-          <button
-            className="relative z-40 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50"
-            onClick={scrollLeft}
-            disabled={!canScrollLeft}
-          >
-            <IconArrowNarrowLeft className="h-6 w-6 text-gray-500" />
-          </button>
-          <button
-            className="relative z-40 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50"
-            onClick={scrollRight}
-            disabled={!canScrollRight}
-          >
-            <IconArrowNarrowRight className="h-6 w-6 text-gray-500" />
-          </button>
+        <div className="pointer-events-none absolute inset-0 z-[100]">
+          <div className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 pointer-events-auto">
+            <button
+              aria-label="Scroll left"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-neutral-700 shadow-md ring-1 ring-black/5 backdrop-blur hover:bg-white disabled:opacity-50 dark:bg-neutral-800/80 dark:text-neutral-200 dark:ring-white/10"
+              onClick={scrollLeft}
+              disabled={!canScrollLeft}
+            >
+              <IconArrowNarrowLeft className="h-6 w-6" />
+            </button>
+          </div>
+          <div className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 pointer-events-auto">
+            <button
+              aria-label="Scroll right"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-neutral-700 shadow-md ring-1 ring-black/5 backdrop-blur hover:bg-white disabled:opacity-50 dark:bg-neutral-800/80 dark:text-neutral-200 dark:ring-white/10"
+              onClick={scrollRight}
+              disabled={!canScrollRight}
+            >
+              <IconArrowNarrowRight className="h-6 w-6" />
+            </button>
+          </div>
         </div>
       </div>
     </CarouselContext.Provider>

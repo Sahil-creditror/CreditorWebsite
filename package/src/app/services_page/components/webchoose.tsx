@@ -256,70 +256,13 @@ export default function WhyChooseUs({
             </div>
           </motion.div>
         </div>
-
-        {/* Optional small testimonial / trust strip */}
-        <div className="mt-12 flex items-center justify-between gap-6 flex-wrap">
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-white dark:bg-gray-800/60 shadow flex items-center justify-center">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden
-              >
-                <path
-                  d="M4 12h16"
-                  stroke="#8B5CF6"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M4 6h16"
-                  stroke="#8B5CF6"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-
-            {/* <div>
-              <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                Trusted by teams worldwide
-              </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Fintechs, marketplaces, and agencies.
-              </p>
-            </div> */}
-          </div>
-
-          {/* <div className="flex items-center gap-6">
-            <img
-              src="/logos/logo-1.svg"
-              alt="logo"
-              className="h-6 opacity-80 dark:opacity-60"
-            />
-            <img
-              src="/logos/logo-2.svg"
-              alt="logo"
-              className="h-6 opacity-80 dark:opacity-60"
-            />
-            <img
-              src="/logos/logo-3.svg"
-              alt="logo"
-              className="h-6 opacity-80 dark:opacity-60"
-            />
-          </div> */}
-        </div>
       </div>
 
-      {/* subtle foreground blur */}
+      {/* subtle foreground blur
       <div
         className="pointer-events-none absolute -right-36 -bottom-36 w-72 h-72 rounded-full bg-gradient-to-br from-pink-300/20 to-rose-300/10 blur-2xl mix-blend-overlay"
         aria-hidden
-      />
+      /> */}
     </section>
   );
 }

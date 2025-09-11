@@ -177,7 +177,7 @@ function Pricing() {
                         rel="noopener noreferrer"
                         className="relative inline-flex justify-center items-center w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white font-bold py-4 rounded-full shadow-lg transition-all duration-300"
                       >
-                        Subscribe Now
+                        Opt Service Now
                       </a>
                     </motion.div>
                   </div>

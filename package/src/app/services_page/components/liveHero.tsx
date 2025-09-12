@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Youtube } from 'lucide-react';
 
-import img1 from "../../../../public/images/pricing/Cover-2.jpg";
+import img1 from "../../../../public/images/pricing/Cover-2.webp";
 
 type LiveHeroProps = {
   channelUrl: string;

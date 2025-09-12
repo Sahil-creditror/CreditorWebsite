@@ -34,7 +34,7 @@ export const Introduction = () => {
     {
       id: "5",
       packageName: "Next Auth",
-      img: "/images/documentation/nextauth.png",
+      img: "/images/documentation/nextauth.webp",
       version: "4.24.11"
     }
   ]

@@ -10,19 +10,19 @@ export default function MasterclassBenefits() {
       title: "Pay-As-You-Go Learning",
       description:
         "Access every course in our library at a member-only rate — only pay for what you need, when you need it.",
-      image: "/images/courses/become/private.png",
+      image: "/images/courses/become/private.webp",
     },
     {
       title: "Introductory Access",
       description:
         "Try the first module of premium courses for free so you can decide before committing.",
-      image: "/images/courses/become/document.png",
+      image: "/images/courses/become/document.webp",
     },
     {
       title: "Private Community Groups",
       description:
         "Connect with entrepreneurs and pros, get fast answers, and share wins in exclusive groups.",
-      image: "/images/masterclass/community.png",
+      image: "/images/masterclass/community.webp",
     },
     {
       title: "Live Weekly Trainings",

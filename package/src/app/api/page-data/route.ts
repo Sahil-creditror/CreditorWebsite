@@ -2,19 +2,19 @@ import { NextResponse } from "next/server";
 
 const avatarList = [
     {
-        image: "/images/avatar/avatar_1.jpg",
+        image: "/images/avatar/avatar_1.webp",
         title: "Sarah Johnson"
     },
     {
-        image: "/images/avatar/avatar_2.jpg",
+        image: "/images/avatar/avatar_2.webp",
         title: "Olivia Miller"
     },
     {
-        image: "/images/avatar/avatar_3.jpg",
+        image: "/images/avatar/avatar_3.webp",
         title: "Sophia Roberts"
     },
     {
-        image: "/images/avatar/avatar_4.jpg",
+        image: "/images/avatar/avatar_4.webp",
         title: "Isabella Clark"
     },
 ];
@@ -105,7 +105,7 @@ const teamData = {
     number: '06',
     data: [
         {
-            image: "/images/home/team/team-img-1.png",
+            image: "/images/home/team/team-img-1.webp",
             name: "Martha Finley",
             position: "Creative Director",
             socialLinks: [
@@ -124,7 +124,7 @@ const teamData = {
             ]
         },
         {
-            image: "/images/home/team/team-img-2.png",
+            image: "/images/home/team/team-img-2.webp",
             name: "Floyd Miles",
             position: "Marketing Strategist",
             socialLinks: [
@@ -143,7 +143,7 @@ const teamData = {
             ]
         },
         {
-            image: "/images/home/team/team-img-3.png",
+            image: "/images/home/team/team-img-3.webp",
             name: "Glenna Snyder",
             position: "Lead Designer",
             socialLinks: [
@@ -162,7 +162,7 @@ const teamData = {
             ]
         },
         {
-            image: "/images/home/team/team-img-4.png",
+            image: "/images/home/team/team-img-4.webp",
             name: "Albert Flores",
             position: "UX/UI Developer",
             socialLinks: [
@@ -191,7 +191,7 @@ const pricingData = {
             planPrice: "Website Service",
             planDescp: "Ideal for startups and small businesses taking their first steps online.",
             planIncludes: ["Custom design for up to 10 pages","Responsive and mobile-friendly layout","Fast page load and security optimizations","On-page SEO optimization for key pages"],
-            coverImage: "/images/pricing/Cover-1.png", // Optional
+            coverImage: "/images/pricing/Cover-1.webp", // Optional
             link: "/services_page/website-service",
             
         },
@@ -202,7 +202,7 @@ const pricingData = {
             // cancelPrice: "$2,199",
             planDescp: "Perfect for growing brands needing more customization and flexibility.",
             planIncludes: ["Join our interactive live classes every Tuesday & Thursday","Interactive Sessions","Hands-on learning","Session Replays"],
-            coverImage: "/images/pricing/Cover-2.jpg", // Optional
+            coverImage: "/images/pricing/Cover-2.webp", // Optional
             link: "/services_page/live-class",
         },
         {
@@ -211,17 +211,17 @@ const pricingData = {
             planPrice: "Private Merchant Processing",
             planDescp: "Best suited for established businesses wanting a fully tailored experience.",
             planIncludes: ["Tailored payment solutions","Empower your business","Customized experience","Seamless Payment Solutions"],
-            coverImage: "/images/pricing/Cover-3.jpg" ,// Optional
+            coverImage: "/images/pricing/Cover-3.webp" ,// Optional
             link: "/services_page/private-merchant"
         },
     ],
     partnerLogo: [
-        { light: "/images/logo/creditorlogo.png", dark: "/images/logo/creditorlogo.png" },
-        { light: "/images/logo/creditorlogoblack.png", dark: "/images/logo/creditorlogowhite.png" },
-        { light: "/images/logo/creditorlogo.png", dark: "/images/logo/creditorlogo.png" },
-        { light: "/images/logo/creditorlogoblack.png", dark: "/images/logo/creditorlogowhite.png" },
-        { light: "/images/logo/creditorlogo.png", dark: "/images/logo/creditorlogo.png" },
-        { light: "/images/logo/creditorlogoblack.png", dark: "/images/logo/creditorlogowhite.png" },
+        { light: "/images/logo/creditorlogo.webp", dark: "/images/logo/creditorlogo.webp" },
+        { light: "/images/logo/creditorlogoblack.webp", dark: "/images/logo/creditorlogowhite.webp" },
+        { light: "/images/logo/creditorlogo.webp", dark: "/images/logo/creditorlogo.webp" },
+        { light: "/images/logo/creditorlogoblack.webp", dark: "/images/logo/creditorlogowhite.webp" },
+        { light: "/images/logo/creditorlogo.webp", dark: "/images/logo/creditorlogo.webp" },
+        { light: "/images/logo/creditorlogoblack.webp", dark: "/images/logo/creditorlogowhite.webp" },
       ],
 };
 
@@ -234,7 +234,7 @@ const pricingData2 = {
             cancelPrice: "$500",
             planDescp: "Ideal for startups and small businesses taking their first steps online.",
             planIncludes: ["Competitive research & insights","Wireframing and prototyping","Basic tracking setup (Google Analytics, etc.)","Standard contact form integration"],
-            coverImage: "/images/pricing/Cover-1.png", // Optional,
+            coverImage: "/images/pricing/Cover-1.webp",
             payLink: "https://quickclick.com/r/mq0rtcnac7tng6qnl2wk009ddrgrly"
         },
         {
@@ -244,7 +244,7 @@ const pricingData2 = {
             cancelPrice: "$2,199",
             planDescp: "Perfect for growing brands needing more customization and flexibility.",
             planIncludes: ["Everything in the Launch Plan","Custom design for up to 10 pages","Seamless social media integration","SEO enhancements for key pages"],
-            coverImage: "/images/pricing/Cover-2.jpg", // Optional
+            coverImage: "/images/pricing/Cover-2.webp",
             payLink: "https://quickclick.com/r/ktwk1pon618kihkfhnfioqm9n1caap"
         },
     ],
@@ -277,7 +277,7 @@ const faqData = {
 const contactData = {
     keypoint:["Always-On Customer Support","Service Across the Globe"],
     managerProfile:{
-        image:"/images/avatar/avatar_1.jpg",
+        image:"/images/avatar/avatar_1.webp",
         name:"Courtney Henry",
         position:"Onboarding & Success Manager"
     }

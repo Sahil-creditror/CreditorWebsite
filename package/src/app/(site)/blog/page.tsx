@@ -9,7 +9,7 @@ export default function Page() {
     return (
         <main>
             <Herobanner
-                bannerimage="/images/blog/banner/blog_banner.png"
+                bannerimage="/images/blog/banner/blog_banner.webp"
                 heading="Blog"
                 desc="Excited to <span>begin something amazing?</span> Get in touch—we'd love to connect with you!" />    
                 <BlogList/>

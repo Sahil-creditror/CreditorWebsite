@@ -23,9 +23,9 @@ function Pricing() {
   }, []);
 
   const defaultCoverImages = [
-    "/images/pricing/Cover-1.jpg",
-    "/images/pricing/Cover-2.jpg",
-    "/images/pricing/Cover-3.jpg"
+    "/images/pricing/Cover-1.webp",
+    "/images/pricing/Cover-2.webp",
+    "/images/pricing/Cover-3.webp"
   ];
 
   return (

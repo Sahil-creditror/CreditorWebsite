@@ -218,7 +218,7 @@ export default function EnrollMasterclass({ container = "", sectionSpacing = "" 
           <motion.div
             className="p-10 flex items-center justify-center relative"
             style={{
-              backgroundImage: "url('/images/home/services/master.jpg')",
+              backgroundImage: "url('/images/home/services/master.webp')",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}

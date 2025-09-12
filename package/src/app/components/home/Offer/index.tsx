@@ -106,9 +106,9 @@ export default function MasterclassBenefits() {
     "Unlock expert-led courses, real mentorship, and an active community — everything you need to rebuild and protect your financial future.";
   const titleWords = title.split(" ");
   const eventImages = [
-    "Get your account.png",
-    "Refer and earn.png",
-    "unlock premium.png",
+    "Get your account.webp",
+    "Refer and earn.webp",
+    "unlock premium.webp",
   ];
   const [currentEventIndex, setCurrentEventIndex] = React.useState(0);
   React.useEffect(() => {

@@ -50,7 +50,7 @@ function Testimonial() {
                                     <h4 className="dark:text-secondary">{testimonialData?.data_1?.title}</h4>
                                 </div>
                                 <div className="flex items-center gap-4">
-                                    <Image src={"/images/testimonial/testimonial_1.png"} alt="Image" width={60} height={60} className="rounded-full" />
+                                    <Image src={"/images/testimonial/testimonial_1.webp"} alt="Image" width={60} height={60} className="rounded-full" />
                                     <div>
                                         <p className="dark:text-secondary">{testimonialData?.data_1?.author}</p>
                                         <p className="text-secondary/70 text-base font-normal">{testimonialData?.data_1?.company}</p>
@@ -71,7 +71,7 @@ function Testimonial() {
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-4">
-                                        <Image src={"/images/testimonial/testimonial_2.png"} alt="Image" width={60} height={60} className="rounded-full" />
+                                        <Image src={"/images/testimonial/testimonial_2.webp"} alt="Image" width={60} height={60} className="rounded-full" />
                                         <div>
                                             <p className="text-white">{testimonialData?.data_2?.author}</p>
                                             <p className="text-white/70 text-base font-normal">{testimonialData?.data_2?.company}</p>
@@ -91,7 +91,7 @@ function Testimonial() {
                                     <h4>{testimonialData?.data_3?.title}</h4>
                                 </div>
                                 <div className="flex items-center gap-4">
-                                    <Image src={"/images/testimonial/testimonial_3.png"} alt="Image" width={60} height={60} className="rounded-full" />
+                                    <Image src={"/images/testimonial/testimonial_3.webp"} alt="Image" width={60} height={60} className="rounded-full" />
                                     <div>
                                         <p>{testimonialData?.data_3?.author}</p>
                                         <p className="text-secondary/70 dark:text-white/70 text-base font-normal">{testimonialData?.data_3?.company}</p>

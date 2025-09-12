@@ -9,7 +9,7 @@ export default function Page() {
     return (
         <main>
             <Herobanner
-                bannerimage="/images/TnC/banner.png"
+                bannerimage="/images/TnC/banner.webp"
                 heading="Terms & Conditions"
                 desc="Understand the <span>Rules & Guidelines</span> Before Using Our Services" />
             <TermsAndCondition />

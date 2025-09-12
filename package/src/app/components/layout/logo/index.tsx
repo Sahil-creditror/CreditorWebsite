@@ -6,7 +6,7 @@ const Logo = (props: { sticky: boolean }) => {
     return (
         <Link href="/">
             <Image
-                src={sticky ? "/images/logo/creditorlogowhite.png" : "/images/logo/creditorlogo.png"}
+                src={sticky ? "/images/logo/creditorlogowhite.webp" : "/images/logo/creditorlogo.webp"}
                 alt="logo"
                 width={200}
                 height={150}
@@ -14,7 +14,7 @@ const Logo = (props: { sticky: boolean }) => {
                 priority
                 className="hidden xsm:block w-28 md:w-40 lg:w-52 h-auto"
                 />
-            <Image src={sticky ? "/images/logo/logo_roadmap.png" : "/images/logo/logo_roadmap.png"} alt='logo' width={40} height={40} className='block xsm:hidden' />
+            <Image src={sticky ? "/images/logo/logo_roadmap.webp" : "/images/logo/logo_roadmap.webp"} alt='logo' width={40} height={40} className='block xsm:hidden' />
         </Link>
     );
 };

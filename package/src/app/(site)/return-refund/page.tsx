@@ -9,7 +9,7 @@ export default function Page() {
     return (
         <main>
             <Herobanner
-                bannerimage="/images/ReturnRefund/banner.png"
+                bannerimage="/images/ReturnRefund/banner.webp"
                 heading="Return & Refund"
                 desc="Understand the <span>Rules & Guidelines</span> Before Using Our Services"
                 buttonPath="/projects/become-private-Sovereignty 101" />

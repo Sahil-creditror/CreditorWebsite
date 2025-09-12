@@ -217,7 +217,7 @@ export default function LiveSessionCTA({
               <div className="flex items-center gap-4">
                 <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full ring-2 ring-white dark:ring-gray-700 shadow-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
                   <Image
-                    src="/images/services/Paul.png"
+                    src="/images/services/Paul.webp"
                     alt="PaulMichael Rowland headshot"
                     fill
                     sizes="(max-width: 768px) 80px, 120px"

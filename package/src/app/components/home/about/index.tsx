@@ -556,14 +556,14 @@ function About() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <Image
-                    src={"/images/logo/creditorlogo.png"}
+                    src={"/images/logo/creditorlogo.webp"}
                     alt="Logo Image"
                     height={60}
                     width={250}
                     className="dark:hidden"
                   />
                   <Image
-                    src={"/images/logo/creditorlogo.png"}
+                    src={"/images/logo/creditorlogo.webp"}
                     alt="Logo Image"
                     height={60}
                     width={250}

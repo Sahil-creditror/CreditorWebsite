@@ -9,7 +9,7 @@ function AboutusHero() {
             <Image
                 className="absolute top-0 left-0 w-full h-full object-cover"
                 alt="Image"
-                src={"/images/about-us/banner/aboutus-banner.png"}
+                src={"/images/about-us/banner/aboutus-banner.webp"}
                 height={694}
                 width={1800}
             />

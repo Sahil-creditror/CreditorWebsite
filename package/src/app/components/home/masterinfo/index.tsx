@@ -194,7 +194,7 @@ const BannerContentSection = () => {
                 {/* Image with zoom effect */}
                 <div className="overflow-hidden rounded-lg border border-blue-500/30 mb-4 sm:mb-6">
                 <motion.img
-                    src="/images/home/services/master.jpg"
+                    src="/images/home/services/master.webp"
                     alt="Masterclass Preview"
                     className="w-full h-full object-cover"
                     initial={{ opacity: 0, scale: 0.9 }}

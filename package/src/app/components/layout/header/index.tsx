@@ -117,7 +117,7 @@ const Header = () => {
               {user?.user || session?.user ? (
                 <div className="relative group flex items-center justify-center">
                   <Image
-                    src="/images/avatar/avatar_1.jpg"
+                    src="/images/avatar/avatar_1.webp"
                     alt="Image"
                     width={32}
                     height={32}
@@ -138,7 +138,7 @@ const Header = () => {
               {user?.user || session?.user ? (
                 <div className="relative group flex items-center justify-center">
                   <Image
-                    src="/images/avatar/avatar_1.jpg"
+                    src="/images/avatar/avatar_1.webp"
                     alt="Image"
                     width={32}
                     height={32}

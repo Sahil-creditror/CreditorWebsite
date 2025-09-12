@@ -23,13 +23,20 @@ export default function RootLayout({
   const [is404, setIs404] = useState(false);
 
   useEffect(() => {
-    fetch(pathname, { method: "HEAD" }).then((res) => {
-      if (res.status === 404) {
-        setIs404(true);
-      } else {
+    // Skip when running from file:// where fetch will fail
+    if (typeof window !== 'undefined' && window.location.protocol === 'file:') {
+      setIs404(false);
+      return;
+    }
+    (async () => {
+      try {
+        const res = await fetch(pathname, { method: "HEAD" });
+        setIs404(res.status === 404);
+      } catch {
+        // Network failure (e.g., not running a dev server). Assume not 404.
         setIs404(false);
       }
-    });
+    })();
   }, [pathname]);
 
   const excludedRoutes = ["/signin", "/signup", "/forgot-password","/documentation", "/become-wonder", "/operate-wonder", "/private-wonder", "/projects-wonder"];

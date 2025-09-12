@@ -53,6 +53,10 @@ const Header = () => {
 
     const fetchData = async () => {
       try {
+        // Skip when running from file:// where fetch will fail
+        if (typeof window !== 'undefined' && window.location.protocol === 'file:') {
+          return;
+        }
         const res = await fetch("/api/layout-data");
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();

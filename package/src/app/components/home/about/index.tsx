@@ -476,7 +476,7 @@ function About() {
                   playsInline
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 >
-                  <source src="/video/intro.mp4" type="video/mp4" />
+                  <source src="/video/intro-new.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
 
@@ -714,7 +714,7 @@ function About() {
                 <div className="relative pt-[56.25%]">
                   {/* 16:9 aspect ratio */}
                   <iframe
-                    src="https://drive.google.com/file/d/1jUjnrebq_Z6jy64RWnIZqAHjD6JEfW9Y/preview"
+                    src="https://drive.google.com/file/d/1r29AYUqcgbs7ZHao66vpeVYV1XskhA6A/preview"
                     className="absolute inset-0 w-full h-full"
                     allow="autoplay"
                     allowFullScreen

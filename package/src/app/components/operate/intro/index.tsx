@@ -262,7 +262,7 @@ export default function MasterclassOverview({
           <div className="flex-1 min-w-[18rem] max-w-3xl relative rounded-2xl overflow-hidden shadow-2xl">
             <div className="w-full aspect-video">
               <iframe
-                src="https://drive.google.com/file/d/1JDzWkLSFtHMuuRceyogbfCTdM3o2NgJp/preview"
+                src="https://drive.google.com/file/d/1_x_eof3Q40gXfXepGAeMCEX98Dro6dIA/preview"
                 className="w-full h-full"
                 allow="autoplay; encrypted-media"
                 allowFullScreen

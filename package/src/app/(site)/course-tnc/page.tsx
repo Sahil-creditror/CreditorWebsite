@@ -14,7 +14,7 @@ export default function Page() {
         <main>
             <Herobanner
                 bannerimage="/images/courses/banner-tnc.webp"
-                heading="Course Bundle Plan"
+                heading="Charge Your Card"
                 desc="Reclaim Your <span>Legal Identity</span> and Exit the Public System."
                 // buttonPath="/terms-and-conditions" //
             />

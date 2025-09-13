@@ -7,7 +7,7 @@ import { FiCheck, FiStar, FiUsers, FiBookOpen, FiGift, FiCreditCard, FiMessageCi
 const plans = [
   {
     id: "masterclass",
-    name: "Masterclass Membership",
+    name: "Become a member",
     price: "$69",
     cadence: "/month",
     // added for toggle
@@ -32,7 +32,7 @@ const plans = [
   },
   {
     id: "bundle",
-    name: "Course Bundle",
+    name: "Charge Your Card",
     price: "$500",
     cadence: "one-time",
     short: "15 modules · Lifetime access · Creditors-focused",
@@ -49,7 +49,7 @@ const plans = [
   },
   {
     id: "enterprise",
-    name: "Enterprise",
+    name: "Become Private, Operate Private, Private Credit",
     price: "$2,800",
     cadence: "Full access",
     short: "Team training, compliance & onboarding",

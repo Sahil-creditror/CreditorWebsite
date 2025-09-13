@@ -14,8 +14,8 @@ export default function Page() {
         <main>
             <Herobanner
                 bannerimage="/images/courses/banner-tnc.webp"
-                heading="Enterprise Plan"
-                desc="Reclaim Your <span>Legal Identity</span> and Exit the Public System."
+                heading="Become Private, Operate Private And Private Credit"
+                desc="Team training, compliance & onboarding. <br/> <span className='text-3xl font-bold text-blue-600'>$2,800</span> - Full access for teams and agencies"
                 // buttonPath="/terms-and-conditions" //
             />
             <TnC/>

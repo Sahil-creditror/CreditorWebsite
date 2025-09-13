@@ -180,15 +180,39 @@ export default function CourseTNC() {
               className="text-3xl md:text-4xl font-extrabold tracking-tight text-center"
             >
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-indigo-600 to-cyan-600 dark:from-blue-300 dark:via-indigo-300 dark:to-cyan-300">
-                Terms & Conditions
+                Charge Your Card
               </span>
             </motion.h2>
             <p className="mt-4 text-center text-base md:text-lg text-slate-600 dark:text-slate-300">
-              Effective Date: 26 September 2024
+              Reclaim Your Legal Identity and Exit the Public System
             </p>
             <p className="mt-2 text-center text-sm text-slate-500 dark:text-slate-400">
-              By using our website and services, you acknowledge and agree to the following terms.
+              By joining our Private Association, you acknowledge and agree to the following terms.
             </p>
+
+            {/* Investment Summary Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="mt-8 mx-auto max-w-md"
+            >
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-6 border border-blue-200/50 dark:border-blue-700/30">
+                <h3 className="text-center text-lg font-semibold text-slate-800 dark:text-slate-200 mb-4">
+                  Investment Summary
+                </h3>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-slate-700 dark:text-slate-300 font-medium">Course Bundle</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">One-time payment + lifetime access to our exclusive course content.</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">$500</div>
+                    <div className="text-sm text-slate-500 dark:text-slate-400">one-time</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
             {/* Agree + CTA moved here */}
             <div className="mt-6 flex flex-col items-center gap-4">
               <label className="flex items-start gap-3 cursor-pointer select-none">
@@ -225,7 +249,7 @@ export default function CourseTNC() {
                     : "bg-slate-200 dark:bg-neutral-800 text-slate-500 dark:text-slate-400"
                 }`}
               >
-                <span>Enroll Now</span>
+                <span>Charge Your Card - $500</span>
               </motion.button>
             </div>
           </div>

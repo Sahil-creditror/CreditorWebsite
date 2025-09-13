@@ -26,8 +26,8 @@ export default function Page() {
             />
             <BecomeIntro />
             {/* <Pricing /> */}
-            <HowItWorks />
             <Intro2 />
+            <HowItWorks />
             <Appoint />
             <Content />
             <Event />

@@ -27,8 +27,8 @@ const PrivatePage = () => {
       />
       <Cards />
       {/* <Pricing /> */}
-      <HowItWorks />
       <CourseDetail />
+      <HowItWorks />
       <Offer />
       <CourseFeatures />
       <Event />

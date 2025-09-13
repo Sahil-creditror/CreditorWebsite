@@ -273,7 +273,7 @@ export default function MasterclassMembershipTC() {
                     : "bg-slate-200 dark:bg-neutral-800 text-slate-500 dark:text-slate-400"
                 }`}
               >
-                <span>Enroll Now</span>
+                <span>Enroll Now @ $69</span>
               </motion.button>
             </div>
           </div>

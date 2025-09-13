@@ -25,8 +25,8 @@ const plans = [
     id: "bundle",
     name: "Charge Your Card",
     //price: "$500",
-    cadence: "one-time",
-    short: "15 modules · Lifetime access · Creditors-focused",
+    //cadence: "monthly",
+    short: "Get credits worth $500",
     badge: "Best value",
     cta: "Get Now",
     featured: true,
@@ -36,9 +36,9 @@ const plans = [
     id: "enterprise",
     name: "Become Private, Operate Private, Business Credit",
     //price: "$2,800",
-    cadence: "Full access",
-    short: "Team training, compliance & onboarding",
-    badge: "Enterprise",
+    //cadence: "Full access",
+    short: "Access to all premium courses",
+    badge: "Full access",
     cta: "Purchase Now",
     featured: false,
     backgroundImage: "/images/plan/new.webp",
@@ -163,9 +163,9 @@ export default function Pricing() {
                                 $69
                               </span>
                             </div>*/}
-                            <span className={`text-sm ${plan.featured ? "text-blue-100/90" : plan.id === "masterclass" ? "text-white" : "text-black dark:text-white"}`}>
-                              monthly
-                            </span>
+                            {/* <span className={`text-sm ${plan.featured ? "text-blue-100/90" : plan.id === "masterclass" ? "text-white" : "text-black dark:text-white"}`}>
+                              Monthly
+                            </span> */}
                           </div>
                         </>
                       ) : (

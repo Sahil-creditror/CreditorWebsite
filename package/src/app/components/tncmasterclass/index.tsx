@@ -210,6 +210,33 @@ export default function MasterclassMembershipTC() {
             <p className="mt-4 text-center text-base md:text-lg text-slate-600 dark:text-slate-300">
               By joining our Private Association, you acknowledge and agree to the following terms.
             </p>
+
+            {/* Payment Summary */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="mt-8 p-6 rounded-2xl bg-gradient-to-br from-indigo-50 via-blue-50 to-cyan-50 dark:from-indigo-950/30 dark:via-blue-950/20 dark:to-cyan-950/30 border border-indigo-200/60 dark:border-indigo-400/20"
+            >
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-4">
+                  Investment Summary
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between py-2 px-4 rounded-xl bg-white/60 dark:bg-neutral-800/40 border border-slate-200/60 dark:border-slate-700/40">
+                    <span className="text-slate-600 dark:text-slate-300 font-medium">Monthly Masterclass Membership</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg text-slate-400 dark:text-slate-500 line-through">$147</span>
+                      <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">$69</span>
+                    </div>
+                  </div>
+                </div>
+                <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
+                  One-time payment + ongoing monthly access to our exclusive community
+                </p>
+              </div>
+            </motion.div>
+
             {/* Agree + CTA moved here */}
             <div className="mt-6 flex flex-col items-center gap-4">
               <label className="flex items-start gap-3 cursor-pointer select-none">

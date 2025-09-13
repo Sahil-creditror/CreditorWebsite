@@ -232,7 +232,7 @@ export default function MasterclassBenefits() {
       >
         <path d="M10 2a1 1 0 01.894.553L12.382 5H15a1 1 0 01.832 1.555l-1.68 2.52.447 3.07a1 1 0 01-.29.882L12.5 14.5 10 16l-2.5-1.5-1.279-.913a1 1 0 01-.29-.882l.447-3.07L4.879 6.555A1 1 0 015.71 5H8.618l1.488-2.447A1 1 0 0110 2z" />
       </svg>
-      <span>Free enrollment • Limited seats</span>
+      <span>Enroll to Creditor Academy</span>
     </motion.span>
 
     <h2 className="text-3xl md:text-5xl font-extrabold leading-tight">
@@ -254,7 +254,7 @@ export default function MasterclassBenefits() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6 }}
       >
-        Enroll free today and start your transformation.
+        Enroll to Creditor Academy today and start your transformation.
       </motion.span>
       <motion.span className="block mt-4 h-1 overflow-hidden">
         <motion.span
@@ -288,7 +288,7 @@ export default function MasterclassBenefits() {
         }}
         whileTap={{ scale: 0.98 }}
       >
-        Enroll free
+        Enroll Today
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"
@@ -319,7 +319,7 @@ export default function MasterclassBenefits() {
           transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
         >
           <h3 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white">
-            What you'll get just after signing up to{" "}
+            What you'll get just after getting enroll to{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-400">
               Creditor Academy
             </span>

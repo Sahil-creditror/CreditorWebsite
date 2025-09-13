@@ -6,6 +6,7 @@ import Appointment from "@/app/components/operate/Appointment";
 import Contact from "@/app/components/shared/cta";
 import Pricing from "@/app/components/shared/plan";
 import Script from "next/script";
+import HowItWorks from "@/app/components/operate/works";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -44,9 +45,9 @@ export default function Page() {
                 />
                 <Intro2 />
                 <Pricing />
-                <BecomeIntro />
+                <HowItWorks />
                 <Appointment />
-                <BusinessCardsGrid />
+                <BecomeIntro />
                 <Contact />
             </main>
         </>

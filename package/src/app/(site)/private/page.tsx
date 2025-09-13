@@ -7,6 +7,7 @@ import Contact from '@/app/components/shared/cta';
 import Pricing from '@/app/components/shared/plan';
 import Offer from '@/app/components/become/appointment';
 import Event from '@/app/components/Event';
+import HowItWorks from '@/app/components/private/works';
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -27,6 +28,7 @@ const PrivatePage = () => {
       <Cards />
       <Pricing />
       <CourseDetail />
+      <HowItWorks />
       <Offer />
       <CourseFeatures />
       <Event />

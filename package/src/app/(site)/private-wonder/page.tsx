@@ -6,6 +6,7 @@ import CourseDetail from '@/app/components/private/course-detail';
 import Contact from '@/app/components/shared/cta';
 import Pricing from '@/app/components/shared/plan';
 import Script from "next/script";
+import HowItWorks from '@/app/components/private/works';
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -44,6 +45,7 @@ const PrivatePage = () => {
         <Cards />
         <Pricing />
         <CourseDetail />
+        <HowItWorks />
         <CourseFeatures />
         <Contact />
       </main>

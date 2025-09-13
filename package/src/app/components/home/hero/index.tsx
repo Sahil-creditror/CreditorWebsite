@@ -30,7 +30,7 @@ const HeroSection = () => {
     {
       src: "/video/hero-1.mp4",
       poster: "/images/hero/banner-1.webp",
-      title: "Creditor Academy",
+      title: "Become a Member",
       description: "Protect What You Build. Pass On What Matters",
     },
     {

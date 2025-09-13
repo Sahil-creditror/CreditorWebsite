@@ -6,6 +6,7 @@ import Appointment from "@/app/components/operate/Appointment";
 import Contact from "@/app/components/shared/cta";
 import Pricing from "@/app/components/shared/plan";
 import Event from "@/app/components/Event";
+import HowItWorks from "@/app/components/operate/works";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -25,6 +26,7 @@ export default function Page() {
             />
             <Intro2 />
             <Pricing />
+            <HowItWorks />
             <Appointment />
             <BecomeIntro /> 
             <Event />

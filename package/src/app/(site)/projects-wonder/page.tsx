@@ -52,9 +52,9 @@ export default function Page() {
                 desc="Learn how to <span>set up your Trust</span>, your Private Identity, and Business Credit step-by-step."
                 // buttonPath="/tncmasterclass" 
             />
+            <Preview />
             <Intro />
             <Pricing />
-            <Preview />
             <Learn />
             <Appoint />
             <Join />

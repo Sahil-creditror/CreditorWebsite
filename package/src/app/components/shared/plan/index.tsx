@@ -2,46 +2,66 @@
 
 import React, { useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import { FiStar, FiAlertTriangle } from "react-icons/fi";
+import { FiCheck, FiStar, FiUsers, FiBookOpen, FiGift, FiCreditCard, FiMessageCircle, FiBook, FiPercent, FiCalendar, FiFileText, FiAward, FiHeadphones, FiShield, FiSettings, FiTrendingUp, FiAlertTriangle } from "react-icons/fi";
 
 const plans = [
   {
     id: "masterclass",
-    name: "Become a Member",
-    // price: "$69",
-    // cadence: "/month",
+    name: "Masterclass Membership",
+    price: "$69",
+    cadence: "/month",
     // added for toggle
-    //priceMonthly: 69,
-    // priceYearly: Math.round(69 * 12 * 0.8), // 20% off yearly
-    // cadenceMonthly: "/month",
-    // cadenceYearly: "/year",
-    short: "Start Your Journey into the Private - Gain the tools, mentorship, and community to start operating privately today.",
+    priceMonthly: 69,
+    priceYearly: Math.round(69 * 12 * 0.8), // 20% off yearly
+    cadenceMonthly: "/month",
+    cadenceYearly: "/year",
+    short: "🚀 Start Your Journey into the Private - Gain the tools, mentorship, and community to start operating privately today.",
     badge: "Limited-Time",
+    features: [
+      { text: "Live Classes, Monday–Friday", icon: FiCalendar },
+      { text: "Step-by-Step Private Plan", icon: FiFileText },
+      { text: "Connect with a Like-Minded Community", icon: FiUsers },
+      { text: "Access to Intro Lessons Across All Premium Courses", icon: FiBookOpen },
+      { text: "Pay-As-You-Go Flexibility", icon: FiCreditCard },
+      { text: "Private Community Groups", icon: FiMessageCircle },
+      { text: "Starter Library", icon: FiBook },
+      { text: "Member Discounts", icon: FiPercent },
+    ],
     cta: "Join Masterclass",
     featured: false,
-    backgroundImage: "/images/plan/membership.webp",
   },
   {
     id: "bundle",
-    name: "Charge Your Card",
-    //price: "$500",
-    //cadence: "monthly",
-    short: "Get credits worth $500",
+    name: "Course Bundle",
+    price: "$500",
+    cadence: "one-time",
+    short: "15 modules · Lifetime access · Creditors-focused",
     badge: "Best value",
-    cta: "Get Now",
+    features: [
+      { text: "Receive 500 credits to spend on any premium course", icon: FiGift },
+      { text: "Unlocks 15 premium courses & 15 live instructor lectures (500 credits)", icon: FiBookOpen },
+      { text: "Bonus Value — 100 bonus credits added to your account", icon: FiPercent },
+      { text: "Masterclass Access — 1 month of Masterclass included (live classes + community)", icon: FiCalendar },
+      { text: "Exclusive Community — Unlock 1 exclusive Private Group for advanced discussions", icon: FiUsers },
+    ],
+    cta: "Buy Bundle",
     featured: true,
-    backgroundImage: "/images/plan/become-member.webp",
   },
   {
     id: "enterprise",
-    name: "Become Private, Operate Private and Business Credit",
-    //price: "$2,800",
-    //cadence: "Full access",
-    short: "Access to all Catalogs",
-    badge: "Full access",
+    name: "Enterprise",
+    price: "$2,800",
+    cadence: "Full access",
+    short: "Team training, compliance & onboarding",
+    badge: "Enterprise",
+    features: [
+      { text: "Unlimited seats, team onboarding & training roadmaps", icon: FiUsers },
+      { text: "Dedicated account manager for implementation", icon: FiAward },
+      { text: "SLA & priority support for large practices", icon: FiShield },
+      { text: "Custom integrations, reporting and agency workflows", icon: FiSettings },
+    ],
     cta: "Purchase Now",
     featured: false,
-    backgroundImage: "/images/plan/new.webp",
   },
 ];
 
@@ -120,34 +140,32 @@ export default function Pricing() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          style={{ gridTemplateRows: '1fr auto' }}
         >
           {plans.map((plan) => (
             <motion.div
               key={plan.id}
               variants={cardVariant}
               whileHover={{ y: -4 }}
-              className={`relative rounded-2xl border p-8 grid grid-rows-[1fr_auto] gap-8 overflow-hidden transition-shadow duration-300 ease-out
-                ${plan.featured ? "text-white border-blue-600 shadow-lg" : "bg-white/90 backdrop-blur dark:bg-[#0f1b2d]/80 border-slate-200 dark:border-[#1e3352]"}`}
-              style={{
-                backgroundImage: `url(${plan.backgroundImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat'
-              }}
+              className={`relative rounded-2xl border p-8 flex flex-col justify-between overflow-hidden transition-shadow duration-300 ease-out
+                ${plan.featured ? "bg-gradient-to-br from-blue-600 to-blue-500 text-white border-blue-600 shadow-lg" : "bg-white/90 backdrop-blur dark:bg-[#0f1b2d]/80 border-slate-200 dark:border-[#1e3352]"}`}
             >
-              {/* Background overlay for text readability */}
-              <div className={`absolute inset-0 ${plan.featured ? "bg-black/20" : plan.id === "masterclass" || plan.id === "enterprise" ? "bg-black/40" : "bg-white/80 dark:bg-[#0f1b2d]/80"}`} />
-              
               {/* Top gradient bar */}
-              <div className={`absolute inset-x-0 top-0 h-1 z-10 ${plan.featured ? "bg-gradient-to-r from-cyan-300/70 via-white/70 to-cyan-300/70" : "bg-gradient-to-r from-blue-500/20 via-cyan-400/20 to-blue-500/20"}`} />
+              <div className={`absolute inset-x-0 top-0 h-1 ${plan.featured ? "bg-gradient-to-r from-cyan-300/70 via-white/70 to-cyan-300/70" : "bg-gradient-to-r from-blue-500/20 via-cyan-400/20 to-blue-500/20"}`} />
 
+              {/* Featured ribbon */}
+              {plan.featured && (
+                <div className="pointer-events-none absolute -right-12 top-6 rotate-45">
+                  <div className="bg-white/20 dark:bg-white/10 text-white text-[10px] tracking-wide px-10 py-1.5 shadow-sm border border-white/20">
+                    Best value
+                  </div>
+                </div>
+              )}
               {/* Top */}
-              <div className="relative z-10">
+              <div>
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className={`text-2xl font-black ${plan.featured ? "text-white" : plan.id === "masterclass" || plan.id === "enterprise" ? "text-white" : "text-slate-900 dark:text-white"}`}>{plan.name}</h3>
-                    <p className={`text-sm mt-1 ${plan.featured ? "text-blue-100/90" : plan.id === "masterclass" || plan.id === "enterprise" ? "text-white" : "text-black dark:text-white"}`}>{plan.short}</p>
+                    <h3 className={`text-2xl font-black ${plan.featured ? "text-white" : "text-slate-900 dark:text-white"}`}>{plan.name}</h3>
+                    <p className={`text-sm mt-1 ${plan.featured ? "text-blue-100/90" : "text-black dark:text-white"}`}>{plan.short}</p>
                   </div>
 
                   <div className="text-right">
@@ -155,23 +173,23 @@ export default function Pricing() {
                       {plan.id === "masterclass" ? (
                         <>
                           <div className="flex flex-col items-end">
-                            {/*<div className="flex items-center gap-2">
-                              <span className={`text-lg font-bold line-through ${plan.featured ? "text-white/60" : plan.id === "masterclass" ? "text-white/60" : "text-slate-400 dark:text-slate-500"}`}>
+                            <div className="flex items-center gap-2">
+                              <span className={`text-lg font-bold line-through ${plan.featured ? "text-white/60" : "text-slate-400 dark:text-slate-500"}`}>
                                 $147
                               </span>
-                              <span className={`text-3xl font-extrabold ${plan.featured ? "text-white" : plan.id === "masterclass" ? "text-white" : "text-blue-700 dark:text-blue-400"}`}>
+                              <span className={`text-3xl font-extrabold ${plan.featured ? "text-white" : "text-blue-700 dark:text-blue-400"}`}>
                                 $69
                               </span>
-                            </div>*/}
-                            {/* <span className={`text-sm ${plan.featured ? "text-blue-100/90" : plan.id === "masterclass" ? "text-white" : "text-black dark:text-white"}`}>
-                              Monthly
-                            </span> */}
+                            </div>
+                            <span className={`text-sm ${plan.featured ? "text-blue-100/90" : "text-black dark:text-white"}`}>
+                              /month
+                            </span>
                           </div>
                         </>
                       ) : (
                         <>
-                          <span className={`text-3xl font-extrabold ${plan.featured ? "text-white" : plan.id === "enterprise" ? "text-white" : "text-blue-700 dark:text-blue-400"}`}>{(plan as any).price}</span>
-                          <span className={`text-sm ${plan.featured ? "text-blue-100/90" : plan.id === "enterprise" ? "text-white" : "text-black dark:text-white"}`}>{(plan as any).cadence}</span>
+                          <span className={`text-3xl font-extrabold ${plan.featured ? "text-white" : "text-blue-700 dark:text-blue-400"}`}>{(plan as any).price}</span>
+                          <span className={`text-sm ${plan.featured ? "text-blue-100/90" : "text-black dark:text-white"}`}>{(plan as any).cadence}</span>
                         </>
                       )}
                     </div>
@@ -183,10 +201,25 @@ export default function Pricing() {
                   </div>
                 </div>
 
+                <div className="mt-6">
+                  <ul className="space-y-3">
+                    {plan.features.map((feature, index) => {
+                      const IconComponent = feature.icon;
+                      return (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className={`${plan.featured ? "text-blue-200" : "text-blue-600 dark:text-blue-400"} flex-shrink-0 mt-0.5`}>
+                            <IconComponent className="w-4 h-4" />
+                          </span>
+                          <span className={`${plan.featured ? "text-blue-50" : "text-black dark:text-white text-sm"} leading-relaxed`}>{feature.text}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               </div>
 
               {/* CTA */}
-              <div className="relative z-10">
+              <div className="mt-8">
                 <motion.a
                   whileTap={{ scale: 0.98 }}
                   whileHover={{ scale: 1.01 }}
@@ -200,13 +233,13 @@ export default function Pricing() {
                       : "#"
                   }
                   className={`relative w-full inline-flex items-center justify-center py-3 rounded-full font-medium shadow-md transition-transform duration-200 overflow-hidden
-                    ${plan.featured ? "bg-white text-blue-600" : plan.id === "enterprise" ? "bg-blue-600 hover:bg-blue-700 text-white" : "bg-blue-600 hover:bg-blue-700 text-white"}`}
+                    ${plan.featured ? "bg-white text-blue-600" : "bg-blue-600 hover:bg-blue-700 text-white"}`}
                 >
                   <span className="relative z-[1]">{plan.cta}</span>
                   <span className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-200 bg-gradient-to-r from-white/0 via-white/30 to-white/0" />
                 </motion.a>
 
-                {/* <p className={`mt-4 text-xs ${plan.featured ? "text-blue-100/90" : plan.id === "masterclass" || plan.id === "enterprise" ? "text-white/80" : "text-slate-500 dark:text-slate-400"}`}>
+                <p className={`mt-4 text-xs ${plan.featured ? "text-blue-100/90" : "text-slate-500 dark:text-slate-400"}`}>
                   {plan.id === "enterprise"
                     ? "Custom contracts, billing and onboarding for teams."
                     : plan.id === "bundle"
@@ -221,11 +254,11 @@ export default function Pricing() {
                     : isYearly
                     ? "Billed annually. Cancel anytime before renewal."
                     : "Cancel anytime. Access renews monthly."}
-                </p> */}
+                </p>
               </div>
 
               {/* Decorative curves and shapes */}
-              <div className="pointer-events-none absolute inset-0 overflow-hidden z-0">
+              <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 {/* Main curved circle */}
                 <div className="absolute -right-10 -top-10 opacity-10">
                   <svg width="220" height="220" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">

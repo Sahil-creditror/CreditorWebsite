@@ -7,6 +7,7 @@ import CTA from "@/app/components/shared/cta";
 import Event from "@/app/components/Event";
 import Pricing from "@/app/components/shared/plan";
 import Script from "next/script";
+import HowItWorks from "@/app/components/become/works";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -45,6 +46,7 @@ export default function Page() {
                 <BecomeIntro />
                 <Pricing />
                 <Intro2 />
+                <HowItWorks />
                 <Appoint />
                 <Content />
                 <Event />

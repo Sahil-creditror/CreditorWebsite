@@ -180,11 +180,11 @@ export default function CourseTNC() {
               className="text-3xl md:text-4xl font-extrabold tracking-tight text-center"
             >
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-indigo-600 to-cyan-600 dark:from-blue-300 dark:via-indigo-300 dark:to-cyan-300">
-                Become Private, Operate Private, Private Credit
+                Become Private, Operate Private and Private Credit
               </span>
             </motion.h2>
             <p className="mt-4 text-center text-base md:text-lg text-slate-600 dark:text-slate-300">
-              Team training, compliance & onboarding
+              Access to all premium courses
             </p>
             <p className="mt-2 text-center text-sm text-slate-500 dark:text-slate-400">
               By joining our Private Association, you acknowledge and agree to the following terms.
@@ -203,8 +203,8 @@ export default function CourseTNC() {
                 </h3>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-slate-700 dark:text-slate-300 font-medium">Enterprise Plan</p>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">Full access + team training, compliance & onboarding.</p>
+                    <p className="text-slate-700 dark:text-slate-300 font-medium">Premium Courses Plan</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">Access to all premium courses</p>
                   </div>
                   <div className="text-right">
                     <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">$2,800</div>

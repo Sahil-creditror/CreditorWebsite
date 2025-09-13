@@ -15,7 +15,7 @@ export default function Page() {
             <Herobanner
                 bannerimage="/images/courses/banner-tnc.webp"
                 heading="Become Private, Operate Private And Private Credit"
-                desc="Team training, compliance & onboarding. <br/> <span className='text-3xl font-bold text-blue-600'>$2,800</span> - Full access for teams and agencies"
+                desc="Access to all premium courses"
                 // buttonPath="/terms-and-conditions" //
             />
             <TnC/>

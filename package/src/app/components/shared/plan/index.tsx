@@ -34,7 +34,7 @@ const plans = [
   },
   {
     id: "enterprise",
-    name: "Become Private, Operate Private, Business Credit",
+    name: "Become Private, Operate Private and Business Credit",
     //price: "$2,800",
     //cadence: "Full access",
     short: "Access to all premium courses",

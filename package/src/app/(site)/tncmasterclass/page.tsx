@@ -15,7 +15,7 @@ export default function Page() {
         <main>
             <Herobanner
                 bannerimage="/images/projects/banner/masterclass-banner.webp"
-                heading="Masterclass Membership"
+                heading="Become Member"
                 desc="Learn how to <span>set up your Trust</span>, your Private Identity, and Business Credit step-by-step."
                  // 👈 you now define the path here
             />

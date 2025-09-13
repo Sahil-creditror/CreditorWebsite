@@ -203,12 +203,12 @@ export default function CourseTNC() {
                 </h3>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-slate-700 dark:text-slate-300 font-medium">Course Bundle</p>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">One-time payment + lifetime access to our exclusive course content.</p>
+                    <p className="text-slate-700 dark:text-slate-300 font-medium">Charge Your Card</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">Lifetime access to our exclusive course content.</p>
                   </div>
                   <div className="text-right">
                     <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">$500</div>
-                    <div className="text-sm text-slate-500 dark:text-slate-400">one-time</div>
+                    <div className="text-sm text-slate-500 dark:text-slate-400">lifetime access</div>
                   </div>
                 </div>
               </div>

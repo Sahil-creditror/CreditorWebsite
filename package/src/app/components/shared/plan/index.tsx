@@ -37,7 +37,7 @@ const plans = [
     name: "Become Private, Operate Private and Business Credit",
     //price: "$2,800",
     //cadence: "Full access",
-    short: "Access to all premium courses",
+    short: "Access to all Catalogs",
     badge: "Full access",
     cta: "Purchase Now",
     featured: false,

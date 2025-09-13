@@ -184,7 +184,7 @@ export default function CourseTNC() {
               </span>
             </motion.h2>
             <p className="mt-4 text-center text-base md:text-lg text-slate-600 dark:text-slate-300">
-              Access to all premium courses
+              Access to all Catalogs
             </p>
             <p className="mt-2 text-center text-sm text-slate-500 dark:text-slate-400">
               By joining our Private Association, you acknowledge and agree to the following terms.
@@ -203,8 +203,8 @@ export default function CourseTNC() {
                 </h3>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-slate-700 dark:text-slate-300 font-medium">Premium Courses Plan</p>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">Access to all premium courses</p>
+                    <p className="text-slate-700 dark:text-slate-300 font-medium">Catalogs Plan</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">Access to all Catalogs</p>
                   </div>
                   <div className="text-right">
                     <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">$2,800</div>
@@ -213,7 +213,7 @@ export default function CourseTNC() {
                 </div>
               </div>
             </motion.div>
-            {/* Agree + CTA moved here */}
+            {/* Agree + CTA moved here */}  
             <div className="mt-6 flex flex-col items-center gap-4">
               <label className="flex items-start gap-3 cursor-pointer select-none">
                 <input

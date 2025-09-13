@@ -15,7 +15,7 @@ export default function Page() {
             <Herobanner
                 bannerimage="/images/courses/banner-tnc.webp"
                 heading="Become Private, Operate Private And Private Credit"
-                desc="Access to all premium courses"
+                desc="Access to all Catalogs"
                 // buttonPath="/terms-and-conditions" //
             />
             <TnC/>

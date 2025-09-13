@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, type Variants } from "framer-motion";
+import Image from "next/image";
 import { FiCheck, FiStar, FiUsers, FiBookOpen, FiGift, FiCreditCard, FiMessageCircle, FiBook, FiPercent, FiCalendar, FiFileText, FiAward, FiHeadphones, FiShield, FiSettings, FiTrendingUp, FiAlertTriangle } from "react-icons/fi";
 
 const plans = [
@@ -15,7 +16,7 @@ const plans = [
     priceYearly: Math.round(69 * 12 * 0.8), // 20% off yearly
     cadenceMonthly: "/month",
     cadenceYearly: "/year",
-    short: "🚀 Start Your Journey into the Private - Gain the tools, mentorship, and community to start operating privately today.",
+    short: "Start Your Journey into the Private - Gain the tools, mentorship, and community to start operating privately today.",
     badge: "Limited-Time",
     features: [
       { text: "Live Classes, Monday–Friday", icon: FiCalendar },
@@ -30,38 +31,32 @@ const plans = [
     cta: "Join Masterclass",
     featured: false,
   },
+];
+
+type Step = {
+  id: number;
+  title: string;
+  description: string;
+};
+
+const steps: Step[] = [
   {
-    id: "bundle",
-    name: "Course Bundle",
-    price: "$500",
-    cadence: "one-time",
-    short: "15 modules · Lifetime access · Creditors-focused",
-    badge: "Best value",
-    features: [
-      { text: "Receive 500 credits to spend on any premium course", icon: FiGift },
-      { text: "Unlocks 15 premium courses & 15 live instructor lectures (500 credits)", icon: FiBookOpen },
-      { text: "Bonus Value — 100 bonus credits added to your account", icon: FiPercent },
-      { text: "Masterclass Access — 1 month of Masterclass included (live classes + community)", icon: FiCalendar },
-      { text: "Exclusive Community — Unlock 1 exclusive Private Group for advanced discussions", icon: FiUsers },
-    ],
-    cta: "Buy Bundle",
-    featured: true,
+    id: 1,
+    title: "Become a Member",
+    description:
+      "Start Your Journey – Get everything you need to transition into the private. Gain step-by-step guidance, mentorship, and an empowering community to begin living and operating privately.",
   },
   {
-    id: "enterprise",
-    name: "Enterprise",
-    price: "$2,800",
-    cadence: "Full access",
-    short: "Team training, compliance & onboarding",
-    badge: "Enterprise",
-    features: [
-      { text: "Unlimited seats, team onboarding & training roadmaps", icon: FiUsers },
-      { text: "Dedicated account manager for implementation", icon: FiAward },
-      { text: "SLA & priority support for large practices", icon: FiShield },
-      { text: "Custom integrations, reporting and agency workflows", icon: FiSettings },
-    ],
-    cta: "Purchase Now",
-    featured: false,
+    id: 2,
+    title: "Charge Card",
+    description:
+      "Load your \"Creditor Card\" right inside the platform. Use it to unlock courses, workshops, and tools across our campus! Each lesson has its own credit value so you can choose your path at your own pace.",
+  },
+  {
+    id: 3,
+    title: "Become Private + Sovereignty101",
+    description:
+      "Redeem credits to uncover how the shift from freedom to control happened — and what steps you can take to reclaim your independence. Learn the strategies to move your life and business into the private realm, one course at a time.",
   },
 ];
 
@@ -81,6 +76,21 @@ const cardVariant: Variants = {
     y: 0,
     transition: { duration: 0.5, ease: "easeOut" as const },
   },
+};
+
+const containerVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, x: 40, scale: 0.98 },
+  visible: { opacity: 1, x: 0, scale: 1, transition: { duration: 0.42, ease: "easeOut" } },
+  hover: { scale: 1.02, y: -4, transition: { type: "spring", stiffness: 300, damping: 18 } },
 };
 
 export default function Pricing() {
@@ -134,165 +144,248 @@ export default function Pricing() {
           )}
         </div> */}
 
-        <motion.div
-          className="grid gap-6 sm:gap-8 grid-cols-1 md:grid-cols-3 items-stretch"
-          variants={container}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {plans.map((plan) => (
-            <motion.div
-              key={plan.id}
-              variants={cardVariant}
-              whileHover={{ y: -4 }}
-              className={`relative rounded-2xl border p-8 flex flex-col justify-between overflow-hidden transition-shadow duration-300 ease-out
-                ${plan.featured ? "bg-gradient-to-br from-blue-600 to-blue-500 text-white border-blue-600 shadow-lg" : "bg-white/90 backdrop-blur dark:bg-[#0f1b2d]/80 border-slate-200 dark:border-[#1e3352]"}`}
-            >
-              {/* Top gradient bar */}
-              <div className={`absolute inset-x-0 top-0 h-1 ${plan.featured ? "bg-gradient-to-r from-cyan-300/70 via-white/70 to-cyan-300/70" : "bg-gradient-to-r from-blue-500/20 via-cyan-400/20 to-blue-500/20"}`} />
-
-              {/* Featured ribbon */}
-              {plan.featured && (
-                <div className="pointer-events-none absolute -right-12 top-6 rotate-45">
-                  <div className="bg-white/20 dark:bg-white/10 text-white text-[10px] tracking-wide px-10 py-1.5 shadow-sm border border-white/20">
-                    Best value
-                  </div>
+        <div className="grid gap-12 grid-cols-1 lg:grid-cols-2 items-start">
+          {/* LEFT - Pricing Card */}
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {plans.map((plan) => (
+              <motion.div
+                key={plan.id}
+                variants={cardVariant}
+                whileHover={{ y: -4 }}
+                className={`relative rounded-2xl border p-8 flex flex-col justify-between overflow-hidden transition-shadow duration-300 ease-out
+                  ${plan.featured ? "bg-gradient-to-br from-blue-600 to-blue-500 text-white border-blue-600 shadow-lg" : "bg-white/90 backdrop-blur dark:bg-[#0f1b2d]/80 border-slate-200 dark:border-[#1e3352]"}`}
+              >
+                {/* Background Image */}
+                <div className="absolute inset-0 opacity-20 dark:opacity-15">
+                  <Image
+                    src="/images/plan/become-member.webp"
+                    alt="Background"
+                    fill
+                    className="object-cover rounded-2xl"
+                    priority
+                  />
                 </div>
-              )}
-              {/* Top */}
-              <div>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className={`text-2xl font-black ${plan.featured ? "text-white" : "text-slate-900 dark:text-white"}`}>{plan.name}</h3>
-                    <p className={`text-sm mt-1 ${plan.featured ? "text-blue-100/90" : "text-black dark:text-white"}`}>{plan.short}</p>
-                  </div>
+                {/* Top gradient bar */}
+                <div className={`absolute inset-x-0 top-0 h-1 ${plan.featured ? "bg-gradient-to-r from-cyan-300/70 via-white/70 to-cyan-300/70" : "bg-gradient-to-r from-blue-500/20 via-cyan-400/20 to-blue-500/20"}`} />
 
-                  <div className="text-right">
-                    <div className="flex items-center gap-2">
-                      {plan.id === "masterclass" ? (
-                        <>
-                          <div className="flex flex-col items-end">
-                            <div className="flex items-center gap-2">
-                              <span className={`text-lg font-bold line-through ${plan.featured ? "text-white/60" : "text-slate-400 dark:text-slate-500"}`}>
-                                $147
-                              </span>
-                              <span className={`text-3xl font-extrabold ${plan.featured ? "text-white" : "text-blue-700 dark:text-blue-400"}`}>
-                                $69
+                {/* Featured ribbon */}
+                {plan.featured && (
+                  <div className="pointer-events-none absolute -right-12 top-6 rotate-45">
+                    <div className="bg-white/20 dark:bg-white/10 text-white text-[10px] tracking-wide px-10 py-1.5 shadow-sm border border-white/20">
+                      Best value
+                    </div>
+                  </div>
+                )}
+                {/* Top */}
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h3 className={`text-2xl font-black ${plan.featured ? "text-white" : "text-slate-900 dark:text-white"}`}>{plan.name}</h3>
+                      <p className={`text-sm mt-1 ${plan.featured ? "text-blue-100/90" : "text-black dark:text-white"}`}>{plan.short}</p>
+                    </div>
+
+                    <div className="text-right">
+                      <div className="flex items-center gap-2">
+                        {plan.id === "masterclass" ? (
+                          <>
+                            <div className="flex flex-col items-end">
+                              <div className="flex items-center gap-2">
+                                <span className={`text-lg font-bold line-through ${plan.featured ? "text-white/60" : "text-slate-400 dark:text-slate-500"}`}>
+                                  $147
+                                </span>
+                                <span className={`text-3xl font-extrabold ${plan.featured ? "text-white" : "text-blue-700 dark:text-blue-400"}`}>
+                                  $69
+                                </span>
+                              </div>
+                              <span className={`text-sm ${plan.featured ? "text-blue-100/90" : "text-black dark:text-white"}`}>
+                                /month
                               </span>
                             </div>
-                            <span className={`text-sm ${plan.featured ? "text-blue-100/90" : "text-black dark:text-white"}`}>
-                              /month
-                            </span>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <span className={`text-3xl font-extrabold ${plan.featured ? "text-white" : "text-blue-700 dark:text-blue-400"}`}>{(plan as any).price}</span>
-                          <span className={`text-sm ${plan.featured ? "text-blue-100/90" : "text-black dark:text-white"}`}>{(plan as any).cadence}</span>
-                        </>
+                          </>
+                        ) : (
+                          <>
+                            <span className={`text-3xl font-extrabold ${plan.featured ? "text-white" : "text-blue-700 dark:text-blue-400"}`}>{(plan as any).price}</span>
+                            <span className={`text-sm ${plan.featured ? "text-blue-100/90" : "text-black dark:text-white"}`}>{(plan as any).cadence}</span>
+                          </>
+                        )}
+                      </div>
+                      {plan.badge && (
+                        <span className={`mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs whitespace-nowrap ${plan.featured ? "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300" : "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300"}`}>
+                          <FiStar className={`text-green-600 dark:text-green-400 w-4 h-4 flex-shrink-0`} /> {plan.badge}
+                        </span>
                       )}
                     </div>
-                    {plan.badge && (
-                      <span className={`mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs whitespace-nowrap ${plan.featured ? "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300" : "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300"}`}>
-                        <FiStar className={`text-green-600 dark:text-green-400 w-4 h-4 flex-shrink-0`} /> {plan.badge}
-                      </span>
-                    )}
+                  </div>
+
+                  <div className="mt-6">
+                    <ul className="space-y-3">
+                      {plan.features.map((feature, index) => {
+                        const IconComponent = feature.icon;
+                        return (
+                          <li key={index} className="flex items-start gap-3">
+                            <span className={`${plan.featured ? "text-blue-200" : "text-blue-600 dark:text-blue-400"} flex-shrink-0 mt-0.5`}>
+                              <IconComponent className="w-4 h-4" />
+                            </span>
+                            <span className={`${plan.featured ? "text-blue-50" : "text-black dark:text-white text-sm"} leading-relaxed`}>{feature.text}</span>
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </div>
                 </div>
 
-                <div className="mt-6">
-                  <ul className="space-y-3">
-                    {plan.features.map((feature, index) => {
-                      const IconComponent = feature.icon;
-                      return (
-                        <li key={index} className="flex items-start gap-3">
-                          <span className={`${plan.featured ? "text-blue-200" : "text-blue-600 dark:text-blue-400"} flex-shrink-0 mt-0.5`}>
-                            <IconComponent className="w-4 h-4" />
+                {/* CTA */}
+                <div className="mt-8 relative z-10">
+                  <motion.a
+                    whileTap={{ scale: 0.98 }}
+                    whileHover={{ scale: 1.01 }}
+                    href={
+                      plan.id === "masterclass"
+                        ? "/tncmasterclass"
+                        : plan.id === "bundle"
+                        ? "/course-tnc"
+                        : plan.id === "enterprise"
+                        ? "/enterprise-tnc"
+                        : "#"
+                    }
+                    className={`relative w-full inline-flex items-center justify-center py-3 rounded-full font-medium shadow-md transition-transform duration-200 overflow-hidden
+                      ${plan.featured ? "bg-white text-blue-600" : "bg-blue-600 hover:bg-blue-700 text-white"}`}
+                  >
+                    <span className="relative z-[1]">{plan.cta}</span>
+                    <span className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-200 bg-gradient-to-r from-white/0 via-white/30 to-white/0" />
+                  </motion.a>
+
+                  <p className={`mt-4 text-xs ${plan.featured ? "text-blue-100/90" : "text-slate-500 dark:text-slate-400"}`}>
+                    {plan.id === "masterclass"
+                      ? (
+                          <span className="flex items-center gap-2">
+                            <FiAlertTriangle className="w-6 h-6 text-amber-500 flex-shrink-0" />
+                            <span>WARNING: The price will increase to $147/month soon. Join now to lock in your $69/month rate forever — and cancel anytime.</span>
                           </span>
-                          <span className={`${plan.featured ? "text-blue-50" : "text-black dark:text-white text-sm"} leading-relaxed`}>{feature.text}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                        )
+                      : isYearly
+                      ? "Billed annually. Cancel anytime before renewal."
+                      : "Cancel anytime. Access renews monthly."}
+                  </p>
                 </div>
-              </div>
 
-              {/* CTA */}
-              <div className="mt-8">
-                <motion.a
-                  whileTap={{ scale: 0.98 }}
-                  whileHover={{ scale: 1.01 }}
-                  href={
-                    plan.id === "masterclass"
-                      ? "/tncmasterclass"
-                      : plan.id === "bundle"
-                      ? "/course-tnc"
-                      : plan.id === "enterprise"
-                      ? "/enterprise-tnc"
-                      : "#"
-                  }
-                  className={`relative w-full inline-flex items-center justify-center py-3 rounded-full font-medium shadow-md transition-transform duration-200 overflow-hidden
-                    ${plan.featured ? "bg-white text-blue-600" : "bg-blue-600 hover:bg-blue-700 text-white"}`}
-                >
-                  <span className="relative z-[1]">{plan.cta}</span>
-                  <span className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-200 bg-gradient-to-r from-white/0 via-white/30 to-white/0" />
-                </motion.a>
+                {/* Decorative curves and shapes */}
+                <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                  {/* Main curved circle */}
+                  <div className="absolute -right-10 -top-10 opacity-10">
+                    <svg width="220" height="220" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="3" />
+                    </svg>
+                  </div>
+                  
+                  {/* Additional curved elements */}
+                  <div className="absolute -left-8 -bottom-8 opacity-5">
+                    <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 20 Q50 5 80 20 Q95 50 80 80 Q50 95 20 80 Q5 50 20 20" stroke="currentColor" strokeWidth="2" fill="none" />
+                    </svg>
+                  </div>
+                  
+                  {/* Small curved accent */}
+                  <div className="absolute top-4 right-4 opacity-8">
+                    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 10 Q30 5 50 10 Q70 15 90 10" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                    </svg>
+                  </div>
+                  
+                  {/* Bottom curve accent */}
+                  <div className="absolute bottom-4 left-4 opacity-6">
+                    <svg width="60" height="30" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0 25 Q25 10 50 25 Q75 40 100 25" stroke="currentColor" strokeWidth="1" fill="none" />
+                    </svg>
+                  </div>
+                  
+                  {/* Gradient overlay for depth */}
+                  <div className={`absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-${plan.featured ? 'white/5' : 'blue-500/5'} dark:to-${plan.featured ? 'white/5' : 'blue-400/5'}`} />
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
 
-                <p className={`mt-4 text-xs ${plan.featured ? "text-blue-100/90" : "text-slate-500 dark:text-slate-400"}`}>
-                  {plan.id === "enterprise"
-                    ? "Custom contracts, billing and onboarding for teams."
-                    : plan.id === "bundle"
-                    ? "One-time purchase — lifetime access to Creditors Academy recorded lessons."
-                    : plan.id === "masterclass"
-                    ? (
-                        <span className="flex items-center gap-2">
-                          <FiAlertTriangle className="w-6 h-6 text-amber-500 flex-shrink-0" />
-                          <span>WARNING: The price will increase to $147/month soon. Join now to lock in your $69/month rate forever — and cancel anytime.</span>
-                        </span>
-                      )
-                    : isYearly
-                    ? "Billed annually. Cancel anytime before renewal."
-                    : "Cancel anytime. Access renews monthly."}
-                </p>
-              </div>
+          {/* RIGHT - How It Works Section */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.25 }}
+            variants={containerVariants}
+            className="pl-2 md:pl-8"
+          >
+            <motion.h2
+              className="text-4xl md:text-5xl font-extrabold tracking-tight text-blue-900 dark:text-blue-100 mb-8"
+              initial={{ opacity: 0, y: -10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45 }}
+            >
+              How It Works
+            </motion.h2>
 
-              {/* Decorative curves and shapes */}
-              <div className="pointer-events-none absolute inset-0 overflow-hidden">
-                {/* Main curved circle */}
-                <div className="absolute -right-10 -top-10 opacity-10">
-                  <svg width="220" height="220" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="3" />
-                  </svg>
-                </div>
-                
-                {/* Additional curved elements */}
-                <div className="absolute -left-8 -bottom-8 opacity-5">
-                  <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 20 Q50 5 80 20 Q95 50 80 80 Q50 95 20 80 Q5 50 20 20" stroke="currentColor" strokeWidth="2" fill="none" />
-                  </svg>
-                </div>
-                
-                {/* Small curved accent */}
-                <div className="absolute top-4 right-4 opacity-8">
-                  <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 10 Q30 5 50 10 Q70 15 90 10" stroke="currentColor" strokeWidth="1.5" fill="none" />
-                  </svg>
-                </div>
-                
-                {/* Bottom curve accent */}
-                <div className="absolute bottom-4 left-4 opacity-6">
-                  <svg width="60" height="30" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 25 Q25 10 50 25 Q75 40 100 25" stroke="currentColor" strokeWidth="1" fill="none" />
-                  </svg>
-                </div>
-                
-                {/* Gradient overlay for depth */}
-                <div className={`absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-${plan.featured ? 'white/5' : 'blue-500/5'} dark:to-${plan.featured ? 'white/5' : 'blue-400/5'}`} />
-              </div>
+            <div className="relative">
+              {/* vertical line */}
+              <div className="absolute left-[28px] top-6 bottom-6 w-[2px] bg-blue-300 dark:bg-blue-600 opacity-70 hidden md:block" />
+
+              <motion.ul className="space-y-8" variants={containerVariants}>
+                {steps.map((s) => (
+                  <motion.li
+                    key={s.id}
+                    className="group relative md:flex md:items-start md:gap-6"
+                    variants={itemVariants}
+                    whileHover="hover"
+                  >
+                    {/* circle */}
+                    <div className="flex-shrink-0">
+                      <motion.div
+                        initial={{ scale: 0.9 }}
+                        whileInView={{ scale: 1 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-white font-bold shadow-lg bg-blue-600 dark:bg-blue-500"
+                      >
+                        <span className="text-lg md:text-xl">{s.id}</span>
+                      </motion.div>
+                    </div>
+
+                    {/* content */}
+                    <div className="mt-2 md:mt-0">
+                      <motion.h3
+                        className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight"
+                        variants={itemVariants}
+                      >
+                        {s.title}
+                      </motion.h3>
+
+                      <motion.p className="mt-2 text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed" variants={itemVariants}>
+                        {s.description}
+                      </motion.p>
+                    </div>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </div>
+
+            {/* CTA row for smaller screens */}
+            <motion.div
+              className="mt-10 flex gap-4 items-center"
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45 }}
+            >
+              <a
+                className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-blue-600 dark:bg-blue-500 text-white font-semibold shadow-md hover:scale-105 transform transition-transform duration-200 hover:bg-blue-700 dark:hover:bg-blue-600"
+                href="https://lmsathena.com/login"
+              >
+                Get Started
+              </a>
             </motion.div>
-          ))}
-        </motion.div>
+          </motion.div>
+        </div>
 
         <div className="mt-12 text-center text-sm text-slate-500 dark:text-slate-400">
           <span>Have questions? </span>

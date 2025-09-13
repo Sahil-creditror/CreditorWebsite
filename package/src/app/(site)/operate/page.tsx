@@ -25,7 +25,7 @@ export default function Page() {
                 // buttonPath="/course-tnc"
             />
             <Intro2 />
-            <Pricing />
+            {/* <Pricing /> */}
             <HowItWorks />
             <Appointment />
             <BecomeIntro /> 

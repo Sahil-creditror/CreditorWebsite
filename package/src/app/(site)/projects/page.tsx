@@ -9,6 +9,7 @@ import Event from "@/app/components/Event";
 import Join from "@/app/components/masterclass/Join";
 import Preview from "@/app/components/masterclass/preview";
 import Pricing from "@/app/components/shared/plan";
+import Works from "@/app/components/masterclass/works";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -28,7 +29,8 @@ export default function Page() {
             />
             <Preview />
             <Intro />
-            <Pricing />
+            <Works />
+            {/* <Pricing /> */}
             <Learn />
             <Appoint />
             <Join />

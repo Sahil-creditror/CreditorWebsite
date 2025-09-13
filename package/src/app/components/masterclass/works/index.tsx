@@ -54,9 +54,9 @@ const steps: Step[] = [
   },
   {
     id: 3,
-    title: "Become Private + Sovereignty101",
+    title: "Masterclass Membership",
     description:
-      "Use your “Creditor Card” on mastering the art of building elite business credit through Unincorporated Business Trusts. Repair and optimize your personal credit profile, and set up Private Merchant Processing to keep your commerce fully under your control.",
+      "A refined three-phase system for founders who want legal protection, fundable credit, and private payment flows. Templates, walkthroughs, and proven playbooks included.",
   },
 ];
 

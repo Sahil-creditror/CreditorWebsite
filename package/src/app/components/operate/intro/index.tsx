@@ -28,7 +28,7 @@ type Module = {
 interface MasterclassOverviewProps {
   title?: string;
   kicker?: string;
-  pitch?: string;
+  pitch?: string[];
   audience?: string[];
   modules?: Module[];
   primaryCtaText?: string;
@@ -44,8 +44,13 @@ interface MasterclassOverviewProps {
 
 const DEFAULT_TITLE = "Launch a Private Business with Trusts & PMAs";
 const DEFAULT_KICKER = "Overview • Self-paced Journey";
-const DEFAULT_PITCH =
-  "This Self-paced Journey teaches you how to operate entirely outside the state-controlled system—by using private trusts, PMAs, and lawful commerce strategies. Ideal for Entrepreneurs, Real estate, asset protection and Family legacy planning.";
+const DEFAULT_PITCH = [
+  "Operate outside state-controlled systems",
+  "Private trusts & PMA structures", 
+  "Lawful commerce strategies",
+  "Asset protection frameworks",
+  "Family legacy planning"
+];
 
 const DEFAULT_AUDIENCE = [
   "Entrepreneurs",
@@ -193,35 +198,31 @@ export default function MasterclassOverview({
     ease: [0.43, 0.13, 0.23, 0.96]
   };
 
-  // Benefit cards data
+  // Benefit cards data - simplified
   const benefitCards = [
     {
       icon: Building2,
-      title: "Private-first structure",
-      desc: "Learn frameworks for operating privately with clarity and confidence.",
-      colors: "from-indigo-500 to-indigo-700",
-      gradient: "from-indigo-500/40 via-fuchsia-500/30 to-rose-500/30",
+      title: "Private Structure",
+      desc: "UBOT Trusts & PMA formation for asset protection",
+      colors: "from-blue-500 to-blue-700",
     },
     {
       icon: Briefcase,
-      title: "Real-world commerce",
-      desc: "Translate principles into offers, payment flows and client delivery.",
-      colors: "from-emerald-500 to-teal-600",
-      gradient: "from-emerald-500/40 to-teal-500/30",
+      title: "Commerce Systems",
+      desc: "Payment flows and client delivery frameworks",
+      colors: "from-emerald-500 to-emerald-700",
     },
     {
       icon: Sprout,
-      title: "Built-in scalability",
-      desc: "Systems, documentation and habits that support growth without chaos.",
-      colors: "from-amber-500 to-rose-600",
-      gradient: "from-amber-500/40 to-pink-500/30",
+      title: "Scalable Growth",
+      desc: "Documentation and process systems for teams",
+      colors: "from-amber-500 to-amber-700",
     },
     {
       icon: ShieldCheck,
-      title: "Clarity & compliance",
-      desc: "Operate with consistent practices and clear boundaries across contexts.",
-      colors: "from-violet-500 to-fuchsia-600",
-      gradient: "from-violet-500/40 to-fuchsia-500/30",
+      title: "Compliance",
+      desc: "Legal boundaries and risk management",
+      colors: "from-violet-500 to-violet-700",
     },
   ];
 
@@ -308,16 +309,21 @@ export default function MasterclassOverview({
               />
             </motion.h2>
 
-            <motion.p
+            <motion.ul
               variants={fadeUp}
               custom={2}
               initial="hidden"
               animate="visible"
               transition={transition}
-              className="leading-relaxed text-lg text-slate-700 dark:text-slate-300 mb-6"
+              className="space-y-2 mb-6"
             >
-              {pitch}
-            </motion.p>
+              {pitch.map((point, index) => (
+                <li key={index} className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                  <div className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" />
+                  <span className="text-base font-medium">{point}</span>
+                </li>
+              ))}
+            </motion.ul>
 
             {/* Audience pills */}
             <motion.div 
@@ -375,16 +381,16 @@ export default function MasterclassOverview({
               initial="hidden"
               animate="visible"
               transition={transition}
-              className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-500 dark:text-gray-400"
+              className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-gray-500 dark:text-gray-400"
             >
               <span className="inline-flex items-center gap-2">
-                <Users className="h-4 w-4" /> Small-group coaching
+                <Users className="h-4 w-4" /> Small groups
               </span>
               <span className="inline-flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4" /> Private community
+                <ShieldCheck className="h-4 w-4" /> Private access
               </span>
               <span className="inline-flex items-center gap-2">
-                <FileCheck className="h-4 w-4" /> Templates included
+                <FileCheck className="h-4 w-4" /> Templates
               </span>
             </motion.div>
           </div>
@@ -397,32 +403,28 @@ export default function MasterclassOverview({
           initial="hidden"
           animate="visible"
           transition={{ ...transition, delay: 0.6 }}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-10 relative z-10"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10 relative z-10"
         >
-          {benefitCards.map(({ icon: Icon, title, desc, colors, gradient }) => (
+          {benefitCards.map(({ icon: Icon, title, desc, colors }) => (
             <motion.article
               key={title}
-              whileHover={{ y: -8, scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ y: -2, scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              className={`rounded-2xl p-[1px] bg-gradient-to-br ${gradient}`}
+              className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-lg transition-all duration-300"
             >
-              <div className="h-full rounded-2xl bg-white/80 dark:bg-gray-900/70 backdrop-blur border border-white/60 dark:border-white/10 p-5 shadow-sm hover:shadow-md transition-all">
-                <div className="flex items-start gap-3">
-                  <div
-                    className={`rounded-xl p-3 bg-gradient-to-br ${colors} text-white shadow-inner`}
-                  >
-                    <Icon className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">
-                      {title}
-                    </h3>
-                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
-                      {desc}
-                    </p>
-                  </div>
+              <div className="text-center">
+                <div
+                  className={`inline-flex rounded-xl p-4 bg-gradient-to-br ${colors} text-white shadow-sm mb-4`}
+                >
+                  <Icon className="h-7 w-7" />
                 </div>
+                <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                  {title}
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                  {desc}
+                </p>
               </div>
             </motion.article>
           ))}

@@ -154,7 +154,7 @@ const PrivateBusinessCredit: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                  <ul className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2">
+                  <ul className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2 [&_svg]:w-6 [&_svg]:h-6">
                     <li className="flex items-center gap-2">
                       {/* Document Icon (Credit Report) */}
                       <svg
@@ -313,7 +313,7 @@ const PrivateBusinessCredit: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                  <ul className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2">
+                  <ul className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2 [&_svg]:w-6 [&_svg]:h-6">
                     <li className="flex items-center gap-2">
                       {/* Bank Slash Icon (Process without banks) */}
                       <svg

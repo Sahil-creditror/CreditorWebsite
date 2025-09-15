@@ -22,32 +22,32 @@ const WhatYoullLearnSlider: React.FC = () => {
 
   const cards: CardType[] = [
     {
-      title: "Set up your UBOT Trust & asset-holding structure",
-      desc: "Design robust UBOT frameworks to protect and compartmentalize assets from day one.",
+      title: "UBOT Trust Setup",
+      desc: "Protect and compartmentalize assets with robust frameworks.",
       color: "#426be6",
       img: "/images/operate/img2.webp",
     },
     {
-      title: "Form PMAs for coaching, services, education, or trades",
-      desc: "Stand up Private Membership Associations to operate in the private with clarity.",
+      title: "Private Membership Associations",
+      desc: "Operate in the private with clear PMA structures.",
       color: "#7648be",
       img: "/images/operate/img5.webp",
     },
     {
-      title: "Acquire & hold real estate in trusts",
-      desc: "Structure acquisitions for privacy, continuity, and long-term stewardship.",
+      title: "Real Estate in Trusts",
+      desc: "Structure acquisitions for privacy and continuity.",
       color: "#23a26c",
       img: "/images/operate/img6.webp",
     },
     {
-      title: "Handle bookkeeping + taxes privately",
-      desc: "Implement disciplined record-keeping and private accounting workflows.",
+      title: "Private Bookkeeping",
+      desc: "Implement disciplined record-keeping workflows.",
       color: "#e28019",
       img: "/images/operate/img1.webp",
     },
     {
-      title: "Build intergenerational wealth in the private",
-      desc: "Navigate operations with private instruments and compliant governance.",
+      title: "Intergenerational Wealth",
+      desc: "Navigate operations with private instruments.",
       color: "#e14040",
       img: "/images/operate/img3.webp",
     },
@@ -110,7 +110,7 @@ const WhatYoullLearnSlider: React.FC = () => {
           </div>
         </div>
         <div className="text-center text-sm text-gray-600 dark:text-gray-300 mb-10">
-          A concise, real-world curriculum for operating in the private—built for clarity, compliance, and longevity.
+          Real-world curriculum for operating in the private with clarity and compliance.
         </div>
       </motion.div>
 
@@ -126,7 +126,7 @@ const WhatYoullLearnSlider: React.FC = () => {
           <button
             aria-label="Previous"
             onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 w-11 h-11 rounded-full shadow-md flex items-center justify-center z-10 text-gray-700 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+            className="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-800 hover:bg-gray-900 border border-gray-700 w-11 h-11 rounded-full shadow-lg flex items-center justify-center z-10 text-white transition-colors duration-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600"
           >
             <FaChevronLeft />
           </button>
@@ -163,10 +163,10 @@ const WhatYoullLearnSlider: React.FC = () => {
                   </div>
 
                   <div className="px-4 pt-10 pb-6 text-center mt-6 flex-1">
-                    <div className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+                    <div className="text-base font-semibold text-gray-800 dark:text-white mb-2">
                       {card.title}
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                    <div className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
                       {card.desc}
                     </div>
                   </div>
@@ -180,7 +180,7 @@ const WhatYoullLearnSlider: React.FC = () => {
           <button
             aria-label="Next"
             onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 w-11 h-11 rounded-full shadow-md flex items-center justify-center z-10 text-gray-700 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+            className="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-800 hover:bg-gray-900 border border-gray-700 w-11 h-11 rounded-full shadow-lg flex items-center justify-center z-10 text-white transition-colors duration-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600"
           >
             <FaChevronRight />
           </button>

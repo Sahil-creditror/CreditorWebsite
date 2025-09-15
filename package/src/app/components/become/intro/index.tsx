@@ -6,6 +6,8 @@ import { gsap } from "gsap";
 export default function CourseOverviewSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const rippleRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLDivElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [particlePositions, setParticlePositions] = useState<Array<{ left: number; top: number }>>([]);
 
   // --- GSAP ripple + blob animation ---
@@ -106,7 +108,29 @@ export default function CourseOverviewSection() {
     return () => { tween.kill(); };
   }, [particlePositions.length]);
 
-  // (Removed play button logic; directly embedding video instead)
+  // Play button animation
+  const handlePlay = () => {
+    setIsPlaying(true);
+    if (videoRef.current) {
+      gsap.to(videoRef.current, {
+        scale: 1.02,
+        boxShadow: "0 25px 50px -12px rgba(79, 70, 229, 0.4)",
+        duration: 0.5
+      });
+      
+      // Simulate video playing (in a real app, this would trigger actual video playback)
+      setTimeout(() => {
+        setIsPlaying(false);
+        if (videoRef.current) {
+          gsap.to(videoRef.current, {
+            scale: 1,
+            boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+            duration: 0.5
+          });
+        }
+      }, 3000);
+    }
+  };
 
   // --- Framer Motion Variants ---
   const containerVariants: Variants = {
@@ -148,14 +172,13 @@ export default function CourseOverviewSection() {
   };
 
   return (
-    <div className="w-full bg-slate-50 dark:bg-slate-800 px-4 md:px-6 py-12 md:py-16">
-      <motion.section
-          ref={containerRef}
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl p-8 md:p-12 bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 shadow-xl border border-blue-100 dark:border-slate-700"
-      >
+    <motion.section
+      ref={containerRef}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="relative w-full overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 px-4 md:px-6 py-12 md:py-16"
+    >
 
       {/* Enhanced Ripple background */}
       <div ref={rippleRef} aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -183,7 +206,7 @@ export default function CourseOverviewSection() {
       <div aria-hidden className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full blob bg-gradient-to-br from-indigo-300/20 to-purple-300/12 dark:from-indigo-800/20 dark:to-purple-800/15 mix-blend-screen blur-3xl transform-gpu" />
       <div aria-hidden className="absolute top-1/4 -left-20 w-64 h-64 rounded-full blob bg-gradient-to-br from-blue-300/15 to-cyan-300/10 dark:from-blue-700/15 dark:to-cyan-600/10 mix-blend-screen blur-2xl transform-gpu" />
 
-      <div className="flex flex-wrap gap-10 items-center relative z-10">
+      <div className="mx-auto max-w-7xl flex flex-wrap gap-10 items-center relative z-10 p-0 md:p-0">
         {/* Embedded Drive Video */}
         <div className="flex-1 min-w-[18rem] max-w-3xl relative rounded-2xl overflow-hidden shadow-2xl">
           <div className="w-full aspect-video rounded-2xl relative overflow-hidden">
@@ -206,14 +229,14 @@ export default function CourseOverviewSection() {
             initial="hidden"
             animate="visible"
             transition={transition}
-            className="text-3xl md:text-4xl font-bold mb-6 text-indigo-800 dark:text-indigo-300 relative inline-block"
+            className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight relative inline-block"
           >
-            Course Overview
-            <motion.span 
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-blue-600 dark:from-indigo-300 dark:to-blue-400">Course Overview</span>
+            <motion.span
               initial={{ width: 0 }}
-              animate={{ width: "3.5rem" }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              className="absolute -bottom-3 left-0 h-1 bg-gradient-to-r from-indigo-600 to-blue-500 dark:from-indigo-400 dark:to-blue-400 rounded" 
+              animate={{ width: "5rem" }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="absolute -bottom-3 left-0 h-1 bg-gradient-to-r from-indigo-600 to-blue-500 dark:from-indigo-400 dark:to-blue-400 rounded"
             />
           </motion.h2>
 
@@ -223,10 +246,9 @@ export default function CourseOverviewSection() {
             initial="hidden"
             animate="visible"
             transition={transition}
-            className="leading-relaxed text-lg text-slate-700 dark:text-slate-300 mb-8"
+            className="leading-relaxed text-base md:text-lg text-slate-700 dark:text-slate-300 mb-8"
           >
-            Discover how the public system views you as a corporate fiction and learn how to correct your status.
-            This foundational course equips you with the knowledge and legal framework to reclaim your identity and start living in the private.
+            Learn how the public system treats you as a corporate fiction and how to correct your status using a clear legal framework so you can confidently live in the private.
           </motion.p>
 
           <motion.div
@@ -240,10 +262,7 @@ export default function CourseOverviewSection() {
             {features.map((item, index) => (
               <motion.div
                 key={index}
-                whileHover={{ y: -8, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="bg-white/70 dark:bg-slate-800/70 rounded-xl py-4 px-5 flex items-center gap-3 border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-md shadow-sm hover:shadow-md transition-all"
+                className="bg-white/70 dark:bg-slate-800/70 rounded-xl py-4 px-5 flex items-center gap-3 border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-md shadow-sm"
               >
                 <span className="text-2xl">{item.icon}</span>
                 <span className="text-sm font-medium text-indigo-800 dark:text-indigo-200">{item.text}</span>
@@ -269,7 +288,6 @@ export default function CourseOverviewSection() {
           </motion.div>
         </div>
       </div>
-      </motion.section>
-    </div>
+    </motion.section>
   );
 }

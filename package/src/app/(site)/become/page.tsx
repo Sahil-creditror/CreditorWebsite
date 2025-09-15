@@ -24,9 +24,9 @@ export default function Page() {
                 desc="Reclaim Your <span>Legal Identity</span> and Exit the Public System."
                 // buttonPath="/course-tnc" // 👈 you now define the path here
             />
+            <Intro2 />
             <BecomeIntro />
             {/* <Pricing /> */}
-            <Intro2 />
             <HowItWorks />
             <Appoint />
             <Content />

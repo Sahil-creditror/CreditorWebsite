@@ -28,7 +28,7 @@ const Herobanner: React.FC<HeroBannerProps> = ({
   const inView = useInView(btnRef, { once: true, amount: 0.25 });
 
   return (
-    <section className="relative flex items-end text-white bg-black h-[100vh] bg-fixed sm:h-screen max-h-[650px]">
+    <section className="relative flex items-end text-white bg-black h-[70vh] bg-fixed sm:h-[80vh] max-h-[450px]">
       {/* Background image */}
       <Image
         className="absolute inset-0 w-full h-full object-cover"

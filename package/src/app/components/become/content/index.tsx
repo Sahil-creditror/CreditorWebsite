@@ -24,6 +24,7 @@ type CardType = {
 const SovSlider: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const sliderRef = useRef<HTMLDivElement | null>(null);
   const touchStartX = useRef<number>(0);
@@ -35,35 +36,35 @@ const SovSlider: React.FC = () => {
       desc: "Learn how to correct your legal status and establish sovereignty",
       Icon: FaBalanceScale,
       color: "#426be6",
-      img: "/images/courses/become/status.webp",
+      img: "/images/courses/become/status.png",
     },
     {
       title: "Legal Fictions",
       desc: "Understand legal fictions and how to rebut presumption",
       Icon: FaGavel,
       color: "#7648be",
-      img: "/images/courses/become/judiciary.webp",
+      img: "/images/courses/become/judiciary.png",
     },
     {
       title: "Private Jurisdiction",
       desc: "Remove yourself from public jurisdiction effectively",
       Icon: FaUserLock,
       color: "#23a26c",
-      img: "/images/courses/become/private.webp",
+      img: "/images/courses/become/private.png",
     },
     {
       title: "Essential Documents",
       desc: "Create the necessary legal documents and private contracts",
       Icon: FaFileContract,
       color: "#e28019",
-      img: "/images/courses/become/document.webp",
+      img: "/images/courses/become/document.png",
     },
     {
       title: "Estate Protection",
       desc: "Begin protecting yourself and your estate properly",
       Icon: FaShieldAlt,
       color: "#e14040",
-      img: "/images/courses/become/asset.webp",
+      img: "/images/courses/become/asset.png",
     },
   ];
 
@@ -85,6 +86,28 @@ const SovSlider: React.FC = () => {
   const prevSlide = () => {
     setCurrentIndex((i) => Math.max(i - 1, 0));
   };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") nextSlide();
+      if (e.key === "ArrowLeft") prevSlide();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [totalSlides]);
+
+  // Autoplay with pause on hover
+  useEffect(() => {
+    if (isHovered) return;
+    const id = setInterval(() => {
+      setCurrentIndex((i) => {
+        if (i >= totalSlides - 1) return 0;
+        return i + 1;
+      });
+    }, 4000);
+    return () => clearInterval(id);
+  }, [isHovered, totalSlides]);
 
   // Swipe handling
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -120,23 +143,41 @@ const SovSlider: React.FC = () => {
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className="flex items-center justify-center gap-3 mb-2">
-          <div className="text-center text-3xl md:text-5xl font-extrabold text-[#0b3d78] dark:text-white">
+        <div className="flex flex-col items-center justify-center mb-8 relative">
+          {/* Main Heading */}
+          <h2
+            className="text-center text-3xl md:text-5xl font-bold 
+                      bg-gradient-to-r from-[#0b3d78] via-[#0072ff] to-[#0b3d78]
+                      bg-clip-text text-transparent dark:from-white dark:via-gray-300 dark:to-gray-100"
+          >
             What You'll Learn
-          </div>
+          </h2>
+
+          {/* Animated underline accent */}
+          <motion.span
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="absolute -bottom-2 left-1/2 h-[3px] w-28 -translate-x-1/2 
+                      bg-gradient-to-r from-[#0b3d78] to-[#00c6ff] rounded-full origin-center"
+          />
         </div>
 
-        <div className="text-center text-sm text-gray-600 dark:text-gray-300 mb-10">
-          Master these essential concepts to take control of your legal standing
-        </div>
+        {/* Subtitle */}
+        <p className="text-center text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-12 leading-relaxed">
+          Master essential concepts to gain true control over your <span className="font-semibold text-[#0b3d78] dark:text-white">legal standing</span> and unlock private knowledge for success.
+        </p>
       </motion.div>
 
       {/* Slider */}
       <div
         className="relative px-4 md:px-12"
         ref={sliderRef}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -145,7 +186,7 @@ const SovSlider: React.FC = () => {
           <button
             aria-label="Previous"
             onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 w-11 h-11 rounded-full shadow-md flex items-center justify-center z-10 text-gray-700"
+            className="absolute left-0 top-1/2 -translate-y-1/2 bg-[#426be6] w-11 h-11 rounded-full shadow-md flex items-center justify-center z-10 text-white transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#426be6]/40"
           >
             <FaChevronLeft />
           </button>
@@ -162,12 +203,12 @@ const SovSlider: React.FC = () => {
                 className="p-2 box-border"
                 style={{ flex: `0 0 ${100 / visibleCards}%` }}
               >
-                <div className="bg-white dark:bg-slate-950 rounded-xl shadow-lg overflow-hidden h-full flex flex-col relative">
+                <div className="bg-white dark:bg-slate-950 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col relative hover:-translate-y-1">
                   <div className="h-44 overflow-hidden">
                     <img
                       src={card.img}
                       alt={card.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover scale-[1.01] transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
 
@@ -199,7 +240,7 @@ const SovSlider: React.FC = () => {
           <button
             aria-label="Next"
             onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 w-11 h-11 rounded-full shadow-md flex items-center justify-center z-10 text-gray-700"
+            className="absolute right-0 top-1/2 -translate-y-1/2 bg-[#426be6] w-11 h-11 rounded-full shadow-md flex items-center justify-center z-10 text-white transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#426be6]/40"
           >
             <FaChevronRight />
           </button>
@@ -214,9 +255,11 @@ const SovSlider: React.FC = () => {
               key={i}
               aria-label={`Go to slide ${i + 1}`}
               onClick={() => setCurrentIndex(i)}
-              className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                currentIndex === i ? "bg-[#426be6]" : "bg-gray-300"
-              }`}
+              className={`${
+                currentIndex === i
+                  ? "w-6 h-2.5 rounded-full bg-[#426be6] shadow-sm"
+                  : "w-2.5 h-2.5 rounded-full bg-gray-300/80"
+              } transition-all duration-300`}
             />
           ))}
         </div>
@@ -229,25 +272,6 @@ const SovSlider: React.FC = () => {
           </div>
         )}
       </div>
-      {/* Call to Action */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        viewport={{ once: true }}
-        className="text-center mt-16 relative z-10"
-      >
-        {/* <motion.button
-          whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(79, 70, 229, 0.3)" }}
-          whileTap={{ scale: 0.98 }}
-          className="bg-gradient-to-r from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 border-none rounded-full py-4 px-10 text-white font-semibold cursor-pointer shadow-lg text-lg group"
-        >
-          Start Your Transformation
-          <svg className="inline-block ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-          </svg>
-        </motion.button> */}
-      </motion.div>
     </div>
   );
 };

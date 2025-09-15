@@ -167,55 +167,104 @@ const BecomePrivateCourse: React.FC = () => {
         <motion.section
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.3 }}
+          viewport={{ once: true }}
           className="my-10 relative"
         >
           {/* Section header */}
-          <motion.h3 
-            className="text-center text-3xl md:text-5xl mb-16 relative text-slate-800 dark:text-slate-100 font-bold"
+          <motion.div 
+            className="text-center mb-20 relative"
             variants={fadeIn}
           >
-            Your Path to <span className="text-blue-700 dark:text-blue-400 relative inline-block">
-            Sovereignty Mastery
-            <motion.span 
-              className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 rounded-full"
+            {/* Decorative elements
+            <motion.div
+              className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent rounded-full opacity-60"
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: 1, delay: 0.2 }}
               viewport={{ once: false, amount: 0.3 }}
-            />
-            </span>
-          </motion.h3>
+            /> */}
+            
+            {/* Main title */}
+            <motion.h2 
+              className="text-2xl md:text-4xl lg:text-5xl font-bold mb-6 relative"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.05 }}
+              viewport={{ once: true }}
+            >
+              <span className="text-slate-800 dark:text-slate-100">
+                Your Path to{' '}
+              </span>
+              <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+                Sovereignty{' '}
+              </span>
+              <span className="text-slate-800 dark:text-slate-100">
+                Mastery
+              </span>
+            </motion.h2>
+
+            {/* Subtitle */}
+            <motion.p 
+              className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed font-medium"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              viewport={{ once: true }}
+            >
+              Transform your understanding of law, identity, and freedom through our comprehensive course system
+            </motion.p>
+
+            {/* Decorative dots
+            <motion.div 
+              className="flex justify-center items-center gap-2 mt-8"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              viewport={{ once: false, amount: 0.3 }}
+            >
+              {[0, 1, 2].map((i) => (
+                <motion.div
+                  key={i}
+                  className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.5, 1, 0.5],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: i * 0.3,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+            </motion.div> */}
+          </motion.div>
 
           {/* Courses container */}
           <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-5 relative z-10">
             {/* "Become Private" Course Card - Blue Theme */}
             <motion.div
-              whileHover={{ y: -12, scale: 1.02 }}
               className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-900/30 dark:to-sky-900/30 rounded-2xl p-0 w-full max-w-md shadow-xl border border-blue-200 dark:border-blue-700/50 relative overflow-hidden group"
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
             >
               {/* Premium Course Tag */}
               <div className="absolute top-5 left-5 bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
                 Foundation Course
               </div>
 
-              {/* Image container with hover effect */}
-              <motion.div 
-                className="w-full h-52 overflow-hidden relative"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-              >
+              {/* Image container */}
+              <div className="w-full h-52 overflow-hidden relative">
                 <img 
                   src="/images/courses/become/sophomore.webp"
                   alt="Status Correction Illustration"
-                  className="w-full h-full object-cover object-center group-hover:brightness-110 transition-all duration-500"
+                  className="w-full h-full object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent"></div>
-              </motion.div>
+              </div>
 
               <div className="p-8 relative">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-600 to-blue-700 clip-path-polygon opacity-10 dark:opacity-15"></div>
@@ -298,8 +347,8 @@ const BecomePrivateCourse: React.FC = () => {
               className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 flex items-center justify-center relative flex-shrink-0 my-6 lg:my-0 shadow-lg"
               initial={{ scale: 0, rotate: 180 }}
               whileInView={{ scale: 1, rotate: 0 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.2 }}
-              viewport={{ once: false, amount: 0.3 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.05 }}
+              viewport={{ once: true }}
             >
               <div className="absolute w-7 h-1 bg-white rounded"></div>
               <div className="absolute w-1 h-7 bg-white rounded"></div>
@@ -309,31 +358,26 @@ const BecomePrivateCourse: React.FC = () => {
 
             {/* New Sovereignty101 Course Card - Indigo Theme */}
             <motion.div
-              whileHover={{ y: -12, scale: 1.02 }}
               className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-2xl p-0 w-full max-w-md shadow-xl border border-indigo-200 dark:border-indigo-700/50 relative overflow-hidden group"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
             >
               {/* Premium Course Tag */}
               <div className="absolute top-5 left-5 bg-gradient-to-r from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
                 Advanced Course
               </div>
 
-              {/* Image container with hover effect */}
-              <motion.div 
-                className="w-full h-52 overflow-hidden relative"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-              >
+              {/* Image container */}
+              <div className="w-full h-52 overflow-hidden relative">
                 <img 
                   src="/images/courses/become/sov.webp"
                   alt="Sovereignty Foundations Illustration"
-                  className="w-full h-full object-cover object-center group-hover:brightness-110 transition-all duration-500"
+                  className="w-full h-full object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/20 to-transparent"></div>
-              </motion.div>
+              </div>
 
               <div className="p-8 relative">
                 <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-indigo-600 to-indigo-700 clip-path-polygon opacity-10 dark:opacity-15"></div>
@@ -411,36 +455,33 @@ const BecomePrivateCourse: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* Bottom mention
+          {/* Bottom mention */}
           <motion.p
-            className="text-center mt-16 text-xl text-slate-700 dark:text-slate-300 font-medium"
+            className="text-center mt-8 text-xl text-slate-700 dark:text-slate-300 font-medium"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
             viewport={{ once: true }}
           >
-            Plus learn to establish your <strong className="text-blue-700 dark:text-blue-400 font-semibold relative">
+            Learn to establish your <strong className="text-violet-700 dark:text-blue-400 font-semibold relative">
             Sovereign Status
-            <motion.span 
-              className="absolute -bottom-1 left-0 w-full h-0.5 bg-blue-700 dark:bg-blue-400 rounded-full"
-              initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            viewport={{ once: true }}
-            />
             </strong>
-          </motion.p> */}
+          </motion.p>
         </motion.section>
 
-        {/* <motion.button
+        <motion.a
+          href="https://lmsathena.com/login"
+          target="_blank"
+          rel="noopener noreferrer"
           whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
           whileTap={{ scale: 0.98 }}
-          className="bg-gradient-to-r from-blue-700 to-indigo-700 dark:from-blue-600 dark:to-indigo-600 border-none rounded-full py-4 px-10 text-white font-semibold cursor-pointer shadow-lg mt-6 text-lg transition-all duration-300 relative z-10"
+          className="inline-flex items-center bg-gradient-to-r from-blue-700 to-indigo-700 dark:from-blue-600 dark:to-indigo-600 border-none rounded-full mb-8 py-4 px-10 text-white font-semibold cursor-pointer shadow-lg text-lg transition-all duration-300 relative z-10"
         >
-          Start Your Journey Today <svg className="inline-block ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          Start your transformation
+          <svg className="inline-block ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
           </svg>
-        </motion.button> */}
+        </motion.a>
       </div>
     </div>
   );

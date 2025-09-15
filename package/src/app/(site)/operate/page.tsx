@@ -5,7 +5,7 @@ import BusinessCardsGrid from "@/app/components/operate/business";
 import Appointment from "@/app/components/operate/Appointment";
 import Contact from "@/app/components/shared/cta";
 import Pricing from "@/app/components/shared/plan";
-import Event from "@/app/components/Event";
+import Event from '@/app/components/Event';
 import HowItWorks from "@/app/components/operate/works";
 
 import { getAllProjects } from "@/lib/markdown";

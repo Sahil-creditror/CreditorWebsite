@@ -1,12 +1,14 @@
 "use client";
-import React, { useRef, useEffect, useMemo } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { motion, Variants, Transition } from "framer-motion";
 import { gsap } from "gsap";
 
-export default function CourseDetail() {
+export default function CourseOverviewSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const rippleRef = useRef<HTMLDivElement>(null);
-  
+  const videoRef = useRef<HTMLDivElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [particlePositions, setParticlePositions] = useState<Array<{ left: number; top: number }>>([]);
 
   // --- GSAP ripple + blob animation ---
   useEffect(() => {
@@ -46,15 +48,17 @@ export default function CourseDetail() {
 
       // Particle animation
       const particles = containerRef.current?.querySelectorAll(".particle") ?? [];
-      gsap.to(particles, {
-        y: -40,
-        opacity: 0,
-        duration: 6,
-        stagger: 0.2,
-        repeat: -1,
-        ease: "power1.out",
-        delay: 1
-      });
+      if (particles.length > 0) {
+        gsap.to(particles, {
+          y: -40,
+          opacity: 0,
+          duration: 6,
+          stagger: 0.2,
+          repeat: -1,
+          ease: "power1.out",
+          delay: 1
+        });
+      }
 
       // Section entrance animation
       gsap.fromTo(containerRef.current, 
@@ -74,7 +78,60 @@ export default function CourseDetail() {
     return () => mm.revert();
   }, []);
 
-  
+  // Generate particle positions on client only to avoid SSR/CSR mismatch
+  useEffect(() => {
+    setParticlePositions(
+      Array.from({ length: 15 }, () => ({ left: Math.random() * 100, top: Math.random() * 100 }))
+    );
+  }, []);
+
+  // Start particle animation once particles are present
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (particlePositions.length === 0) return;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    const particles = containerRef.current?.querySelectorAll(".particle") ?? [];
+    if (particles.length === 0) return;
+
+    const tween = gsap.to(particles, {
+      y: -40,
+      opacity: 0,
+      duration: 6,
+      stagger: 0.2,
+      repeat: -1,
+      ease: "power1.out",
+      delay: 1
+    });
+
+    return () => { tween.kill(); };
+  }, [particlePositions.length]);
+
+  // Play button animation
+  const handlePlay = () => {
+    setIsPlaying(true);
+    if (videoRef.current) {
+      gsap.to(videoRef.current, {
+        scale: 1.02,
+        boxShadow: "0 25px 50px -12px rgba(79, 70, 229, 0.4)",
+        duration: 0.5
+      });
+      
+      // Simulate video playing (in a real app, this would trigger actual video playback)
+      setTimeout(() => {
+        setIsPlaying(false);
+        if (videoRef.current) {
+          gsap.to(videoRef.current, {
+            scale: 1,
+            boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+            duration: 0.5
+          });
+        }
+      }, 3000);
+    }
+  };
+
   // --- Framer Motion Variants ---
   const containerVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -114,31 +171,13 @@ export default function CourseDetail() {
     ease: [0.43, 0.13, 0.23, 0.96]
   };
 
-  // Deterministic particle positions to avoid hydration mismatches
-  const particlePositions = useMemo(() => {
-    const count = 15;
-    const seed = 123456789; // fixed seed so SSR and CSR match
-    // Linear congruential generator (deterministic across environments)
-    let state = seed >>> 0;
-    const next = () => {
-      // Values from Numerical Recipes LCG
-      state = (1664525 * state + 1013904223) >>> 0;
-      return state / 0xffffffff;
-    };
-
-    return Array.from({ length: count }, () => ({
-      left: `${next() * 100}%`,
-      top: `${next() * 100}%`
-    }));
-  }, []);
-
   return (
     <motion.section
-        ref={containerRef}
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="relative overflow-hidden rounded-2xl p-8 md:p-12 bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 shadow-xl border border-blue-100 dark:border-slate-700 mb-20 mt-20 mx-4 md:mx-8 lg:mx-16"
+      ref={containerRef}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="relative w-full overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 px-4 md:px-6 py-12 md:py-16"
     >
 
       {/* Enhanced Ripple background */}
@@ -148,13 +187,16 @@ export default function CourseDetail() {
         <div className="ripple absolute left-1/3 bottom-1/3 w-88 h-88 rounded-full" style={{ background: 'radial-gradient(circle at 40% 60%, rgba(99,102,241,0.18), rgba(79,70,229,0.04) 40%, transparent 72%)' }} />
       </div>
 
-      {/* Floating particles (deterministic positions) */}
+      {/* Floating particles */}
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         {particlePositions.map((pos, i) => (
           <div
             key={i}
             className="particle absolute w-2 h-2 rounded-full bg-indigo-400/30 dark:bg-indigo-500/40"
-            style={pos}
+            style={{
+              left: `${pos.left}%`,
+              top: `${pos.top}%`,
+            }}
           />
         ))}
       </div>
@@ -164,18 +206,18 @@ export default function CourseDetail() {
       <div aria-hidden className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full blob bg-gradient-to-br from-indigo-300/20 to-purple-300/12 dark:from-indigo-800/20 dark:to-purple-800/15 mix-blend-screen blur-3xl transform-gpu" />
       <div aria-hidden className="absolute top-1/4 -left-20 w-64 h-64 rounded-full blob bg-gradient-to-br from-blue-300/15 to-cyan-300/10 dark:from-blue-700/15 dark:to-cyan-600/10 mix-blend-screen blur-2xl transform-gpu" />
 
-      <div className="flex flex-wrap gap-10 items-center relative z-10">
+      <div className="mx-auto max-w-7xl flex flex-wrap gap-10 items-center relative z-10 p-0 md:p-0">
         {/* Embedded Drive Video */}
         <div className="flex-1 min-w-[18rem] max-w-3xl relative rounded-2xl overflow-hidden shadow-2xl">
           <div className="w-full aspect-video rounded-2xl relative overflow-hidden">
-            <iframe
-              className="absolute inset-0 w-full h-full"
-              src="https://drive.google.com/file/d/1dMh3rb8cDq-WOna8IKCRdNQX3egHrJyH/preview"
-              allow="autoplay"
-              allowFullScreen
-              title="Course detail video"
-              style={{ border: 0 }}
-            />
+          <iframe
+            className="absolute inset-0 w-full h-full"
+            src="https://drive.google.com/file/d/1dMh3rb8cDq-WOna8IKCRdNQX3egHrJyH/preview"
+            allow="autoplay"
+            allowFullScreen
+            title="Course detail video"
+            style={{ border: 0 }}
+          />
           </div>
         </div>
 
@@ -220,10 +262,7 @@ export default function CourseDetail() {
             {features.map((item, index) => (
               <motion.div
                 key={index}
-                whileHover={{ y: -8, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="bg-white/70 dark:bg-slate-800/70 rounded-xl py-4 px-5 flex items-center gap-3 border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-md shadow-sm hover:shadow-md transition-all"
+                className="bg-white/70 dark:bg-slate-800/70 rounded-xl py-4 px-5 flex items-center gap-3 border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-md shadow-sm"
               >
                 <span className="text-2xl">{item.icon}</span>
                 <span className="text-sm font-medium text-indigo-800 dark:text-indigo-200">{item.text}</span>

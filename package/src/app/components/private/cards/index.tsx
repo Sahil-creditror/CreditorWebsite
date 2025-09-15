@@ -37,7 +37,7 @@ const PrivateBusinessCredit: React.FC = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { duration: 0.8, ease: "easeOut" as const },
+      transition: { duration: 0.4, ease: "easeOut" as const },
     },
   };
 
@@ -68,46 +68,52 @@ const PrivateBusinessCredit: React.FC = () => {
   return (
     <div className="font-sans bg-gray-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 p-5">
       {/* Title Section */}
-      <div className="text-center px-5 max-w-7xl mx-auto mb-20 relative">
+      <div className="text-center px-5 max-w-7xl mx-auto mb-10 relative">
         {/* Courses Section with Creative Layout */}
         <motion.section
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
           className="my-10 relative"
         >
           {/* Decorative elements */}
           <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-36 h-36 rounded-full bg-blue-100 bg-opacity-70 blur-xl z-0 dark:bg-blue-900 dark:bg-opacity-30"></div>
           <div className="absolute -bottom-20 right-20 w-24 h-24 rounded-full bg-indigo-100 bg-opacity-50 blur-lg z-0 dark:bg-indigo-900 dark:bg-opacity-20"></div>
 
-          {/* Section header */}
-          <motion.h3
-            className="text-center text-3xl md:text-5xl mb-16 relative text-slate-800 dark:text-slate-100 font-bold"
-            variants={fadeIn}
+          {/* Section header (matched style from Become section) */}
+          <motion.h2
+            className="text-2xl md:text-4xl lg:text-5xl font-bold mb-6 relative text-slate-800 dark:text-slate-100"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            viewport={{ once: true }}
           >
-            Your Path to{" "}
-            <span className="text-blue-700 dark:text-blue-400 relative inline-block">
+            <span className="text-slate-800 dark:text-slate-100">Your Path to </span>
+            <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
               Financial Freedom
-              <motion.span
-                className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 rounded-full"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                viewport={{ once: false, amount: 0.3 }}
-              />
             </span>
-          </motion.h3>
+          </motion.h2>
+
+          {/* Subtitle */}
+          <motion.p
+            className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed font-medium mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            viewport={{ once: true }}
+          >
+            Learn to correct status, process payments privately, and build resilient business credit with clarity and confidence.
+          </motion.p>
 
           {/* Courses container */}
           <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-5 relative z-10">
             {/* "I WANT REMEDY NOW - Blue Theme */}
             <motion.div
-              whileHover={{ y: -12, scale: 1.02 }}
               className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-900/30 dark:to-sky-900/30 rounded-2xl p-0 w-full max-w-sm shadow-xl border border-blue-200 dark:border-blue-700/50 relative overflow-hidden group"
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.35 }}
+              viewport={{ once: true, amount: 0.3 }}
             >
               {/* Premium Course Tag */}
               {/* <div className="absolute top-5 left-5 bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
@@ -117,13 +123,12 @@ const PrivateBusinessCredit: React.FC = () => {
               {/* Image container with hover effect */}
               <motion.div
                 className="w-full h-40 overflow-hidden relative"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.2 }}
               >
                 <img
                   src="/images/courses/become/remedy.webp"
                   alt="Status Correction Illustration"
-                  className="w-full h-full object-cover object-center group-hover:brightness-110 transition-all duration-500"
+                  className="w-full h-full object-cover object-center transition-all duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent"></div>
               </motion.div>
@@ -250,9 +255,9 @@ const PrivateBusinessCredit: React.FC = () => {
                 type: "spring",
                 stiffness: 300,
                 damping: 20,
-                delay: 0.2,
+                delay: 0.1,
               }}
-              viewport={{ once: false, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
             >
               <div className="absolute w-7 h-1 bg-white rounded"></div>
               <div className="absolute w-1 h-7 bg-white rounded"></div>
@@ -262,12 +267,11 @@ const PrivateBusinessCredit: React.FC = () => {
 
             {/* Private Merchant  - Indigo Theme */}
             <motion.div
-              whileHover={{ y: -12, scale: 1.02 }}
               className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-2xl p-0 w-full max-w-sm shadow-xl border border-indigo-200 dark:border-indigo-700/50 relative overflow-hidden group"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.35, delay: 0.05 }}
+              viewport={{ once: true, amount: 0.3 }}
             >
               {/* Premium Course Tag */}
               {/* <div className="absolute top-5 left-5 bg-gradient-to-r from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
@@ -277,13 +281,12 @@ const PrivateBusinessCredit: React.FC = () => {
               {/* Image container with hover effect */}
               <motion.div
                 className="w-full h-40 overflow-hidden relative"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.2 }}
               >
                 <img
                   src="/images/courses/become/PMP2.webp"
                   alt="Sovereignty Foundations Illustration"
-                  className="w-full h-full object-cover object-center group-hover:brightness-110 transition-all duration-500"
+                  className="w-full h-full object-cover object-center transition-all duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/20 to-transparent"></div>
               </motion.div>
@@ -409,9 +412,9 @@ const PrivateBusinessCredit: React.FC = () => {
                 type: "spring",
                 stiffness: 300,
                 damping: 20,
-                delay: 0.4,
+                delay: 0.15,
               }} // Increased delay
-              viewport={{ once: false, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
             >
               <div className="absolute w-7 h-1 bg-white rounded"></div>
               <div className="absolute w-1 h-7 bg-white rounded"></div>
@@ -421,12 +424,11 @@ const PrivateBusinessCredit: React.FC = () => {
 
             {/* "Private Business Credit" Course Card - Green Theme */}
             <motion.div
-              whileHover={{ y: -12, scale: 1.02 }}
               className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-900/30 dark:to-sky-900/30 rounded-2xl p-0 w-full max-w-sm shadow-xl border border-blue-200 dark:border-blue-700/50 relative overflow-hidden group"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.35, delay: 0.05 }}
+              viewport={{ once: true, amount: 0.3 }}
             >
               {/* Premium Course Tag */}
               {/* <div className="absolute top-5 left-5 bg-gradient-to-r from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
@@ -436,13 +438,12 @@ const PrivateBusinessCredit: React.FC = () => {
               {/* Image container with hover effect */}
               <motion.div
                 className="w-full h-40 overflow-hidden relative"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.2 }}
               >
                 <img
                   src="/images/courses/become/PBC.webp"
                   alt="Sovereignty Foundations Illustration"
-                  className="w-full h-full object-cover object-center group-hover:brightness-110 transition-all duration-500"
+                  className="w-full h-full object-cover object-center transition-all duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/20 to-transparent"></div>
               </motion.div>
@@ -581,15 +582,15 @@ const PrivateBusinessCredit: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* Bottom mention
+          {/* Bottom mention */}
           <motion.p
-            className="text-center mt-16 text-xl text-slate-700 dark:text-slate-300 font-medium"
+            className="text-center mt-8 text-xl text-slate-700 dark:text-slate-300 font-medium"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
             viewport={{ once: true }}
           >
-            Plus learn to establish your{" "}
+            Learn to establish your{" "}
             <strong className="text-blue-700 dark:text-blue-400 font-semibold relative">
               Financial Status
               <motion.span
@@ -600,18 +601,18 @@ const PrivateBusinessCredit: React.FC = () => {
                 viewport={{ once: true }}
               />
             </strong>
-          </motion.p> */}
+          </motion.p>
         </motion.section>
 
-        {/* <motion.button
+        <motion.button
           whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
           whileTap={{ scale: 0.98 }}
-          className="bg-gradient-to-r from-blue-700 to-indigo-700 dark:from-blue-600 dark:to-indigo-600 border-none rounded-full py-4 px-10 text-white font-semibold cursor-pointer shadow-lg mt-6 text-lg transition-all duration-300"
+          className="bg-gradient-to-r from-blue-700 to-indigo-700 dark:from-blue-600 dark:to-indigo-600 border-none rounded-full py-4 px-10 text-white font-semibold cursor-pointer shadow-lg text-lg transition-all duration-300"
         >
           Start Your Journey Today <svg className="inline-block ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
           </svg>
-        </motion.button> */}
+        </motion.button>
       </div>
 
       {/* Game Banner Section */}

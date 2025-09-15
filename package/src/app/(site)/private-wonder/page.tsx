@@ -42,9 +42,9 @@ const PrivatePage = () => {
           bannerimage="/images/services/service-banner.webp"
           // buttonPath="/course-tnc"
         />
+        <CourseDetail />
         <Cards />
         {/* <Pricing /> */}
-        <CourseDetail />
         <HowItWorks />
         <CourseFeatures />
         <Contact />

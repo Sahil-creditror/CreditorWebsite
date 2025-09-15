@@ -176,12 +176,11 @@ export default function CourseFeatures() {
                     initial={{ y: 60, opacity: 0, rotate: 2 }}
                     whileInView={{ y: 0, opacity: 1, rotate: 0 }}
                     transition={{ duration: 0.6, delay: i * 0.08 }}
-                    whileHover={{ y: -12, scale: 1.02 }}
                     viewport={{ once: true, margin: "0px" }}
-                    className="group relative w-full"
+                    className="relative w-full"
                   >
                     {/* Card - fixed size */}
-                    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-2xl border border-slate-200 dark:border-slate-700 relative overflow-hidden transition-all duration-300 h-full flex flex-col">
+                    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 relative overflow-hidden transition-all duration-300 h-full flex flex-col">
                       {/* Image section - fixed height */}
                       <div className="h-44 overflow-hidden">
                         <img
@@ -204,7 +203,7 @@ export default function CourseFeatures() {
 
                       {/* Content - fixed area with consistent spacing */}
                       <div className="px-4 pt-10 pb-6 text-center mt-6 flex-1 flex flex-col">
-                        <h3 className="text-lg font-semibold text-slate-800 dark:text-white mb-2 group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-300">
+                        <h3 className="text-lg font-semibold text-slate-800 dark:text-white mb-2 transition-colors duration-300">
                           {item.title}
                         </h3>
                         <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed flex-1">
@@ -222,7 +221,7 @@ export default function CourseFeatures() {
                     </div>
 
                     {/* Floating effect background */}
-                    <div className={`absolute inset-0 bg-gradient-to-r ${item.gradient} rounded-xl opacity-20 blur-md group-hover:opacity-30 transition-opacity duration-300 -z-10 translate-y-4 group-hover:translate-y-6`}></div>
+                    <div className={`absolute inset-0 bg-gradient-to-r ${item.gradient} rounded-xl opacity-20 blur-md transition-opacity duration-300 -z-10 translate-y-4`}></div>
                   </motion.div>
                 </div>
               ))}
@@ -271,11 +270,10 @@ export default function CourseFeatures() {
                 initial={{ y: 60, opacity: 0, rotate: 2 }}
                 whileInView={{ y: 0, opacity: 1, rotate: 0 }}
                 transition={{ duration: 0.6, delay: i * 0.08 }}
-                whileHover={{ y: -12, scale: 1.02 }}
                 viewport={{ once: true, margin: "0px" }}
-                className="group relative w-full h-[420px]"
+                className="relative w-full h-[420px]"
               >
-                <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-2xl border border-slate-200 dark:border-slate-700 relative overflow-hidden transition-all duration-300 h-full flex flex-col">
+                <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 relative overflow-hidden transition-all duration-300 h-full flex flex-col">
                   <div className="h-44 overflow-hidden">
                     <img
                       src={item.img}
@@ -295,7 +293,7 @@ export default function CourseFeatures() {
                   </div>
 
                   <div className="px-4 pt-10 pb-6 text-center mt-6 flex-1 flex flex-col">
-                    <h3 className="text-lg font-semibold text-slate-800 dark:text-white mb-2 group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-300">
+                    <h3 className="text-lg font-semibold text-slate-800 dark:text-white mb-2 transition-colors duration-300">
                       {item.title}
                     </h3>
                     <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed flex-1">
@@ -308,7 +306,7 @@ export default function CourseFeatures() {
                   <div className={`absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r ${item.gradient}`}></div>
                 </div>
 
-                <div className={`absolute inset-0 bg-gradient-to-r ${item.gradient} rounded-xl opacity-20 blur-md group-hover:opacity-30 transition-opacity duration-300 -z-10 translate-y-4 group-hover:translate-y-6`}></div>
+                <div className={`absolute inset-0 bg-gradient-to-r ${item.gradient} rounded-xl opacity-20 blur-md transition-opacity duration-300 -z-10 translate-y-4`}></div>
               </motion.div>
             ))}
           </div>

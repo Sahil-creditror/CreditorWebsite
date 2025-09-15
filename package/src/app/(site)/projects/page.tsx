@@ -28,7 +28,7 @@ export default function Page() {
                 // buttonPath="/tncmasterclass" 
             />
             <Preview />
-            <Intro />
+            {/* <Intro /> */}
             <Works />
             {/* <Pricing /> */}
             <Learn />

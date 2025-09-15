@@ -57,14 +57,7 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
         );
       });
 
-      // gentle floating of the hero card (scoped to cardRef)
-      if (!prefersReducedMotion && cardRef.current) {
-        gsap.fromTo(
-          cardRef.current,
-          { y: 8 },
-          { y: -8, ease: "sine.inOut", duration: 3.5, repeat: -1, yoyo: true }
-        );
-      }
+      // removed floating animation for the right-side card
 
       // price counter
       if (priceRef.current && !prefersReducedMotion) {
@@ -82,30 +75,7 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
         priceRef.current.textContent = "$69";
       }
 
-      // Card entrance animation with ScrollTrigger (scoped to cardRef)
-      if (cardRef.current && !prefersReducedMotion) {
-        gsap.fromTo(
-          cardRef.current,
-          {
-            opacity: 0,
-            y: 40,
-            rotationX: 5,
-            transformPerspective: 1000,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            rotationX: 0,
-            duration: 1.2,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: cardRef.current,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      }
+      // removed entrance animation for the right-side card
 
       // subtle parallax for ripple on pointermove (works on touch & mouse)
       const onMove = (e: PointerEvent) => {
@@ -206,7 +176,7 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
                 <span className="absolute inset-0 bg-gradient-to-r from-sky-400 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-clip-text text-transparent" />
                 </span>
                 <br />
-                <span className="block">90-Day Accelerator</span>
+                <span className="block">Self Paced Accelerator</span>
             </motion.h2>
 
             <motion.p
@@ -216,7 +186,7 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
                 variants={heading}
                 className="mt-6 text-slate-700 dark:text-slate-200 max-w-2xl text-lg sm:text-xl leading-relaxed font-light"
             >
-                A focused 90-day program combining{" "}
+                A focused Self Paced program combining{" "}
                 <span className="font-semibold text-sky-600 dark:text-sky-300">video training</span>,{" "}
                 <span className="font-semibold text-sky-600 dark:text-sky-300">templates</span>, and{" "}
                 <span className="font-semibold text-sky-600 dark:text-sky-300">live group mentorship</span>{" "}
@@ -269,7 +239,7 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
                 animate={{ opacity: 1, transition: { delay: 0.9 } }}
             >
                 {[
-                { label: "Program Length", value: "90 Days" },
+                { label: "Program Length", value: "Self Paced" },
                 { label: "Format", value: "Video + Templates + Live Mentorship" },
                 ].map((info, idx) => (
                 <div
@@ -301,7 +271,6 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
           <motion.div
             ref={cardRef}
             className="hero-card group relative rounded-2xl p-6 sm:p-8 overflow-hidden shadow-2xl"
-            whileHover={{ y: -4, transition: { duration: 0.25 } }}
             >
             {/* Shine Effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-0 transition-transform duration-700 opacity-0 group-hover:opacity-60 pointer-events-none" />

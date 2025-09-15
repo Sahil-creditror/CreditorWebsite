@@ -54,7 +54,7 @@ const steps: Step[] = [
   },
   {
     id: 3,
-    title: "Become Private + Sovereignty101",
+    title: "Operate Private",
     description:
       "Redeem credits to access a detailed, self-paced curriculum on private operations. You’ll learn the legal and practical frameworks for setting up Unincorporated Business Trusts, forming Private Membership Associations, and conducting lawful commerce. This program is designed for entrepreneurs, real estate professionals, and families focused on asset protection and legacy planning.",
   },
@@ -103,11 +103,35 @@ export default function Pricing() {
         <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
       </div>
       <div className="relative container mx-auto px-6">
-        <div className="max-w-3xl mx-auto text-center mb-8">
-          <h2 className="text-4xl font-black tracking-tight text-black dark:text-white" style={{ fontWeight: 900 }}>Pricing & Plans</h2>
-          <p className="mt-3 text-black dark:text-slate-300">
-            Choose the Creditors Academy plan that fits your goals — monthly membership for ongoing learning, a one-time course bundle for complete self-study, or enterprise access for teams and agencies.
-          </p>
+        <div className="relative mb-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
+            <div className="text-left">
+              <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/70 dark:border-white/10 bg-white/70 dark:bg-white/5 px-3 py-1 text-s text-slate-700 dark:text-slate-300 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400" />
+                Membership & Programs
+              </div>
+              <h2 className="mt-3 text-4xl md:text-5xl font-black tracking-tight text-black dark:text-white" style={{ fontWeight: 900 }}>
+                Invest In Becoming Private
+              </h2>
+              <p className="mt-3 text-slate-700 dark:text-slate-300 max-w-2xl">
+                Choose the plan that fits your goals. Start with Masterclass membership and scale into premium catalogs at your own pace.
+              </p>
+            </div>
+            <div className="w-full flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-md">
+                <div className="absolute -inset-2 rounded-xl bg-gradient-to-tr from-blue-500/20 via-cyan-400/20 to-blue-500/20 blur-xl" aria-hidden />
+                <Image
+                  src="/images/plan/become-member.webp"
+                  alt="Pricing overview"
+                  width={560}
+                  height={320}
+                  className="relative rounded-xl ring-1 ring-slate-200/70 dark:ring-white/10 shadow-lg object-cover w-full h-auto"
+                  priority
+                />
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 h-px w-full bg-gradient-to-r from-transparent via-slate-300/70 dark:via-white/10 to-transparent" />
         </div>
 
         {/* Billing toggle
@@ -144,13 +168,14 @@ export default function Pricing() {
           )}
         </div> */}
 
-        <div className="grid gap-12 grid-cols-1 lg:grid-cols-2 items-start">
+        <div className="grid gap-12 grid-cols-1 lg:grid-cols-3 items-start">
           {/* LEFT - Pricing Card */}
           <motion.div
             variants={container}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
+            className="lg:col-span-1"
           >
             {plans.map((plan) => (
               <motion.div
@@ -160,16 +185,7 @@ export default function Pricing() {
                 className={`relative rounded-2xl border p-8 flex flex-col justify-between overflow-hidden transition-shadow duration-300 ease-out
                   ${plan.featured ? "bg-gradient-to-br from-blue-600 to-blue-500 text-white border-blue-600 shadow-lg" : "bg-white/90 backdrop-blur dark:bg-[#0f1b2d]/80 border-slate-200 dark:border-[#1e3352]"}`}
               >
-                {/* Background Image */}
-                <div className="absolute inset-0 opacity-20 dark:opacity-15">
-                  <Image
-                    src="/images/plan/become-member.webp"
-                    alt="Background"
-                    fill
-                    className="object-cover rounded-2xl"
-                    priority
-                  />
-                </div>
+                {/* Background Image removed as requested */}
                 {/* Top gradient bar */}
                 <div className={`absolute inset-x-0 top-0 h-1 ${plan.featured ? "bg-gradient-to-r from-cyan-300/70 via-white/70 to-cyan-300/70" : "bg-gradient-to-r from-blue-500/20 via-cyan-400/20 to-blue-500/20"}`} />
 
@@ -317,10 +333,10 @@ export default function Pricing() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.25 }}
             variants={containerVariants}
-            className="pl-2 md:pl-8"
+            className="lg:col-span-2 w-full"
           >
             <motion.h2
-              className="text-4xl md:text-5xl font-extrabold tracking-tight text-blue-900 dark:text-blue-100 mb-8"
+              className="text-3xl md:text-4xl font-extrabold tracking-tight text-blue-900 dark:text-blue-100 mb-6"
               initial={{ opacity: 0, y: -10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
@@ -328,9 +344,9 @@ export default function Pricing() {
               How It Works
             </motion.h2>
 
-            <div className="relative">
+            <div className="relative rounded-2xl border border-slate-200 dark:border-[#1e3352] bg-white/70 dark:bg-[#0f1b2d]/60 p-6 md:p-8">
               {/* vertical line */}
-              <div className="absolute left-[28px] top-6 bottom-6 w-[2px] bg-blue-300 dark:bg-blue-600 opacity-70 hidden md:block" />
+              <div className="absolute md:left-[60px] top-10 bottom-10 w-[2px] bg-blue-300 dark:bg-blue-600 opacity-70 hidden md:block" />
 
               <motion.ul className="space-y-8" variants={containerVariants}>
                 {steps.map((s) => (
@@ -338,7 +354,6 @@ export default function Pricing() {
                     key={s.id}
                     className="group relative md:flex md:items-start md:gap-6"
                     variants={itemVariants}
-                    whileHover="hover"
                   >
                     {/* circle */}
                     <div className="flex-shrink-0">
@@ -361,7 +376,7 @@ export default function Pricing() {
                         {s.title}
                       </motion.h3>
 
-                      <motion.p className="mt-2 text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed" variants={itemVariants}>
+                      <motion.p className="mt-2 text-slate-600 dark:text-slate-300 leading-relaxed" variants={itemVariants}>
                         {s.description}
                       </motion.p>
                     </div>

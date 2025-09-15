@@ -227,31 +227,7 @@ export default function MasterclassBenefits() {
                     {item.description}
                   </p>
 
-                  <div className="mt-4 flex items-center justify-between">
-                    <a
-                      href="#"
-                      className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
-                      aria-label={`Explore ${item.title}`}
-                    >
-                      Explore
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </a>
-
-                    <motion.div
-                      className="ml-auto flex items-center gap-3"
-                      whileHover={{ rotate: 10 }}
-                      transition={{ type: "spring", stiffness: 200, damping: 12 }}
-                    >
-                      <div className="w-9 h-9 rounded-full bg-blue-50 dark:bg-slate-700 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-blue-600 dark:text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-                          <path d="M2 11a1 1 0 011-1h3.28a1 1 0 01.95.684L8.9 14H16a1 1 0 011 1v2a1 1 0 01-1 1H2v-6z" />
-                          <path d="M7 7a3 3 0 100-6 3 3 0 000 6z" />
-                        </svg>
-                      </div>
-                    </motion.div>
-                  </div>
+                  
                 </div>
 
                 {/* Decorative bottom accent */}

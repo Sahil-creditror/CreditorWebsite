@@ -5,7 +5,7 @@ import Image from "next/image";
 const AboutusTeam = () => {
   const team = [
     {
-      name: "Paul Michale",
+      name: "PaulMichael Rowland",
       role: "Founder & CEO",
       image: "/images/team/Paul.webp",
       bio: "Paul founded Creditor Academy with the mission to make financial literacy accessible and transformative.",

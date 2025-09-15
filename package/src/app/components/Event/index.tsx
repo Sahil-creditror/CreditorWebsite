@@ -25,47 +25,79 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
   // Widget URL
   const WIDGET_URL = 'https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls';
 
-  // Function to get current PST time
-  const getPSTTime = (): Date => {
-    const now = new Date();
-    // Convert to PST (UTC-8)
-    const pstTime = new Date(now.getTime() - (8 * 60 * 60 * 1000));
-    return pstTime;
+  // Robust Pacific Time (America/Los_Angeles) helpers with DST handling
+  const getLAOffsetMinutes = (dateUTC: Date) => {
+    const LA_TZ = 'America/Los_Angeles';
+    const fmt = new Intl.DateTimeFormat('en-US', { timeZone: LA_TZ, timeZoneName: 'shortOffset' });
+    const text = fmt.format(dateUTC); // e.g., "... GMT-7"
+    const match = text.match(/GMT([+-]?\d{1,2})(?::?(\d{2}))?/);
+    if (!match) return 0;
+    const sign = match[1].startsWith('-') ? -1 : 1;
+    const hours = Math.abs(parseInt(match[1], 10));
+    const minutes = match[2] ? parseInt(match[2], 10) : 0;
+    // Return NEGATED offset minutes so: UTC = local + offsetMinutes
+    return -(sign * (hours * 60 + minutes));
   };
 
-  // Function to get next Saturday at 11:15 AM PST
+  const getLAParts = (date: Date) => {
+    const LA_TZ = 'America/Los_Angeles';
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: LA_TZ,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      weekday: 'short',
+      hour12: false,
+    });
+    const parts = formatter.formatToParts(date);
+    const lookup = (type: string) => parts.find((p) => p.type === type)?.value ?? '0';
+    const weekdayText = parts.find((p) => p.type === 'weekday')?.value ?? 'Sun';
+    const weekdayIndexMap: Record<string, number> = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+    return {
+      year: Number(lookup('year')),
+      month: Number(lookup('month')),
+      day: Number(lookup('day')),
+      hour: Number(lookup('hour')),
+      minute: Number(lookup('minute')),
+      second: Number(lookup('second')),
+      weekdayIndex: weekdayIndexMap[weekdayText] ?? 0,
+    };
+  };
+
+  // Get next Saturday 11:15 AM America/Los_Angeles in UTC millis (handles DST correctly)
   const getNextSaturdayEvent = (): number => {
-    const pstNow = getPSTTime();
-    const currentDay = pstNow.getDay(); // 0 = Sunday, 6 = Saturday
-    
-    // Calculate days until next Saturday in PST
-    let daysUntilSaturday;
-    if (currentDay === 6) { // If it's Saturday
-      daysUntilSaturday = 0; // Today is Saturday
-    } else if (currentDay === 0) { // If it's Sunday
-      daysUntilSaturday = 6; // 6 days until next Saturday
-    } else { // Monday through Friday
-      daysUntilSaturday = 6 - currentDay; // Calculate days until Saturday
+    const now = new Date();
+    const laNow = getLAParts(now);
+    const targetHourLA = 11;
+    const targetMinuteLA = 15;
+
+    const addDaysCalendar = (year: number, month: number, day: number, daysToAdd: number) => {
+      const ms = Date.UTC(year, month - 1, day) + daysToAdd * 24 * 60 * 60 * 1000;
+      const d = new Date(ms);
+      return { year: d.getUTCFullYear(), month: d.getUTCMonth() + 1, day: d.getUTCDate() };
+    };
+
+    // Days to add from LA perspective to reach Saturday (6)
+    let daysToAdd = (6 - laNow.weekdayIndex + 7) % 7; // 0..6
+    // If today is Saturday and time has passed 11:15, move to next Saturday
+    if (daysToAdd === 0 && (laNow.hour > targetHourLA || (laNow.hour === targetHourLA && laNow.minute >= targetMinuteLA))) {
+      daysToAdd = 7;
     }
-    
-    // Create the target Saturday date in PST
-    const targetDate = new Date(pstNow);
-    targetDate.setDate(pstNow.getDate() + daysUntilSaturday);
-    targetDate.setHours(11, 15, 0, 0); // 11:15 AM PST
-    
-    // Convert PST date back to UTC for comparison
-    const utcTargetDate = new Date(targetDate.getTime() + (8 * 60 * 60 * 1000));
-    
-    // If it's Saturday and the event has already passed today, get next Saturday
-    if (currentDay === 6 && pstNow.getTime() > targetDate.getTime()) {
-      const nextSaturday = new Date(targetDate);
-      nextSaturday.setDate(targetDate.getDate() + 7);
-      nextSaturday.setHours(11, 15, 0, 0);
-      // Convert back to UTC
-      return new Date(nextSaturday.getTime() + (8 * 60 * 60 * 1000)).getTime();
-    }
-    
-    return utcTargetDate.getTime();
+
+    const laTarget = addDaysCalendar(laNow.year, laNow.month, laNow.day, daysToAdd);
+
+    // Determine correct UTC offset for that calendar date using noon to avoid DST edge hour
+    const offsetMinutes = getLAOffsetMinutes(new Date(Date.UTC(laTarget.year, laTarget.month - 1, laTarget.day, 12, 0, 0)));
+
+    // Build UTC milliseconds for 11:15 LA time: UTC = local + offset
+    const utcMillis =
+      Date.UTC(laTarget.year, laTarget.month - 1, laTarget.day, targetHourLA, targetMinuteLA, 0) +
+      offsetMinutes * 60 * 1000;
+
+    return utcMillis;
   };
 
   const calcTimeLeft = (target: number): TimeLeft => {
@@ -86,16 +118,8 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
   const [currentEventDate, setCurrentEventDate] = useState<number>(0);
 
   useEffect(() => {
-    // Get the next Saturday event date
     const nextEvent = getNextSaturdayEvent();
     setCurrentEventDate(nextEvent);
-    
-    // Debug: Log the calculated date
-    const pstEventDate = new Date(nextEvent - (8 * 60 * 60 * 1000));
-    console.log('Next Saturday event date (PST):', pstEventDate.toLocaleString());
-    console.log('Day of week (PST):', pstEventDate.toLocaleDateString('en-US', { weekday: 'long' }));
-    console.log('Current PST time:', getPSTTime().toLocaleString());
-    
     // Prime immediately on mount, then tick every second
     setTimeLeft(calcTimeLeft(nextEvent));
     
@@ -108,9 +132,6 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
         if (timeLeftResult.expired) {
           const newEventDate = getNextSaturdayEvent();
           setCurrentEventDate(newEventDate);
-          const pstNewEventDate = new Date(newEventDate - (8 * 60 * 60 * 1000));
-          console.log('Event expired, restarting countdown for next Saturday (PST):', pstNewEventDate.toLocaleString());
-          console.log('New day of week (PST):', pstNewEventDate.toLocaleDateString('en-US', { weekday: 'long' }));
           return calcTimeLeft(newEventDate);
         }
         
@@ -275,17 +296,20 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
     return ('0' + value).slice(-2);
   };
 
-  // Function to format the event date for display in PST
+  // Format the event date in America/Los_Angeles
   const formatEventDate = (timestamp: number): string => {
-    // Convert UTC timestamp to PST for display
-    const utcDate = new Date(timestamp);
-    const pstDate = new Date(utcDate.getTime() - (8 * 60 * 60 * 1000));
-    
-    const months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 
-                   'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
-    const day = pstDate.getDate();
-    const month = months[pstDate.getMonth()];
-    const year = pstDate.getFullYear();
+    const LA_TZ = 'America/Los_Angeles';
+    const date = new Date(timestamp);
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: LA_TZ,
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }).formatToParts(date);
+    const lookup = (type: string) => parts.find((p) => p.type === type)?.value ?? '';
+    const day = lookup('day');
+    const month = (lookup('month') || '').toUpperCase();
+    const year = lookup('year');
     return `${day} ${month} ${year}`;
   };
 

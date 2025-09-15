@@ -105,7 +105,7 @@ const WhatYoullLearnSlider: React.FC = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="flex items-center justify-center gap-3 mb-2">
-          <div className="text-center text-4xl md:text-6xl font-extrabold text-[#0b3d78] dark:text-white">
+          <div className="text-center text-4xl md:text-6xl font-bold text-[#0b3d78] dark:text-white">
             What You'll Learn
           </div>
         </div>

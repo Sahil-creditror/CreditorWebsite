@@ -66,7 +66,7 @@ export default function HeroSection() {
           whileTap={{ scale: 0.95 }}
           className="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-white text-sm sm:text-base font-semibold shadow-lg transition-transform duration-300 hover:shadow-xl"
         >
-          Free Signup Now <FaArrowRight />
+          Enroll Today <FaArrowRight />
         </motion.a>
       </motion.div>
     </section>

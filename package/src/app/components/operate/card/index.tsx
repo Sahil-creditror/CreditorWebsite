@@ -105,7 +105,7 @@ const WhatYoullLearnSlider: React.FC = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="flex items-center justify-center gap-3 mb-2">
-          <div className="text-center text-3xl md:text-5xl font-extrabold text-[#0b3d78] dark:text-white">
+          <div className="text-center text-4xl md:text-6xl font-extrabold text-[#0b3d78] dark:text-white">
             What You'll Learn
           </div>
         </div>
@@ -163,10 +163,10 @@ const WhatYoullLearnSlider: React.FC = () => {
                   </div>
 
                   <div className="px-4 pt-10 pb-6 text-center mt-6 flex-1">
-                    <div className="text-base font-semibold text-gray-800 dark:text-white mb-2">
+                    <div className="text-base font-semibold text-gray-1000 dark:text-white mb-2">
                       {card.title}
                     </div>
-                    <div className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                    <div className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed font-medium">
                       {card.desc}
                     </div>
                   </div>

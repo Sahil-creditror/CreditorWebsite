@@ -23,31 +23,31 @@ const WhatYoullLearnSlider: React.FC = () => {
   const cards: CardType[] = [
     {
       title: "UBOT Trust Setup",
-      desc: "Protect and compartmentalize assets with robust frameworks.",
+      desc: "Protect assets; compartmentalize holdings.",
       color: "#426be6",
       img: "/images/operate/img2.webp",
     },
     {
       title: "Private Membership Associations",
-      desc: "Operate in the private with clear PMA structures.",
+      desc: "Operate privately with PMAs.",
       color: "#7648be",
       img: "/images/operate/img5.webp",
     },
     {
       title: "Real Estate in Trusts",
-      desc: "Structure acquisitions for privacy and continuity.",
+      desc: "Acquire and hold privately.",
       color: "#23a26c",
       img: "/images/operate/img6.webp",
     },
     {
       title: "Private Bookkeeping",
-      desc: "Implement disciplined record-keeping workflows.",
+      desc: "Disciplined records; clean books.",
       color: "#e28019",
       img: "/images/operate/img1.webp",
     },
     {
       title: "Intergenerational Wealth",
-      desc: "Navigate operations with private instruments.",
+      desc: "Build with private instruments.",
       color: "#e14040",
       img: "/images/operate/img3.webp",
     },

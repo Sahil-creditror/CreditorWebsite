@@ -13,12 +13,12 @@ export default function Page() {
     const projects = getAllProjects();
     return (
         <main>
-            <Herobanner
+            {/* <Herobanner
                 bannerimage="/images/projects/banner/masterclass-banner.webp"
                 heading="Become Member"
                 desc="Learn how to <span>set up your Trust</span>, your Private Identity, and Business Credit step-by-step."
                  // 👈 you now define the path here
-            />
+            /> */}
             <MasterclassMembershipTC />
         </main>
     );

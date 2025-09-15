@@ -180,7 +180,7 @@ export default function MasterclassMembershipTC() {
   );
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-slate-50 text-slate-800 dark:bg-neutral-950 dark:text-slate-200">
+    <main className="relative min-h-screen overflow-hidden bg-blue-100 text-slate-800 dark:bg-blue-950 dark:text-slate-200 pt-10">
       {/* Animated Background */}
       <AnimatedBackground paused={prefersReduced} />
 

@@ -108,8 +108,6 @@ const Header = () => {
               </Link> */}
               <Link
                 href="https://lmsathena.com/login"
-                target="_blank"
-                rel="noopener noreferrer"
                 className={`flex justify-center items-center gap-2 text-base sm:text-xl font-bold rounded-full py-1.5 px-4 transition-colors
                   ${sticky 
                     ? "bg-white text-secondary hover:bg-secondary hover:text-white dark:bg-white dark:text-secondary dark:hover:bg-secondary dark:hover:text-white" 

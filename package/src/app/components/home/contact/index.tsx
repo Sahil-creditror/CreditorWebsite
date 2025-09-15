@@ -4,6 +4,7 @@ import Image from "next/image";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -58,30 +59,24 @@ export default function Contact(props: ContactProps) {
         transformOrigin: '50% 50%'
       });
 
-      // small parallax move for the whole section on scroll
-      gsap.to(sectionRef.current, {
-        y: 0,
-        opacity: 1,
-        duration: 1.2,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 85%',
-        }
-      });
+      // Note: section entrance animation handled by Framer Motion
     }, rippleRef);
 
     return () => ctx.revert();
   }, []);
 
   // framer-motion variants
-  const container = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { staggerChildren: 0.08, when: 'beforeChildren' } }
+  const container: Variants = {
+    hidden: { opacity: 0, y: 12 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.45, staggerChildren: 0.04, when: 'beforeChildren' }
+    }
   };
-  const item = {
-    hidden: { opacity: 0, y: 8 },
-    show: { opacity: 1, y: 0 }
+  const item: Variants = {
+    hidden: { opacity: 0, y: 6 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.25 } }
   };
 
   return (

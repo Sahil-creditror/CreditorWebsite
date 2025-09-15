@@ -151,7 +151,7 @@ export default function MasterclassBenefits() {
           className="max-w-4xl mx-auto text-center mb-10 md:mb-16"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.25 }}
+          viewport={{ once: true, amount: 0.25 }}
           variants={sectionVariants}
         >
           <motion.h2 className="font-extrabold leading-tight text-slate-900 dark:text-white text-3xl md:text-5xl lg:text-6xl tracking-tight mb-4">
@@ -193,18 +193,17 @@ export default function MasterclassBenefits() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {benefits.map((item, index) => {
             const cardRef = useRef<HTMLDivElement>(null);
-            const isInView = useInView(cardRef, { once: false, margin: "-80px" });
+            const isInView = useInView(cardRef, { once: true, margin: "-80px" });
 
             return (
               <motion.article
                 key={index}
                 ref={cardRef}
-                className="relative bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-300 flex flex-col"
+                className="relative bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl overflow-hidden shadow-md transition-shadow duration-300 flex flex-col"
                 variants={cardVariants}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
                 custom={index}
-                whileHover={{ translateY: -8, scale: 1.02 }}
                 layout
               >
                 {/* Image / media */}

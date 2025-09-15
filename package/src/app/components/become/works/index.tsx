@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
 import { FiCheck, FiStar, FiUsers, FiBookOpen, FiGift, FiCreditCard, FiMessageCircle, FiBook, FiPercent, FiCalendar, FiFileText, FiAward, FiHeadphones, FiShield, FiSettings, FiTrendingUp, FiAlertTriangle } from "react-icons/fi";
@@ -95,6 +95,20 @@ const itemVariants: Variants = {
 
 export default function Pricing() {
   const [isYearly, setIsYearly] = useState(false);
+  // Simple auto-advancing slider (3 images, 4s interval)
+  const sliderImages = [
+    "/images/plan/credit1.webp",
+    "/images/plan/credit2.webp",
+    "/images/plan/credit3.webp",
+  ];
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
+    }, 3000);
+    return () => clearInterval(id);
+  }, [sliderImages.length]);
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-[#eef5ff] to-[#f8fbff] dark:from-[#0b1220] dark:to-[#0e1a2b] text-slate-900 dark:text-white py-16">
       {/* subtle background accents */}
@@ -120,14 +134,30 @@ export default function Pricing() {
             <div className="w-full flex justify-center lg:justify-end">
               <div className="relative w-full max-w-md">
                 <div className="absolute -inset-2 rounded-xl bg-gradient-to-tr from-blue-500/20 via-cyan-400/20 to-blue-500/20 blur-xl" aria-hidden />
-                <Image
-                  src="/images/plan/become-member.webp"
-                  alt="Pricing overview"
-                  width={560}
-                  height={320}
-                  className="relative rounded-xl ring-1 ring-slate-200/70 dark:ring-white/10 shadow-lg object-cover w-full h-auto"
-                  priority
-                />
+                <motion.div
+                  key={sliderImages[currentSlide]}
+                  initial={{ opacity: 0.2, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="relative h-[320px] overflow-hidden"
+                >
+                  <Image
+                    src={sliderImages[currentSlide]}
+                    alt="Membership highlights"
+                    width={560}
+                    height={320}
+                    className="relative rounded-xl ring-1 ring-slate-200/70 dark:ring-white/10 shadow-lg object-cover w-full h-full"
+                    priority
+                  />
+                </motion.div>
+                <div className="mt-3 flex justify-center gap-2">
+                  {sliderImages.map((_, idx) => (
+                    <span
+                      key={idx}
+                      className={`h-1.5 w-1.5 rounded-full transition-colors ${idx === currentSlide ? "bg-blue-600 dark:bg-blue-400" : "bg-slate-300 dark:bg-white/20"}`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>

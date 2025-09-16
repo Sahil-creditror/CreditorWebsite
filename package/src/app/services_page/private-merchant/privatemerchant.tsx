@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import MerchantHero from "../components/MerchantHero";
+import HeroBanner from "@/app/components/shared/hero-banner";
 import MerchantFeatures from "../components/MerchantFeatures";
 import MerchantIntegrations from "../components/MerchantIntegrations";
 import MerchantSteps from "../components/MerchantSteps";
@@ -12,7 +12,12 @@ import PMPOffers from "../components/pmpOffer";
 export function PrivateMerchant() {
   return (
     <>
-      <MerchantHero />
+      <HeroBanner
+                bannerimage="/images/courses/become/junior.webp"
+                heading="Operate Private"
+                desc="Build <span> Wealth & Privacy Through </span> Private Business Structures"
+                // buttonPath="/course-tnc"
+            />
       {/* <MerchantHero ctaHref="" /> */}
       <MerchantFeatures />
       <MerchantIntegrations />

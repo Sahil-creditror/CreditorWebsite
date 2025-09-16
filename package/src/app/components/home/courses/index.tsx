@@ -14,7 +14,7 @@ function Courses() {
         muted
         playsInline
       >
-        <source src="/video/course-bg-light.mp4" type="video/mp4" />
+        <source src="/video/course-bg-new-light.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
@@ -50,10 +50,10 @@ function Courses() {
               {/* Title + Tagline */}
               <div className="flex flex-col gap-11">
                 <div className="flex flex-col gap-5">
-                  <h2 className="max-w-3xl text-white dark:text-white">Explore Our Premium Courses</h2>
+                  <h2 className="max-w-3xl text-white dark:text-white">Explore Our Premium Catalogs</h2>
                   <p className="max-w-2xl text-white/70 dark:text-white/70 leading-relaxed">
                     Learn Differently. Grow Distinctively. <br />
-                    Become Private with Our Premium Courses.
+                    Become Private with Our Premium Catalogs.
                   </p>
                 </div>
               </div>

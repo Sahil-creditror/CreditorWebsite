@@ -45,7 +45,6 @@ export default function Home() {
       {/* <Pricing */}
       {/* <Faq /> */}
       {/* <Resources /> */}
-      
     </>
   );
 }

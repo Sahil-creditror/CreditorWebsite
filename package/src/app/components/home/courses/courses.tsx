@@ -35,10 +35,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
   return (
     <article
       aria-labelledby={`course-${slug}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={`relative w-full rounded-xl overflow-hidden transition-transform duration-300 ease-out transform bg-white dark:bg-[#0b1220]
-        ${isHovered ? "-translate-y-1 shadow-2xl" : "shadow-md"}
+      className={`relative w-full rounded-xl overflow-hidden bg-white dark:bg-[#0b1220] shadow-md
         ${highlight ? "border-t-4 border-blue-900" : "border-t-4 border-blue-400"}
       `}
     >
@@ -54,7 +51,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
         />
 
         {badge && (
-          <span className="absolute top-3 left-3 z-20 inline-block bg-white/90 dark:bg-gray-900/80 text-blue-900 dark:text-blue-100 px-3 py-1 rounded-full text-xs font-semibold shadow">
+          <span className="absolute top-3 left-3 z-20 inline-block bg-blue-600 dark:bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm font-semibold shadow">
             {badge}
           </span>
         )}
@@ -98,17 +95,14 @@ const CourseCard: React.FC<CourseCardProps> = ({
           </div>
         </div>
 
-        <div className="mt-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Next Step: Private session</p>
-            <p className="text-2xl font-bold text-blue-900 dark:text-blue-200">{price ?? "—"}</p>
-          </div>
-
+        <div className="mt-5">
           <button
             onClick={onLearnMore}
             aria-label={`Learn more about ${title}`}
-            className={`w-full sm:w-auto px-5 py-3 rounded-md text-white font-semibold text-sm shadow transition-transform duration-150 ease-out
-              ${isHovered ? "bg-blue-800 translate-y-0.5 shadow-lg" : "bg-blue-600"}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className={`w-full px-5 py-3 rounded-full text-white font-semibold text-sm shadow transition-transform duration-150 ease-out
+              ${isHovered ? "bg-blue-700 scale-105 shadow-lg" : "bg-blue-500"}
             `}
           >
             Learn More ➔

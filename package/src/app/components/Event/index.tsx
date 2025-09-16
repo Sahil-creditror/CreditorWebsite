@@ -427,7 +427,9 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
             </div>
             <div style={{ marginLeft: 'auto' }}>
               <div className="phone-pill reveal" data-delay="540">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ marginRight: 8 }}><path d="M21 16.5v3a2.25 2.25 0 0 1-2.25 2.25 19.5 19.5 0 0 1-8.475-2.475A19.5 19.5 0 0 1 3.225 6.225 19.5 19.5 0 0 1 5.7 2.25 2.25 2.25 0 0 1 7.95 0h3a2.25 2.25 0 0 1 2.25 1.912l.45 3.6a2.25 2.25 0 0 1-.675 2.05l-1.05.9a13.5 13.5 0 0 0 5.4 5.4l.9-1.05a2.25 2.25 0 0 1 2.05-.675l3.6.45A2.25 2.25 0 0 1 24 16.5z" fill="white"></path></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style={{ marginRight: 8 }}>
+                  <path d="M22 16.92v2a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.1 5.18 2 2 0 0 1 5 3h2a2 2 0 0 1 2 1.72l.18 1.6a2 2 0 0 1-.57 1.68l-1.2 1.2a16 16 0 0 0 6.4 6.4l1.2-1.2a2 2 0 0 1 1.68-.57l1.6.18A2 2 0 0 1 22 16.92" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
                 425-400-9246
               </div>
             </div>
@@ -569,6 +571,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
         .info-row{display:flex;gap:18px;align-items:center;margin-top:18px;color:rgba(255,255,255,0.92)}
         .date{font-weight:900;color:#59b6ff;font-size:18px}
         .time{color:rgba(255,255,255,0.92);font-weight:700}
+        .phone-pill{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
 
         .speaker-wrap{position:relative;z-index:5;display:flex;align-items:flex-end;justify-content:center}
         .speaker-card{width:100%;max-width:440px;border-radius:20px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));padding:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 20px 50px rgba(0,12,30,0.6);position:relative;overflow:visible;transform-origin:center center;transition:transform 360ms cubic-bezier(.2,.9,.26,1)}

@@ -92,15 +92,6 @@ export default function MasterclassBenefits() {
     },
   };
 
-  const iconVariants: Variants = {
-    hidden: { rotate: 0, scale: 1 },
-    hover: {
-      rotate: 90,
-      scale: 1.1,
-      transition: { duration: 0.4, ease: "easeOut" },
-    },
-  };
-
   const title = "Join Creditor Academy";
   const subtitle =
     "Unlock expert-led courses, real mentorship, and an active community — everything you need to rebuild and protect your financial future.";
@@ -335,8 +326,7 @@ export default function MasterclassBenefits() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.4 }}
-              whileHover="hover"
-              className="relative flex flex-col justify-between bg-white dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl overflow-hidden p-6 transition-all duration-300 group h-full"
+              className="relative flex flex-col justify-between bg-white dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden p-6 transition-all duration-300 h-full"
             >
               {/* Decorative Gradient Blob */}
               <div className="absolute -top-10 -right-10 w-36 h-36 bg-blue-200/20 dark:bg-blue-700/30 rounded-full blur-3xl pointer-events-none transition-opacity duration-500 group-hover:opacity-60" />
@@ -353,36 +343,18 @@ export default function MasterclassBenefits() {
                   className="object-cover object-center"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-black/10 dark:bg-black/20 group-hover:bg-black/5 transition-colors duration-500" />
+                <div className="absolute inset-0 bg-black/10 dark:bg-black/20 transition-colors duration-500" />
               </motion.div>
 
               {/* Text */}
               <div className="flex flex-col gap-3 flex-grow">
-                <h3 className="text-xl font-bold text-slate-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                <h3 className="text-xl font-bold text-slate-800 dark:text-white transition-colors duration-300">
                   {item.title}
                 </h3>
                 <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   {item.description}
                 </p>
               </div>
-
-              {/* Floating Action Icon */}
-              <motion.div
-                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/80 dark:bg-slate-800/80 flex items-center justify-center shadow-md backdrop-blur-sm"
-                variants={iconVariants}
-                whileHover="hover"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 text-blue-600 dark:text-blue-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-              </motion.div>
             </motion.div>
           ))}
         </div>

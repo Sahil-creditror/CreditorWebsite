@@ -1,7 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
-
 type Row = {
   feature: string;
   pmp: string;
@@ -76,39 +74,25 @@ export default function PMPComparisonTable() {
 
       <div className="container relative z-10 px-4">
         <div className="text-center mb-6 md:mb-10">
-          <motion.h2
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+          <h2
             className="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-500 to-blue-300 drop-shadow-xl"
           >
             Why a Private Merchant Account Beats Stripe, PayPal, and Square
-          </motion.h2>
+          </h2>
         </div>
 
         <div className="flex justify-center mb-10">
-          <motion.button
-            whileHover={{
-              scale: 1.06,
-              boxShadow: "0 10px 32px rgba(38,102,254,0.10)",
-              filter: "brightness(1.08)",
-            }}
-            whileTap={{ scale: 1.01 }}
-            className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 text-white font-bold text-lg shadow-xl transition-all focus:outline-none focus:ring-2 focus:ring-blue-400/80"
+          <button
+            className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 text-white font-bold text-lg shadow-xl transition-all duration-200 transform hover:scale-105 hover:brightness-110 hover:shadow-2xl active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-400/80"
             aria-label="Learn how a private account benefits you"
           >
             Switch to Private Today
-          </motion.button>
+          </button>
         </div>
 
         {/* Desktop Table */}
         <div className="hidden md:block overflow-x-auto w-full">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.97, y: 18 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          <div
             className="min-w-[1200px] w-full rounded-3xl border border-blue-200/20 dark:border-blue-900/30 bg-white/70 dark:bg-[#192040]/80 shadow-2xl backdrop-blur-lg"
           >
             <div className="grid grid-cols-5 bg-gradient-to-r from-blue-200/25 via-blue-100/35 to-white/60 dark:from-blue-900/35 dark:to-blue-900/60 font-bold text-base md:text-lg">
@@ -120,12 +104,8 @@ export default function PMPComparisonTable() {
             </div>
             <div className="divide-y divide-blue-200/16 dark:divide-blue-900/13 w-full">
               {rows.map((r, idx) => (
-                <motion.div
+                <div
                   key={idx}
-                  initial={{ opacity: 0, x: 60 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4 + idx * 0.18, ease: "easeOut" }}
                   className="w-full grid grid-cols-5 text-base md:text-lg bg-white/70 dark:bg-[#192040]/80 text-slate-900 dark:text-slate-100"
                 >
                   <div className="px-6 py-4 font-semibold">{r.feature}</div>
@@ -133,21 +113,17 @@ export default function PMPComparisonTable() {
                   <div className="px-6 py-4">{r.stripe}</div>
                   <div className="px-6 py-4">{r.paypal}</div>
                   <div className="px-6 py-4">{r.square}</div>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Mobile stacked cards (cleaned up) */}
 <div className="md:hidden space-y-6">
   {rows.map((r, idx) => (
-    <motion.div
+    <div
       key={idx}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4 + idx * 0.1, ease: "easeOut" }}
       className="rounded-2xl bg-white/80 dark:bg-[#192040]/90 shadow-md backdrop-blur-lg p-5 border border-blue-100/30 dark:border-blue-800/30"
     >
       {/* Feature Title */}
@@ -182,7 +158,7 @@ export default function PMPComparisonTable() {
           </div>
         </div>
       </details>
-    </motion.div>
+    </div>
   ))}
 </div>
 

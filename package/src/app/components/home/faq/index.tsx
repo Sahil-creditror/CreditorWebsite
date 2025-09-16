@@ -261,13 +261,12 @@ function AnimatedBackground() {
     <div aria-hidden className="pointer-events-none absolute inset-0 -z-0">
       {/* Subtle grid with radial mask */}
       <div
-        className="absolute inset-0 opacity-[0.15] dark:opacity-[0.12]"
+        className="absolute inset-0 opacity-[0.15] dark:opacity-[0.18] text-gray-500 dark:text-blue-900"
         style={{
           backgroundImage:
             "radial-gradient(currentColor 1px, transparent 1px), radial-gradient(currentColor 1px, transparent 1px)",
           backgroundPosition: "0 0, 12px 12px",
           backgroundSize: "24px 24px",
-          color: "#6b7280", // gray-500 dots; ignored in dark via opacity
           WebkitMaskImage:
             "radial-gradient(70% 60% at 50% 40%, rgba(0,0,0,1), transparent 75%)",
           maskImage:

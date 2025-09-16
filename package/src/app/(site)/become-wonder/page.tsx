@@ -38,7 +38,7 @@ export default function Page() {
             />
             <main>
                 <Herobanner
-                    bannerimage="/images/courses/become/freshman.webp"
+                    bannerimage="/images/projects/projectlist/freshman.webp"
                     heading="Become Private + Sovereignty 101"
                     desc="Reclaim Your <span>Legal Identity</span> and Exit the Public System."
                     // buttonPath="/course-tnc" // 👈 you now define the path here

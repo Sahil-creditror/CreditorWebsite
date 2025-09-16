@@ -113,7 +113,7 @@ export default function Faq() {
           >
             <div className="flex items-center py-3 gap-4 md:gap-8 w-full max-w-xl">
               <span className="bg-primary text-white dark:text-secondary py-1.5 px-2.5 text-base font-medium rounded-full shadow-sm shadow-black/10 dark:shadow-white/5">
-                09
+                🧾
               </span>
               <div className="h-px w-16 bg-black/10 dark:bg-white/10" />
               <p className="section-bedge py-1.5 px-4 rounded-full flex items-center gap-2">
@@ -171,11 +171,11 @@ export default function Faq() {
               </p>
             </motion.div>
           ) : (
-            <div className="flex flex-col items-end">
+            <div className="flex flex-col items-end w-full md:w-2/3 ml-auto">
               <Accordion
                 type="single"
                 collapsible
-                className="flex flex-col 2xl:max-w-5xl w-full"
+                className="flex flex-col w-full"
               >
                 {faqs.map((item: any, index: number) => (
                   <motion.div

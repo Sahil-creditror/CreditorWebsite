@@ -14,21 +14,29 @@ import TransparentPricingSnapshot from "../components/TransparentPricingSnapshot
 import PMPHowItWorks from "../components/PMPHowItWorks";
 import PMPFeatures from "../components/PMPFeatures";
 import PMPComparisonTable from "../components/PMPComparisonTable";
+import Faq from "@/app/components/home/faq";
+import Work from "../components/work";
+import Feature from "../components/featuremp";
+
 export function PrivateMerchant() {
   return (
     <>
-      {/* <HeroBanner
-                bannerimage="/images/courses/become/junior.webp"
-                heading="Operate Private"
-                desc="Build <span> Wealth & Privacy Through </span> Private Business Structures"
-                // buttonPath="/course-tnc"
-            /> */}
-      <MerchantHero />
+      <HeroBanner
+        bannerimage="/images/services/service-banner.webp"
+        heading="Your Merchant Account"
+        desc="Ditch the restrictions of mainstream processors. Get a fully underwritten <span>Private Merchant Account</span> with fast approvals."
+        buttonPath="/contact"
+      />
+      {/* <MerchantHero /> */}
       <WhyAPMP />
-      <PMPHowItWorks />
+      <Work/>
+      {/* <PMPHowItWorks /> */}
       <TransparentPricingSnapshot/>
-      <PMPFeatures/>
+      {/* <PMPFeatures/> */}
+      <Feature/>
       <PMPComparisonTable/>
+      <Faq/>
+      <Contact/>
 
 
       {/* <MerchantFeatures /> */}

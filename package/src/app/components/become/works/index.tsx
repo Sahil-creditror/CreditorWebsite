@@ -54,7 +54,7 @@ const steps: Step[] = [
   },
   {
     id: 3,
-    title: "Become Private + Sovereignty101",
+    title: "Become Private",
     description:
       "Redeem credits to uncover how the shift from freedom to control happened — and what steps you can take to reclaim your independence. Learn the strategies to move your life and business into the private realm, one course at a time.",
   },
@@ -95,7 +95,7 @@ const itemVariants: Variants = {
 
 export default function Pricing() {
   const [isYearly, setIsYearly] = useState(false);
-  // Simple auto-advancing slider (3 images, 4s interval)
+  // Simple auto-advancing slider (3 images, 3s interval)
   const sliderImages = [
     "/images/plan/credit1.webp",
     "/images/plan/credit2.webp",
@@ -198,7 +198,7 @@ export default function Pricing() {
           )}
         </div> */}
 
-        <div className="grid gap-12 grid-cols-1 lg:grid-cols-3 items-start">
+        <div className="grid gap-12 grid-cols-1 lg:grid-cols-3 items-stretch">
           {/* LEFT - Pricing Card */}
           <motion.div
             variants={container}
@@ -212,7 +212,7 @@ export default function Pricing() {
                 key={plan.id}
                 variants={cardVariant}
                 whileHover={{ y: -4 }}
-                className={`relative rounded-2xl border p-8 flex flex-col justify-between overflow-hidden transition-shadow duration-300 ease-out
+                className={`relative h-full rounded-2xl border p-8 flex flex-col justify-between overflow-hidden transition-shadow duration-300 ease-out
                   ${plan.featured ? "bg-gradient-to-br from-blue-600 to-blue-500 text-white border-blue-600 shadow-lg" : "bg-white/90 backdrop-blur dark:bg-[#0f1b2d]/80 border-slate-200 dark:border-[#1e3352]"}`}
               >
                 {/* Background Image removed as requested */}
@@ -285,40 +285,7 @@ export default function Pricing() {
                   </div>
                 </div>
 
-                {/* CTA */}
-                <div className="mt-8 relative z-10">
-                  <motion.a
-                    whileTap={{ scale: 0.98 }}
-                    whileHover={{ scale: 1.01 }}
-                    href={
-                      plan.id === "masterclass"
-                        ? "/tncmasterclass"
-                        : plan.id === "bundle"
-                        ? "/course-tnc"
-                        : plan.id === "enterprise"
-                        ? "/enterprise-tnc"
-                        : "#"
-                    }
-                    className={`relative w-full inline-flex items-center justify-center py-3 rounded-full font-medium shadow-md transition-transform duration-200 overflow-hidden
-                      ${plan.featured ? "bg-white text-blue-600" : "bg-blue-600 hover:bg-blue-700 text-white"}`}
-                  >
-                    <span className="relative z-[1]">{plan.cta}</span>
-                    <span className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-200 bg-gradient-to-r from-white/0 via-white/30 to-white/0" />
-                  </motion.a>
-
-                  <p className={`mt-4 text-xs ${plan.featured ? "text-blue-100/90" : "text-slate-500 dark:text-slate-400"}`}>
-                    {plan.id === "masterclass"
-                      ? (
-                          <span className="flex items-center gap-2">
-                            <FiAlertTriangle className="w-6 h-6 text-amber-500 flex-shrink-0" />
-                            <span>WARNING: The price will increase to $147/month soon. Join now to lock in your $69/month rate forever — and cancel anytime.</span>
-                          </span>
-                        )
-                      : isYearly
-                      ? "Billed annually. Cancel anytime before renewal."
-                      : "Cancel anytime. Access renews monthly."}
-                  </p>
-                </div>
+                {/* CTA moved below near footer */}
 
                 {/* Decorative curves and shapes */}
                 <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -415,21 +382,26 @@ export default function Pricing() {
               </motion.ul>
             </div>
 
-            {/* CTA row for smaller screens */}
-            <motion.div
-              className="mt-10 flex gap-4 items-center"
-              initial={{ opacity: 0, y: 8 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45 }}
-            >
-              <a
-                className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-blue-600 dark:bg-blue-500 text-white font-semibold shadow-md hover:scale-105 transform transition-transform duration-200 hover:bg-blue-700 dark:hover:bg-blue-600"
-                href="https://lmsathena.com/login"
-              >
-                Get Started
-              </a>
-            </motion.div>
+            {/* CTA row removed as requested */}
           </motion.div>
+        </div>
+
+        {/* Moved Join Masterclass CTA and Disclaimer */}
+        <div className="mt-12 flex flex-col items-center gap-4">
+          <a
+            className="relative w-full max-w-xl inline-flex items-center justify-center px-10 py-3.5 md:px-14 md:py-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-semibold text-lg md:text-xl shadow-lg ring-1 ring-white/10 dark:ring-black/10 transition-transform duration-200"
+            href="/tncmasterclass"
+          >
+            Join Masterclass
+          </a>
+          <div className="text-xs text-slate-600 dark:text-slate-300 max-w-3xl text-center">
+            <span className="inline-flex items-center justify-center gap-2">
+              <FiAlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0" />
+              <span className="leading-relaxed">
+                WARNING: The price will increase to $147/month soon. Join now to lock in your $69/month rate forever — and cancel anytime.
+              </span>
+            </span>
+          </div>
         </div>
 
         <div className="mt-12 text-center text-sm text-slate-500 dark:text-slate-400">

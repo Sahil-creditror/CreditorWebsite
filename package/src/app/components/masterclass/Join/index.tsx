@@ -18,18 +18,18 @@ export default function EnrollMasterclass({ container = "", sectionSpacing = "" 
     <section
       id="enroll"
       className={`${container} ${sectionSpacing} px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16
-          bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 
-          dark:from-[#0a0f1a] dark:via-[#101828] dark:to-[#1a2235] relative overflow-hidden`}
+          bg-gradient-to-br from-blue-50 via-blue-50 to-blue-100 
+          dark:from-[#0a0f1a] dark:via-[#0f1419] dark:to-[#1a2235] relative overflow-hidden`}
     >
       {/* Animated Background Elements */}
       <motion.div
-        className="absolute inset-0 opacity-30 dark:opacity-20"
+        className="absolute inset-0 opacity-20 dark:opacity-10"
         animate={{
           background: [
-            "radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%)",
-            "radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%)",
-            "radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%)",
-            "radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%)",
+            "radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%)",
+            "radial-gradient(circle at 80% 20%, rgba(96, 165, 250, 0.15) 0%, transparent 50%)",
+            "radial-gradient(circle at 40% 40%, rgba(147, 197, 253, 0.15) 0%, transparent 50%)",
+            "radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%)",
           ],
         }}
         transition={{
@@ -41,7 +41,7 @@ export default function EnrollMasterclass({ container = "", sectionSpacing = "" 
       
       {/* Floating Orbs */}
       <motion.div
-        className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full opacity-20 dark:opacity-10"
+        className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-blue-300 to-blue-500 rounded-full opacity-15 dark:opacity-8"
         animate={{
           y: [0, -20, 0],
           x: [0, 10, 0],
@@ -53,7 +53,7 @@ export default function EnrollMasterclass({ container = "", sectionSpacing = "" 
         }}
       />
       <motion.div
-        className="absolute top-32 right-20 w-16 h-16 bg-gradient-to-r from-pink-400 to-red-500 rounded-full opacity-20 dark:opacity-10"
+        className="absolute top-32 right-20 w-16 h-16 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full opacity-15 dark:opacity-8"
         animate={{
           y: [0, 15, 0],
           x: [0, -15, 0],
@@ -66,7 +66,7 @@ export default function EnrollMasterclass({ container = "", sectionSpacing = "" 
         }}
       />
       <motion.div
-        className="absolute bottom-20 left-1/4 w-12 h-12 bg-gradient-to-r from-green-400 to-blue-500 rounded-full opacity-20 dark:opacity-10"
+        className="absolute bottom-20 left-1/4 w-12 h-12 bg-gradient-to-r from-blue-200 to-blue-400 rounded-full opacity-15 dark:opacity-8"
         animate={{
           y: [0, -25, 0],
           x: [0, 20, 0],
@@ -96,7 +96,7 @@ export default function EnrollMasterclass({ container = "", sectionSpacing = "" 
           >
             <div className="max-w-lg">
               <motion.h3 
-                className="text-4xl font-extrabold mb-4 text-slate-900 dark:text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500"
+                className="text-4xl font-extrabold mb-4 text-slate-900 dark:text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
@@ -132,28 +132,28 @@ export default function EnrollMasterclass({ container = "", sectionSpacing = "" 
                     icon: <FaLock />, 
                     title: "Lifetime Access", 
                     subtitle: "Return anytime — materials updated",
-                    bgColor: "bg-gradient-to-br from-blue-50/80 to-indigo-100/60 dark:from-blue-900/20 dark:to-indigo-900/15",
-                    borderColor: "border-blue-200/50 dark:border-blue-700/30",
-                    iconBg: "bg-gradient-to-tr from-blue-100 to-indigo-200 dark:from-blue-900/30 dark:to-indigo-900/30",
-                    iconColor: "text-blue-600 dark:text-blue-300"
+                    bgColor: "bg-gradient-to-br from-blue-50/60 to-blue-100/40 dark:from-blue-900/15 dark:to-blue-800/10",
+                    borderColor: "border-blue-200/40 dark:border-blue-700/20",
+                    iconBg: "bg-gradient-to-tr from-blue-100 to-blue-200 dark:from-blue-800/25 dark:to-blue-700/20",
+                    iconColor: "text-blue-600 dark:text-blue-400"
                   },
                   { 
                     icon: <FaFileDownload />, 
                     title: "All Templates", 
                     subtitle: "Trusts, contracts, vendor lists",
-                    bgColor: "bg-gradient-to-br from-emerald-50/80 to-teal-100/60 dark:from-emerald-900/20 dark:to-teal-900/15",
-                    borderColor: "border-emerald-200/50 dark:border-emerald-700/30",
-                    iconBg: "bg-gradient-to-tr from-emerald-100 to-teal-200 dark:from-emerald-900/30 dark:to-teal-900/30",
-                    iconColor: "text-emerald-600 dark:text-emerald-300"
+                    bgColor: "bg-gradient-to-br from-blue-100/60 to-blue-200/40 dark:from-blue-800/15 dark:to-blue-900/10",
+                    borderColor: "border-blue-300/40 dark:border-blue-600/20",
+                    iconBg: "bg-gradient-to-tr from-blue-200 to-blue-300 dark:from-blue-700/25 dark:to-blue-600/20",
+                    iconColor: "text-blue-700 dark:text-blue-300"
                   },
                   { 
                     icon: <FaClock />, 
                     title: "Private Payment Flows", 
                     subtitle: "Resilient, low-risk payment design",
-                    bgColor: "bg-gradient-to-br from-purple-50/80 to-pink-100/60 dark:from-purple-900/20 dark:to-pink-900/15",
-                    borderColor: "border-purple-200/50 dark:border-purple-700/30",
-                    iconBg: "bg-gradient-to-tr from-purple-100 to-pink-200 dark:from-purple-900/30 dark:to-pink-900/30",
-                    iconColor: "text-purple-600 dark:text-purple-300"
+                    bgColor: "bg-gradient-to-br from-blue-50/60 to-blue-100/40 dark:from-blue-900/15 dark:to-blue-800/10",
+                    borderColor: "border-blue-200/40 dark:border-blue-700/20",
+                    iconBg: "bg-gradient-to-tr from-blue-100 to-blue-200 dark:from-blue-800/25 dark:to-blue-700/20",
+                    iconColor: "text-blue-600 dark:text-blue-400"
                   },
                 ].map((item, idx) => (
                   <motion.div
@@ -258,7 +258,7 @@ export default function EnrollMasterclass({ container = "", sectionSpacing = "" 
                 Reserve your spot
               </motion.h4>
               <motion.p 
-                className="text-slate-700 dark:text-slate-300 mt-2 mb-6 text-lg leading-relaxed"
+                className="text-slate-1000 dark:text-slate-300 mt-2 mb-6 text-lg leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.7 }}

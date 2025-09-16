@@ -29,13 +29,14 @@ export default function Page() {
             />
             <Preview />
             {/* <Intro /> */}
+            <Get />
             <Works />
             {/* <Pricing /> */}
-            <Learn />
+            {/* <Learn /> */}
             <Appoint />
             <Join />
-            <Get />
-            <About />
+            {/* <Get /> */}
+            {/* <About /> */}
             <Event />
             <CTA />
         </main>

@@ -166,25 +166,15 @@ export default function MasterclassBenefits() {
             {subtitle}
           </motion.p>
 
-          <motion.div className="mt-6 flex items-center justify-center gap-4" variants={sectionVariants}>
+          <motion.div className="mt-6 flex items-center justify-center" variants={sectionVariants}>
             <motion.a
               href="/tncmasterclass"
-              className="inline-flex items-center gap-3 rounded-full px-6 py-3 md:px-8 md:py-4 bg-blue-600 text-white font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300"
+              className="inline-flex items-center gap-3 rounded-full px-8 py-4 md:px-12 md:py-5 bg-blue-600 text-white font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 text-lg md:text-xl"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
               aria-label="Join Masterclass"
             >
               Join — $69 / month
-            </motion.a>
-
-            <motion.a
-              href="/contact"
-              className="inline-flex items-center gap-2 rounded-full px-4 py-2 md:px-6 md:py-3 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 font-medium"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              aria-label="Learn more about Masterclass"
-            >
-              Know more
             </motion.a>
           </motion.div>
         </motion.header>

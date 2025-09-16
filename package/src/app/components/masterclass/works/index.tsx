@@ -417,14 +417,14 @@ export default function Pricing() {
 
             {/* CTA row for smaller screens */}
             <motion.div
-              className="mt-10 flex gap-4 items-center"
+              className="mt-10 flex items-center justify-center"
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
             >
               <a
-                className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-blue-600 dark:bg-blue-500 text-white font-semibold shadow-md hover:scale-105 transform transition-transform duration-200 hover:bg-blue-700 dark:hover:bg-blue-600"
-                href="https://lmsathena.com/login"
+                className="inline-flex items-center gap-3 px-8 py-4 md:px-12 md:py-5 rounded-full bg-blue-600 dark:bg-blue-500 text-white font-semibold text-lg md:text-xl shadow-lg hover:scale-105 transform transition-transform duration-200 hover:bg-blue-700 dark:hover:bg-blue-600"
+                href="/tncmasterclass"
               >
                 Get Started
               </a>

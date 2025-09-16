@@ -17,7 +17,7 @@ export default function HeroSection({
   return (
     <>
       {/* HERO */}
-      <section className={`${container} ${sectionSpacing} relative overflow-hidden bg-white dark:bg-[#151922]`}>
+      <section className={`w-full ${sectionSpacing} relative overflow-hidden bg-white dark:bg-[#151922]`}>
         {/* Background Accents */}
         <div
           aria-hidden
@@ -31,61 +31,10 @@ export default function HeroSection({
         />
 
         <div
-          className="grid lg:grid-cols-2 gap-12 items-center my-15"
+          className="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center my-15"
         >
           
-          {/* VIDEO (Left) */}
-          <div>
-            <div
-              className="w-full max-w-4xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-lg"
-            >
-              <iframe
-                className="w-full h-full"
-                src="https://drive.google.com/file/d/1ATSSVZJ9zTAXFhSgQfFN5AzJud_STVXo/preview"
-                title="Intro Video"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-            
-            {/* Three-step tiles (just below video) */}
-            <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-4 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-md">
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/15">
-                    <FaShieldAlt className="text-white" />
-                  </span>
-                  <div className="text-xs font-semibold uppercase tracking-wide opacity-90">Step 1</div>
-                </div>
-                <div className="mt-2 text-lg font-bold">Set Up Trust</div>
-                <div className="mt-1 text-sm opacity-95">Foundational legal structure.</div>
-              </div>
-              <div className="p-4 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 text-white shadow-md">
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/15">
-                    <FaCreditCard className="text-white" />
-                  </span>
-                  <div className="text-xs font-semibold uppercase tracking-wide opacity-90">Step 2</div>
-                </div>
-                <div className="mt-2 text-lg font-bold">Build Credit</div>
-                <div className="mt-1 text-sm opacity-95">Tier 1 business credit profile.</div>
-              </div>
-              <div className="p-4 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 text-white shadow-md">
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/15">
-                    <FaBolt className="text-white" />
-                  </span>
-                  <div className="text-xs font-semibold uppercase tracking-wide opacity-90">Step 3</div>
-                </div>
-                <div className="mt-2 text-lg font-bold">Activate Processing</div>
-                <div className="mt-1 text-sm opacity-95">Private merchant payments & onboarding.</div>
-              </div>
-            </div>
-            
-          </div>
-
-          {/* Content (Right) */}
+          {/* Content (Left) */}
           <div>
             <div className="max-w-2xl">
               {/* Badge */}
@@ -151,6 +100,57 @@ export default function HeroSection({
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* VIDEO (Right) */}
+          <div>
+            <div
+              className="w-full max-w-4xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-lg"
+            >
+              <iframe
+                className="w-full h-full"
+                src="https://drive.google.com/file/d/1ATSSVZJ9zTAXFhSgQfFN5AzJud_STVXo/preview"
+                title="Intro Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+            
+            {/* Three-step tiles (just below video) */}
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="p-4 rounded-xl bg-gradient-to-br from-blue-300 to-blue-500 text-white shadow-md">
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/15">
+                    <FaShieldAlt className="text-white" />
+                  </span>
+                  <div className="text-xs font-semibold uppercase tracking-wide opacity-90">Step 1</div>
+                </div>
+                <div className="mt-2 text-lg font-bold">Set Up Trust</div>
+                <div className="mt-1 text-sm opacity-95">Foundational legal structure.</div>
+              </div>
+              <div className="p-4 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-md">
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/15">
+                    <FaCreditCard className="text-white" />
+                  </span>
+                  <div className="text-xs font-semibold uppercase tracking-wide opacity-90">Step 2</div>
+                </div>
+                <div className="mt-2 text-lg font-bold">Build Credit</div>
+                <div className="mt-1 text-sm opacity-95">Tier 1 business credit profile.</div>
+              </div>
+              <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 text-white shadow-md">
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/15">
+                    <FaBolt className="text-white" />
+                  </span>
+                  <div className="text-xs font-semibold uppercase tracking-wide opacity-90">Step 3</div>
+                </div>
+                <div className="mt-2 text-lg font-bold">Activate Processing</div>
+                <div className="mt-1 text-sm opacity-95">Private merchant payments & onboarding.</div>
+              </div>
+            </div>
+            
           </div>
 
         </div>

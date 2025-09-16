@@ -15,7 +15,7 @@ type MerchantFeaturesProps = {
 export default function WhyAPMP({
   title = "Why a Private Merchant Account?",
   subtitle = "",
-  sideImageSrc = "/images/services/PMP_Flex.webp",
+  sideImageSrc = "/images/services/1PMP_Flex.webp",
   highlightedPhrase = "private operators",
 }: MerchantFeaturesProps) {
   const sectionRef = useRef<HTMLDivElement>(null);

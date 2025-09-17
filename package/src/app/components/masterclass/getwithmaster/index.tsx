@@ -10,7 +10,7 @@ export default function MasterclassBenefits() {
       title: "Pay-As-You-Go Learning",
       description:
         "Access every course in our library at a member-only rate — only pay for what you need, when you need it.",
-      image: "/images/courses/become/learn.webp",
+      image: "/images/courses/become/learning.webp",
     },
     {
       title: "Introductory Access",

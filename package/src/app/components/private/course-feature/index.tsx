@@ -38,7 +38,7 @@ export default function CourseFeatures() {
       icon: FaBalanceScale,
       color: "#4f46e5",
       gradient: "from-indigo-500 to-indigo-600",
-      img: "/images/courses/become/Learning.webp",
+      img: "/images/courses/become/learn.webp",
     },
     {
       title: "Expert Guidance",

@@ -25,13 +25,13 @@ const WhatYoullLearnSlider: React.FC = () => {
       title: "UBOT Trust Setup",
       desc: "Protect assets; compartmentalize holdings.",
       color: "#426be6",
-      img: "/images/operate/pvtbusiness.webp",
+      img: "/images/operate/protect.webp",
     },
     {
       title: "Private Membership Associations",
       desc: "Operate privately with PMAs.",
       color: "#7648be",
-      img: "/images/operate/protect.webp",
+      img: "/images/operate/pvtbusiness.webp",
     },
     {
       title: "Real Estate in Trusts",

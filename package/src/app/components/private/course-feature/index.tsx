@@ -38,7 +38,7 @@ export default function CourseFeatures() {
       icon: FaBalanceScale,
       color: "#4f46e5",
       gradient: "from-indigo-500 to-indigo-600",
-      img: "/images/courses/become/status.webp",
+      img: "/images/courses/become/Learningpvt.webp",
     },
     {
       title: "Expert Guidance",
@@ -47,7 +47,7 @@ export default function CourseFeatures() {
       icon: FaGavel,
       color: "#7c3aed",
       gradient: "from-purple-500 to-purple-600",
-      img: "/images/courses/become/judiciary.webp",
+      img: "/images/courses/become/Expert Guidance.webp",
     },
     {
       title: "Practical Tools & Resources",
@@ -56,7 +56,7 @@ export default function CourseFeatures() {
       icon: FaFileContract,
       color: "#059669",
       gradient: "from-emerald-500 to-emerald-600",
-      img: "/images/courses/become/document.webp",
+      img: "/images/courses/become/resource.webp",
     },
     {
       title: "Community Support",
@@ -65,7 +65,7 @@ export default function CourseFeatures() {
       icon: FaShieldAlt,
       color: "#ea580c",
       gradient: "from-orange-500 to-orange-600",
-      img: "/images/courses/become/asset.webp",
+      img: "/images/courses/become/Community Support.webp",
     },
   ];
 

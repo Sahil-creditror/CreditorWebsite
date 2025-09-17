@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 const Footer = () => {
     const [footerData, setFooterData] = useState<any>(null);
     const socials = [
-        { name: 'Facebook', href: 'https://www.facebook.com/groups/1455118361753321/', icon: '/images/footer/facebook.png' },
-        { name: 'X', href: 'https://x.com/CreditorAcademy', icon: '/images/footer/twitter.png' },
-        { name: 'YouTube', href: 'https://www.youtube.com/@creditoracademy', icon: '/images/footer/youtube.png' },
-        { name: 'Rumble', href: 'https://rumble.com/user/CreditorAcademy', icon: '/images/footer/rumble.png' },
-        { name: 'TikTok', href: 'https://www.tiktok.com/@creditoracademy', icon: '/images/footer/tiktok.png' },
+        { name: 'Facebook', href: 'https://www.facebook.com/groups/1455118361753321/', icon: '/images/footer/facebook.webp' },
+        { name: 'X', href: 'https://x.com/CreditorAcademy', icon: '/images/footer/twitter.webp' },
+        { name: 'YouTube', href: 'https://www.youtube.com/@creditoracademy', icon: '/images/footer/youtube.webp' },
+        { name: 'Rumble', href: 'https://rumble.com/user/CreditorAcademy', icon: '/images/footer/rumble.webp' },
+        { name: 'TikTok', href: 'https://www.tiktok.com/@creditoracademy', icon: '/images/footer/tiktok.webp' },
     ];
     useEffect(() => {
         const fetchData = async () => {
@@ -28,7 +28,7 @@ const Footer = () => {
         <footer>
             <div className="bg-secondary py-10 md:py-20 xl:py-40">
                 <div className="container">
-                    <div className="flex flex-col xl:flex-row gap-10 xl:gap-0">
+                    <div className="flex flex-col xl:flex-row gap-10 xl:gap-12">
 
                         <div className="flex flex-col gap-10 xl:max-w-xl xl:w-1/3 w-full">
                             {footerData?.tagline &&
@@ -48,7 +48,7 @@ const Footer = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-3 w-full gap-10 md:gap-0">
+                        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-3 w-full gap-8 md:gap-10 xl:gap-12">
                             <div className='flex flex-col gap-3'>
                                 <h4 className='text-white font-medium'>Legal & Policies</h4>
                                 <ul className='flex flex-col gap-1.5'>
@@ -110,7 +110,7 @@ const Footer = () => {
                                                 className='inline-flex items-center gap-2 text-white/90 hover:text-white transition-colors group rounded-full border border-white/15 bg-white/5 px-3 py-1.5 hover:bg-primary hover:border-primary'
                                                 aria-label={s.name}
                                             >
-                                                <Image src={s.icon} alt={`${s.name} icon`} width={20} height={20} className="transition-transform group-hover:scale-105" />
+                                                <img src={s.icon} alt={`${s.name} icon`} width={20} height={20} loading="lazy" className="transition-transform group-hover:scale-105" />
                                                 <span className='text-sm font-medium'>{s.name}</span>
                                             </a>
                                         </li>

@@ -50,7 +50,7 @@ const SovSlider: React.FC = () => {
       desc: "Remove yourself from public jurisdiction effectively",
       Icon: FaUserLock,
       color: "#23a26c",
-      img: "/images/courses/become/jurisdiction.webp",
+      img: "/images/courses/become/court.webp",
     },
     {
       title: "Essential Documents",

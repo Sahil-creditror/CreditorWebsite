@@ -61,7 +61,7 @@ export default function HeroSection() {
 
         {/* CTA Button */}
         <motion.a
-          href="https://lmsathena.com/login"
+          href="/tncmasterclass"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           className="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-white text-sm sm:text-base font-semibold shadow-lg transition-transform duration-300 hover:shadow-xl"

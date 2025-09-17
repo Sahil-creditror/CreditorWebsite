@@ -470,7 +470,7 @@ const BecomePrivateCourse: React.FC = () => {
         </motion.section>
 
         <motion.a
-          href="https://lmsathena.com/login"
+          href="/tncmasterclass"
           whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
           whileTap={{ scale: 0.98 }}
           className="inline-flex items-center bg-gradient-to-r from-blue-700 to-indigo-700 dark:from-blue-600 dark:to-indigo-600 border-none rounded-full mb-8 py-4 px-10 text-white font-semibold cursor-pointer shadow-lg text-lg transition-all duration-300 relative z-10"

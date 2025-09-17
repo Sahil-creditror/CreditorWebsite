@@ -204,7 +204,7 @@ const CourseRoadmap: React.FC = () => {
 
           <CourseCard
             title="Operate Private"
-            image="/images/projects/projectlist/junior.webp"
+            image="/images/courses/junior.webp"
             subtitle="Asset Protection & Business"
             description="Build trusts and PMAs to operate without state oversight"
             learnings={["UBOT business trusts", "Private Membership Associations", "Real estate in trusts", "Intergenerational protection"]}

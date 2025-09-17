@@ -41,7 +41,7 @@ export default function Page() {
                 <HeroBanner
                     bannerimage="/images/courses/junior.webp"
                     heading="Operate Private"
-                    desc="Build <span> Wealth & Privacy Through </span> Private Business Structures"
+                    desc="Build Wealth & Privacy Through Private Business Structures"
                     // buttonPath="/course-tnc"
                 />
                 <Intro2 />

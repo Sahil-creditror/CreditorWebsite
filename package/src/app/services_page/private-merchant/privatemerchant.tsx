@@ -14,7 +14,7 @@ export function PrivateMerchant() {
   return (
     <>
       <HeroBanner
-        bannerimage="/images/services/service-banner.webp"
+        bannerimage="/images/services/pma-banner.webp"
         heading="Your Merchant Account"
         desc="Ditch the restrictions of mainstream processors. Get a fully underwritten <span>Private Merchant Account</span> with fast approvals."
         buttonPath="/contact"

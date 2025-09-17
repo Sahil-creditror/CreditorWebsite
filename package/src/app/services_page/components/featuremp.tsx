@@ -203,66 +203,70 @@ export default function MasterclassBenefits() {
         </motion.header>
 
         {/* Slider (all breakpoints) */}
-        <div
-          className="relative px-2 md:px-4 lg:px-12"
-          ref={sliderRef}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
+        <div className="relative">
+          {/* Navigation buttons positioned outside the slider */}
           {currentIndex > 0 && (
             <button
               aria-label="Previous"
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 w-10 h-10 md:w-11 md:h-11 rounded-full shadow-md flex items-center justify-center z-10 text-white"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-blue-600 hover:bg-blue-700 w-10 h-10 md:w-11 md:h-11 rounded-full shadow-md flex items-center justify-center z-10 text-white transition-all duration-200"
             >
               <FaChevronLeft />
             </button>
           )}
 
-          {/* Track */}
-          <div
-            className="flex items-stretch transition-transform duration-500 ease-in-out"
-            style={{ transform: `translateX(-${translatePercent}%)` }}
-          >
-            {benefits.map((item, index) => (
-              <div
-                key={index}
-                className="p-2 box-border flex"
-                style={{ flex: `0 0 ${100 / visibleCards}%` }}
-              >
-                <article
-                  className="relative bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl overflow-hidden shadow-md transition-shadow duration-300 flex flex-col w-full"
-                >
-                  <div className="relative w-full h-40 sm:h-44 lg:h-40">
-                    <Image src={item.image} alt={item.title} fill className="object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                  </div>
-
-                  <div className="p-5 sm:p-6 flex flex-col text-center">
-                    <h3 className="text-lg md:text-xl font-semibold text-slate-900 dark:text-white mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-
-                  <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-blue-600 opacity-80" />
-                </article>
-              </div>
-            ))}
-          </div>
-
           {currentIndex < totalSlides - 1 && (
             <button
               aria-label="Next"
               onClick={nextSlide}
-              className="absolute right-0 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 w-10 h-10 md:w-11 md:h-11 rounded-full shadow-md flex items-center justify-center z-10 text-white"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-blue-600 hover:bg-blue-700 w-10 h-10 md:w-11 md:h-11 rounded-full shadow-md flex items-center justify-center z-10 text-white transition-all duration-200"
             >
               <FaChevronRight />
             </button>
           )}
+
+          {/* Slider container with card-consistent spacing */}
+          <div
+            className="px-1"
+            ref={sliderRef}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {/* Track */}
+            <div
+              className="flex items-stretch transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${translatePercent}%)` }}
+            >
+              {benefits.map((item, index) => (
+                <div
+                  key={index}
+                  className="px-1 box-border flex"
+                  style={{ flex: `0 0 ${100 / visibleCards}%` }}
+                >
+                  <article
+                    className="relative bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl overflow-hidden shadow-md transition-shadow duration-300 flex flex-col w-full"
+                  >
+                    <div className="relative w-full h-40 sm:h-44 lg:h-40">
+                      <Image src={item.image} alt={item.title} fill className="object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    </div>
+
+                    <div className="p-5 sm:p-6 flex flex-col text-center">
+                      <h3 className="text-lg md:text-xl font-semibold text-slate-900 dark:text-white mb-2">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-blue-600 opacity-80" />
+                  </article>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Dots */}

@@ -83,7 +83,7 @@ export default function HeroSection({
                   </div>
                   <div>
                     <div className="font-semibold text-slate-900 dark:text-white">Templates + Checklists</div>
-                    <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">Contracts, trust docs, and vendor lists</div>
+                    <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">Contracts and trust docs</div>
                   </div>
                 </div>
 
@@ -94,7 +94,7 @@ export default function HeroSection({
                     <FaLock />
                   </div>
                   <div>
-                    <div className="font-semibold text-slate-900 dark:text-white">Private Payments</div>
+                    <div className="font-semibold text-slate-900 dark:text-white">Private Community</div>
                     <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">Gateways, flow design, fraud avoidance</div>
                   </div>
                 </div>
@@ -126,8 +126,8 @@ export default function HeroSection({
                   </span>
                   <div className="text-xs font-semibold uppercase tracking-wide opacity-90">Step 1</div>
                 </div>
-                <div className="mt-2 text-lg font-bold">Set Up Trust</div>
-                <div className="mt-1 text-sm opacity-95">Foundational legal structure.</div>
+                <div className="mt-2 text-lg font-bold">Unincorporated Business Trust</div>
+                {/* <div className="mt-1 text-sm opacity-95">Foundational legal structure.</div> */}
               </div>
               <div className="p-4 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-md">
                 <div className="flex items-center gap-3">
@@ -136,8 +136,8 @@ export default function HeroSection({
                   </span>
                   <div className="text-xs font-semibold uppercase tracking-wide opacity-90">Step 2</div>
                 </div>
-                <div className="mt-2 text-lg font-bold">Build Credit</div>
-                <div className="mt-1 text-sm opacity-95">Tier 1 business credit profile.</div>
+                <div className="mt-2 text-lg font-bold">Private Merchant Account</div>
+                {/* <div className="mt-1 text-sm opacity-95">Private Merchant Account</div> */}
               </div>
               <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 text-white shadow-md">
                 <div className="flex items-center gap-3">
@@ -146,8 +146,8 @@ export default function HeroSection({
                   </span>
                   <div className="text-xs font-semibold uppercase tracking-wide opacity-90">Step 3</div>
                 </div>
-                <div className="mt-2 text-lg font-bold">Activate Processing</div>
-                <div className="mt-1 text-sm opacity-95">Private merchant payments & onboarding.</div>
+                <div className="mt-2 text-lg font-bold">Credit Optimization</div>
+                {/* <div className="mt-1 text-sm opacity-95">Private merchant payments & onboarding.</div> */}
               </div>
             </div>
             

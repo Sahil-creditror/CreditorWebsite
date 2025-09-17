@@ -33,9 +33,8 @@ export default function Page() {
             <Works />
             {/* <Pricing /> */}
             {/* <Learn /> */}
-            <Appoint />
+            {/* <Appoint /> */}
             <Join />
-            {/* <Get /> */}
             {/* <About /> */}
             <Event />
             <CTA />

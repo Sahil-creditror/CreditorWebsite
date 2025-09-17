@@ -20,13 +20,12 @@ export function PrivateMerchant() {
         buttonPath="/contact"
       />
       <WhyAPMP />
-      <Work/>
-      <TransparentPricingSnapshot/>
       <Feature/>
+      <TransparentPricingSnapshot/>
+      <Work/>
       <PMPComparisonTable/>
       <Faq/>
       <Contact/>
-
     </>
   );
 }

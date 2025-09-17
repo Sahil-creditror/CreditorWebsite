@@ -28,7 +28,7 @@ export default function MasterclassBenefits() {
       title: "Live Weekly Trainings",
       description:
         "Attend live sessions with instructors — ask questions, get critiques, and stay ahead.",
-      image: "/images/courses/become/training.webp",
+      image: "/images/masterclass/trainer.webp",
     },
   ];
 

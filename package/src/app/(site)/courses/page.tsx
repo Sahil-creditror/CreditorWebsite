@@ -9,7 +9,7 @@ export default function Page() {
     return (
         <main>
             <Herobanner
-                bannerimage="/images/courses/banner-tnc.webp"
+                bannerimage="/images/courses/course-banner.webp"
                 heading="Explore Our Premium Catalogs"
                 desc="Learn Differently. Grow Distinctively. Become Private with Our Premium Catalogs." />
             <Courses />

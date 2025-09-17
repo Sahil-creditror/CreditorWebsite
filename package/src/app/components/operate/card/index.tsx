@@ -25,31 +25,31 @@ const WhatYoullLearnSlider: React.FC = () => {
       title: "UBOT Trust Setup",
       desc: "Protect assets; compartmentalize holdings.",
       color: "#426be6",
-      img: "/images/operate/protect.webp",
+      img: "/images/operate/img1.webp",
     },
     {
       title: "Private Membership Associations",
       desc: "Operate privately with PMAs.",
       color: "#7648be",
-      img: "/images/operate/pvtbusiness.webp",
+      img: "/images/operate/img2.webp",
     },
     {
       title: "Real Estate in Trusts",
       desc: "Acquire and hold privately.",
       color: "#23a26c",
-      img: "/images/operate/RealEstate.webp",
+      img: "/images/operate/img3.webp",
     },
     {
       title: "Private Bookkeeping",
       desc: "Disciplined records; clean books.",
       color: "#e28019",
-      img: "/images/operate/bookeeping.webp",
+      img: "/images/operate/img4.webp",
     },
     {
       title: "Intergenerational Wealth",
       desc: "Build with private instruments.",
       color: "#e14040",
-      img: "/images/operate/Intergenerational Wealth.webp",
+      img: "/images/operate/img5.webp",
     },
   ];
 

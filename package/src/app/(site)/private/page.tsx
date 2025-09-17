@@ -21,8 +21,8 @@ const PrivatePage = () => {
     <div>
       <Herobanner
         heading="Private Business Credit"
-        desc="Your gateway to <span>financial sovereignty</span>."
-        bannerimage="/images/projects/projectlist/senior.webp"
+        desc="Your gateway to financial sovereignty."
+        bannerimage="/images/projects/banner/private.webp"
         // buttonPath="/course-tnc"
       />
       <CourseDetail />

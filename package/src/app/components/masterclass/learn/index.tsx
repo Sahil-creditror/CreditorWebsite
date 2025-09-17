@@ -27,7 +27,7 @@ const phases: Phase[] = [
     title: "Phase 1: Trust Formation",
     subtitle: "Set the foundation for private wealth.",
     bullets: [
-      "Form your own UBOT Business Trust (template included)",
+      "Form your own Unincorporated Business Trusts (template included)",
       "Lawfully exit public business registration systems",
       "Protect your assets & avoid tax and liability traps",
       "Understand private contracts & lawful operations",

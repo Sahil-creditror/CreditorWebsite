@@ -515,7 +515,7 @@ const PrivateBusinessCredit: React.FC = () => {
                     </li>
 
                     <li className="flex items-center gap-2">
-                      {/* Layers Icon (Use UBOT Trusts) */}
+                      {/* Layers Icon (Use Unincorporated Business Trusts) */}
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="w-5 h-5"
@@ -530,7 +530,7 @@ const PrivateBusinessCredit: React.FC = () => {
                           d="M12 3l9 5-9 5-9-5 9-5zm0 8l9 5-9 5-9-5 9-5z"
                         />
                       </svg>
-                      Use UBOT Trusts
+                      Use Unincorporated Business Trusts
                     </li>
 
                     <li className="flex items-center gap-2">
@@ -594,7 +594,7 @@ const PrivateBusinessCredit: React.FC = () => {
           </motion.p>
         </motion.section>
 
-        <a href="https://lmsathena.com/login">
+        <a href="/tncmasterclass">
           <motion.button
             whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
             whileTap={{ scale: 0.98 }}

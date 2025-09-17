@@ -26,11 +26,11 @@ const PrivatePage = () => {
         // buttonPath="/course-tnc"
       />
       <CourseDetail />
+      <CourseFeatures />
       <Cards />
       {/* <Pricing /> */}
       <HowItWorks />
       <Offer />
-      <CourseFeatures />
       <Event />
       <Contact />
     </div>

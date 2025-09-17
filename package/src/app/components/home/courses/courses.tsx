@@ -190,7 +190,7 @@ const CourseRoadmap: React.FC = () => {
             title="Become Private + Sovereignty101"
             image="/images/projects/projectlist/freshman.webp"
             subtitle="Reclaim Your Legal Identity"
-            description="Correct your status and exit public contracts to reclaim sovereignty"
+            description="Learn how to step out of the public and establish your affairs in the private."
             learnings={[
               "Status correction principles",
               "Remove from public jurisdiction",
@@ -206,8 +206,8 @@ const CourseRoadmap: React.FC = () => {
             title="Operate Private"
             image="/images/courses/junior.webp"
             subtitle="Asset Protection & Business"
-            description="Build trusts and PMAs to operate without state oversight"
-            learnings={["UBOT business trusts", "Private Membership Associations", "Real estate in trusts", "Intergenerational protection"]}
+            description="Build trusts and PMAs to operate without state oversight."
+            learnings={["Unincorporated Business Trusts", "Private Membership Associations", "Real estate in trusts", "Intergenerational protection"]}
             outcomes={["Real estate trusts", "Wellness PMAs", "Private coaching", "Trade guilds"]}
             badge="JUNIOR"
             highlight
@@ -215,11 +215,11 @@ const CourseRoadmap: React.FC = () => {
           />
 
           <CourseCard
-            title="Private Business Credit"
+            title="Financial Freedom"
             image="/images/projects/projectlist/senior.webp"
             subtitle="$200K+ Without Banks"
-            description="Build business credit through UBOT Trusts and private processing"
-            learnings={["Unlock vendor accounts", "Fix public credit lawfully", "0% APR funding", "Non-KYC payments"]}
+            description="Build business credit through Unincorporated Business Trusts and private processing."
+            learnings={["Private Business Credit","Personal Credit Repair","Fix public credit lawfully", "0% APR funding & Non-KYC payments"]}//"Unlock vendor accounts",
             outcomes={["Rental businesses", "E-commerce", "Merchant services", "15+ other models"]}
             badge="SENIOR"
             onLearnMore={() => router.push("/private")}

@@ -248,7 +248,7 @@ export default function CourseOverviewSection() {
             transition={transition}
             className="leading-relaxed text-lg text-slate-700 dark:text-slate-300 mb-8"
           >
-            Learn to build elite business credit with UBOT Trusts, repair your personal credit, and establish Private Merchant Processing — no banks, no KYC, no risk of shutdowns.
+            Learn to build elite business credit with Unincorporated Business Trusts, repair your personal credit, and establish Private Merchant Processing — no banks, no KYC, no risk of shutdowns.
           </motion.p>
 
           <motion.div

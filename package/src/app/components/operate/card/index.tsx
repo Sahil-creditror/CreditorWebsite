@@ -22,7 +22,7 @@ const WhatYoullLearnSlider: React.FC = () => {
 
   const cards: CardType[] = [
     {
-      title: "UBOT Trust Setup",
+      title: "Unincorporated Business Trust Setup",
       desc: "Protect assets; compartmentalize holdings.",
       color: "#426be6",
       img: "/images/operate/img1.webp",

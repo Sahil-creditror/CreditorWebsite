@@ -25,10 +25,10 @@ export default function Page() {
                 // buttonPath="/course-tnc"
             />
             <Intro2 />
+            <BecomeIntro /> 
             {/* <Pricing /> */}
             <HowItWorks />
             <Appointment />
-            <BecomeIntro /> 
             <Event />
             {/* <BusinessCardsGrid /> */}
             <Contact />

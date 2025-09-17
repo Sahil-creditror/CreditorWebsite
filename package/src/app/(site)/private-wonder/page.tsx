@@ -44,10 +44,10 @@ const PrivatePage = () => {
           // buttonPath="/course-tnc"
         />
         <CourseDetail />
+        <CourseFeatures />
         <Cards />
         {/* <Pricing /> */}
         <HowItWorks />
-        <CourseFeatures />
         <Event />
         <Contact />
       </main>

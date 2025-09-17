@@ -108,12 +108,12 @@ const CourseCard: React.FC<CourseCardProps> = ({
             </span>
             <div className="absolute top-0.5 right-0.5 transition-all duration-300 ease-in-out group-hover:left-0">
               <svg className="flex items-center transition-transform duration-300 ease-in-out group-hover:rotate-45" width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g filter="url(#filter0_d_home_courses_btn)">
+                <g filter="url(#filter0_d_courses_btn)">
                   <rect x="3" y="2" width="52" height="52" rx="26" fill="white" />
                   <path d="M24 23H34M34 23V33M34 23L24 33" stroke="#1F2A2E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </g>
                 <defs>
-                  <filter id="filter0_d_home_courses_btn" x="0" y="0" width="58" height="58" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                  <filter id="filter0_d_courses_btn" x="0" y="0" width="58" height="58" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
                     <feFlood floodOpacity="0" result="BackgroundImageFix" />
                     <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
                     <feOffset dy="1" />

@@ -57,7 +57,7 @@ function Pricing() {
         <div className="container">
           <div className="flex flex-col gap-20">
             <div className="flex flex-col gap-14 xl:gap-24">
-              <div className="flex flex-col xl:flex xl:flex-row items-start gap-8">
+              {/* <div className="flex flex-col xl:flex xl:flex-row items-start gap-8">
                 <div className="flex items-center py-3 gap-4 md:gap-8 w-full max-w-xl">
                   <span className="bg-primary dark:text-secondary py-1.5 px-2.5 text-base font-medium rounded-full">07</span>
                   <div className="h-px w-16 bg-black/12 dark:bg-white/12" />
@@ -69,7 +69,7 @@ function Pricing() {
                     <p className="max-w-2xl text-secondary/70 dark:text-white/70">A glimpse into our creativity—exploring innovative designs, successful collaborations, and transformative digital experiences.</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-7">
                 {isLoading && Array.from({ length: 3 }).map((_, idx) => (
@@ -207,7 +207,7 @@ function Pricing() {
             </div>
 
             <div className="flex flex-col gap-10">
-              <p className="text-secondary dark:text-white text-center">More than 100+ trusted Learners</p>
+              <p className="text-secondary dark:text-white text-center">More than 1200+ trusted Learners</p>
               {(pricingData?.partnerLogo?.length ?? 0) > 0 ? (
                 <Slider duration={20} pauseOnHover={true} blurBorders={false}>
                   {(pricingData?.partnerLogo ?? []).map((items: PartnerLogoItem, index: number) => (

@@ -11,13 +11,13 @@ export default function MasterclassBenefits() {
       title: "POS & Gateway Options",
       description:
         "EMV-compliant terminals, mobile readers, and online gateways.",
-      image: "/images/services/template/ecommerce.webp",
+      image: "/images/services/private-merchant/gateway.webp",
     },
     {
       title: "Fraud & Chargeback Protection",
       description:
         "Real-time monitoring and dispute support.",
-      image: "/images/services/template/digital.webp",
+      image: "/images/services/private-merchant/protection.webp",
     },
     {
       title: "PCI & EMV Compliant",
@@ -29,13 +29,13 @@ export default function MasterclassBenefits() {
       title: "Multi-Currency Settlement",
       description:
         "Process payments worldwide and settle in your preferred currency.",
-      image: "/images/services/template/estate.webp",
+      image: "/images/services/private-merchant/currency.webp",
     },
     {
       title: "Detailed Reporting",
       description:
         "Merchant statements, analytics, and dashboards.",
-      image: "/images/services/template/health.webp",
+      image: "/images/services/private-merchant/report.webp",
     },
   ];
 

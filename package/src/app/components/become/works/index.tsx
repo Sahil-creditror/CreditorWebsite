@@ -128,7 +128,7 @@ export default function Pricing() {
                 Invest In Becoming Private
               </h2>
               <p className="mt-3 text-slate-700 dark:text-slate-300 max-w-2xl">
-                Choose the plan that fits your goals. Start with Masterclass membership and scale into premium catalogs at your own pace.
+                Start with Masterclass membership and scale into premium catalogs at your own pace.
               </p>
             </div>
             <div className="w-full flex justify-center lg:justify-end">

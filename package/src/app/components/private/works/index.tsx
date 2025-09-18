@@ -394,13 +394,17 @@ export default function Pricing() {
           >
             Join Masterclass
           </a>
-          <div className="text-xs text-slate-600 dark:text-slate-300 max-w-3xl text-center">
-            <span className="inline-flex items-center justify-center gap-2">
-              <FiAlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0" />
-              <span className="leading-relaxed">
-                WARNING: The price will increase to $147/month soon. Join now to lock in your $69/month rate forever — and cancel anytime.
+          <div className="text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-3xl text-center">
+            <div className="flex flex-col items-center justify-center gap-3">
+              {/* Icon on top */}
+              <FiAlertTriangle className="w-10 h-10 text-amber-500" />
+              
+              {/* Text below */}
+              <span className="leading-snug font-medium">
+                <span className="text-amber-500 font-semibold">WARNING:</span> 
+                {" "}The price will increase to $147/month soon. Join now to lock in your $69/month rate forever — and cancel anytime.
               </span>
-            </span>
+            </div>
           </div>
         </div>
 

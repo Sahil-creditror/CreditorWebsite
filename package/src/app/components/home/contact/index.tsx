@@ -3,8 +3,6 @@
 import Image from "next/image";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import type { Variants } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -59,33 +57,15 @@ export default function Contact(props: ContactProps) {
         transformOrigin: '50% 50%'
       });
 
-      // Note: section entrance animation handled by Framer Motion
+      // Note: section entrance animation removed (was framer-motion)
     }, rippleRef);
 
     return () => ctx.revert();
   }, []);
 
-  // framer-motion variants
-  const container: Variants = {
-    hidden: { opacity: 0, y: 12 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.45, staggerChildren: 0.04, when: 'beforeChildren' }
-    }
-  };
-  const item: Variants = {
-    hidden: { opacity: 0, y: 6 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.25 } }
-  };
-
   return (
-    <motion.section
+    <section
       ref={sectionRef}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.15 }}
-      variants={container}
       className="relative py-20 md:py-24 bg-gradient-to-b from-slate-150 to-slate-200 dark:from-slate-900 dark:to-slate-800 overflow-hidden"
     >
       {/* ripple animation layer (purely decorative) */}
@@ -97,9 +77,9 @@ export default function Contact(props: ContactProps) {
       </div>
 
       <div className="container relative z-10">
-        <motion.div variants={container} className="mx-auto flex flex-col gap-8 md:gap-12">
+        <div className="mx-auto flex flex-col gap-8 md:gap-12">
 
-          <motion.div variants={item} className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex items-center gap-4">
               <span className="bg-primary dark:text-secondary py-1.5 px-3 text-base font-semibold rounded-full">{contactdataNumber ?? 3}</span>
               <div className="h-px w-16 bg-black/12 dark:bg-white/12" />
@@ -109,32 +89,31 @@ export default function Contact(props: ContactProps) {
             <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
                 Get in Touch
             </h2>
-            <p className="mt-3 text-lg leading-relaxed text-gray-600 dark:text-gray-300 max-w-xl">
+            <p className="mt-3 text-lg leading-relaxed text-gray-600 dark:text-gray-300 max-w-xl transition-opacity duration-200">
                 Let's collaborate and craft something extraordinary together.  
                 Share your vision—I'm all ears and ready to help bring it to life.
             </p>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div variants={container} className="flex flex-col xl:flex-row gap-10 xl:gap-16 xl:items-stretch">
+          <div className="flex flex-col xl:flex-row gap-10 xl:gap-16 xl:items-stretch">
 
             {/* left info column - Enhanced with more visual elements */}
-            <motion.div
-              variants={item}
+            <div
               className="max-w-md flex flex-col gap-10 md:gap-14 xl:flex-1"
             >
-              <div className="relative bg-gradient-to-br from-white/90 via-white/80 to-white/70 dark:from-gray-900/90 dark:via-gray-800/80 dark:to-gray-900/70 backdrop-blur-2xl rounded-3xl p-8 shadow-2xl border border-white/20 dark:border-white/10 transition-all duration-500 hover:shadow-3xl hover:-translate-y-1.5 overflow-hidden group h-full">
+              <div className="relative bg-gradient-to-br from-white/90 via-white/80 to-white/70 dark:from-gray-900/90 dark:via-gray-800/80 dark:to-gray-900/70 backdrop-blur-2xl rounded-3xl p-8 shadow-2xl border border-white/20 dark:border-white/10 transition-all duration-200 hover:shadow-3xl hover:-translate-y-0.5 overflow-hidden group h-full">
                 
                 {/* Decorative elements */}
-                <div className="absolute -top-10 -right-10 w-28 h-28 bg-primary/10 rounded-full blur-xl group-hover:bg-primary/20 transition-all duration-700"></div>
-                <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-blue-500/10 rounded-full blur-xl group-hover:bg-blue-500/20 transition-all duration-700"></div>
+                <div className="absolute -top-10 -right-10 w-28 h-28 bg-primary/10 rounded-full blur-xl group-hover:bg-primary/20 transition-all duration-300"></div>
+                <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-blue-500/10 rounded-full blur-xl group-hover:bg-blue-500/20 transition-all duration-300"></div>
                 
                 {/* Animated floating elements */}
                 <div className="absolute top-6 left-6 w-4 h-4 rounded-full bg-primary/30 animate-pulse"></div>
                 <div className="absolute bottom-10 right-8 w-3 h-3 rounded-full bg-blue-500/40 animate-ping"></div>
                 
                 {/* Shimmer effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 dark:via-white/5 to-transparent -skew-x-12 group-hover:animate-shimmer transition-all duration-1000 opacity-0 group-hover:opacity-100"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 dark:via-white/5 to-transparent -skew-x-12 group-hover:animate-shimmer transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
                 
                 {/* Heading with icon */}
                 <div className="flex items-center gap-3 mb-6 relative z-10">
@@ -157,21 +136,19 @@ export default function Contact(props: ContactProps) {
                 {/* Keypoints */}
                 <ul className="space-y-5 relative z-10">
                   {contactData?.keypoint?.map((value: any, index: number) => (
-                    <motion.li
+                    <li
                       key={index}
-                      variants={item}
-                      className="flex items-start gap-4 group p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 hover:bg-white/80 dark:hover:bg-gray-800/50 transition-all duration-300 border border-white/30 dark:border-white/5"
-                      whileHover={{ scale: 1.02 }}
+                      className="flex items-start gap-4 group p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 hover:bg-white/80 dark:hover:bg-gray-800/50 transition-transform duration-150 border border-white/30 dark:border-white/5 hover:scale-105"
                     >
-                      <div className="bg-gradient-to-r from-primary to-blue-600 p-2.5 rounded-full flex-shrink-0 shadow-sm group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300 mt-0.5">
+                      <div className="bg-gradient-to-r from-primary to-blue-600 p-2.5 rounded-full flex-shrink-0 shadow-sm group-hover:scale-110 group-hover:rotate-12 transition-transform duration-200 mt-0.5">
                         <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
-                      <span className="text-base font-medium text-gray-800 dark:text-gray-200 group-hover:text-primary transition-colors duration-300">
+                      <span className="text-base font-medium text-gray-800 dark:text-gray-200 group-hover:text-primary transition-colors duration-150">
                         {value}
                       </span>
-                    </motion.li>
+                    </li>
                   ))}
                 </ul>
 
@@ -182,7 +159,7 @@ export default function Contact(props: ContactProps) {
                     Why Choose Us?
                   </h4>
                   <div className="space-y-3">
-                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 border border-white/30 dark:border-white/5 hover:bg-white/70 dark:hover:bg-gray-800/50 transition-all duration-300">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 border border-white/30 dark:border-white/5 hover:bg-white/70 dark:hover:bg-gray-800/50 transition-all duration-200">
                       <div className="bg-green-500/20 p-2 rounded-lg">
                         <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -194,7 +171,7 @@ export default function Contact(props: ContactProps) {
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 border border-white/30 dark:border-white/5 hover:bg-white/70 dark:hover:bg-gray-800/50 transition-all duration-300">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 border border-white/30 dark:border-white/5 hover:bg-white/70 dark:hover:bg-gray-800/50 transition-all duration-200">
                       <div className="bg-blue-500/20 p-2 rounded-lg">
                         <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -206,7 +183,7 @@ export default function Contact(props: ContactProps) {
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 border border-white/30 dark:border-white/5 hover:bg-white/70 dark:hover:bg-gray-800/50 transition-all duration-300">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/30 border border-white/30 dark:border-white/5 hover:bg-white/70 dark:hover:bg-gray-800/50 transition-all duration-200">
                       <div className="bg-purple-500/20 p-2 rounded-lg">
                         <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
@@ -220,13 +197,12 @@ export default function Contact(props: ContactProps) {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* right form column - WonderEngine Form */}
-            <motion.div variants={item} className="w-full xl:flex-1">
-              <motion.div 
-                variants={container} 
-                className="relative bg-gradient-to-br from-white/90 via-white/80 to-white/70 dark:from-gray-900/90 dark:via-gray-800/80 dark:to-gray-900/70 backdrop-blur-2xl rounded-3xl p-8 md:p-10 shadow-2xl border border-white/20 dark:border-white/10 overflow-hidden group hover:shadow-3xl hover:-translate-y-1 transition-all duration-500 h-full"
+            <div className="w-full xl:flex-1">
+              <div 
+                className="relative bg-gradient-to-br from-white/90 via-white/80 to-white/70 dark:from-gray-900/90 dark:via-gray-800/80 dark:to-gray-900/70 backdrop-blur-2xl rounded-3xl p-8 md:p-10 shadow-2xl border border-white/20 dark:border-white/10 overflow-hidden group hover:shadow-3xl hover:-translate-y-0.5 transition-all duration-200 h-full"
               >
                 {/* Enhanced decorative elements */}
                 <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl group-hover:bg-blue-500/30 group-hover:blur-2xl transition-all duration-700"></div>
@@ -237,22 +213,7 @@ export default function Contact(props: ContactProps) {
                 <div className="absolute bottom-12 right-12 w-5 h-5 rounded-full bg-blue-500/30 animate-ping"></div>
                 
                 {/* Shimmer effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 dark:via-white/5 to-transparent -skew-x-12 group-hover:animate-shimmer transition-all duration-1000 opacity-0 group-hover:opacity-100"></div>
-                
-                {/* Form Header
-                <div className="relative z-10 mb-8 text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary to-blue-600 rounded-2xl shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">
-                    Send us a Message
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-lg">
-                    We'd love to hear from you. Let's start a conversation!
-                  </p>
-                </div> */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 dark:via-white/5 to-transparent -skew-x-12 group-hover:animate-shimmer transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
 
                 {/* WonderEngine Form - Direct Integration */}
                 <div className="relative z-10 mb-6">
@@ -308,11 +269,11 @@ export default function Contact(props: ContactProps) {
                 {isMounted && (
                   <Script src="https://api.wonderengine.ai/js/form_embed.js" strategy="afterInteractive" />
                 )}
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
 
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* Custom animation styles */}
@@ -325,6 +286,6 @@ export default function Contact(props: ContactProps) {
           animation: shimmer 1.5s infinite;
         }
       `}</style>
-    </motion.section>
+    </section>
   );
 }

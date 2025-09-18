@@ -50,11 +50,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
           priority={false}
         />
 
-        {badge && (
-          <span className="absolute top-3 left-3 z-20 inline-block bg-blue-600 dark:bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm font-semibold shadow">
-            {badge}
-          </span>
-        )}
+        {/* badge overlay removed */}
 
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent text-white py-2 text-center font-semibold tracking-wide">
           {title.split(" ")[0]}
@@ -206,7 +202,7 @@ const CourseRoadmap: React.FC = () => {
             title="Operate Private"
             image="/images/courses/junior.webp"
             subtitle="Asset Protection & Business"
-            description="Build trusts and PMAs to operate without state oversight."
+            description="Build, manage, and grow an Empire in the private, independent of the public system."
             learnings={["Unincorporated Business Trusts", "Private Membership Associations", "Real estate in trusts", "Intergenerational protection"]}
             outcomes={["Real estate trusts", "Wellness PMAs", "Private coaching", "Trade guilds"]}
             badge="JUNIOR"
@@ -216,9 +212,9 @@ const CourseRoadmap: React.FC = () => {
 
           <CourseCard
             title="Financial Freedom"
-            image="/images/projects/projectlist/senior.webp"
+            image="/images/projects/projectlist/finance.webp"
             subtitle="$200K+ Without Banks"
-            description="Build business credit through Unincorporated Business Trusts and private processing."
+            description="Discover the foundation of private commerce and take control of how you get paid"
             learnings={["Private Business Credit","Personal Credit Repair","Fix public credit lawfully", "0% APR funding & Non-KYC payments"]}//"Unlock vendor accounts",
             outcomes={["Rental businesses", "E-commerce", "Merchant services", "15+ other models"]}
             badge="SENIOR"

@@ -50,11 +50,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
           priority={false}
         />
 
-        {badge && (
-          <span className="absolute top-3 left-3 z-20 inline-block bg-blue-600 dark:bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm font-semibold shadow">
-            {badge}
-          </span>
-        )}
+        {/* badge overlay removed */}
 
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent text-white py-2 text-center font-semibold tracking-wide">
           {title.split(" ")[0]}
@@ -216,10 +212,10 @@ const CourseRoadmap: React.FC = () => {
 
           <CourseCard
             title="Financial Freedom"
-            image="/images/projects/projectlist/senior.webp"
+            image="/images/projects/projectlist/finance.webp"
             subtitle="$200K+ Without Banks"
             description="Build business credit through Unincorporated Business Trusts and private processing."
-            learnings={["Private Business Credit","Personal Credit Repair", "Fix public credit lawfully", "0% APR funding & Non-KYC payments"]}//"Unlock vendor accounts", 
+            learnings={["Private Business Credit","Personal Credit Repair", "Fix public credit lawfully", "0% APR funding & Non-KYC payments"]}//"Unlock vendor accounts"
             outcomes={["Rental businesses", "E-commerce", "Merchant services", "15+ other models"]}
             badge="SENIOR"
             onLearnMore={() => router.push("/private")}

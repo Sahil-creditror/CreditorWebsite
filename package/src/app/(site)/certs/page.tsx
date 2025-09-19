@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, FormEvent } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, XCircle, Loader2 } from 'lucide-react';
+import { CheckCircle, XCircle, Loader2, ShieldCheck } from 'lucide-react';
 
 interface Certificate {
   id: string;
@@ -56,39 +56,57 @@ export default function CertificateVerifier(): React.ReactElement {
   const domainLabel = certificate?.domain ?? certificate?.course ?? '—';
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-6">
+    <div className="relative min-h-screen flex flex-col items-center justify-center p-6 bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-neutral-950 dark:via-neutral-950 dark:to-black">
+      <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(1200px_600px_at_20%_-10%,rgba(59,130,246,0.10),transparent),radial-gradient(900px_500px_at_80%_110%,rgba(16,185,129,0.10),transparent)]" />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.35] dark:opacity-[0.2] [background-image:repeating-linear-gradient(0deg,transparent,transparent_23px,rgba(0,0,0,0.04)_24px),repeating-linear-gradient(90deg,transparent,transparent_23px,rgba(0,0,0,0.04)_24px)] dark:[background-image:repeating-linear-gradient(0deg,transparent,transparent_23px,rgba(255,255,255,0.05)_24px),repeating-linear-gradient(90deg,transparent,transparent_23px,rgba(255,255,255,0.05)_24px)]" />
+      <div className="pointer-events-none absolute inset-0 mix-blend-soft-light opacity-40 [background-image:radial-gradient(circle_at_70%_20%,rgba(255,255,255,0.6),transparent_35%),radial-gradient(circle_at_30%_80%,rgba(255,255,255,0.4),transparent_35%)] dark:opacity-20" />
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-xl w-full bg-white rounded-2xl shadow-xl p-8 border border-gray-200"
+        className="relative max-w-2xl w-full mx-auto rounded-2xl shadow-2xl p-8 border bg-white/80 backdrop-blur-xl border-gray-200 dark:bg-neutral-900/70 dark:border-neutral-800 mt-20"
       >
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Certificate Verification</h1>
+        <div className="flex flex-col items-center gap-2 mb-6">
+          <div className="inline-flex items-center justify-center rounded-full h-12 w-12 bg-blue-600/10 text-blue-700 dark:bg-blue-500/10 dark:text-blue-300">
+            <ShieldCheck className="h-6 w-6" />
+          </div>
+          <h1 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-100">Certificate Verification</h1>
+          <p className="text-center text-gray-600 dark:text-gray-400">Verify the authenticity of a certificate issued by Creditor Academy.</p>
+        </div>
 
-        <form onSubmit={handleSubmit} className="flex gap-2 mb-6">
+        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2 sm:gap-3 mb-6">
+          <label htmlFor="cert-id" className="sr-only">Certificate ID</label>
           <input
+            id="cert-id"
             type="text"
             placeholder="Enter Certificate ID"
             value={certId}
             onChange={(e) => setCertId(e.target.value)}
-            className="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full sm:flex-grow px-4 py-2 border rounded-lg bg-white/70 dark:bg-neutral-800/70 border-gray-300 dark:border-neutral-700 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
           />
           <button
             type="submit"
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            disabled={status === 'loading'}
+            className="w-full sm:w-auto px-6 py-2 rounded-lg text-white transition disabled:opacity-70 disabled:cursor-not-allowed bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-sm"
           >
-            Verify
+            {status === 'loading' ? 'Verifying…' : 'Verify'}
           </button>
         </form>
 
+        {status !== 'success' && (
+          <div className="-mt-2 mb-2 text-xs text-gray-500 dark:text-gray-500 text-center">
+            Hint: Example format e.g. <span className="font-mono">CERT-********</span>
+          </div>
+        )}
+
         {status === 'loading' && (
-          <div className="flex items-center justify-center text-blue-600">
+          <div className="flex items-center justify-center text-blue-600 dark:text-blue-400">
             <Loader2 className="animate-spin mr-2" />
-            Verifying...
+            Verifying…
           </div>
         )}
 
         {status === 'error' && (
-          <div className="flex items-center justify-center text-red-600">
+          <div className="flex items-center justify-center px-4 py-3 rounded-md border text-red-700 border-red-200 bg-red-50 dark:text-red-300 dark:border-red-900/60 dark:bg-red-900/20">
             <XCircle className="mr-2" /> Invalid certificate ID or network error.
           </div>
         )}
@@ -97,22 +115,34 @@ export default function CertificateVerifier(): React.ReactElement {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mt-6 border-t pt-6"
+            className="mt-6 border-t pt-6 border-gray-200 dark:border-neutral-800"
           >
-            <div className="flex items-center text-green-600 mb-4">
+            <div className="flex items-center text-green-600 dark:text-emerald-400 mb-4">
               <CheckCircle className="mr-2" />
               <span className="font-semibold">Valid Certificate</span>
             </div>
 
-            <div className="space-y-2 text-gray-700">
-              <p><strong>Name:</strong> {certificate.name}</p>
-              <p><strong>Domain:</strong> {domainLabel}</p>
-              <p><strong>Issued Date:</strong> {certificate.issuedDate}</p>
-              <p><strong>Issuer:</strong> {certificate.issuer ?? 'Creditor Academy'}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700 dark:text-gray-200">
+              <div className="rounded-lg border p-4 border-gray-200 dark:border-neutral-800 bg-white/60 dark:bg-neutral-900/60">
+                <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Name</p>
+                <p className="mt-1 font-medium text-gray-900 dark:text-gray-100">{certificate.name}</p>
+              </div>
+              <div className="rounded-lg border p-4 border-gray-200 dark:border-neutral-800 bg-white/60 dark:bg-neutral-900/60">
+                <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Domain</p>
+                <p className="mt-1 font-medium text-gray-900 dark:text-gray-100">{domainLabel}</p>
+              </div>
+              <div className="rounded-lg border p-4 border-gray-200 dark:border-neutral-800 bg-white/60 dark:bg-neutral-900/60">
+                <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Issued Date</p>
+                <p className="mt-1 font-medium text-gray-900 dark:text-gray-100">{certificate.issuedDate}</p>
+              </div>
+              <div className="rounded-lg border p-4 border-gray-200 dark:border-neutral-800 bg-white/60 dark:bg-neutral-900/60">
+                <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Issuer</p>
+                <p className="mt-1 font-medium text-gray-900 dark:text-gray-100">{certificate.issuer ?? 'Creditor Academy'}</p>
+              </div>
             </div>
 
-            <div className="mt-4 rounded-md border border-green-200 bg-green-50 text-green-800 px-4 py-3">
-              This is a valid Certificate issued by Creditor Academy.
+            <div className="mt-4 rounded-md border px-4 py-3 border-green-200 bg-green-50 text-green-800 dark:border-emerald-800/60 dark:bg-emerald-900/20 dark:text-emerald-300">
+              This is a valid certificate issued by Creditor Academy.
             </div>
           </motion.div>
         )}

@@ -9,7 +9,7 @@ import Script from "next/script";
 import Header from "./components/layout/header";
 import Footer from "./components/layout/footer";
 import ScrollToTop from "./components/scroll-to-top";
-import PreloaderWrapper from "./preloader"; // ⬅️ your preloader component
+// Removed preloader
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -81,10 +81,7 @@ export default function RootLayout({
           <ThemeProvider attribute="class" enableSystem={false} defaultTheme="light">
             {!hideLayout && <Header />}
             
-            {/* ✅ Wrap children with Preloader */}
-            <PreloaderWrapper>
-              {children}
-            </PreloaderWrapper>
+            {children}
 
             {!hideLayout && <Footer />}
             <ScrollToTop />

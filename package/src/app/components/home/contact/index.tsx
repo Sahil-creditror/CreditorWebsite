@@ -3,10 +3,7 @@
 import Image from "next/image";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+ 
 
 type ContactProps = { contactdataNumber?: string };
 
@@ -16,8 +13,7 @@ export default function Contact(props: ContactProps) {
   const [isFormLoaded, setIsFormLoaded] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const rippleRef = useRef<HTMLDivElement | null>(null);
+ 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,43 +34,12 @@ export default function Contact(props: ContactProps) {
     setIsMounted(true);
   }, []);
 
-  // GSAP: ripple background + subtle entrance parallax
-  useEffect(() => {
-    if (!rippleRef.current || typeof window === 'undefined') return;
-
-    const ctx = gsap.context(() => {
-      const ripples = gsap.utils.toArray<HTMLSpanElement>('.ripple');
-
-      // animate repeating ripples - scales & fades
-      gsap.to(ripples, {
-        scale: 6,
-        opacity: 0,
-        duration: 3.2,
-        ease: 'power2.out',
-        stagger: 0.9,
-        repeat: -1,
-        repeatDelay: 0.6,
-        transformOrigin: '50% 50%'
-      });
-
-      // Note: section entrance animation removed (was framer-motion)
-    }, rippleRef);
-
-    return () => ctx.revert();
-  }, []);
+ 
 
   return (
     <section
-      ref={sectionRef}
-      className="relative py-20 md:py-24 bg-gradient-to-b from-slate-150 to-slate-200 dark:from-slate-900 dark:to-slate-800 overflow-hidden"
+      className="relative py-20 md:py-24 overflow-hidden"
     >
-      {/* ripple animation layer (purely decorative) */}
-      <div ref={rippleRef} aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
-        {/* center ripples - three elements, different base sizes */}
-        <span className="ripple absolute rounded-full bg-primary/20 dark:bg-primary/10 z-0" style={{ width: 120, height: 120, left: '50%', top: '48%', transform: 'translate(-50%, -50%)' }} />
-        <span className="ripple absolute rounded-full bg-primary/16 dark:bg-primary/8 z-0" style={{ width: 220, height: 220, left: '50%', top: '48%', transform: 'translate(-50%, -50%)' }} />
-        <span className="ripple absolute rounded-full bg-primary/10 dark:bg-primary/6 z-0" style={{ width: 340, height: 340, left: '50%', top: '48%', transform: 'translate(-50%, -50%)' }} />
-      </div>
 
       <div className="container relative z-10">
         <div className="mx-auto flex flex-col gap-8 md:gap-12">
@@ -108,9 +73,7 @@ export default function Contact(props: ContactProps) {
                 <div className="absolute -top-10 -right-10 w-28 h-28 bg-primary/10 rounded-full blur-xl group-hover:bg-primary/20 transition-all duration-300"></div>
                 <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-blue-500/10 rounded-full blur-xl group-hover:bg-blue-500/20 transition-all duration-300"></div>
                 
-                {/* Animated floating elements */}
-                <div className="absolute top-6 left-6 w-4 h-4 rounded-full bg-primary/30 animate-pulse"></div>
-                <div className="absolute bottom-10 right-8 w-3 h-3 rounded-full bg-blue-500/40 animate-ping"></div>
+                
                 
                 {/* Shimmer effect on hover */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 dark:via-white/5 to-transparent -skew-x-12 group-hover:animate-shimmer transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
@@ -208,9 +171,7 @@ export default function Contact(props: ContactProps) {
                 <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl group-hover:bg-blue-500/30 group-hover:blur-2xl transition-all duration-700"></div>
                 <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-gradient-to-br from-green-500/20 to-blue-500/20 rounded-full blur-3xl group-hover:bg-green-500/30 group-hover:blur-2xl transition-all duration-700"></div>
                 
-                {/* Animated floating elements */}
-                <div className="absolute top-10 left-10 w-6 h-6 rounded-full bg-primary/20 animate-bounce"></div>
-                <div className="absolute bottom-12 right-12 w-5 h-5 rounded-full bg-blue-500/30 animate-ping"></div>
+                
                 
                 {/* Shimmer effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 dark:via-white/5 to-transparent -skew-x-12 group-hover:animate-shimmer transition-all duration-500 opacity-0 group-hover:opacity-100"></div>

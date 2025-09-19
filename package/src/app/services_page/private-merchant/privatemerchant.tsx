@@ -17,7 +17,7 @@ export function PrivateMerchant() {
         bannerimage="/images/services/pma-banner.webp"
         heading="Your Merchant Account"
         desc="Ditch the restrictions of mainstream processors. Get a fully underwritten <span>Private Merchant Account</span> with fast approvals."
-        buttonPath="/contact"
+        buttonPath="https://payments.creditoracademy.com/form/creditor-academy-paulr-referral"
       />
       <WhyAPMP />
       <Feature/>

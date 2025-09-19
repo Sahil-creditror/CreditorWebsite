@@ -1,0 +1,16 @@
+[
+  {
+    "id": "CERT-2025-09-19-7F3A01",
+    "name": "Ravi Sharma",
+    "domain": "Advanced Credit Management",
+    "issuedDate": "2025-09-19",
+    "issuer": "Creditor Academy"
+  },
+  {
+    "id": "CERT-2025-09-19-7F3A02",
+    "name": "Ananya Mehta",
+    "domain": "Risk Analysis & Credit Scoring",
+    "issuedDate": "2025-08-15",
+    "issuer": "Creditor Academy"
+  }
+]

@@ -716,7 +716,6 @@ function About() {
                   <iframe
                     src="https://drive.google.com/file/d/1r29AYUqcgbs7ZHao66vpeVYV1XskhA6A/preview"
                     className="absolute inset-0 w-full h-full"
-                    allow="autoplay"
                     allowFullScreen
                   />
                 </div>

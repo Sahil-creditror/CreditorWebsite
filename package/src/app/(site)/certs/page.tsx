@@ -3,11 +3,6 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, Loader2, ShieldCheck } from 'lucide-react';
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-    title: "Certificate | Creditor",
-};
 
 interface Certificate {
   id: string;

@@ -60,6 +60,23 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Google Analytics 4 */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-QMSV3WP8T5"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="ga4-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-QMSV3WP8T5');
+            `,
+          }}
+        />
         <SessionProvider>
           <ThemeProvider attribute="class" enableSystem={false} defaultTheme="light">
             {!hideLayout && <Header />}

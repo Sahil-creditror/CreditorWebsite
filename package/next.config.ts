@@ -1,15 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  experimental: {
-    // Allow Next dev overlay/assets when accessed via these dev origins
-    allowedDevOrigins: [
-      "http://localhost:3000",
-      "https://localhost:3000",
-      "http://127.0.0.1:3000",
-      "https://127.0.0.1:3000",
-    ],
-  },
   eslint: {
     ignoreDuringBuilds: true,
   },

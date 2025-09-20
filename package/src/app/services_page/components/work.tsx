@@ -43,7 +43,6 @@ const containerVariants: Variants = {
 const itemVariants: Variants = {
   hidden: { opacity: 0, x: 40, scale: 0.98 },
   visible: { opacity: 1, x: 0, scale: 1, transition: { duration: 0.42, ease: "easeOut" } },
-  hover: { scale: 1.02, y: -4, transition: { type: "spring", stiffness: 300, damping: 18 } },
 };
 
 const sliderImages = [
@@ -192,7 +191,6 @@ export default function HowItWorks() {
                     key={s.id}
                     className="group relative md:flex md:items-start md:gap-6"
                     variants={itemVariants}
-                    whileHover="hover"
                   >
                     {/* circle */}
                     <div className="flex-shrink-0">

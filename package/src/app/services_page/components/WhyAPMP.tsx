@@ -244,10 +244,10 @@ export default function WhyAPMP({
             variants={itemVariants}
             className="mt-10 flex justify-start self-start"
           >
-            <a
-              href="https://payments.creditoracademy.com/form/creditor-academy-paulr-referral"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              // href="https://payments.creditoracademy.com/form/creditor-academy-paulr-referral"
+              // target="_blank"
+              // rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-8 py-3 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold shadow-lg hover:scale-105 hover:brightness-110 transition-transform focus:outline-none focus:ring-4 focus:ring-blue-400/50"
               aria-label="Start Your Application"
             >
@@ -263,7 +263,7 @@ export default function WhyAPMP({
                 <path d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
               Start Your Application
-            </a>
+            </button>
           </motion.div>
         </MotionDiv>
 

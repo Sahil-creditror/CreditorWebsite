@@ -229,14 +229,14 @@ export default function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
             >
-              <a
+              <button
                 className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-blue-600 dark:bg-blue-500 text-white font-semibold shadow-md hover:scale-105 transform transition-transform duration-200 hover:bg-blue-700 dark:hover:bg-blue-600"
-                href="https://payments.creditoracademy.com/form/creditor-academy-paulr-referral"
-                target="_blank"
-                rel="noopener noreferrer"
+                // href="https://payments.creditoracademy.com/form/creditor-academy-paulr-referral"
+                // target="_blank"
+                // rel="noopener noreferrer"
               >
                 Start Processing Today
-              </a>
+              </button>
             </motion.div>
           </motion.div>
         </div>

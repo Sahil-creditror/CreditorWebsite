@@ -104,7 +104,10 @@ export default function Page() {
     const headers = React.useMemo(() => {
         if (!rows.length) return [] as string[];
         const keys = new Set<string>();
-        rows.forEach((r) => Object.keys(r).forEach((k) => keys.add(k)));
+        rows.forEach((r) => Object.keys(r).forEach((k) => {
+            if (k.startsWith("documents.")) return; // hide documents.* because files columns exist
+            keys.add(k);
+        }));
         // Keep createdAt, folder first, then alphabetical for rest
         const ordered = Array.from(keys).filter((k) => k !== "createdAt" && k !== "folder").sort();
         return ["createdAt", "folder", ...ordered];

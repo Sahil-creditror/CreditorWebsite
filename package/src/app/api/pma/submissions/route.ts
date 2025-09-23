@@ -17,6 +17,7 @@ type Submission = {
     jsonKey: string; // e.g. pma-submissions/.../form.json
     createdAt?: string; // derived from folder name if possible
     payload?: unknown; // parsed JSON
+    files?: string[]; // S3 keys for uploaded files
 };
 
 export async function GET(_req: NextRequest) {
@@ -53,7 +54,16 @@ export async function GET(_req: NextRequest) {
                 // ignore parse errors but include minimal entry
             }
 
-            submissions.push({ folder, jsonKey: key, createdAt, payload });
+            // List files under the folder's files/ prefix
+            let files: string[] = [];
+            try {
+                const listFiles = await s3.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: `${folder}/files/` }));
+                files = (listFiles.Contents || [])
+                    .map((o) => o.Key)
+                    .filter((k): k is string => !!k);
+            } catch {}
+
+            submissions.push({ folder, jsonKey: key, createdAt, payload, files });
         }
 
         // Sort newest first based on Key LastModified if available

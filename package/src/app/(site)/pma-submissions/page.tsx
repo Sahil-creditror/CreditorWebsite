@@ -74,11 +74,23 @@ export default function Page() {
         load();
     }, []);
 
-    function downloadCsv() {
-        const rows = submissions.map((s) => {
+    const rows = React.useMemo<Record<string, string>[]>(() => {
+        return submissions.map((s) => {
             const flat = flattenForCsv(s.payload ?? {});
-            return { folder: s.folder, createdAt: s.createdAt ?? "", ...flat };
+            return { createdAt: s.createdAt ?? "", folder: s.folder, ...flat };
         });
+    }, [submissions]);
+
+    const headers = React.useMemo(() => {
+        if (!rows.length) return [] as string[];
+        const keys = new Set<string>();
+        rows.forEach((r) => Object.keys(r).forEach((k) => keys.add(k)));
+        // Keep createdAt, folder first, then alphabetical for rest
+        const ordered = Array.from(keys).filter((k) => k !== "createdAt" && k !== "folder").sort();
+        return ["createdAt", "folder", ...ordered];
+    }, [rows]);
+
+    function downloadCsv() {
         const csv = toCsv(rows);
         const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
         const url = URL.createObjectURL(blob);
@@ -105,33 +117,22 @@ export default function Page() {
 
             {!loading && !error && (
                 <div className="overflow-auto border border-secondary/20 dark:border-white/10 rounded-md">
-                    <table className="min-w-full text-sm">
+                    <table className="min-w-full text-xs md:text-sm">
                         <thead className="bg-neutral-50 dark:bg-neutral-900">
                             <tr>
-                                <th className="px-3 py-2 text-left font-medium">Created</th>
-                                <th className="px-3 py-2 text-left font-medium">Folder</th>
-                                <th className="px-3 py-2 text-left font-medium">Legal Name</th>
-                                <th className="px-3 py-2 text-left font-medium">Entity Type</th>
-                                <th className="px-3 py-2 text-left font-medium">DBA Name</th>
-                                <th className="px-3 py-2 text-left font-medium">Contact Email</th>
-                                <th className="px-3 py-2 text-left font-medium">Monthly Volume</th>
+                                {headers.map((h) => (
+                                    <th key={h} className="px-3 py-2 text-left font-medium whitespace-nowrap">{h}</th>
+                                ))}
                             </tr>
                         </thead>
                         <tbody>
-                            {submissions.map((s, i) => {
-                                const p = s.payload || {};
-                                return (
-                                    <tr key={i} className="border-t border-secondary/10 dark:border-white/10">
-                                        <td className="px-3 py-2">{s.createdAt || ""}</td>
-                                        <td className="px-3 py-2">{s.folder}</td>
-                                        <td className="px-3 py-2">{p?.legal?.legalName ?? ""}</td>
-                                        <td className="px-3 py-2">{p?.legal?.entityType ?? ""}</td>
-                                        <td className="px-3 py-2">{p?.dba?.dbaName ?? ""}</td>
-                                        <td className="px-3 py-2">{p?.contact?.email ?? ""}</td>
-                                        <td className="px-3 py-2">{p?.sales?.monthlyVolume ?? ""}</td>
-                                    </tr>
-                                );
-                            })}
+                            {rows.map((r, i) => (
+                                <tr key={i} className="border-t border-secondary/10 dark:border-white/10">
+                                    {headers.map((h) => (
+                                        <td key={h} className="px-3 py-2 whitespace-nowrap">{r[h] ?? ""}</td>
+                                    ))}
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

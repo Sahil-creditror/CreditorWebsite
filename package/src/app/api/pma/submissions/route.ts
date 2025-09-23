@@ -18,6 +18,7 @@ type Submission = {
     createdAt?: string; // derived from folder name if possible
     payload?: unknown; // parsed JSON
     files?: string[]; // S3 keys for uploaded files
+    fileMap?: Record<string, string>; // documentField -> S3 key
 };
 
 export async function GET(_req: NextRequest) {
@@ -56,14 +57,25 @@ export async function GET(_req: NextRequest) {
 
             // List files under the folder's files/ prefix
             let files: string[] = [];
+            let fileMap: Record<string, string> = {};
             try {
                 const listFiles = await s3.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: `${folder}/files/` }));
                 files = (listFiles.Contents || [])
                     .map((o) => o.Key)
                     .filter((k): k is string => !!k);
+
+                // Derive document field name from key pattern `${folder}/files/${field}-${filename}`
+                for (const k of files) {
+                    const afterPrefix = k.replace(`${folder}/files/`, "");
+                    const idx = afterPrefix.indexOf("-");
+                    if (idx > 0) {
+                        const field = afterPrefix.substring(0, idx);
+                        if (!fileMap[field]) fileMap[field] = k;
+                    }
+                }
             } catch {}
 
-            submissions.push({ folder, jsonKey: key, createdAt, payload, files });
+            submissions.push({ folder, jsonKey: key, createdAt, payload, files, fileMap });
         }
 
         // Sort newest first based on Key LastModified if available

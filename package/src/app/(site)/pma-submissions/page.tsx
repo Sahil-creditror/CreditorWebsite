@@ -8,6 +8,7 @@ type Submission = {
     createdAt?: string;
     payload?: any;
     files?: string[];
+    fileMap?: Record<string, string>;
 };
 
 function flattenForCsv(payload: any): Record<string, string> {
@@ -82,6 +83,24 @@ export default function Page() {
         });
     }, [submissions]);
 
+    const docFields = [
+        "articlesOfOrg",
+        "ss4Letter",
+        "voidedCheck",
+        "governmentId",
+        "businessStatement1",
+        "businessStatement2",
+        "businessStatement3",
+        "personalStatement1",
+        "personalStatement2",
+        "personalStatement3",
+        "customerServiceAgreement",
+        "fulfillmentAgreement",
+        "crmAgreement",
+        "chargebackAgreement",
+        "coa",
+    ];
+
     const headers = React.useMemo(() => {
         if (!rows.length) return [] as string[];
         const keys = new Set<string>();
@@ -124,39 +143,36 @@ export default function Page() {
                                 {headers.map((h) => (
                                     <th key={h} className="px-3 py-2 text-left font-medium whitespace-nowrap">{h}</th>
                                 ))}
-                                <th className="px-3 py-2 text-left font-medium whitespace-nowrap">files</th>
+                                {docFields.map((d) => (
+                                    <th key={d} className="px-3 py-2 text-left font-medium whitespace-nowrap">{d}</th>
+                                ))}
                             </tr>
                         </thead>
                         <tbody>
                             {rows.map((r, i) => {
-                                const files = submissions[i]?.files || [];
+                                const fileMap = submissions[i]?.fileMap || {};
                                 return (
                                     <tr key={i} className="border-t border-secondary/10 dark:border-white/10">
                                         {headers.map((h) => (
                                             <td key={h} className="px-3 py-2 whitespace-nowrap">{r[h] ?? ""}</td>
                                         ))}
-                                        <td className="px-3 py-2 whitespace-nowrap">
-                                            {files.length ? (
-                                                <div className="flex flex-wrap gap-2">
-                                                    {files.map((k) => {
-                                                        const fileName = k.split("/").pop() || k;
-                                                        return (
-                                                            <a
-                                                                key={k}
-                                                                href={`/api/pma/file?key=${encodeURIComponent(k)}`}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className="text-blue-600 hover:underline"
-                                                            >
-                                                                {fileName}
-                                                            </a>
-                                                        );
-                                                    })}
-                                                </div>
-                                            ) : (
-                                                <span className="text-neutral-500">—</span>
-                                            )}
-                                        </td>
+                                        {docFields.map((d) => {
+                                            const key = fileMap[d];
+                                            if (!key) return <td key={d} className="px-3 py-2 whitespace-nowrap text-neutral-500">—</td>;
+                                            const fileName = key.split("/").pop() || key;
+                                            return (
+                                                <td key={d} className="px-3 py-2 whitespace-nowrap">
+                                                    <a
+                                                        href={`/api/pma/file?key=${encodeURIComponent(key)}`}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-blue-600 hover:underline"
+                                                    >
+                                                        {fileName}
+                                                    </a>
+                                                </td>
+                                            );
+                                        })}
                                     </tr>
                                 );
                             })}

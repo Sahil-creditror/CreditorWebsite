@@ -335,7 +335,7 @@ function Section({ title, children, defaultOpen = true }: { title: string; child
 					</button>
 				</div>
 				{open && (
-					<div id={`${title.replace(/\s+/g, "-").toLowerCase()}-content`} className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div id={`${title.replace(/\s+/g, "-").toLowerCase()}-content`} className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
 						{children}
 					</div>
 				)}
@@ -434,6 +434,10 @@ function DateInput({ value, onChange, placeholder, className, required }: { valu
 		setCursor((prev) => new Date(prev.getFullYear(), prev.getMonth() + delta, 1));
 	}
 
+	function changeYear(delta: number) {
+		setCursor((prev) => new Date(prev.getFullYear() + delta, prev.getMonth(), 1));
+	}
+
 	function handleSelect(day: number) {
 		const chosen = new Date(cursor.getFullYear(), cursor.getMonth(), day);
 		const iso = formatDateISO(chosen);
@@ -474,14 +478,35 @@ function DateInput({ value, onChange, placeholder, className, required }: { valu
 			</button>
 			{open && (
 				<div className="absolute z-10 mt-2 w-72 rounded-lg border border-secondary/20 bg-white p-3 shadow-lg dark:bg-neutral-900 dark:border-white/10">
-					<div className="flex items-center justify-between mb-2">
-						<button type="button" onClick={() => changeMonth(-1)} className="inline-flex h-8 w-8 items-center justify-center rounded-full text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:text-blue-400 dark:hover:bg-white/10">
+				<div className="flex items-center justify-between mb-2">
+					<div className="flex items-center gap-1">
+						<button type="button" onClick={() => changeMonth(-1)} aria-label="Previous month" className="inline-flex h-8 w-8 items-center justify-center rounded-full text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:text-blue-400 dark:hover:bg-white/10">
 							<svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
 						</button>
-						<div className="text-sm font-semibold">{cursor.toLocaleString(undefined, { month: "long" })} {year}</div>
-						<button type="button" onClick={() => changeMonth(1)} className="inline-flex h-8 w-8 items-center justify-center rounded-full text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:text-blue-400 dark:hover:bg-white/10">
+					</div>
+					<div className="flex items-center gap-2">
+						<div className="text-sm font-semibold">{cursor.toLocaleString(undefined, { month: "long" })}</div>
+						<select
+							aria-label="Select year"
+							className="rounded-md border border-secondary/30 bg-white px-2 py-1 text-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-300 dark:bg-neutral-900 dark:border-white/20"
+							value={year}
+							onChange={(e) => {
+								const newYear = Number(e.target.value);
+								if (!isNaN(newYear)) {
+									setCursor(new Date(newYear, month, 1));
+								}
+							}}
+						>
+							{Array.from({ length: 201 }, (_, i) => year - 100 + i).map((y) => (
+								<option key={y} value={y}>{y}</option>
+							))}
+						</select>
+					</div>
+					<div className="flex items-center gap-1">
+						<button type="button" onClick={() => changeMonth(1)} aria-label="Next month" className="inline-flex h-8 w-8 items-center justify-center rounded-full text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:text-blue-400 dark:hover:bg-white/10">
 							<svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
 						</button>
+					</div>
 					</div>
 					<div className="grid grid-cols-7 gap-1 text-center text-xs text-neutral-500">
 						<div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
@@ -549,13 +574,56 @@ function SelectInput({ options, value, onChange, className }: React.SelectHTMLAt
 }
 
 function FileInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
+	const [fileName, setFileName] = useState<string>("");
+	const [error, setError] = useState<string>("");
+	const inputRef = React.useRef<HTMLInputElement>(null);
+
+	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+		const file = e.target.files?.[0];
+		const MAX_BYTES = 2 * 1024 * 1024; // 2 MB
+
+		if (file) {
+			if (file.size > MAX_BYTES) {
+				setError("File exceeds 2MB. Please upload a smaller file.");
+				setFileName("");
+				if (inputRef.current) {
+					inputRef.current.value = "";
+				}
+				if (props.onChange) {
+					const emptyEvent = { target: { files: null } } as unknown as React.ChangeEvent<HTMLInputElement>;
+					props.onChange(emptyEvent);
+				}
+				return;
+			}
+			setError("");
+			setFileName(file.name);
+		} else {
+			setError("");
+			setFileName("");
+		}
+
+		if (props.onChange) props.onChange(e);
+	}
+
 	return (
-		<input
-			{...props}
-			type="file"
-			accept=".pdf,.png,.jpg,.jpeg"
-			className={`w-full border-b border-secondary/20 px-2 py-3 outline-none transition dark:border-white/20 file:mr-3 file:rounded file:border file:px-3 file:py-1 file:text-sm focus:border-secondary/60 dark:focus:border-primary ${props.className ?? ""}`}
-		/>
+		<div>
+			<input
+				{...props}
+				ref={inputRef}
+				onChange={handleChange}
+				type="file"
+				accept=".pdf,.png,.jpg,.jpeg"
+				className={`w-full border-b border-secondary/20 px-2 py-3 outline-none transition dark:border-white/20 file:mr-3 file:rounded file:border file:px-3 file:py-1 file:text-sm focus:border-secondary/60 dark:focus:border-primary ${props.className ?? ""}`}
+			/>
+			{error ? (
+				<div className="mt-1 flex items-center text-sm text-red-600">
+					<svg className="mr-1 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12" y2="17"/></svg>
+					<span>{error}</span>
+				</div>
+			) : (
+				fileName ? <div className="mt-1 text-sm text-neutral-600 dark:text-neutral-300">{fileName}</div> : null
+			)}
+		</div>
 	);
 }
 
@@ -563,6 +631,8 @@ export default function PMAForm() {
 	const [form, setForm] = useState<FormState>(initialForm);
 	const [saving, setSaving] = useState(false);
 	const [submitting, setSubmitting] = useState(false);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [submittedFolder, setSubmittedFolder] = useState<string>("");
 
 	const initiationTotal = useMemo(() => {
 		const p = form.sales.initiationPercent;
@@ -636,12 +706,15 @@ export default function PMAForm() {
 
 			const res = await fetch("/api/pma", { method: "POST", body: formData });
 			if (!res.ok) {
-				const data = await res.json().catch(() => ({}));
-				throw new Error(data?.error || `Request failed: ${res.status}`);
+				const data = await res.json().catch(() => ({} as any));
+				const msg = (data && (data.detail || data.error)) || `Request failed: ${res.status}`;
+				throw new Error(msg);
 			}
-			const data = await res.json();
-			alert(`Form submitted. Upload folder: ${data.folder}`);
+            const data = await res.json();
+            setSubmittedFolder(String(data.folder || ""));
+            setShowSuccessModal(true);
 		} catch (err: any) {
+			console.error("PMA submission client error", err);
 			alert(`Submission failed: ${String(err?.message || err)}`);
 		} finally {
 			setSubmitting(false);
@@ -781,7 +854,7 @@ export default function PMAForm() {
 										</button>
 									)}
 								</div>
-								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 									<div>
 										<Label required>First Name</Label>
 										<TextInput placeholder="First name" value={owner.firstName} onChange={(e) => updateOwner(idx, { firstName: e.target.value })} required />
@@ -853,7 +926,7 @@ export default function PMAForm() {
 								</div>
 							</div>
 						))}
-						<button type="button" onClick={addOwner} className="text-sm mt-2 px-3 py-2 rounded border border-secondary/20 dark:border-white/20">
+						<button type="button" onClick={addOwner} className="text-sm mt-2 px-3 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-300">
 							+ Add additional owner
 						</button>
 					</div>
@@ -1126,14 +1199,45 @@ export default function PMAForm() {
 				</div>
 			</Section>
 
-			<div className="flex items-center gap-3">
+			<div className="flex items-center justify-center gap-3">
 				<button type="button" onClick={onSaveProgress} disabled={saving} className="inline-flex items-center gap-2 rounded-md border border-secondary/20 dark:border-white/20 px-4 py-2 text-sm">
 					{saving ? "Saving..." : "Save progress"}
 				</button>
-				<button type="submit" disabled={submitting} className="inline-flex items-center gap-2 rounded-md bg-secondary/80 hover:bg-secondary px-4 py-2 text-sm text-white dark:bg-primary/80 dark:hover:bg-primary">
+				<button type="submit" disabled={submitting} className="inline-flex items-center gap-2 rounded-md bg-blue-600 hover:bg-blue-700 px-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-300">
 					{submitting ? "Submitting..." : "Submit Form"}
 				</button>
 			</div>
+            {showSuccessModal && (
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Form submitted successfully"
+                    className="fixed inset-0 z-50 flex items-center justify-center"
+                    onClick={(e) => { if (e.target === e.currentTarget) setShowSuccessModal(false); }}
+                >
+                    <div className="absolute inset-0 bg-black/50" />
+                    <div className="relative z-10 w-full max-w-sm mx-auto rounded-2xl bg-white p-6 shadow-2xl text-center dark:bg-neutral-900 border border-secondary/20 dark:border-white/10">
+                        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-900/30">
+                            <svg className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                <path d="M22 4L12 14.01l-3-3" />
+                            </svg>
+                        </div>
+                        <h3 className="text-lg font-semibold mb-1">Form submitted!</h3>
+                        <p className="text-sm text-neutral-600 dark:text-neutral-300">Thank you. Your documents have been uploaded{submittedFolder ? ` to folder ${submittedFolder}` : ""}.</p>
+                        <div className="mt-5 flex justify-center">
+                            <button
+                                type="button"
+                                onClick={() => setShowSuccessModal(false)}
+                                className="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                autoFocus
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 		</form>
 	);
 }

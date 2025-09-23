@@ -633,6 +633,7 @@ export default function PMAForm() {
 	const [submitting, setSubmitting] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [submittedFolder, setSubmittedFolder] = useState<string>("");
+	const [errors, setErrors] = useState<{ contactPhone?: string; bankRouting?: string; ownerErrors: Array<{ personalPhone?: string; dlDates?: string; dob?: string }>}>({ ownerErrors: [{ }] });
 
 	const initiationTotal = useMemo(() => {
 		const p = form.sales.initiationPercent;
@@ -666,10 +667,12 @@ export default function PMAForm() {
 
 	function addOwner() {
 		setForm((prev) => ({ ...prev, owners: [...prev.owners, initialOwner()] }));
+		setErrors((prev) => ({ ...prev, ownerErrors: [...prev.ownerErrors, {}] }));
 	}
 
 	function removeOwner(index: number) {
 		setForm((prev) => ({ ...prev, owners: prev.owners.filter((_, i) => i !== index) }));
+		setErrors((prev) => ({ ...prev, ownerErrors: prev.ownerErrors.filter((_, i) => i !== index) }));
 	}
 
 	async function onSaveProgress() {
@@ -862,7 +865,14 @@ export default function PMAForm() {
 				<TextInput placeholder="##########" inputMode="numeric" value={form.contact.phone} onChange={(e) => {
 					const digits = (e.target.value || "").replace(/\D+/g, "").slice(0, 10);
 					update("contact", { phone: digits });
+					setErrors((prev) => ({ ...prev, contactPhone: digits.length === 10 ? undefined : "Phone must be 10 digits." }));
 				}} required />
+				{errors.contactPhone ? (
+					<div className="mt-1 flex items-center text-sm text-red-600">
+						<svg className="mr-1 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12" y2="17"/></svg>
+						<span>{errors.contactPhone}</span>
+					</div>
+				) : null}
 				</div>
 				<div>
 					<Label required>Contact Email</Label>
@@ -921,7 +931,18 @@ export default function PMAForm() {
 					<TextInput placeholder="##########" inputMode="numeric" value={owner.personalPhone} onChange={(e) => {
 						const digits = (e.target.value || "").replace(/\D+/g, "").slice(0, 10);
 						updateOwner(idx, { personalPhone: digits });
+						setErrors((prev) => {
+							const next = { ...prev, ownerErrors: [...prev.ownerErrors] };
+							next.ownerErrors[idx] = { ...(next.ownerErrors[idx] || {}), personalPhone: digits.length === 10 ? undefined : "Phone must be 10 digits." };
+							return next;
+						});
 					}} required />
+					{errors.ownerErrors[idx]?.personalPhone ? (
+						<div className="mt-1 flex items-center text-sm text-red-600">
+							<svg className="mr-1 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12" y2="17"/></svg>
+							<span>{errors.ownerErrors[idx]?.personalPhone}</span>
+						</div>
+					) : null}
 				</div>
 									<div>
 										<Label required>Individual With Control?</Label>
@@ -952,16 +973,59 @@ export default function PMAForm() {
 										<SelectInput value={owner.dlStateIssued} onChange={(e) => updateOwner(idx, { dlStateIssued: e.target.value })} options={states} required />
 									</div>
 									<div>
-										<Label required>Issue Date</Label>
-										<DateInput placeholder="Select date" value={owner.dlIssueDate} onChange={(e) => updateOwner(idx, { dlIssueDate: e.target.value })} />
+					<Label required>Issue Date</Label>
+					<DateInput placeholder="Select date" value={owner.dlIssueDate} onChange={(e) => {
+						const val = e.target.value;
+						updateOwner(idx, { dlIssueDate: val });
+						setErrors((prev) => {
+							const next = { ...prev, ownerErrors: [...prev.ownerErrors] };
+							const issue = parseDateISO(val);
+							const exp = parseDateISO(form.owners[idx].dlExpDate);
+							next.ownerErrors[idx] = { ...(next.ownerErrors[idx] || {}), dlDates: issue && exp && issue >= exp ? "Issue date must be before Exp date." : undefined };
+							return next;
+						});
+					}} />
 									</div>
 									<div>
-										<Label required>Exp Date</Label>
-										<DateInput placeholder="Select date" value={owner.dlExpDate} onChange={(e) => updateOwner(idx, { dlExpDate: e.target.value })} />
+					<Label required>Exp Date</Label>
+					<DateInput placeholder="Select date" value={owner.dlExpDate} onChange={(e) => {
+						const val = e.target.value;
+						updateOwner(idx, { dlExpDate: val });
+						setErrors((prev) => {
+							const next = { ...prev, ownerErrors: [...prev.ownerErrors] };
+							const issue = parseDateISO(form.owners[idx].dlIssueDate);
+							const exp = parseDateISO(val);
+							next.ownerErrors[idx] = { ...(next.ownerErrors[idx] || {}), dlDates: issue && exp && issue >= exp ? "Issue date must be before Exp date." : undefined };
+							return next;
+						});
+					}} />
 									</div>
+				{errors.ownerErrors[idx]?.dlDates ? (
+					<div className="md:col-span-2 mt-1 flex items-center text-sm text-red-600">
+						<svg className="mr-1 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12" y2="17"/></svg>
+						<span>{errors.ownerErrors[idx]?.dlDates}</span>
+					</div>
+				) : null}
 									<div>
-										<Label required>Date of Birth</Label>
-										<DateInput placeholder="Select date" value={owner.dob} onChange={(e) => updateOwner(idx, { dob: e.target.value })} />
+					<Label required>Date of Birth</Label>
+					<DateInput placeholder="Select date" value={owner.dob} onChange={(e) => {
+						const val = e.target.value;
+						updateOwner(idx, { dob: val });
+						setErrors((prev) => {
+							const next = { ...prev, ownerErrors: [...prev.ownerErrors] };
+							const today = new Date();
+							const eighteenYearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+							const dob = parseDateISO(val);
+							next.ownerErrors[idx] = { ...(next.ownerErrors[idx] || {}), dob: dob && dob > eighteenYearsAgo ? "Must be at least 18 years old." : undefined };
+							return next;
+						});
+					}} />
+					{errors.ownerErrors[idx]?.dob ? (
+						<div className="mt-1 flex items-center text-sm text-red-600">
+							<svg className="mr-1 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12" y2="17"/></svg>
+							<span>{errors.ownerErrors[idx]?.dob}</span>
+						</div>
+					) : null}
 									</div>
 									<div>
 										<Label required>Social Security Number</Label>
@@ -1175,7 +1239,14 @@ export default function PMAForm() {
 					<TextInput placeholder="#########" inputMode="numeric" value={form.bank.routingNumber} onChange={(e) => {
 						const digits = (e.target.value || "").replace(/\D+/g, "").slice(0, 9);
 						update("bank", { routingNumber: digits });
+						setErrors((prev) => ({ ...prev, bankRouting: digits.length === 9 ? undefined : "Routing number must be 9 digits." }));
 					}} required />
+					{errors.bankRouting ? (
+						<div className="mt-1 flex items-center text-sm text-red-600">
+							<svg className="mr-1 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12" y2="17"/></svg>
+							<span>{errors.bankRouting}</span>
+						</div>
+					) : null}
 				</div>
 				<div>
 					<Label required>Bank Account #</Label>

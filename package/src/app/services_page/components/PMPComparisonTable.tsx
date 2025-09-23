@@ -121,50 +121,48 @@ export default function PMPComparisonTable() {
             </div>
           </div>
         </div>
-
         {/* Mobile stacked cards (cleaned up) */}
-<div className="md:hidden space-y-6">
-  {rows.map((r, idx) => (
-    <div
-      key={idx}
-      className="rounded-2xl bg-white/80 dark:bg-[#192040]/90 shadow-md backdrop-blur-lg p-5 border border-blue-100/30 dark:border-blue-800/30"
-    >
-      {/* Feature Title */}
-      <h3 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3">
-        {r.feature}
-      </h3>
+        <div className="md:hidden space-y-6">
+          {rows.map((r, idx) => (
+            <div
+              key={idx}
+              className="rounded-2xl bg-white/80 dark:bg-[#192040]/90 shadow-md backdrop-blur-lg p-5 border border-blue-100/30 dark:border-blue-800/30"
+            >
+              {/* Feature Title */}
+              <h3 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3">
+                {r.feature}
+              </h3>
 
-      {/* PMP always visible (highlighted) */}
-      <div className="mb-4">
-        <span className="block text-sm font-semibold text-blue-700 dark:text-blue-300">
-          Private Merchant Account
-        </span>
-        <p className="text-slate-900 dark:text-slate-100 text-base leading-relaxed">
-          {r.pmp}
-        </p>
-      </div>
+              {/* PMP always visible (highlighted) */}
+              <div className="mb-4">
+                <span className="block text-sm font-semibold text-blue-700 dark:text-blue-300">
+                  Private Merchant Account
+                </span>
+                <p className="text-slate-900 dark:text-slate-100 text-base leading-relaxed">
+                  {r.pmp}
+                </p>
+              </div>
 
-      {/* Competitors in collapsible */}
-      <details className="group">
-        <summary className="cursor-pointer text-sm text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400">
-          Compare with Stripe, PayPal & Square
-        </summary>
-        <div className="mt-3 space-y-3 text-slate-800 dark:text-slate-200 text-sm">
-          <div>
-            <span className="font-semibold">Stripe:</span> {r.stripe}
-          </div>
-          <div>
-            <span className="font-semibold">PayPal:</span> {r.paypal}
-          </div>
-          <div>
-            <span className="font-semibold">Square:</span> {r.square}
-          </div>
+              {/* Competitors in collapsible */}
+              <details className="group">
+                <summary className="cursor-pointer text-sm text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400">
+                  Compare with Stripe, PayPal & Square
+                </summary>
+                <div className="mt-3 space-y-3 text-slate-800 dark:text-slate-200 text-sm">
+                  <div>
+                    <span className="font-semibold">Stripe:</span> {r.stripe}
+                  </div>
+                  <div>
+                    <span className="font-semibold">PayPal:</span> {r.paypal}
+                  </div>
+                  <div>
+                    <span className="font-semibold">Square:</span> {r.square}
+                  </div>
+                </div>
+              </details>
+            </div>
+          ))}
         </div>
-      </details>
-    </div>
-  ))}
-</div>
-
       </div>
     </section>
   );

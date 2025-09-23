@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import img1 from "../../../../public/images/pricing/Cover-2.webp"
 
 export function HeroSectionOne() {

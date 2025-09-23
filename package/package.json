@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "3.894.0",
     "@iconify/icons-ion": "^1.2.10",
     "@iconify/react": "^5.2.0",
     "@iconify/tools": "^4.1.1",

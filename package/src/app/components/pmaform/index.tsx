@@ -660,6 +660,10 @@ export default function PMAForm() {
 		});
 	}
 
+	function digitsOnly(input: string): string {
+		return (input || "").replace(/\D+/g, "");
+	}
+
 	function addOwner() {
 		setForm((prev) => ({ ...prev, owners: [...prev.owners, initialOwner()] }));
 	}
@@ -682,6 +686,44 @@ export default function PMAForm() {
 		e.preventDefault();
 		setSubmitting(true);
 		try {
+			// Validation rules
+			const errors: string[] = [];
+
+			// 1) Contact number max 10 digits (and required elsewhere)
+			const contactDigits = digitsOnly(form.contact.phone);
+			if (contactDigits.length !== 10) {
+				errors.push("Contact Phone must be exactly 10 digits.");
+			}
+
+			// 2) Issue date must be prior to Exp date per owner
+			form.owners.forEach((o, i) => {
+				const issue = parseDateISO(o.dlIssueDate);
+				const exp = parseDateISO(o.dlExpDate);
+				if (issue && exp && issue >= exp) {
+					errors.push(`Owner #${i + 1}: DL Issue Date must be before Exp Date.`);
+				}
+			});
+
+			// 3) DOB must be at least 18 years old
+			const today = new Date();
+			const eighteenYearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+			form.owners.forEach((o, i) => {
+				const dob = parseDateISO(o.dob);
+				if (dob && dob > eighteenYearsAgo) {
+					errors.push(`Owner #${i + 1}: Must be at least 18 years old.`);
+				}
+			});
+
+			// 4) Bank Routing must be exactly 9 digits
+			const routingDigits = digitsOnly(form.bank.routingNumber);
+			if (routingDigits.length !== 9) {
+				errors.push("Bank Routing number must be exactly 9 digits.");
+			}
+
+			if (errors.length) {
+				alert(errors.join("\n"));
+				return;
+			}
 			if (initiationTotal !== 100 || marketTotal !== 100) {
 				alert("Percentages must equal 100% in Sales Profile sections.");
 				return;
@@ -816,8 +858,11 @@ export default function PMAForm() {
 					<TextInput placeholder="Last name" value={form.contact.lastName} onChange={(e) => update("contact", { lastName: e.target.value })} required />
 				</div>
 				<div>
-					<Label required>Contact Phone</Label>
-					<TextInput placeholder="###-###-####" value={form.contact.phone} onChange={(e) => update("contact", { phone: e.target.value })} required />
+				<Label required>Contact Phone</Label>
+				<TextInput placeholder="##########" inputMode="numeric" value={form.contact.phone} onChange={(e) => {
+					const digits = (e.target.value || "").replace(/\D+/g, "").slice(0, 10);
+					update("contact", { phone: digits });
+				}} required />
 				</div>
 				<div>
 					<Label required>Contact Email</Label>
@@ -871,10 +916,13 @@ export default function PMAForm() {
 										<Label required>Ownership %</Label>
 										<TextInput placeholder="e.g., 50" inputMode="numeric" value={owner.ownershipPercent} onChange={(e) => updateOwner(idx, { ownershipPercent: e.target.value })} required />
 									</div>
-									<div>
-										<Label required>Personal Phone</Label>
-										<TextInput placeholder="###-###-####" value={owner.personalPhone} onChange={(e) => updateOwner(idx, { personalPhone: e.target.value })} required />
-									</div>
+				<div>
+					<Label required>Personal Phone</Label>
+					<TextInput placeholder="##########" inputMode="numeric" value={owner.personalPhone} onChange={(e) => {
+						const digits = (e.target.value || "").replace(/\D+/g, "").slice(0, 10);
+						updateOwner(idx, { personalPhone: digits });
+					}} required />
+				</div>
 									<div>
 										<Label required>Individual With Control?</Label>
 										<SelectInput value={owner.individualWithControl} onChange={(e) => updateOwner(idx, { individualWithControl: e.target.value })} options={yesNo} required />
@@ -1124,7 +1172,10 @@ export default function PMAForm() {
 				</div>
 				<div>
 					<Label required>Bank Routing #</Label>
-					<TextInput placeholder="9-digit routing number" inputMode="numeric" value={form.bank.routingNumber} onChange={(e) => update("bank", { routingNumber: e.target.value })} required />
+					<TextInput placeholder="#########" inputMode="numeric" value={form.bank.routingNumber} onChange={(e) => {
+						const digits = (e.target.value || "").replace(/\D+/g, "").slice(0, 9);
+						update("bank", { routingNumber: digits });
+					}} required />
 				</div>
 				<div>
 					<Label required>Bank Account #</Label>

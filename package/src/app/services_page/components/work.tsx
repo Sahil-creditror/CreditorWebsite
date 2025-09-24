@@ -222,7 +222,7 @@ export default function HowItWorks() {
               </motion.ul>
             </div>
 
-            {/* CTA row */}
+            {/* CTA row
             <motion.div
               className="mt-10 flex gap-4 items-center justify-center"
               initial={{ opacity: 0, y: 8 }}
@@ -237,7 +237,7 @@ export default function HowItWorks() {
               >
                 Start Processing Today
               </button>
-            </motion.div>
+            </motion.div> */}
           </motion.div>
         </div>
       </div>

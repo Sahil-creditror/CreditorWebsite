@@ -260,6 +260,7 @@ export default function MasterclassMembershipTC() {
               </label>
 
               <motion.button
+                id="tnc-enroll-button"
                 type="button"
                 onClick={() => {
                   if (!agreed) return;

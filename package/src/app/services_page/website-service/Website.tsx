@@ -154,13 +154,14 @@ export function Website() {
       <HeroSectionOne  />
       <Plan />
       {/* <WebsiteUpperSection /> */}
-      <CardsCarouselSection />
+      <Template />
+      
       <Appointment />
       <Table 
         starterPrototypeLink="https://digi-market-simple.vercel.app/" 
         cadillacPrototypeLink="https://rhythmic-vibe.vercel.app/"
       />
-      <Template />
+      <CardsCarouselSection />
       <WhyChoose />
     </>
   );

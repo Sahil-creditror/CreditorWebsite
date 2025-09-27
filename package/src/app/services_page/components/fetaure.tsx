@@ -13,6 +13,8 @@ type FeatureRow = {
 interface ComparisonTableProps {
   starterPrototypeLink?: string;
   cadillacPrototypeLink?: string;
+  starterPaymentLink?: string;
+  cadillacPaymentLink?: string;
   className?: string;
   featuresData?: FeatureRow[];
 }
@@ -61,10 +63,10 @@ const DEFAULT_FEATURES: FeatureRow[] = [
   { key: "uiux", label: "UI/UX Design", starter: "Clean layout", cadillac: "Brand-aligned premium design" },
   { key: "security", label: "Security (SSL)", starter: "HTTPS", cadillac: "HTTPS + Extra layers" },
   { key: "mobile", label: "Mobile Responsive", starter: true, cadillac: true },
-  { key: "underwriter", label: "Underwriter-Ready Structure", starter: true, cadillac: true },
+  { key: "member", label: "Member Login / Portal", starter: true, cadillac: true },
+  { key: "underwriter", label: "Payment Automation & Merchant Account Approved", starter: true, cadillac: true },
   { key: "hosting", label: "Hosting & Maintenance", starter: "Monthly", cadillac: "Monthly" },
   { key: "dashboard", label: "Detail User Dashboard", starter: false, cadillac: true },
-  { key: "member", label: "Member Login / Portal", starter: false, cadillac: true },
   { key: "backend", label: "Backend Integration", starter: false, cadillac: true },
   { key: "blog", label: "Blog / Resource Section", starter: false, cadillac: true },
   { key: "chatbot", label: "Chatbot / Live Chat", starter: false, cadillac: true },
@@ -76,6 +78,8 @@ const DEFAULT_FEATURES: FeatureRow[] = [
 export default function ComparisonTable({
   starterPrototypeLink,
   cadillacPrototypeLink,
+  starterPaymentLink,
+  cadillacPaymentLink,
   className = "",
   featuresData,
 }: ComparisonTableProps) {
@@ -171,21 +175,13 @@ export default function ComparisonTable({
                 </div>
                 <div className="mt-4 flex flex-col sm:flex-row gap-2">
                   <a
-                    href={starterPrototypeLink ?? "#"}
+                    href={starterPaymentLink ?? "https://quickclick.com/r/mq0rtcnac7tng6qnl2wk009ddrgrly"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`w-full text-center px-3 py-2 rounded-md text-sm font-medium border ${
-                      starterPrototypeLink
-                        ? "bg-indigo-600 text-white hover:bg-indigo-700"
-                        : "bg-white dark:bg-gray-700 text-gray-500 border-gray-200 dark:border-gray-600 cursor-not-allowed opacity-60"
-                    }`}
-                    aria-disabled={!starterPrototypeLink}
+                    className="w-full text-center px-4 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl border-0"
                   >
-                    View Prototype
+                    Pay Now
                   </a>
-                  {/* <button className="w-full px-3 py-2 rounded-md text-sm font-medium bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-600">
-                    Choose
-                  </button> */}
                 </div>
               </div>
 
@@ -209,21 +205,13 @@ export default function ComparisonTable({
                 </div>
                 <div className="mt-4 flex flex-col sm:flex-row gap-2">
                   <a
-                    href={cadillacPrototypeLink ?? "#"}
+                    href={cadillacPaymentLink ?? "https://quickclick.com/r/ktwk1pon618kihkfhnfioqm9n1caap"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`w-full text-center px-3 py-2 rounded-md text-sm font-medium border ${
-                      cadillacPrototypeLink
-                        ? "bg-indigo-700 text-white hover:bg-indigo-800"
-                        : "bg-white dark:bg-gray-700 text-gray-500 border-gray-200 dark:border-gray-600 cursor-not-allowed opacity-60"
-                    }`}
-                    aria-disabled={!cadillacPrototypeLink}
+                    className="w-full text-center px-4 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl border-0"
                   >
-                    View Prototype
+                    Pay Now 
                   </a>
-                  {/* <button className="w-full px-3 py-2 rounded-md text-sm font-medium bg-indigo-600 text-white">
-                    Choose
-                  </button> */}
                 </div>
               </div>
             </div>
@@ -267,7 +255,7 @@ export default function ComparisonTable({
                   rel="noopener noreferrer"
                   className={`w-full text-center px-4 py-2 rounded-md text-sm font-semibold ${
                     starterPrototypeLink
-                      ? "bg-indigo-600 text-white"
+                      ? "bg-indigo-600 text-white hover:bg-indigo-700"
                       : "bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-600 cursor-not-allowed opacity-60"
                   }`}
                 >
@@ -280,7 +268,7 @@ export default function ComparisonTable({
                   rel="noopener noreferrer"
                   className={`w-full text-center px-4 py-2 rounded-md text-sm font-semibold ${
                     cadillacPrototypeLink
-                      ? "bg-indigo-700 text-white"
+                      ? "bg-indigo-700 text-white hover:bg-indigo-800"
                       : "bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-600 cursor-not-allowed opacity-60"
                   }`}
                 >

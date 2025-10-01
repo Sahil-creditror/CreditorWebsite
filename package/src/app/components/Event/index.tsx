@@ -367,13 +367,24 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
           <div className="eyebrow reveal" data-delay="80">CREDITOR ACADEMY</div>
 
           <h1 id="eventTitle" className="hero reveal" data-delay="140">
-            Exciting <span className="highlight">Giveaway</span> Opportunity <span className="highlight">Alert!</span>
+            Exciting Opportunity
+            {/* <span className="highlight">Giveaway</span>  */} 
+            <span className="highlight"> Alert! </span>
             <span className="title-sheen" aria-hidden="true" />
           </h1>
 
-          <div className="sub reveal" data-delay="220">Are You Ready To Become Private? <div className="winners-pill" aria-hidden="true"><span className="winners-number">$1000</span><span className="winners-text">Giveaway</span></div></div>
+          <div className="sub reveal" data-delay="220">Are You Ready To Become Private? 
+            {/* <div className="winners-pill" aria-hidden="true">
+              <span className="winners-number">
+                $1000
+              </span>
+              <span className="winners-text">
+                Giveaway
+              </span>
+            </div> */}
+          </div>
 
-          <p className="desc reveal" data-delay="300">Join Creditor Academy for your chance to win $800 and unlock exclusive insights into becoming private.</p>
+          <p className="desc reveal" data-delay="300">Unlock our Special Credit System and unlock your lessons from premium catalogue. Start your Alternative Business Income right away.</p>
 
           <div className="cta-row">
             <button

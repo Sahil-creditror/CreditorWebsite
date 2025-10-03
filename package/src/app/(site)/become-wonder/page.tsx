@@ -8,6 +8,7 @@ import Event from "@/app/components/Event";
 import Pricing from "@/app/components/shared/plan";
 import Script from "next/script";
 import HowItWorks from "@/app/components/become/works";
+import FaqSection from "@/app/components/become/faq";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -44,10 +45,11 @@ export default function Page() {
                     buttonPath="/tncmasterclass" // 👈 you now define the path here
                 />
                 <Intro2 />
-                <Content />
+                {/* <Content /> */}
                 <BecomeIntro />
                 {/* <Pricing /> */}
                 <HowItWorks />
+                <FaqSection />
                 <Appoint />
                 <Event />
                 {/* <Learn2 /> */}

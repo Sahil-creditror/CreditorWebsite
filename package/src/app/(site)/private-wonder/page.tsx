@@ -8,6 +8,7 @@ import Pricing from '@/app/components/shared/plan';
 import Script from "next/script";
 import HowItWorks from '@/app/components/private/works';
 import Event from "@/app/components/Event";
+import FaqSection from '@/app/components/private/faq';
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -44,10 +45,11 @@ const PrivatePage = () => {
           buttonPath="/tncmasterclass"
         />
         <CourseDetail />
-        <CourseFeatures />
+        {/* <CourseFeatures /> */}
         <Cards />
         {/* <Pricing /> */}
         <HowItWorks />
+        <FaqSection />
         <Event />
         <Contact />
       </main>

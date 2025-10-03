@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { FaLock, FaRocket, FaBook, FaLightbulb } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 
 type FAQItem = {
   question: string;
@@ -40,28 +40,63 @@ const FAQSection: React.FC = () => {
     setFlippedIndex(flippedIndex === index ? null : index);
   };
 
+  const headingVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { 
+        type: "spring", 
+        stiffness: 100, 
+        damping: 15,
+        duration: 0.8 
+      },
+    },
+  };
+  
+  const subtitleVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { 
+        type: "spring", 
+        stiffness: 120, 
+        damping: 18,
+        delay: 0.2 
+      },
+    },
+  };
+
   return (
     <div className="w-full py-20 px-4 bg-white dark:bg-gray-900 font-sans transition-colors duration-300">
-      {/* Header */}
-      <div className="text-center mb-16">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6"
-        >
-          Frequently Asked Questions
-        </motion.h2>
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed"
-        >
-          Click on any card to reveal the answer
-        </motion.p>
-      </div>
+      <motion.div className="text-center mb-16">
+            <motion.div 
+              variants={headingVariants}
+              className="flex items-center justify-center gap-3 mb-6"
+            >
+              {/* <Sparkles className="h-8 w-8 text-blue-500 hidden md:block" /> */}
+              <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">
+                Frequently Asked{' '}
+                <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 bg-clip-text text-transparent">
+                  Questions
+                </span>
+              </h2>
+              {/* <Sparkles className="h-8 w-8 text-blue-500 hidden md:block" /> */}
+            </motion.div>
+            
+            <motion.div 
+              variants={subtitleVariants}
+              className="w-20 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto rounded-full mb-8"
+            />
+            
+            <motion.p 
+              variants={subtitleVariants}
+              className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed font-light"
+            >
+              Discover how we tailor our solutions to meet unique needs, delivering impactful strategies, personalized branding, and exceptional customer experiences.
+            </motion.p>
+          </motion.div>
 
       {/* Flip Cards Grid */}
       <div className="max-w-6xl mx-auto">

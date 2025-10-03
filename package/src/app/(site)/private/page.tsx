@@ -8,6 +8,7 @@ import Pricing from '@/app/components/shared/plan';
 import Offer from '@/app/components/become/appointment';
 import Event from '@/app/components/Event';
 import HowItWorks from '@/app/components/private/works';
+import FaqSection from '@/app/components/private/faq';
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -22,14 +23,15 @@ const PrivatePage = () => {
       <Herobanner
         heading="Finacial Freedom"
         desc="Your gateway to financial sovereignty."
-        bannerimage="/images/projects/banner/private.webp"
+        bannerimage="/images/projects/banner/financial.webp"
         buttonPath="/tncmasterclass"
       />
       <CourseDetail />
-      <CourseFeatures />
+      {/* <CourseFeatures /> */}
       <Cards />
       {/* <Pricing /> */}
       <HowItWorks />
+      <FaqSection />
       <Offer />
       <Event />
       <Contact />

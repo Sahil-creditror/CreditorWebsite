@@ -102,7 +102,7 @@ const PrivateBusinessCredit: React.FC = () => {
             transition={{ duration: 0.4, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            Learn to correct status, process payments privately, and build resilient business credit with clarity and confidence.
+            Learn to repair your credit, process payments privately, and build 200k + in business credit with clarity and confidence.
           </motion.p>
 
           {/* Courses container */}
@@ -155,7 +155,7 @@ const PrivateBusinessCredit: React.FC = () => {
                         I Want Remedy Now
                       </h4>
                       <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">
-                        Status Correction Masterclass
+                        Personal Credit Repair
                       </p>
                     </div>
                   </div>

@@ -213,7 +213,7 @@ const CourseRoadmap: React.FC = () => {
           <CourseCard
             title="Financial Freedom"
             image="/images/projects/projectlist/finance.webp"
-            subtitle="$200K+ Without Banks"
+            subtitle="200k with Vendors, Banks & Credit Unions"
             description="Discover the foundation of private commerce and take control of how you get paid"
             learnings={["Private Business Credit","Personal Credit Repair","Fix public credit lawfully", "0% APR funding & Non-KYC payments"]}//"Unlock vendor accounts",
             outcomes={["Rental businesses", "E-commerce", "Merchant services", "15+ other models"]}

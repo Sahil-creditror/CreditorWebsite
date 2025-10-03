@@ -12,7 +12,7 @@ import HowItWorks from '@/app/components/private/works';
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
 export const metadata: Metadata = {
-    title: "Private Business | Creditor",
+    title: "Finacial Freedom | Creditor",
 };
 
 const PrivatePage = () => {
@@ -20,7 +20,7 @@ const PrivatePage = () => {
   return (
     <div>
       <Herobanner
-        heading="Private Business Credit"
+        heading="Finacial Freedom"
         desc="Your gateway to financial sovereignty."
         bannerimage="/images/projects/banner/private.webp"
         buttonPath="/tncmasterclass"

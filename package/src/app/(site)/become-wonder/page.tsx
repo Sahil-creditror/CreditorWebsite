@@ -41,7 +41,7 @@ export default function Page() {
                     bannerimage="/images/projects/projectlist/freshman.webp"
                     heading="Become Private + Sovereignty 101"
                     desc="Reclaim Your <span>Legal Identity</span> and Exit the Public System."
-                    // buttonPath="/course-tnc" // 👈 you now define the path here
+                    buttonPath="/tncmasterclass" // 👈 you now define the path here
                 />
                 <Intro2 />
                 <Content />

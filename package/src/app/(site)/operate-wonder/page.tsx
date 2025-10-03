@@ -42,7 +42,7 @@ export default function Page() {
                     bannerimage="/images/courses/junior.webp"
                     heading="Operate Private"
                     desc="Build Wealth & Privacy Through Private Business Structures"
-                    // buttonPath="/course-tnc"
+                    buttonPath="/tncmasterclass"
                 />
                 <Intro2 />
                 <BecomeIntro />

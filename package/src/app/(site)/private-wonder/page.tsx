@@ -41,7 +41,7 @@ const PrivatePage = () => {
           heading="Private Business Credit"
           desc="Your gateway to financial sovereignty."
           bannerimage="/images/projects/banner/private.webp"
-          // buttonPath="/course-tnc"
+          buttonPath="/tncmasterclass"
         />
         <CourseDetail />
         <CourseFeatures />

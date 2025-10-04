@@ -37,7 +37,7 @@ const WhatYoullLearnSlider: React.FC = () => {
       title: "Grow Business Credit",
       desc: "Builds your company's credit, separates it from you, and unlocks $50k–$200k.",
       color: "#23a26c",
-      img: "/images/private/Growbusiness.webp",
+      img: "/images/private/GrowBusiness.webp",
     },
     {
       title: "Escape Money Stress",

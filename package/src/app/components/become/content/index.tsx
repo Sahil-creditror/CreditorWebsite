@@ -100,7 +100,7 @@ const WhatYoullLearnSlider: React.FC = () => {
       >
         <div className="flex items-center justify-center gap-3 mb-6">
           <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-            Your Path to Sovereignty
+            Inside The Course
           </h2>
         </div>
         

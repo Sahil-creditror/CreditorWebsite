@@ -29,10 +29,10 @@ export default function Page() {
             <BecomeIntro /> 
             {/* <Pricing /> */}
             <HowItWorks />
-            <FaqSection />
             <Appointment />
             <Event />
             {/* <BusinessCardsGrid /> */}
+            <FaqSection />
             <Contact />
         </main>
     ); 

@@ -46,12 +46,12 @@ export default function Page() {
                     buttonPath="/tncmasterclass"
                 />
                 <Intro2 />
-                {/* <BecomeIntro /> */}
+                <BecomeIntro />
                 {/* <Pricing /> */}
                 <HowItWorks />
-                <FaqSection />
                 <Appointment />
                 <Event />
+                <FaqSection />
                 <Contact />
             </main>
         </>

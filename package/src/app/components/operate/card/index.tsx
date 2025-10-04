@@ -31,13 +31,13 @@ const WhatYoullLearnSlider: React.FC = () => {
       title: "Build & Protect Real Wealth",
       desc: "Holds your real estate in trusts, shields assets from lawsuits, and creates private systems that grow your business without exposure.",
       color: "#7648be",
-      img: "/images/operate/img2.webp",
+      img: "/images/operate/protect.jpg",
     },
     {
       title: "Gives You the Private Blueprint",
       desc: "Teaches you how to set up trusts, operate through PMAs, structure real estate holdings, and design a legacy plan that lasts generations.",
       color: "#23a26c",
-      img: "/images/operate/img3.webp",
+      img: "/images/operate/trust.jpg",
     },
     {
       title: "When Control Slips Away",
@@ -98,14 +98,17 @@ const WhatYoullLearnSlider: React.FC = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <div className="flex items-center justify-center gap-3 mb-2">
-          <div className="text-center text-4xl md:text-6xl font-bold text-[#0b3d78] dark:text-white">
-            How It Works
-          </div>
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">
+            Inside The Course
+          </h2>
         </div>
-        <div className="text-center text-sm text-gray-600 dark:text-gray-300 mb-10">
+        
+        <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto rounded-full mb-8" />
+        
+        <p className="text-center text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed font-light mb-10">
           Your path to private business operations and protected wealth.
-        </div>
+        </p>
       </motion.div>
 
       {/* Slider */}
@@ -137,7 +140,7 @@ const WhatYoullLearnSlider: React.FC = () => {
                 className="p-2 box-border"
                 style={{ flex: `0 0 ${100 / visibleCards}%` }}
               >
-                <div className="bg-white dark:bg-slate-950 rounded-xl shadow-lg overflow-hidden h-full flex flex-col relative">
+                <div className="bg-white/80 dark:bg-slate-950/80 hover:bg-blue-50/90 dark:hover:bg-blue-900/20 backdrop-blur-sm border border-white/20 dark:border-white/10 hover:border-blue-200/50 dark:hover:border-blue-400/30 rounded-xl shadow-lg overflow-hidden h-full flex flex-col relative transition-all duration-300 group">
                   <div className="h-44 overflow-hidden">
                     <img
                       src={card.img}
@@ -153,14 +156,33 @@ const WhatYoullLearnSlider: React.FC = () => {
                       boxShadow: `${card.color}55 0px 6px 18px`,
                     }}
                   >
-                    <div className="text-white text-xl font-bold">{i + 1}</div>
+                    {i === 0 && (
+                      <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    )}
+                    {i === 1 && (
+                      <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                    )}
+                    {i === 2 && (
+                      <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                      </svg>
+                    )}
+                    {i === 3 && (
+                      <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    )}
                   </div>
 
                   <div className="px-4 pt-10 pb-6 text-center mt-6 flex-1">
-                    <div className="text-base font-semibold text-gray-1000 dark:text-white mb-2">
+                    <div className="text-xl font-bold text-blue-600 dark:text-blue-400 group-hover:text-blue-800 dark:group-hover:text-blue-200 mb-2">
                       {card.title}
                     </div>
-                    <div className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed font-medium">
+                    <div className="text-sm text-gray-700 dark:text-gray-200 group-hover:text-blue-700 dark:group-hover:text-blue-100 leading-relaxed font-medium max-w-xs mx-auto">
                       {card.desc}
                     </div>
                   </div>

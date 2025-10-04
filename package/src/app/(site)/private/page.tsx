@@ -13,7 +13,7 @@ import FaqSection from '@/app/components/private/faq';
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
 export const metadata: Metadata = {
-    title: "Finacial Freedom | Creditor",
+    title: "Financial Freedom | Creditor",
 };
 
 const PrivatePage = () => {
@@ -21,7 +21,7 @@ const PrivatePage = () => {
   return (
     <div>
       <Herobanner
-        heading="Finacial Freedom"
+        heading="Financial Freedom"
         desc="Your gateway to financial sovereignty."
         bannerimage="/images/projects/banner/financial.webp"
         buttonPath="/tncmasterclass"

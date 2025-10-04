@@ -580,11 +580,11 @@ function FileInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
 
 	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
 		const file = e.target.files?.[0];
-		const MAX_BYTES = 2 * 1024 * 1024; // 2 MB
+		const MAX_BYTES = 20 * 1024 * 1024; // 20 MB
 
 		if (file) {
 			if (file.size > MAX_BYTES) {
-				setError("File exceeds 2MB. Please upload a smaller file.");
+				setError("File exceeds 20MB. Please upload a smaller file.");
 				setFileName("");
 				if (inputRef.current) {
 					inputRef.current.value = "";

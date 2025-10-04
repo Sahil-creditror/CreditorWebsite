@@ -1,140 +1,244 @@
 "use client";
 
-import React, { useState } from "react";
-import { FaLock, FaRocket, FaBook, FaLightbulb } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { motion } from "framer-motion";
 
-type FAQItem = {
-  question: string;
-  answer: string;
-  icon: React.ReactNode;
+type CardType = {
+  title: string;
+  desc: string;
+  img: string;
+  color: string;
 };
 
-const FAQSection: React.FC = () => {
-  const [flippedIndex, setFlippedIndex] = useState<number | null>(null);
+const WhatYoullLearnSlider: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
 
-  const faqData: FAQItem[] = [
+  const sliderRef = useRef<HTMLDivElement | null>(null);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+
+  const cards: CardType[] = [
     {
-      question: "How does it make my problem go away?",
-      answer: "It removes the stress of public systems by giving you private solutions for business, banking, and protection.",
-      icon: <FaLock className="text-2xl" />
+      title: "Step Out of the Public Trap",
+      desc: "Shifts you from risky corporations and licenses into unincorporated business trusts and PMAs that keep you private, safe, and beyond government overreach.",
+      color: "#426be6",
+      img: "/images/operate/img1.webp",
     },
     {
-      question: "How will it help me?",
-      answer: "It empowers you to operate outside the broken 9–5 and government-controlled model, giving you freedom and control.",
-      icon: <FaRocket className="text-2xl" />
+      title: "Build & Protect Real Wealth",
+      desc: "Holds your real estate in trusts, shields assets from lawsuits, and creates private systems that grow your business without exposure.",
+      color: "#7648be",
+      img: "/images/operate/img2.webp",
     },
     {
-      question: "What does it do?",
-      answer: "It teaches you step-by-step how to run your business privately with trusts, PMAs, and private credit strategies.",
-      icon: <FaBook className="text-2xl" />
+      title: "Gives You the Private Blueprint",
+      desc: "Teaches you how to set up trusts, operate through PMAs, structure real estate holdings, and design a legacy plan that lasts generations.",
+      color: "#23a26c",
+      img: "/images/operate/img3.webp",
     },
     {
-      question: "How will I know I need it?",
-      answer: "If you're tired of taxes, debt, bank denials, or relying on the system, this is your path to sovereignty.",
-      icon: <FaLightbulb className="text-2xl" />
+      title: "When Control Slips Away",
+      desc: "If you're paying heavy taxes, risking property in your own name, or worried about what happens to your family's wealth—you're ready to Operate Private.",
+      color: "#e28019",
+      img: "/images/operate/img4.webp",
     }
   ];
 
-  const handleCardClick = (index: number) => {
-    setFlippedIndex(flippedIndex === index ? null : index);
+  // ✅ Only run resize logic after mount (avoids SSR mismatch)
+  useEffect(() => {
+    setHasMounted(true);
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 800);
+    };
+
+    handleResize(); // run once at mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // 🚀 Don't render until mounted → fixes hydration errors
+  if (!hasMounted) return null;
+
+  const visibleCards = isMobile ? 1 : 4;
+  const totalSlides = Math.max(1, cards.length - visibleCards + 1);
+
+  const nextSlide = () => setCurrentIndex((i) => Math.min(i + 1, totalSlides - 1));
+  const prevSlide = () => setCurrentIndex((i) => Math.max(i - 1, 0));
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = e.touches[0].clientX;
   };
 
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    const distance = touchStartX.current - touchEndX.current;
+    const minSwipe = 50;
+    if (distance > minSwipe) nextSlide();
+    else if (distance < -minSwipe) prevSlide();
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+  };
+
+  const translatePercent = currentIndex * (100 / visibleCards);
+
   return (
-    <div className="w-full py-20 px-4 bg-white dark:bg-gray-900 font-sans transition-colors duration-300">
+    <div className="w-full py-10 px-4 bg-whitesmoke dark:bg-slate-900 font-sans">
       {/* Header */}
-      <div className="text-center mb-16">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6"
-        >
-          Frequently Asked Questions
-        </motion.h2>
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed"
-        >
-          Click on any card to reveal the answer
-        </motion.p>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <div className="text-center text-4xl md:text-6xl font-bold text-[#0b3d78] dark:text-white">
+            How It Works
+          </div>
+        </div>
+        <div className="text-center text-sm text-gray-600 dark:text-gray-300 mb-10">
+          Your path to private business operations and protected wealth.
+        </div>
+      </motion.div>
+
+      {/* Slider */}
+      <div
+        className="relative px-4 md:px-12"
+        ref={sliderRef}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        {currentIndex > 0 && (
+          <button
+            aria-label="Previous"
+            onClick={prevSlide}
+            className="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-800 hover:bg-gray-900 border border-gray-700 w-11 h-11 rounded-full shadow-lg flex items-center justify-center z-10 text-white transition-colors duration-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600"
+          >
+            <FaChevronLeft />
+          </button>
+        )}
+
+        <div className="overflow-hidden">
+          <div
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${translatePercent}%)` }}
+          >
+            {cards.map((card, i) => (
+              <div
+                key={i}
+                className="p-2 box-border"
+                style={{ flex: `0 0 ${100 / visibleCards}%` }}
+              >
+                <div className="bg-white dark:bg-slate-950 rounded-xl shadow-lg overflow-hidden h-full flex flex-col relative">
+                  <div className="h-44 overflow-hidden">
+                    <img
+                      src={card.img}
+                      alt={card.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  <div
+                    className="absolute left-1/2 -translate-x-1/2 top-36 w-14 h-14 rounded-lg flex items-center justify-center shadow-md"
+                    style={{
+                      backgroundColor: card.color,
+                      boxShadow: `${card.color}55 0px 6px 18px`,
+                    }}
+                  >
+                    <div className="text-white text-xl font-bold">{i + 1}</div>
+                  </div>
+
+                  <div className="px-4 pt-10 pb-6 text-center mt-6 flex-1">
+                    <div className="text-base font-semibold text-gray-1000 dark:text-white mb-2">
+                      {card.title}
+                    </div>
+                    <div className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed font-medium">
+                      {card.desc}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {currentIndex < totalSlides - 1 && (
+          <button
+            aria-label="Next"
+            onClick={nextSlide}
+            className="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-800 hover:bg-gray-900 border border-gray-700 w-11 h-11 rounded-full shadow-lg flex items-center justify-center z-10 text-white transition-colors duration-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600"
+          >
+            <FaChevronRight />
+          </button>
+        )}
       </div>
 
-      {/* Flip Cards Grid */}
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {faqData.map((item, index) => (
-            <div key={index} className="h-80">
-              <div 
-                className="relative w-full h-full cursor-pointer"
-                onClick={() => handleCardClick(index)}
-              >
-                <AnimatePresence mode="wait">
-                  {flippedIndex !== index ? (
-                    // Front Card - Question
-                    <motion.div
-                      key="front"
-                      initial={{ opacity: 1, rotateY: 0 }}
-                      animate={{ opacity: 1, rotateY: 0 }}
-                      exit={{ opacity: 0, rotateY: -90 }}
-                      transition={{ duration: 0.5 }}
-                      className="w-full h-full bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 border-2 border-blue-200 dark:border-blue-700 rounded-2xl p-8 shadow-lg flex flex-col items-center justify-center text-center transition-colors duration-300"
-                    >
-                      <div className="w-20 h-20 rounded-full bg-blue-500 dark:bg-blue-600 flex items-center justify-center text-white mb-6 shadow-lg transition-colors duration-300">
-                        {item.icon}
-                      </div>
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white leading-tight mb-4">
-                        {item.question}
-                      </h3>
-                      <div className="text-blue-600 dark:text-blue-400 font-semibold text-lg transition-colors duration-300">
-                        Click to reveal answer
-                      </div>
-                    </motion.div>
-                  ) : (
-                    // Back Card - Answer
-                    <motion.div
-                      key="back"
-                      initial={{ opacity: 0, rotateY: 90 }}
-                      animate={{ opacity: 1, rotateY: 0 }}
-                      exit={{ opacity: 0, rotateY: 90 }}
-                      transition={{ duration: 0.5 }}
-                      className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-800 dark:to-blue-900 rounded-2xl p-8 shadow-lg flex flex-col items-center justify-center text-center transition-colors duration-300"
-                    >
-                      {/* <div className="text-white dark:text-blue-100 text-2xl font-bold mb-6 transition-colors duration-300">
-                        Answer
-                      </div> */}
-                      <p className="text-white dark:text-blue-100 text-xl leading-relaxed font-medium transition-colors duration-300">
-                        {item.answer}
-                      </p>
-                      <div className="text-blue-100 dark:text-blue-300 font-semibold text-lg mt-8 transition-colors duration-300">
-                        Click to see question
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
+      {/* Dots + Swipe */}
+      <div className="mt-6 text-center">
+        <div className="flex items-center justify-center gap-3">
+          {Array.from({ length: totalSlides }).map((_, i) => (
+            <button
+              key={i}
+              aria-label={`Go to slide ${i + 1}`}
+              onClick={() => setCurrentIndex(i)}
+              className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                currentIndex === i ? "bg-[#426be6]" : "bg-gray-300"
+              }`}
+            />
           ))}
         </div>
 
-        {/* Simple Footer */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="text-center mt-12"
-        >
-          <p className="text-gray-600 dark:text-gray-400 text-lg transition-colors duration-300">
-            Clear answers to your most important questions
-          </p>
-        </motion.div>
+        {isMobile && (
+          <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mt-3 dark:text-gray-400">
+            <FaChevronLeft className="text-sm" />
+            <span>Swipe or use arrows</span>
+            <FaChevronRight className="text-sm" />
+          </div>
+        )}
       </div>
+
+      {/* CTA */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        viewport={{ once: true }}
+        className="text-center mt-16 relative z-10"
+      >
+        {/* <motion.button
+          whileHover={{
+            scale: 1.05,
+            boxShadow: "0 10px 25px rgba(79, 70, 229, 0.3)",
+          }}
+          whileTap={{ scale: 0.98 }}
+          className="bg-gradient-to-r from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 border-none rounded-full py-4 px-10 text-white font-semibold cursor-pointer shadow-lg text-lg group"
+        >
+          Start Your Transformation
+          <svg
+            className="inline-block ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M17 8l4 4m0 0l-4 4m4-4H3"
+            />
+          </svg>
+        </motion.button> */}
+      </motion.div>
     </div>
   );
 };
 
-export default FAQSection;
+export default WhatYoullLearnSlider;

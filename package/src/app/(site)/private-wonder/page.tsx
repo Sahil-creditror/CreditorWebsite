@@ -45,12 +45,12 @@ const PrivatePage = () => {
           buttonPath="/tncmasterclass"
         />
         <CourseDetail />
-        {/* <CourseFeatures /> */}
+        <CourseFeatures />
         <Cards />
         {/* <Pricing /> */}
         <HowItWorks />
-        <FaqSection />
         <Event />
+        <FaqSection />
         <Contact />
       </main>
     </>

@@ -45,14 +45,14 @@ export default function Page() {
                     buttonPath="/tncmasterclass" // 👈 you now define the path here
                 />
                 <Intro2 />
-                {/* <Content /> */}
+                <Content />
                 <BecomeIntro />
                 {/* <Pricing /> */}
                 <HowItWorks />
-                <FaqSection />
                 <Appoint />
                 <Event />
                 {/* <Learn2 /> */}
+                <FaqSection />
                 <CTA />
             </main>
         </>

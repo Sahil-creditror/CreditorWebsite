@@ -30,10 +30,10 @@ export default function Page() {
             <BecomeIntro />
             {/* <Pricing /> */}
             <HowItWorks />
-            <FaqSection />
             <Appoint />
             <Event />
             {/* <Learn2 /> */}
+            <FaqSection />
             <CTA />
         </main>
     );

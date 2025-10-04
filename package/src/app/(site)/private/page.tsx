@@ -31,9 +31,9 @@ const PrivatePage = () => {
       <Cards />
       {/* <Pricing /> */}
       <HowItWorks />
-      <FaqSection />
       <Offer />
       <Event />
+      <FaqSection />
       <Contact />
     </div>
   );

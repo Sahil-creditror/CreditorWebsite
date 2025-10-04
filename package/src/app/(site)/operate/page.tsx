@@ -32,7 +32,7 @@ export default function Page() {
             <Appointment />
             <Event />
             {/* <BusinessCardsGrid /> */}
-            <FaqSection />
+            {/* <FaqSection /> */}
             <Contact />
         </main>
     ); 

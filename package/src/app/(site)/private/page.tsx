@@ -33,7 +33,7 @@ const PrivatePage = () => {
       <HowItWorks />
       <Offer />
       <Event />
-      <FaqSection />
+      {/* <FaqSection /> */}
       <Contact />
     </div>
   );

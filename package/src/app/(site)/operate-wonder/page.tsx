@@ -51,7 +51,7 @@ export default function Page() {
                 <HowItWorks />
                 <Appointment />
                 <Event />
-                <FaqSection />
+                {/* <FaqSection /> */}
                 <Contact />
             </main>
         </>

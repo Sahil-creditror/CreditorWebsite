@@ -33,7 +33,7 @@ export default function Page() {
             <Appoint />
             <Event />
             {/* <Learn2 /> */}
-            <FaqSection />
+            {/* <FaqSection /> */}
             <CTA />
         </main>
     );

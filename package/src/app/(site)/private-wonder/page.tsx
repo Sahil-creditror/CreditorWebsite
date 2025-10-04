@@ -50,7 +50,7 @@ const PrivatePage = () => {
         {/* <Pricing /> */}
         <HowItWorks />
         <Event />
-        <FaqSection />
+        {/* <FaqSection /> */}
         <Contact />
       </main>
     </>

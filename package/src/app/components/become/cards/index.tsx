@@ -68,97 +68,6 @@ const BecomePrivateCourse: React.FC = () => {
   return (
     <div className="font-sans bg-gray-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 p-5 relative overflow-hidden">
 
-      {/* Floating bubbles background */}
-      <div className="absolute inset-0 overflow-hidden z-0">
-        {/* Large blue bubble */}
-        <motion.div
-          className="absolute top-1/4 -left-20 w-72 h-72 rounded-full bg-blue-100 dark:bg-blue-900/30 opacity-40 dark:opacity-20"
-          animate={{
-            y: [0, -20, 0],
-            x: [0, 10, 0],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        
-        {/* Medium indigo bubble */}
-        <motion.div
-          className="absolute top-1/3 right-10 w-48 h-48 rounded-full bg-indigo-100 dark:bg-indigo-900/20 opacity-30 dark:opacity-15"
-          animate={{
-            y: [0, 15, 0],
-            x: [0, -5, 0],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
-          }}
-        />
-        
-        {/* Small purple bubble */}
-        <motion.div
-          className="absolute bottom-1/4 left-1/4 w-24 h-24 rounded-full bg-purple-100 dark:bg-purple-900/20 opacity-30 dark:opacity-15"
-          animate={{
-            y: [0, -10, 0],
-            x: [0, 8, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
-        
-        {/* Medium teal bubble */}
-        <motion.div
-          className="absolute bottom-1/3 right-1/4 w-36 h-36 rounded-full bg-teal-100 dark:bg-teal-900/20 opacity-30 dark:opacity-15"
-          animate={{
-            y: [0, 12, 0],
-            x: [0, -7, 0],
-          }}
-          transition={{
-            duration: 14,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 0.5
-          }}
-        />
-        
-        {/* Small blue bubble */}
-        <motion.div
-          className="absolute top-1/5 right-1/3 w-20 h-20 rounded-full bg-blue-200 dark:bg-blue-800/20 opacity-30 dark:opacity-15"
-          animate={{
-            y: [0, -15, 0],
-            x: [0, 5, 0],
-          }}
-          transition={{
-            duration: 11,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1.5
-          }}
-        />
-        
-        {/* Medium cyan bubble */}
-        <motion.div
-          className="absolute bottom-1/5 left-1/3 w-40 h-40 rounded-full bg-cyan-100 dark:bg-cyan-900/20 opacity-25 dark:opacity-10"
-          animate={{
-            y: [0, 18, 0],
-            x: [0, -10, 0],
-          }}
-          transition={{
-            duration: 16,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 0.8
-          }}
-        />
-      </div>
 
       {/* Title Section */}
       <div className="text-center px-5 max-w-7xl mx-auto relative z-10">
@@ -267,7 +176,6 @@ const BecomePrivateCourse: React.FC = () => {
               </div>
 
               <div className="p-8 relative">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-600 to-blue-700 clip-path-polygon opacity-10 dark:opacity-15"></div>
                 <div className="flex flex-col gap-5">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 flex items-center justify-center flex-shrink-0 shadow-md">
@@ -380,7 +288,6 @@ const BecomePrivateCourse: React.FC = () => {
               </div>
 
               <div className="p-8 relative">
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-indigo-600 to-indigo-700 clip-path-polygon opacity-10 dark:opacity-15"></div>
                 <div className="flex flex-col gap-5">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-md">

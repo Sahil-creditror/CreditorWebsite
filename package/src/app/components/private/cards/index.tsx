@@ -76,9 +76,6 @@ const PrivateBusinessCredit: React.FC = () => {
           viewport={{ once: true, amount: 0.3 }}
           className="my-10 relative"
         >
-          {/* Decorative elements */}
-          <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-36 h-36 rounded-full bg-blue-100 bg-opacity-70 blur-xl z-0 dark:bg-blue-900 dark:bg-opacity-30"></div>
-          <div className="absolute -bottom-20 right-20 w-24 h-24 rounded-full bg-indigo-100 bg-opacity-50 blur-lg z-0 dark:bg-indigo-900 dark:bg-opacity-20"></div>
 
           {/* Section header (matched style from Become section) */}
           <motion.h2
@@ -134,7 +131,6 @@ const PrivateBusinessCredit: React.FC = () => {
               </motion.div>
 
               <div className="p-6 relative">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-600 to-blue-700 clip-path-polygon opacity-10 dark:opacity-15"></div>
                 <div className="flex flex-col gap-5">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 flex items-center justify-center flex-shrink-0 shadow-md">
@@ -292,7 +288,6 @@ const PrivateBusinessCredit: React.FC = () => {
               </motion.div>
 
               <div className="p-6 relative">
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-indigo-600 to-indigo-700 clip-path-polygon opacity-10 dark:opacity-15"></div>
                 <div className="flex flex-col gap-5">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-md">
@@ -449,7 +444,6 @@ const PrivateBusinessCredit: React.FC = () => {
               </motion.div>
 
               <div className="p-6 relative">
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-indigo-600 to-indigo-700 clip-path-polygon opacity-10 dark:opacity-15"></div>
                 <div className="flex flex-col gap-5">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-md">

@@ -100,7 +100,7 @@ export default function MasterclassBenefits() {
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{ duration: 0.7, delay: idx * 0.1 }}
               >
-                {String(idx + 1).padStart(2, "0")}
+                {String(idx + 1).padStart(1, "0")}
               </motion.span>
 
               {/* --- BG type cards (1 & 4) --- */}

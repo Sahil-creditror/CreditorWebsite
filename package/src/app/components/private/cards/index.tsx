@@ -17,6 +17,104 @@ const fadeInUp: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
+// Reusable Card Component
+interface CardProps {
+  title: string;
+  subtitle: string;
+  imageSrc: string;
+  imageAlt: string;
+  icon: React.ReactNode;
+  features: Array<{
+    icon: React.ReactNode;
+    text: string;
+  }>;
+  theme: 'blue' | 'indigo';
+  animationDelay?: number;
+}
+
+const CourseCard: React.FC<CardProps> = ({
+  title,
+  subtitle,
+  imageSrc,
+  imageAlt,
+  icon,
+  features,
+  theme,
+  animationDelay = 0
+}) => {
+  const themeClasses = {
+    blue: {
+      container: "bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-900/30 dark:to-sky-900/30 border-blue-200 dark:border-blue-700/50",
+      iconBg: "bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600",
+      titleColor: "text-blue-700 dark:text-blue-300",
+      overlay: "from-blue-900/20"
+    },
+    indigo: {
+      container: "bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 border-indigo-200 dark:border-indigo-700/50",
+      iconBg: "bg-gradient-to-br from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600",
+      titleColor: "text-indigo-700 dark:text-indigo-300",
+      overlay: "from-indigo-900/20"
+    }
+  };
+
+  const currentTheme = themeClasses[theme];
+
+  return (
+    <motion.div
+      className={`${currentTheme.container} rounded-2xl p-0 w-full max-w-sm shadow-xl border relative overflow-hidden group flex flex-col`}
+      initial={{ opacity: 0, x: animationDelay > 0 ? 20 : -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.35, delay: animationDelay }}
+      viewport={{ once: true, amount: 0.3 }}
+    >
+      {/* Image container */}
+      <motion.div
+        className="w-full h-40 overflow-hidden relative flex-shrink-0"
+        transition={{ duration: 0.2 }}
+      >
+        <img
+          src={imageSrc}
+          alt={imageAlt}
+          className="w-full h-full object-cover object-center transition-all duration-300"
+        />
+        <div className={`absolute inset-0 bg-gradient-to-t ${currentTheme.overlay} to-transparent`}></div>
+      </motion.div>
+
+      {/* Content */}
+      <div className="p-6 relative flex-1 flex flex-col">
+        <div className="flex flex-col gap-5 flex-1">
+          {/* Header */}
+          <div className="flex items-center gap-4">
+            <div className={`w-14 h-14 rounded-xl ${currentTheme.iconBg} flex items-center justify-center flex-shrink-0 shadow-md`}>
+              {icon}
+            </div>
+            <div className="text-left">
+              <h4 className={`text-lg font-bold ${currentTheme.titleColor} m-0`}>
+                {title}
+              </h4>
+              <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">
+                {subtitle}
+              </p>
+            </div>
+          </div>
+
+          {/* Features List */}
+          <ul className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2 flex-1">
+            {features.map((feature, index) => (
+              <li key={index} className="flex items-start gap-2">
+                <div className="w-5 h-5 flex-shrink-0 mt-0.5">
+                  {feature.icon}
+                </div>
+                <span className="text-sm">{feature.text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const PrivateBusinessCredit: React.FC = () => {
   const colors = {
     primary: "#0369a1",
@@ -65,6 +163,252 @@ const PrivateBusinessCredit: React.FC = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number>(0);
 
+  // Card data
+  const cardsData = [
+    {
+      title: "I Want Remedy Now",
+      subtitle: "Personal Credit Repair",
+      imageSrc: "/images/courses/become/remedynew.webp",
+      imageAlt: "Status Correction Illustration",
+      theme: "blue" as const,
+      animationDelay: 0,
+      icon: (
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+          <path d="M12 7v6l3 3"></path>
+        </svg>
+      ),
+      features: [
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+          ),
+          text: "Remove Negative Accounts & Collections"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          ),
+          text: "Eliminate Late Payments & Charge-Offs"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5-2.586V6a2 2 0 00-2-2h-3.586a2 2 0 01-1.414-.586l-1.414-1.414A2 2 0 0010.586 2H7a2 2 0 00-2 2v1.414A2 2 0 014.586 6L3.172 7.414A2 2 0 002 8.828V12a2 2 0 002 2h1.172a2 2 0 011.414.586l1.414 1.414A2 2 0 008.828 18H12a2 2 0 002-2v-1.172a2 2 0 01.586-1.414l1.414-1.414A2 2 0 0018 12h1.172a2 2 0 001.414-.586l1.414-1.414A2 2 0 0022 8.828V8a2 2 0 00-2-2h-1z" />
+            </svg>
+          ),
+          text: "Dispute Inaccurate Credit Report Data"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+          ),
+          text: "Boost FICO Scores Fast"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+            </svg>
+          ),
+          text: "Qualify for High-Limit Credit Cards"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+            </svg>
+          ),
+          text: "Restore Financial Freedom & Confidence"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 7a5 5 0 11-9.9 1M10 14l2 2m-2-2l-2 2m2-2l2-2" />
+            </svg>
+          ),
+          text: "Unlock Better Loan & Lease Terms"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V6l-8-4-8 4v6c0 6 8 10 8 10z" />
+            </svg>
+          ),
+          text: "Protect Identity & Credit Profile"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          ),
+          text: "Rebuild Strong Payment History"
+        }
+      ]
+    },
+    {
+      title: "Private Merchant Processing",
+      subtitle: "Foundations Mastery",
+      imageSrc: "/images/courses/become/PMP2.webp",
+      imageAlt: "Sovereignty Foundations Illustration",
+      theme: "indigo" as const,
+      animationDelay: 0.05,
+      icon: (
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+        </svg>
+      ),
+      features: [
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+            </svg>
+          ),
+          text: "Lower Transaction Fees"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          ),
+          text: "Faster Funding Times"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          ),
+          text: "No Hidden Costs"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          ),
+          text: "Dedicated Account Manager"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          ),
+          text: "Seamless Equipment Integration"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+          ),
+          text: "Real-Time Reporting Dashboard"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V6l-8-4-8 4v6c0 6 8 10 8 10z" />
+            </svg>
+          ),
+          text: "Chargeback Protection Tools"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          ),
+          text: "Customizable Payment Solutions"
+        }
+      ]
+    },
+    {
+      title: "Private Business Credit",
+      subtitle: "Foundations Mastery",
+      imageSrc: "/images/courses/become/PBCnew.webp",
+      imageAlt: "Sovereignty Foundations Illustration",
+      theme: "blue" as const,
+      animationDelay: 0.1,
+      icon: (
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+          <rect x="3" y="5" width="18" height="14" rx="3" stroke="white" strokeWidth="2" />
+          <path d="M8 9h8M8 13h5" stroke="white" strokeWidth="2" strokeLinecap="round" />
+          <circle cx="18" cy="17" r="1.5" stroke="white" strokeWidth="2" />
+        </svg>
+      ),
+      features: [
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+            </svg>
+          ),
+          text: "Earn Cash-Back on Every Purchase"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+          ),
+          text: "Travel Rewards for Flights & Hotels"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          ),
+          text: "Airport Lounge Access"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+            </svg>
+          ),
+          text: "Exclusive Hotel Upgrades"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            </svg>
+          ),
+          text: "0% Intro APR Offers"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          ),
+          text: "Get Approved for Up to $200K"
+        },
+        {
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 3l9 5-9 5-9-5 9-5zm0 8l9 5-9 5-9-5 9-5z" />
+            </svg>
+          ),
+          text: "Credit Card Stacking Strategies"
+        }
+      ]
+    }
+  ];
+
   return (
     <div className="font-sans bg-gray-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 p-5">
       {/* Title Section */}
@@ -103,477 +447,32 @@ const PrivateBusinessCredit: React.FC = () => {
           </motion.p>
 
           {/* Courses container */}
-          <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-5 relative z-10">
-            {/* "I WANT REMEDY NOW - Blue Theme */}
-            <motion.div
-              className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-900/30 dark:to-sky-900/30 rounded-2xl p-0 w-full max-w-sm shadow-xl border border-blue-200 dark:border-blue-700/50 relative overflow-hidden group"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.35 }}
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              {/* Premium Course Tag */}
-              {/* <div className="absolute top-5 left-5 bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
-                Foundation Course
-              </div> */}
-
-              {/* Image container with hover effect */}
-              <motion.div
-                className="w-full h-40 overflow-hidden relative"
-                transition={{ duration: 0.2 }}
-              >
-                <img
-                  src="/images/courses/become/remedy.webp"
-                  alt="Status Correction Illustration"
-                  className="w-full h-full object-cover object-center transition-all duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent"></div>
-              </motion.div>
-
-              <div className="p-6 relative">
-                <div className="flex flex-col gap-5">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 flex items-center justify-center flex-shrink-0 shadow-md">
-                      <svg
-                        width="26"
-                        height="26"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="white"
-                        strokeWidth="2"
-                      >
-                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        <path d="M12 7v6l3 3"></path>
-                      </svg>
-                    </div>
-                    <div className="text-left">
-                      <h4 className="text-lg font-bold text-blue-700 dark:text-blue-300 m-0">
-                        I Want Remedy Now
-                      </h4>
-                      <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">
-                        Personal Credit Repair
-                      </p>
-                    </div>
-                  </div>
-                  <ul className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2 [&_svg]:w-6 [&_svg]:h-6">
-                    <li className="flex items-center gap-2">
-                      {/* Document Icon (Credit Report) */}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 12h6m-6 4h6M9 8h6M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z"
-                        />
-                      </svg>
-                      Check credit reports
-                    </li>
-
-                    <li className="flex items-center gap-2">
-                      {/* Shield Check Icon (Dispute) */}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 12l2 2 4-4m5-2.586V6a2 2 0 00-2-2h-3.586a2 2 0 01-1.414-.586l-1.414-1.414A2 2 0 0010.586 2H7a2 2 0 00-2 2v1.414A2 2 0 014.586 6L3.172 7.414A2 2 0 002 8.828V12a2 2 0 002 2h1.172a2 2 0 011.414.586l1.414 1.414A2 2 0 008.828 18H12a2 2 0 002-2v-1.172a2 2 0 01.586-1.414l1.414-1.414A2 2 0 0018 12h1.172a2 2 0 001.414-.586l1.414-1.414A2 2 0 0022 8.828V8a2 2 0 00-2-2h-1z"
-                        />
-                      </svg>
-                      Dispute negative items
-                    </li>
-
-                    <li className="flex items-center gap-2">
-                      {/* Clock Icon (Pay on time) */}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z"
-                        />
-                      </svg>
-                      Pay bills on time
-                    </li>
-
-                    <li className="flex items-center gap-2">
-                      {/* Trending Down Icon (Reduce Debt) */}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M19 15l-7-7-4 4-6-6"
-                        />
-                      </svg>
-                      Reduce debt balances
-                    </li>
-                  </ul>
-
-                  <div className="mt-4">
-                    {/* <button className="w-full bg-blue-100 dark:bg-blue-800/40 hover:bg-blue-200 dark:hover:bg-blue-700/60 text-blue-700 dark:text-blue-300 font-medium py-3 rounded-lg transition-colors">
-                      Explore Course
-                    </button> */}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Plus sign connector */}
-            <motion.div
-              className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 flex items-center justify-center relative flex-shrink-0 my-6 lg:my-0 shadow-lg"
-              initial={{ scale: 0, rotate: 180 }}
-              whileInView={{ scale: 1, rotate: 0 }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 20,
-                delay: 0.1,
-              }}
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              <div className="absolute w-7 h-1 bg-white rounded"></div>
-              <div className="absolute w-1 h-7 bg-white rounded"></div>
-              <div className="absolute w-full h-full rounded-full border-2 border-blue-500 border-dashed opacity-30 animate-spin-slow"></div>
-              <span className="sr-only">Plus</span>
-            </motion.div>
-
-            {/* Private Merchant  - Indigo Theme */}
-            <motion.div
-              className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-2xl p-0 w-full max-w-sm shadow-xl border border-indigo-200 dark:border-indigo-700/50 relative overflow-hidden group"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.35, delay: 0.05 }}
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              {/* Premium Course Tag */}
-              {/* <div className="absolute top-5 left-5 bg-gradient-to-r from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
-                Advanced Course
-              </div> */}
-
-              {/* Image container with hover effect */}
-              <motion.div
-                className="w-full h-40 overflow-hidden relative"
-                transition={{ duration: 0.2 }}
-              >
-                <img
-                  src="/images/courses/become/PMP2.webp"
-                  alt="Sovereignty Foundations Illustration"
-                  className="w-full h-full object-cover object-center transition-all duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/20 to-transparent"></div>
-              </motion.div>
-
-              <div className="p-6 relative">
-                <div className="flex flex-col gap-5">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-md">
-                      <svg
-                        width="26"
-                        height="26"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="white"
-                        strokeWidth="2"
-                      >
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                      </svg>
-                    </div>
-                    <div className="text-left">
-                      <h4 className="text-lg font-bold text-indigo-700 dark:text-indigo-300 m-0">
-                        Private Merchant Processing{" "}
-                      </h4>
-                      <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">
-                        Foundations Mastery
-                      </p>
-                    </div>
-                  </div>
-                  <ul className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2 [&_svg]:w-6 [&_svg]:h-6">
-                    <li className="flex items-center gap-2">
-                      {/* Bank Slash Icon (Process without banks) */}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M3 10h18M3 6h18M3 14h18M4 19h16M2 2l20 20"
-                        />
-                      </svg>
-                      Process without banks
-                    </li>
-
-                    <li className="flex items-center gap-2">
-                      {/* ID Card Slash Icon (No KYC required) */}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M4 6h16v12H4zM2 2l20 20"
-                        />
-                      </svg>
-                      No KYC required
-                    </li>
-
-                    <li className="flex items-center gap-2">
-                      {/* Shield X Icon (No shutdown risks) */}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 22s8-4 8-10V6l-8-4-8 4v6c0 6 8 10 8 10zM15 9l-6 6m0-6l6 6"
-                        />
-                      </svg>
-                      No shutdown risks
-                    </li>
-
-                    <li className="flex items-center gap-2">
-                      {/* Key Icon (Full financial control) */}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M15 7a5 5 0 11-9.9 1M10 14l2 2m-2-2l-2 2m2-2l2-2"
-                        />
-                      </svg>
-                      Full financial control
-                    </li>
-                  </ul>
-
-                  <div className="mt-4">
-                    {/* <button className="w-full bg-indigo-100 dark:bg-indigo-800/40 hover:bg-indigo-200 dark:hover:bg-indigo-700/60 text-indigo-700 dark:text-indigo-300 font-medium py-3 rounded-lg transition-colors">
-                      Explore Course
-                    </button> */}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Plus sign connector for the 3rd card */}
-            <motion.div
-              className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 flex items-center justify-center relative flex-shrink-0 my-6 lg:my-0 shadow-lg"
-              initial={{ scale: 0, rotate: 180 }}
-              whileInView={{ scale: 1, rotate: 0 }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 20,
-                delay: 0.15,
-              }} // Increased delay
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              <div className="absolute w-7 h-1 bg-white rounded"></div>
-              <div className="absolute w-1 h-7 bg-white rounded"></div>
-              <div className="absolute w-full h-full rounded-full border-2 border-blue-500 border-dashed opacity-30 animate-spin-slow"></div>
-              <span className="sr-only">Plus</span>
-            </motion.div>
-
-            {/* "Private Business Credit" Course Card - Green Theme */}
-            <motion.div
-              className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-900/30 dark:to-sky-900/30 rounded-2xl p-0 w-full max-w-sm shadow-xl border border-blue-200 dark:border-blue-700/50 relative overflow-hidden group"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.35, delay: 0.05 }}
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              {/* Premium Course Tag */}
-              {/* <div className="absolute top-5 left-5 bg-gradient-to-r from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
-                Advanced Course
-              </div> */}
-
-              {/* Image container with hover effect */}
-              <motion.div
-                className="w-full h-40 overflow-hidden relative"
-                transition={{ duration: 0.2 }}
-              >
-                <img
-                  src="/images/courses/become/PBC.webp"
-                  alt="Sovereignty Foundations Illustration"
-                  className="w-full h-full object-cover object-center transition-all duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/20 to-transparent"></div>
-              </motion.div>
-
-              <div className="p-6 relative">
-                <div className="flex flex-col gap-5">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-md">
-                      <svg
-                        width="26"
-                        height="26"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="white"
-                        strokeWidth="2"
-                      >
-                        <rect
-                          x="3"
-                          y="5"
-                          width="18"
-                          height="14"
-                          rx="3"
-                          stroke="white"
-                          strokeWidth="2"
-                        />
-                        <path
-                          d="M8 9h8M8 13h5"
-                          stroke="white"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                        />
-                        <circle
-                          cx="18"
-                          cy="17"
-                          r="1.5"
-                          stroke="white"
-                          strokeWidth="2"
-                        />
-                      </svg>
-                    </div>
-                    <div className="text-left">
-                      <h4 className="text-lg font-bold text-blue-700 dark:text-blue-300 m-0">
-                        Private Business Credit{" "}
-                      </h4>
-                      <p className="m-0 text-slate-600 dark:text-slate-400 text-sm">
-                        Foundations Mastery
-                      </p>
-                    </div>
-                  </div>
-                  <ul className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left space-y-2">
-                    <li className="flex items-center gap-2">
-                      {/* Briefcase Icon (Build business credit) */}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 6V4a2 2 0 012-2h2a2 2 0 012 2v2m4 0h-12a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2z"
-                        />
-                      </svg>
-                      Build business credit
-                    </li>
-
-                    <li className="flex items-center gap-2">
-                      {/* Layers Icon (Use Unincorporated Business Trusts) */}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 3l9 5-9 5-9-5 9-5zm0 8l9 5-9 5-9-5 9-5z"
-                        />
-                      </svg>
-                      Use Unincorporated Business Trusts
-                    </li>
-
-                    <li className="flex items-center gap-2">
-                      {/* Server Icon (Leverage private processing) */}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M4 6h16M4 12h16M4 18h16M6 6v12M18 6v12"
-                        />
-                      </svg>
-                      Leverage private processing
-                    </li>
-
-                    <li className="flex items-center gap-2">
-                      {/* Rocket Icon (Empower financial freedom) */}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M5 13l4 4L19 7M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z"
-                        />
-                      </svg>
-                      Empower financial freedom
-                    </li>
-                  </ul>
-
-                  <div className="mt-4">
-                    {/* <button className="w-full bg-indigo-100 dark:bg-indigo-800/40 hover:bg-indigo-200 dark:hover:bg-indigo-700/60 text-indigo-700 dark:text-indigo-300 font-medium py-3 rounded-lg transition-colors">
-                      Explore Course
-                    </button> */}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+          <div className="flex flex-col lg:flex-row items-stretch justify-center gap-8 lg:gap-5 relative z-10">
+            {/* Render cards using the reusable component */}
+            {cardsData.map((card, index) => (
+              <React.Fragment key={index}>
+                <CourseCard {...card} />
+                {index < cardsData.length - 1 && (
+                  <motion.div
+                    className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 flex items-center justify-center relative flex-shrink-0 my-6 lg:my-auto shadow-lg self-center"
+                    initial={{ scale: 0, rotate: 180 }}
+                    whileInView={{ scale: 1, rotate: 0 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 20,
+                      delay: 0.1 + (index * 0.05),
+                    }}
+                    viewport={{ once: true, amount: 0.3 }}
+                  >
+                    <div className="absolute w-7 h-1 bg-white rounded"></div>
+                    <div className="absolute w-1 h-7 bg-white rounded"></div>
+                    <div className="absolute w-full h-full rounded-full border-2 border-blue-500 border-dashed opacity-30 animate-spin-slow"></div>
+                    <span className="sr-only">Plus</span>
+                  </motion.div>
+                )}
+              </React.Fragment>
+            ))}
           </div>
 
           {/* Bottom mention */}

@@ -77,7 +77,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
           </ul>
         </div>
 
-        <div className="mt-4">
+        {/* <div className="mt-4">
           <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-200 mb-2">Business models</h4>
           <div className="flex flex-wrap gap-2">
             {outcomes.map((o, i) => (
@@ -89,7 +89,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
               </span>
             ))}
           </div>
-        </div>
+        </div> */}
 
         <div className="mt-5">
           <button

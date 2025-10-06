@@ -77,20 +77,6 @@ const CourseCard: React.FC<CourseCardProps> = ({
           </ul>
         </div>
 
-        <div className="mt-4">
-          <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-200 mb-2">Business models</h4>
-          <div className="flex flex-wrap gap-2">
-            {outcomes.map((o, i) => (
-              <span
-                key={i}
-                className="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 dark:bg-gray-700 text-blue-700 dark:text-blue-200"
-              >
-                {o}
-              </span>
-            ))}
-          </div>
-        </div>
-
         <div className="mt-5">
           <button
             onClick={onLearnMore}

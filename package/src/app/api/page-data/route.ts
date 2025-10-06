@@ -253,7 +253,7 @@ const faqData = {
     data: [
         {
             faq_que: "What makes this a “Private” Merchant Account?",
-            faq_ans: "It’s a full merchant account with private-friendly underwriting and bank-resilient rails, giving you autonomy and control."
+            faq_ans: "It’s a full merchant account with private-friendly underwriting and bank rails, giving you autonomy and control."
         },
         {
             faq_que: "How quickly are payouts?",

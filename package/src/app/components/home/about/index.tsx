@@ -446,7 +446,7 @@ function About() {
                   "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
               }}
               viewport={{ once: true, margin: "0px 0px -50px 0px" }}
-              className="interactive-card w-full h-full overflow-hidden rounded-lg cursor-pointer rounded-xl group md:col-span-2"
+              className="w-full h-full overflow-hidden rounded-lg cursor-pointer rounded-xl group md:col-span-2"
               onMouseEnter={() => {
                 gsap.to(".mouse-follower", {
                   opacity: 1,

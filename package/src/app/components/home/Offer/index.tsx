@@ -73,11 +73,11 @@ export default function MasterclassBenefits() {
           transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
         >
           <h3 className="text-3xl md:text-5xl font-extrabold text-slate-800 dark:text-white leading-tight">
-            What you'll get just after getting enroll to
-            <br className="hidden sm:block" />
+            The{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-400">
-              Creditor Academy
-            </span>
+              Freedom
+            </span>{" "}
+            Formula
           </h3>
         </motion.div>
 
@@ -94,8 +94,8 @@ export default function MasterclassBenefits() {
             >
               {/* --- Large Number Overlay --- */}
               <motion.span
-                className={`absolute ${idx === 1 || idx === 3 ? "bottom-3" : "top-3"} right-5 text-[90px] md:text-[120px] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-blue-400/40 to-amber-400/40 dark:from-blue-300/50 dark:to-yellow-300/50 select-none pointer-events-none leading-none z-10 drop-shadow-[0_0_20px_rgba(255,215,0,0.25)] group-hover:scale-110 group-hover:opacity-100 opacity-90 transition-transform duration-500 ease-out`}
-                initial={{ opacity: 0, scale: 0.9, y: idx === 1 || idx === 3 ? 15 : -15 }}
+                className={`absolute top-3 right-5 text-[90px] md:text-[120px] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-blue-400/40 to-amber-400/40 dark:from-blue-300/50 dark:to-yellow-300/50 select-none pointer-events-none leading-none z-30 drop-shadow-[0_0_20px_rgba(255,215,0,0.25)] group-hover:scale-110 group-hover:opacity-100 opacity-90 transition-transform duration-500 ease-out`}
+                initial={{ opacity: 0, scale: 0.9, y: -15 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{ duration: 0.7, delay: idx * 0.1 }}
@@ -106,7 +106,7 @@ export default function MasterclassBenefits() {
               {/* --- BG type cards (1 & 4) --- */}
               {item.type === "bg" && (
                 <div
-                  className="relative h-full min-h-[20rem] flex flex-col justify-end rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700"
+                  className="relative h-full min-h-[20rem] flex flex-col justify-between rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700"
                   style={{
                     backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.12) 0%, rgba(2,6,23,0.38) 60%), url(${item.bg})`,
                     backgroundSize: "cover",
@@ -131,13 +131,13 @@ export default function MasterclassBenefits() {
                   </motion.div>
 
                   <motion.div
-                    className="p-6 md:p-8 bg-gradient-to-t from-black/30 via-black/10 to-transparent relative z-20"
+                    className="p-6 md:p-8 relative z-20 mt-auto"
                     initial={{ opacity: 0, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.6 }}
                   >
-                    <p className="mt-3 text-sm md:text-base text-white/90 leading-relaxed max-w-prose">
+                    <p className="text-sm md:text-base text-white/90 leading-relaxed max-w-prose text-justify">
                       {item.description}
                     </p>
                   </motion.div>
@@ -151,29 +151,27 @@ export default function MasterclassBenefits() {
                 >
                   <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 via-black/40 to-transparent pointer-events-none z-0" />
 
-                  <div className="relative z-20">
-                    <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-md">
-                      {item.title}
-                    </h3>
+                  {/* Heading */}
+                  <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-md relative z-20">
+                    {item.title}
+                  </h3>
 
+                  {/* Image */}
+                  <div className="relative mt-5 z-20">
                     <Image
                       src={item.img}
                       alt={item.title}
                       width={800}
                       height={400}
-                      className="mt-5 w-full h-36 md:h-44 object-contain opacity-90 rounded-lg"
+                      className="w-full h-36 md:h-44 object-contain rounded-xl"
                       sizes="(max-width: 768px) 100vw, 33vw"
                     />
-
-                    {/* --- Left-aligned description for second and third cards --- */}
-                    <p
-                      className={`mt-4 text-sm md:text-base text-white/90 leading-relaxed max-w-prose ${
-                        idx === 1 || idx === 2 ? "text-left" : "text-center"
-                      }`}
-                    >
-                      {item.description}
-                    </p>
                   </div>
+
+                  {/* Description at bottom */}
+                  <p className="mt-4 text-sm md:text-base text-white/90 leading-relaxed max-w-prose z-20 text-justify">
+                    {item.description}
+                  </p>
                 </div>
               )}
             </motion.div>

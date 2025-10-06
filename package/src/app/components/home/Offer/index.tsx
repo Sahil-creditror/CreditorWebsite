@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion, Variants } from "framer-motion";
+ 
 import Image from "next/image";
 
 export default function MasterclassBenefits() {
@@ -52,25 +52,14 @@ export default function MasterclassBenefits() {
     },
   ];
 
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
-    },
-  };
+  
 
   return (
     <section className="relative overflow-hidden py-20 md:py-24 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <div className="container mx-auto px-4 relative z-10">
         {/* --- Section Heading --- */}
-        <motion.div
+        <div
           className="mt-0 md:mt-5 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
         >
           <h3 className="text-3xl md:text-5xl font-extrabold text-slate-800 dark:text-white leading-tight">
             The{" "}
@@ -79,29 +68,21 @@ export default function MasterclassBenefits() {
             </span>{" "}
             Formula
           </h3>
-        </motion.div>
+        </div>
 
         {/* --- Cards Grid --- */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
           {benefits.map((item, idx) => (
-            <motion.div
+            <div
               key={idx}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.35 }}
               className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 h-full group"
             >
               {/* --- Large Number Overlay --- */}
-              <motion.span
+              <span
                 className={`absolute top-3 right-5 text-[90px] md:text-[120px] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-blue-400/40 to-amber-400/40 dark:from-blue-300/50 dark:to-yellow-300/50 select-none pointer-events-none leading-none z-30 drop-shadow-[0_0_20px_rgba(255,215,0,0.25)] group-hover:scale-110 group-hover:opacity-100 opacity-90 transition-transform duration-500 ease-out`}
-                initial={{ opacity: 0, scale: 0.9, y: -15 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.7, delay: idx * 0.1 }}
               >
                 {String(idx + 1).padStart(1, "0")}
-              </motion.span>
+              </span>
 
               {/* --- BG type cards (1 & 4) --- */}
               {item.type === "bg" && (
@@ -118,29 +99,21 @@ export default function MasterclassBenefits() {
                   <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0a1e3f]/80 via-[#0a1e3f]/50 to-transparent pointer-events-none" />
 
                   {/* Top heading overlay for BG cards */}
-                  <motion.div
+                  <div
                     className="p-6 md:p-8 absolute top-0 left-0 right-0 bg-gradient-to-b from-black/40 via-black/10 to-transparent z-20"
-                    initial={{ opacity: 0, y: -12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.6 }}
                   >
                     <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-md">
                       {item.title}
                     </h3>
-                  </motion.div>
+                  </div>
 
-                  <motion.div
+                  <div
                     className="p-6 md:p-8 relative z-20 mt-auto"
-                    initial={{ opacity: 0, y: 12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.6 }}
                   >
                     <p className="text-sm md:text-base text-white/90 leading-relaxed max-w-prose text-justify">
                       {item.description}
                     </p>
-                  </motion.div>
+                  </div>
                 </div>
               )}
 
@@ -174,7 +147,7 @@ export default function MasterclassBenefits() {
                   </p>
                 </div>
               )}
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

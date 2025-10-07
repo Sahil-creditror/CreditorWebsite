@@ -1,10 +1,16 @@
 "use client";
 
 import React from "react";
- 
 import Image from "next/image";
+import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
 
 export default function MasterclassBenefits() {
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  });
+
   type BgCard = {
     type: "bg";
     title: string;
@@ -52,22 +58,82 @@ export default function MasterclassBenefits() {
     },
   ];
 
-  
-
   return (
     <section className="relative overflow-hidden py-20 md:py-24 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <div className="container mx-auto px-4 relative z-10">
+        
         {/* --- Section Heading --- */}
-        <div
-          className="mt-0 md:mt-5 text-center"
-        >
-          <h3 className="text-3xl md:text-5xl font-extrabold text-slate-800 dark:text-white leading-tight">
-            The{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-400">
-              Freedom
-            </span>{" "}
-            Formula
-          </h3>
+        <div ref={ref} className="mt-0 md:mt-5">
+          {/* Top Row - Left Aligned */}
+          <motion.div
+            className="flex items-center gap-4 md:gap-8 mb-6"
+            initial={{ opacity: 0 }}
+            animate={
+              inView
+                ? {
+                    opacity: 1,
+                    transition: { delay: 0.2 }
+                  }
+                : {}
+            }
+          >
+            <motion.span
+              className="bg-primary py-1.5 px-2.5 text-base font-medium rounded-full dark:text-secondary"
+              initial={{ scale: 0 }}
+              animate={
+                inView
+                  ? {
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 15
+                      }
+                    }
+                  : {}
+              }
+            >
+              02
+            </motion.span>
+            <motion.div
+              className="h-px w-16 bg-secondary/12 dark:bg-white/12"
+              initial={{ scaleX: 0 }}
+              animate={
+                inView
+                  ? {
+                      scaleX: 1,
+                      transition: { delay: 0.3 }
+                    }
+                  : {}
+              }
+            />
+            <motion.p
+              className="text-base font-medium text-white bg-secondary dark:bg-white/10 py-1.5 px-4 rounded-full"
+              initial={{ y: 20, opacity: 0 }}
+              animate={
+                inView
+                  ? {
+                      y: 0,
+                      opacity: 1,
+                      transition: { delay: 0.4 }
+                    }
+                  : {}
+              }
+            >
+              We Offer You
+            </motion.p>
+          </motion.div>
+          
+          {/* Section Title - Center Aligned */}
+          <div className="text-center">
+            <h3 className="text-3xl md:text-5xl font-extrabold text-slate-800 dark:text-white leading-tight">
+              The{' '}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-400">
+                Freedom
+              </span>{' '}
+              Formula
+            </h3>
+          </div>
         </div>
 
         {/* --- Cards Grid --- */}
@@ -84,6 +150,21 @@ export default function MasterclassBenefits() {
                 {String(idx + 1).padStart(1, "0")}
               </span>
 
+              {/* Shared overlays for ALL card types (subtle glass + gradient + radial glow) */}
+              <div className="absolute inset-0 pointer-events-none z-10">
+                {/* soft tint to unify cards */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10 dark:to-black/40 opacity-60 mix-blend-overlay" />
+
+                {/* radial glow (top-right) */}
+                <div className="absolute -top-10 -right-10 w-36 h-36 rounded-full blur-3xl opacity-60 bg-gradient-to-tr from-blue-400/30 to-indigo-600/20" />
+
+                {/* subtle bottom vignette */}
+                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent" />
+
+                {/* translucent glass layer for readable text */}
+                <div className="absolute inset-0 bg-white/0 dark:bg-black/0 backdrop-blur-[2px]" />
+              </div>
+
               {/* --- BG type cards (1 & 4) --- */}
               {item.type === "bg" && (
                 <div
@@ -94,26 +175,26 @@ export default function MasterclassBenefits() {
                     backgroundPosition: "center",
                   }}
                 >
-                  <div className="absolute inset-0 mix-blend-overlay opacity-40 pointer-events-none" />
-                  <div className="absolute -top-8 -right-8 w-36 h-36 bg-gradient-to-tr from-blue-400/30 to-indigo-600/20 rounded-full blur-3xl pointer-events-none opacity-80" />
-                  <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0a1e3f]/80 via-[#0a1e3f]/50 to-transparent pointer-events-none" />
+                  {/* Additional overlay specific to BG cards for contrast */}
+                  <div className="absolute inset-0 mix-blend-overlay opacity-40 pointer-events-none z-20" />
+
+                  <div className="absolute -top-8 -right-8 w-36 h-36 bg-gradient-to-tr from-blue-400/30 to-indigo-600/20 rounded-full blur-3xl pointer-events-none opacity-80 z-15" />
 
                   {/* Top heading overlay for BG cards */}
-                  <div
-                    className="p-6 md:p-8 absolute top-0 left-0 right-0 bg-gradient-to-b from-black/40 via-black/10 to-transparent z-20"
-                  >
+                  <div className="p-6 md:p-8 absolute top-0 left-0 right-0 bg-gradient-to-b from-black/40 via-black/10 to-transparent z-30">
                     <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-md">
                       {item.title}
                     </h3>
                   </div>
 
-                  <div
-                    className="p-6 md:p-8 relative z-20 mt-auto"
-                  >
+                  <div className="p-6 md:p-8 relative z-30 mt-auto">
                     <p className="text-sm md:text-base text-white/90 leading-relaxed max-w-prose text-justify">
                       {item.description}
                     </p>
                   </div>
+
+                  {/* Hover accent */}
+                  <div className="absolute inset-0 z-0 transition-opacity duration-500 opacity-0 group-hover:opacity-30 bg-gradient-to-br from-blue-400/20 to-amber-300/10" />
                 </div>
               )}
 
@@ -122,7 +203,8 @@ export default function MasterclassBenefits() {
                 <div
                   className={`relative flex flex-col justify-between rounded-2xl p-6 md:p-8 h-full bg-gradient-to-b ${item.color} border border-slate-200 dark:border-slate-700 overflow-hidden`}
                 >
-                  <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 via-black/40 to-transparent pointer-events-none z-0" />
+                  {/* layered gradients to improve readability */}
+                  <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/50 via-black/30 to-transparent" />
 
                   {/* Heading */}
                   <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-md relative z-20">
@@ -130,21 +212,22 @@ export default function MasterclassBenefits() {
                   </h3>
 
                   {/* Image */}
-                  <div className="relative mt-5 z-20">
-                    <Image
-                      src={item.img}
-                      alt={item.title}
-                      width={800}
-                      height={400}
-                      className="w-full h-36 md:h-44 object-contain rounded-xl"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  </div>
+                  <Image
+                    src={(item as BlockCard).img}
+                    alt={item.title}
+                    width={800}
+                    height={400}
+                    className={`w-full object-contain rounded-xl relative mt-5 z-20 ${idx === 1 ? 'h-28 md:h-32' : 'h-36 md:h-44'}`}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
 
                   {/* Description at bottom */}
                   <p className="mt-4 text-sm md:text-base text-white/90 leading-relaxed max-w-prose z-20 text-justify">
                     {item.description}
                   </p>
+
+                  {/* Hover accent */}
+                  <div className="absolute inset-0 z-10 transition-opacity duration-500 opacity-0 group-hover:opacity-25 bg-gradient-to-br from-white/5 to-black/20 pointer-events-none" />
                 </div>
               )}
             </div>

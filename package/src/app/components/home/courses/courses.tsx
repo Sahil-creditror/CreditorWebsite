@@ -184,7 +184,7 @@ const CourseRoadmap: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <CourseCard
             title="Become Private + Sovereignty101"
-            image="/images/projects/projectlist/freshman.webp"
+            image="/images/projects/projectlist/become.webp"
             subtitle="Reclaim Your Legal Identity"
             description="Learn how to step out of the public and establish your affairs in the private."
             learnings={[
@@ -200,7 +200,7 @@ const CourseRoadmap: React.FC = () => {
 
           <CourseCard
             title="Operate Private"
-            image="/images/courses/junior.webp"
+            image="/images/projects/projectlist/operate.webp"
             subtitle="Asset Protection & Business"
             description="Build, manage, and grow an Empire in the private, independent of the public system."
             learnings={["Unincorporated Business Trusts", "Private Membership Associations", "Real estate in trusts", "Intergenerational protection"]}
@@ -212,7 +212,7 @@ const CourseRoadmap: React.FC = () => {
 
           <CourseCard
             title="Financial Freedom"
-            image="/images/projects/projectlist/finance.webp"
+            image="/images/projects/projectlist/financial.webp"
             subtitle="200k with Vendors, Banks & Credit Unions"
             description="Discover the foundation of private commerce and take control of how you get paid"
             learnings={["Private Business Credit","Personal Credit Repair","Fix public credit lawfully", "0% APR funding & Non-KYC payments"]}//"Unlock vendor accounts",

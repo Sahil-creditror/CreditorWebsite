@@ -46,7 +46,7 @@ export default function Contact(props: ContactProps) {
 
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex items-center gap-4">
-              <span className="bg-primary dark:text-secondary py-1.5 px-3 text-base font-semibold rounded-full">{contactdataNumber ?? 3}</span>
+              <span className="bg-primary dark:text-secondary py-1.5 px-3 text-base font-semibold rounded-full">{contactdataNumber ?? 4}</span>
               <div className="h-px w-16 bg-black/12 dark:bg-white/12" />
               <p className="section-bedge py-1.5 px-4 rounded-full">Contact us</p>
             </div>

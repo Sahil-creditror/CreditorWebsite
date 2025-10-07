@@ -11,7 +11,7 @@ function Courses() {
         bannerimage="/images/courses/course-banner.webp"
         heading="Explore Our Premium Catalogs"
         desc="Learn Differently. Grow Distinctively. Become Private with Our Premium Catalogs."
-        badgeNumber="02"
+        badgeNumber="03"
         badgeText="Courses"
       />
 

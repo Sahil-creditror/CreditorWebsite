@@ -31,10 +31,10 @@ export default function Home() {
       {/* <Masterclass /> */}
       {/* <Aboutus /> */}
       <About />
+      <Offer />
       {/* <MasterInfo /> */}
       <Courses />
-      <Contact contactdataNumber="3" />
-      <Offer />
+      <Contact contactdataNumber="4" />
       <Event />
       {/* <Roadmap /> */}
       {/* <Testimonial /> */}

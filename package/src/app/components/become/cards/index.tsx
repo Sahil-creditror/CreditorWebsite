@@ -166,9 +166,9 @@ const BecomePrivateCourse: React.FC = () => {
               </div>
 
               {/* Image container */}
-              <div className="w-full h-52 overflow-hidden relative">
+              <div className="w-full h-60 overflow-hidden relative">
                 <img 
-                  src="/images/courses/become/become.webp"
+                  src="/images/courses/become/bp.webp"
                   alt="Status Correction Illustration"
                   className="w-full h-full object-cover object-center"
                 />
@@ -278,9 +278,9 @@ const BecomePrivateCourse: React.FC = () => {
               </div>
 
               {/* Image container */}
-              <div className="w-full h-52 overflow-hidden relative">
+              <div className="w-full h-60 overflow-hidden relative">
                 <img 
-                  src="/images/courses/become/Sovereignty.webp"
+                  src="/images/courses/become/sovcard.webp"
                   alt="Sovereignty Foundations Illustration"
                   className="w-full h-full object-cover object-center"
                 />

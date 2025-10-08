@@ -160,10 +160,10 @@ const BecomePrivateCourse: React.FC = () => {
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              {/* Premium Course Tag */}
+              {/* Premium Course Tag
               <div className="absolute top-5 left-5 bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
                 Foundation Course
-              </div>
+              </div> */}
 
               {/* Image container */}
               <div className="w-full h-60 overflow-hidden relative">
@@ -272,10 +272,10 @@ const BecomePrivateCourse: React.FC = () => {
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              {/* Premium Course Tag */}
+              {/* Premium Course Tag
               <div className="absolute top-5 left-5 bg-gradient-to-r from-indigo-600 to-indigo-700 dark:from-indigo-500 dark:to-indigo-600 text-white px-4 py-2 rounded-full text-xs font-semibold z-10 shadow-lg">
                 Advanced Course
-              </div>
+              </div> */}
 
               {/* Image container */}
               <div className="w-full h-60 overflow-hidden relative">

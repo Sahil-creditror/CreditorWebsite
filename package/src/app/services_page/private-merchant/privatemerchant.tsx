@@ -9,6 +9,7 @@ import PMPComparisonTable from "../components/PMPComparisonTable";
 import Faq from "@/app/components/home/faq";
 import Work from "../components/work";
 import Feature from "../components/featuremp";
+// import PrivateMerchantBanner from "../components/private-merchant";
 
 export function PrivateMerchant() {
   return (
@@ -20,6 +21,9 @@ export function PrivateMerchant() {
         buttonPath="/pmaform"
       />
       <WhyAPMP />
+      {/* <PrivateMerchantBanner 
+        imageSrc="/images/services/pmabanner.webp"
+      /> */}
       <Feature/>
       <TransparentPricingSnapshot/>
       <Work/>

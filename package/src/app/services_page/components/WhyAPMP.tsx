@@ -179,7 +179,7 @@ export default function WhyAPMP({
         {/* Left content: Title, subtitle, feature cards, CTA */}
         <MotionDiv
           variants={staggerVariants}
-          className="lg:col-span-6 max-w-3xl mx-auto lg:mx-0 relative flex flex-col"
+          className="lg:col-span-5 max-w-3xl mx-auto lg:mx-0 relative flex flex-col"
         >
           <motion.h2
             variants={itemVariants}
@@ -268,20 +268,24 @@ export default function WhyAPMP({
         {/* Right: Large image card with layered glows */}
         <motion.div
           variants={containerVariants}
-          className="order-1 lg:order-2 relative flex justify-center items-center lg:col-span-6"
+          className="order-1 lg:order-2 relative flex justify-center items-center lg:col-span-7"
         >
           <motion.div
             variants={imageVariants}
-            className="relative h-80 sm:h-96 md:h-[520px] w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-3xl border-8 border-white dark:border-blue-950 transition-transform hover:scale-[1.03]"
+            className="relative w-full max-w-3xl rounded-[2.5rem] overflow-hidden shadow-3xl border-8 border-white dark:border-blue-950 transition-transform hover:scale-[1.03]"
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/40 via-blue-400/20 to-white/30 mix-blend-multiply" />
-            <Image
-              src={sideImageSrc}
-              alt="Private merchant processing visual"
-              fill
-              className="object-cover object-center"
-              priority
-            />
+            <div className="relative w-full flex items-center justify-center">
+              <Image
+                src="/images/services/pmabanner.webp"
+                alt="Private merchant processing visual"
+                width={1600}
+                height={1000}
+                priority
+                className="w-full h-auto object-contain"
+                sizes="(max-width: 1024px) 100vw, 600px"
+              />
+            </div>
           </motion.div>
 
           {/* Glow circles */}

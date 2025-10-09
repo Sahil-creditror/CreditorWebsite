@@ -34,7 +34,7 @@ export default function Page() {
             {/* <Pricing /> */}
             {/* <Learn /> */}
             {/* <Appoint /> */}
-            <Join />
+            {/* <Join /> */}
             {/* <About /> */}
             <Event />
             <CTA />

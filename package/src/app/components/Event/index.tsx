@@ -373,7 +373,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
             <span className="title-sheen" aria-hidden="true" />
           </h1>
 
-          <div className="sub reveal" data-delay="220">Are You Ready To Become Private? 
+          <div className="sub reveal" data-delay="220" style={{ marginTop: '2rem' }}>Curious what it's like to be part of Creditor Academy? 
             {/* <div className="winners-pill" aria-hidden="true">
               <span className="winners-number">
                 $1000
@@ -384,7 +384,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
             </div> */}
           </div>
 
-          <p className="desc reveal" data-delay="300">Unlock our Special Credit System and unlock your lessons from premium catalogue. Start your Alternative Business Income right away.</p>
+          <p className="desc reveal" data-delay="300">Join our Free Non-Member Orientation held every Saturday and discover everything we offer — from private education and trust setup to credit mastery and financial freedom. See why thousands are choosing to live, build, and thrive in the private.</p>
 
           <div className="cta-row">
             <button
@@ -396,7 +396,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
               disabled={timeLeft.expired}
               onClick={() => { if (!timeLeft.expired) handleWidgetOpen(); }}
             >
-              <span className="btn-content">{timeLeft.expired ? 'Entry Closed' : 'Enter to Win'}</span>
+              <span className="btn-content">{timeLeft.expired ? 'Entry Closed' : 'Join Now'}</span>
             </button>
 
             <div className="countdown-wrap reveal" data-delay="420" aria-live="polite">

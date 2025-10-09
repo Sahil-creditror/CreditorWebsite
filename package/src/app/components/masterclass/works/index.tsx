@@ -54,9 +54,9 @@ const steps: Step[] = [
   },
   {
     id: 3,
-    title: "Masterclass Membership",
+    title: "Become Private",
     description:
-      "A refined three-phase system for founders who want legal protection, fundable credit, and private payment flows. Templates, walkthroughs, and proven playbooks included.",
+      "The ultimate educational roadmap to sovereignty, asset protection, wealth, and independence. Break free and become Private today!",
   },
 ];
 

@@ -16,19 +16,19 @@ export default function MasterclassBenefits() {
       title: "Introductory Access",
       description:
         "Try the first module of premium courses for free so you can decide before committing.",
-      image: "/images/courses/become/document.webp",
+      image: "/images/courses/become/access.webp",
     },
     {
       title: "Private Community Groups",
       description:
         "Connect with entrepreneurs and pros, get fast answers, and share wins in exclusive groups.",
-      image: "/images/masterclass/community.webp",
+      image: "/images/courses/become/group.webp",
     },
     {
       title: "Live Weekly Trainings",
       description:
         "Attend live sessions with instructors — ask questions, get critiques, and stay ahead.",
-      image: "/images/masterclass/trainer.webp",
+      image: "/images/courses/become/trainingnew.webp",
     },
   ];
 
@@ -201,10 +201,10 @@ export default function MasterclassBenefits() {
                   <Image src={item.image} alt={item.title} fill className="object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
-                  {/* Floating label */}
+                  {/* Floating label
                   <div className="absolute left-4 top-4 px-3 py-1 rounded-full text-xs font-semibold bg-white/90 dark:bg-slate-900/80 text-slate-900 dark:text-white">
                     {index === 0 ? "New" : index === 3 ? "Live" : "Feature"}
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* Content */}

@@ -238,7 +238,7 @@ export default function MasterclassBenefits() {
         <div className="mt-12 flex flex-col items-center gap-4">
           <a
             className="relative w-full max-w-md inline-flex items-center justify-center px-10 py-3.5 md:px-10 md:py-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-semibold text-lg md:text-xl shadow-lg ring-1 ring-white/10 dark:ring-black/10 transition-transform duration-200"
-            href="/tncmasterclass"
+            href="/projects"
           >
             Become a Member
           </a>

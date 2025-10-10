@@ -11,8 +11,8 @@ function Courses() {
         bannerimage="/images/courses/course-banner.webp"
         heading="Explore Our Premium Catalogs"
         desc="Learn Differently. Grow Distinctively. Become Private with Our Premium Catalogs."
-        badgeNumber="03"
-        badgeText="Courses"
+        // badgeNumber="03"
+        // badgeText="Courses"
       />
 
       <section className="relative py-20 md:py-20 overflow-hidden">

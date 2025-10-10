@@ -203,7 +203,7 @@ const CourseRoadmap: React.FC = () => {
             image="/images/projects/projectlist/operate.webp"
             subtitle="Asset Protection & Business"
             description="Build, manage, and grow an Empire in the private, independent of the public system."
-            learnings={["Unincorporated Business Trusts", "Private Membership Associations", "Real estate in trusts", "Intergenerational protection"]}
+            learnings={["Unincorporated Business Trusts", "Private Membership Associations", "Real estate in trusts", "Family legacy planning"]}
             outcomes={["Real estate trusts", "Wellness PMAs", "Private coaching", "Trade guilds"]}
             badge="JUNIOR"
             highlight
@@ -215,7 +215,7 @@ const CourseRoadmap: React.FC = () => {
             image="/images/projects/projectlist/financial.webp"
             subtitle="200k with Vendors, Banks & Credit Unions"
             description="Discover the foundation of private commerce and take control of how you get paid"
-            learnings={["Private Business Credit","Personal Credit Repair","Fix public credit lawfully", "0% APR funding & Non-KYC payments"]}//"Unlock vendor accounts",
+            learnings={["Private Business Credit","Personal Credit Repair","Private Merchant Accounts", "Credit card stacking strategies"]}//"Unlock vendor accounts",
             outcomes={["Rental businesses", "E-commerce", "Merchant services", "15+ other models"]}
             badge="SENIOR"
             onLearnMore={() => router.push("/private")}

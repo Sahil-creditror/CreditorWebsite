@@ -264,7 +264,7 @@ function About() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-20 md:py-40 dark:bg-darkblue overflow-hidden"
+      className="relative py-10 md:py-20 dark:bg-darkblue overflow-hidden"
       style={{
         clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
         willChange: "clip-path"
@@ -317,7 +317,7 @@ function About() {
             }
             className="flex flex-col gap-5 2xl:gap-7 w-full 2xl:max-w-2xl 2xl:w-full"
           >
-            {/* Top Row */}
+            {/* Top Row
             <motion.div
               className="flex items-center gap-4 md:gap-8"
               initial={{ opacity: 0 }}
@@ -375,7 +375,7 @@ function About() {
               >
                 About Creditor
               </motion.p>
-            </motion.div>
+            </motion.div> */}
 
             {/* Heading + Paragraph with stagger */}
             <motion.div

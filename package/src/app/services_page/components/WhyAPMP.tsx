@@ -19,7 +19,7 @@ const FEATURES: Array<{ icon: string; title: string; desc: string }> = [
   { icon: "⚡", title: "Reliable Payouts", desc: "Funds in 24–48 hours, not frozen for weeks." },
   { icon: "💳", title: "Custom Pricing", desc: "Interchange-plus and volume-based rates, not one-size-fits-all fees." },
   { icon: "🤝", title: "Dedicated Support", desc: "An account manager who knows your business." },
-  { icon: "🔐", title: "Privacy and Control", desc: "Bank-free rails with PCI-compliant infrastructure." },
+  { icon: "🔐", title: "Privacy and Control", desc: "Bank rails with PCI-compliant infrastructure." },
 ];
 
 export default function WhyAPMP({

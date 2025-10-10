@@ -38,7 +38,7 @@ export default function MasterclassBenefits() {
       title: "Charge Your Card",
       img: "/images/offers/card.webp",
       description:
-        "Charge your Creditor Card and step into the private economy. Each swipe unlocks access, wealth, and opportunity reserved for members only.",
+        "Charge your \"Creditor Card\" and step into the private economy. Each swipe unlocks access, wealth, and opportunity reserved for members only.",
       color: "from-slate-800 to-slate-900 dark:from-slate-900 dark:to-black",
     },
     {
@@ -59,13 +59,13 @@ export default function MasterclassBenefits() {
   ];
 
   return (
-    <section className="relative overflow-hidden py-20 md:py-24 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+    <section className="relative overflow-hidden py-10 md:py-20 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <div className="container mx-auto px-4 relative z-10">
         
         {/* --- Section Heading --- */}
         <div ref={ref} className="mt-0 md:mt-5">
           {/* Top Row - Left Aligned */}
-          <motion.div
+          {/* <motion.div
             className="flex items-center gap-4 md:gap-8 mb-6"
             initial={{ opacity: 0 }}
             animate={
@@ -122,7 +122,7 @@ export default function MasterclassBenefits() {
             >
               We Offer You
             </motion.p>
-          </motion.div>
+          </motion.div> */}
           
           {/* Section Title - Center Aligned */}
           <div className="text-center">

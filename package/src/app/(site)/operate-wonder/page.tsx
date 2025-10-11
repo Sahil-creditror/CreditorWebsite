@@ -7,7 +7,7 @@ import Contact from "@/app/components/shared/cta";
 import Pricing from "@/app/components/shared/plan";
 import Script from "next/script";
 import HowItWorks from "@/app/components/operate/works";
-import Event from "@/app/components/Event";
+import Event from "@/app/components/home/event";
 import FaqSection from "@/app/components/operate/faq";  
 
 import { getAllProjects } from "@/lib/markdown";

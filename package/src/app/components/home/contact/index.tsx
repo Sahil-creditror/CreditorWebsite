@@ -2,7 +2,6 @@
 
 import Script from "next/script";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 
 type ContactProps = { contactdataNumber?: string };
 
@@ -26,20 +25,10 @@ export default function Contact(props: ContactProps) {
             <div className="flex flex-col gap-8">
               {/* Title and Subtitle */}
               <div>
-                <motion.span
-                  initial={{ opacity: 0, y: -10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="relative inline-flex items-center justify-center px-5 py-2 mb-5 text-sm font-semibold tracking-wide rounded-full overflow-hidden
-                            bg-gradient-to-r from-blue-500/20 via-blue-400/10 to-blue-600/20 
-                            dark:from-blue-400/10 dark:via-blue-500/5 dark:to-blue-600/10
-                            border border-blue-500/30 dark:border-blue-400/30 
-                            backdrop-blur-md text-blue-800 dark:text-blue-300 shadow-[0_0_15px_rgba(59,130,246,0.15)]"
-                >
-                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/30 to-transparent -skew-x-12 animate-shimmer opacity-60"></span>
-                  <span className="relative z-10 flex items-center gap-2">
+                <span className="inline-flex items-center justify-center px-5 py-2 mb-5 text-sm font-semibold tracking-wide rounded-full overflow-hidden bg-gradient-to-r from-blue-500/20 via-blue-400/10 to-blue-600/20 dark:from-blue-400/10 dark:via-blue-500/5 dark:to-blue-600/10 border border-blue-500/30 dark:border-blue-400/30 backdrop-blur-md text-blue-800 dark:text-blue-300 shadow-[0_0_15px_rgba(59,130,246,0.15)]">
+                  <span className="flex items-center gap-2">
                     <svg
-                      className="w-4 h-4 text-blue-600 dark:text-blue-400 animate-pulse"
+                      className="w-4 h-4 text-blue-600 dark:text-blue-400"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth={2}
@@ -53,7 +42,7 @@ export default function Contact(props: ContactProps) {
                     </svg>
                     Contact Us
                   </span>
-                </motion.span>
+                </span>
 
                 <h2 className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
                   Get in Touch
@@ -66,10 +55,10 @@ export default function Contact(props: ContactProps) {
               </div>
 
               {/* Message Card */}
-              <div className="relative bg-gradient-to-br from-white/90 via-white/80 to-white/70 dark:from-gray-900/90 dark:via-gray-800/80 dark:to-gray-900/70 backdrop-blur-2xl rounded-3xl p-8 shadow-2xl border border-white/20 dark:border-white/10 transition-all duration-200 overflow-hidden">
+              <div className="relative bg-gradient-to-br from-white/90 via-white/80 to-white/70 dark:from-gray-900/90 dark:via-gray-800/80 dark:to-gray-900/70 backdrop-blur-2xl rounded-3xl p-8 shadow-2xl border border-white/20 dark:border-white/10 overflow-hidden">
                 {/* Decorative elements */}
-                <div className="absolute -top-10 -right-10 w-28 h-28 bg-primary/10 rounded-full blur-xl transition-all duration-300"></div>
-                <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-blue-500/10 rounded-full blur-xl transition-all duration-300"></div>
+                <div className="absolute -top-10 -right-10 w-28 h-28 bg-primary/10 rounded-full blur-xl"></div>
+                <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-blue-500/10 rounded-full blur-xl"></div>
 
                 {/* Heading with icon */}
                 <div className="flex items-center gap-3 mb-6 relative z-10">
@@ -105,19 +94,16 @@ export default function Contact(props: ContactProps) {
             {/* Right Column - Form */}
             <div className="w-full">
               <div
-                className="relative bg-gradient-to-br from-white/90 via-white/80 to-white/70 dark:from-gray-900/90 dark:via-gray-800/80 dark:to-gray-900/70 backdrop-blur-2xl rounded-3xl p-8 md:p-10 shadow-2xl border border-white/20 dark:border-white/10 overflow-hidden group hover:shadow-3xl hover:-translate-y-0.5 transition-all duration-200"
+                className="relative bg-gradient-to-br from-white/90 via-white/80 to-white/70 dark:from-gray-900/90 dark:via-gray-800/80 dark:to-gray-900/70 backdrop-blur-2xl rounded-3xl p-8 md:p-10 shadow-2xl border border-white/20 dark:border-white/10 overflow-hidden"
               >
                 {/* Enhanced decorative elements */}
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl group-hover:bg-blue-500/30 group-hover:blur-2xl transition-all duration-700"></div>
-                <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-gradient-to-br from-green-500/20 to-blue-500/20 rounded-full blur-3xl group-hover:bg-green-500/30 group-hover:blur-2xl transition-all duration-700"></div>
-
-                {/* Shimmer effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 dark:via-white/5 to-transparent -skew-x-12 group-hover:animate-shimmer transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
+                <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
+                <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-gradient-to-br from-green-500/20 to-blue-500/20 rounded-full blur-3xl"></div>
 
                 {/* WonderEngine Form - Direct Integration */}
                 <div className="relative z-10 mb-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-2 h-2 bg-gradient-to-r from-primary to-blue-600 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-gradient-to-r from-primary to-blue-600 rounded-full"></div>
                     <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
                       Powered by WonderEngine
                     </span>
@@ -197,20 +183,6 @@ export default function Contact(props: ContactProps) {
         </div>
       </div>
 
-      {/* Custom animation styles */}
-      <style jsx>{`
-        @keyframes shimmer {
-          0% {
-            transform: translateX(-100%) skewX(-12deg);
-          }
-          100% {
-            transform: translateX(200%) skewX(-12deg);
-          }
-        }
-        .animate-shimmer {
-          animation: shimmer 1.5s infinite;
-        }
-      `}</style>
     </section>
   );
 }

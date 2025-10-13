@@ -164,40 +164,6 @@ export default function Pricing() {
           <div className="mt-8 h-px w-full bg-gradient-to-r from-transparent via-slate-300/70 dark:via-white/10 to-transparent" />
         </div>
 
-        {/* Billing toggle
-        <div className="flex justify-center mb-10">
-          <div className="relative inline-flex items-center rounded-full bg-white/70 dark:bg-white/5 border border-slate-200/70 dark:border-white/10 p-1 backdrop-blur supports-[backdrop-filter]:bg-white/30">
-            <button
-              onClick={() => setIsYearly(false)}
-              className={`relative z-[1] px-4 py-2 text-sm rounded-full transition-colors ${
-                !isYearly ? "text-blue-700 dark:text-blue-300" : "text-slate-600 dark:text-slate-300"
-              }`}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setIsYearly(true)}
-              className={`relative z-[1] px-4 py-2 text-sm rounded-full transition-colors ${
-                isYearly ? "text-blue-700 dark:text-blue-300" : "text-slate-600 dark:text-slate-300"
-              }`}
-            >
-              Yearly
-            </button>
-            <motion.span
-              layout
-              transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className={`absolute inset-y-1 w-1/2 rounded-full shadow-sm ${
-                isYearly ? "left-1/2" : "left-1"
-              } bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-500`}
-            />
-          </div>
-          {isYearly && (
-            <span className="ml-3 inline-flex items-center rounded-full bg-green-500/10 text-green-700 dark:text-green-300 border border-green-500/20 px-2.5 py-1 text-xs">
-              Save 20%
-            </span>
-          )}
-        </div> */}
-
         <div className="grid gap-12 grid-cols-1 lg:grid-cols-3 items-stretch">
           {/* LEFT - Pricing Card */}
           <motion.div

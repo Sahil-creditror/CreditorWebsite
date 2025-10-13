@@ -30,6 +30,11 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Google Ads */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17542559364"
+          strategy="afterInteractive"
+        />
       </head>
       <body className={manrope.className}>
         {/* Google Tag Manager (noscript) */}
@@ -69,6 +74,19 @@ export default function RootLayout({
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'G-QMSV3WP8T5');
+            `,
+          }}
+        />
+        {/* Google Ads */}
+        <Script
+          id="google-ads-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17542559364');
             `,
           }}
         />

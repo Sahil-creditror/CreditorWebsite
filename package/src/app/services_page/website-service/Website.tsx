@@ -155,7 +155,6 @@ export function Website() {
       <Plan />
       {/* <WebsiteUpperSection /> */}
       <Template />
-      
       <Appointment />
       <Table 
         starterPrototypeLink="https://digi-market-simple.vercel.app/" 

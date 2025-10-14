@@ -163,9 +163,9 @@ export default function HeroSection({
 
 		{/* Bottom Closing Copy (Centered) */}
 		<div className="container mx-auto px-4 sm:px-6">
-			<p className="mt-8 sm:mt-12 text-sm sm:text-base text-slate-700 dark:text-slate-300 max-w-2xl mx-auto text-center leading-relaxed">
-				Start with our Masterclass to learn these basics, then advance through our Premium Courses — Become Private, Operate Private, and Financial Freedom — to master every stage of your journey from public to private.
-			</p>
+    <p className="mt-8 sm:mt-12 text-sm sm:text-base text-slate-700 dark:text-slate-300 max-w-2xl mx-auto text-center leading-relaxed">
+      Start with our <span className="font-semibold text-blue-600 dark:text-blue-400">Masterclass</span> to learn these basics, then advance through our <span className="font-semibold text-blue-600 dark:text-blue-400">Premium Courses — Become Private, Operate Private, and Financial Freedom —</span> to master every stage of your journey from public to private.
+    </p>
 		</div>
 		</section>
     </>

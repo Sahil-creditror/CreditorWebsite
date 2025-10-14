@@ -166,7 +166,7 @@ export default function MasterclassBenefits() {
             {subtitle}
           </motion.p>
 
-          <motion.div className="mt-6 flex items-center justify-center" variants={sectionVariants}>
+          {/* <motion.div className="mt-6 flex items-center justify-center" variants={sectionVariants}>
             <motion.a
               href="/tncmasterclass"
               className="inline-flex items-center gap-3 rounded-full px-8 py-4 md:px-12 md:py-5 bg-blue-600 text-white font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 text-lg md:text-xl"
@@ -176,7 +176,7 @@ export default function MasterclassBenefits() {
             >
               Join — $69 / month
             </motion.a>
-          </motion.div>
+          </motion.div> */}
         </motion.header>
 
         {/* Benefits Grid */}
@@ -227,8 +227,13 @@ export default function MasterclassBenefits() {
         </div>
 
         {/* Sub-footer / note */}
-        <motion.div className="mt-10 max-w-3xl mx-auto text-center text-sm text-slate-500 dark:text-slate-400" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
-          <p>
+        <motion.div
+          className="mt-10 max-w-3xl mx-auto text-center text-sm text-slate-700 dark:text-white"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          <p className="!text-white dark:!text-white">
             Join today to get exclusive previews, live coaching, and entry to member-only community groups — cancel anytime.
           </p>
         </motion.div>

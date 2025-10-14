@@ -52,9 +52,9 @@ const CourseCard: React.FC<CourseCardProps> = ({
 
         {/* badge overlay removed */}
 
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent text-white py-2 text-center font-semibold tracking-wide">
+        {/* <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent text-white py-2 text-center font-semibold tracking-wide">
           {title.split(" ")[0]}
-        </div>
+        </div> */}
       </div>
 
       {/* Body */}
@@ -183,7 +183,7 @@ const CourseRoadmap: React.FC = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <CourseCard
-            title="Become Private + Sovereignty101"
+            title="Become Private"
             image="/images/projects/projectlist/become.webp"
             subtitle="Reclaim Your Legal Identity"
             description="Learn how to step out of the public and establish your affairs in the private."
@@ -194,7 +194,7 @@ const CourseRoadmap: React.FC = () => {
               "Estate protection basics",
             ]}
             outcomes={["Sovereignty consulting", "Private education", "Trust services", "Debt discharge"]}
-            badge="FOUNDATION"
+            // badge="FOUNDATION"
             onLearnMore={() => router.push("/become")}
           />
 
@@ -205,7 +205,7 @@ const CourseRoadmap: React.FC = () => {
             description="Build, manage, and grow an Empire in the private, independent of the public system."
             learnings={["Unincorporated Business Trusts", "Private Membership Associations", "Real estate in trusts", "Family legacy planning"]}
             outcomes={["Real estate trusts", "Wellness PMAs", "Private coaching", "Trade guilds"]}
-            badge="JUNIOR"
+            // badge="JUNIOR"
             highlight
             onLearnMore={() => router.push("/operate")}
           />
@@ -217,7 +217,7 @@ const CourseRoadmap: React.FC = () => {
             description="Discover the foundation of private commerce and take control of how you get paid"
             learnings={["Private Business Credit","Personal Credit Repair","Private Merchant Accounts", "Credit card stacking strategies"]}//"Unlock vendor accounts",
             outcomes={["Rental businesses", "E-commerce", "Merchant services", "15+ other models"]}
-            badge="SENIOR"
+            // badge="SENIOR"
             onLearnMore={() => router.push("/private")}
           />
         </div>

@@ -167,7 +167,7 @@ export default function ComparisonTable({
                   </div>
                   {/* Maintenance Charge */}
                   <p className="text-sm sm:text-base font-extrabold text-black-500 dark:text-gray-400 mt-1">
-                    + $49/month Maintenance
+                    + $49/month Maintenance + Hosting
                   </p>
                   <p className="mt-3 text-sm sm:text-base text-gray-600 dark:text-gray-300">
                     Fast & lean website — ideal for smaller projects and quick launches.
@@ -197,7 +197,7 @@ export default function ComparisonTable({
                   </div>
                   {/* Maintenance Charge */}
                   <p className="text-sm sm:text-base font-extrabold text-black-500 dark:text-gray-400 mt-1">
-                    + $49/month Maintenance
+                    + $49/month Maintenance + Hosting
                   </p>
                   <p className="mt-3 text-sm sm:text-base text-gray-700 dark:text-gray-300">
                     Full custom solution — premium design, integrations and enterprise-ready structure.

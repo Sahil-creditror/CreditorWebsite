@@ -83,18 +83,18 @@ type ContactDetails = {
 	chargebackEmail: string;
 };
 
-type LegalOverview = {
-	legalName: string;
+type LawfulOverview = {
+	lawfulName: string;
 	entityType: string;
 	tinType: string;
 	federalTaxId: string;
-	legalAddress: string;
-	legalSuite: string;
-	legalCity: string;
-	legalState: string;
-	legalZip: string;
-	legalPhone: string;
-	legalEmail: string;
+	lawfulAddress: string;
+	lawfulSuite: string;
+	lawfulCity: string;
+	lawfulState: string;
+	lawfulZip: string;
+	lawfulPhone: string;
+	lawfulEmail: string;
 };
 
 type Mailing = {
@@ -144,7 +144,7 @@ type SupportingDocuments = {
 };
 
 type FormState = {
-	legal: LegalOverview;
+	lawful: LawfulOverview;
 	mailing: Mailing;
 	contact: ContactDetails;
 	owners: Owner[];
@@ -240,18 +240,18 @@ const initialOwner = (): Owner => ({
 });
 
 const initialForm: FormState = {
-	legal: {
-		legalName: "",
+	lawful: {
+		lawfulName: "",
 		entityType: "",
 		tinType: "",
 		federalTaxId: "",
-		legalAddress: "",
-		legalSuite: "",
-		legalCity: "",
-		legalState: "",
-		legalZip: "",
-		legalPhone: "",
-		legalEmail: "",
+		lawfulAddress: "",
+		lawfulSuite: "",
+		lawfulCity: "",
+		lawfulState: "",
+		lawfulZip: "",
+		lawfulPhone: "",
+		lawfulEmail: "",
 	},
 	mailing: { address: "", suite: "", city: "", state: "", zip: "" },
 	contact: {
@@ -633,7 +633,7 @@ export default function PMAForm() {
 	const [submitting, setSubmitting] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [submittedFolder, setSubmittedFolder] = useState<string>("");
-	const [errors, setErrors] = useState<{ legalPhone?: string; contactPhone?: string; bankRouting?: string; ownerErrors: Array<{ personalPhone?: string; dlDates?: string; dob?: string }>}>({ ownerErrors: [{ }] });
+	const [errors, setErrors] = useState<{ lawfulPhone?: string; contactPhone?: string; bankRouting?: string; ownerErrors: Array<{ personalPhone?: string; dlDates?: string; dob?: string }>}>({ ownerErrors: [{ }] });
 
 	const initiationTotal = useMemo(() => {
 		const p = form.sales.initiationPercent;
@@ -778,61 +778,61 @@ export default function PMAForm() {
 
 	return (
 		<form onSubmit={onSubmit} className="max-w-5xl mx-auto px-4 md:px-6 py-8 mt-20">
-			{/* 1. Legal Overview */}
-			<Section title="1. Legal Overview">
+			{/* 1. Lawful Overview */}
+			<Section title="1. Lawful Overview">
 				<div>
-					<Label required>Legal Name</Label>
-					<TextInput placeholder="Enter legal name" value={form.legal.legalName} onChange={(e) => update("legal", { legalName: e.target.value })} required />
+					<Label required>Lawful Name</Label>
+					<TextInput placeholder="Enter lawful name" value={form.lawful.lawfulName} onChange={(e) => update("lawful", { lawfulName: e.target.value })} required />
 				</div>
 				<div>
 					<Label required>Entity Type</Label>
-					<SelectInput value={form.legal.entityType} onChange={(e) => update("legal", { entityType: e.target.value })} options={[selectDefault, { label: "LLC", value: "llc" }, { label: "Corp", value: "corp" }, { label: "Sole Prop", value: "sole" }]} required />
+					<SelectInput value={form.lawful.entityType} onChange={(e) => update("lawful", { entityType: e.target.value })} options={[selectDefault, { label: "LLC", value: "llc" }, { label: "Corp", value: "corp" }, { label: "Sole Prop", value: "sole" }]} required />
 				</div>
 				<div>
 					<Label required>TIN Type</Label>
-					<SelectInput value={form.legal.tinType} onChange={(e) => update("legal", { tinType: e.target.value })} options={[selectDefault, { label: "EIN", value: "ein" }, { label: "SSN", value: "ssn" }]} required />
+					<SelectInput value={form.lawful.tinType} onChange={(e) => update("lawful", { tinType: e.target.value })} options={[selectDefault, { label: "EIN", value: "ein" }, { label: "SSN", value: "ssn" }]} required />
 				</div>
 				<div>
 					<Label required>Federal Tax ID/EIN</Label>
-					<PasswordInput placeholder="Enter Federal Tax ID/EIN" value={form.legal.federalTaxId} onChange={(e) => update("legal", { federalTaxId: e.target.value })} required />
+					<PasswordInput placeholder="Enter Federal Tax ID/EIN" value={form.lawful.federalTaxId} onChange={(e) => update("lawful", { federalTaxId: e.target.value })} required />
 				</div>
 				<div>
-					<Label required>Legal Address</Label>
-					<TextInput placeholder="Street address" value={form.legal.legalAddress} onChange={(e) => update("legal", { legalAddress: e.target.value })} required />
+					<Label required>Lawful Address</Label>
+					<TextInput placeholder="Street address" value={form.lawful.lawfulAddress} onChange={(e) => update("lawful", { lawfulAddress: e.target.value })} required />
 				</div>
 				<div>
-					<Label>Legal Suite</Label>
-					<TextInput placeholder="Apt, suite, etc." value={form.legal.legalSuite} onChange={(e) => update("legal", { legalSuite: e.target.value })} />
+					<Label>Lawful Suite</Label>
+					<TextInput placeholder="Apt, suite, etc." value={form.lawful.lawfulSuite} onChange={(e) => update("lawful", { lawfulSuite: e.target.value })} />
 				</div>
 				<div>
-					<Label required>Legal City</Label>
-					<TextInput placeholder="City" value={form.legal.legalCity} onChange={(e) => update("legal", { legalCity: e.target.value })} required />
+					<Label required>Lawful City</Label>
+					<TextInput placeholder="City" value={form.lawful.lawfulCity} onChange={(e) => update("lawful", { lawfulCity: e.target.value })} required />
 				</div>
 				<div>
-					<Label required>Legal State</Label>
-					<SelectInput value={form.legal.legalState} onChange={(e) => update("legal", { legalState: e.target.value })} options={states} required />
+					<Label required>Lawful State</Label>
+					<SelectInput value={form.lawful.lawfulState} onChange={(e) => update("lawful", { lawfulState: e.target.value })} options={states} required />
 				</div>
 				<div>
-					<Label required>Legal ZIP</Label>
-					<TextInput placeholder="ZIP code" value={form.legal.legalZip} onChange={(e) => update("legal", { legalZip: e.target.value })} required inputMode="numeric" maxLength={10} />
+					<Label required>Lawful ZIP</Label>
+					<TextInput placeholder="ZIP code" value={form.lawful.lawfulZip} onChange={(e) => update("lawful", { lawfulZip: e.target.value })} required inputMode="numeric" maxLength={10} />
 				</div>
 				<div>
-					<Label required>Legal Phone</Label>
-					<TextInput placeholder="##########" inputMode="numeric" value={form.legal.legalPhone} onChange={(e) => {
+					<Label required>Lawful Phone</Label>
+					<TextInput placeholder="##########" inputMode="numeric" value={form.lawful.lawfulPhone} onChange={(e) => {
 						const digits = (e.target.value || "").replace(/\D+/g, "").slice(0, 10);
-						update("legal", { legalPhone: digits });
-						setErrors((prev) => ({ ...prev, legalPhone: digits.length === 10 ? undefined : "Phone must be 10 digits." }));
+						update("lawful", { lawfulPhone: digits });
+						setErrors((prev) => ({ ...prev, lawfulPhone: digits.length === 10 ? undefined : "Phone must be 10 digits." }));
 					}} required />
-					{errors.legalPhone ? (
+					{errors.lawfulPhone ? (
 						<div className="mt-1 flex items-center text-sm text-red-600">
 							<svg className="mr-1 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12" y2="17"/></svg>
-							<span>{errors.legalPhone}</span>
+							<span>{errors.lawfulPhone}</span>
 						</div>
 					) : null}
 				</div>
 				<div>
-					<Label required>Legal Email</Label>
-					<TextInput type="email" placeholder="name@example.com" value={form.legal.legalEmail} onChange={(e) => update("legal", { legalEmail: e.target.value })} required />
+					<Label required>Lawful Email</Label>
+					<TextInput type="email" placeholder="name@example.com" value={form.lawful.lawfulEmail} onChange={(e) => update("lawful", { lawfulEmail: e.target.value })} required />
 				</div>
 			</Section>
 

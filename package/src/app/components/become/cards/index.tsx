@@ -236,7 +236,7 @@ const BecomePrivateCourse: React.FC = () => {
                         <FaHandsHelping className="w-3 h-3 text-blue-600 dark:text-blue-400" />
                       </div>
                       <p className="text-sm text-slate-600 dark:text-slate-400 m-0 leading-relaxed text-left">
-                        Declare your political and legal autonomy
+                        Declare your political and lawful autonomy
                       </p>
                     </div>
                   </div>
@@ -320,7 +320,7 @@ const BecomePrivateCourse: React.FC = () => {
                         <FaHistory className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
                       </div>
                       <p className="text-sm text-slate-600 dark:text-slate-400 m-0 leading-relaxed text-left">
-                        Evolution of legal identity post-Civil War
+                        Evolution of lawful identity post-Civil War
                       </p>
                     </div>
                     

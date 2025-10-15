@@ -383,9 +383,9 @@ export default function MasterClassLaunchpad() {
               </motion.div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <FeatureCard Icon={FaLock} title="Structure Legally" desc="Trust formation, entity separation, and fundamental compliance." color="from-emerald-500 to-cyan-500" />
+                <FeatureCard Icon={FaLock} title="Structure Lawfully" desc="Trust formation, entity separation, and fundamental compliance." color="from-emerald-500 to-cyan-500" />
                 <FeatureCard Icon={FaMoneyCheckAlt} title="Fund Privately" desc="Build fundable credit profiles and access non-bank funding." color="from-amber-500 to-orange-500" />
-                <FeatureCard Icon={FaShieldAlt} title="Asset Protection" desc="Shield your business assets from legal threats." color="from-violet-500 to-purple-500" />
+                <FeatureCard Icon={FaShieldAlt} title="Asset Protection" desc="Shield your business assets from lawful threats." color="from-violet-500 to-purple-500" />
                 <FeatureCard Icon={FaChartLine} title="Grow Exponentially" desc="Scale your business with advanced financial strategies." color="from-pink-500 to-rose-500" />
               </div>
 
@@ -405,7 +405,7 @@ export default function MasterClassLaunchpad() {
 
             {/* three-step strip */}
             <motion.div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
-              <StripCard step="1" title="Set Up Trust" desc="Foundational legal structure." color="bg-gradient-to-br from-cyan-500 to-blue-600" />
+              <StripCard step="1" title="Set Up Trust" desc="Foundational lawful structure." color="bg-gradient-to-br from-cyan-500 to-blue-600" />
               <StripCard step="2" title="Build Credit" desc="Tier 1 business credit profile." color="bg-gradient-to-br from-violet-500 to-purple-600" />
               <StripCard step="3" title="Activate Processing" desc="Private merchant payments & onboarding." color="bg-gradient-to-br from-pink-500 to-rose-600" />
             </motion.div>

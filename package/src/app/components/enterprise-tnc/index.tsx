@@ -75,7 +75,7 @@ const sections = [
     body: (
       <ul className="space-y-2">
         <Li>Do not share login details.</Li>
-        <Li>No illegal activities using our platform.</Li>
+        <Li>No illawful activities using our platform.</Li>
         <Li>Unauthorized copying or reselling is forbidden.</Li>
         <Li>No fraudulent transactions or IP violations.</Li>
       </ul>

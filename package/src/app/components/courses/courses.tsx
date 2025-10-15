@@ -171,12 +171,12 @@ const CourseRoadmap: React.FC = () => {
           <CourseCard
             title="Become Private + Sovereignty101"
             image="/images/projects/projectlist/become.webp"
-            subtitle="Reclaim Your Legal Identity"
+            subtitle="Reclaim Your Lawful Identity"
             description="Learn how to step out of the public and establish your affairs in the private."
             learnings={[
               "Status correction principles",
               "Remove from public jurisdiction",
-              "Essential legal documents",
+              "Essential lawful documents",
               "Estate protection basics",
             ]}
             outcomes={["Sovereignty consulting", "Private education", "Trust services", "Debt discharge"]}

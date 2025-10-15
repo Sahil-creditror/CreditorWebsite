@@ -120,7 +120,7 @@ const GameBanner = () => {
           {[
             {
               title: 'Real Simulation Games',
-              desc: 'Experience learning by playing with engaging, real-world legal scenarios.',
+              desc: 'Experience learning by playing with engaging, real-world lawful scenarios.',
               icon: <FaGamepad size={24} color="#fff" />,
               color: '#3b82f6',
               hoverColor: '#2563eb'
@@ -279,7 +279,7 @@ const GameBanner = () => {
         
         <p style={{ color: '#64748b', fontSize: '1rem', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>
           Play your way to private power with football-themed quizzes and XP boosts. 
-          Score legal knowledge goals and climb the leaderboard!
+          Score lawful knowledge goals and climb the leaderboard!
         </p>        
       </motion.div>
 

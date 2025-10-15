@@ -23,7 +23,7 @@ export default function Page() {
             <Herobanner
                 bannerimage="/images/projects/projectlist/freshman.webp"
                 heading="Become Private"
-                desc="Reclaim Your <span>Legal Identity</span> and Exit the Public System."
+                desc="Reclaim Your <span>Lawful Identity</span> and Exit the Public System."
                 buttonPath="/tncmasterclass" // 👈 you now define the path here
             />
             <Intro2 />

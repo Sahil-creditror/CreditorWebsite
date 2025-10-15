@@ -160,7 +160,7 @@ export default function CourseOverviewSection() {
   };
 
   const features = [
-    { icon: '📜', text: 'Legal Status Correction' },
+    { icon: '📜', text: 'Lawful Status Correction' },
     { icon: '⚖️', text: 'Sovereignty Framework' },
     { icon: '🔐', text: 'Private Jurisdiction' },
     { icon: '🛡️', text: 'Asset Protection' }
@@ -248,7 +248,7 @@ export default function CourseOverviewSection() {
             transition={transition}
             className="leading-relaxed text-base md:text-lg text-slate-700 dark:text-slate-300 mb-8"
           >
-            Learn how the public system treats you as a corporate fiction and how to correct your status using a clear legal framework so you can confidently live in the private.
+            Learn how the public system treats you as a corporate fiction and how to correct your status using a clear lawful framework so you can confidently live in the private.
           </motion.p>
 
           <motion.div

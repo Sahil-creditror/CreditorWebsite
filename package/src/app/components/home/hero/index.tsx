@@ -37,7 +37,7 @@ const HeroSection = () => {
       src: "/video/Banner.mp4",
       poster: "/images/hero/Banner.webp",
       title: "Masterclass Membership",
-      description: "Reclaim Your Legal Identity and Exit the Public System",
+      description: "Reclaim Your Lawful Identity and Exit the Public System",
     },
     // {
     //   src: "/video/hero-3.mp4",

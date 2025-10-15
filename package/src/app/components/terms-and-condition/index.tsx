@@ -316,7 +316,7 @@ export default function TermsAndCondition() {
                 {index === 4 && (
                   <ul className="list-disc ml-6 space-y-2">
                     <li>Do not share your login details with others.</li>
-                    <li>No illegal or unlawful activities using our platform.</li>
+                    <li>No illawful or unlawful activities using our platform.</li>
                     <li>Unauthorized copying, redistribution, or reselling of our content is prohibited.</li>
                     <li>No fraudulent transactions or infringement of intellectual property rights.</li>
                   </ul>

@@ -695,7 +695,7 @@ function Aboutus() {
                   35+
                 </motion.h2>
                 <motion.p className="text-gray-600 dark:text-black mt-2">
-                  Exclusive credit & legal courses
+                  Exclusive credit & lawful courses
                 </motion.p>
               </motion.div>
 

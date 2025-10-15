@@ -244,7 +244,7 @@ export default function EnrollmentCTA() {
           transition={{ delay: 0.5 }}
           className="mt-8 text-black dark:text-slate-300 text-m max-w-xl mx-auto"
         >
-          Join 1,200+ students who've transformed their legal standing. Enrollment closes soon.
+          Join 1,200+ students who've transformed their lawful standing. Enrollment closes soon.
         </motion.p>
       </motion.div>
     </>

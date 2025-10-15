@@ -75,7 +75,7 @@ const sections = [
     body: (
       <ul className="space-y-2">
         <Li>Do not share login details.</Li>
-        <Li>No illegal activities using our platform.</Li>
+        <Li>No illawful activities using our platform.</Li>
         <Li>Unauthorized copying or reselling is forbidden.</Li>
         <Li>No fraudulent transactions or IP violations.</Li>
       </ul>
@@ -184,7 +184,7 @@ export default function CourseTNC() {
               </span>
             </motion.h2>
             <p className="mt-4 text-center text-base md:text-lg text-slate-600 dark:text-slate-300">
-              Reclaim Your Legal Identity and Exit the Public System
+              Reclaim Your Lawful Identity and Exit the Public System
             </p>
             <p className="mt-2 text-center text-sm text-slate-500 dark:text-slate-400">
               By joining our Private Association, you acknowledge and agree to the following terms.

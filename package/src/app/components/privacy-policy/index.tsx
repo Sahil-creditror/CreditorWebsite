@@ -295,7 +295,7 @@ export default function PrivacyPolicy() {
                 {index === 3 && (
                   <ul className="list-disc ml-6 space-y-2">
                     <li><strong>Service Providers:</strong> Payment processors, hosting services, and analytics providers.</li>
-                    <li><strong>Legal Authorities:</strong> When required by law or to protect our rights.</li>
+                    <li><strong>Lawful Authorities:</strong> When required by law or to protect our rights.</li>
                     <li><strong>Business Partners:</strong> If you enroll in courses or services provided in collaboration with third parties.</li>
                   </ul>
                 )}

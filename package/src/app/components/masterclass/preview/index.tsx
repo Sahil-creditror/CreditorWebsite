@@ -82,7 +82,7 @@ export default function HeroSection({
                       <div className="text-xs sm:text-sm font-semibold tracking-wide text-slate-600 dark:text-slate-400 mb-1">Unincorporated Business Trust</div>
                       <div className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-1.5 sm:mb-2 leading-tight">Own nothing, control everything</div>
                       <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-snug">
-                        Create the most powerful private entity available. This trust protects your assets and forms the legal foundation of your private empire.
+                        Create the most powerful private entity available. This trust protects your assets and forms the lawful foundation of your private empire.
                       </p>
                     </div>
                   </div>

@@ -109,7 +109,7 @@ const MasterclassSection = () => {
                 Business Solution
               </h2>
               <p className="text-base sm:text-lg text-white/80 max-w-md">
-                Discover how to legally establish your private business framework and reclaim your financial sovereignty through proven strategies.
+                Discover how to lawfully establish your private business framework and reclaim your financial sovereignty through proven strategies.
               </p>
               <ul className="space-y-3 text-white/80 text-sm sm:text-base">
                 <li className="flex items-center gap-2 sm:gap-3">
@@ -122,7 +122,7 @@ const MasterclassSection = () => {
                   <svg className="w-4 h-4 sm:w-5 sm:h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
-                  Legal entity structuring
+                  Lawful entity structuring
                 </li>
                 <li className="flex items-center gap-2 sm:gap-3">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -161,7 +161,7 @@ const MasterclassSection = () => {
                   : {}
               }
             >
-              Reclaim Your Legal Identity and Exit the Public System
+              Reclaim Your Lawful Identity and Exit the Public System
             </motion.p>
 
             <motion.div

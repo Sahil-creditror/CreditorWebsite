@@ -57,7 +57,7 @@ export default function WhatYouCanDo() {
           },
           {
             title: "Education Business",
-            description: "Launch a private education, coaching, or legal literacy business",
+            description: "Launch a private education, coaching, or lawful literacy business",
             icon: "🎓",
             color: "#7c3aed",
             gradient: "from-purple-500 to-purple-600",
@@ -71,7 +71,7 @@ export default function WhatYouCanDo() {
           },
           {
             title: "Asset Reclamation",
-            description: "Start laying the legal foundation to discharge debt and reclaim assets",
+            description: "Start laying the lawful foundation to discharge debt and reclaim assets",
             icon: "🏦",
             color: "#ea580c",
             gradient: "from-orange-500 to-orange-600",

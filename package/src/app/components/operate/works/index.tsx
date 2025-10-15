@@ -56,7 +56,7 @@ const steps: Step[] = [
     id: 3,
     title: "Operate Private",
     description:
-      "Redeem credits to access a detailed, self-paced curriculum on private operations. You’ll learn the legal and practical frameworks for setting up Unincorporated Business Trusts, forming Private Membership Associations, and conducting lawful commerce. This program is designed for entrepreneurs, real estate professionals, and families focused on asset protection and legacy planning.",
+      "Redeem credits to access a detailed, self-paced curriculum on private operations. You’ll learn the lawful and practical frameworks for setting up Unincorporated Business Trusts, forming Private Membership Associations, and conducting lawful commerce. This program is designed for entrepreneurs, real estate professionals, and families focused on asset protection and legacy planning.",
   },
 ];
 

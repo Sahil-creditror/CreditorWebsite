@@ -50,7 +50,7 @@ const Footer = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-3 w-full gap-8 md:gap-10 xl:gap-12">
                             <div className='flex flex-col gap-3'>
-                                <h4 className='text-white font-medium'>Legal & Policies</h4>
+                                <h4 className='text-white font-medium'>Lawful & Policies</h4>
                                 <ul className='flex flex-col gap-1.5'>
                                     <li>
                                         <a href="/privacy-policy" className='text-lg text-white hover:text-primary'>Privacy Policies</a>

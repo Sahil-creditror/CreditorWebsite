@@ -64,7 +64,7 @@ const DEFAULT_ITEMS: BusinessItem[] = [
     name: "Homeschool PMA",
     whatItDoes: "Offer private or faith-based education",
     income: "$750–$6K/mo",
-    support: ["Curriculum", "Legal agreements"],
+    support: ["Curriculum", "Lawful agreements"],
     icon: <BookOpen className="h-5 w-5" />,
     accent: "from-amber-400 to-orange-500",
   },

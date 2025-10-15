@@ -28,7 +28,7 @@ import {
 const sections = [
   {
     icon: <Scale className="h-6 w-6" />,
-    title: "1. Purpose and Legal Standing",
+    title: "1. Purpose and Lawful Standing",
     body: (
       <>
         <p>
@@ -74,7 +74,7 @@ const sections = [
         <ol className="mt-3 list-decimal list-inside md:list-outside md:pl-6 space-y-1">
           <li>Education</li>
           <li>Financial & Business Matters</li>
-          <li>Legal Issues</li>
+          <li>Lawful Issues</li>
           <li>Health & Wellness</li>
           <li>Personal Development</li>
         </ol>
@@ -123,7 +123,7 @@ const sections = [
       <ul className="space-y-2">
         <Li>Membership is open to any individual who agrees to abide by these principles and is not subject to prior sanction, suspension, or expulsion from the Association.</Li>
         <Li>Membership may be terminated at the discretion of the Association's Trustees or designated representatives if a member's actions are deemed detrimental to the integrity or well-being of the Association.</Li>
-        <Li>Members agree not to pursue legal action against any fellow member unless a clear and present danger exists, as determined by the Association.</Li>
+        <Li>Members agree not to pursue lawful action against any fellow member unless a clear and present danger exists, as determined by the Association.</Li>
         <Li>Membership is non-transferable and may be revoked if a member violates any terms of this agreement.</Li>
       </ul>
     ),
@@ -138,14 +138,14 @@ const sections = [
         </p>
         <ul className="mt-3 space-y-2">
           <Li>All disputes shall be resolved internally through the Association's designated committee or tribunal.</Li>
-          <Li>Members waive their right to pursue external legal action against the Association or any of its members.</Li>
+          <Li>Members waive their right to pursue external lawful action against the Association or any of its members.</Li>
         </ul>
       </>
     ),
   },
   {
     icon: <ShieldCheck className="h-6 w-6" />,
-    title: "8. Voluntary Participation & Legal Standing",
+    title: "8. Voluntary Participation & Lawful Standing",
     body: (
       <ul className="space-y-2">
         <Li>I affirm that I am voluntarily joining the Creditor Academy and that I do not represent any government entity, regulatory body, or enforcement agency.</Li>

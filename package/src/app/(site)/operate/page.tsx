@@ -9,6 +9,7 @@ import Pricing from "@/app/components/shared/plan";
 import Event from "@/app/components/home/event";
 import HowItWorks from "@/app/components/operate/works";
 import FaqSection from "@/app/components/operate/faq";  
+import Cards from "@/app/components/operate/cards";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -27,7 +28,8 @@ export default function Page() {
                 buttonPath="/tncmasterclass"
             />
             <Intro2 />
-            <BecomeIntro /> 
+            <BecomeIntro />
+            <Cards />
             {/* <Pricing /> */}
             <HowItWorks />
             <Appointment />

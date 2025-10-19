@@ -9,6 +9,7 @@ import Script from "next/script";
 import HowItWorks from "@/app/components/operate/works";
 import Event from "@/app/components/home/event";
 import FaqSection from "@/app/components/operate/faq";  
+import Cards from "@/app/components/operate/cards";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -47,6 +48,7 @@ export default function Page() {
                 />
                 <Intro2 />
                 <BecomeIntro />
+                <Cards />
                 {/* <Pricing /> */}
                 <HowItWorks />
                 <Appointment />

@@ -2,6 +2,12 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion, Variants, Transition } from "framer-motion";
 import { gsap } from "gsap";
+import {
+  FileText,
+  Scale,
+  Lock,
+  Shield,
+} from "lucide-react";
 
 export default function CourseOverviewSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -160,10 +166,10 @@ export default function CourseOverviewSection() {
   };
 
   const features = [
-    { icon: '📜', text: 'Lawful Status Correction' },
-    { icon: '⚖️', text: 'Sovereignty Framework' },
-    { icon: '🔐', text: 'Private Jurisdiction' },
-    { icon: '🛡️', text: 'Asset Protection' }
+    { icon: FileText, text: 'Lawful Status Correction' },
+    { icon: Scale, text: 'Sovereignty Framework' },
+    { icon: Lock, text: 'Private Jurisdiction' },
+    { icon: Shield, text: 'Asset Protection' }
   ];
 
   const transition: Transition = {
@@ -259,15 +265,18 @@ export default function CourseOverviewSection() {
             transition={transition}
             className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6"
           >
-            {features.map((item, index) => (
-              <motion.div
-                key={index}
-                className="bg-white/70 dark:bg-slate-800/70 rounded-xl py-4 px-5 flex items-center gap-3 border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-md shadow-sm"
-              >
-                <span className="text-2xl">{item.icon}</span>
-                <span className="text-sm font-medium text-indigo-800 dark:text-indigo-200">{item.text}</span>
-              </motion.div>
-            ))}
+            {features.map((item, index) => {
+              const IconComponent = item.icon;
+              return (
+                <motion.div
+                  key={index}
+                  className="bg-white/70 dark:bg-slate-800/70 rounded-xl py-4 px-5 flex items-center gap-3 border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-md shadow-sm"
+                >
+                  <IconComponent className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                  <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{item.text}</span>
+                </motion.div>
+              );
+            })}
           </motion.div>
 
           <motion.div

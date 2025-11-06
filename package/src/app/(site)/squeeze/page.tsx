@@ -28,42 +28,29 @@ export default function Page() {
                 <h1 className="text-3xl md:text-4xl font-extrabold text-secondary dark:text-white leading-tight">
                   Creditor Academy <span className="text-primary">Private Commerce Masterclass</span>
                 </h1>
-                <p className="mt-4 text-secondary/80 dark:text-white/80 max-w-2xl">
+                <p className="mt-2 text-secondary/80 dark:text-white/80 max-w-2xl">
                   A practical, no-fluff session on restoring credit, operating privately, and protecting your estate. Live demonstrations, downloadable templates, and real member case studies.
                 </p>
 
                 {/* Key badges */}
-                <div className="mt-6 flex flex-wrap gap-3">
+                <div className="mt-4 flex flex-wrap gap-3">
                   <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary ring-1 ring-primary/20">Free orientation</span>
                   <span className="inline-flex items-center gap-2 rounded-full bg-slate-50 px-3 py-1 text-sm font-semibold text-secondary ring-1 ring-black/5 dark:bg-transparent dark:ring-white/10">Weekly — Saturdays</span>
                   <span className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 text-sm font-semibold text-amber-700 ring-1 ring-amber-100">Limited seats</span>
                 </div>
 
                 {/* Image collage */}
-                <div className="mt-6 grid grid-cols-2 gap-3 md:gap-4">
-                    <div className="relative rounded-lg overflow-hidden shadow-sm w-full h-full">
-                        <Image
-                            src="/images/squeeze/squeeze.webp"
-                            alt="Creditor Academy banner"
-                            fill
-                            className="object-cover"
-                            priority
-                        />
-                    <div className="absolute left-3 bottom-3 bg-white/80 dark:bg-neutral-800/70 rounded-md px-3 py-1 text-xs font-medium">
-                        Live demo + Q&A
-                    </div>
+                <div className="mt-2 relative rounded-lg overflow-hidden shadow-sm w-full h-64 md:h-110">
+                <Image
+                    src="/images/squeeze/squeeze.webp"
+                    alt="Creditor Academy banner"
+                    fill
+                    className="object-cover"
+                    priority
+                />
+                <div className="absolute left-3 bottom-3 bg-white/80 dark:bg-neutral-800/70 rounded-md px-3 py-1 text-sm font-medium">
+                    Live demo + Q&A
                 </div>
-
-                  <div className="flex flex-col gap-3">
-                    <div className="relative rounded-lg overflow-hidden shadow-sm h-20 md:h-28">
-                      <Image src="/images/courses/banner-tnc.webp" alt="member learning" width={800} height={600} unoptimized className="w-full h-full object-cover" />
-                      <div className="absolute right-3 top-3 bg-white/80 text-black text-xs font-semibold px-2 py-1 rounded">Member wins</div>
-                    </div>
-                    <div className="relative rounded-lg overflow-hidden shadow-sm h-20 md:h-28">
-                      <Image src="/images/operate/protect.webp" alt="estate planning" width={800} height={600} unoptimized className="w-full h-full object-cover" />
-                      <div className="absolute right-3 top-3 bg-white/80 text-black text-xs font-semibold px-2 py-1 rounded">Estate setups</div>
-                    </div>
-                  </div>
                 </div>
 
                 {/* Social proof */}
@@ -85,27 +72,78 @@ export default function Page() {
                     </div>
                 </div>
 
-                {/* Feature list */}
-                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {[
-                    { title: 'Status correction principles', desc: 'Practical steps used by members to correct status and reclaim control.' },
-                    { title: 'Private membership foundations', desc: 'How PMAs and trust tools are used to structure private commerce.' },
-                    { title: 'Estate protection basics', desc: 'Simple trust and document patterns that protect family legacy.' },
-                    { title: 'Private business credit', desc: 'Credit approaches used inside private entities to scale safely.' },
-                  ].map((f) => (
-                    <div key={f.title} className="flex items-start gap-3 bg-white dark:bg-slate-800/60 rounded-lg p-3 shadow-sm ring-1 ring-black/3 dark:ring-white/6">
-                      <div className="flex-none w-10 h-10 rounded-full bg-primary/5 grid place-items-center text-primary font-semibold">✓</div>
-                      <div>
-                        <div className="text-sm font-semibold text-secondary dark:text-white">{f.title}</div>
-                        <div className="text-xs text-secondary/70 dark:text-white/60 mt-1">{f.desc}</div>
-                      </div>
+                {/* Quick preview checklist (moved above The Freedom Formula) */}
+                <div className="mt-8 rounded-xl bg-white/60 dark:bg-secondary/60 p-4 shadow-sm ring-1 ring-black/5">
+                    <div className="font-semibold text-secondary dark:text-white">Quick preview — what we cover</div>
+                    <ul className="mt-3 space-y-2 text-secondary/80 dark:text-white/80">
+                        {[
+                        "Status & jurisdiction basics — what to know",
+                        "Private documents & trust essentials",
+                        "Simple credit repair frameworks",
+                        ].map((text, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                            <Image
+                            src="/images/Icon/right-check.svg"
+                            alt="Check"
+                            width={20}
+                            height={20}
+                            className="mt-0.5"
+                            />
+                            <span>{text}</span>
+                        </li>
+                        ))}
+                    </ul>
                     </div>
-                  ))}
+
+                    {/* The Freedom Formula Section */}
+                    <div className="my-8">
+                    <h3 className="text-center text-3xl md:text-4xl font-semibold text-blue-600 dark:text-blue-400 mb-6 pt-10">
+                        The Freedom Formula
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {[ 
+                        {
+                            title: 'Become a Member',
+                            desc: 'Join the movement. Step inside Creditor Academy and unlock access to a world of private education and financial freedom.',
+                        },
+                        {
+                            title: 'Charge Your Card',
+                            desc: 'Charge your "Creditor Card" and step into the private economy. Each swipe unlocks access, wealth, and opportunity reserved for members only.',
+                        },
+                        {
+                            title: 'Unlock Courses & Connect',
+                            desc: 'Instantly access premium courses, join daily live masterclasses, and a private network of like-minded achievers. Learn, grow, and collaborate.',
+                        },
+                        {
+                            title: 'Become Private',
+                            desc: 'Take control of your sovereignty. Apply what you learn to live free, operate privately, and build wealth on your own terms.',
+                        },
+                        ].map((step, index) => (
+                        <div
+                            key={index}
+                            className="flex items-start gap-3 bg-white dark:bg-slate-800/60 rounded-lg p-4 shadow-sm ring-1 ring-black/5 dark:ring-white/10 transition-transform duration-300 hover:scale-[1.02]"
+                        >
+                            <div className="flex-none w-10 h-10 rounded-full bg-primary/10 grid place-items-center text-primary font-semibold">
+                            {index + 1}
+                            </div>
+                            <div>
+                            <div className="text-base font-semibold text-secondary dark:text-white">
+                                {step.title}
+                            </div>
+                            <div className="text-sm text-secondary/70 dark:text-white/70 mt-1">
+                                {step.desc}
+                            </div>
+                            </div>
+                        </div>
+                        ))}
+                    </div>
                 </div>
+
+
               </div>
             </div>
 
-            {/* What we teach */}
+            {/* What we teach
             <div className="rounded-xl bg-white/60 dark:bg-secondary/60 p-4 shadow-sm ring-1 ring-black/5">
             <div className="font-semibold text-2xl md:text-2xl text-secondary dark:text-white text-center">
                 What we teach at Creditor Academy
@@ -121,7 +159,7 @@ export default function Page() {
                   </span>
                 ))}
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* RIGHT — Signup form */}
@@ -157,21 +195,36 @@ export default function Page() {
                 </div>
               </div>
 
-              {/* Quick preview checklist */}
-              <div className="mt-4 rounded-xl bg-white/60 dark:bg-secondary/60 p-4 shadow-sm ring-1 ring-black/5">
-                <div className="font-semibold text-secondary dark:text-white">Quick preview — what we cover</div>
-                <ul className="mt-3 space-y-2 text-secondary/80 dark:text-white/80">
-                  {[
-                    "Status & jurisdiction basics — what to know",
-                    "Private documents & trust essentials",
-                    "Simple credit repair frameworks",
-                  ].map((text, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <Image src="/images/Icon/right-check.svg" alt="Check" width={20} height={20} className="mt-0.5" />
-                      <span>{text}</span>
-                    </li>
-                  ))}
-                </ul>
+              {/* Quick preview — key lessons (vertical layout) */}
+              <div className="mt-4 rounded-xl bg-white/60 dark:bg-secondary/60 p-6 shadow-sm ring-1 ring-black/5">
+                <div className="font-semibold text-secondary dark:text-white text-center text-xl mb-6">
+                    Quick Preview — What You’ll Learn
+                </div>
+
+                <div className="flex flex-col gap-4">
+                    {[
+                    {
+                        title: "Become Private",
+                        desc: "Learn how the public system treats you as a corporate fiction and how to correct your status using a clear lawful framework so you can confidently live in the private.",
+                    },
+                    {
+                        title: "Operate Private",
+                        desc: "Learn how to live, build, and do business in the private sector. This course shows you how to use business trusts and private associations to protect assets, manage commerce, plan legacies, and operate outside public jurisdiction.",
+                    },
+                    {
+                        title: "Financial Freedom",
+                        desc: "Learn to build elite business credit with Unincorporated Business Trusts, repair your personal credit, and establish Private Merchant Processing — no banks, no KYC, no risk of shutdowns.",
+                    },
+                    ].map((item, idx) => (
+                    <div
+                        key={idx}
+                        className="flex flex-col gap-2 bg-white dark:bg-slate-800/60 rounded-lg p-5 shadow-sm ring-1 ring-black/5 dark:ring-white/10 transition-transform duration-300 hover:scale-[1.02]"
+                    >
+                        <div className="text-lg font-semibold text-primary">{item.title}</div>
+                        <div className="text-sm text-secondary/80 dark:text-white/80">{item.desc}</div>
+                    </div>
+                    ))}
+                </div>
               </div>
             </div>
           </div>

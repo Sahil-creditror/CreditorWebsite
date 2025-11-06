@@ -41,41 +41,48 @@ export default function Page() {
 
                 {/* Image collage */}
                 <div className="mt-6 grid grid-cols-2 gap-3 md:gap-4">
-                  <div className="relative rounded-lg overflow-hidden shadow-sm">
-                    <Image
-                      src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1600&q=80"
-                      alt="Creditor Academy banner"
-                      width={1200}
-                      height={720}
-                      unoptimized
-                      className="w-full h-44 object-cover md:h-56"
-                      priority
-                    />
-                    <div className="absolute left-3 bottom-3 bg-white/80 dark:bg-neutral-800/70 rounded-md px-3 py-1 text-xs font-medium">Live demo + Q&A</div>
-                  </div>
+                    <div className="relative rounded-lg overflow-hidden shadow-sm w-full h-full">
+                        <Image
+                            src="/images/squeeze/squeeze.webp"
+                            alt="Creditor Academy banner"
+                            fill
+                            className="object-cover"
+                            priority
+                        />
+                    <div className="absolute left-3 bottom-3 bg-white/80 dark:bg-neutral-800/70 rounded-md px-3 py-1 text-xs font-medium">
+                        Live demo + Q&A
+                    </div>
+                </div>
 
                   <div className="flex flex-col gap-3">
                     <div className="relative rounded-lg overflow-hidden shadow-sm h-20 md:h-28">
-                      <Image src="https://images.unsplash.com/photo-1551836022-4c4c79ecde51?auto=format&fit=crop&w=800&q=80" alt="member learning" width={800} height={600} unoptimized className="w-full h-full object-cover" />
-                      <div className="absolute right-3 top-3 bg-primary/10 text-primary text-xs font-semibold px-2 py-1 rounded">Member wins</div>
+                      <Image src="/images/courses/banner-tnc.webp" alt="member learning" width={800} height={600} unoptimized className="w-full h-full object-cover" />
+                      <div className="absolute right-3 top-3 bg-white/80 text-black text-xs font-semibold px-2 py-1 rounded">Member wins</div>
                     </div>
                     <div className="relative rounded-lg overflow-hidden shadow-sm h-20 md:h-28">
-                      <Image src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=800&q=80" alt="estate planning" width={800} height={600} unoptimized className="w-full h-full object-cover" />
-                      <div className="absolute left-3 top-3 bg-white/80 dark:bg-neutral-800/70 rounded px-2 py-1 text-xs">Estate setups</div>
+                      <Image src="/images/operate/protect.webp" alt="estate planning" width={800} height={600} unoptimized className="w-full h-full object-cover" />
+                      <div className="absolute right-3 top-3 bg-white/80 text-black text-xs font-semibold px-2 py-1 rounded">Estate setups</div>
                     </div>
                   </div>
                 </div>
 
                 {/* Social proof */}
-                <div className="mt-5 flex items-center gap-4">
-                  <div className="flex -space-x-3 items-center">
-                    {["avatar_1.webp", "avatar_2.webp", "avatar_3.webp", "avatar_4.webp"].map((a, i) => (
-                      <Image key={i} src={`/images/avatar/${a}`} alt={`Member ${i + 1}`} width={44} height={44} className="h-11 w-11 rounded-full ring-2 ring-white dark:ring-secondary object-cover" />
-                    ))}
-                  </div>
-                  <div className="text-sm text-secondary/70 dark:text-white/70">
-                    Trusted by <span className="font-semibold text-secondary dark:text-white">2,000+</span> members learning private commerce
-                  </div>
+                <div className="mt-5 flex flex-col sm:flex-row sm:items-center sm:gap-4">
+                    <div className="flex flex-wrap -space-x-3 items-center">
+                        {["avatar_1.webp", "avatar_2.webp", "avatar_3.webp", "avatar_4.webp"].map((a, i) => (
+                        <Image
+                            key={i}
+                            src={`/images/avatar/${a}`}
+                            alt={`Member ${i + 1}`}
+                            width={44}
+                            height={44}
+                            className="h-11 w-11 rounded-full ring-2 ring-white dark:ring-secondary object-cover"
+                        />
+                        ))}
+                    </div>
+                    <div className="mt-2 sm:mt-0 text-sm text-secondary/70 dark:text-white/70">
+                        Trusted by <span className="font-semibold text-secondary dark:text-white">2,000+</span> members learning private commerce
+                    </div>
                 </div>
 
                 {/* Feature list */}
@@ -100,7 +107,9 @@ export default function Page() {
 
             {/* What we teach */}
             <div className="rounded-xl bg-white/60 dark:bg-secondary/60 p-4 shadow-sm ring-1 ring-black/5">
-              <div className="font-semibold text-secondary dark:text-white text-center">What we teach at Creditor Academy</div>
+            <div className="font-semibold text-2xl md:text-2xl text-secondary dark:text-white text-center">
+                What we teach at Creditor Academy
+            </div>
               <div className="mt-3 flex flex-wrap justify-center gap-2">
                 {[
                   "Status correction principles", "Remove from public jurisdiction", "Essential lawful documents", "Estate protection basics",
@@ -126,9 +135,9 @@ export default function Page() {
                     <div className="text-sm text-secondary/70 mt-1">Live walkthrough, Q&amp;A, templates</div>
                   </div>
                   <div className="hidden sm:block">
-                    <div className="w-16 h-16 relative rounded-lg overflow-hidden grid place-items-center bg-white/60 dark:bg-neutral-800/60">
+                    {/* <div className="w-16 h-16 relative rounded-lg overflow-hidden grid place-items-center bg-white/60 dark:bg-neutral-800/60">
                       <Clock className="w-12 h-12 text-blue-500" aria-hidden="true" />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 

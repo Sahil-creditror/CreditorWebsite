@@ -13,11 +13,13 @@ export default function Page() {
             <section className="relative bg-lightgray py-10 md:py-25">
                 <div className="container">
                     <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.1fr_.9fr] md:items-center">
-                        <div className="order-2 md:order-1">
+                        <div className="order-1 md:order-1">
                             {/* <div className="mb-3">
                                 <Image src="/images/event/event11.webp" alt="Creditor Academy Event" width={200} height={200} className="w-full h-auto rounded-xl" />
                             </div> */}
-                            <h2 className="text-secondary dark:text-white">Creditor Academy <span className="text-primary">Private Commerce Masterclass</span></h2>
+                            <h2 className="pt-10 md:pt-0 text-secondary dark:text-white">
+                                Creditor Academy <span className="text-primary">Private Commerce Masterclass</span>
+                            </h2>
                             <p className="mt-4 max-w-2xl text-secondary/80 dark:text-white/80">
                                 Reserve your spot for our no‑fluff session on how to restore credit, operate private, and protect your estate the Creditor Academy way.
                             </p>
@@ -35,7 +37,7 @@ export default function Page() {
                                 <p className="mt-3 text-sm font-semibold text-primary">Limited seats available — book now to reserve your spot.</p>
                             </div>
                         </div>
-                        <div className="order-1 md:order-2">
+                        <div className="order-2 md:order-2">
                             <div className="mx-auto max-w-md">
                                 <SqueezeEmbed />
                             </div>

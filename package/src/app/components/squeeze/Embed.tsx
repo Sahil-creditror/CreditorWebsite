@@ -26,11 +26,11 @@ export default function SqueezeEmbed() {
     }, [isMounted]);
 
     return (
-        <div className="w-full" style={{ minHeight: 484 }}>
+        <div className="w-full min-h-[800px] md:min-h-[700px]">
             {isMounted && (
                 <iframe
                     src="https://api.wonderengine.ai/widget/form/Xc230hBV5AURVzetXQJX"
-                    style={{ width: "100%", height: loaded ? 484 : 484, border: "none", borderRadius: 12 }}
+                    className="w-full h-[800px] md:h-[700px] border-none rounded-xl overflow-hidden"
                     id="inline-Xc230hBV5AURVzetXQJX"
                     data-layout="{'id':'INLINE'}"
                     data-trigger-type="alwaysShow"
@@ -40,10 +40,11 @@ export default function SqueezeEmbed() {
                     data-deactivation-type="neverDeactivate"
                     data-deactivation-value=""
                     data-form-name="Squeeze Form"
-                    data-height="484"
+                    data-height="700"
                     data-layout-iframe-id="inline-Xc230hBV5AURVzetXQJX"
                     data-form-id="Xc230hBV5AURVzetXQJX"
                     title="Squeeze Form"
+                    scrolling="no"
                     onLoad={() => setLoaded(true)}
                 />
             )}

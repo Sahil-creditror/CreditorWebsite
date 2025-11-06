@@ -217,29 +217,16 @@ const HeroSection = () => {
             animate="visible"
             variants={contentVariants}
           >
-            {/* Icon + Subtext */}
-            <div className="flex items-start gap-3 md:gap-6">
-              <motion.div
-                className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0"
-                variants={leafVariants}
-                animate="spin"
-              >
-                <Image
-                  src={"/images/Icon/primary-leaf.svg"}
-                  alt="icon"
-                  width={48}
-                  height={48}
-                  priority
-                />
-              </motion.div>
-              <p className="text-white/80 max-w-md text-base sm:text-lg leading-relaxed">
-                We empower individuals with{" "}
-                <span className="text-primary font-semibold">
-                  credit and financial mastery
-                </span>{" "}
-                to unlock lasting freedom and confidence.
-              </p>
-            </div>
+          {/* Logo only (replace previous subtext) */}
+          <div className="flex items-start">
+            <Image
+              src="/images/logo/logo_roadmap.png"
+              alt="Creditor Logo"
+              width={120}
+              height={120}
+              priority
+            />
+          </div>
 
             {/* Title */}
             <h1 className="text-3xl sm:text-5xl md:text-7xl xl:text-9xl font-extrabold tracking-tight leading-tight">

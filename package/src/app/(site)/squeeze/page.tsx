@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Clock } from "lucide-react";
 import SqueezeEmbed from "@/app/components/squeeze/Embed";
+import Script from "next/script";
 
 export const metadata = {
   title: "Creditor Academy — Free Guide",
@@ -9,6 +10,31 @@ export const metadata = {
 
 export default function Page() {
   return (
+    <>
+    <Script
+      id="wonderengine-tracker"
+      strategy="afterInteractive"
+      dangerouslySetInnerHTML={{
+        __html: `
+          (function() {
+            var t = document.createElement("script");
+            t.type = "text/javascript";
+            t.async = true;
+            t.src = 'https://api.wonderengine.ai/js/am.js';
+            t.onload = t.onreadystatechange = function() {
+              var s = this.readyState;
+              if (!s || s === "complete" || s === "loaded") {
+                try {
+                  affiliateManager.init('psaD1vtsVB3b1PyW2P6i', 'https://backend.leadconnectorhq.com', '.www.creditoracademy.com');
+                } catch (e) {}
+              }
+            };
+            var e = document.getElementsByTagName("script")[0];
+            e.parentNode.insertBefore(t, e);
+          })();
+        `,
+      }}
+    />
     <main className="relative min-h-screen flex flex-col bg-gradient-to-b from-blue-900 via-blue-300 to-blue-50 dark:from-neutral-950 dark:via-neutral-950 dark:to-black">
       {/* Background overlays */}
       <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(1200px_600px_at_20%_-10%,rgba(59,130,246,0.10),transparent),radial-gradient(900px_500px_at_80%_110%,rgba(16,185,129,0.10),transparent)]" />
@@ -142,24 +168,6 @@ export default function Page() {
 
               </div>
             </div>
-
-            {/* What we teach
-            <div className="rounded-xl bg-white/60 dark:bg-secondary/60 p-4 shadow-sm ring-1 ring-black/5">
-            <div className="font-semibold text-2xl md:text-2xl text-secondary dark:text-white text-center">
-                What we teach at Creditor Academy
-            </div>
-              <div className="mt-3 flex flex-wrap justify-center gap-2">
-                {[
-                  "Status correction principles", "Remove from public jurisdiction", "Essential lawful documents", "Estate protection basics",
-                  "Unincorporated Business Trusts", "Private Membership Associations", "Real estate in trusts", "Family legacy planning",
-                  "Private Business Credit", "Personal Credit Repair", "Private Merchant Accounts", "Credit card stacking strategies",
-                ].map((item) => (
-                  <span key={item} className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary/10 to-primary/5 px-3 py-1.5 text-xs font-semibold text-primary ring-1 ring-primary/20 dark:from-primary/20 dark:to-primary/10 dark:text-white">
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div> */}
           </div>
 
           {/* RIGHT — Signup form */}
@@ -232,5 +240,6 @@ export default function Page() {
         </div>
       </section>
     </main>
+    </>
   );
 }

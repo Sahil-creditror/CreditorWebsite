@@ -93,91 +93,53 @@ export default function Contact(props: ContactProps) {
 
             {/* Right Column - Form */}
             <div className="w-full">
-              <div
-                className="relative bg-gradient-to-br from-white/90 via-white/80 to-white/70 dark:from-gray-900/90 dark:via-gray-800/80 dark:to-gray-900/70 backdrop-blur-2xl rounded-3xl p-8 md:p-10 shadow-2xl border border-white/20 dark:border-white/10 overflow-hidden"
-              >
-                {/* Enhanced decorative elements */}
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
-                <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-gradient-to-br from-green-500/20 to-blue-500/20 rounded-full blur-3xl"></div>
-
-                {/* WonderEngine Form - Direct Integration */}
-                <div className="relative z-10 mb-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-2 h-2 bg-gradient-to-r from-primary to-blue-600 rounded-full"></div>
-                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                      Powered by WonderEngine
-                    </span>
-                  </div>
-
-                  {/* Form loading state */}
-                  {!isFormLoaded && (
-                    <div className="w-full h-96 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-xl animate-pulse flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
-                        <p className="text-gray-500 dark:text-gray-400">
-                          Loading form...
-                        </p>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* WonderEngine Form (client-only) */}
-                  {isMounted && (
-                    <iframe
-                      src="https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls"
-                      style={{
-                        width: "100%",
-                        height: "380px",
-                        border: "none",
-                        borderRadius: "12px",
-                        display: isFormLoaded ? "block" : "none",
-                      }}
-                      id="inline-o69tKOXv3NV8GnS4aGls"
-                      data-layout="{'id':'INLINE'}"
-                      data-trigger-type="alwaysShow"
-                      data-trigger-value=""
-                      data-activation-type="alwaysActivated"
-                      data-activation-value=""
-                      data-deactivation-type="neverDeactivate"
-                      data-deactivation-value=""
-                      data-form-name="Contact us form"
-                      data-height="402"
-                      data-layout-iframe-id="inline-o69tKOXv3NV8GnS4aGls"
-                      data-form-id="o69tKOXv3NV8GnS4aGls"
-                      title="Contact us form"
-                      onLoad={() => setIsFormLoaded(true)}
-                    />
-                  )}
-                </div>
-
-                {/* Form Footer */}
-                <div className="relative z-10 text-center">
-                  <div className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                      />
-                    </svg>
-                    <span>Your information is secure and encrypted</span>
+              {/* Form loading state */}
+              {!isFormLoaded && (
+                <div className="w-full h-96 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-xl animate-pulse flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      Loading form...
+                    </p>
                   </div>
                 </div>
+              )}
 
-                {/* WonderEngine Script (client-only) */}
-                {isMounted && (
-                  <Script
-                    src="https://api.wonderengine.ai/js/form_embed.js"
-                    strategy="afterInteractive"
-                  />
-                )}
-              </div>
+              {/* WonderEngine Form (client-only) */}
+              {isMounted && (
+                <iframe
+                  src="https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls"
+                  style={{
+                    width: "100%",
+                    height: "380px",
+                    border: "none",
+                    borderRadius: "12px",
+                    display: isFormLoaded ? "block" : "none",
+                  }}
+                  id="inline-o69tKOXv3NV8GnS4aGls"
+                  data-layout="{'id':'INLINE'}"
+                  data-trigger-type="alwaysShow"
+                  data-trigger-value=""
+                  data-activation-type="alwaysActivated"
+                  data-activation-value=""
+                  data-deactivation-type="neverDeactivate"
+                  data-deactivation-value=""
+                  data-form-name="Contact us form"
+                  data-height="402"
+                  data-layout-iframe-id="inline-o69tKOXv3NV8GnS4aGls"
+                  data-form-id="o69tKOXv3NV8GnS4aGls"
+                  title="Contact us form"
+                  onLoad={() => setIsFormLoaded(true)}
+                />
+              )}
+
+              {/* WonderEngine Script (client-only) */}
+              {isMounted && (
+                <Script
+                  src="https://api.wonderengine.ai/js/form_embed.js"
+                  strategy="afterInteractive"
+                />
+              )}
             </div>
           </div>
         </div>

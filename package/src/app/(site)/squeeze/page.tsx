@@ -61,7 +61,9 @@ export default function Page() {
                 {/* Key badges */}
                 <div className="mt-4 flex flex-wrap gap-3">
                   <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary ring-1 ring-primary/20">Free orientation</span>
-                  <span className="inline-flex items-center gap-2 rounded-full bg-slate-50 px-3 py-1 text-sm font-semibold text-secondary ring-1 ring-black/5 dark:bg-transparent dark:ring-white/10">Weekly — Saturdays</span>
+                  <span className="inline-flex items-center gap-2 rounded-full bg-slate-50 px-3 py-1 text-sm font-semibold text-secondary ring-1 ring-black/5 dark:bg-neutral-900 dark:text-blue-300 dark:ring-blue-400/40">
+                    Weekly — Saturdays
+                  </span>
                   <span className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 text-sm font-semibold text-amber-700 ring-1 ring-amber-100">Limited seats</span>
                 </div>
 

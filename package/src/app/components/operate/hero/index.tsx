@@ -36,9 +36,9 @@ const Herobanner = ({
           {/* Logo (replaces previous description area) */}
           <div className="flex items-start">
             <Image
-              src="/images/logo/logo_roadmap.png"
+              src="/images/logo/creditorlogo.webp"
               alt="Creditor Logo"
-              width={120}
+              width={400}
               height={120}
               priority
             />

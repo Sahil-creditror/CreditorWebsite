@@ -70,7 +70,17 @@ const HerobannerWithTag: React.FC<HeroBannerWithTagProps> = ({
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-left">
         <div className="flex flex-col gap-4 sm:gap-6 pb-10 sm:pb-16 xl:pb-20">
-          {/* Description */}
+          {/* Logo (replaces previous description area) */}
+          <div className="flex items-start">
+            <Image
+              src="/images/logo/creditorlogo.webp"
+              alt="Creditor Logo"
+              width={400}
+              height={120}
+              priority
+            />
+          </div>
+          {/* Description
           <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-6">
             <div className="w-9 h-9 sm:w-11 sm:h-11 flex-shrink-0">
               <Image
@@ -86,7 +96,7 @@ const HerobannerWithTag: React.FC<HeroBannerWithTagProps> = ({
               <span className="text-primary">{splitDesc[1]}</span>
               {splitDesc[2]}
             </p>
-          </div>
+          </div> */}
 
           {/* Heading + Button Row */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">

@@ -38,7 +38,7 @@ const Herobanner = ({
             <Image
               src="/images/logo/creditorlogo.webp"
               alt="Creditor Logo"
-              width={450}
+              width={600}
               height={120}
               priority
             />

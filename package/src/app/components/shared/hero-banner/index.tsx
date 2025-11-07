@@ -50,7 +50,7 @@ const Herobanner: React.FC<HeroBannerProps> = ({
             <Image
               src="/images/logo/creditorlogo.webp"
               alt="Creditor Logo"
-              width={400}
+              width={450}
               height={120}
               priority
             />

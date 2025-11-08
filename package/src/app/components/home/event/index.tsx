@@ -452,7 +452,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
             <div className="stripe" aria-hidden="true"></div>
 
             <div className="speaker-photo-wrap">
-              <img src='/images/event/event11.webp' alt="Paul Michael Rowland" className="speaker-photo" />
+              <img src='/images/event/event12.webp' alt="Paul Michael Rowland" className="speaker-photo" />
             </div>
 
             {/* <div className="speaker-overlay" aria-hidden="true">
@@ -604,7 +604,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
 
         /* Modal */
         .modal-overlay{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg, rgba(0,0,0,0.56), rgba(0,0,0,0.72)); z-index:9999; padding:24px; }
-        .modal{ width:100%; max-width:980px; border-radius:12px; background:linear-gradient(180deg, rgba(10,18,28,0.96), rgba(6,14,22,0.96)); box-shadow:0 30px 80px rgba(0,0,0,0.6); position:relative; padding:18px; outline:none; }
+        .modal{ width:100%; max-width:700px; border-radius:12px; background:linear-gradient(180deg, rgba(10,18,28,0.96), rgba(6,14,22,0.96)); box-shadow:0 30px 80px rgba(0,0,0,0.6); position:relative; padding:18px; outline:none; }
         .modal-close{ position:absolute; right:12px; top:10px; background:red; color:var(--muted); border:0; font-size:28px; line-height:1; padding:6px 10px; border-radius:8px; cursor:pointer; }
         .modal-close:focus{outline:2px solid rgba(255, 0, 0, 0.12)}
         .iframe-wrapper{ min-height:320px; display:flex; flex-direction:column; gap:12px; }

@@ -5,7 +5,7 @@ import Get from "@/app/components/masterclass/getwithmaster";
 import About from "@/app/components/masterclass/about";
 import Appoint from "@/app/components/masterclass/appointment";
 import CTA from "@/app/components/shared/cta";
-import Event from "@/app/components/home/event";
+import Event from "@/app/components/Event";
 import Join from "@/app/components/masterclass/Join";
 import Preview from "@/app/components/masterclass/preview";
 import Pricing from "@/app/components/shared/plan";

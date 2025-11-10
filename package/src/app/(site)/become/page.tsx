@@ -5,7 +5,7 @@ import Content from "@/app/components/become/content";
 import Appoint from "@/app/components/become/appointment";
 import CTA from "@/app/components/shared/cta";
 //import Event from "@/app/components/Event";
-import Event from "@/app/components/home/event";
+import Event from "@/app/components/Event";
 import Pricing from "@/app/components/shared/plan";
 import HowItWorks from "@/app/components/become/works";
 import FaqSection from "@/app/components/become/faq";

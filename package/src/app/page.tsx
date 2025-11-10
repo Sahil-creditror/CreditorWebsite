@@ -16,7 +16,7 @@ import Game from "./components/home/Game";
 import Commitment from "./components/home/Commitment";
 import Offer from "./components/home/Offer";
 // import { AnimatedTestimonialsDemo } from "./components/home/testimonial/AnimatedDemo";
-import Event from "./components/home/event";
+import Event from "./components/Event";
 import About from "./components/home/about";
 
 export const metadata: Metadata = {

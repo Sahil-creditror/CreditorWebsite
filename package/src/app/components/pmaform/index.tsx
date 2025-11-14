@@ -239,7 +239,7 @@ const initialOwner = (): Owner => ({
 	priorBankruptcy: "",
 });
 
-const initialForm: FormState = {
+const createInitialForm = (): FormState => ({
 	lawful: {
 		lawfulName: "",
 		entityType: "",
@@ -304,7 +304,35 @@ const initialForm: FormState = {
 	fulfillment: { whoProvides: "", whereStored: "", fulfillmentHouseName: "", shippingService: "", deliveryTimeFrame: "" },
 	bank: { accountType: "", bankName: "", nameOnAccount: "", routingNumber: "", accountNumber: "" },
 	documents: {},
-};
+});
+
+function mergeFormState(saved?: Partial<FormState>): FormState {
+	const base = createInitialForm();
+	if (!saved) return base;
+
+	return {
+		...base,
+		...saved,
+		lawful: { ...base.lawful, ...(saved.lawful ?? {}) },
+		mailing: { ...base.mailing, ...(saved.mailing ?? {}) },
+		contact: { ...base.contact, ...(saved.contact ?? {}) },
+		owners: (saved.owners && saved.owners.length ? saved.owners : base.owners).map((owner) => ({
+			...initialOwner(),
+			...(owner ?? {}),
+		})),
+		dba: { ...base.dba, ...(saved.dba ?? {}) },
+		sales: {
+			...base.sales,
+			...(saved.sales ?? {}),
+			initiationPercent: { ...base.sales.initiationPercent, ...(saved.sales?.initiationPercent ?? {}) },
+			marketPercent: { ...base.sales.marketPercent, ...(saved.sales?.marketPercent ?? {}) },
+		},
+		customerService: { ...base.customerService, ...(saved.customerService ?? {}) },
+		fulfillment: { ...base.fulfillment, ...(saved.fulfillment ?? {}) },
+		bank: { ...base.bank, ...(saved.bank ?? {}) },
+		documents: { ...base.documents, ...(saved.documents ?? {}) },
+	};
+}
 
 function Section({ title, children, defaultOpen = true }: { title: string; children: React.ReactNode; defaultOpen?: boolean }) {
 	const [open, setOpen] = useState(defaultOpen);
@@ -628,7 +656,7 @@ function FileInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
 }
 
 export default function PMAForm() {
-	const [form, setForm] = useState<FormState>(initialForm);
+	const [form, setForm] = useState<FormState>(() => createInitialForm());
 	const [saving, setSaving] = useState(false);
 	const [submitting, setSubmitting] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -695,7 +723,7 @@ export default function PMAForm() {
 			// 1) Contact number max 10 digits (and required elsewhere)
 			const contactDigits = digitsOnly(form.contact.phone);
 			if (contactDigits.length !== 10) {
-				errors.push("Contact Phone must be exactly 10 digits.");
+				errors.push("Phone must be exactly 10 digits.");
 			}
 
 			// 2) Issue date must be prior to Exp date per owner
@@ -770,18 +798,27 @@ export default function PMAForm() {
 		const saved = localStorage.getItem("pma_form_progress");
 		if (saved) {
 			try {
-				const parsed = JSON.parse(saved) as FormState;
-				setForm(parsed);
-			} catch {}
+				const parsed = JSON.parse(saved) as Partial<FormState>;
+				setForm(mergeFormState(parsed));
+			} catch {
+				setForm(createInitialForm());
+			}
 		}
 	}, []);
+
+	React.useEffect(() => {
+		setErrors((prev) => ({
+			...prev,
+			ownerErrors: form.owners.map((_, idx) => prev.ownerErrors[idx] || {}),
+		}));
+	}, [form.owners.length]);
 
 	return (
 		<form onSubmit={onSubmit} className="max-w-5xl mx-auto px-4 md:px-6 py-8 mt-20">
 			{/* 1. Lawful Overview */}
 			<Section title="1. Lawful Overview">
 				<div>
-					<Label required>Lawful Name</Label>
+					<Label required>Name</Label>
 					<TextInput placeholder="Enter lawful name" value={form.lawful.lawfulName} onChange={(e) => update("lawful", { lawfulName: e.target.value })} required />
 				</div>
 				<div>
@@ -797,27 +834,27 @@ export default function PMAForm() {
 					<PasswordInput placeholder="Enter Federal Tax ID/EIN" value={form.lawful.federalTaxId} onChange={(e) => update("lawful", { federalTaxId: e.target.value })} required />
 				</div>
 				<div>
-					<Label required>Lawful Address</Label>
+					<Label required>Address</Label>
 					<TextInput placeholder="Street address" value={form.lawful.lawfulAddress} onChange={(e) => update("lawful", { lawfulAddress: e.target.value })} required />
 				</div>
 				<div>
-					<Label>Lawful Suite</Label>
+					<Label>Suite</Label>
 					<TextInput placeholder="Apt, suite, etc." value={form.lawful.lawfulSuite} onChange={(e) => update("lawful", { lawfulSuite: e.target.value })} />
 				</div>
 				<div>
-					<Label required>Lawful City</Label>
+					<Label required>City</Label>
 					<TextInput placeholder="City" value={form.lawful.lawfulCity} onChange={(e) => update("lawful", { lawfulCity: e.target.value })} required />
 				</div>
 				<div>
-					<Label required>Lawful State</Label>
+					<Label required>State</Label>
 					<SelectInput value={form.lawful.lawfulState} onChange={(e) => update("lawful", { lawfulState: e.target.value })} options={states} required />
 				</div>
 				<div>
-					<Label required>Lawful ZIP</Label>
+					<Label required>ZIP</Label>
 					<TextInput placeholder="ZIP code" value={form.lawful.lawfulZip} onChange={(e) => update("lawful", { lawfulZip: e.target.value })} required inputMode="numeric" maxLength={10} />
 				</div>
 				<div>
-					<Label required>Lawful Phone</Label>
+					<Label required>Phone</Label>
 					<TextInput placeholder="##########" inputMode="numeric" value={form.lawful.lawfulPhone} onChange={(e) => {
 						const digits = (e.target.value || "").replace(/\D+/g, "").slice(0, 10);
 						update("lawful", { lawfulPhone: digits });
@@ -831,31 +868,31 @@ export default function PMAForm() {
 					) : null}
 				</div>
 				<div>
-					<Label required>Lawful Email</Label>
+					<Label required>Email</Label>
 					<TextInput type="email" placeholder="name@example.com" value={form.lawful.lawfulEmail} onChange={(e) => update("lawful", { lawfulEmail: e.target.value })} required />
 				</div>
 			</Section>
 
-			{/* 2. Mailing Address */}
-			<Section title="2. Mailing Address">
+			{/* 2. Address */}
+			<Section title="2. Address">
 				<div>
-					<Label required>Mailing Address</Label>
+					<Label required>Address</Label>
 					<TextInput placeholder="Street address" value={form.mailing.address} onChange={(e) => update("mailing", { address: e.target.value })} required />
 				</div>
 				<div>
-					<Label>Mailing Suite #</Label>
+					<Label>Suite #</Label>
 					<TextInput placeholder="Apt, suite, etc." value={form.mailing.suite} onChange={(e) => update("mailing", { suite: e.target.value })} />
 				</div>
 				<div>
-					<Label required>Mailing City</Label>
+					<Label required>City</Label>
 					<TextInput placeholder="City" value={form.mailing.city} onChange={(e) => update("mailing", { city: e.target.value })} required />
 				</div>
 				<div>
-					<Label required>Mailing State</Label>
+					<Label required>State</Label>
 					<SelectInput value={form.mailing.state} onChange={(e) => update("mailing", { state: e.target.value })} options={states} required />
 				</div>
 				<div>
-					<Label required>Mailing Zip</Label>
+					<Label required>ZIP</Label>
 					<TextInput placeholder="ZIP code" value={form.mailing.zip} onChange={(e) => update("mailing", { zip: e.target.value })} required />
 				</div>
 			</Section>
@@ -863,15 +900,15 @@ export default function PMAForm() {
 			{/* 3. Contact Details */}
 			<Section title="3. Contact Details">
 				<div>
-					<Label required>Contact First Name</Label>
+					<Label required>First Name</Label>
 					<TextInput placeholder="First name" value={form.contact.firstName} onChange={(e) => update("contact", { firstName: e.target.value })} required />
 				</div>
 				<div>
-					<Label required>Contact Last Name</Label>
+					<Label required>Last Name</Label>
 					<TextInput placeholder="Last name" value={form.contact.lastName} onChange={(e) => update("contact", { lastName: e.target.value })} required />
 				</div>
 				<div>
-				<Label required>Contact Phone</Label>
+				<Label required>Phone</Label>
 				<TextInput placeholder="##########" inputMode="numeric" value={form.contact.phone} onChange={(e) => {
 					const digits = (e.target.value || "").replace(/\D+/g, "").slice(0, 10);
 					update("contact", { phone: digits });
@@ -885,7 +922,7 @@ export default function PMAForm() {
 				) : null}
 				</div>
 				<div>
-					<Label required>Contact Email</Label>
+					<Label required>Email</Label>
 					<TextInput type="email" placeholder="name@example.com" value={form.contact.email} onChange={(e) => update("contact", { email: e.target.value })} required />
 				</div>
 				<div>
@@ -1058,7 +1095,7 @@ export default function PMAForm() {
 			{/* 5. DBA Overview */}
 			<Section title="5. DBA Overview">
 				<div>
-					<Label required>DBA Name</Label>
+					<Label required>Name</Label>
 					<TextInput placeholder="Doing Business As (DBA) name" value={form.dba.dbaName} onChange={(e) => update("dba", { dbaName: e.target.value })} required />
 				</div>
 				<div>
@@ -1074,23 +1111,23 @@ export default function PMAForm() {
 					<TextInput placeholder="e.g., 3" inputMode="numeric" value={form.dba.yearsInBusiness} onChange={(e) => update("dba", { yearsInBusiness: e.target.value })} required />
 				</div>
 				<div>
-					<Label required>DBA Address</Label>
+					<Label required>Address</Label>
 					<TextInput placeholder="Street address" value={form.dba.address} onChange={(e) => update("dba", { address: e.target.value })} required />
 				</div>
 				<div>
-					<Label>DBA Suite #</Label>
+					<Label>Suite #</Label>
 					<TextInput placeholder="Apt, suite, etc." value={form.dba.suite} onChange={(e) => update("dba", { suite: e.target.value })} />
 				</div>
 				<div>
-					<Label required>DBA City</Label>
+					<Label required>City</Label>
 					<TextInput placeholder="City" value={form.dba.city} onChange={(e) => update("dba", { city: e.target.value })} required />
 				</div>
 				<div>
-					<Label required>DBA State</Label>
+					<Label required>State</Label>
 					<SelectInput value={form.dba.state} onChange={(e) => update("dba", { state: e.target.value })} options={states} required />
 				</div>
 				<div>
-					<Label required>DBA ZIP</Label>
+					<Label required>ZIP</Label>
 					<TextInput placeholder="ZIP code" value={form.dba.zip} onChange={(e) => update("dba", { zip: e.target.value })} required />
 				</div>
 				<div>
@@ -1102,11 +1139,11 @@ export default function PMAForm() {
 					<TextInput placeholder="e.g., 1200" inputMode="numeric" value={form.dba.squareFeet} onChange={(e) => update("dba", { squareFeet: e.target.value })} />
 				</div>
 				<div>
-					<Label required>DBA Phone</Label>
+					<Label required>Phone</Label>
 					<TextInput placeholder="###-###-####" value={form.dba.phone} onChange={(e) => update("dba", { phone: e.target.value })} required />
 				</div>
 				<div>
-					<Label>DBA Email</Label>
+					<Label>Email</Label>
 					<TextInput type="email" placeholder="name@example.com" value={form.dba.email} onChange={(e) => update("dba", { email: e.target.value })} />
 				</div>
 				<div className="md:col-span-2">
@@ -1193,15 +1230,15 @@ export default function PMAForm() {
 					<SelectInput value={form.customerService.whoProvides} onChange={(e) => update("customerService", { whoProvides: e.target.value })} options={[selectDefault, { label: "In-house", value: "inhouse" }, { label: "Third-party", value: "thirdparty" }]} required />
 				</div>
 				<div>
-					<Label>CS Center Name</Label>
+					<Label>Center Name</Label>
 					<TextInput placeholder="Call center name" value={form.customerService.centerName} onChange={(e) => update("customerService", { centerName: e.target.value })} />
 				</div>
 				<div>
-					<Label required>CS Phone</Label>
+					<Label required>Phone</Label>
 					<TextInput placeholder="###-###-####" value={form.customerService.phone} onChange={(e) => update("customerService", { phone: e.target.value })} required />
 				</div>
 				<div>
-					<Label>CS Email</Label>
+					<Label>Email</Label>
 					<TextInput type="email" placeholder="support@example.com" value={form.customerService.email} onChange={(e) => update("customerService", { email: e.target.value })} />
 				</div>
 			</Section>
@@ -1233,19 +1270,19 @@ export default function PMAForm() {
 			{/* 9. Bank Information */}
 			<Section title="9. Bank Information">
 				<div>
-					<Label required>Bank Account Type</Label>
+					<Label required>Account Type</Label>
 					<SelectInput value={form.bank.accountType} onChange={(e) => update("bank", { accountType: e.target.value })} options={[selectDefault, { label: "Checking", value: "checking" }, { label: "Savings", value: "savings" }]} required />
 				</div>
 				<div>
-					<Label required>Bank Name</Label>
+					<Label required>Name</Label>
 					<TextInput placeholder="Bank name" value={form.bank.bankName} onChange={(e) => update("bank", { bankName: e.target.value })} required />
 				</div>
 				<div>
-					<Label required>Name on Bank Account</Label>
+					<Label required>Name on Account</Label>
 					<TextInput placeholder="Account holder name" value={form.bank.nameOnAccount} onChange={(e) => update("bank", { nameOnAccount: e.target.value })} required />
 				</div>
 				<div>
-					<Label required>Bank Routing #</Label>
+					<Label required>Routing #</Label>
 					<TextInput placeholder="#########" inputMode="numeric" value={form.bank.routingNumber} onChange={(e) => {
 						const digits = (e.target.value || "").replace(/\D+/g, "").slice(0, 9);
 						update("bank", { routingNumber: digits });
@@ -1259,7 +1296,7 @@ export default function PMAForm() {
 					) : null}
 				</div>
 				<div>
-					<Label required>Bank Account #</Label>
+					<Label required>Account #</Label>
 					<TextInput placeholder="Account number" inputMode="numeric" value={form.bank.accountNumber} onChange={(e) => update("bank", { accountNumber: e.target.value })} required />
 				</div>
 			</Section>

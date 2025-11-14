@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Clock } from "lucide-react";
+import { Clock, BookOpen, Shield, DollarSign, ArrowRight } from "lucide-react";
 import SqueezeEmbed from "@/app/components/squeeze/Embed";
 import Script from "next/script";
 
@@ -50,7 +50,7 @@ export default function Page() {
             <div className="relative overflow-hidden rounded-2xl shadow-lg w-full">
               <div className="absolute inset-0 pointer-events-none -z-10 bg-gradient-to-tr from-primary/8 to-transparent" />
 
-              <div className="px-6 py-8 md:px-10 md:py-12 bg-white/80 dark:bg-secondary/60 backdrop-blur-sm">
+              <div className="px-3 py-8 md:px-10 md:py-12 bg-white/80 dark:bg-secondary/60 backdrop-blur-sm">
                 <h1 className="text-3xl md:text-4xl font-extrabold text-secondary dark:text-white leading-tight">
                   Creditor Academy Orientation: <span className="text-primary">Entering the Private Pathway</span>
                 </h1>
@@ -206,34 +206,76 @@ export default function Page() {
               </div>
 
               {/* Quick preview — key lessons (vertical layout) */}
-              <div className="mt-4 rounded-xl bg-white/60 dark:bg-secondary/60 p-6 shadow-sm ring-1 ring-black/5">
-                <div className="font-semibold text-secondary dark:text-white text-center text-xl mb-6">
-                    Quick Preview — What You’ll Learn
+              <div className="mt-4 rounded-2xl bg-gradient-to-br from-white/90 to-white/60 dark:from-secondary/80 dark:to-secondary/60 p-8 shadow-xl backdrop-blur-sm">
+                <div className="text-center mb-8">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 dark:bg-primary/20 mb-3">
+                    <BookOpen className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-secondary dark:text-white mb-2">
+                    Quick Preview — What You'll Learn
+                  </h3>
+                  <p className="text-sm text-secondary/60 dark:text-white/60">
+                    Three core courses that transform your understanding
+                  </p>
                 </div>
 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-5">
                     {[
                     {
                         title: "Become Private",
                         desc: "Learn how the public system treats you as a corporate fiction and how to correct your status using a clear lawful framework so you can confidently live in the private.",
+                        icon: Shield,
+                        gradient: "from-blue-500/10 to-blue-600/5",
+                        iconBg: "bg-blue-500/10",
+                        iconColor: "text-blue-600 dark:text-blue-400",
                     },
                     {
                         title: "Operate Private",
                         desc: "Learn how to live, build, and do business in the private sector. This course shows you how to use business trusts and private associations to protect assets, manage commerce, plan legacies, and operate outside public jurisdiction.",
+                        icon: BookOpen,
+                        gradient: "from-green-500/10 to-green-600/5",
+                        iconBg: "bg-green-500/10",
+                        iconColor: "text-green-600 dark:text-green-400",
                     },
                     {
                         title: "Financial Freedom",
                         desc: "Learn to build elite business credit with Unincorporated Business Trusts, repair your personal credit, and establish Private Merchant Processing — no banks, no KYC, no risk of shutdowns.",
+                        icon: DollarSign,
+                        gradient: "from-amber-500/10 to-amber-600/5",
+                        iconBg: "bg-amber-500/10",
+                        iconColor: "text-amber-600 dark:text-amber-400",
                     },
-                    ].map((item, idx) => (
-                    <div
-                        key={idx}
-                        className="flex flex-col gap-2 bg-white dark:bg-slate-800/60 rounded-lg p-5 shadow-sm ring-1 ring-black/5 dark:ring-white/10 transition-transform duration-300 hover:scale-[1.02]"
-                    >
-                        <div className="text-lg font-semibold text-primary">{item.title}</div>
-                        <div className="text-sm text-secondary/80 dark:text-white/80">{item.desc}</div>
-                    </div>
-                    ))}
+                    ].map((item, idx) => {
+                      const Icon = item.icon;
+                      return (
+                      <div
+                          key={idx}
+                          className={`group relative flex flex-col gap-3 bg-gradient-to-br ${item.gradient} dark:from-slate-800/80 dark:to-slate-800/60 rounded-xl p-6 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
+                      >
+                          <div className="flex items-start gap-4">
+                            <div className={`flex-none w-12 h-12 rounded-xl ${item.iconBg} flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
+                              <Icon className={`w-6 h-6 ${item.iconColor}`} />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between gap-2 mb-2">
+                                <h4 className="text-lg font-bold text-secondary dark:text-white group-hover:text-primary dark:group-hover:text-primary transition-colors">
+                                  {item.title}
+                                </h4>
+                                <div className="flex-none w-6 h-6 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
+                                  <span className="text-xs font-bold text-primary">{idx + 1}</span>
+                                </div>
+                              </div>
+                              <p className="text-sm leading-relaxed text-secondary/70 dark:text-white/70">
+                                {item.desc}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <ArrowRight className="w-4 h-4 text-primary" />
+                          </div>
+                      </div>
+                      );
+                    })}
                 </div>
               </div>
             </div>

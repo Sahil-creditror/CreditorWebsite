@@ -111,6 +111,17 @@ function About() {
                   for maximum privacy, asset protection, and true independence. This is where knowledge
                   becomes sovereignty, because real freedom begins in the Private.
                 </p>
+                           {/* Centered Blue Button */}
+    <div className="flex justify-center mt-4">
+      <a
+        href="https://calendly.com/d/cwfz-k3q-w85/creditor-academy-education-counselor"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-blue-600 text-white px-8 py-3 rounded-xl text-lg font-semibold hover:bg-blue-700 transition"
+      >
+        Book a Slot
+      </a>
+    </div>
               </div>
 
               {/* Subtle gradient background */}

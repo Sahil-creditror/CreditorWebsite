@@ -52,10 +52,10 @@ export default function Page() {
 
               <div className="px-6 py-8 md:px-10 md:py-12 bg-white/80 dark:bg-secondary/60 backdrop-blur-sm">
                 <h1 className="text-3xl md:text-4xl font-extrabold text-secondary dark:text-white leading-tight">
-                  Creditor Academy <span className="text-primary">Private Commerce Masterclass</span>
+                  Creditor Academy Orientation: <span className="text-primary">Entering the Private Pathway</span>
                 </h1>
                 <p className="mt-2 text-secondary/80 dark:text-white/80 max-w-2xl">
-                  A practical, no-fluff session on restoring credit, operating privately, and protecting your estate. Live demonstrations, downloadable templates, and real member case studies.
+                This orientation introduces you to the foundations of operating privately—beyond the noise of the public system—and shows how Creditor Academy guides members toward greater control, protection, and independence. You’ll explore our full range of courses and programs, each designed to help you build private structures, elevate your financial literacy, and navigate commerce with confidence. We’ll also walk you through a demo of our online campus so you can experience how our tools, lessons, and community support your transition into a more empowered private life.
                 </p>
 
                 {/* Key badges */}

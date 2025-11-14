@@ -818,8 +818,8 @@ export default function PMAForm() {
 			{/* 1. Lawful Overview */}
 			<Section title="1. Lawful Overview">
 				<div>
-					<Label required>Name</Label>
-					<TextInput placeholder="Enter lawful name" value={form.lawful.lawfulName} onChange={(e) => update("lawful", { lawfulName: e.target.value })} required />
+					<Label required>Legal name</Label>
+					<TextInput placeholder="Enter legal name" value={form.lawful.lawfulName} onChange={(e) => update("lawful", { lawfulName: e.target.value })} required />
 				</div>
 				<div>
 					<Label required>Entity Type</Label>
@@ -873,8 +873,8 @@ export default function PMAForm() {
 				</div>
 			</Section>
 
-			{/* 2. Address */}
-			<Section title="2. Address">
+			{/* 2. Business Address */}
+			<Section title="2. Business Address">
 				<div>
 					<Label required>Address</Label>
 					<TextInput placeholder="Street address" value={form.mailing.address} onChange={(e) => update("mailing", { address: e.target.value })} required />

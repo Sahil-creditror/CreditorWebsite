@@ -156,11 +156,6 @@ const AboutusValues: React.FC = () => {
             <motion.div
               key={index}
               variants={itemVariants}
-              whileHover={{ 
-                y: -10,
-                scale: 1.02,
-                transition: { type: "spring", stiffness: 300, damping: 15 }
-              }}
               className="group p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-800 relative overflow-hidden"
             >
               <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-gradient-to-r ${value.color}`} />
@@ -168,7 +163,6 @@ const AboutusValues: React.FC = () => {
               <div className={`relative z-10 ${value.bgColor} p-6 rounded-xl`}>
                 <motion.div
                   className="flex justify-center mb-6"
-                  whileHover={{ scale: 1.1, rotate: 360, transition: { duration: 0.5 } }}
                 >
                   <div className={`p-4 rounded-2xl bg-gradient-to-r ${value.color} text-white text-3xl shadow-md`}>
                     {value.icon}

@@ -457,7 +457,7 @@ const AboutusDetail = () => {
             .
           </motion.p>
         </motion.div>
-        
+
         {/* Background video block above cards */}
         <motion.div
           variants={itemVariants}
@@ -470,7 +470,7 @@ const AboutusDetail = () => {
               loop
               muted
               playsInline
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="absolute  w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             >
               <source src="/video/intro-new.mp4" type="video/mp4" />
               Your browser does not support the video tag.
@@ -510,7 +510,7 @@ const AboutusDetail = () => {
                   priority={false}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
-                <div className={`absolute inset-x-0 bottom-0 h-0 bg-gradient-to-t ${i===0 ? 'from-blue-500/10' : i===1 ? 'from-emerald-500/10' : 'from-amber-500/10'} to-transparent transition-all duration-500 ease-out group-hover:h-full`} />
+                <div className={`absolute inset-x-0 bottom-0 h-0 bg-gradient-to-t ${i === 0 ? 'from-blue-500/10' : i === 1 ? 'from-emerald-500/10' : 'from-amber-500/10'} to-transparent transition-all duration-500 ease-out group-hover:h-full`} />
               </div>
 
               <div className="p-5 sm:p-6 bg-white/95 dark:bg-[#0b1220]">
@@ -536,7 +536,7 @@ const AboutusDetail = () => {
                 </AnimatePresence>
               </div>
 
-              <div className={`absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r ${i===0 ? 'from-blue-500 to-blue-600' : i===1 ? 'from-emerald-500 to-emerald-600' : 'from-amber-500 to-amber-600'} opacity-80`} />
+              <div className={`absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r ${i === 0 ? 'from-blue-500 to-blue-600' : i === 1 ? 'from-emerald-500 to-emerald-600' : 'from-amber-500 to-amber-600'} opacity-80`} />
             </motion.article>
           ))}
         </motion.div>
@@ -558,127 +558,127 @@ const AboutusDetail = () => {
           </motion.div>
         )}
         {/* Masterclass CTA - Premium Enhanced */}
-<motion.div
-  variants={containerVariants}
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true, amount: 0.3 }}
-  className="relative max-w-6xl mx-auto mt-28 rounded-4xl p-10 md:p-16 bg-gradient-to-br from-white via-blue-50/95 to-cyan-50/90 dark:from-blue-950/90 dark:via-blue-900/80 dark:to-cyan-900/70 shadow-2xl shadow-blue-200/50 dark:shadow-blue-900/30 overflow-hidden group border border-blue-200/60 dark:border-blue-700/40"
->
-  {/* Animated background elements */}
-  <div className="absolute inset-0 overflow-hidden">
-    {/* Floating particles */}
-    {Array.from({ length: 15 }).map((_, i) => (
-      <motion.div
-        key={i}
-        className="absolute rounded-full bg-blue-400/20 dark:bg-cyan-400/10"
-        initial={{ 
-          y: `${Math.random() * 100}%`, 
-          x: `${Math.random() * 100}%`,
-          opacity: 0,
-          scale: 0
-        }}
-        animate={{ 
-          y: [`${Math.random() * 100}%`, `${Math.random() * 100}%`, `${Math.random() * 100}%`],
-          x: [`${Math.random() * 100}%`, `${Math.random() * 100}%`, `${Math.random() * 100}%`],
-          opacity: [0, 0.5, 0],
-          scale: [0, 1, 0]
-        }}
-        transition={{
-          duration: Math.random() * 10 + 15,
-          repeat: Infinity,
-          delay: Math.random() * 5,
-          ease: "easeInOut"
-        }}
-        style={{
-          width: `${Math.random() * 20 + 5}px`,
-          height: `${Math.random() * 20 + 5}px`,
-        }}
-      />
-    ))}
-    
-    {/* Gradient glow */}
-    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-cyan-400/5 to-blue-500/5" />
-  </div>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="relative max-w-6xl mx-auto mt-28 rounded-4xl p-10 md:p-16 bg-gradient-to-br from-white via-blue-50/95 to-cyan-50/90 dark:from-blue-950/90 dark:via-blue-900/80 dark:to-cyan-900/70 shadow-2xl shadow-blue-200/50 dark:shadow-blue-900/30 overflow-hidden group border border-blue-200/60 dark:border-blue-700/40"
+        >
+          {/* Animated background elements */}
+          <div className="absolute inset-0 overflow-hidden">
+            {/* Floating particles */}
+            {Array.from({ length: 15 }).map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute rounded-full bg-blue-400/20 dark:bg-cyan-400/10"
+                initial={{
+                  y: `${Math.random() * 100}%`,
+                  x: `${Math.random() * 100}%`,
+                  opacity: 0,
+                  scale: 0
+                }}
+                animate={{
+                  y: [`${Math.random() * 100}%`, `${Math.random() * 100}%`, `${Math.random() * 100}%`],
+                  x: [`${Math.random() * 100}%`, `${Math.random() * 100}%`, `${Math.random() * 100}%`],
+                  opacity: [0, 0.5, 0],
+                  scale: [0, 1, 0]
+                }}
+                transition={{
+                  duration: Math.random() * 10 + 15,
+                  repeat: Infinity,
+                  delay: Math.random() * 5,
+                  ease: "easeInOut"
+                }}
+                style={{
+                  width: `${Math.random() * 20 + 5}px`,
+                  height: `${Math.random() * 20 + 5}px`,
+                }}
+              />
+            ))}
 
-  {/* Animated border */}
-  <motion.div 
-    className="absolute inset-0 rounded-4xl border-2 border-blue-300/40 dark:border-cyan-400/30"
-    animate={{
-      boxShadow: [
-        "0 0 20px rgba(59, 130, 246, 0.1)",
-        "0 0 40px rgba(59, 130, 246, 0.2)",
-        "0 0 20px rgba(59, 130, 246, 0.1)"
-      ]
-    }}
-    transition={{ duration: 3, repeat: Infinity }}
-  />
-
-  <div className="grid lg:grid-cols-2 gap-10 items-center relative z-10">
-    {/* Left Column: Text Content */}
-    <div className="text-center lg:text-left order-2 lg:order-1">
-      {/* Badge */}
-      <motion.div
-        variants={itemVariants}
-        className="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-sm font-medium mb-6"
-      >
-        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2 animate-pulse"></div>
-        Limited spots available
-      </motion.div>
-
-      <motion.h3
-        variants={itemVariants}
-        className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 dark:text-white mb-6"
-      >
-        Experience True{" "}
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-700 inline-block">
-          Financial Freedom
-        </span>
-      </motion.h3>
-      
-      <motion.p
-        variants={itemVariants}
-        className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0"
-      >
-        Join our transformative Master Class and unlock the financial future you deserve
-      </motion.p>
-
-      {/* Benefits list */}
-      <motion.div 
-        variants={itemVariants}
-        className="space-y-3 mb-10 text-left"
-      >
-        {[
-          "Boost credit score by 100+ points",
-          "Create a debt-free plan that works",
-          "Build sustainable wealth strategies",
-          "Personalized 1-on-1 coaching",
-          "Lifetime access to all materials"
-        ].map((item, index) => (
-          <div key={index} className="flex items-center text-gray-700 dark:text-gray-300">
-            <div className="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mr-3">
-              <svg className="w-3 h-3 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <span className="font-medium">{item}</span>
+            {/* Gradient glow */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-cyan-400/5 to-blue-500/5" />
           </div>
-        ))}
-      </motion.div>
 
-      {/* CTA Button */}
-      <motion.div
-        variants={itemVariants}
-        className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
-      >
-        <Button
-          as="a"
-          href="/projects"
-          borderRadius="3rem"
-          containerClassName="
+          {/* Animated border */}
+          <motion.div
+            className="absolute inset-0 rounded-4xl border-2 border-blue-300/40 dark:border-cyan-400/30"
+            animate={{
+              boxShadow: [
+                "0 0 20px rgba(59, 130, 246, 0.1)",
+                "0 0 40px rgba(59, 130, 246, 0.2)",
+                "0 0 20px rgba(59, 130, 246, 0.1)"
+              ]
+            }}
+            transition={{ duration: 3, repeat: Infinity }}
+          />
+
+          <div className="grid lg:grid-cols-2 gap-10 items-center relative z-10">
+            {/* Left Column: Text Content */}
+            <div className="text-center lg:text-left order-2 lg:order-1">
+              {/* Badge */}
+              <motion.div
+                variants={itemVariants}
+                className="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-sm font-medium mb-6"
+              >
+                <div className="w-2 h-2 rounded-full bg-blue-500 mr-2 animate-pulse"></div>
+                Limited spots available
+              </motion.div>
+
+              <motion.h3
+                variants={itemVariants}
+                className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 dark:text-white mb-6"
+              >
+                Experience True{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-700 inline-block">
+                  Financial Freedom
+                </span>
+              </motion.h3>
+
+              <motion.p
+                variants={itemVariants}
+                className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0"
+              >
+                Join our transformative Master Class and unlock the financial future you deserve
+              </motion.p>
+
+              {/* Benefits list */}
+              <motion.div
+                variants={itemVariants}
+                className="space-y-3 mb-10 text-left"
+              >
+                {[
+                  "Boost credit score by 100+ points",
+                  "Create a debt-free plan that works",
+                  "Build sustainable wealth strategies",
+                  "Personalized 1-on-1 coaching",
+                  "Lifetime access to all materials"
+                ].map((item, index) => (
+                  <div key={index} className="flex items-center text-gray-700 dark:text-gray-300">
+                    <div className="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mr-3">
+                      <svg className="w-3 h-3 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <span className="font-medium">{item}</span>
+                  </div>
+                ))}
+              </motion.div>
+
+              {/* CTA Button */}
+              <motion.div
+                variants={itemVariants}
+                className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
+              >
+                <Button
+                  as="a"
+                  href="/projects"
+                  borderRadius="3rem"
+                  containerClassName="
     relative w-full sm:w-auto min-w-[200px] h-14 px-8 py-0
   "
-          className="
+                  className="
     text-base md:text-lg font-bold tracking-wide text-white
     bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500
     hover:from-blue-700 hover:via-blue-600 hover:to-cyan-600
@@ -686,76 +686,76 @@ const AboutusDetail = () => {
     shadow-md hover:shadow-lg
     flex items-center justify-center
   "
-          showBorderEffect={false}
-          style={{
-            letterSpacing: "0.02em",
-          }}
-        >
-          <span className="flex items-center">
-            Join Now
-            <svg
-      className="ml-3 w-5 h-5 transition-transform duration-300 translate-x-0 group-hover:translate-x-1"
-              fill="none"
-              stroke="white"
-              strokeWidth={2.2}
-              viewBox="0 0 24 24"
+                  showBorderEffect={false}
+                  style={{
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  <span className="flex items-center">
+                    Join Now
+                    <svg
+                      className="ml-3 w-5 h-5 transition-transform duration-300 translate-x-0 group-hover:translate-x-1"
+                      fill="none"
+                      stroke="white"
+                      strokeWidth={2.2}
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M13 7l5 5m0 0l-5 5m5-5H6"
+                      />
+                    </svg>
+                  </span>
+                </Button>
+
+
+
+
+                <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-4 sm:mt-0">
+                  <div className="flex items-center mr-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <svg key={star} className="w-4 h-4 text-yellow-400 mr-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span>4.9/5 from 2,400+ students</span>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right Column: Image */}
+            <motion.div
+              variants={itemVariants}
+              whileHover={{
+                scale: 1.02,
+                transition: { type: "spring", stiffness: 300, damping: 20 },
+              }}
+              className="relative w-full h-full min-h-[300px] lg:min-h-[450px] flex items-center justify-center order-1 lg:order-2"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13 7l5 5m0 0l-5 5m5-5H6"
-              />
-            </svg>
-          </span>
-        </Button>
+              {/* Image container with elegant frame */}
+              <div className="relative w-full h-full max-w-md">
+                {/* Decorative elements */}
+                <div className="absolute -top-4 -right-4 w-24 h-24 bg-blue-500/10 rounded-full blur-xl"></div>
+                <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-cyan-400/10 rounded-full blur-xl"></div>
 
+                {/* Image with elegant border */}
+                <div className="relative h-full w-full rounded-3xl overflow-hidden shadow-2xl shadow-blue-400/20 group-hover:shadow-cyan-400/30 transition-shadow duration-500">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-400/10 z-10"></div>
+                  <div className="absolute inset-0 border-2 border-white/30 rounded-3xl"></div>
 
+                  <Image
+                    src="/images/about-us/masterclass.webp"
+                    alt="Financial Freedom Master Class"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    priority
+                  />
+                </div>
 
-        
-        <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-4 sm:mt-0">
-          <div className="flex items-center mr-2">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <svg key={star} className="w-4 h-4 text-yellow-400 mr-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-            ))}
-          </div>
-          <span>4.9/5 from 2,400+ students</span>
-        </div>
-      </motion.div>
-    </div>
-
-    {/* Right Column: Image */}
-    <motion.div
-      variants={itemVariants}
-      whileHover={{
-        scale: 1.02,
-        transition: { type: "spring", stiffness: 300, damping: 20 },
-      }}
-      className="relative w-full h-full min-h-[300px] lg:min-h-[450px] flex items-center justify-center order-1 lg:order-2"
-    >
-      {/* Image container with elegant frame */}
-      <div className="relative w-full h-full max-w-md">
-        {/* Decorative elements */}
-        <div className="absolute -top-4 -right-4 w-24 h-24 bg-blue-500/10 rounded-full blur-xl"></div>
-        <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-cyan-400/10 rounded-full blur-xl"></div>
-        
-        {/* Image with elegant border */}
-        <div className="relative h-full w-full rounded-3xl overflow-hidden shadow-2xl shadow-blue-400/20 group-hover:shadow-cyan-400/30 transition-shadow duration-500">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-400/10 z-10"></div>
-          <div className="absolute inset-0 border-2 border-white/30 rounded-3xl"></div>
-          
-          <Image
-            src="/images/about-us/masterclass.webp"
-            alt="Financial Freedom Master Class"
-            fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
-            priority
-          />
-        </div>
-        
-        {/* Floating card element
+                {/* Floating card element
         <motion.div 
           className="absolute -bottom-6 -right-6 bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-xl border border-gray-100 dark:border-gray-700"
           initial={{ y: 20, opacity: 0 }}
@@ -769,10 +769,10 @@ const AboutusDetail = () => {
           </div>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Starting in 5 days</p>
         </motion.div> */}
-      </div>
-    </motion.div>
-  </div>
-</motion.div>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

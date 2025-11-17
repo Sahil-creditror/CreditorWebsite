@@ -391,7 +391,7 @@ const AboutusDetail = () => {
   );
 
   return (
-    <section className="relative py-24 md:py-36 overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-darkblack dark:via-secondary dark:to-blue-900/10">
+    <section className="relative py-16 md:py-24 overflow-hidden bg-gradient-to-br from-lightgray via-white to-blue-50/30 dark:from-darkblack dark:via-secondary dark:to-blue-900/10">
       <BubblesBackground />
       {/* Floating Background */}
       <div className="absolute inset-0 overflow-hidden">
@@ -425,7 +425,7 @@ const AboutusDetail = () => {
           className="text-center max-w-4xl mx-auto mb-16 md:mb-24" // Increased bottom margin
         >
           <motion.h2
-            className="text-5xl md:text-6xl font-extrabold tracking-tight text-darkblack dark:text-white"
+            className="text-5xl md:text-6xl font-extrabold tracking-tight text-secondary dark:text-white"
             initial="hidden"
             animate="visible"
             variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
@@ -435,7 +435,7 @@ const AboutusDetail = () => {
             </motion.span>
             <motion.span
               variants={wordVariants}
-              className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600"
+              className="inline-block text-secondary dark:text-white"
             >
               Creditor Academy
             </motion.span>

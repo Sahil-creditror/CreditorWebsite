@@ -127,7 +127,6 @@ const AboutusStory = () => {
 
   return (
     <section className="py-28 md:py-40 bg-gradient-to-b from-white to-gray-100 dark:from-darkblack dark:to-gray-900 relative overflow-hidden">
-      <BubbleBackground />
       <motion.div
         className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 dark:from-primary/10 dark:to-secondary/10"
         style={{ y: backgroundY }}

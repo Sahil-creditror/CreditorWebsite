@@ -389,28 +389,6 @@ const AboutusDetail = () => {
 
   return (
     <section className="relative py-16 md:py-24 overflow-hidden bg-gradient-to-br from-lightgray via-white to-blue-50/30 dark:from-darkblack dark:via-secondary dark:to-blue-900/10">
-      <BubblesBackground />
-      {/* Floating Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <FloatingShape
-          delay={0}
-          size="w-32 h-32"
-          position={{ top: "15%", left: "5%" }}
-          color="bg-blue-200/30 dark:bg-blue-500/10"
-        />
-        <FloatingShape
-          delay={7}
-          size="w-24 h-24"
-          position={{ top: "25%", right: "10%" }}
-          color="bg-purple-200/30 dark:bg-purple-500/10"
-        />
-        <FloatingShape
-          delay={14}
-          size="w-28 h-28"
-          position={{ bottom: "20%", left: "15%" }}
-          color="bg-amber-200/30 dark:bg-amber-500/10"
-        />
-      </div>
 
       <div className="container relative z-10 px-6 mx-auto">
         {/* Heading */}
@@ -470,7 +448,7 @@ const AboutusDetail = () => {
               loop
               muted
               playsInline
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="absolute inset-0 w-full h-full transition-transform duration-700 group-hover:scale-105"
             >
               <source src="/video/intro-new.mp4" type="video/mp4" />
               Your browser does not support the video tag.
@@ -485,61 +463,87 @@ const AboutusDetail = () => {
             </div>
           </div>
         </motion.div>
-        {/* Cards */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          className="grid lg:grid-cols-3 gap-10 xl:gap-12 max-w-7xl mx-auto"
-        >
-          {cards.map((card, i) => (
-            <motion.article
-              key={i}
-              variants={itemVariants}
-              whileHover={{ y: -6, scale: 1.01 }}
-              className="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-lg bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-700"
-            >
-              <div className="relative w-full h-40 sm:h-48">
-                <Image
-                  src={card.image}
-                  alt={card.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  priority={false}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
-                <div className={`absolute inset-x-0 bottom-0 h-0 bg-gradient-to-t ${i === 0 ? 'from-blue-500/10' : i === 1 ? 'from-emerald-500/10' : 'from-amber-500/10'} to-transparent transition-all duration-500 ease-out group-hover:h-full`} />
-              </div>
+        <div className="relative py-16">
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.6 }}
+            className="h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 rounded-full mx-auto max-w-7xl origin-left"
+          />
 
-              <div className="p-5 sm:p-6 bg-white/95 dark:bg-[#0b1220]">
-                <h3 className="text-lg md:text-xl font-semibold text-slate-900 dark:text-white mb-2">{card.title}</h3>
-                <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-                  {card.desc}
-                </p>
+          <motion.div
+            variants={itemVariants}
+            className="max-w-7xl mx-auto mb-6 px-2"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
+              Creditor Academy — Core Essentials
+            </h2>
+            <p className="mt-2 text-slate-600 dark:text-slate-300">
+              What we offer, how we deliver, and why it matters
+            </p>
+          </motion.div>
 
-                <AnimatePresence>
-                  {showAllDescriptions && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.35 }}
-                      className="mt-4"
-                    >
-                      <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
-                        {card.long_desc}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            className="grid lg:grid-cols-3 gap-10 xl:gap-12 max-w-7xl mx-auto"
+          >
+            {cards.map((card, i) => (
+              <motion.article
+                key={i}
+                variants={itemVariants}
+                className="relative rounded-2xl overflow-hidden bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-shadow duration-300"
+              >
+                <div className="relative w-full h-48 sm:h-56 rounded-t-2xl overflow-hidden">
+                  <Image
+                    src={card.image}
+                    alt={card.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                    className="object-cover"
+                    priority={false}
+                  />
+                </div>
 
-              <div className={`absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r ${i === 0 ? 'from-blue-500 to-blue-600' : i === 1 ? 'from-emerald-500 to-emerald-600' : 'from-amber-500 to-amber-600'} opacity-80`} />
-            </motion.article>
-          ))}
-        </motion.div>
+                <div className="p-6 bg-white dark:bg-[#0b1220]">
+                  <h3 className="text-xl md:text-2xl font-semibold text-slate-900 dark:text-white mb-3">{card.title}</h3>
+                  <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                    {card.desc}
+                  </p>
+
+                  <AnimatePresence>
+                    {showAllDescriptions && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.35 }}
+                        className="mt-4"
+                      >
+                        <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+                          {card.long_desc}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                <div className="absolute bottom-0 left-0 w-full h-[3px] bg-slate-200 dark:bg-slate-700" />
+              </motion.article>
+            ))}
+          </motion.div>
+
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.6 }}
+            className="h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 rounded-full mx-auto max-w-7xl origin-left mt-12"
+          />
+        </div>
         {/* "Show Less" Button */}
         {showAllDescriptions && (
           <motion.div

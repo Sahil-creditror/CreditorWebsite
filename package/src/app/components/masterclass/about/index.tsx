@@ -47,7 +47,7 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
         priceRef.current.textContent = "$69";
       }
 
-      return () => {};
+      return () => { };
     }, wrapRef);
 
     return () => ctx.revert();
@@ -75,113 +75,113 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
         "dark:from-slate-900 dark:via-sky-900 dark:to-slate-800 dark:text-slate-50"
       }
     >
-      
+
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
 
           {/* Left - Content */}
           <div className="relative">
-          
+
 
             <motion.h2
-                initial="hidden"
-                animate="visible"
-                custom={1}
-                variants={heading}
-                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight bg-gradient-to-r from-sky-600 via-sky-500 to-sky-400 dark:from-sky-300 dark:via-sky-200 dark:to-white bg-clip-text text-transparent relative"
+              initial="hidden"
+              animate="visible"
+              custom={1}
+              variants={heading}
+              className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight bg-gradient-to-r from-sky-600 via-sky-500 to-sky-400 dark:from-sky-300 dark:via-sky-200 dark:to-white bg-clip-text text-transparent relative"
             >
-                <span className="relative inline-block">
+              <span className="relative inline-block">
                 Private Operation:
                 <span className="absolute inset-0 bg-gradient-to-r from-sky-400 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-clip-text text-transparent" />
-                </span>
-                <br />
-                <span className="block">Self Paced Accelerator</span>
+              </span>
+              <br />
+              <span className="block">Self Paced Accelerator</span>
             </motion.h2>
 
             <motion.p
-                initial="hidden"
-                animate="visible"
-                custom={2}
-                variants={heading}
-                className="mt-6 text-slate-700 dark:text-slate-200 max-w-2xl text-lg sm:text-xl leading-relaxed font-light"
+              initial="hidden"
+              animate="visible"
+              custom={2}
+              variants={heading}
+              className="mt-6 text-slate-700 dark:text-slate-200 max-w-2xl text-lg sm:text-xl leading-relaxed font-light"
             >
-                A focused Self Paced program combining{" "}
-                <span className="font-semibold text-sky-600 dark:text-sky-300">video training</span>,{" "}
-                <span className="font-semibold text-sky-600 dark:text-sky-300">templates</span>, and{" "}
-                <span className="font-semibold text-sky-600 dark:text-sky-300">live group mentorship</span>{" "}
-                to help founders, creators, and investors run fully private, profitable operations.
+              A focused Self Paced program combining{" "}
+              <span className="font-semibold text-sky-600 dark:text-sky-300">video training</span>,{" "}
+              <span className="font-semibold text-sky-600 dark:text-sky-300">templates</span>, and{" "}
+              <span className="font-semibold text-sky-600 dark:text-sky-300">live group mentorship</span>{" "}
+              to help founders, creators, and investors run fully private, profitable operations.
             </motion.p>
 
             {/* Feature Cards */}
             <motion.ul
-                className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl"
-                initial="hidden"
-                animate="visible"
+              className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl"
+              initial="hidden"
+              animate="visible"
             >
-                {[
+              {[
                 "Video training + action templates",
                 "Live weekly group mentorship",
                 "Business & launch playbooks",
                 "Community support + accountability",
-                ].map((txt, i) => (
+              ].map((txt, i) => (
                 <motion.li
-                    key={i}
-                    custom={i + 1}
-                    variants={list}
-                    whileHover={{ scale: 1.03, y: -2 }}
-                    className="flex items-start gap-3 p-4 rounded-2xl bg-white/80 dark:bg-slate-800/40 border border-slate-200/30 dark:border-white/10 shadow-sm hover:shadow-md transition-all"
+                  key={i}
+                  custom={i + 1}
+                  variants={list}
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  className="flex items-start gap-3 p-4 rounded-2xl bg-white/80 dark:bg-slate-800/40 border border-slate-200/30 dark:border-white/10 shadow-sm hover:shadow-md transition-all"
                 >
-                    <svg
+                  <svg
                     className="w-6 h-6 flex-none mt-1 text-sky-600 dark:text-sky-300"
                     viewBox="0 0 24 24"
                     fill="none"
-                    >
+                  >
                     <path
-                        d="M5 12l4 4L19 6"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                      d="M5 12l4 4L19 6"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
-                    </svg>
-                    <span className="text-slate-900 dark:text-slate-100 text-sm sm:text-base font-medium">{txt}</span>
+                  </svg>
+                  <span className="text-slate-900 dark:text-slate-100 text-sm sm:text-base font-medium">{txt}</span>
                 </motion.li>
-                ))}
+              ))}
             </motion.ul>
 
             {/* Info Badges */}
             <motion.div
-                className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { delay: 0.9 } }}
+              className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { delay: 0.9 } }}
             >
-                {[
+              {[
                 { label: "Program Length", value: "Self Paced" },
                 { label: "Format", value: "Video + Templates + Live Mentorship" },
-                ].map((info, idx) => (
+              ].map((info, idx) => (
                 <div
-                    key={idx}
-                    className="inline-flex items-center gap-2 rounded-full px-4 py-2 bg-gradient-to-r from-sky-500/10 to-sky-400/5 dark:from-sky-400/20 dark:to-sky-300/10 border border-sky-500/20 dark:border-sky-300/20 backdrop-blur-md shadow-sm"
+                  key={idx}
+                  className="inline-flex items-center gap-2 rounded-full px-4 py-2 bg-gradient-to-r from-sky-500/10 to-sky-400/5 dark:from-sky-400/20 dark:to-sky-300/10 border border-sky-500/20 dark:border-sky-300/20 backdrop-blur-md shadow-sm"
                 >
-                    <span className="text-xs uppercase tracking-wider text-sky-600 dark:text-sky-300 font-semibold">
+                  <span className="text-xs uppercase tracking-wider text-sky-600 dark:text-sky-300 font-semibold">
                     {info.label}
-                    </span>
-                    <span className="text-sm font-medium text-slate-900 dark:text-slate-100">{info.value}</span>
+                  </span>
+                  <span className="text-sm font-medium text-slate-900 dark:text-slate-100">{info.value}</span>
                 </div>
-                ))}
+              ))}
             </motion.div>
 
             {/* CTA Paragraph */}
             <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { delay: 1.1 } }}
-                className="mt-8 border-l-4 border-sky-500/50 dark:border-sky-300/50 pl-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { delay: 1.1 } }}
+              className="mt-8 border-l-4 border-sky-500/50 dark:border-sky-300/50 pl-4"
             >
-                <p className="text-slate-600 dark:text-slate-300 max-w-md text-base sm:text-lg leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-300 max-w-md text-base sm:text-lg leading-relaxed">
                 <strong className="text-sky-600 dark:text-sky-300 font-bold">Limited spots open monthly.</strong>{" "}
                 Enroll now and take the first step toward full private operation.
-                </p>
+              </p>
             </motion.div>
           </div>
 
@@ -189,90 +189,90 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
           <motion.div
             ref={cardRef}
             className="hero-card group relative rounded-2xl p-6 sm:p-8 overflow-hidden shadow-2xl"
-            >
+          >
             {/* Shine Effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-0 transition-transform duration-700 opacity-0 group-hover:opacity-60 pointer-events-none" />
 
             <div className="relative z-10 bg-white/60 dark:bg-slate-900/40 border border-slate-200/10 dark:border-white/10 rounded-2xl p-6 sm:p-7 backdrop-blur-sm">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 p-6 rounded-2xl bg-white/80 dark:bg-slate-900/60 shadow-xl border border-slate-200 dark:border-slate-700">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 p-6 rounded-2xl bg-white/80 dark:bg-slate-900/60 shadow-xl border border-slate-200 dark:border-slate-700">
                 {/* Left: Enrollment Info */}
                 <div className="flex items-center gap-4">
-                    <span className="inline-flex items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-indigo-500 p-3 shadow-lg">
+                  <span className="inline-flex items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-indigo-500 p-3 shadow-lg">
                     <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none">
-                        <path
+                      <path
                         d="M12 3v6l4 2"
                         stroke="currentColor"
                         strokeWidth={1.6}
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        />
+                      />
                     </svg>
-                    </span>
-                    <div>
+                  </span>
+                  <div>
                     <p className="text-sm text-black-500 dark:text-slate-400 uppercase tracking-wide font-semibold">
-                        Enrollment Plan
+                      Enrollment Plan
                     </p>
                     <p className="text-lg sm:text-xl font-bold text-sky-600 dark:text-sky-300">
-                        $69 <span className="text-sm text-slate-500">/month</span>
+                      $69 <span className="text-sm text-slate-500">/month</span>
                     </p>
                     <p className="text-sm text-slate-500 dark:text-slate-400">
-                        For 3 months · Total $207
+                      For 3 months · Total $207
                     </p>
-                    </div>
+                  </div>
                 </div>
 
                 {/* Right: Total Highlight */}
                 <div className="sm:text-right w-full sm:w-auto">
-                    <p className="text-m font-bold text-slate-800 dark:text-slate-400">Total</p>
-                    <p className="mt-1 text-4xl font-extrabold tracking-tight text-sky-600 dark:text-sky-300">
+                  <p className="text-m font-bold text-slate-800 dark:text-slate-400">Total</p>
+                  <p className="mt-1 text-4xl font-extrabold tracking-tight text-sky-600 dark:text-sky-300">
                     $207
-                    </p>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                  </p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
                     Billed over 3 months
-                    </p>
+                  </p>
                 </div>
-                </div>
+              </div>
 
-                {/* What's Included */}
-                <div className="mt-5 mb-5">
+              {/* What's Included */}
+              <div className="mt-5 mb-5">
                 <h3 className="text-base sm:text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">
-                    What's Included:
+                  What's Included:
                 </h3>
                 <ul className="grid gap-2">
-                    {[
+                  {[
                     "Lifetime access to videos & templates",
                     "Weekly live group mentorship (Q&A)",
                     "Private community + accountability",
-                    ].map((t, idx) => (
+                  ].map((t, idx) => (
                     <li
-                        key={idx}
-                        className="flex items-start text-slate-700 dark:text-slate-200 text-base sm:text-lg gap-3 py-2"
+                      key={idx}
+                      className="flex items-start text-slate-700 dark:text-slate-200 text-base sm:text-lg gap-3 py-2"
                     >
-                        <svg className="w-5 h-5 mt-0.5 text-sky-600 dark:text-sky-300 flex-none" viewBox="0 0 24 24" fill="none">
-                            <path d="M5 12l4 4L19 6" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        <span>{t}</span>
+                      <svg className="w-5 h-5 mt-0.5 text-sky-600 dark:text-sky-300 flex-none" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12l4 4L19 6" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      <span>{t}</span>
                     </li>
-                    ))}
+                  ))}
                 </ul>
-                </div>
+              </div>
 
-                {/* Buttons */}
-                <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-3">
+              {/* Buttons */}
+              <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-3">
                 <motion.button
-                    onClick={() => {
-                      if (onEnroll) {
-                        onEnroll();
-                      } else {
-                        router.push("/tncmasterclass");
-                      }
-                    }}
-                    className="relative overflow-hidden rounded-xl px-6 py-3 font-semibold text-lg sm:text-xl text-white bg-gradient-to-r from-sky-500 to-sky-600 shadow-lg hover:brightness-105 transition-all duration-200"
-                    aria-label="Enroll now"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    if (onEnroll) {
+                      onEnroll();
+                    } else {
+                      router.push("/tncmasterclass");
+                    }
+                  }}
+                  className="relative overflow-hidden rounded-xl px-6 py-3 font-semibold text-lg sm:text-xl text-white bg-gradient-to-r from-sky-500 to-sky-600 shadow-lg hover:brightness-105 transition-all duration-200"
+                  aria-label="Enroll now"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                    <span className="relative z-10">Join Now — $69/mo</span>
+                  <span className="relative z-10">Join Now — $69/mo</span>
                 </motion.button>
 
                 {/* <motion.a
@@ -282,12 +282,12 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
                 >
                     Book an appointment
                 </motion.a> */}
-                </div>
+              </div>
 
-                {/* Fine Print */}
-                <p className="mt-5 text-sm text-center text-slate-500 dark:text-slate-400">
+              {/* Fine Print */}
+              <p className="mt-5 text-sm text-center text-slate-500 dark:text-slate-400">
                 Ideal for: aspiring entrepreneurs, coaches, investors, creators, and freedom-seekers.
-                </p>
+              </p>
             </div>
           </motion.div>
         </div>

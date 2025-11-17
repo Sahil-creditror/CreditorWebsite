@@ -103,13 +103,14 @@ const AboutusValues: React.FC = () => {
 
   return (
     <section className="relative py-20 md:py-28 bg-gradient-to-b from-gray-50 to-white dark:from-darkblack dark:to-secondary overflow-hidden">
-      {/* Floating shapes */}
-      <div className="absolute inset-0 overflow-hidden">
-        <FloatingShape delay={0} size="w-16 h-16" position={{ top: "15%", left: "10%" }} />
-        <FloatingShape delay={2} size="w-24 h-24" position={{ top: "25%", right: "15%" }} />
-        <FloatingShape delay={4} size="w-12 h-12" position={{ bottom: "20%", left: "20%" }} />
-        <FloatingShape delay={6} size="w-20 h-20" position={{ bottom: "30%", right: "10%" }} />
-      </div>
+      <motion.div
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: 0.6 }}
+        className="h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 rounded-full mx-auto max-w-7xl origin-left mb-10"
+      />
+      
       
       <div className="container mx-auto text-center relative z-10 px-4">
         {/* Heading */}
@@ -180,6 +181,14 @@ const AboutusValues: React.FC = () => {
           ))}
         </motion.div>
       </div>
+      <motion.div
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: 0.6 }}
+        className="h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 rounded-full mx-auto max-w-7xl origin-left mt-10"
+      />
+      <div className="w-3 h-3 rounded-full bg-blue-500/90 mx-auto mt-3 shadow-sm" />
     </section>
   );
 };

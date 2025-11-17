@@ -118,54 +118,15 @@ const AboutusMission: React.FC = () => {
             >
               <motion.div
                 variants={cardVariants}
-                whileHover={{ 
-                  y: -12,
-                  rotateZ: -1,
-                  transition: { type: "spring", stiffness: 300, damping: 15 }
-                }}
-                className="bg-gradient-to-br from-white to-blue-50 dark:from-gray-800 dark:to-blue-900/30 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-500 border-2 border-blue-100/50 dark:border-blue-700/30 h-full flex flex-col justify-center relative overflow-hidden group"
+                className="rounded-3xl p-10 shadow-xl bg-white dark:bg-gray-800 border border-blue-100 dark:border-blue-700/40 h-full flex flex-col justify-center relative overflow-hidden"
               >
-                {/* Decorative elements */}
-                <div className="absolute top-6 right-6 w-16 h-16 bg-blue-500/10 rounded-full blur-xl"></div>
-                <div className="absolute bottom-6 left-6 w-12 h-12 bg-cyan-400/10 rounded-full blur-xl"></div>
-                
-                {/* Animated border */}
-                <motion.div 
-                  className="absolute inset-0 rounded-3xl border-2 border-blue-200/30 dark:border-blue-600/20"
-                  animate={{
-                    boxShadow: [
-                      "0 0 0px rgba(59, 130, 246, 0.1)",
-                      "0 0 15px rgba(59, 130, 246, 0.3)",
-                      "0 0 0px rgba(59, 130, 246, 0.1)"
-                    ]
-                  }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
+                <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-blue-500/10 blur-2xl" />
+                <div className="absolute -right-6 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-cyan-400/10 blur-2xl" />
 
-                {/* Icon Container */}
-                <div className="relative mb-8 flex justify-center">
-                  <motion.div
-                    className="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white text-4xl shadow-lg shadow-blue-500/30"
-                    whileHover={{
-                      scale: 1.1,
-                      rotate: 5,
-                      transition: { duration: 0.3 },
-                    }}
-                  >
+                <div className="mb-8 flex justify-center">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-md">
                     <FaBullseye />
-                  </motion.div>
-                  <motion.div
-                    className="absolute -inset-4 rounded-2xl border-2 border-blue-400/30"
-                    animate={{
-                      scale: [1, 1.1, 1],
-                      opacity: [0.3, 0.6, 0.3],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
+                  </div>
                 </div>
 
                 <h3 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">
@@ -193,44 +154,11 @@ const AboutusMission: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Hover effect overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+                <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-70 rounded-b-3xl" />
               </motion.div>
             </motion.div>
 
-            {/* Animated element between cards */}
-            <motion.div
-              className="absolute hidden lg:flex items-center justify-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
-              initial={{ opacity: 0, scale: 0.5, rotate: 0 }}
-              whileInView={{ opacity: 1, scale: 1, rotate: 360 }}
-              viewport={{ once: true }}
-              animate={{
-                y: ["-50%", "-60%", "-50%"], // Floating effect
-                rotate: [0, 5, 0, -5, 0], // Subtle rotation
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <div className="relative w-28 h-28 bg-gradient-to-br from-indigo-500 to-teal-400 rounded-full flex items-center justify-center shadow-xl shadow-indigo-500/40">
-                <FaRocket className="text-white text-5xl transform -rotate-45" />
-                <motion.div
-                  className="absolute inset-0 rounded-full border-4 border-indigo-300/50"
-                  animate={{
-                    scale: [1, 1.3, 1],
-                    opacity: [0.6, 0.1, 0.6],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.8,
-                  }}
-                />
-              </div>
-            </motion.div>
+            
 
             {/* Vision Card - Right */}
             <motion.div
@@ -242,55 +170,15 @@ const AboutusMission: React.FC = () => {
             >
               <motion.div
                 variants={cardVariants}
-                whileHover={{ 
-                  y: -12,
-                  rotateZ: 1,
-                  transition: { type: "spring", stiffness: 300, damping: 15 }
-                }}
-                className="bg-gradient-to-br from-white to-purple-50 dark:from-gray-800 dark:to-purple-900/30 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-500 border-2 border-purple-100/50 dark:border-purple-700/30 h-full flex flex-col justify-center relative overflow-hidden group"
+                className="rounded-3xl p-10 shadow-xl bg-white dark:bg-gray-800 border border-purple-100 dark:border-purple-700/40 h-full flex flex-col justify-center relative overflow-hidden"
               >
-                {/* Decorative elements */}
-                <div className="absolute top-6 left-6 w-16 h-16 bg-purple-500/10 rounded-full blur-xl"></div>
-                <div className="absolute bottom-6 right-6 w-12 h-12 bg-pink-400/10 rounded-full blur-xl"></div>
-                
-                {/* Animated border */}
-                <motion.div 
-                  className="absolute inset-0 rounded-3xl border-2 border-purple-200/30 dark:border-purple-600/20"
-                  animate={{
-                    boxShadow: [
-                      "0 0 0px rgba(168, 85, 247, 0.1)",
-                      "0 0 15px rgba(168, 85, 247, 0.3)",
-                      "0 0 0px rgba(168, 85, 247, 0.1)"
-                    ]
-                  }}
-                  transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-                />
+                <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-pink-400/10 blur-2xl" />
+                <div className="absolute -right-6 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-purple-500/10 blur-2xl" />
 
-                {/* Icon Container */}
-                <div className="relative mb-8 flex justify-center">
-                  <motion.div
-                    className="w-24 h-24 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-400 flex items-center justify-center text-white text-4xl shadow-lg shadow-purple-500/30"
-                    whileHover={{
-                      scale: 1.1,
-                      rotate: -5,
-                      transition: { duration: 0.3 },
-                    }}
-                  >
+                <div className="mb-8 flex justify-center">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-400 flex items-center justify-center text-white text-2xl shadow-md">
                     <FaEye />
-                  </motion.div>
-                  <motion.div
-                    className="absolute -inset-4 rounded-2xl border-2 border-purple-400/30"
-                    animate={{
-                      scale: [1, 1.1, 1],
-                      opacity: [0.3, 0.6, 0.3],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 0.5,
-                    }}
-                  />
+                  </div>
                 </div>
 
                 <h3 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">
@@ -318,8 +206,7 @@ const AboutusMission: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Hover effect overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+                <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 opacity-70 rounded-b-3xl" />
               </motion.div>
             </motion.div>
           </div>

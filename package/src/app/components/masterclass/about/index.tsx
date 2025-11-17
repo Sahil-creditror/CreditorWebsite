@@ -21,7 +21,6 @@ type ProgramSectionProps = {
 
 export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
-  const rippleRef = useRef<SVGSVGElement | null>(null);
   const priceRef = useRef<HTMLSpanElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
@@ -32,33 +31,6 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const ctx = gsap.context(() => {
-      // Ripple circles animation (scoped to rippleRef)
-      const circles = rippleRef.current
-        ? Array.from(
-            rippleRef.current.querySelectorAll<SVGCircleElement>(".ripple")
-          )
-        : [];
-
-      circles.forEach((c, i) => {
-        const dur = 3 + i * 1.1;
-        gsap.fromTo(
-          c,
-          { attr: { r: 40 }, opacity: 0 },
-          {
-            attr: { r: 220 },
-            opacity: 0.06,
-            ease: "sine.inOut",
-            duration: dur,
-            repeat: -1,
-            repeatDelay: 0.6 + i * 0.2,
-            yoyo: true,
-            stagger: { each: 0.2 },
-          }
-        );
-      });
-
-      // removed floating animation for the right-side card
-
       // price counter
       if (priceRef.current && !prefersReducedMotion) {
         const obj = { val: 0 };
@@ -75,26 +47,7 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
         priceRef.current.textContent = "$69";
       }
 
-      // removed entrance animation for the right-side card
-
-      // subtle parallax for ripple on pointermove (works on touch & mouse)
-      const onMove = (e: PointerEvent) => {
-        const el = wrapRef.current;
-        if (!el || !rippleRef.current) return;
-        const rect = el.getBoundingClientRect();
-        const mx = (e.clientX - rect.left) / rect.width - 0.5;
-        const my = (e.clientY - rect.top) / rect.height - 0.5;
-        gsap.to(rippleRef.current, { x: mx * 18, y: my * 10, duration: 0.9, ease: "power2.out" });
-      };
-
-      if (!prefersReducedMotion) {
-        wrapRef.current?.addEventListener("pointermove", onMove);
-      }
-
-      // cleanup handler inside gsap.context; ctx.revert() will also clear tweens
-      return () => {
-        if (!prefersReducedMotion) wrapRef.current?.removeEventListener("pointermove", onMove);
-      };
+      return () => {};
     }, wrapRef);
 
     return () => ctx.revert();
@@ -122,47 +75,14 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
         "dark:from-slate-900 dark:via-sky-900 dark:to-slate-800 dark:text-slate-50"
       }
     >
-      {/* Ripple SVG background (pointer-events-none so it doesn't block taps)
-          CHANGES:
-          - mix-blend-multiply in light mode so colors remain visible over white
-          - dark:mix-blend-screen for soft glow in dark mode
-          - opacity increased in light mode (opacity-100) and slightly reduced in dark (dark:opacity-70)
-      */}
-      <svg
-        ref={rippleRef}
-        className="pointer-events-none absolute inset-0 w-full h-full mix-blend-multiply dark:mix-blend-screen opacity-100 dark:opacity-70"
-        viewBox="0 0 1400 800"
-        preserveAspectRatio="xMidYMid slice"
-        aria-hidden="true"
-      >
-        <defs>
-          <radialGradient id="g1" cx="50%" cy="40%">
-            {/* slightly stronger in light so it's visible; dark mode opacity is handled by svg class above */}
-            <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.26" />
-            <stop offset="100%" stopColor="#bfdbfe" stopOpacity="0.06" />
-          </radialGradient>
-        </defs>
-
-        <rect width="1400" height="800" fill="url(#g1)" />
-
-        {/* Big ambient circles that pulse via GSAP
-            Increased base opacity so they show through light backgrounds; dark mode will tone them via svg opacity.
-        */}
-        <g className="ripple-group">
-          <circle className="ripple" cx="200" cy="120" r="40" fill="#60a5fa" opacity="0.14" />
-          <circle className="ripple" cx="1100" cy="420" r="40" fill="#38bdf8" opacity="0.14" />
-          <circle className="ripple" cx="700" cy="620" r="40" fill="#93c5fd" opacity="0.14" />
-          <circle className="ripple" cx="400" cy="320" r="40" fill="#60a5fa" opacity="0.14" />
-        </g>
-      </svg>
+      
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
 
           {/* Left - Content */}
           <div className="relative">
-            {/* Glow Accent Behind Heading */}
-            <div className="absolute -top-10 -left-10 w-40 h-40 rounded-full bg-sky-400/20 blur-3xl animate-pulse hidden sm:block" />
+          
 
             <motion.h2
                 initial="hidden"
@@ -210,12 +130,10 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
                     custom={i + 1}
                     variants={list}
                     whileHover={{ scale: 1.03, y: -2 }}
-                    className="flex items-start gap-3 p-4 rounded-2xl bg-white/70 dark:bg-slate-800/40 border border-slate-200/30 dark:border-white/10 backdrop-blur-lg shadow-md hover:shadow-xl transition-all relative overflow-hidden"
+                    className="flex items-start gap-3 p-4 rounded-2xl bg-white/80 dark:bg-slate-800/40 border border-slate-200/30 dark:border-white/10 shadow-sm hover:shadow-md transition-all"
                 >
-                    {/* Faint ripple behind icon */}
-                    <div className="absolute -inset-1 opacity-0 hover:opacity-100 transition duration-500 rounded-2xl bg-gradient-to-r from-sky-400/20 to-sky-600/10 blur-xl" />
                     <svg
-                    className="w-6 h-6 flex-none mt-1 text-sky-600 dark:text-sky-300 relative z-10"
+                    className="w-6 h-6 flex-none mt-1 text-sky-600 dark:text-sky-300"
                     viewBox="0 0 24 24"
                     fill="none"
                     >
@@ -227,7 +145,7 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
                         strokeLinejoin="round"
                     />
                     </svg>
-                    <span className="text-slate-900 dark:text-slate-100 text-sm sm:text-base font-medium relative z-10">{txt}</span>
+                    <span className="text-slate-900 dark:text-slate-100 text-sm sm:text-base font-medium">{txt}</span>
                 </motion.li>
                 ))}
             </motion.ul>
@@ -320,7 +238,7 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
                 <h3 className="text-base sm:text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">
                     What's Included:
                 </h3>
-                <ul className="grid gap-3">
+                <ul className="grid gap-2">
                     {[
                     "Lifetime access to videos & templates",
                     "Weekly live group mentorship (Q&A)",
@@ -328,13 +246,11 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
                     ].map((t, idx) => (
                     <li
                         key={idx}
-                        className="flex items-center text-slate-700 dark:text-slate-200 text-base sm:text-lg gap-3 py-2 border-b border-slate-200/6 dark:border-white/5"
+                        className="flex items-start text-slate-700 dark:text-slate-200 text-base sm:text-lg gap-3 py-2"
                     >
-                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-sky-500/10">
-                        <svg className="w-4 h-4 text-sky-500" viewBox="0 0 24 24" fill="none">
+                        <svg className="w-5 h-5 mt-0.5 text-sky-600 dark:text-sky-300 flex-none" viewBox="0 0 24 24" fill="none">
                             <path d="M5 12l4 4L19 6" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                        </span>
                         <span>{t}</span>
                     </li>
                     ))}

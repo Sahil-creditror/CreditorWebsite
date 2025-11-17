@@ -163,6 +163,7 @@ function Button({
   borderClassName,
   duration,
   className,
+  showBorderEffect = true,
   ...otherProps
 }: {
   borderRadius?: string;
@@ -172,6 +173,7 @@ function Button({
   borderClassName?: string;
   duration?: number;
   className?: string;
+  showBorderEffect?: boolean;
   [key: string]: any;
 }) {
   return (
@@ -180,33 +182,28 @@ function Button({
         "relative h-16 w-40 overflow-hidden bg-transparent p-[1px] text-xl",
         containerClassName
       )}
-      style={{
-        borderRadius: borderRadius,
-      }}
+      style={{ borderRadius }}
       {...otherProps}
     >
-      <div
-        className="absolute inset-0"
-        style={{ borderRadius: `calc(${borderRadius} * 0.96)` }}
-      >
-        <MovingBorder duration={duration} rx="30%" ry="30%">
-          <div
-            className={cn(
-              "h-20 w-20 bg-[radial-gradient(#0ea5e9_40%,transparent_60%)] opacity-[0.8]",
-              borderClassName
-            )}
-          />
-        </MovingBorder>
-      </div>
+      {showBorderEffect && (
+        <div className="absolute inset-0" style={{ borderRadius: `calc(${borderRadius} * 0.96)` }}>
+          <MovingBorder duration={duration} rx="30%" ry="30%">
+            <div
+              className={cn(
+                "h-20 w-20 bg-[radial-gradient(#0ea5e9_40%,transparent_60%)] opacity-[0.8]",
+                borderClassName
+              )}
+            />
+          </MovingBorder>
+        </div>
+      )}
 
       <div
         className={cn(
-          "relative flex h-full w-full items-center justify-center border border-slate-800 bg-slate-900/[0.8] text-sm text-white antialiased backdrop-blur-xl",
+          "relative flex h-full w-full items-center justify-center text-sm text-white",
           className
         )}
-        style={{
-          borderRadius: `calc(${borderRadius} * 0.96)`,
-        }}
+        style={{ borderRadius: `calc(${borderRadius} * 0.96)` }}
       >
         {children}
       </div>
@@ -460,104 +457,87 @@ const AboutusDetail = () => {
             .
           </motion.p>
         </motion.div>
+        
+        {/* Background video block above cards */}
+        <motion.div
+          variants={itemVariants}
+          className="group relative w-full max-w-xl mx-auto mb-12 rounded-2xl overflow-hidden shadow-xl"
+        >
+          <div className="relative bg-black">
+            <div className="pt-[100%]" />
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            >
+              <source src="/video/intro-new.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-md">
+                <svg className="w-8 h-8 text-secondary ml-1" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </motion.div>
         {/* Cards */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto relative"
+          className="grid lg:grid-cols-3 gap-10 xl:gap-12 max-w-7xl mx-auto"
         >
           {cards.map((card, i) => (
-            <motion.div
+            <motion.article
               key={i}
               variants={itemVariants}
-              onClick={() => setShowAllDescriptions(true)} // ✅ Show all descriptions
-              whileHover={{
-                y: -10,
-                scale: 1.02,
-                transition: { type: "spring", stiffness: 300, damping: 15 },
-              }}
-              className={`relative cursor-pointer p-8 rounded-3xl bg-gradient-to-b from-white to-gray-50 dark:from-darkblack dark:to-gray-900 shadow-xl hover:shadow-2xl border border-gray-100 dark:border-gray-800 transition-all duration-300 z-10 group h-full flex flex-col`} 
+              whileHover={{ y: -6, scale: 1.01 }}
+              className="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-lg bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-700"
             >
-              {/* Hover glow */}
-              <div
-                className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${card.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500 -z-10`}
-              />
+              <div className="relative w-full h-40 sm:h-48">
+                <Image
+                  src={card.image}
+                  alt={card.title}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  priority={false}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+                <div className={`absolute inset-x-0 bottom-0 h-0 bg-gradient-to-t ${i===0 ? 'from-blue-500/10' : i===1 ? 'from-emerald-500/10' : 'from-amber-500/10'} to-transparent transition-all duration-500 ease-out group-hover:h-full`} />
+              </div>
 
-              {/* Top Accent */}
-              <div
-                className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${card.color} rounded-t-3xl`}
-              />
-
-              <motion.div layout="position" className="flex flex-col h-full"> {/* layout="position" helps with smooth height transitions */}
-                {/* Icon */}
-                <motion.div
-                  layout="position"
-                  className={`flex items-center justify-center mb-6 p-4 rounded-2xl ${card.bgColor} w-20 h-20 mx-auto`}
-                >
-                  <div className="w-12 h-12 flex items-center justify-center">
-                    {card.icon}
-                  </div>
-                </motion.div>
-
-                <motion.h3
-                  layout="position"
-                  className="text-2xl font-bold text-darkblack dark:text-white mb-4 text-center"
-                >
-                  {card.title}
-                </motion.h3>
-                <motion.p
-                  layout="position"
-                  className="text-gray-600 dark:text-gray-300 leading-relaxed text-center flex-grow"
-                >
+              <div className="p-5 sm:p-6 bg-white/95 dark:bg-[#0b1220]">
+                <h3 className="text-lg md:text-xl font-semibold text-slate-900 dark:text-white mb-2">{card.title}</h3>
+                <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
                   {card.desc}
-                </motion.p>
+                </p>
 
-                {!showAllDescriptions && (
-                  <div className="mt-auto pt-4 flex items-center justify-center text-sm font-semibold text-primary">
-                    <span>Show More</span>
-                    <FaArrowDown className="ml-2" />
-                  </div>
-                )}
-
-                {/* Expanded content */}
                 <AnimatePresence>
-                  {showAllDescriptions && ( // ✅ Conditional rendering based on showAllDescriptions
+                  {showAllDescriptions && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.4, ease: "easeOut" }}
-                      className="mt-6 overflow-hidden" // Added overflow-hidden for smooth height
+                      transition={{ duration: 0.35 }}
+                      className="mt-4"
                     >
-                      <div
-                        className={`w-full h-40 rounded-xl mb-4 ${card.fallbackColor} flex items-center justify-center overflow-hidden`}
-                      >
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.5 }}
-                          className="w-full h-full"
-                        >
-                          <Image
-                            src={card.image}
-                            alt={card.title}
-                            width={500}
-                            height={500}
-                            className="w-full h-full object-cover"
-                          />
-                        </motion.div>
-                      </div>
-
-                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-center">
+                      <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
                         {card.long_desc}
                       </p>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </motion.div>
-            </motion.div>
+              </div>
+
+              <div className={`absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r ${i===0 ? 'from-blue-500 to-blue-600' : i===1 ? 'from-emerald-500 to-emerald-600' : 'from-amber-500 to-amber-600'} opacity-80`} />
+            </motion.article>
           ))}
         </motion.div>
         {/* "Show Less" Button */}
@@ -669,11 +649,11 @@ const AboutusDetail = () => {
         className="space-y-3 mb-10 text-left"
       >
         {[
-          "✓ Boost credit score by 100+ points",
-          "✓ Create a debt-free plan that works",
-          "✓ Build sustainable wealth strategies",
-          "✓ Personalized 1-on-1 coaching",
-          "✓ Lifetime access to all materials"
+          "Boost credit score by 100+ points",
+          "Create a debt-free plan that works",
+          "Build sustainable wealth strategies",
+          "Personalized 1-on-1 coaching",
+          "Lifetime access to all materials"
         ].map((item, index) => (
           <div key={index} className="flex items-center text-gray-700 dark:text-gray-300">
             <div className="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mr-3">
@@ -692,42 +672,42 @@ const AboutusDetail = () => {
         className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
       >
         <Button
-  as="a"
-  href="/projects"
-  borderRadius="3rem"
-  containerClassName="
-    relative w-full sm:w-auto min-w-[200px] h-14 px-8 py-0 group/btn
-    overflow-visible
+          as="a"
+          href="/projects"
+          borderRadius="3rem"
+          containerClassName="
+    relative w-full sm:w-auto min-w-[200px] h-14 px-8 py-0
   "
-  className="
+          className="
     text-base md:text-lg font-bold tracking-wide text-white
     bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500
     hover:from-blue-700 hover:via-blue-600 hover:to-cyan-600
     transition-all duration-300 ease-out
-    shadow-lg hover:shadow-xl hover:shadow-blue-500/30
+    shadow-md hover:shadow-lg
     flex items-center justify-center
   "
-  style={{
-    letterSpacing: "0.02em",
-  }}
->
-  <span className="flex items-center">
-    Join Now
-    <svg
-      className="ml-3 w-5 h-5 transition-transform duration-300 group-hover/btn:translate-x-1.5"
-      fill="none"
-      stroke="white"
-      strokeWidth={2.2}
-      viewBox="0 0 24 24"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M13 7l5 5m0 0l-5 5m5-5H6"
-      />
-    </svg>
-  </span>
-</Button>
+          showBorderEffect={false}
+          style={{
+            letterSpacing: "0.02em",
+          }}
+        >
+          <span className="flex items-center">
+            Join Now
+            <svg
+      className="ml-3 w-5 h-5 transition-transform duration-300 translate-x-0 group-hover:translate-x-1"
+              fill="none"
+              stroke="white"
+              strokeWidth={2.2}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              />
+            </svg>
+          </span>
+        </Button>
 
 
 

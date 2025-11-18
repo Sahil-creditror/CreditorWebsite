@@ -5,6 +5,7 @@ import Link from "next/link";
 
 interface ThanksgivingPopupProps {
   delayMs?: number;
+  disableAutoOpen?: boolean;
 }
 
 interface TimeLeft {
@@ -14,14 +15,15 @@ interface TimeLeft {
   seconds: number;
 }
 
-const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000 }) => {
+const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000, disableAutoOpen = false }) => {
   const [open, setOpen] = useState(false);
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
+    if (disableAutoOpen) return;
     const timer = setTimeout(() => setOpen(true), delayMs);
     return () => clearTimeout(timer);
-  }, [delayMs]);
+  }, [delayMs, disableAutoOpen]);
 
   useEffect(() => {
     const calculateTimeLeft = () => {

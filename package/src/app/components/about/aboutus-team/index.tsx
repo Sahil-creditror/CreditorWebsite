@@ -12,7 +12,7 @@ const AboutusTeam = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-white via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+    <section className="py-8 md:py-12 bg-gradient-to-b from-white via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
 
       <style>{`
         @keyframes gradientPan {
@@ -38,7 +38,7 @@ const AboutusTeam = () => {
         }
       `}</style>
       <div className="container">
-        <div className="grid lg:grid-cols-2 gap-10 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
           <div className="text-left">
             <h2>Meet Our Founder</h2>
             <div className="mt-4">
@@ -48,7 +48,7 @@ const AboutusTeam = () => {
             <p className="mt-6 text-secondary/70 dark:text-white/70">{member.bio}</p>
           </div>
           <motion.div
-            className="relative w-full flex justify-center"
+            className="relative w-full flex justify-center lg:justify-end"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}

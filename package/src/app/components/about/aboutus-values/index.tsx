@@ -113,7 +113,7 @@ const AboutusValues: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          className="mb-16"
+          className="mb-10"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4 flex flex-wrap justify-center gap-3">
             {headingWords.map((word, i) => (

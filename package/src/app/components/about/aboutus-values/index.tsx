@@ -13,30 +13,30 @@ interface ValueItem {
 }
 
 const values: ValueItem[] = [
-  { 
-    title: "Integrity", 
-    desc: "We uphold transparency and honesty in everything we do.", 
+  {
+    title: "Integrity",
+    desc: "We uphold transparency and honesty in everything we do.",
     icon: <FaHandshake />,
     color: "from-blue-500 to-cyan-500",
     bgColor: "bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20"
   },
-  { 
-    title: "Student First", 
-    desc: "We design learning experiences that put students at the center.", 
+  {
+    title: "Student First",
+    desc: "We design learning experiences that put students at the center.",
     icon: <FaUserGraduate />,
     color: "from-green-500 to-emerald-500",
     bgColor: "bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20"
   },
-  { 
-    title: "Innovation", 
-    desc: "We constantly evolve to deliver modern education solutions.", 
+  {
+    title: "Innovation",
+    desc: "We constantly evolve to deliver modern education solutions.",
     icon: <FaLightbulb />,
     color: "from-amber-500 to-orange-500",
     bgColor: "bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20"
   },
-  { 
-    title: "Global Impact", 
-    desc: "We aim to build financial literacy worldwide.", 
+  {
+    title: "Global Impact",
+    desc: "We aim to build financial literacy worldwide.",
     icon: <FaGlobe />,
     color: "from-purple-500 to-indigo-500",
     bgColor: "bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20"
@@ -53,7 +53,7 @@ const FloatingShape: React.FC<FloatingShapeProps> = ({ delay, size, position }) 
   <motion.div
     className={`absolute rounded-full bg-gradient-to-r from-primary/10 to-primary/5 dark:from-primary/20 dark:to-primary/10 ${size}`}
     initial={{ opacity: 0, scale: 0 }}
-    animate={{ 
+    animate={{
       opacity: [0, 0.5, 0],
       scale: [0, 1, 0],
       y: [0, -20, 0],
@@ -93,19 +93,19 @@ const AboutusValues: React.FC = () => {
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: { 
-        delay: i * 0.3, 
-        duration: 0.6, 
-        ease: "easeOut" 
+      transition: {
+        delay: i * 0.3,
+        duration: 0.6,
+        ease: "easeOut"
       }
     }),
   };
 
   return (
     <section className="relative py-20 md:py-28 bg-gradient-to-b from-gray-50 to-white dark:from-darkblack dark:to-secondary overflow-hidden">
-      
-      
-      
+
+
+
       <div className="container mx-auto text-center relative z-10 px-4">
         {/* Heading */}
         <motion.div
@@ -131,7 +131,7 @@ const AboutusValues: React.FC = () => {
             variants={itemVariants}
             className="h-1.5 w-24 bg-gradient-to-r from-primary to-blue-600 mx-auto rounded-full"
           />
-          <motion.p 
+          <motion.p
             variants={itemVariants}
             className="mt-6 text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
           >
@@ -140,7 +140,7 @@ const AboutusValues: React.FC = () => {
         </motion.div>
 
         {/* Values grid */}
-        <motion.div 
+        <motion.div
           className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
           variants={containerVariants}
           initial="hidden"
@@ -154,7 +154,7 @@ const AboutusValues: React.FC = () => {
               className="group p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-800 relative overflow-hidden"
             >
               <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-gradient-to-r ${value.color}`} />
-              
+
               <div className={`relative z-10 ${value.bgColor} p-6 rounded-xl`}>
                 <motion.div
                   className="flex justify-center mb-6"
@@ -175,7 +175,7 @@ const AboutusValues: React.FC = () => {
           ))}
         </motion.div>
       </div>
-      
+
       <div className="w-3 h-3 rounded-full bg-blue-500/90 mx-auto mt-3 shadow-sm" />
     </section>
   );

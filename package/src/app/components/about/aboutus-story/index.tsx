@@ -157,9 +157,8 @@ const AboutusStory = () => {
               >
                 <div className="w-full flex flex-col md:flex-row items-center justify-between">
                   <motion.div
-                    className={`w-full md:w-5/12 ${
-                      index % 2 === 0 ? "md:order-1" : "md:order-2"
-                    }`}
+                    className={`w-full md:w-5/12 ${index % 2 === 0 ? "md:order-1" : "md:order-2"
+                      }`}
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
@@ -171,9 +170,8 @@ const AboutusStory = () => {
                     />
                   </motion.div>
                   <div
-                    className={`w-full md:w-5/12 ${
-                      index % 2 === 0 ? "md:order-2" : "md:order-1"
-                    }`}
+                    className={`w-full md:w-5/12 ${index % 2 === 0 ? "md:order-2" : "md:order-1"
+                      }`}
                   >
                     <motion.div variants={textVariants} className="text-left">
                       <div className="text-2xl font-bold text-primary mb-2">

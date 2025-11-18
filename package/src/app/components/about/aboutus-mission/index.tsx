@@ -57,7 +57,7 @@ const AboutusMission: React.FC = () => {
   return (
     <div className="relative py-16">
       <section className="relative py-24 md:py-32 bg-gradient-to-br from-slate-50 via-white to-blue-50/50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20 overflow-hidden">
-        
+
 
         <div className="container mx-auto px-4 relative z-10">
           {/* Section Header */}
@@ -101,7 +101,7 @@ const AboutusMission: React.FC = () => {
                 <h3 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">
                   Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Mission</span>
                 </h3>
-                
+
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed text-center mb-6">
                   To demystify financial complexity and equip individuals with practical knowledge for confident credit and money management decisions.
                 </p>
@@ -109,7 +109,7 @@ const AboutusMission: React.FC = () => {
                 {/* Feature highlights */}
                 <div className="space-y-3 mt-6">
                   {["Simplify complex concepts", "Provide actionable guidance", "Build financial confidence"].map((item, index) => (
-                    <motion.div 
+                    <motion.div
                       key={index}
                       className="flex items-center text-blue-700 dark:text-blue-300"
                       initial={{ opacity: 0, x: -20 }}
@@ -127,7 +127,7 @@ const AboutusMission: React.FC = () => {
               </motion.div>
             </motion.div>
 
-            
+
 
             {/* Vision Card - Right */}
             <motion.div
@@ -153,7 +153,7 @@ const AboutusMission: React.FC = () => {
                 <h3 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">
                   Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">Vision</span>
                 </h3>
-                
+
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed text-center mb-6">
                   To cultivate a <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">financially empowered generation</span> that excels in both personal prosperity and professional achievement.
                 </p>
@@ -161,7 +161,7 @@ const AboutusMission: React.FC = () => {
                 {/* Feature highlights */}
                 <div className="space-y-3 mt-6">
                   {["Create financial awareness", "Foster generational wealth", "Enable life transformation"].map((item, index) => (
-                    <motion.div 
+                    <motion.div
                       key={index}
                       className="flex items-center text-purple-700 dark:text-purple-300"
                       initial={{ opacity: 0, x: 20 }}
@@ -208,7 +208,7 @@ const AboutusMission: React.FC = () => {
           </motion.div>
         </div>
       </section>
-      
+
       <div className="w-3 h-3 rounded-full bg-blue-500/90 mx-auto mt-3 shadow-sm" />
     </div>
   );

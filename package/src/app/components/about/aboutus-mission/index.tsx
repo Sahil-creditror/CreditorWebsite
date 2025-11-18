@@ -3,6 +3,7 @@
 import { motion, Variants } from "framer-motion";
 import { FaBullseye, FaEye, FaLightbulb, FaRocket } from "react-icons/fa"; // Import FaRocket
 import React from "react";
+import Image from "next/image";
 
 interface FloatingOrbProps {
   delay: number;
@@ -68,16 +69,14 @@ const AboutusMission: React.FC = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Core Beliefs</span>
-            </h2>
-            <p className="text-xl text-white/80 max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Our Core Beliefs</h2>
+            <p className="text-xl text-white max-w-3xl mx-auto">
               Driving financial empowerment through education and innovation
             </p>
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-10 items-stretch max-w-6xl mx-auto relative"> {/* Added relative to parent for absolute positioning */}
-            {/* Mission Card - Left */}
+            {/* Mission Card - Left (image style) */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
@@ -87,49 +86,31 @@ const AboutusMission: React.FC = () => {
             >
               <motion.div
                 variants={cardVariants}
-                className="rounded-3xl p-10 shadow-xl bg-white dark:bg-gray-800 border border-blue-100 dark:border-blue-700/40 h-full flex flex-col justify-center relative overflow-hidden"
+                className="relative rounded-3xl overflow-hidden shadow-xl"
               >
-                <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-blue-500/10 blur-2xl" />
-                <div className="absolute -right-6 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-cyan-400/10 blur-2xl" />
-
-                <div className="mb-8 flex justify-center">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-md">
-                    <FaBullseye />
+                <div className="relative h-56 md:h-64 lg:h-72">
+                  <Image
+                    src="/images/about-us/offer.webp"
+                    alt="Our Mission"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
+                    priority={false}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 className="text-xl md:text-2xl font-semibold text-white">Our Mission</h3>
+                    <p className="mt-2 text-sm md:text-base text-white/90">
+                      To demystify financial complexity and equip individuals with practical knowledge for confident credit and money management decisions.
+                    </p>
                   </div>
                 </div>
-
-                <h3 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">
-                  Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Mission</span>
-                </h3>
-
-                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed text-center mb-6">
-                  To demystify financial complexity and equip individuals with practical knowledge for confident credit and money management decisions.
-                </p>
-
-                {/* Feature highlights */}
-                <div className="space-y-3 mt-6">
-                  {["Simplify complex concepts", "Provide actionable guidance", "Build financial confidence"].map((item, index) => (
-                    <motion.div
-                      key={index}
-                      className="flex items-center text-blue-700 dark:text-blue-300"
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 + 0.5 }}
-                      viewport={{ once: true }}
-                    >
-                      <div className="w-2 h-2 rounded-full bg-blue-500 mr-3"></div>
-                      <span className="text-sm font-medium">{item}</span>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-70 rounded-b-3xl" />
               </motion.div>
             </motion.div>
 
 
 
-            {/* Vision Card - Right */}
+            {/* Vision Card - Right (image style) */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
@@ -139,43 +120,25 @@ const AboutusMission: React.FC = () => {
             >
               <motion.div
                 variants={cardVariants}
-                className="rounded-3xl p-10 shadow-xl bg-white dark:bg-gray-800 border border-purple-100 dark:border-purple-700/40 h-full flex flex-col justify-center relative overflow-hidden"
+                className="relative rounded-3xl overflow-hidden shadow-xl"
               >
-                <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-pink-400/10 blur-2xl" />
-                <div className="absolute -right-6 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-purple-500/10 blur-2xl" />
-
-                <div className="mb-8 flex justify-center">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-400 flex items-center justify-center text-white text-2xl shadow-md">
-                    <FaEye />
+                <div className="relative h-56 md:h-64 lg:h-72">
+                  <Image
+                    src="/images/about-us/why.webp"
+                    alt="Our Vision"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
+                    priority={false}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 className="text-xl md:text-2xl font-semibold text-white">Our Vision</h3>
+                    <p className="mt-2 text-sm md:text-base text-white/90">
+                      To cultivate a financially empowered generation that excels in both personal prosperity and professional achievement.
+                    </p>
                   </div>
                 </div>
-
-                <h3 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">
-                  Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">Vision</span>
-                </h3>
-
-                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed text-center mb-6">
-                  To cultivate a <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">financially empowered generation</span> that excels in both personal prosperity and professional achievement.
-                </p>
-
-                {/* Feature highlights */}
-                <div className="space-y-3 mt-6">
-                  {["Create financial awareness", "Foster generational wealth", "Enable life transformation"].map((item, index) => (
-                    <motion.div
-                      key={index}
-                      className="flex items-center text-purple-700 dark:text-purple-300"
-                      initial={{ opacity: 0, x: 20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 + 0.5 }}
-                      viewport={{ once: true }}
-                    >
-                      <div className="w-2 h-2 rounded-full bg-purple-500 mr-3"></div>
-                      <span className="text-sm font-medium">{item}</span>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 opacity-70 rounded-b-3xl" />
               </motion.div>
             </motion.div>
           </div>

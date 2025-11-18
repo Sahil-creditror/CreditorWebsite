@@ -456,12 +456,12 @@ const AboutusDetail = () => {
 
           <motion.div
             variants={itemVariants}
-            className="max-w-7xl mx-auto mb-6 px-2"
+            className="max-w-7xl mx-auto mb-6 px-2 text-center"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white">
+            <h2 className="text-4xl md:text-5xl font-bold text-white text-center">
               Creditor Academy — Core Essentials
             </h2>
-            <p className="mt-2 text-white/80">
+            <p className="mt-2 text-white/80 text-center">
               What we offer, how we deliver, and why it matters
             </p>
           </motion.div>
@@ -490,7 +490,7 @@ const AboutusDetail = () => {
                   />
                 </div>
 
-                <div className="p-6 bg-white dark:bg-[#0b1220]">
+                <div className="p-4 md:p-5 bg-white dark:bg-[#0b1220]">
                   <h3 className="text-xl md:text-2xl font-semibold text-slate-900 dark:text-white mb-3">{card.title}</h3>
                   <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                     {card.desc}
@@ -545,41 +545,7 @@ const AboutusDetail = () => {
           viewport={{ once: true, amount: 0.3 }}
           className="relative max-w-6xl mx-auto mt-28 rounded-4xl p-10 md:p-16 bg-gradient-to-br from-white via-blue-50/95 to-cyan-50/90 dark:from-blue-950/90 dark:via-blue-900/80 dark:to-cyan-900/70 shadow-2xl shadow-blue-200/50 dark:shadow-blue-900/30 overflow-hidden group border border-blue-200/60 dark:border-blue-700/40"
         >
-          {/* Animated background elements */}
-          <div className="absolute inset-0 overflow-hidden">
-            {/* Floating particles */}
-            {Array.from({ length: 15 }).map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute rounded-full bg-blue-400/20 dark:bg-cyan-400/10"
-                initial={{
-                  y: `${Math.random() * 100}%`,
-                  x: `${Math.random() * 100}%`,
-                  opacity: 0,
-                  scale: 0
-                }}
-                animate={{
-                  y: [`${Math.random() * 100}%`, `${Math.random() * 100}%`, `${Math.random() * 100}%`],
-                  x: [`${Math.random() * 100}%`, `${Math.random() * 100}%`, `${Math.random() * 100}%`],
-                  opacity: [0, 0.5, 0],
-                  scale: [0, 1, 0]
-                }}
-                transition={{
-                  duration: Math.random() * 10 + 15,
-                  repeat: Infinity,
-                  delay: Math.random() * 5,
-                  ease: "easeInOut"
-                }}
-                style={{
-                  width: `${Math.random() * 20 + 5}px`,
-                  height: `${Math.random() * 20 + 5}px`,
-                }}
-              />
-            ))}
-
-            {/* Gradient glow */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-cyan-400/5 to-blue-500/5" />
-          </div>
+          
 
           {/* Animated border */}
           <motion.div

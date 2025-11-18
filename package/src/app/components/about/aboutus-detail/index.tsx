@@ -471,7 +471,7 @@ const AboutusDetail = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            className="grid lg:grid-cols-3 gap-10 xl:gap-12 max-w-7xl mx-auto"
+            className="grid lg:grid-cols-3 gap-10 xl:gap-12 max-w-7xl mx-auto px-3 md:px-6"
           >
             {cards.map((card, i) => (
               <motion.article

@@ -56,8 +56,8 @@ const AboutusMission: React.FC = () => {
   };
 
   return (
-    <div className="relative py-16">
-      <section className="relative py-24 md:py-32 bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 dark:from-blue-900 dark:via-blue-900 dark:to-cyan-900 overflow-hidden text-white">
+    <div className="relative py-10">
+      <section className="relative py-12 md:py-16 bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 dark:from-blue-900 dark:via-blue-900 dark:to-cyan-900 overflow-hidden text-white">
 
 
         <div className="container mx-auto px-4 relative z-10">
@@ -143,36 +143,10 @@ const AboutusMission: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* Connecting Element */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-            viewport={{ once: true }}
-            className="flex justify-center mt-12"
-          >
-            <div className="relative">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white text-xl shadow-lg">
-                <FaLightbulb />
-              </div>
-              <motion.div
-                className="absolute inset-0 rounded-full border-2 border-blue-400/50"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.5, 0.8, 0.5],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-            </div>
-          </motion.div>
         </div>
       </section>
 
-      
+
     </div>
   );
 };

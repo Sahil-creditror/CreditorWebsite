@@ -56,8 +56,8 @@ const AboutusMission: React.FC = () => {
   };
 
   return (
-    <div className="relative py-8">
-      <section className="relative py-8 md:py-16 bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 dark:from-blue-900 dark:via-blue-900 dark:to-cyan-900 overflow-hidden text-white">
+    <div className="relative py-5">
+      <section className="relative py-5 md:py-16 bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 dark:from-blue-900 dark:via-blue-900 dark:to-cyan-900 overflow-hidden text-white">
 
 
         <div className="container mx-auto px-4 relative z-10">

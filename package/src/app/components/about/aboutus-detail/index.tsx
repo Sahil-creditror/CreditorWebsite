@@ -388,7 +388,7 @@ const AboutusDetail = () => {
   );
 
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden bg-gradient-to-br from-lightgray via-white to-blue-50/30 dark:from-darkblack dark:via-secondary dark:to-blue-900/10">
+    <section className="relative py-3 md:py-10 overflow-hidden bg-gradient-to-br from-lightgray via-white to-blue-50/30 dark:from-darkblack dark:via-secondary dark:to-blue-900/10">
 
       <div className="container relative z-10 px-6 mx-auto">
         {/* Heading */}
@@ -397,7 +397,7 @@ const AboutusDetail = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          className="text-center max-w-4xl mx-auto mb-16 md:mb-24" // Increased bottom margin
+          className="text-center max-w-4xl mx-auto mb-12 md:mb-10" // Increased bottom margin
         >
           <motion.h2
             className="text-5xl md:text-6xl font-extrabold tracking-tight text-secondary dark:text-white"
@@ -471,7 +471,7 @@ const AboutusDetail = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            className="grid lg:grid-cols-3 gap-10 xl:gap-12 max-w-7xl mx-auto px-3 md:px-6"
+            className="grid lg:grid-cols-3 gap-12 xl:gap-10 max-w-7xl mx-auto px-2 md:px-4"
           >
             {cards.map((card, i) => (
               <motion.article

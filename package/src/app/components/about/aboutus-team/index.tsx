@@ -56,17 +56,15 @@ const AboutusTeam = () => {
             transition={{ type: "spring", stiffness: 200, damping: 18 }}
           >
             <div className="w-full max-w-sm">
-              <div className="card-inner relative overflow-hidden">
-                <div className="relative w-72 h-72 mx-auto rounded-full overflow-hidden">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover"
-                    priority
-                  />
-                </div>
+              <div className="relative w-72 h-72 mx-auto rounded-full overflow-hidden">
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                  priority
+                />
               </div>
             </div>
           </motion.div>

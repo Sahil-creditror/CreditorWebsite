@@ -464,13 +464,6 @@ const AboutusDetail = () => {
           </div>
         </motion.div>
         <div className="relative py-16">
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ duration: 0.6 }}
-            className="h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 rounded-full mx-auto max-w-7xl origin-left"
-          />
 
           <motion.div
             variants={itemVariants}
@@ -536,13 +529,7 @@ const AboutusDetail = () => {
             ))}
           </motion.div>
 
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ duration: 0.6 }}
-            className="h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 rounded-full mx-auto max-w-7xl origin-left mt-12"
-          />
+          
         </div>
         {/* "Show Less" Button */}
         {showAllDescriptions && (

@@ -56,13 +56,6 @@ const AboutusMission: React.FC = () => {
 
   return (
     <div className="relative py-16">
-      <motion.div
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.6 }}
-        className="h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 rounded-full mx-auto max-w-7xl origin-left"
-      />
       <section className="relative py-24 md:py-32 bg-gradient-to-br from-slate-50 via-white to-blue-50/50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20 overflow-hidden">
         
 
@@ -215,13 +208,7 @@ const AboutusMission: React.FC = () => {
           </motion.div>
         </div>
       </section>
-      <motion.div
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.6 }}
-        className="h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 rounded-full mx-auto max-w-7xl origin-left mt-10"
-      />
+      
       <div className="w-3 h-3 rounded-full bg-blue-500/90 mx-auto mt-3 shadow-sm" />
     </div>
   );

@@ -13,13 +13,7 @@ const AboutusTeam = () => {
 
   return (
     <section className="py-16 md:py-24 bg-gradient-to-br from-blue-50 via-white to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20">
-      <motion.div
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.6 }}
-        className="h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 rounded-full mx-auto max-w-7xl origin-left mb-10"
-      />
+      
       <style>{`
         @keyframes gradientPan {
           0% { background-position: 0% 50%; }
@@ -78,13 +72,7 @@ const AboutusTeam = () => {
           </motion.div>
         </div>
       </div>
-      <motion.div
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.6 }}
-        className="h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 rounded-full mx-auto max-w-7xl origin-left mt-10"
-      />
+      
       <div className="w-3 h-3 rounded-full bg-blue-500/90 mx-auto mt-3 shadow-sm" />
     </section>
   );

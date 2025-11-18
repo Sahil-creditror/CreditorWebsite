@@ -103,13 +103,7 @@ const AboutusValues: React.FC = () => {
 
   return (
     <section className="relative py-20 md:py-28 bg-gradient-to-b from-gray-50 to-white dark:from-darkblack dark:to-secondary overflow-hidden">
-      <motion.div
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.6 }}
-        className="h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 rounded-full mx-auto max-w-7xl origin-left mb-10"
-      />
+      
       
       
       <div className="container mx-auto text-center relative z-10 px-4">
@@ -181,13 +175,7 @@ const AboutusValues: React.FC = () => {
           ))}
         </motion.div>
       </div>
-      <motion.div
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.6 }}
-        className="h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 rounded-full mx-auto max-w-7xl origin-left mt-10"
-      />
+      
       <div className="w-3 h-3 rounded-full bg-blue-500/90 mx-auto mt-3 shadow-sm" />
     </section>
   );

@@ -18,6 +18,8 @@ import Offer from "./components/home/Offer";
 // import { AnimatedTestimonialsDemo } from "./components/home/testimonial/AnimatedDemo";
 import Event from "./components/Event";
 import About from "./components/home/about";
+import ThanksgivingPopupSection from "./components/home/Thanksgiving/index";
+import ThanksgivingPopup from "./components/home/Thanksgiving/index";
 
 export const metadata: Metadata = {
     title: "Creditor Academy",
@@ -34,6 +36,7 @@ export default function Home() {
       <Offer />
       {/* <MasterInfo /> */}
       <Courses />
+      <ThanksgivingPopup />
       <Contact contactdataNumber="4" />
       <Event />
       {/* <Roadmap /> */}

@@ -61,7 +61,7 @@ const wordVariants: Variants = {
 
 const AboutusTestimonials = () => {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-blue-50 via-white to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20 transition-colors duration-500">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-white via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 transition-colors duration-500">
 
       <div className="container mx-auto text-center px-6">
         {/* Animated Heading */}

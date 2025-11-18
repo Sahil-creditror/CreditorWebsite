@@ -56,7 +56,7 @@ const AboutusMission: React.FC = () => {
 
   return (
     <div className="relative py-16">
-      <section className="relative py-24 md:py-32 bg-gradient-to-br from-slate-50 via-white to-blue-50/50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20 overflow-hidden">
+      <section className="relative py-24 md:py-32 bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 dark:from-blue-900 dark:via-blue-900 dark:to-cyan-900 overflow-hidden text-white">
 
 
         <div className="container mx-auto px-4 relative z-10">
@@ -68,10 +68,10 @@ const AboutusMission: React.FC = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Core Beliefs</span>
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-white/80 max-w-3xl mx-auto">
               Driving financial empowerment through education and innovation
             </p>
           </motion.div>

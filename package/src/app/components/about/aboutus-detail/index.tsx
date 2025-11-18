@@ -439,40 +439,29 @@ const AboutusDetail = () => {
         {/* Background video block above cards */}
         <motion.div
           variants={itemVariants}
-          className="group relative w-full max-w-xl mx-auto mb-12 rounded-2xl overflow-hidden shadow-xl"
+          className="group relative w-full max-w-3xl mx-auto mb-12 rounded-2xl bg-white shadow-xl"
         >
-          <div className="relative bg-black">
-            <div className="pt-[100%]" />
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full transition-transform duration-700 group-hover:scale-105"
-            >
-              <source src="/video/intro-new.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-md">
-                <svg className="w-8 h-8 text-secondary ml-1" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-            </div>
-          </div>
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-auto transition-transform duration-700 group-hover:scale-[1.02]"
+          >
+            <source src="/video/intro-new.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </motion.div>
-        <div className="relative py-16">
+        <div className="relative py-16 bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 text-white w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
 
           <motion.div
             variants={itemVariants}
             className="max-w-7xl mx-auto mb-6 px-2"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
+            <h2 className="text-4xl md:text-5xl font-bold text-white">
               Creditor Academy — Core Essentials
             </h2>
-            <p className="mt-2 text-slate-600 dark:text-slate-300">
+            <p className="mt-2 text-white/80">
               What we offer, how we deliver, and why it matters
             </p>
           </motion.div>

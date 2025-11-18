@@ -12,7 +12,7 @@ const AboutusTeam = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-blue-50 via-white to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-white via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
 
       <style>{`
         @keyframes gradientPan {
@@ -55,9 +55,9 @@ const AboutusTeam = () => {
             whileHover={{ y: -6, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 200, damping: 18 }}
           >
-            <div className="animated-card-border w-full max-w-sm">
+            <div className="w-full max-w-sm">
               <div className="card-inner relative overflow-hidden">
-                <div className="relative w-full h-72">
+                <div className="relative w-72 h-72 mx-auto rounded-full overflow-hidden">
                   <Image
                     src={member.image}
                     alt={member.name}

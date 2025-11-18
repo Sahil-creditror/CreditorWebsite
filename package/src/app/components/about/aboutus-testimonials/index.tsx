@@ -61,11 +61,12 @@ const wordVariants: Variants = {
 
 const AboutusTestimonials = () => {
   return (
-    <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900 transition-colors duration-500">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-blue-700 via-blue-600 to-cyan-600 transition-colors duration-500">
+
       <div className="container mx-auto text-center px-6">
         {/* Animated Heading */}
         <motion.h2
-          className="text-4xl md:text-5xl font-bold mb-12 text-gray-900 dark:text-white"
+          className="text-4xl md:text-5xl font-bold mb-12 text-white"
           variants={headingVariants}
           initial="hidden"
           whileInView="visible"
@@ -77,9 +78,7 @@ const AboutusTestimonials = () => {
               custom={i}
               variants={wordVariants}
               className={
-                word === "Students"
-                  ? "text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600 inline-block mr-2"
-                  : "inline-block mr-2"
+                "inline-block mr-2"
               }
             >
               {word}

@@ -26,7 +26,7 @@ export default function Page() {
             {/* <AboutusStory /> */}
             <AboutusMission />
             <AboutusValues />
-            <AboutusStats />
+            {/* <AboutusStats /> */}
             <AboutusTestimonials />
             <AboutusFullimg />
             <AboutusTeam />

@@ -8,17 +8,16 @@ export function HeroSectionOne() {
     <div
       className="relative w-full bg-cover bg-center py-20 md:py-40"
       style={{
-         backgroundImage: `url(${img1.src})`,
+        backgroundImage: `url(${img1.src})`,
       }}
     >
       {/* Overlay for better text contrast */}
       <div className="absolute inset-0 bg-black/30 dark:bg-black/50"></div>
 
-      {/* Left and Right vertical lines */}
-      <div className="absolute inset-y-0 left-0 h-full w-px bg-neutral-200/80 dark:bg-neutral-800/80">
+      <div className="absolute inset-y-0 left-4 md:left-8 h-full w-px bg-neutral-200/80 dark:bg-neutral-800/80">
         <div className="absolute top-0 h-40 w-px bg-gradient-to-b from-transparent via-blue-500 to-transparent" />
       </div>
-      <div className="absolute inset-y-0 right-0 h-full w-px bg-neutral-200/80 dark:bg-neutral-800/80">
+      <div className="absolute inset-y-0 right-4 md:right-8 h-full w-px bg-neutral-200/80 dark:bg-neutral-800/80">
         <div className="absolute h-40 w-px bg-gradient-to-b from-transparent via-blue-500 to-transparent" />
       </div>
 
@@ -27,36 +26,38 @@ export function HeroSectionOne() {
         <div className="absolute mx-auto h-px w-40 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
       </div>
 
-      {/* Content container */}
-      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center justify-center px-4">
-        <h1 className="text-center text-2xl font-bold text-white md:text-4xl lg:text-7xl max-w-5xl">
-          {"Launch Your Private Dream Website Today"
-            .split(" ")
-            .map((word, index) => (
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
-                animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                transition={{
-                  duration: 0.3,
-                  delay: index * 0.1,
-                  ease: "easeInOut",
-                }}
-                className="mr-2 inline-block"
-              >
-                {word}
-              </motion.span>
-            ))}
-        </h1>
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-start justify-center px-4">
+        <div className="relative w-full max-w-5xl pl-6">
+          <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-blue-500/70 to-transparent" />
+          <h1 className="text-left text-2xl md:text-4xl lg:text-7xl font-bold text-white leading-tight tracking-tight">
+            {"Launch Your Private Dream Website Today"
+              .split(" ")
+              .map((word, index) => (
+                <motion.span
+                  key={index}
+                  initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
+                  animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                  transition={{
+                    duration: 0.3,
+                    delay: index * 0.1,
+                    ease: "easeInOut",
+                  }}
+                  className="mr-2 inline-block"
+                >
+                  {word}
+                </motion.span>
+              ))}
+          </h1>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, delay: 0.8 }}
-          className="mt-4 max-w-3xl text-center text-lg font-normal text-white/90"
-        >
-          Elevate your brand with a stunning, high-performance website designed for success.
-        </motion.p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.8 }}
+            className="mt-4 max-w-3xl text-left text-lg font-normal text-white/90 leading-relaxed"
+          >
+            Elevate your brand with a stunning, high-performance website designed for success.
+          </motion.p>
+        </div>
 
         {/* <motion.div
           initial={{ opacity: 0 }}

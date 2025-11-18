@@ -477,7 +477,7 @@ const AboutusDetail = () => {
               <motion.article
                 key={i}
                 variants={itemVariants}
-                className="relative rounded-2xl overflow-hidden bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="relative rounded-2xl overflow-hidden bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full"
               >
                 <div className="relative w-full h-48 sm:h-56 rounded-t-2xl overflow-hidden">
                   <Image
@@ -490,7 +490,7 @@ const AboutusDetail = () => {
                   />
                 </div>
 
-                <div className="p-4 md:p-5 bg-white dark:bg-[#0b1220]">
+                <div className="p-2 md:p-4 bg-white dark:bg-[#0b1220] flex-1">
                   <h3 className="text-xl md:text-2xl font-semibold text-slate-900 dark:text-white mb-3">{card.title}</h3>
                   <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                     {card.desc}
@@ -518,7 +518,7 @@ const AboutusDetail = () => {
             ))}
           </motion.div>
 
-          
+
         </div>
         {/* "Show Less" Button */}
         {showAllDescriptions && (
@@ -545,7 +545,7 @@ const AboutusDetail = () => {
           viewport={{ once: true, amount: 0.3 }}
           className="relative max-w-6xl mx-auto mt-28 rounded-4xl p-10 md:p-16 bg-gradient-to-br from-white via-blue-50/95 to-cyan-50/90 dark:from-blue-950/90 dark:via-blue-900/80 dark:to-cyan-900/70 shadow-2xl shadow-blue-200/50 dark:shadow-blue-900/30 overflow-hidden group border border-blue-200/60 dark:border-blue-700/40"
         >
-          
+
 
           {/* Animated border */}
           <motion.div

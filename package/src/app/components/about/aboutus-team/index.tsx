@@ -72,8 +72,6 @@ const AboutusTeam = () => {
           </motion.div>
         </div>
       </div>
-
-      <div className="w-3 h-3 rounded-full bg-blue-500/90 mx-auto mt-3 shadow-sm" />
     </section>
   );
 };

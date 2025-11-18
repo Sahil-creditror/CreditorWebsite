@@ -86,15 +86,22 @@ const sections = [
   },
   {
     icon: <HandCoins className="h-6 w-6" />,
-    title: "4. Masterclass Membership & Monthly Fee",
+    title: "4. Masterclass Membership & Payment Options",
     body: (
-      <ul className="space-y-2">
-        <Li>To maintain an active membership, a monthly fee of $69 USD is required.</Li>
-        <Li>Membership remains active as long as the fee is paid on time.</Li>
-        <Li>Failure to pay the fee results in automatic termination of membership.</Li>
-        <Li>Terminated members may reapply, subject to approval by the Association.</Li>
-        <Li>Once a membership fee payment is made, it is non-refundable.</Li>
-      </ul>
+      <>
+        <p className="mb-3">We offer two membership options:</p>
+        <ul className="space-y-2 mb-4">
+          <Li><strong>Monthly Membership:</strong> $69 USD per month for ongoing access to our exclusive community and resources.</Li>
+          <Li><strong>Annual Membership:</strong> $828 USD per year, plus 2000 Credit Points added to your LMS account. These credits can be used to unlock premium courses on our Learning Management System.</Li>
+        </ul>
+        <p className="mb-3 font-semibold text-amber-700 dark:text-amber-400">The Annual Membership plan is available for a limited time until November 30th.</p>
+        <ul className="space-y-2">
+          <Li>Membership remains active as long as the fee is paid on time.</Li>
+          <Li>Failure to pay the fee results in automatic termination of membership.</Li>
+          <Li>Terminated members may reapply, subject to approval by the Association.</Li>
+          <Li>Once a membership fee payment is made, it is non-refundable.</Li>
+        </ul>
+      </>
     ),
   },
   {
@@ -172,6 +179,7 @@ export default function MasterclassMembershipTC() {
   const [agreed, setAgreed] = useState(false);
   const [darkHint, setDarkHint] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<"monthly" | "annual">("monthly");
 
   // Reduced-motion preference
   const prefersReduced = useMemo(
@@ -220,19 +228,108 @@ export default function MasterclassMembershipTC() {
             >
               <div className="text-center">
                 <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-4">
-                  Investment Summary
+                  Choose Your Membership Plan
                 </h3>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between py-2 px-4 rounded-xl bg-white/60 dark:bg-neutral-800/40 border border-slate-200/60 dark:border-slate-700/40">
-                    <span className="text-slate-600 dark:text-slate-300 font-medium">Monthly Masterclass Membership</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-lg text-slate-400 dark:text-slate-500 line-through">$147</span>
-                      <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">$69</span>
+                  {/* Monthly Plan */}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPlan("monthly")}
+                    className={`w-full py-4 px-4 rounded-xl border-2 transition-all duration-200 ${
+                      selectedPlan === "monthly"
+                        ? "bg-white dark:bg-neutral-800 border-indigo-500 dark:border-indigo-400 shadow-md"
+                        : "bg-white/60 dark:bg-neutral-800/40 border-slate-200/60 dark:border-slate-700/40 hover:border-indigo-300 dark:hover:border-indigo-500"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-start gap-3 flex-1">
+                        <div className={`w-5 h-5 mt-0.5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+                          selectedPlan === "monthly"
+                            ? "border-indigo-500 dark:border-indigo-400"
+                            : "border-slate-300 dark:border-slate-600"
+                        }`}>
+                          {selectedPlan === "monthly" && (
+                            <div className="w-3 h-3 rounded-full bg-indigo-500 dark:bg-indigo-400" />
+                          )}
+                        </div>
+                        <div className="text-left flex-1">
+                          <div className="text-slate-700 dark:text-slate-200 font-semibold mb-2">Monthly Membership</div>
+                          <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
+                            <li className="flex items-start gap-2">
+                              <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-indigo-500 dark:text-indigo-400 flex-shrink-0" />
+                              <span>Masterclass Membership for 1 month</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-indigo-500 dark:text-indigo-400 flex-shrink-0" />
+                              <span>LMS Login ID</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                        <span className="text-sm text-slate-400 dark:text-slate-500 line-through">$147</span>
+                        <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">$69</span>
+                        <span className="text-xs text-slate-500 dark:text-slate-400">/month</span>
+                      </div>
                     </div>
-                  </div>
+                  </button>
+
+                  {/* Annual Plan */}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPlan("annual")}
+                    className={`relative w-full py-4 px-4 rounded-xl border-2 transition-all duration-200 ${
+                      selectedPlan === "annual"
+                        ? "bg-white dark:bg-neutral-800 border-indigo-500 dark:border-indigo-400 shadow-md"
+                        : "bg-white/60 dark:bg-neutral-800/40 border-slate-200/60 dark:border-slate-700/40 hover:border-indigo-300 dark:hover:border-indigo-500"
+                    }`}
+                  >
+                    {/* Limited Time Badge */}
+                    <div className="absolute -top-2 -right-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg flex items-center gap-1 z-10">
+                      <Sparkles className="h-3 w-3" />
+                      Until Nov 30th
+                    </div>
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-start gap-3 flex-1">
+                        <div className={`w-5 h-5 mt-0.5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+                          selectedPlan === "annual"
+                            ? "border-indigo-500 dark:border-indigo-400"
+                            : "border-slate-300 dark:border-slate-600"
+                        }`}>
+                          {selectedPlan === "annual" && (
+                            <div className="w-3 h-3 rounded-full bg-indigo-500 dark:bg-indigo-400" />
+                          )}
+                        </div>
+                        <div className="text-left flex-1">
+                          <div className="text-slate-700 dark:text-slate-200 font-semibold mb-2">Annual Membership</div>
+                          <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
+                            <li className="flex items-start gap-2">
+                              <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-indigo-500 dark:text-indigo-400 flex-shrink-0" />
+                              <span>Masterclass Membership for 1 year</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-indigo-500 dark:text-indigo-400 flex-shrink-0" />
+                              <span>LMS Login ID</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+                              <span className="font-semibold text-emerald-700 dark:text-emerald-400">2000 FREE Credits to unlock premium courses on LMS</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                        <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">$828</span>
+                        <span className="text-xs text-slate-500 dark:text-slate-400">/year</span>
+                      </div>
+                    </div>
+                  </button>
                 </div>
                 <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
-                  One-time payment + ongoing monthly access to our exclusive community
+                  {selectedPlan === "monthly" 
+                    ? "Ongoing monthly access to our exclusive community"
+                    : "Annual access + 2000 credit points to unlock premium courses on LMS"
+                  }
                 </p>
               </div>
             </motion.div>
@@ -264,7 +361,10 @@ export default function MasterclassMembershipTC() {
                 type="button"
                 onClick={() => {
                   if (!agreed) return;
-                  window.location.href = "https://quickclick.com/r/m7o5skh90z5o7s6x6bg9yeklf7ql3f";
+                  const url = selectedPlan === "monthly" 
+                    ? "https://quickclick.com/r/m7o5skh90z5o7s6x6bg9yeklf7ql3f"
+                    : "https://quickclick.com/r/ylju71tqiulsto3pqq6w9mq9tbrnmn";
+                  window.open(url, '_blank', 'noopener,noreferrer');
                 }}
                 disabled={!agreed}
                 whileTap={{ scale: agreed ? 0.98 : 1 }}
@@ -274,8 +374,23 @@ export default function MasterclassMembershipTC() {
                     : "bg-slate-200 dark:bg-neutral-800 text-slate-500 dark:text-slate-400"
                 }`}
               >
-                <span>Enroll Now @ $69</span>
+                <span>
+                  {selectedPlan === "monthly" ? "Enroll Now @ $69/mo" : "Enroll Now @ $828/year"}
+                </span>
+                {selectedPlan === "annual" && (
+                  <Sparkles className="h-4 w-4" />
+                )}
               </motion.button>
+
+              <p className="text-sm text-slate-600 dark:text-slate-400 text-center">
+                Any doubts?{" "}
+                <a 
+                  href="/contact" 
+                  className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 underline underline-offset-2 hover:underline-offset-4 transition-all duration-200 font-medium"
+                >
+                  Contact Sales
+                </a>
+              </p>
             </div>
           </div>
 

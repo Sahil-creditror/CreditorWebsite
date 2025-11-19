@@ -107,7 +107,7 @@ const AboutusValues: React.FC = () => {
   };
 
   return (
-    <section className="relative py-1 md:py-5 bg-white overflow-hidden">
+    <section className="relative py-1 md:py-5 bg- blue overflow-hidden bg-[linear-gradient(90deg,rgba(7,32,63,0.85)_30%,rgba(10,35,66,0.7)_100%)">
 
 
 

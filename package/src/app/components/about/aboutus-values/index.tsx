@@ -211,7 +211,7 @@ const AboutusValues: React.FC = () => {
                   </div>
                 )}
 
-                <div className="relative z-10 p-6">
+                <div className="relative z-0 p-6">
                   {!(isStudentFirst || isInnovation || isIntegrity || isGlobalImpact) && (
                     <motion.div className="flex justify-center mb-6">
                       <div className={`p-4 rounded-2xl bg-gradient-to-r ${value.color} text-white text-3xl shadow-md`}>
@@ -220,8 +220,8 @@ const AboutusValues: React.FC = () => {
                     </motion.div>
                   )}
 
-                  <h3 className={(isStudentFirst || isInnovation || isIntegrity || isGlobalImpact) ? "text-xl font-semibold mb-3 text-white" : "text-xl font-semibold mb-3 text-gray-800 dark:text-white"}>{value.title}</h3>
-                  <p className={(isStudentFirst || isInnovation || isIntegrity || isGlobalImpact) ? "text-white/90 leading-relaxed text-base" : "text-gray-600 dark:text-gray-300 leading-relaxed text-base"}>
+                  <h3 className={(isStudentFirst || isInnovation || isIntegrity || isGlobalImpact) ? "text-xl font-semibold mb-4 text-white" : "text-xl font-semibold mb-5 text-gray-800 dark:text-white"}>{value.title}</h3>
+                  <p className={(isStudentFirst || isInnovation || isIntegrity || isGlobalImpact) ? "text-white/100 font-medium leading-relaxed text-base" : "text-gray-600 dark:text-gray-300 leading-relaxed text-base"}>
                     {value.desc}
                   </p>
                 </div>

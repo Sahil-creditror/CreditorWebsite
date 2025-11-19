@@ -1,14 +1,30 @@
+"use client";
+
 import Image from "next/image";
-import { Clock, BookOpen, Shield, DollarSign, ArrowRight } from "lucide-react";
+import { Clock, BookOpen, Shield, DollarSign, ArrowRight, Play, Pause } from "lucide-react";
 import SqueezeEmbed from "@/app/components/squeeze/Embed";
 import Script from "next/script";
-
-export const metadata = {
-  title: "Creditor Academy — Free Guide",
-  description: "Discover how to restore credit, operate private, and protect your estate.",
-};
+import { useState, useRef } from "react";
 
 export default function Page() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [showControls, setShowControls] = useState(true);
+
+  const togglePlayPause = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+        setIsPlaying(false);
+        setShowControls(true);
+      } else {
+        videoRef.current.play();
+        setIsPlaying(true);
+        setShowControls(false);
+      }
+    }
+  };
+
   return (
     <>
     <Script
@@ -55,30 +71,58 @@ export default function Page() {
                   Creditor Academy Orientation: <span className="text-primary">Entering the Private Pathway</span>
                 </h1>
                 <p className="mt-2 text-secondary/80 dark:text-white/80 max-w-2xl">
-                This orientation introduces you to the foundations of operating privately—beyond the noise of the public system—and shows how Creditor Academy guides members toward greater control, protection, and independence. You’ll explore our full range of courses and programs, each designed to help you build private structures, elevate your financial literacy, and navigate commerce with confidence. We’ll also walk you through a demo of our online campus so you can experience how our tools, lessons, and community support your transition into a more empowered private life.
+                This orientation introduces you to the foundations of operating privately—beyond the noise of the public system—and shows how Creditor Academy guides members toward greater control, protection, and independence. You'll explore our full range of courses and programs, each designed to help you build private structures, elevate your financial literacy, and navigate commerce with confidence. We'll also walk you through a demo of our online campus so you can experience how our tools, lessons, and community support your transition into a more empowered private life.
                 </p>
 
-                {/* Key badges */}
-                <div className="mt-4 flex flex-wrap gap-3">
-                  <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary ring-1 ring-primary/20">Free orientation</span>
-                  <span className="inline-flex items-center gap-2 rounded-full bg-slate-50 px-3 py-1 text-sm font-semibold text-secondary ring-1 ring-black/5 dark:bg-neutral-900 dark:text-blue-300 dark:ring-blue-400/40">
-                    Weekly — Saturdays
-                  </span>
-                  <span className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 text-sm font-semibold text-amber-700 ring-1 ring-amber-100">Limited seats</span>
-                </div>
+                {/* Video Section */}
+                <div className="mt-6 relative rounded-lg overflow-hidden shadow-sm w-full group">
+                  <video
+                    ref={videoRef}
+                    playsInline
+                    controls
+                    controlsList="nodownload"
+                    className="w-full h-auto aspect-video object-cover"
+                    onPlay={() => {
+                      setIsPlaying(true);
+                      setShowControls(false);
+                    }}
+                    onPause={() => {
+                      setIsPlaying(false);
+                      setShowControls(true);
+                    }}
+                    onClick={(e) => {
+                      // Prevent default video click behavior
+                      e.preventDefault();
+                      togglePlayPause();
+                    }}
+                  >
+                    <source src="/video/squeeze.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
 
-                {/* Image collage */}
-                <div className="mt-2 relative rounded-lg overflow-hidden shadow-sm w-full h-64 md:h-110">
-                <Image
-                    src="/images/squeeze/squeeze.webp"
-                    alt="Creditor Academy banner"
-                    fill
-                    className="object-cover"
-                    priority
-                />
-                <div className="absolute left-3 bottom-3 bg-white/80 dark:bg-neutral-800/70 rounded-md px-3 py-1 text-sm font-medium">
-                    Live demo + Q&A
-                </div>
+                  {/* Custom Play/Pause Button Overlay */}
+                  <div 
+                    className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
+                      showControls || !isPlaying ? 'opacity-100 group-hover:opacity-100' : 'opacity-0 group-hover:opacity-100'
+                    }`}
+                    style={{ pointerEvents: 'none' }}
+                  >
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        togglePlayPause();
+                      }}
+                      className="w-20 h-20 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 hover:bg-white cursor-pointer"
+                      style={{ pointerEvents: 'auto' }}
+                      aria-label={isPlaying ? 'Pause video' : 'Play video'}
+                    >
+                      {isPlaying ? (
+                        <Pause className="w-10 h-10 text-primary" fill="currentColor" />
+                      ) : (
+                        <Play className="w-10 h-10 text-primary ml-1" fill="currentColor" />
+                      )}
+                    </button>
+                  </div>
                 </div>
 
                 {/* Social proof */}

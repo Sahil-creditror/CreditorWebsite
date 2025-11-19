@@ -1,6 +1,9 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
+import Image from "next/image";
+import studentBg from "../../../../Image/student.jpg";
+import innovationBg from "../../../../Image/6674339_3383078.jpg";
 import { FaHandshake, FaUserGraduate, FaLightbulb, FaGlobe } from "react-icons/fa";
 import { ReactNode, CSSProperties } from "react";
 
@@ -102,7 +105,7 @@ const AboutusValues: React.FC = () => {
   };
 
   return (
-    <section className="relative py-1 md:py-5 bg-gradient-to-b from-white via-white to-gray-50 dark:from-darkblack dark:to-secondary overflow-hidden">
+    <section className="relative py-1 md:py-5 bg-white overflow-hidden">
 
 
 
@@ -115,13 +118,13 @@ const AboutusValues: React.FC = () => {
           viewport={{ once: true, amount: 0.3 }}
           className="mb-10"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 flex flex-wrap justify-center gap-3">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 flex flex-wrap justify-center gap-3 text-blue-900">
             {headingWords.map((word, i) => (
               <motion.span
                 key={i}
                 custom={i}
                 variants={wordVariants}
-                className="relative inline-block text-blue-600 dark:text-blue-400"
+                className="relative inline-block"
               >
                 {word}
               </motion.span>
@@ -147,32 +150,63 @@ const AboutusValues: React.FC = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          {values.map((value, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              className="group p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-800 relative overflow-hidden"
-            >
-              <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-gradient-to-r ${value.color}`} />
+          {values.map((value, index) => {
+            const isStudentFirst = value.title === "Student First";
+            const isInnovation = value.title === "Innovation";
+            return (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                whileHover={{ scale: 1.02 }}
+                className="group p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 relative overflow-hidden bg-white"
+              >
+                {!(isStudentFirst || isInnovation) && (
+                  <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 bg-gradient-to-r ${value.color}`} />
+                )}
 
-              <div className={`relative z-10 ${value.bgColor} p-6 rounded-xl`}>
-                <motion.div
-                  className="flex justify-center mb-6"
-                >
-                  <div className={`p-4 rounded-2xl bg-gradient-to-r ${value.color} text-white text-3xl shadow-md`}>
-                    {value.icon}
+                {(isStudentFirst || isInnovation) && (
+                  <div className="absolute inset-0">
+                    {isStudentFirst ? (
+                      <Image
+                        src={studentBg}
+                        alt="Student First"
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 25vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        priority={false}
+                      />
+                    ) : (
+                      <Image
+                        src={innovationBg}
+                        alt="Innovation"
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 25vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        priority={false}
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors" />
                   </div>
-                </motion.div>
+                )}
 
-                <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-white">{value.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-base">
-                  {value.desc}
-                </p>
-              </div>
+                <div className="relative z-10 p-6">
+                  {!(isStudentFirst || isInnovation) && (
+                    <motion.div className="flex justify-center mb-6">
+                      <div className={`p-4 rounded-2xl bg-gradient-to-r ${value.color} text-white text-3xl shadow-md`}>
+                        {value.icon}
+                      </div>
+                    </motion.div>
+                  )}
 
-              <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${value.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`} />
-            </motion.div>
-          ))}
+                  <h3 className={(isStudentFirst || isInnovation) ? "text-xl font-semibold mb-3 text-white" : "text-xl font-semibold mb-3 text-gray-800 dark:text-white"}>{value.title}</h3>
+                  <p className={(isStudentFirst || isInnovation) ? "text-white/90 leading-relaxed text-base" : "text-gray-600 dark:text-gray-300 leading-relaxed text-base"}>
+                    {value.desc}
+                  </p>
+                </div>
+
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>

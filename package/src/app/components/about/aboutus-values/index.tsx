@@ -4,6 +4,8 @@ import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import studentBg from "../../../../Image/student.jpg";
 import innovationBg from "../../../../Image/6674339_3383078.jpg";
+import integrityBg from "../../../../Image/23.jpg";
+import globalImpactBg from "../../../../Image/g.jpg";
 import { FaHandshake, FaUserGraduate, FaLightbulb, FaGlobe } from "react-icons/fa";
 import { ReactNode, CSSProperties } from "react";
 
@@ -153,18 +155,20 @@ const AboutusValues: React.FC = () => {
           {values.map((value, index) => {
             const isStudentFirst = value.title === "Student First";
             const isInnovation = value.title === "Innovation";
+            const isIntegrity = value.title === "Integrity";
+            const isGlobalImpact = value.title === "Global Impact";
             return (
               <motion.div
                 key={index}
                 variants={itemVariants}
-                whileHover={{ scale: 1.02 }}
+                whileHover={(isIntegrity || isGlobalImpact) ? { y: -6, scale: 1.04 } : { scale: 1.02 }}
                 className="group p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 relative overflow-hidden bg-white"
               >
-                {!(isStudentFirst || isInnovation) && (
+                {!(isStudentFirst || isInnovation || isIntegrity || isGlobalImpact) && (
                   <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 bg-gradient-to-r ${value.color}`} />
                 )}
 
-                {(isStudentFirst || isInnovation) && (
+                {(isStudentFirst || isInnovation || isIntegrity || isGlobalImpact) && (
                   <div className="absolute inset-0">
                     {isStudentFirst ? (
                       <Image
@@ -175,10 +179,28 @@ const AboutusValues: React.FC = () => {
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                         priority={false}
                       />
-                    ) : (
+                    ) : isInnovation ? (
                       <Image
                         src={innovationBg}
                         alt="Innovation"
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 25vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        priority={false}
+                      />
+                    ) : isIntegrity ? (
+                      <Image
+                        src={integrityBg}
+                        alt="Integrity"
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 25vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        priority={false}
+                      />
+                    ) : (
+                      <Image
+                        src={globalImpactBg}
+                        alt="Global Impact"
                         fill
                         sizes="(max-width: 1024px) 100vw, 25vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -190,7 +212,7 @@ const AboutusValues: React.FC = () => {
                 )}
 
                 <div className="relative z-10 p-6">
-                  {!(isStudentFirst || isInnovation) && (
+                  {!(isStudentFirst || isInnovation || isIntegrity || isGlobalImpact) && (
                     <motion.div className="flex justify-center mb-6">
                       <div className={`p-4 rounded-2xl bg-gradient-to-r ${value.color} text-white text-3xl shadow-md`}>
                         {value.icon}
@@ -198,8 +220,8 @@ const AboutusValues: React.FC = () => {
                     </motion.div>
                   )}
 
-                  <h3 className={(isStudentFirst || isInnovation) ? "text-xl font-semibold mb-3 text-white" : "text-xl font-semibold mb-3 text-gray-800 dark:text-white"}>{value.title}</h3>
-                  <p className={(isStudentFirst || isInnovation) ? "text-white/90 leading-relaxed text-base" : "text-gray-600 dark:text-gray-300 leading-relaxed text-base"}>
+                  <h3 className={(isStudentFirst || isInnovation || isIntegrity || isGlobalImpact) ? "text-xl font-semibold mb-3 text-white" : "text-xl font-semibold mb-3 text-gray-800 dark:text-white"}>{value.title}</h3>
+                  <p className={(isStudentFirst || isInnovation || isIntegrity || isGlobalImpact) ? "text-white/90 leading-relaxed text-base" : "text-gray-600 dark:text-gray-300 leading-relaxed text-base"}>
                     {value.desc}
                   </p>
                 </div>

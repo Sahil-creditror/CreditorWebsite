@@ -211,7 +211,7 @@ const AboutusValues: React.FC = () => {
                   </div>
                 )}
 
-                <div className="relative z-0 p-6">
+                <div className="relative z-0 p-4">
                   {!(isStudentFirst || isInnovation || isIntegrity || isGlobalImpact) && (
                     <motion.div className="flex justify-center mb-6">
                       <div className={`p-4 rounded-2xl bg-gradient-to-r ${value.color} text-white text-3xl shadow-md`}>

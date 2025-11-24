@@ -6,6 +6,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface TimeLeft {
   expired: boolean;
@@ -16,14 +17,12 @@ interface TimeLeft {
 }
 
 export default function EventPromoSectionEnhanced(): React.ReactElement {
+  const router = useRouter();
   const cardRef = useRef<HTMLDivElement | null>(null);
   const speakerCardRef = useRef<HTMLDivElement | null>(null);
   const primaryCtaRef = useRef<HTMLButtonElement | null>(null);
   const rafRef = useRef<number | null>(null);
   const stateRef = useRef<{ tx: number; ty: number; x: number; y: number }>({ tx: 0, ty: 0, x: 0, y: 0 });
-
-  // Widget URL
-  const WIDGET_URL = 'https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls';
 
   // Robust Pacific Time (America/Los_Angeles) helpers with DST handling
   const getLAOffsetMinutes = (dateUTC: Date) => {
@@ -285,11 +284,14 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
     };
   }, []);
 
-  const [widgetOpen, setWidgetOpen] = useState(false);
-  const [iframeLoaded, setIframeLoaded] = useState(false);
-  const [iframeError, setIframeError] = useState(false);
-  const modalCloseRef = useRef<HTMLButtonElement | null>(null);
-  const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  // Removed modal-related state since we're redirecting to a page now
+  // const [widgetOpen, setWidgetOpen] = useState(false);
+  // const [iframeLoaded, setIframeLoaded] = useState(false);
+  // const [iframeError, setIframeError] = useState(false);
+  // const [isRegistering, setIsRegistering] = useState(false);
+  // const [registrationError, setRegistrationError] = useState<string | null>(null);
+  // const modalCloseRef = useRef<HTMLButtonElement | null>(null);
+  // const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
   const pad = (n: number) => {
     const value = Number.isFinite(n) ? Math.max(0, Math.floor(n)) : 0;
@@ -315,39 +317,15 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
 
   const handleWidgetOpen = () => {
     if (timeLeft.expired) return;
-    setIframeLoaded(false);
-    setIframeError(false);
-    setWidgetOpen(true);
+    // Redirect to registration page with session date
+    const params = new URLSearchParams({
+      session_date: new Date(currentEventDate).toISOString(),
+    });
+    router.push(`/register?${params.toString()}`);
   };
 
-  const handleWidgetClose = () => {
-    setWidgetOpen(false);
-    if (iframeRef.current) {
-      try {
-        iframeRef.current.src = 'about:blank';
-        setTimeout(() => {
-          if (iframeRef.current) iframeRef.current.src = WIDGET_URL;
-        }, 200);
-      } catch (e) { }
-    }
-  };
-
-  useEffect(() => {
-    if (!widgetOpen) return;
-    const onKey = (e: KeyboardEvent) => { if ((e as KeyboardEvent).key === 'Escape') handleWidgetClose(); };
-    document.addEventListener('keydown', onKey as EventListener);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    setTimeout(() => modalCloseRef.current?.focus(), 120);
-    return () => {
-      document.removeEventListener('keydown', onKey as EventListener);
-      document.body.style.overflow = prev;
-    };
-  }, [widgetOpen]);
-
-  const handleIframeError = () => setIframeError(true);
-  const handleIframeLoad = () => { setIframeLoaded(true); setIframeError(false); };
-  const openWidgetInNewTab = () => window.open(WIDGET_URL, '_blank', 'noopener,noreferrer');
+  // Removed modal and iframe handlers since we're redirecting to a dedicated page
+  // All registration logic is now in /register page
 
   return (
     <section className="event-section" aria-label="Event promotion">
@@ -463,60 +441,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
 
       </div>
 
-      {widgetOpen && (
-        <div
-          className="modal-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Enter to win form"
-          onClick={(e) => { if (e.target === e.currentTarget) handleWidgetClose(); }}
-        >
-          <div className="modal" role="document">
-            <button
-              className="modal-close"
-              aria-label="Close form"
-              onClick={handleWidgetClose}
-              ref={modalCloseRef}
-            >
-              ×
-            </button>
-
-            <div className="iframe-wrapper" aria-live="polite">
-              {!iframeLoaded && !iframeError && (
-                <div className="iframe-spinner" aria-hidden="true">
-                  <svg width="36" height="36" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="20" strokeWidth="4" stroke="currentColor" fill="none" strokeLinecap="round" /></svg>
-                  <div className="spinner-text">Loading form...</div>
-                </div>
-              )}
-
-              {iframeError ? (
-                <div className="iframe-error">
-                  <p>Unable to embed the form here. You can open it in a new tab.</p>
-                  <div style={{ display: 'flex', gap: 10 }}>
-                    <button className="btn btn-primary" onClick={openWidgetInNewTab}>Open in new tab</button>
-                    <button className="btn btn-ghost" onClick={handleWidgetClose}>Close</button>
-                  </div>
-                </div>
-              ) : (
-                <iframe
-                  ref={iframeRef}
-                  title="WonderEngine Enter Form"
-                  src={WIDGET_URL}
-                  onLoad={handleIframeLoad}
-                  onError={handleIframeError}
-                  sandbox="allow-forms allow-scripts allow-same-origin allow-popups"
-                  aria-label="Enter to win form widget"
-                />
-              )}
-              {!iframeError && (
-                <div className="modal-footer">
-                  <button className="btn btn-ghost" onClick={openWidgetInNewTab}>Open in new tab</button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Modal removed - now redirecting to /register page */}
 
       <style>{`
         :root{ --bg-start: #001428; --bg-mid: #002b5c; --bg-end: #0066cc; --accent: #66d0ff; --accent-2: #4fc3ff; --muted: rgba(200,210,220,0.88); }
@@ -602,18 +527,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
         .reveal{opacity:0;transform:translateY(18px) translateZ(0);transition:all 700ms cubic-bezier(.2,.9,.26,1)}
         .reveal.in-view{opacity:1;transform:translateY(0)}
 
-        /* Modal */
-        .modal-overlay{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg, rgba(0,0,0,0.56), rgba(0,0,0,0.72)); z-index:9999; padding:24px; }
-        .modal{ width:100%; max-width:980px; border-radius:12px; background:linear-gradient(180deg, rgba(10,18,28,0.96), rgba(6,14,22,0.96)); box-shadow:0 30px 80px rgba(0,0,0,0.6); position:relative; padding:18px; outline:none; }
-        .modal-close{ position:absolute; right:12px; top:10px; background:red; color:var(--muted); border:0; font-size:28px; line-height:1; padding:6px 10px; border-radius:8px; cursor:pointer; }
-        .modal-close:focus{outline:2px solid rgba(255, 0, 0, 0.12)}
-        .iframe-wrapper{ min-height:320px; display:flex; flex-direction:column; gap:12px; }
-        .iframe-wrapper iframe{ width:100%; height:min(62vh, 620px); border:0; border-radius:8px; background:white; }
-        .iframe-spinner{ display:flex; align-items:center; gap:12px; color:var(--muted); }
-        .iframe-spinner svg{animation: spin 1s linear infinite; color:var(--muted)}
-        @keyframes spin{to{transform:rotate(360deg)}}
-        .iframe-error{padding:18px; color:var(--muted)}
-        .modal-footer{display:flex;justify-content:flex-end;gap:10px;margin-top:8px}
+        /* Modal styles removed - now using dedicated registration page */
 
         /* Responsive tweaks */
         @media (max-width:980px){

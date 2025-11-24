@@ -111,7 +111,7 @@ const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000, d
 
             <div className="tg-image-wrap">
               <img
-                src="/images/event/thanksgiving.png"
+                src="https://lesson-banners.s3.us-east-1.amazonaws.com/Upcoming_Courses_Banner/Thanks+giving+off.png"
                 alt="Thanksgiving Mega Offer"
                 className="tg-image"
               />

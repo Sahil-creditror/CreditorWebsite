@@ -36,7 +36,7 @@ export default function Home() {
       <Offer />
       {/* <MasterInfo /> */}
       <Courses />
-      <ThanksgivingPopup />
+      {/* <ThanksgivingPopup /> */}
       <Contact contactdataNumber="4" />
       <Event />
       {/* <Roadmap /> */}

@@ -74,18 +74,18 @@ export async function GET(request: Request) {
 
     const accessToken = STATIC_ZOOM_ACCESS_TOKEN;
 
-    // Use query parameters for GET request
-    // Ensure URL is absolute before creating URL object
+    // Use query parameters for GET request and pass both webinarId and access_token
     let finalUrl: string;
     try {
       const urlWithParams = new URL(webxParticipantsUrl);
       urlWithParams.searchParams.set("webinarId", webinarId);
+      urlWithParams.searchParams.set("access_token", accessToken);
       finalUrl = urlWithParams.toString();
     } catch (urlError) {
       // If URL construction fails, manually append query parameter
       console.warn("[WEBX] URL construction error, using manual method:", urlError);
       const separator = webxParticipantsUrl.includes("?") ? "&" : "?";
-      finalUrl = `${webxParticipantsUrl}${separator}webinarId=${encodeURIComponent(webinarId)}`;
+      finalUrl = `${webxParticipantsUrl}${separator}webinarId=${encodeURIComponent(webinarId)}&access_token=${encodeURIComponent(accessToken)}`;
       console.log("[WEBX] Using manual URL construction:", finalUrl);
     }
     

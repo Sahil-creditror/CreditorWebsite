@@ -7,7 +7,6 @@ const WEBX_ROUTES = {
   REGISTER_WEBINAR: "/zoom/register-webinar",
 };
 
-// Static Zoom access token provided by backend team.
 // Prefer env var if available, fallback to hard-coded token.
 const STATIC_ZOOM_ACCESS_TOKEN =
   process.env.ZOOM_ACCESS_TOKEN ||

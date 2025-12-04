@@ -84,6 +84,9 @@ interface SessionData {
 }
 
 const UNKNOWN_DATE_KEY = "unknown-date";
+const EVENT_TIMEZONE = "America/Los_Angeles";
+const DAILY_RECURRENCE_MS = 24 * 60 * 60 * 1000;
+const OCCURRENCE_TOLERANCE_MS = 5 * 60 * 1000;
 
 const normalizeDateKey = (value?: string): string | null => {
   if (!value) return null;
@@ -120,6 +123,111 @@ const groupParticipantsByDate = (participants: Participant[]) => {
   }, {});
 };
 
+const parseIsoDate = (value?: string | null): Date | null => {
+  if (!value) return null;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+};
+
+const formatEventDateTime = (date: Date | null) => {
+  if (!date) return null;
+  return date.toLocaleString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: EVENT_TIMEZONE,
+    timeZoneName: "short",
+  });
+};
+
+const formatEventDateTimeLocal = (date: Date | null) => {
+  if (!date) return null;
+  const localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return date.toLocaleString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: localTimeZone,
+    timeZoneName: "short",
+  });
+};
+
+const getNextDailyOccurrence = (baseDate: Date | null, now = new Date()) => {
+  if (!baseDate) return null;
+  const occurrence = new Date(baseDate.getTime());
+  const nowMs = now.getTime();
+
+  if (occurrence.getTime() > nowMs) {
+    return occurrence;
+  }
+
+  const elapsedDays = Math.floor((nowMs - occurrence.getTime()) / DAILY_RECURRENCE_MS) + 1;
+  occurrence.setUTCDate(occurrence.getUTCDate() + elapsedDays);
+  return occurrence;
+};
+
+const getNextEventRegistrations = (registrations: Registrant[]) => {
+  if (!registrations.length) {
+    return { registrations, eventDate: null };
+  }
+
+  const now = new Date();
+  const enhanced = registrations
+    .map((registrant) => {
+      const baseDate = parseIsoDate(registrant.start_time);
+      const occurrenceDate = getNextDailyOccurrence(baseDate, now) ?? baseDate;
+      return { registrant, occurrenceDate };
+    })
+    .filter((item): item is { registrant: Registrant; occurrenceDate: Date } => Boolean(item.occurrenceDate));
+
+  if (!enhanced.length) {
+    return { registrations, eventDate: null };
+  }
+
+  enhanced.sort((a, b) => a.occurrenceDate.getTime() - b.occurrenceDate.getTime());
+  const nextEventDate = enhanced[0].occurrenceDate;
+  const selectedRegistrations = enhanced
+    .filter((item) => Math.abs(item.occurrenceDate.getTime() - nextEventDate.getTime()) <= OCCURRENCE_TOLERANCE_MS)
+    .map((item) => item.registrant);
+
+  return {
+    registrations: selectedRegistrations.length ? selectedRegistrations : registrations,
+    eventDate: nextEventDate,
+  };
+};
+
+const getLatestParticipantsEvent = (participants: Participant[]) => {
+  const grouped = groupParticipantsByDate(participants);
+  const sortedEntries = Object.entries(grouped).sort(([dateA], [dateB]) => {
+    if (dateA === UNKNOWN_DATE_KEY) return 1;
+    if (dateB === UNKNOWN_DATE_KEY) return -1;
+    return dateB.localeCompare(dateA);
+  });
+
+  if (!sortedEntries.length) {
+    return { participants: [], eventDate: null, hasHistory: false };
+  }
+
+  const [latestKey, latestList] = sortedEntries[0];
+  const representativeParticipant =
+    latestList.find((participant) => parseIsoDate(participant.join_time)) ?? latestList[0];
+  const eventDate =
+    parseIsoDate(representativeParticipant?.join_time ?? null) ||
+    (latestKey !== UNKNOWN_DATE_KEY ? parseIsoDate(latestKey) : null);
+
+  return {
+    participants: latestList,
+    eventDate,
+    hasHistory: sortedEntries.length > 1,
+  };
+};
+
 const buildDateSummary = (sessions: Record<string, SessionData>) => {
   const summary = Object.values(sessions).reduce<Record<string, number>>((acc, session) => {
     session.participants.forEach((participant) => {
@@ -149,7 +257,6 @@ const createDefaultSessionData = (): SessionData => ({
 
 export default function WebinarRegistrationPage() {
   const [sessionsData, setSessionsData] = useState<Record<string, SessionData>>({});
-  const [expandedDates, setExpandedDates] = useState<Record<string, Record<string, boolean>>>({});
 
   const dateSummary = useMemo(() => buildDateSummary(sessionsData), [sessionsData]);
 
@@ -230,27 +337,6 @@ export default function WebinarRegistrationPage() {
         };
       });
 
-      setExpandedDates((prev) => {
-        const grouped = groupParticipantsByDate(participants);
-        const existing = prev[sessionKey] || {};
-        const orderedDates = Object.keys(grouped).sort((a, b) => {
-          if (a === UNKNOWN_DATE_KEY) return 1;
-          if (b === UNKNOWN_DATE_KEY) return -1;
-          return b.localeCompare(a);
-        });
-
-        const nextSessionDates: Record<string, boolean> = { ...existing };
-        orderedDates.forEach((dateKey, index) => {
-          if (typeof nextSessionDates[dateKey] === "undefined") {
-            nextSessionDates[dateKey] = index === 0;
-          }
-        });
-
-        return {
-          ...prev,
-          [sessionKey]: nextSessionDates,
-        };
-      });
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : "An error occurred while fetching participants";
       setSessionsData((prev) => {
@@ -306,20 +392,6 @@ export default function WebinarRegistrationPage() {
         [sessionKey]: {
           ...current,
           showDetails: !current.showDetails,
-        },
-      };
-    });
-  };
-
-  const toggleDateSection = (sessionKey: string, dateKey: string) => {
-    setExpandedDates((prev) => {
-      const sessionDates = prev[sessionKey] || {};
-      const currentValue = sessionDates[dateKey];
-      return {
-        ...prev,
-        [sessionKey]: {
-          ...sessionDates,
-          [dateKey]: typeof currentValue === "boolean" ? !currentValue : false,
         },
       };
     });
@@ -452,18 +524,17 @@ export default function WebinarRegistrationPage() {
         <div className="flex flex-col gap-6 mb-12">
           {webinarSessions.map((session) => {
             const sessionData = sessionsData[session.key] ?? createDefaultSessionData();
+            const registrationsView = getNextEventRegistrations(sessionData.registrations);
+            const participantsView = getLatestParticipantsEvent(sessionData.participants);
             const isParticipantsView = sessionData.activeView === "participants";
-            const activeList = isParticipantsView ? sessionData.participants : sessionData.registrations;
+            const eventDate = isParticipantsView ? participantsView.eventDate : registrationsView.eventDate;
+            const activeList = isParticipantsView ? participantsView.participants : registrationsView.registrations;
             const activeLoading = isParticipantsView ? sessionData.participantsLoading : sessionData.registrationsLoading;
             const activeError = isParticipantsView ? sessionData.participantsError : sessionData.registrationsError;
             const loadButtonLabel = activeList.length > 0 ? "Refresh" : "Show";
-
-            const groupedByDate = groupParticipantsByDate(sessionData.participants);
-            const dateEntries = Object.entries(groupedByDate).sort(([dateA], [dateB]) => {
-              if (dateA === UNKNOWN_DATE_KEY) return 1;
-              if (dateB === UNKNOWN_DATE_KEY) return -1;
-              return dateB.localeCompare(dateA);
-            });
+            const eventDateLabel = formatEventDateTime(eventDate);
+            const eventDateLocalLabel = formatEventDateTimeLocal(eventDate);
+            const participantsHistoryAvailable = isParticipantsView && participantsView.hasHistory;
 
             return (
               <div
@@ -492,6 +563,7 @@ export default function WebinarRegistrationPage() {
                 <div className="p-6">
                   <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between mb-4">
                     <div className="space-y-1">
+                    
                       {sessionData.showDetails && activeList.length > 0 && (
                         <p className="text-sm text-gray-600 dark:text-gray-400">
                           <span className="font-semibold text-[#026fe2] dark:text-blue-400">
@@ -500,9 +572,9 @@ export default function WebinarRegistrationPage() {
                           total {isParticipantsView ? "participants" : "registrations"}
                         </p>
                       )}
-                      {isParticipantsView && sessionData.showDetails && dateEntries.length > 0 && (
+                      {participantsHistoryAvailable && (
                         <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                          {dateEntries.length} {dateEntries.length === 1 ? "date" : "dates"} loaded
+                          Previous sessions archived
                         </p>
                       )}
                     </div>
@@ -584,112 +656,75 @@ export default function WebinarRegistrationPage() {
                           </p>
           </div>
                       ) : isParticipantsView ? (
-                        dateEntries.map(([dateKey, dateParticipants], index) => {
-                          const isExpanded =
-                            expandedDates[session.key]?.[dateKey] ?? (index === 0);
-                          return (
-                            <div
-                              key={`${session.key}-${dateKey}`}
-                              className="border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden bg-white dark:bg-[#131b22]"
-                            >
-                              <button
-                                onClick={() => toggleDateSection(session.key, dateKey)}
-                                className="w-full flex items-center justify-between px-5 py-4 bg-gray-50 dark:bg-gray-800/60 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                              >
-                                <div className="text-left">
-                                  <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                                    {formatDateLabel(dateKey)}
-                                  </p>
-                                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                                    {dateParticipants.length}{" "}
-                                    {dateParticipants.length === 1 ? "participant" : "participants"}
-                                  </p>
-            </div>
-                                <svg
-                                  className={`h-5 w-5 text-[#026fe2] transition-transform ${
-                                    isExpanded ? "rotate-180" : ""
-                                  }`}
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                                </svg>
-                              </button>
-                              {isExpanded && (
-                                <div className="overflow-x-auto">
-                                  <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                    <thead className="bg-gray-50 dark:bg-gray-900">
-                                      <tr>
-                                        <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                        #
-                      </th>
-                                        <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                        Name
-                      </th>
-                                        <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                        Email
-                      </th>
-                                        <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                        Phone
-                      </th>
-                                        <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                        Join Time
-                      </th>
-                                        <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                        Duration
-                      </th>
-                    </tr>
-                  </thead>
-                                    <tbody className="bg-white dark:bg-[#1F2A2E] divide-y divide-gray-200 dark:divide-gray-700">
-                                      {dateParticipants.map((participant, indexWithinDate) => {
-                      const name =
-                        participant.name ||
-                        (participant.first_name && participant.last_name
-                          ? `${participant.first_name} ${participant.last_name}`
-                          : participant.first_name || participant.last_name || "N/A");
-                      const email = participant.user_email || participant.email || "N/A";
-                      const phone = participant.phone_number || "N/A";
-                      const joinTime = participant.join_time
-                        ? new Date(participant.join_time).toLocaleString()
-                        : "N/A";
-                      const duration = participant.duration
-                        ? `${Math.floor(participant.duration / 60)}m ${participant.duration % 60}s`
-                        : "N/A";
+                        <div className="border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden bg-white dark:bg-[#131b22]">
+                          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead className="bg-gray-50 dark:bg-gray-900">
+                              <tr>
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
+                                  #
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
+                                  Name
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
+                                  Email
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
+                                  Phone
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
+                                  Join Time
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
+                                  Duration
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody className="bg-white dark:bg-[#1F2A2E] divide-y divide-gray-200 dark:divide-gray-700">
+                              {participantsView.participants.map((participant, indexWithinDate) => {
+                                const name =
+                                  participant.name ||
+                                  (participant.first_name && participant.last_name
+                                    ? `${participant.first_name} ${participant.last_name}`
+                                    : participant.first_name || participant.last_name || "N/A");
+                                const email = participant.user_email || participant.email || "N/A";
+                                const phone = participant.phone_number || "N/A";
+                                const joinTime = participant.join_time
+                                  ? new Date(participant.join_time).toLocaleString()
+                                  : "N/A";
+                                const duration = participant.duration
+                                  ? `${Math.floor(participant.duration / 60)}m ${participant.duration % 60}s`
+                                  : "N/A";
 
-                      return (
-                        <tr
-                                            key={participant.id || `${session.key}-${dateKey}-${indexWithinDate}`}
-                                            className="hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
-                                          >
-                                            <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
-                                              {indexWithinDate + 1}
-                                            </td>
-                                            <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                                              {name}
-                                            </td>
-                                            <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                                              {email}
-                                            </td>
-                                            <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                                              {phone}
-                                            </td>
-                                            <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                                              {joinTime}
-                                            </td>
-                                            <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                                              {duration}
-                                            </td>
-                                          </tr>
-                                        );
-                                      })}
-                                    </tbody>
-                                  </table>
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })
+                                return (
+                                  <tr
+                                    key={participant.id || `${session.key}-latest-${indexWithinDate}`}
+                                    className="hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+                                  >
+                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
+                                      {indexWithinDate + 1}
+                                    </td>
+                                    <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                                      {name}
+                                    </td>
+                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
+                                      {email}
+                                    </td>
+                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
+                                      {phone}
+                                    </td>
+                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
+                                      {joinTime}
+                                    </td>
+                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
+                                      {duration}
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
                       ) : (
                         <div className="overflow-x-auto">
                           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -708,6 +743,9 @@ export default function WebinarRegistrationPage() {
                                   Phone
                                 </th>
                                 <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
+                                  Session Time
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
                                   Registered
                                 </th>
                                 <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
@@ -716,11 +754,12 @@ export default function WebinarRegistrationPage() {
                               </tr>
                             </thead>
                             <tbody className="bg-white dark:bg-[#1F2A2E] divide-y divide-gray-200 dark:divide-gray-700">
-                              {sessionData.registrations.map((registrant, index) => {
+                              {registrationsView.registrations.map((registrant, index) => {
                                 const name =
                                   registrant.first_name || registrant.last_name
                                     ? `${registrant.first_name ?? ""} ${registrant.last_name ?? ""}`.trim() || "N/A"
                                     : "N/A";
+                                const sessionTime = formatEventDateTime(parseIsoDate(registrant.start_time));
                                 const registeredAt = registrant.registered_at
                                   ? new Date(registrant.registered_at).toLocaleString()
                                   : "N/A";
@@ -730,6 +769,9 @@ export default function WebinarRegistrationPage() {
                                     <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{name}</td>
                                     <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{registrant.email}</td>
                                     <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{registrant.phone_number || "N/A"}</td>
+                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
+                                      {sessionTime || "TBD"}
+                                    </td>
                                     <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{registeredAt}</td>
                                     <td className="px-4 py-3 whitespace-nowrap text-sm">
                                       <span

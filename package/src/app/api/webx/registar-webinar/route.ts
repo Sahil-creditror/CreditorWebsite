@@ -4,14 +4,14 @@ import { ZoomWebinarRegistrationPayload, ZoomWebinarRegistrationResponse } from 
 
 const WEBX_ROUTES = {
   CONNECT: "/zoom/connect",
-  REGISTER_WEBINAR: "/zoom/register-webinar",
+  REGISTER_WEBINAR: "/zoom/registar-webinar",
 };
 
 // Static Zoom access token provided by backend team.
 // Prefer env var if available, fallback to hard-coded token.
 const STATIC_ZOOM_ACCESS_TOKEN =
   process.env.ZOOM_ACCESS_TOKEN ||
-  "eyJzdiI6IjAwMDAwMiIsImFsZyI6IkhTNTEyIiwidiI6IjIuMCIsImtpZCI6IjgyODg1NDA4LTFiNTItNDlhOS05ZTJiLTNkYmIzOWNiNGIwNSJ9.eyJhdWQiOiJodHRwczovL29hdXRoLnpvb20udXMiLCJ1aWQiOiJwX2ZpS1NxSFNtU3N1Si0wYVhSZ3VnIiwidmVyIjoxMCwiYXVpZCI6ImY0NjlmZDAyNDVjMjBmODQ0Mzg2OTIzMmQwYjRmMjg1NzMzOTBkM2RlYmI2YmZhMWU3MzVhYTkyYWNlNGE2NzciLCJuYmYiOjE3NjQ4MjU3OTAsImNvZGUiOiJNODdua3BFZDZhUmkwTlFVTm1RUVA2U1hDcGZMQ2t0ZGciLCJpc3MiOiJ6bTpjaWQ6enJQd1RZSzJUZ0tEMlBrcldGOUt2QSIsImdubyI6MCwiZXhwIjoxNzY0ODI5MzkwLCJ0eXBlIjowLCJpYXQiOjE3NjQ4MjU3OTAsImFpZCI6IjlUaWJWRWlMVEwtMDVDQU1KcHo3cmcifQ.tndET8GCE7d-gClfnwbJ0FULuEpefo7FkFY2aHuqhCEPSlBS9SGAkUVz0b4BXaZj3n7KbEhPo0pLNmIHBG4EOg";
+  "eyJzdiI6IjAwMDAwMiIsImFsZyI6IkhTNTEyIiwidiI6IjIuMCIsImtpZCI6ImY4MjkyZWEyLTk1ZDgtNDIyYy1iNmY4LTczOGQ3YjY1YThjNSJ9.eyJhdWQiOiJodHRwczovL29hdXRoLnpvb20udXMiLCJ1aWQiOiJwX2ZpS1NxSFNtU3N1Si0wYVhSZ3VnIiwidmVyIjoxMCwiYXVpZCI6ImY0NjlmZDAyNDVjMjBmODQ0Mzg2OTIzMmQwYjRmMjg1NzMzOTBkM2RlYmI2YmZhMWU3MzVhYTkyYWNlNGE2NzciLCJuYmYiOjE3NjQ3NjE1NTAsImNvZGUiOiJpenVocmh3WkExWUU2c0lOX0gwUXNxV2s2c1NJbzlkeGciLCJpc3MiOiJ6bTpjaWQ6enJQd1RZSzJUZ0tEMlBrcldGOUt2QSIsImdubyI6MCwiZXhwIjoxNzY0NzY1MTUwLCJ0eXBlIjowLCJpYXQiOjE3NjQ3NjE1NTAsImFpZCI6IjlUaWJWRWlMVEwtMDVDQU1KcHo3cmcifQ.00jINHwN-VNH2HD0Kl-2FeM94drfW2rvvN7OEfhI5Et9w3gjgOJHstLd1XwKtmgmYEm96KlCXlPoYJQyoMDomA";
 
 const withBaseUrl = (path: string) => {
   const normalizedBase = API_CONFIG.BASE_URL?.replace(/\/$/, "") || "";
@@ -58,8 +58,8 @@ export async function POST(request: Request) {
       email,
       first_name,
       last_name,
-      // phone_number is sent as a string
-      phone_number: phone_number ? String(phone_number) : undefined,
+      // Ensure phone_number is a number if provided, to match WebX spec
+      phone_number: typeof phone_number === "string" ? Number(phone_number) || undefined : phone_number,
       webinarId,
     };
 
@@ -106,7 +106,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, data: responseData });
   } catch (error: any) {
-    console.error("WebX register-webinar API error:", error);
+    console.error("WebX registar-webinar API error:", error);
     return NextResponse.json(
       { success: false, error: error?.message || "Unexpected server error while registering." },
       { status: 500 }

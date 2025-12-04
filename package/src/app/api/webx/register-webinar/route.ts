@@ -11,7 +11,7 @@ const WEBX_ROUTES = {
 // Prefer env var if available, fallback to hard-coded token.
 const STATIC_ZOOM_ACCESS_TOKEN =
   process.env.ZOOM_ACCESS_TOKEN ||
-  "eyJzdiI6IjAwMDAwMiIsImFsZyI6IkhTNTEyIiwidiI6IjIuMCIsImtpZCI6ImU2M2U1M2RiLTE1ZGMtNGFhYy05YzNkLWJkZjVlMDU3NGY5MyJ9.eyJhdWQiOiJodHRwczovL29hdXRoLnpvb20udXMiLCJ1aWQiOiJwX2ZpS1NxSFNtU3N1Si0wYVhSZ3VnIiwidmVyIjoxMCwiYXVpZCI6ImY0NjlmZDAyNDVjMjBmODQ0Mzg2OTIzMmQwYjRmMjg1NzMzOTBkM2RlYmI2YmZhMWU3MzVhYTkyYWNlNGE2NzciLCJuYmYiOjE3NjQ4Mjc2MDQsImNvZGUiOiJ0dk9TakxLbFZsOFFCUjJJNGd5U2tPX29NUzRlM3FDeFEiLCJpc3MiOiJ6bTpjaWQ6enJQd1RZSzJUZ0tEMlBrcldGOUt2QSIsImdubyI6MCwiZXhwIjoxNzY0ODMxMjA0LCJ0eXBlIjowLCJpYXQiOjE3NjQ4Mjc2MDQsImFpZCI6IjlUaWJWRWlMVEwtMDVDQU1KcHo3cmcifQ.D4Jic9WNArtFS6VENuBfTbzHqodpMdansxU1Zjwsf7H84FLp6IRmk2Dgq76kjIXJkGTJXa5nPFGdmWDS6YpKCA";
+  "eyJzdiI6IjAwMDAwMiIsImFsZyI6IkhTNTEyIiwidiI6IjIuMCIsImtpZCI6IjNlMGQ4NmIxLTBhNzUtNGQzOC1iY2M3LTI2OGYxMzI0Y2RlYiJ9.eyJhdWQiOiJodHRwczovL29hdXRoLnpvb20udXMiLCJ1aWQiOiJwX2ZpS1NxSFNtU3N1Si0wYVhSZ3VnIiwidmVyIjoxMCwiYXVpZCI6ImY0NjlmZDAyNDVjMjBmODQ0Mzg2OTIzMmQwYjRmMjg1NzMzOTBkM2RlYmI2YmZhMWU3MzVhYTkyYWNlNGE2NzciLCJuYmYiOjE3NjQ4MzgwMDAsImNvZGUiOiJBZXRTdkh5eWdVOHpFME5RS2lfU0NxTEhZN2xVckxyMHciLCJpc3MiOiJ6bTpjaWQ6enJQd1RZSzJUZ0tEMlBrcldGOUt2QSIsImdubyI6MCwiZXhwIjoxNzY0ODQxNjAwLCJ0eXBlIjowLCJpYXQiOjE3NjQ4MzgwMDAsImFpZCI6IjlUaWJWRWlMVEwtMDVDQU1KcHo3cmcifQ.A2Y0-5NNKYFzaOIu63UmYZzOfdAnuoIGRnYfSOk5nmL7X5cLOhf-pz__cydiJlLjR02zk379NfbkXvZ6UgEpPw";
 
 const withBaseUrl = (path: string) => {
   const normalizedBase = API_CONFIG.BASE_URL?.replace(/\/$/, "") || "";
@@ -105,10 +105,11 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ success: true, data: responseData });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("WebX register-webinar API error:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unexpected server error while registering.";
     return NextResponse.json(
-      { success: false, error: error?.message || "Unexpected server error while registering." },
+      { success: false, error: errorMessage },
       { status: 500 }
     );
   }

@@ -3,6 +3,7 @@
  */
 
 import { API_CONFIG, API_ENDPOINTS } from '@/config/api';
+import { registerZoomWebinar, ZoomWebinarRegistrationPayload, ZoomWebinarRegistrationResponse } from '@/services/zoom';
 
 interface ApiResponse<T> {
   success: boolean;
@@ -50,41 +51,32 @@ export interface RegisterWebinarPayload {
   email: string;
   first_name: string;
   last_name: string;
-  phone?: string;
+  phone_number?: string;
 }
 
-export interface RegisterWebinarResponse {
-  id: string;
-  join_url: string;
-  registrant_id: string;
-  topic: string;
-  start_time: string;
-}
+export type RegisterWebinarResponse = ZoomWebinarRegistrationResponse;
 
 export async function registerForWebinar(
   webinarId: string,
   payload: RegisterWebinarPayload
 ): Promise<ApiResponse<RegisterWebinarResponse>> {
   try {
-    const url = `${API_CONFIG.BASE_URL}${API_ENDPOINTS.REGISTER_WEBINAR(webinarId)}`;
-    const response = await fetchWithTimeout(url, {
-      method: 'POST',
-      body: JSON.stringify(payload),
-    });
+    const registrationResult = await registerZoomWebinar({
+      ...payload,
+      webinarId,
+    } as ZoomWebinarRegistrationPayload);
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+    if (!registrationResult.success || !registrationResult.data) {
       return {
         success: false,
-        error: errorData.message || `Registration failed: ${response.statusText}`,
+        error: registrationResult.error || 'Registration failed. Please try again.',
       };
     }
 
-    const data = await response.json();
     return {
       success: true,
-      data,
-      message: 'Registration successful! Check your email for the session link.',
+      data: registrationResult.data,
+      message: registrationResult.message || 'Registration successful! Check your email for the session link.',
     };
   } catch (error: any) {
     console.error('Registration error:', error);

@@ -18,7 +18,7 @@ import Offer from "./components/home/Offer";
 // import { AnimatedTestimonialsDemo } from "./components/home/testimonial/AnimatedDemo";
 import Event from "./components/Event";
 import About from "./components/home/about";
-import ThanksgivingPopupSection from "./components/home/Thanksgiving/index";
+import WebclassSection from "./components/home/webclass";
 import ThanksgivingPopup from "./components/home/Thanksgiving/index";
 
 export const metadata: Metadata = {
@@ -33,6 +33,7 @@ export default function Home() {
       {/* <Masterclass /> */}
       {/* <Aboutus /> */}
       <About />
+      <WebclassSection />
       <Offer />
       {/* <MasterInfo /> */}
       <Courses />

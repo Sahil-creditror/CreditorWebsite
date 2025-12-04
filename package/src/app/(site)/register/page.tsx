@@ -2,9 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { registerForWebinar, RegisterWebinarPayload } from "@/lib/api";
 import { DEFAULT_WEBINAR_ID } from "@/config/api";
+import { registerZoomWebinar, ZoomWebinarRegistrationPayload } from "@/services/zoom";
 import { GraduationCap, Building2, CreditCard, Users, Calendar, Clock, DollarSign, ArrowRight, AlertCircle } from "lucide-react";
+
+type FormState = Omit<ZoomWebinarRegistrationPayload, "webinarId">;
 
 export default function RegistrationPage(): React.ReactElement {
   const router = useRouter();
@@ -13,11 +15,11 @@ export default function RegistrationPage(): React.ReactElement {
   // Get session date from URL params (passed from Event component)
   const sessionDate = searchParams.get('session_date') || '';
   
-  const [formData, setFormData] = useState<RegisterWebinarPayload>({
+  const [formData, setFormData] = useState<FormState>({
     email: '',
     first_name: '',
     last_name: '',
-    phone: '',
+    phone_number: '',
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,7 +49,7 @@ export default function RegistrationPage(): React.ReactElement {
     setTouched({ ...touched, [field]: true });
   };
 
-  const handleChange = (field: keyof RegisterWebinarPayload, value: string) => {
+  const handleChange = (field: keyof FormState, value: string) => {
     setFormData({ ...formData, [field]: value });
     setError(null);
   };
@@ -84,8 +86,11 @@ export default function RegistrationPage(): React.ReactElement {
     setError(null);
 
     try {
-      // Call backend API to register user
-      const result = await registerForWebinar(DEFAULT_WEBINAR_ID, formData);
+      // Call WebX API to register user for the webinar
+      const result = await registerZoomWebinar({
+        ...formData,
+        webinarId: DEFAULT_WEBINAR_ID,
+      });
 
       if (result.success && result.data) {
         // Registration successful - redirect to success page
@@ -335,15 +340,15 @@ export default function RegistrationPage(): React.ReactElement {
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-bold text-secondary dark:text-white mb-2">
+                  <label htmlFor="phone_number" className="block text-sm font-bold text-secondary dark:text-white mb-2">
                     Phone Number <span className="text-secondary/50 dark:text-white/50 font-normal">(Optional)</span>
                   </label>
                   <input
                     type="tel"
-                    id="phone"
+                    id="phone_number"
                     className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-white/10 bg-white dark:bg-secondary/60 text-secondary dark:text-white placeholder:text-secondary/40 dark:placeholder:text-white/40 focus:border-primary focus:ring-4 focus:ring-primary/10 focus:outline-none transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed font-medium"
-                    value={formData.phone}
-                    onChange={(e) => handleChange('phone', e.target.value)}
+                    value={formData.phone_number || ''}
+                    onChange={(e) => handleChange('phone_number', e.target.value)}
                     disabled={isSubmitting}
                     placeholder="+1 (555) 123-4567"
                     autoComplete="tel"

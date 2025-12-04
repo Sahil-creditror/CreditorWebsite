@@ -7,7 +7,7 @@
 
 export const API_CONFIG = {
   // ⚠️ IMPORTANT: Replace this with your actual backend API URL
-  BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://your-backend-api.com/api',
+  BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://webx-6ba8.onrender.com',
   
   // Timeout in milliseconds
   TIMEOUT: 30000,
@@ -40,5 +40,5 @@ export const API_ENDPOINTS = {
  * Default Webinar ID
  * Update this with your actual Zoom webinar ID
  */
-export const DEFAULT_WEBINAR_ID = process.env.NEXT_PUBLIC_WEBINAR_ID || 'YOUR_WEBINAR_ID';
+export const DEFAULT_WEBINAR_ID = process.env.NEXT_PUBLIC_WEBINAR_ID || '85030968110';
 

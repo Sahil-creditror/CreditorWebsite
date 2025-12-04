@@ -89,21 +89,21 @@ type WebinarSession = {
 const webinarSessions: WebinarSession[] = [
   {
     key: "morning-session",
-    id: DEFAULT_WEBINAR_ID,
+    id: process.env.NEXT_PUBLIC_WEBINAR_ID_MORNING || DEFAULT_WEBINAR_ID,
     label: "Morning Intensive",
     time: "10:00 AM PST",
     description: "Perfect if you want to take action before lunch.",
   },
   {
     key: "afternoon-session",
-    id: DEFAULT_WEBINAR_ID,
+    id: process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON || DEFAULT_WEBINAR_ID,
     label: "Afternoon Deep-Dive",
     time: "2:00 PM PST",
     description: "Great for regrouping mid-day and asking questions live.",
   },
   {
     key: "evening-session",
-    id: DEFAULT_WEBINAR_ID,
+    id: process.env.NEXT_PUBLIC_WEBINAR_ID_EVENING || process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON || DEFAULT_WEBINAR_ID,
     label: "Evening Session",
     time: "7:00 PM PST",
     description: "Catch the training after work with zero rush.",

@@ -160,6 +160,22 @@ export default function EventRegistrationSuccess(): React.ReactElement {
     }
   };
 
+  const truncateUrl = (url: string, maxLength: number = 15): string => {
+    if (!url || url.length <= maxLength) return url;
+    try {
+      const urlObj = new URL(url);
+      const hostname = urlObj.hostname;
+      const protocol = urlObj.protocol;
+      // Show protocol + first part of hostname + "..."
+      // e.g., "https://us0..." for "https://us06web.zoom.us/..."
+      const prefix = `${protocol}//${hostname.substring(0, Math.min(5, hostname.length))}`;
+      return `${prefix}...`;
+    } catch {
+      // Fallback if URL parsing fails - show first part + "..."
+      return url.length > maxLength ? `${url.substring(0, maxLength)}...` : url;
+    }
+  };
+
   const heroHeading =
     "How to Start & Grow your very own credit repair business without having any prior experience with credit repair.";
   const sessionDateLabel = sessionDate ? formatSessionDateLine(sessionDate) : "Session time pending";
@@ -248,11 +264,13 @@ export default function EventRegistrationSuccess(): React.ReactElement {
                 <div className="rounded-2xl border border-gray-200 p-4">
                   <p className="text-[11px] font-semibold text-gray-500 mb-2">Link</p>
                   <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2">
-                    <code className="flex-1 text-[11px] text-gray-700 truncate">{joinUrl}</code>
+                    <code className="flex-1 text-[11px] text-gray-700 truncate" title={joinUrl}>
+                      {truncateUrl(joinUrl)}
+                    </code>
                     <button
                       onClick={handleCopyLink}
                       title="Copy link"
-                      className="flex items-center justify-center rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition w-9 h-9"
+                      className="flex items-center justify-center rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition w-9 h-9 flex-shrink-0"
                     >
                       {copied ? <CheckCircle2 className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                     </button>

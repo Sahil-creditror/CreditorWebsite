@@ -40,5 +40,5 @@ export const API_ENDPOINTS = {
  * Default Webinar ID
  * Update this with your actual Zoom webinar ID
  */
-export const DEFAULT_WEBINAR_ID = process.env.NEXT_PUBLIC_WEBINAR_ID || '85030968110';
+export const DEFAULT_WEBINAR_ID = process.env.NEXT_PUBLIC_WEBINAR_ID || '85345478550';
 

@@ -126,7 +126,7 @@ function About() {
                   />
                 </div>
 
-                <p className="text-gray-600 dark:text-black">
+                <p className="text-gray-600 dark:text-black relative z-30">
                   Our educational platform & Instructors empower you to structure your life and business
                   for maximum privacy, asset protection, and true independence. This is where knowledge
                   becomes sovereignty, because real freedom begins in the Private.
@@ -162,6 +162,16 @@ function About() {
           </div>
         </div>
       </div>
+      {/* Snow image at bottom right of section */}
+      <div className="absolute bottom-0 right-0 z-20">
+          <Image
+            src="/images/home/aboutusIndex/about_snow.png"
+            alt="Snow decoration"
+            width={150}
+            height={150}
+            className="object-contain"
+          />
+        </div>
 
       {/* Video Modal */}
       {isVideoModalOpen && (

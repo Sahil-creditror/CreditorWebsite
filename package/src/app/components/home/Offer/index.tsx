@@ -60,6 +60,13 @@ export default function MasterclassBenefits() {
 
   return (
     <section className="relative overflow-hidden py-10 md:py-20 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+      {/* <div className="absolute inset-0 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800" /> */}
+      <div
+        className="absolute inset-0 bg-[url('/images/home/aboutusIndex/about_christmas4.webp')] bg-cover bg-center dark:opacity-0 transition-opacity duration-300"
+        aria-hidden="true"
+      />
+      {/* <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/30 to-white/60 dark:hidden pointer-events-none" /> */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/20 to-slate-900/60 hidden dark:block pointer-events-none" />
       <div className="container mx-auto px-4 relative z-10">
         
         {/* --- Section Heading --- */}
@@ -128,7 +135,7 @@ export default function MasterclassBenefits() {
           <div className="text-center">
             <h3 className="text-3xl md:text-5xl font-extrabold text-slate-800 dark:text-white leading-tight">
               The{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-400">
+              <span className="bg-clip-text text-white bg-gradient-to-r from-blue-500 to-blue-400">
                 Freedom
               </span>{' '}
               Formula

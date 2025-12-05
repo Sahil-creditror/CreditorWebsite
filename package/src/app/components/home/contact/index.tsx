@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Script from "next/script";
 import { useEffect, useState } from "react";
 
@@ -10,6 +11,9 @@ export default function Contact(props: ContactProps) {
   const [isFormLoaded, setIsFormLoaded] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
+  // contactdataNumber is currently unused but preserved for future integration
+  void contactdataNumber;
+
   // Ensure iframe/script render only on client to avoid hydration mismatches
   useEffect(() => {
     setIsMounted(true);
@@ -17,6 +21,26 @@ export default function Contact(props: ContactProps) {
 
   return (
     <section className="relative py-20 md:py-24 overflow-hidden">
+      {/* Festive corner illustrations */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden z-40">
+        <Image
+          src="/images/hero/santa.png"
+          alt="Santa waving"
+          width={260}
+          height={360}
+          priority
+          className="absolute bottom-0 left-0 w-32 md:w-44 h-auto drop-shadow-xl select-none"
+        />
+        <Image
+          src="/images/hero/side.png"
+          alt="Snowman with reindeer"
+          width={300}
+          height={300}
+          priority
+          className="absolute bottom-0 right-0 w-36 md:w-52 h-auto drop-shadow-xl select-none"
+        />
+      </div>
+
       <div className="container relative z-10">
         <div className="mx-auto flex flex-col gap-8 md:gap-12">
           {/* Two Column Layout */}
@@ -44,13 +68,16 @@ export default function Contact(props: ContactProps) {
                   </span>
                 </span>
 
-                <h2 className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
-                  Get in Touch
-                </h2>
+                <div className="relative inline-block">
+                  <span className="absolute inset-0 -inset-x-2 -inset-y-1 rounded-full bg-gradient-to-r from-sky-100 via-blue-50 to-blue-100 dark:from-blue-900/40 dark:via-blue-800/30 dark:to-sky-900/30 blur-sm" />
+                  <h2 className="relative px-3 py-1 bg-clip-text text-transparent bg-gradient-to-r from-sky-500 via-blue-500 to-blue-700 drop-shadow-sm">
+                    Get in Touch
+                  </h2>
+                </div>
                 <p className="mt-5 text-black dark:text-white/70">
-                  Let's collaborate and craft something extraordinary together.
-                  Share your vision—I'm all ears and ready to help bring it to
-                  life.
+                  Let&apos;s collaborate and craft something extraordinary
+                  together. Share your vision—I&apos;m all ears and ready to
+                  help bring it to life.
                 </p>
               </div>
 
@@ -85,7 +112,7 @@ export default function Contact(props: ContactProps) {
 
                 {/* Description */}
                 <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 relative z-10">
-                  One message can change your life. We'll guide you with
+                  One message can change your life. We&apos;ll guide you with
                   clarity, strategy, and purpose.
                 </p>
               </div>

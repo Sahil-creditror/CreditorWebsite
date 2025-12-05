@@ -73,7 +73,6 @@ export default function PresentationSection() {
             <div className="relative w-full overflow-hidden shadow-2xl aspect-video bg-black border border-white/10 dark:border-gray-200/30 rounded-none">
               <video
                 playsInline
-                autoPlay
                 controls
                 controlsList="nodownload"
                 preload="metadata"

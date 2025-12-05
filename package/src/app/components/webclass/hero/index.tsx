@@ -8,9 +8,17 @@ import { registerZoomWebinar, ZoomWebinarRegistrationPayload } from "@/services/
 
 /**
  * Fixed daily webinar times in PST (24h format).
- * These are used for the countdown logic.
+ * These are used for the countdown logic and upcoming-session dropdown.
  */
 const WEBINAR_SESSION_HOURS_PST = [10, 14, 19]; // 10:00, 14:00 (2 PM), 19:00 (7 PM)
+
+/**
+ * Hard stop for this webinar series (final occurrence).
+ * Used so that "upcoming" logic never goes past the last scheduled date.
+ *
+ * NOTE: Feb 1, 2026 11:59 PM PST (adjust if the series end date changes).
+ */
+const WEBINAR_SERIES_END = new Date("2026-02-01T23:59:59-08:00");
 
 /**
  * Countdown hook: next scheduled webinar (10am, 2pm, 7pm PST) from current time.
@@ -86,32 +94,107 @@ type WebinarSession = {
   description: string;
 };
 
-const webinarSessions: WebinarSession[] = [
+/**
+ * Base templates for the three daily webinar slots.
+ * We derive the actual upcoming occurrences (date + time) from these.
+ */
+type WebinarTemplate = {
+  baseKey: string;
+  id: string;
+  label: string;
+  hour: number;
+  minute: number;
+  description: string;
+};
+
+const webinarTemplates: WebinarTemplate[] = [
   {
-    key: "morning-session",
+    baseKey: "morning",
     id: process.env.NEXT_PUBLIC_WEBINAR_ID_MORNING || DEFAULT_WEBINAR_ID,
     label: "Morning Intensive",
-    time: "10:00 AM PST",
+    hour: 10,
+    minute: 0,
     description: "Perfect if you want to take action before lunch.",
   },
   {
-    key: "afternoon-session",
+    baseKey: "afternoon",
     id: process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON || DEFAULT_WEBINAR_ID,
     label: "Afternoon Deep-Dive",
-    time: "2:00 PM PST",
+    hour: 14,
+    minute: 0,
     description: "Great for regrouping mid-day and asking questions live.",
   },
   {
-    key: "evening-session",
-    id: process.env.NEXT_PUBLIC_WEBINAR_ID_EVENING || process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON || DEFAULT_WEBINAR_ID,
+    baseKey: "evening",
+    id:
+      process.env.NEXT_PUBLIC_WEBINAR_ID_EVENING ||
+      process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON ||
+      DEFAULT_WEBINAR_ID,
     label: "Evening Session",
-    time: "7:00 PM PST",
+    hour: 19,
+    minute: 0,
     description: "Catch the training after work with zero rush.",
   },
 ];
 
-const defaultSessionId = webinarSessions[0]?.id || DEFAULT_WEBINAR_ID;
-const defaultSessionKey = webinarSessions[0]?.key || "default-session";
+/**
+ * Build the next N upcoming webinar slots (date + time) in PST,
+ * constrained so that they never extend past the final series date.
+ */
+const buildUpcomingSessions = (count: number): WebinarSession[] => {
+  const now = new Date();
+  const sessions: WebinarSession[] = [];
+
+  // Iterate day-by-day until we gather the requested number of upcoming slots
+  let cursor = new Date(now);
+
+  while (sessions.length < count) {
+    for (const template of webinarTemplates) {
+      const occurrence = new Date(cursor);
+      occurrence.setHours(template.hour, template.minute, 0, 0);
+
+      // Only include future occurrences
+      if (occurrence.getTime() <= now.getTime()) continue;
+
+      // Stop if we’re past the series end date
+      if (occurrence.getTime() > WEBINAR_SERIES_END.getTime()) {
+        return sessions;
+      }
+
+      const dateLabel = occurrence.toLocaleString("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        timeZone: "America/Los_Angeles",
+      });
+
+      const timeLabel = occurrence.toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+        timeZoneName: "short",
+        timeZone: "America/Los_Angeles",
+      });
+
+      sessions.push({
+        key: `${template.baseKey}-${occurrence.toISOString()}`,
+        id: template.id,
+        label: `${template.label} — ${dateLabel}`,
+        time: timeLabel,
+        description: template.description,
+      });
+
+      if (sessions.length === count) {
+        return sessions;
+      }
+    }
+
+    // Move to the next day and continue
+    cursor.setDate(cursor.getDate() + 1);
+  }
+
+  return sessions;
+};
 
 export default function WebclassSection() {
   const router = useRouter();
@@ -123,7 +206,8 @@ export default function WebclassSection() {
   // Modal and form state
   const [widgetOpen, setWidgetOpen] = useState(false);
   const [formData, setFormData] = useState<FormState>({ ...initialFormState });
-  const [selectedSessionKey, setSelectedSessionKey] = useState(defaultSessionKey);
+  const [sessions, setSessions] = useState<WebinarSession[]>(() => buildUpcomingSessions(3));
+  const [selectedSessionKey, setSelectedSessionKey] = useState<string>(sessions[0]?.key || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [touched, setTouched] = useState({
@@ -133,14 +217,16 @@ export default function WebclassSection() {
     session: false,
   });
   const selectedSession =
-    webinarSessions.find((session) => session.key === selectedSessionKey) ?? webinarSessions[0];
-  const sessionTimesSummary = webinarSessions.map((session) => session.time).join(" • ");
+    sessions.find((session) => session.key === selectedSessionKey) ?? sessions[0];
+  const sessionTimesSummary = sessions.map((session) => `${session.label} @ ${session.time}`).join(" • ");
   const sessionTimezoneLabel = "PST";
 
   const resetFormState = () => {
     setFormData({ ...initialFormState });
     setTouched({ email: false, first_name: false, last_name: false, session: false });
-    setSelectedSessionKey(defaultSessionKey);
+    const refreshedSessions = buildUpcomingSessions(3);
+    setSessions(refreshedSessions);
+    setSelectedSessionKey(refreshedSessions[0]?.key || "");
     setError(null);
   };
 
@@ -219,7 +305,7 @@ export default function WebclassSection() {
 
     try {
       // Call backend API to register user
-      const sessionId = selectedSession?.id || defaultSessionId;
+      const sessionId = selectedSession?.id || DEFAULT_WEBINAR_ID;
 
       const result = await registerZoomWebinar({
         ...formData,
@@ -377,19 +463,20 @@ export default function WebclassSection() {
 
               {/* Main headline - very large, bold */}
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[1.1] mb-4 text-white dark:text-white">
-                Credit Repair
+                Non Member
                 <br />
-                <span className="block">Business</span>
+                <span className="block">Orientation</span>
               </h1>
 
               {/* Subtext */}
               <p className="text-base md:text-lg mb-4 text-white dark:text-gray-300">
-                Without having any prior experience with credit repair!
+                ZERO legal experience required.
               </p>
 
               {/* Highlight text - bold */}
               <p className="text-base md:text-lg font-bold mb-6 text-white dark:text-white">
-                100% FREE — {webinarSessions.length} daily sessions ({sessionTimesSummary || 'Live all day'}) {sessionTimezoneLabel} so you can start now.
+                100% FREE - Next Class Is Starting TODAY!
+                {/* 100% FREE — {sessions.length || webinarTemplates.length} upcoming sessions ({sessionTimesSummary || 'Live all day'}) {sessionTimezoneLabel} so you can start now. */}
               </p>
 
               {/* Session options */}
@@ -515,9 +602,9 @@ export default function WebclassSection() {
                         setError(null);
                       }}
                       onBlur={() => handleBlur('session')}
-                      disabled={isSubmitting || webinarSessions.length === 0}
+                      disabled={isSubmitting || sessions.length === 0}
                     >
-                      {webinarSessions.map((session) => (
+                      {sessions.map((session: WebinarSession) => (
                         <option key={session.key} value={session.key}>
                           {session.label} — {session.time}
                         </option>

@@ -28,7 +28,7 @@ export default function PresentationSection() {
 
           <div className="inline-flex flex-col gap-4">
             <span className="text-3xl md:text-5xl font-extrabold tracking-tight text-white px-6 py-3 rounded-lg bg-white/15 backdrop-blur">
-              Join Us For This FREE Presentation...
+              Join This FREE Training And Discover Exactly How Thousands Of Regular People Just Like You Are…
             </span>
           </div>
 
@@ -38,12 +38,15 @@ export default function PresentationSection() {
             <span className="inline-block w-16 h-1 rounded-full bg-[#b87b1f]" />
           </div>
 
-          <p className="mt-6 text-lg md:text-2xl font-semibold leading-relaxed text-white/90 max-w-3xl mx-auto">
+          <p className="mt-6 text-lg md:text-2xl font-semibold leading-relaxed text-white/90 max-w-5xl mx-auto">
             ...And Find Out What{" "}
             <span className="text-[#ffe08a]">THOUSANDS Of Entrepreneurs, Who Are Just Like You,</span>{" "}
             Are Doing To Start And Grow Their Very Own{" "}
-            <span className="text-white underline decoration-2">Credit Repair Businesses!</span>
+            <span className="text-white underline decoration-2">Credit Repair Businesses!</span>{" "}
+            — legally destroying junk debt buyers, wiping out old debts, stopping garnishments cold,
+            and turning the tables on collectors – all without spending $10,000+ on a lawyer!
           </p>
+
 
           {/* <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
@@ -67,7 +70,20 @@ export default function PresentationSection() {
 
         <div className="mt-12">
           <div className="relative max-w-5xl mx-auto rounded-[32px] overflow-hidden shadow-2xl border border-white/50 bg-white dark:border-white/10 dark:bg-[#0c1322]">
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/10 via-transparent to-transparent" />
+            <div className="relative w-full overflow-hidden shadow-2xl aspect-video bg-black border border-white/10 dark:border-gray-200/30 rounded-none">
+              <video
+                playsInline
+                autoPlay
+                controls
+                controlsList="nodownload"
+                preload="metadata"
+                className="w-full h-full object-cover"
+              >
+                <source src="/video/squeeze.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            {/* <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/10 via-transparent to-transparent" />
             <Image
               src="/images/squeeze/squeeze.webp"
               alt="Millionaires Club Awards"
@@ -75,7 +91,7 @@ export default function PresentationSection() {
               height={700}
               className="w-full h-auto object-cover"
               priority
-            />
+            /> */}
           </div>
         </div>
       </div>

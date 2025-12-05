@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { CheckCircle2, Copy } from "lucide-react";
+import FreedomFormula from "@/app/components/home/Offer";
 
 interface TimeLeft {
   expired: boolean;
@@ -71,8 +72,63 @@ export default function EventRegistrationSuccess(): React.ReactElement {
   const sessionDate = getParam("session_date");
   const registrantId = getParam("registrant_id");
 
+  /**
+   * For recurring webinars that run daily at the same time until a final end date,
+   * Zoom currently sends us the LAST occurrence as `session_date` (e.g. Feb 1).
+   *
+   * This helper converts that "series end" timestamp into the NEXT upcoming
+   * occurrence by preserving the same UTC time-of-day each day.
+   * Using UTC instead of local hours avoids extra +/- hours depending
+   * on the viewer's local timezone.
+   */
+  const getNextOccurrenceTarget = (seriesEndISO: string): number | null => {
+    if (!seriesEndISO) return null;
+
+    const seriesEnd = new Date(seriesEndISO);
+    if (Number.isNaN(seriesEnd.getTime())) return null;
+
+    const now = new Date();
+
+    // If we're already past the series end, just treat it as expired.
+    if (now.getTime() > seriesEnd.getTime()) {
+      return seriesEnd.getTime();
+    }
+
+    // Use the UTC time-of-day from the series end as the recurring slot anchor.
+    const utcHour = seriesEnd.getUTCHours();
+    const utcMinute = seriesEnd.getUTCMinutes();
+    const utcSecond = seriesEnd.getUTCSeconds();
+
+    // Candidate = today at the webinar UTC time
+    let candidate = new Date(
+      Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        utcHour,
+        utcMinute,
+        utcSecond,
+        0
+      )
+    );
+
+    // If today's slot has already passed, move to tomorrow (in UTC)
+    if (candidate.getTime() <= now.getTime()) {
+      candidate = new Date(candidate.getTime());
+      candidate.setUTCDate(candidate.getUTCDate() + 1);
+    }
+
+    // Never go past the final series end date
+    if (candidate.getTime() > seriesEnd.getTime()) {
+      return seriesEnd.getTime();
+    }
+
+    return candidate.getTime();
+  };
+
   const calcTimeLeft = (targetDate: string): TimeLeft => {
-    const target = new Date(targetDate).getTime();
+    const recurringTarget = getNextOccurrenceTarget(targetDate);
+    const target = recurringTarget ?? new Date(targetDate).getTime();
     const diff = target - Date.now();
 
     if (diff <= 0) {
@@ -160,7 +216,7 @@ export default function EventRegistrationSuccess(): React.ReactElement {
     }
   };
 
-  const truncateUrl = (url: string, maxLength: number = 15): string => {
+  const truncateUrl = (url: string, maxLength: number = 25): string => {
     if (!url || url.length <= maxLength) return url;
     try {
       const urlObj = new URL(url);
@@ -168,7 +224,7 @@ export default function EventRegistrationSuccess(): React.ReactElement {
       const protocol = urlObj.protocol;
       // Show protocol + first part of hostname + "..."
       // e.g., "https://us0..." for "https://us06web.zoom.us/..."
-      const prefix = `${protocol}//${hostname.substring(0, Math.min(5, hostname.length))}`;
+      const prefix = `${protocol}//${hostname.substring(0, Math.min(20, hostname.length))}`;
       return `${prefix}...`;
     } catch {
       // Fallback if URL parsing fails - show first part + "..."
@@ -176,21 +232,32 @@ export default function EventRegistrationSuccess(): React.ReactElement {
     }
   };
 
-  const heroHeading =
-    "How to Start & Grow your very own credit repair business without having any prior experience with credit repair.";
-  const sessionDateLabel = sessionDate ? formatSessionDateLine(sessionDate) : "Session time pending";
+  const heroHeading = "Creditor Academy Orientation: Entering the Private Pathway";
+
+  // Use the NEXT upcoming occurrence (for recurring daily webinars) for display & calendar
+  const nextOccurrenceMs = sessionDate ? getNextOccurrenceTarget(sessionDate) : null;
+  const displaySessionDate = nextOccurrenceMs ? new Date(nextOccurrenceMs).toISOString() : sessionDate || "";
+
+  const sessionDateLabel = displaySessionDate ? formatSessionDateLine(displaySessionDate) : "Session time pending";
   const calendarLink =
-    sessionDate && joinUrl
-      ? buildCalendarLink("How to Start & Grow Your Credit Repair Business", sessionDate, 90, `Join webinar: ${joinUrl}`)
+    displaySessionDate && joinUrl
+      ? buildCalendarLink(
+          "How to Start & Grow Your Credit Repair Business",
+          displaySessionDate,
+          90,
+          `Join webinar: ${joinUrl}`
+        )
       : "";
 
+  const digitColorClass = isLinkActive ? "text-[#026fe2] dark:text-[#026fe2]" : "text-white dark:text-white";
+
   return (
-    <main className="relative min-h-screen text-white">
-      <div className="bg-[#08152b] text-center text-[9px] sm:text-[10px] tracking-[0.35em] uppercase font-semibold py-3">
+    <main className="relative min-h-screen bg-gradient-to-b from-[#060f14] via-[#08152b] to-[#04060a] text-white dark:from-white dark:via-slate-50 dark:to-white dark:text-gray-900">
+      <div className="bg-[#08152b] text-center text-[12px] sm:text-[13px] tracking-[0.35em] uppercase font-semibold pt-24 pb-5 text-white dark:bg-gray-900 dark:text-gray-100">
         Great! You are now successfully registered and CONFIRMED for this Webclass...
       </div>
 
-      <div className="relative flex-1 overflow-hidden pb-16 bg-[#f7f9fc]">
+      <div className="relative flex-1 overflow-hidden pb-16 bg-[#f7f9fc] dark:bg-[#050911]">
         <div className="absolute inset-0 pointer-events-none opacity-40">
           <div
             className="w-full h-full"
@@ -203,47 +270,53 @@ export default function EventRegistrationSuccess(): React.ReactElement {
 
         <section className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-0 pt-10 md:pt-16">
           <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] items-start">
-            <div className="text-gray-900 flex flex-col h-full">
-              <p className="text-xs md:text-sm font-semibold tracking-[0.4em] uppercase text-gray-400 mb-5">
+            <div className="text-gray-900 dark:text-white flex flex-col h-full">
+              <p className="text-xs md:text-sm font-semibold tracking-[0.4em] uppercase text-black dark:text-gray-300 mb-5">
                 Exclusive confirmation for {registrantName || "Guest"}
               </p>
-              <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-black leading-tight text-[#11142d] mb-6">
+              <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-black leading-tight text-[#11142d] dark:text-white mb-6">
                 How To Start Your Very Own{" "}
-                <span className="text-[#b7933f] block">Profitable Credit Repair Business</span>
+                <span className="text-[#026fe2] block">Profitable Credit Repair Business</span>
               </h1>
-              <button
-                type="button"
-                className="inline-flex items-center justify-center rounded-xl bg-[#c89b3c] text-white font-black text-xs sm:text-sm tracking-[0.2em] uppercase py-3 mb-6 max-w-[460px]"
-              >
-                Watch This Video To Find Out The Best Way To Prepare For This Webclass!
-              </button>
-              <div className="relative w-full rounded-3xl overflow-hidden shadow-xl aspect-[4/3]">
-                <Image
-                  src="/images/squeeze/webex.jpeg"
-                  alt="Webclass preview"
-                  fill
-                  priority
-                  className="object-cover"
-                />
-                <span className="absolute top-4 right-4 bg-black/70 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                  Unmute
-                </span>
+              <div className="flex flex-col w-full max-w-[560px]">
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center rounded-none bg-[#026fe2] text-white font-black text-xs sm:text-sm tracking-[0.2em] uppercase py-3 w-full shadow-lg dark:shadow-[#026fe2]/20"
+                >
+                  Watch This Video To Find Out The Best Way To Prepare For This Webclass!
+                </button>
+                <div className="relative w-full overflow-hidden shadow-2xl aspect-video bg-black border border-white/10 dark:border-gray-200/30 rounded-none">
+                  <video
+                    playsInline
+                    autoPlay
+                    controls
+                    controlsList="nodownload"
+                    preload="metadata"
+                    className="w-full h-full object-cover"
+                  >
+                    <source src="/video/squeeze.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+
               </div>
             </div>
 
-            <aside className="rounded-[32px] bg-white text-gray-900 shadow-2xl p-8 flex flex-col gap-6 h-full">
+            <aside className="rounded-[32px] bg-white text-gray-900 shadow-2xl p-8 flex flex-col gap-6 h-full dark:bg-[#0b1322] dark:text-white dark:shadow-black/50">
               <div>
-                <p className="text-[10px] font-semibold tracking-[0.3em] text-gray-400 uppercase mb-1.5">
+                <p className="text-[10px] font-semibold tracking-[0.3em] text-blue-600 uppercase mb-1.5 dark:text-gray-300">
                   Congrats! You're Registered!
                 </p>
-                <h3 className="text-xl md:text-2xl font-black leading-snug text-[#1f1f1f]">{heroHeading}</h3>
+                <h3 className="text-xl md:text-2xl font-black leading-snug text-[#1f1f1f] dark:text-white">{heroHeading}</h3>
               </div>
 
               <button
                 onClick={handleJoinSession}
                 disabled={!isLinkActive}
                 className={`w-full rounded-2xl py-3.5 font-black text-base transition shadow-lg ${
-                  isLinkActive ? "bg-[#c89b3c] hover:bg-[#d6a74a] text-white" : "bg-gray-200 text-gray-500 cursor-not-allowed"
+                  isLinkActive
+                    ? "bg-[#026fe2] hover:bg-[#158af0] text-white"
+                    : "bg-gray-200 text-gray-500 cursor-not-allowed dark:bg-white/10 dark:text-white/50"
                 }`}
               >
                 {isLinkActive ? "Join Webinar" : "Link activates when session starts"}
@@ -254,23 +327,23 @@ export default function EventRegistrationSuccess(): React.ReactElement {
                   href={calendarLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs md:text-sm font-semibold text-[#c89b3c] hover:text-[#a27c2d] underline text-center"
+                  className="text-xs md:text-sm font-semibold text-[#026fe2] hover:text-[#158af0] underline text-center dark:text-[#026fe2]"
                 >
                   Add to Calendar
                 </a>
               )}
 
               {joinUrl && (
-                <div className="rounded-2xl border border-gray-200 p-4">
-                  <p className="text-[11px] font-semibold text-gray-500 mb-2">Link</p>
-                  <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2">
-                    <code className="flex-1 text-[11px] text-gray-700 truncate" title={joinUrl}>
+                <div className="rounded-2xl border border-gray-200 dark:border-white/10 p-4">
+                  <p className="text-[11px] font-semibold text-gray-500 dark:text-gray-300 mb-2">Link</p>
+                  <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 dark:bg-white/5 dark:border-white/10">
+                    <code className="flex-1 text-[11px] text-gray-700 truncate dark:text-gray-200" title={joinUrl}>
                       {truncateUrl(joinUrl)}
                     </code>
                     <button
                       onClick={handleCopyLink}
                       title="Copy link"
-                      className="flex items-center justify-center rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition w-9 h-9 flex-shrink-0"
+                      className="flex items-center justify-center rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition w-9 h-9 flex-shrink-0 dark:bg-white/10 dark:text-white"
                     >
                       {copied ? <CheckCircle2 className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                     </button>
@@ -278,12 +351,12 @@ export default function EventRegistrationSuccess(): React.ReactElement {
                 </div>
               )}
 
-              <div className="rounded-2xl bg-[#11142d] text-white px-5 py-5 flex flex-col gap-4">
+              <div className="rounded-2xl bg-[#11142d] text-white px-5 py-5 flex flex-col gap-4 dark:bg-[#050910] dark:text-white">
                 {isLinkActive && (
-                  <div className="flex items-center justify-center gap-2 text-sm font-semibold text-[#ffb347]">
+                  <div className="flex items-center justify-center gap-2 text-sm font-semibold text-[#026fe2]">
                     <span className="relative flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ffb347] opacity-75" />
-                      <span className="relative inline-flex h-3 w-3 rounded-full bg-[#ffb347]" />
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#026fe2] opacity-75" />
+                      <span className="relative inline-flex h-3 w-3 rounded-full bg-[#026fe2]" />
                     </span>
                     Session is live!
                   </div>
@@ -296,20 +369,20 @@ export default function EventRegistrationSuccess(): React.ReactElement {
                     { label: "Secs", value: pad(timeLeft.seconds) },
                   ].map((unit) => (
                     <div key={unit.label}>
-                      <p className="text-2xl font-black">{unit.value}</p>
+                      <p className={`text-2xl font-black ${digitColorClass}`}>{unit.value}</p>
                       <p className="text-[9px] tracking-[0.3em] uppercase text-white/70">{unit.label}</p>
                     </div>
                   ))}
                 </div>
-                <div className="bg-white/10 rounded-2xl px-3 py-2.5 text-xs font-semibold text-center">
+                <div className="bg-white/10 rounded-2xl px-3 py-2.5 text-xs font-semibold text-center dark:bg-white/5">
                   {sessionDateLabel}
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 border-t border-gray-100 pt-4">
-                <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
+              <div className="flex items-center gap-3 border-t border-gray-100 dark:border-white/10 pt-4">
+                <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 dark:bg-white/5">
                   <Image
-                    src="/images/logo/creditorlogowhite.webp"
+                    src="/images/squeeze/webex.jpeg"
                     alt="Host avatar"
                     width={48}
                     height={48}
@@ -317,14 +390,15 @@ export default function EventRegistrationSuccess(): React.ReactElement {
                   />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">Daniel Rosen</p>
-                  <p className="text-xs text-gray-500">Host & Founder, Credit Repair Business Academy</p>
+                  <p className="text-sm font-semibold text-gray-900 dark:text-white">PaulMichael Rowland</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-300">Host & Founder, Creditor Academy</p>
                 </div>
               </div>
             </aside>
           </div>
         </section>
       </div>
+      <FreedomFormula />
     </main>
   );
 }

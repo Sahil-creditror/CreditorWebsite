@@ -177,14 +177,14 @@ export default function WebclassSection() {
 
               {/* Main headline - very large, bold */}
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[1.1] mb-4 text-gray-900 dark:text-white">
-                Credit Repair
+                Non Member
                 <br />
-                <span className="block">Business</span>
+                <span className="block">Orientation</span>
               </h1>
 
               {/* Subtext */}
               <p className="text-base md:text-lg mb-4 text-gray-700 dark:text-gray-300">
-                Without having any prior experience with credit repair!
+                ZERO legal experience required.
               </p>
 
               {/* Highlight text - bold */}

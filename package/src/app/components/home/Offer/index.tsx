@@ -139,23 +139,35 @@ export default function MasterclassBenefits() {
                 Freedom
               </span>{' '}
               Formula
-            </h3>
-          </div>
+            </h3> 
+          </div> 
         </div>
 
         {/* --- Cards Grid --- */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
           {benefits.map((item, idx) => (
-            <div
-              key={idx}
-              className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 h-full group"
-            >
-              {/* --- Large Number Overlay --- */}
-              <span
-                className={`absolute top-3 right-5 text-[90px] md:text-[120px] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-blue-400/40 to-amber-400/40 dark:from-blue-300/50 dark:to-yellow-300/50 select-none pointer-events-none leading-none z-30 drop-shadow-[0_0_20px_rgba(255,215,0,0.25)] group-hover:scale-110 group-hover:opacity-100 opacity-90 transition-transform duration-500 ease-out`}
+            <div key={idx} className="relative">
+              {/* --- Snow Layer Above Card (Outside Card Container) --- */}
+              <div className="absolute -top-3 left-0 right-0 w-full h-auto z-40 pointer-events-none">
+                <Image
+                  src="/images/offers/snow.png"
+                  alt=""
+                  width={800}
+                  height={200}
+                  className="w-full h-auto object-contain object-top"
+                />
+              </div>
+
+              {/* --- Card Container --- */}
+              <div
+                className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 h-full group"
               >
-                {String(idx + 1).padStart(1, "0")}
-              </span>
+                {/* --- Large Number Overlay --- */}
+                <span
+                  className={`absolute top-3 right-5 text-[90px] md:text-[120px] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-blue-400/40 to-amber-400/40 dark:from-blue-300/50 dark:to-yellow-300/50 select-none pointer-events-none leading-none z-30 drop-shadow-[0_0_20px_rgba(255,215,0,0.25)] group-hover:scale-110 group-hover:opacity-100 opacity-90 transition-transform duration-500 ease-out`}
+                >
+                  {String(idx + 1).padStart(1, "0")}
+                </span>
 
               {/* Shared overlays for ALL card types (subtle glass + gradient + radial glow) */}
               <div className="absolute inset-0 pointer-events-none z-10">
@@ -163,7 +175,7 @@ export default function MasterclassBenefits() {
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10 dark:to-black/40 opacity-60 mix-blend-overlay" />
 
                 {/* radial glow (top-right) */}
-                <div className="absolute -top-10 -right-10 w-36 h-36 rounded-full blur-3xl opacity-60 bg-gradient-to-tr from-blue-400/30 to-indigo-600/20" />
+                <div className="absolute -top-10 -right-10 w-36 h-36 blur-3xl opacity-60 rounded-full bg-gradient-to-tr from-blue-400/30 to-indigo-600/20" /> 
 
                 {/* subtle bottom vignette */}
                 <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent" />
@@ -175,7 +187,7 @@ export default function MasterclassBenefits() {
               {/* --- BG type cards (1 & 4) --- */}
               {item.type === "bg" && (
                 <div
-                  className="relative h-full min-h-[20rem] flex flex-col justify-between rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700"
+                  className="relative h-full min-h-[20rem] flex flex-col justify-between overflow-hidden border rounded-2xl border-slate-200 dark:border-slate-700"
                   style={{
                     backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.12) 0%, rgba(2,6,23,0.38) 60%), url(${item.bg})`,
                     backgroundSize: "cover",
@@ -237,6 +249,7 @@ export default function MasterclassBenefits() {
                   <div className="absolute inset-0 z-10 transition-opacity duration-500 opacity-0 group-hover:opacity-25 bg-gradient-to-br from-white/5 to-black/20 pointer-events-none" />
                 </div>
               )}
+              </div>
             </div>
           ))}
         </div>

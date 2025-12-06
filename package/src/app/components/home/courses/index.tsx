@@ -1,6 +1,7 @@
 "use client";
 
 import "swiper/css";
+import Image from "next/image";
 import Premium from "./courses";
 import HerobannerWithTag from "@/app/components/shared/hero-banner-with-tag";
 
@@ -16,8 +17,20 @@ function Courses() {
       />
 
       <section className="relative py-20 md:py-20 overflow-hidden">
+      {/* Christmas bell in top right corner */}
+      <div className="absolute top-0 left-0 z-20 pointer-events-none">
+        <Image
+          src="/images/hero/bell.png"
+          alt="Christmas Bell"
+          width={200}
+          height={200}
+          priority
+          className="w-32 md:w-44 lg:w-52 h-auto drop-shadow-xl select-none"
+        />
+      </div>
+
       {/* 🔹 Light Mode Video */}
-      <video
+      {/* <video
         className="absolute top-0 left-0 w-full h-full object-cover -z-10 dark:hidden"
         autoPlay
         loop
@@ -26,7 +39,12 @@ function Courses() {
       >
         <source src="/video/course-bg-new-light.mp4" type="video/mp4" />
         Your browser does not support the video tag.
-      </video>
+      </video> */}
+      <img
+        src="/images/courses/course_bg.webp"
+        alt="Background"
+        className="absolute top-0 left-0 w-full h-full object-cover"
+      />
 
       {/* 🔹 Dark Mode Video */}
       <video
@@ -50,6 +68,17 @@ function Courses() {
           <div className="px-3.5">
             <Premium />
           </div>
+        </div>
+
+        {/* Snow image at bottom right of section */}
+        <div className="absolute bottom-0 right-0 z-20">
+          <Image
+            src="/images/courses/santa.webp"
+            alt="Snow decoration"
+            width={200}
+            height={200}
+            className="object-contain"
+          />
         </div>
       </section>
     </>

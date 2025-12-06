@@ -24,21 +24,21 @@ export default function Contact(props: ContactProps) {
       {/* Festive corner illustrations */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden z-40">
       <Image
-  src="/images/contact/banner/contact_bg.png"
-  alt="Santa waving"
-  width={400}      // increase actual image size
-  height={500}
-  priority
-  className="
-    absolute 
-    top-0 
-    left-0 
-    w-72 md:w-100     // bigger display size
-    h-auto 
-    drop-shadow-xl 
-    select-none
-  "
-/>
+        src="/images/contact/banner/contact_bg.png"
+        alt="Santa waving"
+        width={400}      // increase actual image size
+        height={500}
+        priority
+        className="
+          absolute 
+          top-0 
+          left-0 
+          w-72 md:w-100     // bigger display size
+          h-auto 
+          drop-shadow-xl 
+          select-none
+        "
+      />
 
 
         <Image

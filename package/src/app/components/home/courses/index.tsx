@@ -17,54 +17,42 @@ function Courses() {
       />
 
       <section className="relative py-20 md:py-20 overflow-hidden">
-      {/* Christmas bell in top right corner */}
-      <div className="absolute top-0 left-0 z-20 pointer-events-none">
-        <Image
-          src="/images/hero/bell.png"
-          alt="Christmas Bell"
-          width={200}
-          height={200}
-          priority
-          className="w-32 md:w-44 lg:w-52 h-auto drop-shadow-xl select-none"
+        {/* Christmas bell in top right corner */}
+        <div className="absolute top-0 left-0 z-20 pointer-events-none">
+          <Image
+            src="/images/hero/bell.png"
+            alt="Christmas Bell"
+            width={200}
+            height={200}
+            priority
+            className="w-32 md:w-44 lg:w-52 h-auto drop-shadow-xl select-none"
+          />
+        </div>
+
+        {/* Light-mode background image (hidden in dark mode) */}
+        
+        <img
+          src="/images/courses/course_bg.webp"
+          alt="Background"
+          className="absolute top-0 left-0 w-full h-full object-cover -z-20 dark:hidden"
         />
-      </div>
 
-      {/* 🔹 Light Mode Video */}
-      {/* <video
-        className="absolute top-0 left-0 w-full h-full object-cover -z-10 dark:hidden"
-        autoPlay
-        loop
-        muted
-        playsInline
-      >
-        <source src="/video/course-bg-new-light.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video> */}
-      <img
-        src="/images/courses/course_bg.webp"
-        alt="Background"
-        className="absolute top-0 left-0 w-full h-full object-cover"
-      />
+        {/* Dark-mode background video (hidden in light mode) */}
+        <video
+          className="absolute top-0 left-0 w-full h-full object-cover -z-20 hidden dark:block"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="/video/course-bg-dark.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
 
-      {/* 🔹 Dark Mode Video */}
-      <video
-        className="absolute top-0 left-0 w-full h-full object-cover -z-10 hidden dark:block"
-        autoPlay
-        loop
-        muted
-        playsInline
-      >
-        <source src="/video/course-bg-dark.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-
-      {/* 🔹 Overlay for darkening video */}
-      <div className="absolute inset-0 bg-black/20 dark:bg-black/60 -z-10" />
+        {/* Overlay for darkening video / image (above background) */}
+        <div className="absolute inset-0 bg-black/20 dark:bg-black/60 -z-10" />
 
         <div className="relative flex flex-col gap-24">
-          {/* Badge moved into Hero banner variant */}
-
-          {/* Swiper Section */}
           <div className="px-3.5">
             <Premium />
           </div>
@@ -81,6 +69,7 @@ function Courses() {
           />
         </div>
       </section>
+
     </>
   );
 }

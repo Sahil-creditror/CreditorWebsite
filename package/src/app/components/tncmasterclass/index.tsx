@@ -287,7 +287,7 @@ export default function MasterclassMembershipTC() {
                     {/* Limited Time Badge */}
                     <div className="absolute -top-2 -right-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg flex items-center gap-1 z-10">
                       <Sparkles className="h-3 w-3" />
-                      Until Nov 30th
+                      Until Dec 25th
                     </div>
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex items-start gap-3 flex-1">
@@ -313,7 +313,7 @@ export default function MasterclassMembershipTC() {
                             </li>
                             <li className="flex items-start gap-2">
                               <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
-                              <span className="font-semibold text-emerald-700 dark:text-emerald-400">2000 FREE Credits to unlock premium courses on LMS</span>
+                              <span className="font-semibold text-emerald-700 dark:text-emerald-400">1000 FREE Credits to unlock premium courses on LMS</span>
                             </li>
                           </ul>
                         </div>

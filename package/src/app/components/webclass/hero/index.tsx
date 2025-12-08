@@ -1,10 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { DEFAULT_WEBINAR_ID } from "@/config/api";
-import { registerZoomWebinar, ZoomWebinarRegistrationPayload } from "@/services/zoom";
+import {
+  registerZoomWebinar,
+  ZoomWebinarRegistrationPayload,
+  fetchOccurrences,
+  OccurrenceItem,
+} from "@/services/zoom";
 
 /**
  * Fixed daily webinar times in PST (24h format).
@@ -88,6 +93,7 @@ const initialFormState: FormState = {
 
 type WebinarSession = {
   key: string;
+  baseKey: string;
   id: string;
   label: string;
   time: string;
@@ -146,7 +152,7 @@ const buildUpcomingSessions = (count: number): WebinarSession[] => {
   const sessions: WebinarSession[] = [];
 
   // Iterate day-by-day until we gather the requested number of upcoming slots
-  let cursor = new Date(now);
+  const cursor = new Date(now);
 
   while (sessions.length < count) {
     for (const template of webinarTemplates) {
@@ -178,6 +184,7 @@ const buildUpcomingSessions = (count: number): WebinarSession[] => {
 
       sessions.push({
         key: `${template.baseKey}-${occurrence.toISOString()}`,
+        baseKey: template.baseKey,
         id: template.id,
         label: `${template.label} — ${dateLabel}`,
         time: timeLabel,
@@ -218,27 +225,26 @@ export default function WebclassSection() {
   });
   const selectedSession =
     sessions.find((session) => session.key === selectedSessionKey) ?? sessions[0];
-  const sessionTimesSummary = sessions.map((session) => `${session.label} @ ${session.time}`).join(" • ");
   const sessionTimezoneLabel = "PST";
 
-  const resetFormState = () => {
+  const resetFormState = useCallback(() => {
     setFormData({ ...initialFormState });
     setTouched({ email: false, first_name: false, last_name: false, session: false });
     const refreshedSessions = buildUpcomingSessions(3);
     setSessions(refreshedSessions);
     setSelectedSessionKey(refreshedSessions[0]?.key || "");
     setError(null);
-  };
+  }, []);
 
-  const handleWidgetOpen = () => {
+  const handleWidgetOpen = useCallback(() => {
     resetFormState();
     setWidgetOpen(true);
-  };
+  }, [resetFormState]);
 
-  const handleWidgetClose = () => {
+  const handleWidgetClose = useCallback(() => {
     setWidgetOpen(false);
     resetFormState();
-  };
+  }, [resetFormState]);
 
   useEffect(() => {
     if (!widgetOpen) return;
@@ -251,6 +257,62 @@ export default function WebclassSection() {
       document.removeEventListener('keydown', onKey as EventListener);
       document.body.style.overflow = prev;
     };
+  }, [widgetOpen, handleWidgetClose]);
+
+  /**
+   * When the modal opens, fetch occurrences for all three webinar IDs
+   * and store the latest (next upcoming) occurrence for each in localStorage.
+   */
+  useEffect(() => {
+    if (!widgetOpen) return;
+
+    const storeOccurrence = (baseKey: string, webinarId: string, occ?: OccurrenceItem) => {
+      if (typeof window === "undefined" || !occ) return;
+      localStorage.setItem(`occurrence_${baseKey}_id`, occ.occurrence_id);
+      localStorage.setItem(`occurrence_${baseKey}_start`, occ.start_time);
+      localStorage.setItem(`occurrence_${baseKey}_webinar`, webinarId);
+      console.log(
+        `[Webclass Modal] Stored ${baseKey} occurrence -> id: ${occ.occurrence_id}, start: ${occ.start_time}, webinar: ${webinarId}`
+      );
+    };
+
+    const loadOccurrencesForModal = async () => {
+      console.log("\n🟢 Modal opened -> fetching occurrences for dropdown (webclass hero)");
+      const now = new Date();
+
+      await Promise.all(
+        webinarTemplates.map(async (template) => {
+          try {
+            console.log(`[Webclass Modal] Fetching occurrences for ${template.baseKey} (webinar ${template.id})`);
+            const result = await fetchOccurrences(template.id);
+            if (!result.success || !result.data) {
+              console.warn(`[Webclass Modal] Failed to fetch occurrences for ${template.baseKey}`);
+              return;
+            }
+
+            const occurrences = result.data.occurrences || [];
+            const future = occurrences
+              .filter((occ) => new Date(occ.start_time) > now)
+              .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime());
+
+            // Pick the next upcoming occurrence; if none future, pick the last known occurrence
+            const chosen = future[0] || occurrences.sort(
+              (a, b) => new Date(b.start_time).getTime() - new Date(a.start_time).getTime()
+            )[0];
+
+            if (chosen) {
+              storeOccurrence(template.baseKey, template.id, chosen);
+            } else {
+              console.warn(`[Webclass Modal] No occurrences available for ${template.baseKey}`);
+            }
+          } catch (err) {
+            console.error(`[Webclass Modal] Error fetching occurrences for ${template.baseKey}:`, err);
+          }
+        })
+      );
+    };
+
+    loadOccurrencesForModal();
   }, [widgetOpen]);
 
   const validateEmail = (email: string): boolean => {
@@ -304,12 +366,28 @@ export default function WebclassSection() {
     setError(null);
 
     try {
-      // Call backend API to register user
-      const sessionId = selectedSession?.id || DEFAULT_WEBINAR_ID;
+      // Determine baseKey for selected session
+      const baseKey = selectedSession?.baseKey || selectedSession?.key.split("-")[0] || "morning";
+
+      // Pull stored occurrence + webinar from localStorage (set when modal opened)
+      const occurrenceId =
+        (typeof window !== "undefined" && localStorage.getItem(`occurrence_${baseKey}_id`)) || "";
+      const storedWebinarId =
+        (typeof window !== "undefined" && localStorage.getItem(`occurrence_${baseKey}_webinar`)) || "";
+
+      // Use selected session id, fallback to stored, then default
+      const sessionId = selectedSession?.id || storedWebinarId || DEFAULT_WEBINAR_ID;
+
+      console.log("[Webclass Modal] Submitting registration with:", {
+        baseKey,
+        occurrence_id: occurrenceId,
+        webinar_id: sessionId,
+      });
 
       const result = await registerZoomWebinar({
         ...formData,
         webinarId: sessionId,
+        occurrence_id: occurrenceId,
       });
 
       if (result.success && result.data) {
@@ -328,27 +406,12 @@ export default function WebclassSection() {
         setError(result.error || 'Registration failed. Please try again.');
         setIsSubmitting(false);
       }
-    } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred. Please try again.');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'An unexpected error occurred. Please try again.';
+      setError(message);
       setIsSubmitting(false);
     }
   };
-
-  // placeholder SVG data URL
-  const placeholderSrc =
-    "data:image/svg+xml;utf8," +
-    encodeURIComponent(
-      `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='1000' viewBox='0 0 800 1000'>
-         <defs>
-           <linearGradient id='g' x1='0' x2='1'><stop offset='0' stop-color='#111827' /><stop offset='1' stop-color='#374151' /></linearGradient>
-         </defs>
-         <rect width='100%' height='100%' fill='url(#g)'/>
-         <g fill='#f3f4f6' font-family='Arial, Helvetica, sans-serif'>
-           <text x='50%' y='45%' font-size='36' text-anchor='middle' font-weight='700'>Speaker</text>
-           <text x='50%' y='52%' font-size='18' text-anchor='middle'>Placeholder Image</text>
-         </g>
-       </svg>`
-    );
 
   return (
     <>
@@ -575,10 +638,13 @@ export default function WebclassSection() {
             <div className="modal-form-wrapper">
               <div className="modal-header">
               <div className="modal-icon flex items-center justify-center">
-                <img 
+                <Image 
                   src={"/images/logo/logo_roadmap.webp"} 
                   alt="Logo" 
+                  width={80}
+                  height={60}
                   className="w-20 h-15 object-contain" 
+                  priority
                 />
               </div>
                 <div className="modal-title-group">

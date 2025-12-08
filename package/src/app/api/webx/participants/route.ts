@@ -48,23 +48,12 @@ const fetchJson = async <T>(url: string, init?: RequestInit): Promise<{ ok: bool
 
 export async function GET(request: Request) {
   try {
-    // For GET requests, try to get webinarId from query params first, then body
+    // Accept webinar_id (snake) or webinarId (camel) from query
     const url = new URL(request.url);
-    let webinarId = url.searchParams.get("webinarId");
-
-    // If not in query params, try to parse from body (for cases where body is sent)
-    if (!webinarId) {
-      try {
-        const body = await request.json();
-        webinarId = body?.webinarId;
-      } catch {
-        // Body might be empty or invalid JSON, which is fine for GET requests
-        console.log("[WEBX] No valid JSON body found, using query params only");
-      }
-    }
+    const webinarId = url.searchParams.get("webinar_id") || url.searchParams.get("webinarId");
 
     if (!webinarId) {
-      return NextResponse.json({ success: false, error: "Missing webinarId" }, { status: 400 });
+      return NextResponse.json({ success: false, error: "Missing webinar_id" }, { status: 400 });
     }
 
     const webxParticipantsUrl = withBaseUrl(WEBX_ROUTES.PARTICIPANTS);
@@ -72,20 +61,21 @@ export async function GET(request: Request) {
     console.log("[WEBX] Fetching participants for webinar:", webinarId);
     console.log("[WEBX] Backend URL:", webxParticipantsUrl);
 
-    const accessToken = STATIC_ZOOM_ACCESS_TOKEN;
+    // Prefer client-provided auth token; fallback to static
+    const authHeader = request.headers.get("authorization");
+    const accessToken = authHeader?.replace("Bearer ", "") || STATIC_ZOOM_ACCESS_TOKEN;
 
-    // Use query parameters for GET request and pass both webinarId and access_token
+    // Use query parameters for GET request and pass webinar_id
     let finalUrl: string;
     try {
       const urlWithParams = new URL(webxParticipantsUrl);
-      urlWithParams.searchParams.set("webinarId", webinarId);
-      urlWithParams.searchParams.set("access_token", accessToken);
+      urlWithParams.searchParams.set("webinar_id", webinarId);
       finalUrl = urlWithParams.toString();
     } catch (urlError) {
       // If URL construction fails, manually append query parameter
       console.warn("[WEBX] URL construction error, using manual method:", urlError);
       const separator = webxParticipantsUrl.includes("?") ? "&" : "?";
-      finalUrl = `${webxParticipantsUrl}${separator}webinarId=${encodeURIComponent(webinarId)}&access_token=${encodeURIComponent(accessToken)}`;
+      finalUrl = `${webxParticipantsUrl}${separator}webinar_id=${encodeURIComponent(webinarId)}`;
       console.log("[WEBX] Using manual URL construction:", finalUrl);
     }
     
@@ -105,6 +95,7 @@ export async function GET(request: Request) {
     });
 
     if (!participantsResult.ok) {
+      console.error("[WEBX] Participants backend error:", participantsResult.status, participantsResult.data);
       return NextResponse.json(
         {
           success: false,

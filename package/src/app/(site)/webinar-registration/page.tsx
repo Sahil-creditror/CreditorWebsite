@@ -84,9 +84,6 @@ interface SessionData {
 }
 
 const UNKNOWN_DATE_KEY = "unknown-date";
-const EVENT_TIMEZONE = "America/Los_Angeles";
-const DAILY_RECURRENCE_MS = 24 * 60 * 60 * 1000;
-const OCCURRENCE_TOLERANCE_MS = 5 * 60 * 1000;
 
 const normalizeDateKey = (value?: string): string | null => {
   if (!value) return null;
@@ -123,111 +120,6 @@ const groupParticipantsByDate = (participants: Participant[]) => {
   }, {});
 };
 
-const parseIsoDate = (value?: string | null): Date | null => {
-  if (!value) return null;
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? null : date;
-};
-
-const formatEventDateTime = (date: Date | null) => {
-  if (!date) return null;
-  return date.toLocaleString("en-US", {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    timeZone: EVENT_TIMEZONE,
-    timeZoneName: "short",
-  });
-};
-
-const formatEventDateTimeLocal = (date: Date | null) => {
-  if (!date) return null;
-  const localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  return date.toLocaleString("en-US", {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    timeZone: localTimeZone,
-    timeZoneName: "short",
-  });
-};
-
-const getNextDailyOccurrence = (baseDate: Date | null, now = new Date()) => {
-  if (!baseDate) return null;
-  const occurrence = new Date(baseDate.getTime());
-  const nowMs = now.getTime();
-
-  if (occurrence.getTime() > nowMs) {
-    return occurrence;
-  }
-
-  const elapsedDays = Math.floor((nowMs - occurrence.getTime()) / DAILY_RECURRENCE_MS) + 1;
-  occurrence.setUTCDate(occurrence.getUTCDate() + elapsedDays);
-  return occurrence;
-};
-
-const getNextEventRegistrations = (registrations: Registrant[]) => {
-  if (!registrations.length) {
-    return { registrations, eventDate: null };
-  }
-
-  const now = new Date();
-  const enhanced = registrations
-    .map((registrant) => {
-      const baseDate = parseIsoDate(registrant.start_time);
-      const occurrenceDate = getNextDailyOccurrence(baseDate, now) ?? baseDate;
-      return { registrant, occurrenceDate };
-    })
-    .filter((item): item is { registrant: Registrant; occurrenceDate: Date } => Boolean(item.occurrenceDate));
-
-  if (!enhanced.length) {
-    return { registrations, eventDate: null };
-  }
-
-  enhanced.sort((a, b) => a.occurrenceDate.getTime() - b.occurrenceDate.getTime());
-  const nextEventDate = enhanced[0].occurrenceDate;
-  const selectedRegistrations = enhanced
-    .filter((item) => Math.abs(item.occurrenceDate.getTime() - nextEventDate.getTime()) <= OCCURRENCE_TOLERANCE_MS)
-    .map((item) => item.registrant);
-
-  return {
-    registrations: selectedRegistrations.length ? selectedRegistrations : registrations,
-    eventDate: nextEventDate,
-  };
-};
-
-const getLatestParticipantsEvent = (participants: Participant[]) => {
-  const grouped = groupParticipantsByDate(participants);
-  const sortedEntries = Object.entries(grouped).sort(([dateA], [dateB]) => {
-    if (dateA === UNKNOWN_DATE_KEY) return 1;
-    if (dateB === UNKNOWN_DATE_KEY) return -1;
-    return dateB.localeCompare(dateA);
-  });
-
-  if (!sortedEntries.length) {
-    return { participants: [], eventDate: null, hasHistory: false };
-  }
-
-  const [latestKey, latestList] = sortedEntries[0];
-  const representativeParticipant =
-    latestList.find((participant) => parseIsoDate(participant.join_time)) ?? latestList[0];
-  const eventDate =
-    parseIsoDate(representativeParticipant?.join_time ?? null) ||
-    (latestKey !== UNKNOWN_DATE_KEY ? parseIsoDate(latestKey) : null);
-
-  return {
-    participants: latestList,
-    eventDate,
-    hasHistory: sortedEntries.length > 1,
-  };
-};
-
 const buildDateSummary = (sessions: Record<string, SessionData>) => {
   const summary = Object.values(sessions).reduce<Record<string, number>>((acc, session) => {
     session.participants.forEach((participant) => {
@@ -251,14 +143,34 @@ const createDefaultSessionData = (): SessionData => ({
   registrationsLoading: false,
   participantsError: null,
   registrationsError: null,
-  showDetails: false,
-  activeView: "registrations",
+  showDetails: true,
+  activeView: "participants",
 });
 
 export default function WebinarRegistrationPage() {
   const [sessionsData, setSessionsData] = useState<Record<string, SessionData>>({});
+  const [selectedDates, setSelectedDates] = useState<Record<string, string | null>>({});
+  const [allRegistrations, setAllRegistrations] = useState<Registrant[]>([]);
+  const [allRegsLoading, setAllRegsLoading] = useState(false);
+  const [allRegsError, setAllRegsError] = useState<string | null>(null);
+  const [allRegsPage, setAllRegsPage] = useState(0);
 
   const dateSummary = useMemo(() => buildDateSummary(sessionsData), [sessionsData]);
+  const sortedAllRegs = useMemo(() => {
+    const getTimestamp = (reg: Registrant): number => {
+      const regTimeSource = (reg as unknown as { registration_time?: string }).registration_time;
+      const ts =
+        regTimeSource && typeof regTimeSource === "string"
+          ? Date.parse(regTimeSource)
+          : reg.registered_at
+          ? Date.parse(reg.registered_at)
+          : reg.start_time
+          ? Date.parse(reg.start_time)
+          : 0;
+      return Number.isNaN(ts) ? 0 : ts;
+    };
+    return [...allRegistrations].sort((a, b) => getTimestamp(b) - getTimestamp(a));
+  }, [allRegistrations]);
 
   const fetchParticipants = async (webinarId: string, sessionKey: string) => {
     setSessionsData((prev) => {
@@ -275,14 +187,15 @@ export default function WebinarRegistrationPage() {
     });
 
     try {
-      const response = await fetch(`/api/webx/participants?webinarId=${encodeURIComponent(webinarId)}`, {
+      // Fetch all registrations (merged report) and filter by webinar_id
+      const response = await fetch(`/api/webx/merged-report`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      const result = (await response.json()) as { success: boolean; error?: string; data?: unknown };
+      const result = (await response.json()) as { success: boolean; error?: string; data?: Registrant[] };
 
       if (!result.success) {
         setSessionsData((prev) => {
@@ -301,27 +214,25 @@ export default function WebinarRegistrationPage() {
         return;
       }
 
-      const data = result.data;
-      let participants: Participant[] = [];
-
-      if (Array.isArray(data)) {
-        participants = data as Participant[];
-      } else if (data && typeof data === "object" && "registerParticipants" in data) {
-        const nested = (data as { registerParticipants?: unknown }).registerParticipants;
-        if (Array.isArray(nested)) {
-          participants = nested as Participant[];
-        }
-      } else if (data && typeof data === "object" && "participants" in data) {
-        const nested = (data as { participants?: unknown }).participants;
-        if (Array.isArray(nested)) {
-          participants = nested as Participant[];
-        }
-      } else if (data && typeof data === "object" && "registrants" in data) {
-        const nested = (data as { registrants?: unknown }).registrants;
-        if (Array.isArray(nested)) {
-          participants = nested as Participant[];
-        }
-      }
+      const data = Array.isArray(result.data) ? result.data : [];
+      // Map registrants to participant-like objects for display
+      const participants: Participant[] = data
+        .filter((reg) => reg.webinar_id === webinarId)
+        .map((reg) => ({
+          id: reg.registrant_id,
+          name:
+            (reg.first_name && reg.last_name ? `${reg.first_name} ${reg.last_name}` : reg.first_name || reg.last_name) ||
+            reg.email ||
+            "N/A",
+          first_name: reg.first_name,
+          last_name: reg.last_name,
+          user_email: reg.email,
+          email: reg.email,
+          phone_number: reg.phone_number || undefined,
+          join_time: reg.start_time || undefined, // use start_time as the event time
+          leave_time: reg.leave_time || undefined,
+          duration: reg.duration ?? undefined,
+        }));
 
       setSessionsData((prev) => {
         const current = prev[sessionKey] ?? createDefaultSessionData();
@@ -336,6 +247,14 @@ export default function WebinarRegistrationPage() {
           },
         };
       });
+      // set default selected date to latest
+      const groupedParticipants = groupParticipantsByDate(participants);
+      const sortedKeys = Object.keys(groupedParticipants).sort((a, b) => {
+        if (a === UNKNOWN_DATE_KEY) return 1;
+        if (b === UNKNOWN_DATE_KEY) return -1;
+        return b.localeCompare(a);
+      });
+      setSelectedDates((prev) => ({ ...prev, [sessionKey]: sortedKeys[0] ?? null }));
 
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : "An error occurred while fetching participants";
@@ -355,123 +274,29 @@ export default function WebinarRegistrationPage() {
     }
   };
 
-  const handleViewChange = (session: WebinarSession, view: SessionView) => {
-    setSessionsData((prev) => {
-      const current = prev[session.key] ?? createDefaultSessionData();
-      return {
-        ...prev,
-        [session.key]: {
-          ...current,
-          activeView: view,
-          showDetails: true,
-        },
-      };
-    });
-
-    if (view === "participants") {
-      const current = sessionsData[session.key];
-      if (!current || current.participants.length === 0) {
-        fetchParticipants(session.id, session.key);
-      }
-    } else {
-      const current = sessionsData[session.key];
-      if (!current || current.registrations.length === 0) {
-        fetchRegistrations(session.id, session.key);
-      }
-    }
-  };
-
-  const toggleDetails = (sessionKey: string) => {
-    setSessionsData(prev => {
-      const current = prev[sessionKey];
-      if (!current) {
-        return prev;
-      }
-      return {
-        ...prev,
-        [sessionKey]: {
-          ...current,
-          showDetails: !current.showDetails,
-        },
-      };
-    });
-  };
-
-  const fetchRegistrations = async (webinarId: string, sessionKey: string) => {
-    setSessionsData((prev) => {
-      const current = prev[sessionKey] ?? createDefaultSessionData();
-      return {
-        ...prev,
-        [sessionKey]: {
-          ...current,
-          registrationsLoading: true,
-          registrationsError: null,
-          showDetails: true,
-        },
-      };
-    });
-
+  const fetchAllRegistrations = async () => {
+    setAllRegsLoading(true);
+    setAllRegsError(null);
     try {
-      const response = await fetch(`/api/webx/merged-report?webinarId=${encodeURIComponent(webinarId)}`, {
+      const response = await fetch(`/api/webx/merged-report`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
-
-      const result = (await response.json()) as {
-        success: boolean;
-        error?: string;
-        data?: Registrant[];
-      };
-
+      const result = (await response.json()) as { success: boolean; error?: string; data?: Registrant[] };
       if (!result.success) {
-        setSessionsData((prev) => {
-          const current = prev[sessionKey] ?? createDefaultSessionData();
-          return {
-            ...prev,
-            [sessionKey]: {
-              ...current,
-              registrations: [],
-              registrationsLoading: false,
-              registrationsError: result.error || "Failed to fetch registrations",
-              showDetails: true,
-            },
-          };
-        });
-        return;
+        setAllRegsError(result.error || "Failed to fetch registrations");
+        setAllRegistrations([]);
+      } else {
+        setAllRegistrations(Array.isArray(result.data) ? result.data : []);
       }
-
-      const registrations = Array.isArray(result.data) ? result.data : [];
-
-      setSessionsData((prev) => {
-        const current = prev[sessionKey] ?? createDefaultSessionData();
-        return {
-          ...prev,
-          [sessionKey]: {
-            ...current,
-            registrations,
-            registrationsLoading: false,
-            registrationsError: null,
-            showDetails: true,
-          },
-        };
-      });
-    } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : "An error occurred while fetching registrations";
-      setSessionsData((prev) => {
-        const current = prev[sessionKey] ?? createDefaultSessionData();
-        return {
-          ...prev,
-          [sessionKey]: {
-            ...current,
-            registrations: [],
-            registrationsLoading: false,
-            registrationsError: message,
-            showDetails: true,
-          },
-        };
-      });
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to fetch registrations";
+      setAllRegsError(message);
+      setAllRegistrations([]);
+    } finally {
+      setAllRegsLoading(false);
     }
   };
 
@@ -486,7 +311,108 @@ export default function WebinarRegistrationPage() {
           <p className="text-lg text-gray-600 dark:text-gray-300">
             View participant details for each webinar session
           </p>
+          <div className="mt-4 flex justify-center">
+            <button
+              onClick={fetchAllRegistrations}
+              disabled={allRegsLoading}
+              className="px-6 py-3 bg-[#026fe2] hover:bg-[#0256b8] text-white font-semibold rounded-lg shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {allRegsLoading ? "Loading registrations..." : "Registrations"}
+            </button>
+          </div>
+          {allRegsError && (
+            <p className="mt-2 text-sm text-red-600 dark:text-red-400">{allRegsError}</p>
+          )}
         </div>
+
+        {allRegistrations.length > 0 && (
+          <section className="mb-10 bg-white dark:bg-[#1F2A2E] rounded-2xl shadow-lg border border-blue-100 dark:border-blue-800/50 p-6">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">All Registrations</h2>
+            <div className="flex items-center justify-between mb-3 gap-3 flex-wrap">
+              <div className="text-sm text-gray-600 dark:text-gray-300">
+                Showing latest registrations (sorted by most recent)
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setAllRegsPage((p) => Math.max(0, p - 1))}
+                  disabled={allRegsPage === 0}
+                  className="px-3 py-1.5 text-sm rounded-lg border border-blue-200 dark:border-blue-700 bg-white dark:bg-[#1F2A2E] text-[#026fe2] dark:text-blue-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Prev
+                </button>
+                <button
+                  onClick={() =>
+                    setAllRegsPage((p) =>
+                      p + 1 < Math.ceil(sortedAllRegs.length / 5) ? p + 1 : p
+                    )
+                  }
+                  disabled={allRegsPage + 1 >= Math.max(1, Math.ceil(sortedAllRegs.length / 5))}
+                  className="px-3 py-1.5 text-sm rounded-lg border border-blue-200 dark:border-blue-700 bg-white dark:bg-[#1F2A2E] text-[#026fe2] dark:text-blue-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+                <span className="text-xs text-gray-500 dark:text-gray-400">
+                  Page {allRegsPage + 1} of {Math.max(1, Math.ceil(sortedAllRegs.length / 5))}
+                </span>
+              </div>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gray-50 dark:bg-gray-900">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">#</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">Name</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">Email</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">Phone</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">Topic</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">Reg Time</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">Start</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">Status</th>
+             
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">Duration</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white dark:bg-[#1F2A2E] divide-y divide-gray-200 dark:divide-gray-700">
+                  {sortedAllRegs
+                    .slice(allRegsPage * 5, allRegsPage * 5 + 5)
+                    .map((reg, idx) => {
+                    const name =
+                      (reg.first_name && reg.last_name ? `${reg.first_name} ${reg.last_name}` : reg.first_name || reg.last_name) || "N/A";
+                    const email = reg.email || "N/A";
+                    const phone = reg.phone_number || "N/A";
+                    const regTimeSource = (reg as unknown as { registration_time?: string }).registration_time;
+                    const regTime =
+                      regTimeSource && typeof regTimeSource === "string"
+                        ? regTimeSource
+                        : reg.registered_at
+                        ? new Date(reg.registered_at).toLocaleString()
+                        : "N/A";
+                    const start = reg.start_time ? new Date(reg.start_time).toLocaleString() : "N/A";
+                    const status = reg.status || "N/A";
+                    const duration =
+                      typeof reg.duration === "number" && reg.duration > 0
+                        ? `${Math.floor(reg.duration / 60)}m ${reg.duration % 60}s`
+                        : "0s";
+                    return (
+                      <tr key={reg.registrant_id || `${reg.email}-${idx}`} className="hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{allRegsPage * 5 + idx + 1}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{name}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{email}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{phone}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{reg.topic || "N/A"}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{regTime}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{start}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{status}</td>
+                       
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{duration}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
 
         {/* Date-wise snapshot */}
         {dateSummary.length > 0 && (
@@ -524,17 +450,18 @@ export default function WebinarRegistrationPage() {
         <div className="flex flex-col gap-6 mb-12">
           {webinarSessions.map((session) => {
             const sessionData = sessionsData[session.key] ?? createDefaultSessionData();
-            const registrationsView = getNextEventRegistrations(sessionData.registrations);
-            const participantsView = getLatestParticipantsEvent(sessionData.participants);
-            const isParticipantsView = sessionData.activeView === "participants";
-            const eventDate = isParticipantsView ? participantsView.eventDate : registrationsView.eventDate;
-            const activeList = isParticipantsView ? participantsView.participants : registrationsView.registrations;
-            const activeLoading = isParticipantsView ? sessionData.participantsLoading : sessionData.registrationsLoading;
-            const activeError = isParticipantsView ? sessionData.participantsError : sessionData.registrationsError;
-            const loadButtonLabel = activeList.length > 0 ? "Refresh" : "Show";
-            const eventDateLabel = formatEventDateTime(eventDate);
-            const eventDateLocalLabel = formatEventDateTimeLocal(eventDate);
-            const participantsHistoryAvailable = isParticipantsView && participantsView.hasHistory;
+            const grouped = groupParticipantsByDate(sessionData.participants);
+            const sortedDates = Object.keys(grouped).sort((a, b) => {
+              if (a === UNKNOWN_DATE_KEY) return 1;
+              if (b === UNKNOWN_DATE_KEY) return -1;
+              return b.localeCompare(a);
+            });
+            const selectedDate = selectedDates[session.key] ?? sortedDates[0] ?? null;
+            const activeList = selectedDate ? grouped[selectedDate] ?? [] : [];
+            const activeLoading = sessionData.participantsLoading;
+            const activeError = sessionData.participantsError;
+            const loadButtonLabel = activeList.length > 0 ? "Refresh Participants" : "Show Participants";
+            const participantsHistoryAvailable = sortedDates.length > 1;
 
             return (
               <div
@@ -569,7 +496,7 @@ export default function WebinarRegistrationPage() {
                           <span className="font-semibold text-[#026fe2] dark:text-blue-400">
                             {activeList.length}
                           </span>{" "}
-                          total {isParticipantsView ? "participants" : "registrations"}
+                          total participants
                         </p>
                       )}
                       {participantsHistoryAvailable && (
@@ -579,29 +506,23 @@ export default function WebinarRegistrationPage() {
                       )}
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      <div className="inline-flex rounded-lg border border-blue-200 dark:border-blue-800 p-1 bg-blue-50/50 dark:bg-blue-900/20">
-                        {(["registrations", "participants"] as SessionView[]).map((view) => (
-                          <button
-                            key={view}
-                            onClick={() => handleViewChange(session, view)}
-                            className={`px-4 py-2 text-sm font-semibold rounded-md transition-all ${
-                              sessionData.activeView === view
-                                ? "bg-[#026fe2] text-white shadow-md"
-                                : "text-[#026fe2] dark:text-blue-300 hover:bg-white/60 dark:hover:bg-blue-900/30"
-                            }`}
-                          >
-                            {view === "registrations" ? "Registrations" : "Participants"}
-                          </button>
-                        ))}
-                      </div>
-                      <button
-                        onClick={() => {
-                          if (sessionData.activeView === "participants") {
-                            fetchParticipants(session.id, session.key);
-                          } else {
-                            fetchRegistrations(session.id, session.key);
+                      {sortedDates.length > 0 && (
+                        <select
+                          className="px-3 py-2 border border-blue-200 dark:border-blue-800 rounded-lg text-sm bg-white dark:bg-[#1F2A2E]"
+                          value={selectedDate ?? ""}
+                          onChange={(e) =>
+                            setSelectedDates((prev) => ({ ...prev, [session.key]: e.target.value || null }))
                           }
-                        }}
+                        >
+                          {sortedDates.map((dateKey) => (
+                            <option key={dateKey} value={dateKey}>
+                              {formatDateLabel(dateKey)}
+                            </option>
+                          ))}
+                        </select>
+                      )}
+                      <button
+                        onClick={() => fetchParticipants(session.id, session.key)}
                         disabled={activeLoading}
                         className="px-6 py-2.5 bg-[#026fe2] hover:bg-[#0256b8] dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                       >
@@ -620,20 +541,6 @@ export default function WebinarRegistrationPage() {
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <button
-                      onClick={() => toggleDetails(session.key)}
-                      className="px-4 py-2 border border-blue-200 dark:border-blue-700 text-[#026fe2] dark:text-blue-300 font-semibold rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all text-sm"
-                    >
-                      {sessionData.showDetails ? "Hide Details" : "Show Details"}
-                    </button>
-                    {!sessionData.showDetails && (
-                      <p className="text-sm text-gray-500 dark:text-gray-400 self-center">
-                        Expand to view {sessionData.activeView === "participants" ? "participants" : "registrations"}.
-            </p>
-          )}
-        </div>
-
                   {/* Error Message */}
                   {activeError && (
                     <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
@@ -644,18 +551,16 @@ export default function WebinarRegistrationPage() {
         )}
 
                   {/* Data Views */}
-                  {sessionData.showDetails && !activeLoading && !activeError && (
+                  {!activeLoading && !activeError && (
                     <div className="mt-4 space-y-4">
                       {activeList.length === 0 ? (
                         <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                           <svg className="mx-auto h-12 w-12 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                           </svg>
-                          <p className="text-sm">
-                            No {isParticipantsView ? "participants" : "registrations"} found for this webinar.
-                          </p>
-          </div>
-                      ) : isParticipantsView ? (
+                          <p className="text-sm">No participants found for this webinar.</p>
+                        </div>
+                      ) : (
                         <div className="border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden bg-white dark:bg-[#131b22]">
                           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                             <thead className="bg-gray-50 dark:bg-gray-900">
@@ -681,7 +586,7 @@ export default function WebinarRegistrationPage() {
                               </tr>
                             </thead>
                             <tbody className="bg-white dark:bg-[#1F2A2E] divide-y divide-gray-200 dark:divide-gray-700">
-                              {participantsView.participants.map((participant, indexWithinDate) => {
+                              {(activeList as Participant[]).map((participant: Participant, indexWithinDate: number) => {
                                 const name =
                                   participant.name ||
                                   (participant.first_name && participant.last_name
@@ -689,9 +594,7 @@ export default function WebinarRegistrationPage() {
                                     : participant.first_name || participant.last_name || "N/A");
                                 const email = participant.user_email || participant.email || "N/A";
                                 const phone = participant.phone_number || "N/A";
-                                const joinTime = participant.join_time
-                                  ? new Date(participant.join_time).toLocaleString()
-                                  : "N/A";
+                                const joinTime = participant.join_time ? new Date(participant.join_time).toLocaleString() : "N/A";
                                 const duration = participant.duration
                                   ? `${Math.floor(participant.duration / 60)}m ${participant.duration % 60}s`
                                   : "N/A";
@@ -725,76 +628,9 @@ export default function WebinarRegistrationPage() {
                             </tbody>
                           </table>
                         </div>
-                      ) : (
-                        <div className="overflow-x-auto">
-                          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead className="bg-gray-50 dark:bg-gray-900">
-                              <tr>
-                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                                  #
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                                  Name
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                                  Email
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                                  Phone
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                                  Session Time
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                                  Registered
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                                  Status
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody className="bg-white dark:bg-[#1F2A2E] divide-y divide-gray-200 dark:divide-gray-700">
-                              {registrationsView.registrations.map((registrant, index) => {
-                                const name =
-                                  registrant.first_name || registrant.last_name
-                                    ? `${registrant.first_name ?? ""} ${registrant.last_name ?? ""}`.trim() || "N/A"
-                                    : "N/A";
-                                const sessionTime = formatEventDateTime(parseIsoDate(registrant.start_time));
-                                const registeredAt = registrant.registered_at
-                                  ? new Date(registrant.registered_at).toLocaleString()
-                                  : "N/A";
-                                return (
-                                  <tr key={registrant.registrant_id || `${session.key}-reg-${index}`} className="hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
-                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{index + 1}</td>
-                                    <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{name}</td>
-                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{registrant.email}</td>
-                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{registrant.phone_number || "N/A"}</td>
-                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                                      {sessionTime || "TBD"}
-                                    </td>
-                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{registeredAt}</td>
-                                    <td className="px-4 py-3 whitespace-nowrap text-sm">
-                                      <span
-                                        className={`inline-flex px-2 py-1 rounded-full text-xs font-semibold ${
-                                          registrant.status === "in_meeting"
-                                            ? "bg-green-100 text-green-700"
-                                            : registrant.status === "not_attended"
-                                            ? "bg-yellow-100 text-yellow-700"
-                                            : "bg-gray-100 text-gray-700"
-                                        }`}
-                                      >
-                                        {registrant.status ? registrant.status.replace("_", " ") : registrant.joined ? "Attended" : "Registered"}
-                                      </span>
-                                    </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        )}
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             );

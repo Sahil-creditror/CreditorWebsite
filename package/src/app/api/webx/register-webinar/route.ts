@@ -35,8 +35,17 @@ export async function POST(request: Request) {
   try {
     const payload = (await request.json()) as ZoomWebinarRegistrationPayload;
 
-    if (!payload?.webinarId) {
-      return NextResponse.json({ success: false, error: "Missing webinarId" }, { status: 400 });
+    // Accept both webinarId (camel) and webinar_id (snake) from the client
+    const webinarId =
+      payload.webinarId ||
+      ((
+        payload as {
+          webinar_id?: string;
+        }
+      ).webinar_id ?? undefined);
+
+    if (!webinarId) {
+      return NextResponse.json({ success: false, error: "Missing webinar_id" }, { status: 400 });
     }
 
     const webxRegisterUrl = withBaseUrl(WEBX_ROUTES.REGISTER_WEBINAR);
@@ -46,12 +55,17 @@ export async function POST(request: Request) {
       first_name: payload.first_name,
       last_name: payload.last_name,
       phone_number: payload.phone_number,
-      webinarId: payload.webinarId,
+      webinarId,
+      occurrence_id: payload.occurrence_id,
     });
 
-    const accessToken = STATIC_ZOOM_ACCESS_TOKEN;
+    // Get token from Authorization header, fallback to static token
+    const authHeader = request.headers.get("authorization");
+    const accessToken = authHeader?.replace("Bearer ", "") || STATIC_ZOOM_ACCESS_TOKEN;
+    
+    console.log("[WEBX] Using", authHeader ? "client-provided" : "static", "access token");
 
-    const { email, first_name, last_name, phone_number, webinarId } = payload;
+    const { email, first_name, last_name, phone_number, occurrence_id } = payload;
 
     const webxBody = {
       email,
@@ -59,7 +73,8 @@ export async function POST(request: Request) {
       last_name,
       // phone_number is sent as a string
       phone_number: phone_number ? String(phone_number) : undefined,
-      webinarId,
+      webinar_id: webinarId,
+      occurrence_id,
     };
 
     console.log("[WEBX] Calling backend register endpoint:", {

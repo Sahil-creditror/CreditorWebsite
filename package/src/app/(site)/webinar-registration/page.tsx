@@ -1,56 +1,25 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { DEFAULT_WEBINAR_ID } from "@/config/api";
 
-type WebinarSession = {
-  key: string;
-  id: string;
-  label: string;
-  time: string;
-  description: string;
-};
-
-const webinarSessions: WebinarSession[] = [
+const TOPIC_FILTER_OPTIONS = [
+  { value: "all", label: "All topics", matches: [] as string[] },
   {
-    key: "morning-session",
-    id: process.env.NEXT_PUBLIC_WEBINAR_ID_MORNING || DEFAULT_WEBINAR_ID,
-    label: "Morning Intensive",
-    time: "10:00 AM PST",
-    description: "Perfect if you want to take action before lunch.",
+    value: "orientation-10am",
+    label: "Orientation Webinar 10 AM",
+    matches: ["orientation webinar 10 am", "orientation webinar at 10 am"],
   },
   {
-    key: "afternoon-session",
-    id: process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON || DEFAULT_WEBINAR_ID,
-    label: "Afternoon Deep-Dive",
-    time: "2:00 PM PST",
-    description: "Great for regrouping mid-day and asking questions live.",
+    value: "orientation-2pm",
+    label: "Orientation Webinar 2 PM",
+    matches: ["orientation webinar 2 pm", "orientation webinar at 2 pm"],
   },
   {
-    key: "evening-session",
-    id:
-      process.env.NEXT_PUBLIC_WEBINAR_ID_EVENING ||
-      process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON ||
-      DEFAULT_WEBINAR_ID,
-    label: "Evening Session",
-    time: "7:00 PM PST",
-    description: "Catch the training after work with zero rush.",
+    value: "orientation-7pm",
+    label: "Orientation Webinar 7 PM",
+    matches: ["orientation webinar 7 pm", "orientation webinar at 7 pm"],
   },
 ];
-
-interface Participant {
-  id?: string;
-  name?: string;
-  user_email?: string;
-  email?: string;
-  first_name?: string;
-  last_name?: string;
-  phone_number?: string;
-  join_time?: string;
-  leave_time?: string;
-  duration?: number;
-  [key: string]: unknown;
-}
 
 interface Registrant {
   registrant_id: string;
@@ -70,22 +39,9 @@ interface Registrant {
   duration?: number | null;
 }
 
-type SessionView = "registrations" | "participants";
-
-interface SessionData {
-  participants: Participant[];
-  registrations: Registrant[];
-  participantsLoading: boolean;
-  registrationsLoading: boolean;
-  participantsError: string | null;
-  registrationsError: string | null;
-  showDetails: boolean;
-  activeView: SessionView;
-}
-
 const UNKNOWN_DATE_KEY = "unknown-date";
 
-const normalizeDateKey = (value?: string): string | null => {
+const normalizeDateKey = (value?: string | null): string | null => {
   if (!value) return null;
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return null;
@@ -109,23 +65,29 @@ const formatDateLabel = (key: string) => {
   }
 };
 
-const groupParticipantsByDate = (participants: Participant[]) => {
-  return participants.reduce<Record<string, Participant[]>>((groups, participant) => {
-    const key = normalizeDateKey(participant.join_time) ?? UNKNOWN_DATE_KEY;
-    if (!groups[key]) {
-      groups[key] = [];
-    }
-    groups[key].push(participant);
-    return groups;
-  }, {});
+const formatToPST = (value?: string | number | Date | null) => {
+  if (value === null || value === undefined) return "N/A";
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return typeof value === "string" && value.trim() ? value : "N/A";
+  }
+  return date.toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
 };
 
-const buildDateSummary = (sessions: Record<string, SessionData>) => {
-  const summary = Object.values(sessions).reduce<Record<string, number>>((acc, session) => {
-    session.participants.forEach((participant) => {
-      const key = normalizeDateKey(participant.join_time) ?? UNKNOWN_DATE_KEY;
-      acc[key] = (acc[key] || 0) + 1;
-    });
+const normalizeTopic = (topic?: string | null) => topic?.trim().toLowerCase() ?? "";
+const toInputDate = (date: Date) => date.toISOString().split("T")[0];
+
+const buildAttendanceSummary = (registrations: Registrant[]) => {
+  const summary = registrations.reduce<Record<string, number>>((acc, reg) => {
+    const status = reg.status?.toLowerCase();
+    if (status !== "attended") return acc;
+    const regTimeSource = (reg as unknown as { registration_time?: string }).registration_time;
+    const key =
+      normalizeDateKey(reg.start_time) ??
+      normalizeDateKey(regTimeSource) ??
+      normalizeDateKey(reg.registered_at ?? undefined) ??
+      UNKNOWN_DATE_KEY;
+    acc[key] = (acc[key] || 0) + 1;
     return acc;
   }, {});
 
@@ -136,26 +98,47 @@ const buildDateSummary = (sessions: Record<string, SessionData>) => {
   });
 };
 
-const createDefaultSessionData = (): SessionData => ({
-  participants: [],
-  registrations: [],
-  participantsLoading: false,
-  registrationsLoading: false,
-  participantsError: null,
-  registrationsError: null,
-  showDetails: true,
-  activeView: "participants",
-});
-
 export default function WebinarRegistrationPage() {
-  const [sessionsData, setSessionsData] = useState<Record<string, SessionData>>({});
-  const [selectedDates, setSelectedDates] = useState<Record<string, string | null>>({});
   const [allRegistrations, setAllRegistrations] = useState<Registrant[]>([]);
   const [allRegsLoading, setAllRegsLoading] = useState(false);
   const [allRegsError, setAllRegsError] = useState<string | null>(null);
   const [allRegsPage, setAllRegsPage] = useState(0);
+  const [topicFilter, setTopicFilter] = useState<string>("all");
+  const [startDateFilter, setStartDateFilter] = useState<string>("");
+  const [endDateFilter, setEndDateFilter] = useState<string>("");
 
-  const dateSummary = useMemo(() => buildDateSummary(sessionsData), [sessionsData]);
+  const filteredAllRegs = useMemo(() => {
+    const selected = TOPIC_FILTER_OPTIONS.find((opt) => opt.value === topicFilter);
+    const matches = selected?.matches.map((m) => m.toLowerCase()) ?? [];
+
+    return allRegistrations.filter((reg) => {
+      // topic filter
+      if (selected && selected.value !== "all") {
+        const topic = normalizeTopic(reg.topic);
+        const matchesTopic = matches.some((m) => topic.includes(m));
+        if (!matchesTopic) return false;
+      }
+
+      // date filter
+      const regTimeSource = (reg as unknown as { registration_time?: string }).registration_time;
+      const recordDate =
+        normalizeDateKey(reg.start_time) ??
+        normalizeDateKey(regTimeSource) ??
+        normalizeDateKey(reg.registered_at ?? undefined);
+
+      if (startDateFilter) {
+        if (!recordDate || recordDate < startDateFilter) return false;
+      }
+      if (endDateFilter) {
+        if (!recordDate || recordDate > endDateFilter) return false;
+      }
+
+      return true;
+    });
+  }, [allRegistrations, topicFilter, startDateFilter, endDateFilter]);
+
+  const dateSummary = useMemo(() => buildAttendanceSummary(filteredAllRegs), [filteredAllRegs]);
+
   const sortedAllRegs = useMemo(() => {
     const getTimestamp = (reg: Registrant): number => {
       const regTimeSource = (reg as unknown as { registration_time?: string }).registration_time;
@@ -169,110 +152,8 @@ export default function WebinarRegistrationPage() {
           : 0;
       return Number.isNaN(ts) ? 0 : ts;
     };
-    return [...allRegistrations].sort((a, b) => getTimestamp(b) - getTimestamp(a));
-  }, [allRegistrations]);
-
-  const fetchParticipants = async (webinarId: string, sessionKey: string) => {
-    setSessionsData((prev) => {
-      const current = prev[sessionKey] ?? createDefaultSessionData();
-      return {
-        ...prev,
-        [sessionKey]: {
-          ...current,
-          participantsLoading: true,
-          participantsError: null,
-          showDetails: true,
-        },
-      };
-    });
-
-    try {
-      // Fetch all registrations (merged report) and filter by webinar_id
-      const response = await fetch(`/api/webx/merged-report`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const result = (await response.json()) as { success: boolean; error?: string; data?: Registrant[] };
-
-      if (!result.success) {
-        setSessionsData((prev) => {
-          const current = prev[sessionKey] ?? createDefaultSessionData();
-          return {
-            ...prev,
-            [sessionKey]: {
-              ...current,
-              participants: [],
-              participantsLoading: false,
-              participantsError: result.error || "Failed to fetch participants",
-              showDetails: true,
-            },
-          };
-        });
-        return;
-      }
-
-      const data = Array.isArray(result.data) ? result.data : [];
-      // Map registrants to participant-like objects for display
-      const participants: Participant[] = data
-        .filter((reg) => reg.webinar_id === webinarId)
-        .map((reg) => ({
-          id: reg.registrant_id,
-          name:
-            (reg.first_name && reg.last_name ? `${reg.first_name} ${reg.last_name}` : reg.first_name || reg.last_name) ||
-            reg.email ||
-            "N/A",
-          first_name: reg.first_name,
-          last_name: reg.last_name,
-          user_email: reg.email,
-          email: reg.email,
-          phone_number: reg.phone_number || undefined,
-          join_time: reg.start_time || undefined, // use start_time as the event time
-          leave_time: reg.leave_time || undefined,
-          duration: reg.duration ?? undefined,
-        }));
-
-      setSessionsData((prev) => {
-        const current = prev[sessionKey] ?? createDefaultSessionData();
-        return {
-          ...prev,
-          [sessionKey]: {
-            ...current,
-            participants,
-            participantsLoading: false,
-            participantsError: null,
-            showDetails: true,
-          },
-        };
-      });
-      // set default selected date to latest
-      const groupedParticipants = groupParticipantsByDate(participants);
-      const sortedKeys = Object.keys(groupedParticipants).sort((a, b) => {
-        if (a === UNKNOWN_DATE_KEY) return 1;
-        if (b === UNKNOWN_DATE_KEY) return -1;
-        return b.localeCompare(a);
-      });
-      setSelectedDates((prev) => ({ ...prev, [sessionKey]: sortedKeys[0] ?? null }));
-
-    } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : "An error occurred while fetching participants";
-      setSessionsData((prev) => {
-        const current = prev[sessionKey] ?? createDefaultSessionData();
-        return {
-          ...prev,
-          [sessionKey]: {
-            ...current,
-            participants: [],
-            participantsLoading: false,
-            participantsError: errorMessage,
-            showDetails: true,
-          },
-        };
-      });
-    }
-  };
+    return [...filteredAllRegs].sort((a, b) => getTimestamp(b) - getTimestamp(a));
+  }, [filteredAllRegs]);
 
   const fetchAllRegistrations = async () => {
     setAllRegsLoading(true);
@@ -332,7 +213,92 @@ export default function WebinarRegistrationPage() {
               <div className="text-sm text-gray-600 dark:text-gray-300">
                 Showing latest registrations (sorted by most recent)
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3 flex-wrap">
+                <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-blue-100 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10 shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-[#026fe2] dark:text-blue-300">Date range</span>
+                    <svg className="h-4 w-4 text-[#026fe2] dark:text-blue-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                      <path d="M3 10h18" />
+                      <path d="M8 2v4" />
+                      <path d="M16 2v4" />
+                    </svg>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="date"
+                      value={startDateFilter}
+                      onChange={(e) => {
+                        setStartDateFilter(e.target.value);
+                        setAllRegsPage(0);
+                      }}
+                      className="px-2 py-1 text-sm rounded-lg border border-blue-200 dark:border-blue-700 bg-white dark:bg-[#1F2A2E]"
+                    />
+                    <span className="text-xs text-gray-500 dark:text-gray-400">to</span>
+                    <input
+                      type="date"
+                      value={endDateFilter}
+                      onChange={(e) => {
+                        setEndDateFilter(e.target.value);
+                        setAllRegsPage(0);
+                      }}
+                      className="px-2 py-1 text-sm rounded-lg border border-blue-200 dark:border-blue-700 bg-white dark:bg-[#1F2A2E]"
+                    />
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => {
+                        const today = new Date();
+                        const dateStr = toInputDate(today);
+                        setStartDateFilter(dateStr);
+                        setEndDateFilter(dateStr);
+                        setAllRegsPage(0);
+                      }}
+                      className="text-xs px-2 py-1 rounded-md border border-blue-200 dark:border-blue-700 text-[#026fe2] dark:text-blue-300 bg-white dark:bg-[#1F2A2E] hover:bg-blue-50 dark:hover:bg-blue-800/40"
+                    >
+                      Today
+                    </button>
+                    <button
+                      onClick={() => {
+                        const end = new Date();
+                        const start = new Date();
+                        start.setDate(end.getDate() - 6);
+                        setStartDateFilter(toInputDate(start));
+                        setEndDateFilter(toInputDate(end));
+                        setAllRegsPage(0);
+                      }}
+                      className="text-xs px-2 py-1 rounded-md border border-blue-200 dark:border-blue-700 text-[#026fe2] dark:text-blue-300 bg-white dark:bg-[#1F2A2E] hover:bg-blue-50 dark:hover:bg-blue-800/40"
+                    >
+                      Last 7d
+                    </button>
+                    {(startDateFilter || endDateFilter) && (
+                      <button
+                        onClick={() => {
+                          setStartDateFilter("");
+                          setEndDateFilter("");
+                          setAllRegsPage(0);
+                        }}
+                        className="text-xs px-2 py-1 rounded-md border border-blue-200 dark:border-blue-700 text-[#026fe2] dark:text-blue-300 bg-white dark:bg-[#1F2A2E] hover:bg-blue-50 dark:hover:bg-blue-800/40"
+                      >
+                        Clear
+                      </button>
+                    )}
+                  </div>
+                </div>
+                <select
+                  value={topicFilter}
+                  onChange={(e) => {
+                    setTopicFilter(e.target.value);
+                    setAllRegsPage(0);
+                  }}
+                  className="px-3 py-2 text-sm rounded-lg border border-blue-200 dark:border-blue-700 bg-white dark:bg-[#1F2A2E] text-[#026fe2] dark:text-blue-300"
+                >
+                  {TOPIC_FILTER_OPTIONS.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
                 <button
                   onClick={() => setAllRegsPage((p) => Math.max(0, p - 1))}
                   disabled={allRegsPage === 0}
@@ -383,9 +349,11 @@ export default function WebinarRegistrationPage() {
                     const regTimeSource = (reg as unknown as { registration_time?: string }).registration_time;
                     const regTime =
                       regTimeSource && typeof regTimeSource === "string"
-                        ? regTimeSource
+                        ? formatToPST(regTimeSource)
                         : reg.registered_at
-                        ? new Date(reg.registered_at).toLocaleString()
+                        ? formatToPST(reg.registered_at)
+                        : reg.start_time
+                        ? formatToPST(reg.start_time)
                         : "N/A";
                     const start = reg.start_time ? new Date(reg.start_time).toLocaleString() : "N/A";
                     const status = reg.status || "N/A";
@@ -445,197 +413,6 @@ export default function WebinarRegistrationPage() {
             </div>
           </section>
         )}
-
-        {/* Webinar Sessions Column */}
-        <div className="flex flex-col gap-6 mb-12">
-          {webinarSessions.map((session) => {
-            const sessionData = sessionsData[session.key] ?? createDefaultSessionData();
-            const grouped = groupParticipantsByDate(sessionData.participants);
-            const sortedDates = Object.keys(grouped).sort((a, b) => {
-              if (a === UNKNOWN_DATE_KEY) return 1;
-              if (b === UNKNOWN_DATE_KEY) return -1;
-              return b.localeCompare(a);
-            });
-            const selectedDate = selectedDates[session.key] ?? sortedDates[0] ?? null;
-            const activeList = selectedDate ? grouped[selectedDate] ?? [] : [];
-            const activeLoading = sessionData.participantsLoading;
-            const activeError = sessionData.participantsError;
-            const loadButtonLabel = activeList.length > 0 ? "Refresh Participants" : "Show Participants";
-            const participantsHistoryAvailable = sortedDates.length > 1;
-
-            return (
-              <div
-                key={session.key}
-                className="bg-white dark:bg-[#1F2A2E] rounded-xl shadow-lg border border-blue-100 dark:border-blue-800/50 overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
-              >
-                {/* Session Card Header */}
-                <div className="bg-gradient-to-r from-[#026fe2] to-[#45beff] dark:from-[#001428] dark:to-[#002b5c] p-6 text-white">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold mb-2">{session.label}</h3>
-                      <p className="text-blue-100 dark:text-blue-300 text-sm mb-1">
-                        <span className="font-semibold">Time:</span> {session.time}
-                      </p>
-                      <p className="text-blue-100 dark:text-blue-300 text-sm">
-                        <span className="font-semibold">ID:</span> {session.id}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-blue-50 dark:text-blue-200 text-sm mt-3 italic">
-                    {session.description}
-                  </p>
-                </div>
-
-                {/* Session Card Body */}
-                <div className="p-6">
-                  <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between mb-4">
-                    <div className="space-y-1">
-                    
-                      {sessionData.showDetails && activeList.length > 0 && (
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                          <span className="font-semibold text-[#026fe2] dark:text-blue-400">
-                            {activeList.length}
-                          </span>{" "}
-                          total participants
-                        </p>
-                      )}
-                      {participantsHistoryAvailable && (
-                        <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                          Previous sessions archived
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {sortedDates.length > 0 && (
-                        <select
-                          className="px-3 py-2 border border-blue-200 dark:border-blue-800 rounded-lg text-sm bg-white dark:bg-[#1F2A2E]"
-                          value={selectedDate ?? ""}
-                          onChange={(e) =>
-                            setSelectedDates((prev) => ({ ...prev, [session.key]: e.target.value || null }))
-                          }
-                        >
-                          {sortedDates.map((dateKey) => (
-                            <option key={dateKey} value={dateKey}>
-                              {formatDateLabel(dateKey)}
-                            </option>
-                          ))}
-                        </select>
-                      )}
-                      <button
-                        onClick={() => fetchParticipants(session.id, session.key)}
-                        disabled={activeLoading}
-                        className="px-6 py-2.5 bg-[#026fe2] hover:bg-[#0256b8] dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                      >
-                        {activeLoading ? (
-                          <>
-                            <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            Loading...
-                          </>
-                        ) : (
-                          loadButtonLabel
-                        )}
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Error Message */}
-                  {activeError && (
-                    <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                      <p className="text-sm text-red-600 dark:text-red-400">
-                        <span className="font-semibold">Error:</span> {activeError}
-                      </p>
-          </div>
-        )}
-
-                  {/* Data Views */}
-                  {!activeLoading && !activeError && (
-                    <div className="mt-4 space-y-4">
-                      {activeList.length === 0 ? (
-                        <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                          <svg className="mx-auto h-12 w-12 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                          </svg>
-                          <p className="text-sm">No participants found for this webinar.</p>
-                        </div>
-                      ) : (
-                        <div className="border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden bg-white dark:bg-[#131b22]">
-                          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead className="bg-gray-50 dark:bg-gray-900">
-                              <tr>
-                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                                  #
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                                  Name
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                                  Email
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                                  Phone
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                                  Join Time
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">
-                                  Duration
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody className="bg-white dark:bg-[#1F2A2E] divide-y divide-gray-200 dark:divide-gray-700">
-                              {(activeList as Participant[]).map((participant: Participant, indexWithinDate: number) => {
-                                const name =
-                                  participant.name ||
-                                  (participant.first_name && participant.last_name
-                                    ? `${participant.first_name} ${participant.last_name}`
-                                    : participant.first_name || participant.last_name || "N/A");
-                                const email = participant.user_email || participant.email || "N/A";
-                                const phone = participant.phone_number || "N/A";
-                                const joinTime = participant.join_time ? new Date(participant.join_time).toLocaleString() : "N/A";
-                                const duration = participant.duration
-                                  ? `${Math.floor(participant.duration / 60)}m ${participant.duration % 60}s`
-                                  : "N/A";
-
-                                return (
-                                  <tr
-                                    key={participant.id || `${session.key}-latest-${indexWithinDate}`}
-                                    className="hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
-                                  >
-                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
-                                      {indexWithinDate + 1}
-                                    </td>
-                                    <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                                      {name}
-                                    </td>
-                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                                      {email}
-                                    </td>
-                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                                      {phone}
-                                    </td>
-                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                                      {joinTime}
-                                    </td>
-                                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                                      {duration}
-                                    </td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          </table>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
       </div>
     </main>
   );

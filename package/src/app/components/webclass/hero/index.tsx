@@ -504,9 +504,9 @@ export default function WebclassSection() {
             {/* Left image with background */}
             <div className="lg:w-5/12 flex justify-center lg:justify-start lg:pl-20">
               <div className="relative rounded-lg overflow-hidden w-full max-w-[420px]">
-                <div className="relative rounded-lg w-full h-[600px] bg-gray-100 dark:bg-[#0a0e14]">
+                <div className="relative rounded-lg w-full h-[700px] bg-gray-100 dark:bg-[#0a0e14]">
                   <Image
-                    src={"/images/squeeze/webex.jpeg"}
+                    src={"/images/webinar/paul_webclass.webp"}
                     alt="Speaker"
                     fill
                     style={{ objectFit: "cover" }}
@@ -526,9 +526,8 @@ export default function WebclassSection() {
 
               {/* Main headline - very large, bold */}
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[1.1] mb-4 text-white dark:text-white">
-                Non Member
-                <br />
-                <span className="block">Orientation</span>
+                <span className="block" style={{ color: "#ffc107" }}>100% FREE</span>
+                <span className="block">Webinar Class</span>
               </h1>
 
               {/* Subtext */}
@@ -538,7 +537,7 @@ export default function WebclassSection() {
 
               {/* Highlight text - bold */}
               <p className="text-base md:text-lg font-bold mb-6 text-white dark:text-white">
-                100% FREE - Next Class Is Starting TODAY!
+                Next Class Is Starting TODAY!
                 {/* 100% FREE — {sessions.length || webinarTemplates.length} upcoming sessions ({sessionTimesSummary || 'Live all day'}) {sessionTimezoneLabel} so you can start now. */}
               </p>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { CheckCircle2, Copy } from "lucide-react";
@@ -54,6 +54,7 @@ export default function EventRegistrationSuccess(): React.ReactElement {
   const [isLinkActive, setIsLinkActive] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const getParam = (key: string): string => {
     const hookValue = searchParams?.get(key);
@@ -150,6 +151,36 @@ export default function EventRegistrationSuccess(): React.ReactElement {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Force unmuted playback and retry on first user interaction if blocked by autoplay policies.
+    video.muted = false;
+    video.volume = 1;
+
+    const tryPlay = () => {
+      const playPromise = video.play();
+      if (playPromise?.catch) {
+        playPromise.catch(() => {
+          /* swallow autoplay rejections; user gesture retry below */
+        });
+      }
+    };
+
+    const handleUserInteract = () => {
+      tryPlay();
+      window.removeEventListener("click", handleUserInteract);
+    };
+
+    tryPlay();
+    window.addEventListener("click", handleUserInteract);
+
+    return () => window.removeEventListener("click", handleUserInteract);
+  }, [isMounted]);
 
   useEffect(() => {
     if (!isMounted) return;
@@ -275,8 +306,8 @@ export default function EventRegistrationSuccess(): React.ReactElement {
                 Exclusive confirmation for {registrantName || "Guest"}
               </p>
               <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-black leading-tight text-[#11142d] dark:text-white mb-6">
-                How To Start Your Very Own{" "}
-                <span className="text-[#026fe2] block">Profitable Credit Repair Business</span>
+                How To Build Your Very Own{" "}
+                <span className="text-[#026fe2] block">Private Operating Structure Outside the Public System</span>
               </h1>
               <div className="flex flex-col w-full max-w-[560px]">
                 <button
@@ -287,6 +318,7 @@ export default function EventRegistrationSuccess(): React.ReactElement {
                 </button>
                 <div className="relative w-full overflow-hidden shadow-2xl aspect-video bg-black border border-white/10 dark:border-gray-200/30 rounded-none">
                   <video
+                    ref={videoRef}
                     playsInline
                     autoPlay
                     controls

@@ -25,6 +25,18 @@ function About() {
 
   return (
     <section className="relative py-10 md:py-20 dark:bg-darkblue overflow-hidden">
+      {/* Christmas bell in top right corner */}
+      <div className="absolute top-0 right-0 z-20 pointer-events-none">
+        <Image
+          src="/images/hero/bell.png"
+          alt="Christmas Bell"
+          width={200}
+          height={200}
+          priority
+          className="w-32 md:w-44 lg:w-52 h-auto drop-shadow-xl select-none "
+        />
+      </div>
+
       {/* Animated gradient background */}
       <div className="absolute inset-0 overflow-hidden">
         <div
@@ -43,13 +55,21 @@ function About() {
           <div className="flex flex-col gap-5 2xl:gap-7 w-full 2xl:max-w-2xl 2xl:w-full">
             {/* Heading + Paragraph */}
             <div className="flex flex-col gap-5 2xl:gap-7">
-              <h2 className="2xl:max-w-3xl text-secondary dark:text-white">
-                Why Choose Us
-              </h2>
+            <h2 className="relative inline-block 2xl:max-w-3xl text-secondary dark:text-white">
+              <Image
+                src="/images/hero/hat.png"
+                alt="Christmas Hat"
+                width={80}
+                height={200}
+                priority
+                className="absolute -top-3 -left-7 md:-top-5 md:-left-8 lg:-top-6 lg:-left-9 w-14 md:w-18 lg:w-20 h-auto drop-shadow-lg select-none z-10 rotate-[-10deg]"
+              />
+              Why Choose Us
+            </h2>
 
               <p className="2xl:max-w-sm text-black dark:text-white/70 text-justify">
                 At Creditor Academy, we equip individuals and entrepreneurs with the knowledge to unlock
-                the full power of the "Private" operating outside the public system, which means more control,
+                the full power of the &quot;Private&quot; operating outside the public system, which means more control,
                 more protection, and more opportunity.
               </p>
             </div>
@@ -106,7 +126,7 @@ function About() {
                   />
                 </div>
 
-                <p className="text-gray-600 dark:text-black">
+                <p className="text-gray-600 dark:text-black relative z-30">
                   Our educational platform & Instructors empower you to structure your life and business
                   for maximum privacy, asset protection, and true independence. This is where knowledge
                   becomes sovereignty, because real freedom begins in the Private.
@@ -142,6 +162,16 @@ function About() {
           </div>
         </div>
       </div>
+      {/* Snow image at bottom right of section */}
+      <div className="absolute bottom-0 right-0 z-20">
+          <Image
+            src="/images/home/aboutusIndex/about_snow.png"
+            alt="Snow decoration"
+            width={150}
+            height={150}
+            className="object-contain"
+          />
+        </div>
 
       {/* Video Modal */}
       {isVideoModalOpen && (

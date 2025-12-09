@@ -67,14 +67,14 @@ export default function ClientLayoutShell({ children }: PropsWithChildren) {
         <ScrollToTop />
         
         {/* Thanksgiving Modal - Auto-opens after 5 seconds only once per session */}
-        {/* <ThanksgivingPopup 
+         <ThanksgivingPopup 
           key={thanksgivingKey} 
           delayMs={thanksgivingKey > 0 ? 0 : 5000} 
           disableAutoOpen={thanksgivingKey === 0 && hasShownModal}
-        /> */}
+        />
 
         {/* Floating Offer Icon Button */}
-        {/* <motion.button
+        <motion.button
           onClick={() => setThanksgivingKey(prev => prev + 1)}
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -92,7 +92,7 @@ export default function ClientLayoutShell({ children }: PropsWithChildren) {
           <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-2 bg-slate-900 text-white text-sm rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
             Thanksgiving Offers
           </span>
-        </motion.button> */}
+        </motion.button>
       </ThemeProvider>
     </SessionProvider>
   );

@@ -27,8 +27,8 @@ const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000, d
 
   useEffect(() => {
     const calculateTimeLeft = () => {
-      // November 30, 2025 11:59:59 PM PST (UTC-8)
-      const targetDate = new Date("2025-11-30T23:59:59-08:00");
+      // December 25, 2025 11:59:59 PM PST (UTC-8)
+      const targetDate = new Date("2025-12-25T23:59:59-08:00");
       const now = new Date();
       const difference = targetDate.getTime() - now.getTime();
 
@@ -60,59 +60,63 @@ const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000, d
           if (e.target === e.currentTarget) setOpen(false);
         }}
       >
-        <div className="tg-card">
+        <div className="tg-card" role="dialog" aria-modal="true" aria-label="Christmas Mega Offer">
           <button className="tg-close" aria-label="Close" onClick={() => setOpen(false)}>
             ×
           </button>
 
           <div className="tg-inner">
             <div className="tg-text">
-              <div className="tg-eyebrow">🔥 Limited Time Special Event</div>
-              <h2 className="tg-title">Thanksgiving Mega Offer</h2>
+              <div className="tg-eyebrow">🎄 Christmas Mega Offer – Limited Time!</div>
+              <h2 className="tg-title">Christmas Mega Offer</h2>
               <p className="tg-sub">
-                Join our <strong>Masterclass Membership</strong> this Thanksgiving and get
-                <strong> 2000 credit</strong> added to your LMS account — plus premium
-                support & exclusive benefits.
+                Celebrate this festive season with our biggest Christmas deal ever! Join our <strong>Masterclass Membership</strong> or grab the <strong>Cadillac Luxury Website Package</strong> and receive exclusive holiday bonus credits, premium support, and VIP benefits.
               </p>
-              
+
               <div className="tg-deadline">
-                ⏰ <strong>Offer Valid Only Till November 30th, 2025 (11:59 PM PST)</strong>
+                ⏰ <strong>Offer Valid Only Till December 25th, 2025 (11:59 PM PST)</strong>
               </div>
 
-              <div className="tg-countdown">
-                <div className="countdown-item">
+              <div className="tg-countdown" aria-live="polite">
+                <div className="countdown-item" title={`${timeLeft.days} days`}>
                   <div className="countdown-value">{timeLeft.days}</div>
                   <div className="countdown-label">Days</div>
                 </div>
-                <div className="countdown-divider">:</div>
-                <div className="countdown-item">
+                <div className="countdown-divider" aria-hidden="true">:</div>
+                <div className="countdown-item" title={`${timeLeft.hours} hours`}>
                   <div className="countdown-value">{String(timeLeft.hours).padStart(2, '0')}</div>
                   <div className="countdown-label">Hours</div>
                 </div>
-                <div className="countdown-divider">:</div>
-                <div className="countdown-item">
+                <div className="countdown-divider" aria-hidden="true">:</div>
+                <div className="countdown-item" title={`${timeLeft.minutes} minutes`}>
                   <div className="countdown-value">{String(timeLeft.minutes).padStart(2, '0')}</div>
                   <div className="countdown-label">Minutes</div>
                 </div>
-                <div className="countdown-divider">:</div>
-                <div className="countdown-item">
+                <div className="countdown-divider" aria-hidden="true">:</div>
+                <div className="countdown-item" title={`${timeLeft.seconds} seconds`}>
                   <div className="countdown-value">{String(timeLeft.seconds).padStart(2, '0')}</div>
                   <div className="countdown-label">Seconds</div>
                 </div>
               </div>
 
               <div className="btn-container">
-                <Link href="/tncmasterclass" className="tg-cta-btn" onClick={() => setOpen(false)}>
-                  <span className="btn-text">Explore Now </span>
-                  <span className="btn-arrow"> →</span>
+                {/* Legacy behavior to ensure anchor receives className across Next versions */}
+                <Link href="/tncmasterclass" legacyBehavior>
+                  <a
+                    className="tg-cta-btn"
+                    onClick={() => setOpen(false)}
+                    aria-label="Explore Now"
+                  >
+                    Explore Now →
+                  </a>
                 </Link>
               </div>
             </div>
 
-            <div className="tg-image-wrap">
+            <div className="tg-image-wrap" aria-hidden="true">
               <img
-                src="https://lesson-banners.s3.us-east-1.amazonaws.com/Upcoming_Courses_Banner/Thanks+giving+off.png"
-                alt="Thanksgiving Mega Offer"
+                src="/images/event/christmas.webp"
+                alt="Christmas Mega Offer"
                 className="tg-image"
               />
             </div>
@@ -132,13 +136,12 @@ const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000, d
           padding: 20px;
         }
 
-        /* WIDER + BORDER RADIUS ADDED */
         .tg-card {
           position: relative;
           width: 100%;
           max-width: 900px;
           max-height: 90vh;
-          background: linear-gradient(180deg, #001428, #002b5c, #004c9c);
+          background: linear-gradient(180deg, #2b0d16, #4a1120, #6b0f1a);
           border-radius: 20px;
           overflow-y: auto;
           overflow-x: hidden;
@@ -147,7 +150,6 @@ const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000, d
           flex-direction: column;
         }
 
-        /* Custom scrollbar */
         .tg-card::-webkit-scrollbar {
           width: 8px;
         }
@@ -189,6 +191,7 @@ const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000, d
           display: flex;
           align-items: center;
           justify-content: center;
+          line-height: 1;
         }
 
         .tg-text {
@@ -254,7 +257,7 @@ const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000, d
         }
 
         .countdown-item {
-          background: rgba(255, 255, 255, 0.1);
+          background: rgba(255, 255, 255, 0.08);
           border: 2px solid rgba(255, 179, 71, 0.4);
           border-radius: 10px;
           padding: 8px 12px;
@@ -287,103 +290,51 @@ const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000, d
         }
 
         .btn-container {
-          margin-top: 8px;
-          display: inline-block;
-          position: relative;
-          background:rgb(237, 115, 38);
-          padding: 4px 16px;
-          border-radius: 16px;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-          transition: all 0.3s ease;
+          margin-top: 12px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: flex-start;
         }
 
-        .btn-container:hover {
-          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
-          transform: translateY(-2px);
-        }
-
+        /* Updated tg-cta-btn: added fallback color, appearance reset, and stronger clipping rules */
         .tg-cta-btn {
-          position: relative;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          gap: 6px;
-          background: linear-gradient(135deg, #4c6fff 0%, #2563eb 100%);
-          color: #ffffff;
-          padding: 12px 32px;
-          border-radius: 12px;
-          font-size: 15px;
-          font-weight: 900;
-          text-decoration: none;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          letter-spacing: 0.02em;
-          overflow: visible;
-          min-width: 160px;
-          box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
-          cursor: pointer;
-        }
-
-        .tg-cta-btn::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          border-radius: 16px;
-          padding: 2px;
-          background: linear-gradient(135deg, #ff6a00, #ffb347, #ff6a00);
-          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          -webkit-mask-composite: xor;
-          mask-composite: exclude;
-          opacity: 0;
-          transition: opacity 0.4s ease;
-        }
-
-        .btn-shine {
-          display: none;
-        }
-
-        .btn-text {
-          position: relative;
-          z-index: 1;
-          color: #ffffff;
-          font-weight: 900;
-        }
-
-        .btn-arrow {
-          position: relative;
-          z-index: 1;
-          padding-left:4px;
-          color: #ffffff;
+          gap: 10px;
+          /* fallback color in case gradient is overwritten */
+          background-color: #0f66ff;
+          /* main gradient */
+          background-image: linear-gradient(90deg, #0f66ff 0%, #06c8ff 100%);
+          color: #ffffff !important;
+          padding: 15px 46px;
+          border-radius: 999px;
           font-size: 18px;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          display: inline-block;
+          font-weight: 800;
+          text-decoration: none !important;
+          border: none;
+          cursor: pointer;
+          box-shadow: 0 18px 36px rgba(0, 0, 0, 0.38);
+          transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          -webkit-appearance: none;
+          appearance: none;
+          text-align: center;
+          line-height: 1;
+          /* ensure gradient paints the element box */
+          background-origin: padding-box;
+          background-clip: padding-box;
         }
 
         .tg-cta-btn:hover {
-          transform: translateY(-4px) scale(1.02);
-          box-shadow: 0 8px 28px rgba(37, 99, 235, 0.6), 0 0 20px rgba(255, 106, 0, 0.3);
-          background: linear-gradient(135deg, #ff6a00 0%, #ff8c00 100%);
-        }
-
-        .tg-cta-btn:hover::before {
-          opacity: 1;
-        }
-
-        .tg-cta-btn:hover .btn-arrow {
-          transform: translateX(5px);
-          animation: arrowBounce 0.6s ease-in-out infinite;
-        }
-
-        @keyframes arrowBounce {
-          0%, 100% {
-            transform: translateX(5px);
-          }
-          50% {
-            transform: translateX(10px);
-          }
+          transform: translateY(-2px);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.42);
+          filter: brightness(1.05);
         }
 
         .tg-cta-btn:active {
-          transform: translateY(-2px) scale(1);
+          transform: translateY(-1px) scale(0.995);
         }
 
         .tg-image-wrap {
@@ -479,9 +430,6 @@ const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000, d
             font-size: 14px;
             min-width: 140px;
             gap: 4px;
-          }
-          .btn-arrow {
-            font-size: 16px;
           }
           .tg-image-wrap {
             max-width: 250px;

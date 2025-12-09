@@ -144,7 +144,7 @@ export default function WebclassSection() {
             </div>
             {/* Tagline */}
             <p className="text-base md:text-lg text-black dark:text-gray-300">
-              This Free Webclass Is For Entrepreneurs, Small Business Owners, &amp; Those Just Getting Started...
+              How To Legally Crush Debt Collectors, Stop Lawsuits &amp; Delete Debts – Even If They Already Have A Judgment Against You!
             </p>
           </div>
         </div>
@@ -157,7 +157,7 @@ export default function WebclassSection() {
               <div className="relative rounded-lg overflow-hidden w-full max-w-[420px]">
                 <div className="relative rounded-lg w-full h-[600px] bg-gray-100 dark:bg-[#0a0e14]">
                   <Image
-                    src={"/images/squeeze/webex.jpeg"}
+                    src={"/images/webinar/paul_webclass.webp"}
                     alt="Speaker"
                     fill
                     style={{ objectFit: "cover" }}
@@ -177,9 +177,9 @@ export default function WebclassSection() {
 
               {/* Main headline - very large, bold */}
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[1.1] mb-4 text-gray-900 dark:text-white">
-                Non Member
+                Free Webinar
                 <br />
-                <span className="block">Orientation</span>
+                <span className="block">Class</span>
               </h1>
 
               {/* Subtext */}

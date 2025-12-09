@@ -493,7 +493,7 @@ export default function WebclassSection() {
             </div>
             {/* Tagline */}
             <p className="text-base md:text-lg text-white dark:text-gray-300">
-              This Free Webclass Is For Entrepreneurs, Small Business Owners, &amp; Those Just Getting Started...
+              How To Legally Crush Debt Collectors, Stop Lawsuits &amp; Delete Debts – Even If They Already Have A Judgment Against You!
             </p>
           </div>
         </div>

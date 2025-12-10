@@ -167,9 +167,21 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
     const speaker = speakerCardRef.current;
     if (!card || !speaker) return;
 
-    let active = false;
+    const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    if (prefersReduced?.matches) return;
 
-    const onPointerEnter = () => { active = true; };
+    let active = false;
+    const stopLoop = () => {
+      if (rafRef.current != null) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+    };
+
+    const onPointerEnter = () => {
+      active = true;
+      if (rafRef.current == null) rafRef.current = requestAnimationFrame(loop);
+    };
     const onPointerMove = (e: PointerEvent) => {
       if (!active) return;
       const rect = card.getBoundingClientRect();
@@ -191,6 +203,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
       speaker.style.transform = 'translate3d(0px, 0px, 0)';
       stateRef.current.x = 0;
       stateRef.current.y = 0;
+      if (rafRef.current == null) rafRef.current = requestAnimationFrame(loop);
     };
 
     const loop = () => {
@@ -203,6 +216,12 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
 
       speaker.style.transform = `translate3d(${translateX}px, ${translateY}px, 0)`;
 
+      const nearlyIdle = !active && Math.abs(s.tx - s.x) < 0.001 && Math.abs(s.ty - s.y) < 0.001;
+      if (nearlyIdle) {
+        stopLoop();
+        return;
+      }
+
       rafRef.current = requestAnimationFrame(loop);
     };
 
@@ -210,13 +229,23 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
     window.addEventListener('pointermove', onPointerMove as EventListener);
     card.addEventListener('pointerleave', onPointerLeave);
 
-    loop();
+    const onVisibility = () => {
+      if (!document.hidden) return;
+      active = false;
+      stateRef.current.tx = 0;
+      stateRef.current.ty = 0;
+      speaker.style.transform = 'translate3d(0px, 0px, 0)';
+      stopLoop();
+    };
+
+    document.addEventListener('visibilitychange', onVisibility);
 
     return () => {
       card.removeEventListener('pointerenter', onPointerEnter);
       window.removeEventListener('pointermove', onPointerMove as EventListener);
       card.removeEventListener('pointerleave', onPointerLeave);
-      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+      document.removeEventListener('visibilitychange', onVisibility);
+      stopLoop();
     };
   }, []);
 
@@ -257,46 +286,6 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
       btn.removeEventListener('keydown', handleKey as EventListener);
     };
   }, [timeLeft.expired]);
-
-  // Floating snowflake/ornament layer (creates Christmas decorations)
-  useEffect(() => {
-    const card = cardRef.current;
-    if (!card) return;
-    const layer = document.createElement('div');
-    layer.className = 'particle-layer';
-    card.appendChild(layer);
-
-    const particles: HTMLElement[] = [];
-    const count = 16;
-    const ornaments = ['❄️', '✨', '🎄', '🎁', '⭐'];
-    
-    for (let i = 0; i < count; i++) {
-      const p = document.createElement('span');
-      p.className = 'particle';
-      const isEmoji = Math.random() > 0.5;
-      
-      if (isEmoji) {
-        p.textContent = ornaments[Math.floor(Math.random() * ornaments.length)];
-        p.style.fontSize = `${Math.random() * 12 + 10}px`;
-        p.style.opacity = `${0.3 + Math.random() * 0.4}`;
-      } else {
-        const s = (Math.random() * 8 + 4).toFixed(2);
-        p.style.width = p.style.height = `${s}px`;
-        p.style.opacity = `${0.2 + Math.random() * 0.3}`;
-      }
-      
-      p.style.left = `${Math.random() * 100}%`;
-      p.style.top = `${Math.random() * 100}%`;
-      p.style.animationDelay = `${Math.random() * 2}s`;
-      p.style.animationDuration = `${4 + Math.random() * 4}s`;
-      layer.appendChild(p);
-      particles.push(p);
-    }
-
-    return () => {
-      layer.remove();
-    };
-  }, []);
 
   // Modal state
   const [widgetOpen, setWidgetOpen] = useState(false);
@@ -375,10 +364,6 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
           <div className="gradient-blob g1"></div>
           <div className="gradient-blob g2"></div>
           <div className="scanline" />
-          <div className="christmas-decoration top-left">🎄</div>
-          <div className="christmas-decoration top-right">⭐</div>
-          {/* <div className="christmas-decoration bottom-left">🎁</div> */}
-          <div className="christmas-decoration bottom-right">✨</div>
         </div>
 
         <div className="event-content">
@@ -871,32 +856,6 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
           padding:8px 12px;
           border-radius:8px;
         }
-
-        .particle-layer{position:absolute;inset:0;pointer-events:none;border-radius:20px;overflow:hidden;z-index:1}
-        .particle{
-          position:absolute;
-          border-radius:50%;
-          background:radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,215,0,0.4) 50%, transparent 100%);
-          animation: floaty 8s infinite ease-in-out, twinkle 2s infinite ease-in-out;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-        }
-        @keyframes floaty{0%{transform:translateY(0) scale(1) rotate(0deg)}50%{transform:translateY(-8px) scale(1.06) rotate(180deg)}100%{transform:translateY(0) scale(1) rotate(360deg)}}
-        @keyframes twinkle{0%,100%{opacity:0.3}50%{opacity:1}}
-        
-        .christmas-decoration{
-          position:absolute;
-          font-size:32px;
-          opacity:0.4;
-          animation: floaty 6s infinite ease-in-out, twinkle 3s infinite ease-in-out;
-          pointer-events:none;
-          filter:drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
-        }
-        .christmas-decoration.top-left{top:20px;left:20px;animation-delay:0s}
-        .christmas-decoration.top-right{top:20px;right:20px;animation-delay:1.5s}
-        .christmas-decoration.bottom-left{bottom:20px;left:20px;animation-delay:3s}
-        .christmas-decoration.bottom-right{bottom:20px;right:20px;animation-delay:4.5s}
 
         .reveal{opacity:0;transform:translateY(18px) translateZ(0);transition:all 700ms cubic-bezier(.2,.9,.26,1)}
         .reveal.in-view{opacity:1;transform:translateY(0)}

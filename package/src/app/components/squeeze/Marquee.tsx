@@ -14,6 +14,18 @@ export default function Marquee({ items, className = "", pillClassName = "", spe
     const contentRef = React.useRef<HTMLDivElement | null>(null);
     const [contentWidth, setContentWidth] = React.useState(0);
     const [translate, setTranslate] = React.useState(0);
+    const [inView, setInView] = React.useState(true);
+    const [reduceMotion, setReduceMotion] = React.useState(false);
+
+    // Respect prefers-reduced-motion
+    React.useEffect(() => {
+        if (typeof window === "undefined" || !window.matchMedia) return;
+        const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const update = () => setReduceMotion(mql.matches);
+        update();
+        mql.addEventListener("change", update);
+        return () => mql.removeEventListener("change", update);
+    }, []);
 
     // Measure content width
     React.useEffect(() => {
@@ -33,15 +45,37 @@ export default function Marquee({ items, className = "", pillClassName = "", spe
         };
     }, [items.join("|")]);
 
-    // Continuous ticker loop (circular)
+    // Track visibility for pause/resume
     React.useEffect(() => {
+        const node = trackRef.current;
+        if (!node) return;
+        let lastIntersecting = true;
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                lastIntersecting = entry.isIntersecting;
+                setInView(entry.isIntersecting && !document.hidden);
+            },
+            { threshold: 0.1 }
+        );
+        observer.observe(node);
+        const onVisibility = () => setInView(lastIntersecting && !document.hidden);
+        document.addEventListener("visibilitychange", onVisibility);
+        return () => {
+            observer.disconnect();
+            document.removeEventListener("visibilitychange", onVisibility);
+        };
+    }, []);
+
+    // Continuous ticker loop (circular) — paused when off-screen or reduced motion
+    React.useEffect(() => {
+        if (reduceMotion || !inView) return;
         let raf = 0;
         let last = performance.now();
         const step = (now: number) => {
             const dt = (now - last) / 1000; // seconds
             last = now;
             const delta = -speedPxPerSec * dt; // move left
-            setTranslate(prev => {
+            setTranslate((prev) => {
                 let next = prev + delta;
                 // when first copy fully out of view, wrap by adding its width
                 if (contentWidth > 0) {
@@ -53,7 +87,7 @@ export default function Marquee({ items, className = "", pillClassName = "", spe
         };
         raf = requestAnimationFrame(step);
         return () => cancelAnimationFrame(raf);
-    }, [contentWidth, speedPxPerSec]);
+    }, [contentWidth, speedPxPerSec, reduceMotion, inView]);
 
     return (
         <div ref={trackRef} className={`relative overflow-hidden ${className}`}>

@@ -167,9 +167,21 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
     const speaker = speakerCardRef.current;
     if (!card || !speaker) return;
 
-    let active = false;
+    const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    if (prefersReduced?.matches) return;
 
-    const onPointerEnter = () => { active = true; };
+    let active = false;
+    const stopLoop = () => {
+      if (rafRef.current != null) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+    };
+
+    const onPointerEnter = () => {
+      active = true;
+      if (rafRef.current == null) rafRef.current = requestAnimationFrame(loop);
+    };
     const onPointerMove = (e: PointerEvent) => {
       if (!active) return;
       const rect = card.getBoundingClientRect();
@@ -191,6 +203,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
       speaker.style.transform = 'translate3d(0px, 0px, 0)';
       stateRef.current.x = 0;
       stateRef.current.y = 0;
+      if (rafRef.current == null) rafRef.current = requestAnimationFrame(loop);
     };
 
     const loop = () => {
@@ -203,6 +216,12 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
 
       speaker.style.transform = `translate3d(${translateX}px, ${translateY}px, 0)`;
 
+      const nearlyIdle = !active && Math.abs(s.tx - s.x) < 0.001 && Math.abs(s.ty - s.y) < 0.001;
+      if (nearlyIdle) {
+        stopLoop();
+        return;
+      }
+
       rafRef.current = requestAnimationFrame(loop);
     };
 
@@ -210,13 +229,23 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
     window.addEventListener('pointermove', onPointerMove as EventListener);
     card.addEventListener('pointerleave', onPointerLeave);
 
-    loop();
+    const onVisibility = () => {
+      if (!document.hidden) return;
+      active = false;
+      stateRef.current.tx = 0;
+      stateRef.current.ty = 0;
+      speaker.style.transform = 'translate3d(0px, 0px, 0)';
+      stopLoop();
+    };
+
+    document.addEventListener('visibilitychange', onVisibility);
 
     return () => {
       card.removeEventListener('pointerenter', onPointerEnter);
       window.removeEventListener('pointermove', onPointerMove as EventListener);
       card.removeEventListener('pointerleave', onPointerLeave);
-      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+      document.removeEventListener('visibilitychange', onVisibility);
+      stopLoop();
     };
   }, []);
 

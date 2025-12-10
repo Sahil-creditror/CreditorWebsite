@@ -481,7 +481,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
             <div className="stripe" aria-hidden="true"></div>
 
             <div className="speaker-photo-wrap">
-              <img src='/images/event/event16.webp' alt="Paul Michael Rowland" className="speaker-photo" />
+              <img src='/images/event/event17.webp' alt="Paul Michael Rowland" className="speaker-photo" />
             </div>
 
             {/* <div className="speaker-overlay" aria-hidden="true">
@@ -544,14 +544,14 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
               )}
             </div>
           </div>
-        </div>
+        </div> //background-attachment:fixed;
       )}
 
       <style>{`
         :root{ --bg-start: #001428; --bg-mid: #002b5c; --bg-end: #0066cc; --accent: #66d0ff; --accent-2: #4fc3ff; --muted: rgba(200,210,220,0.88); }
         *{box-sizing:border-box}
         .event-section{font-family:Inter,Montserrat,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;line-height:1.25;margin:0;color:var(--muted);-webkit-font-smoothing:antialiased}
-        .event-section{background:linear-gradient(180deg,var(--bg-start) 0%, var(--bg-mid) 50%, var(--bg-end) 100%), url('/images/event/eventbg.webp');background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;background-blend-mode:overlay;padding:24px 18px; overflow-x:hidden}
+        .event-section{background:linear-gradient(180deg,var(--bg-start) 0%, var(--bg-mid) 50%, var(--bg-end) 100%), url('/images/haloween/christmas.webp');background-size:cover;background-position:center;background-repeat:no-repeat;background-blend-mode:overlay;padding:24px 18px; overflow-x:hidden}
 
         /* Layout: desktop -> two columns (content + visual). Use minmax so the right column can shrink. */
         .event-card{position:relative;display:grid;grid-template-columns:1fr minmax(240px, 440px);gap:26px;padding:20px;border-radius:20px;background:linear-gradient(180deg, rgba(0,20,40,0.85), rgba(0,30,60,0.9));backdrop-filter: blur(12px);box-shadow:0 18px 50px rgba(4,8,22,0.6);overflow:hidden;min-width:0;max-width:1200px;margin-inline:auto}

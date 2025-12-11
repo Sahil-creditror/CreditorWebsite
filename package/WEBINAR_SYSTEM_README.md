@@ -88,7 +88,7 @@ Body: { "webinarId": "YOUR_WEBINAR_ID" }
 ## 🔧 Key Files Modified/Created
 
 ### Modified
-- `src/app/components/Event/index.tsx` - Added registration flow
+- `src/app/components/home/event/index.tsx` - Added registration flow
 
 ### Created
 ```

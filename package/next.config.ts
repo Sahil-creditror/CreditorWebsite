@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Allow explicit dev origins to avoid future cross-origin warnings for /_next/*
+  allowedDevOrigins: ["localhost:3000", "127.0.0.1:3000"],
   eslint: {
     ignoreDuringBuilds: true,
   },

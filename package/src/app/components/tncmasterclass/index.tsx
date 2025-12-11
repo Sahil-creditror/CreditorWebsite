@@ -328,7 +328,7 @@ export default function MasterclassMembershipTC() {
                 <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
                   {selectedPlan === "monthly" 
                     ? "Ongoing monthly access to our exclusive community"
-                    : "Annual access + 2000 credit points to unlock premium courses on LMS"
+                    : "Annual access + 1000 credit points to unlock premium courses on LMS"
                   }
                 </p>
               </div>

@@ -100,15 +100,13 @@ const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000, d
               </div>
 
               <div className="btn-container">
-                {/* Legacy behavior to ensure anchor receives className across Next versions */}
-                <Link href="/tncmasterclass" legacyBehavior>
-                  <a
-                    className="tg-cta-btn"
-                    onClick={() => setOpen(false)}
-                    aria-label="Explore Now"
-                  >
-                    Explore Now →
-                  </a>
+                <Link
+                  href="/tncmasterclass"
+                  className="tg-cta-btn"
+                  onClick={() => setOpen(false)}
+                  aria-label="Explore Now"
+                >
+                  Explore Now →
                 </Link>
               </div>
             </div>

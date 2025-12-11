@@ -17,7 +17,7 @@ Event Page → Click "Join Now" → Registration Page (/register) → Fill form 
 ## 📄 Pages Overview
 
 ### 1. Event Page (Event Component)
-- **Location**: `src/app/components/Event/index.tsx`
+- **Location**: `src/app/components/home/event/index.tsx`
 - **Purpose**: Display event information and countdown
 - **Action**: Clicking "Join Now" redirects to `/register`
 

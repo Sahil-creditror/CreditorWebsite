@@ -6,7 +6,7 @@ import CourseDetail from '@/app/components/private/course-detail';
 import Contact from '@/app/components/shared/cta';
 import Pricing from '@/app/components/shared/plan';
 import Offer from '@/app/components/become/appointment';
-import Event from '@/app/components/Event';
+import Event from '@/app/components/home/event';
 import HowItWorks from '@/app/components/private/works';
 import FaqSection from '@/app/components/private/faq';
 

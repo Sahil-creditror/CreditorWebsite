@@ -7,7 +7,7 @@
 
 export const API_CONFIG = {
   // ⚠️ IMPORTANT: Replace this with your actual backend API URL
-  BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://webx-6ba8.onrender.com',
+  BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://testbackend-hcoy.onrender.com/api',
   
   // Timeout in milliseconds
   TIMEOUT: 30000,

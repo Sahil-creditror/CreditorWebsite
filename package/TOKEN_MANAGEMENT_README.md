@@ -78,7 +78,7 @@ Fetches a fresh token directly from the backend API.
 const token = await fetchNewToken();
 // Always fetches new token via GET request:
 // GET {BASE_URL}/zoom/refresh-token
-// Example: GET https://webx-6ba8.onrender.com/zoom/refresh-token
+// Example: GET https://testbackend-hcoy.onrender.com/api/zoom/refresh-token
 ```
 
 ### `isTokenExpired()`

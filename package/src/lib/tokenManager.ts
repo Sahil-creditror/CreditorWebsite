@@ -10,9 +10,9 @@ const REFRESH_TOKEN_KEY = 'zoom_refresh_token';
 // Get backend base URL from environment or default
 const getBackendBaseUrl = () => {
   if (typeof window !== 'undefined') {
-    return process.env.NEXT_PUBLIC_API_BASE_URL || 'https://webx-6ba8.onrender.com';
+    return process.env.NEXT_PUBLIC_API_BASE_URL || 'https://testbackend-hcoy.onrender.com/api';
   }
-  return 'https://webx-6ba8.onrender.com';
+  return 'https://testbackend-hcoy.onrender.com/api';
 };
 
 interface TokenData {

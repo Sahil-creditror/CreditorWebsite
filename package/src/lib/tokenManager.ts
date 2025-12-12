@@ -7,12 +7,14 @@ const TOKEN_STORAGE_KEY = 'zoom_access_token';
 const TOKEN_EXPIRY_KEY = 'zoom_token_expiry';
 const REFRESH_TOKEN_KEY = 'zoom_refresh_token';
 
+// https://creditor.onrender.com/api
+// https://testbackend-hcoy.onrender.com/api
 // Get backend base URL from environment or default
 const getBackendBaseUrl = () => {
   if (typeof window !== 'undefined') {
-    return process.env.NEXT_PUBLIC_API_BASE_URL || 'https://testbackend-hcoy.onrender.com/api';
+    return process.env.NEXT_PUBLIC_API_BASE_URL || 'https://testbackend-hcoy.onrender.com/api'; // TODO: Change to testbackend-hcoy.onrender.com/api
   }
-  return 'https://testbackend-hcoy.onrender.com/api';
+  return 'https://testbackend-hcoy.onrender.com/api'; // TODO: Change to testbackend-hcoy.onrender.com/api 
 };
 
 interface TokenData {

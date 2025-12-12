@@ -14,8 +14,9 @@ import {
 /**
  * Fixed daily webinar times in PST (24h format).
  * These are used for the countdown logic and upcoming-session dropdown.
+ * Updated for four daily sessions: 12 AM, 9 AM, 2 PM, 7 PM.
  */
-const WEBINAR_SESSION_HOURS_PST = [10, 14, 19]; // 10:00, 14:00 (2 PM), 19:00 (7 PM)
+const WEBINAR_SESSION_HOURS_PST = [0, 9, 14, 19];
 
 /**
  * Hard stop for this webinar series (final occurrence).
@@ -26,8 +27,8 @@ const WEBINAR_SESSION_HOURS_PST = [10, 14, 19]; // 10:00, 14:00 (2 PM), 19:00 (7
 const WEBINAR_SERIES_END = new Date("2026-02-01T23:59:59-08:00");
 
 /**
- * Countdown hook: next scheduled webinar (10am, 2pm, 7pm PST) from current time.
- * If we've passed 7pm, it rolls over to tomorrow's 10am.
+ * Countdown hook: next scheduled webinar (12am, 9am, 2pm, 7pm PST) from current time.
+ * If we've passed 7pm, it rolls over to tomorrow's 12am.
  */
 function useCountdown() {
   const getNextSessionTarget = () => {
@@ -46,7 +47,7 @@ function useCountdown() {
       return upcomingToday;
     }
 
-    // Otherwise, go to tomorrow's first session (10am)
+    // Otherwise, go to tomorrow's first session (12am)
     const tomorrow = new Date(now);
     tomorrow.setDate(tomorrow.getDate() + 1);
     tomorrow.setHours(WEBINAR_SESSION_HOURS_PST[0], 0, 0, 0);
@@ -115,10 +116,18 @@ type WebinarTemplate = {
 
 const webinarTemplates: WebinarTemplate[] = [
   {
+    baseKey: "midnight",
+    id: process.env.NEXT_PUBLIC_WEBINAR_ID_MIDNIGHT || DEFAULT_WEBINAR_ID,
+    label: "Midnight Kickoff",
+    hour: 0,
+    minute: 0,
+    description: "Great for night owls who want a fresh start.",
+  },
+  {
     baseKey: "morning",
     id: process.env.NEXT_PUBLIC_WEBINAR_ID_MORNING || DEFAULT_WEBINAR_ID,
     label: "Morning Intensive",
-    hour: 10,
+    hour: 9,
     minute: 0,
     description: "Perfect if you want to take action before lunch.",
   },
@@ -213,7 +222,7 @@ export default function WebclassSection() {
   // Modal and form state
   const [widgetOpen, setWidgetOpen] = useState(false);
   const [formData, setFormData] = useState<FormState>({ ...initialFormState });
-  const [sessions, setSessions] = useState<WebinarSession[]>(() => buildUpcomingSessions(3));
+  const [sessions, setSessions] = useState<WebinarSession[]>(() => buildUpcomingSessions(webinarTemplates.length));
   const [selectedSessionKey, setSelectedSessionKey] = useState<string>(sessions[0]?.key || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -230,7 +239,7 @@ export default function WebclassSection() {
   const resetFormState = useCallback(() => {
     setFormData({ ...initialFormState });
     setTouched({ email: false, first_name: false, last_name: false, session: false });
-    const refreshedSessions = buildUpcomingSessions(3);
+    const refreshedSessions = buildUpcomingSessions(webinarTemplates.length);
     setSessions(refreshedSessions);
     setSelectedSessionKey(refreshedSessions[0]?.key || "");
     setError(null);
@@ -260,7 +269,7 @@ export default function WebclassSection() {
   }, [widgetOpen, handleWidgetClose]);
 
   /**
-   * When the modal opens, fetch occurrences for all three webinar IDs
+   * When the modal opens, fetch occurrences for all four webinar IDs
    * and store the latest (next upcoming) occurrence for each in localStorage.
    */
   useEffect(() => {

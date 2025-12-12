@@ -4,12 +4,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 /**
- * Fixed daily webinar times in PST.
+ * Fixed daily webinar times in PST (12am, 9am, 2pm, 7pm).
  */
-const WEBINAR_SESSION_HOURS_PST = [10, 14, 19];
+const WEBINAR_SESSION_HOURS_PST = [0, 9, 14, 19];
 
 /**
- * Countdown hook: next scheduled webinar (10am, 2pm, 7pm PST).
+ * Countdown hook: next scheduled webinar (12am, 9am, 2pm, 7pm PST).
  */
 function useCountdown() {
   const getNextSessionTarget = () => {

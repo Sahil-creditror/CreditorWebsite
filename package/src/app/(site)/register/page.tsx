@@ -17,6 +17,7 @@ interface ExtendedOccurrenceItem extends OccurrenceItem {
 
 // Webinar IDs from environment - defined outside component to avoid re-creation
 const WEBINAR_IDS = {
+  midnight: process.env.NEXT_PUBLIC_WEBINAR_ID_MIDNIGHT || '81368819394',
   morning: process.env.NEXT_PUBLIC_WEBINAR_ID_MORNING || '85345478550',
   afternoon: process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON || '85009970371',
   evening: process.env.NEXT_PUBLIC_WEBINAR_ID_EVENING || '84323907773',
@@ -63,22 +64,24 @@ export default function RegistrationPage(): React.ReactElement {
       // Initialize token first
       await initializeToken();
       
-      // Then fetch occurrences from all three webinar IDs
+      // Then fetch occurrences from all four webinar IDs
       await loadOccurrences();
     };
 
-    // Fetch occurrences from all three webinar IDs
+    // Fetch occurrences from all four webinar IDs
     const loadOccurrences = async () => {
       setLoadingOccurrences(true);
       console.log('\n🔄 ========== LOADING OCCURRENCES FOR DROPDOWNS ==========');
-      console.log('📅 Fetching from 3 webinar IDs:');
+      console.log('📅 Fetching from 4 webinar IDs:');
+      console.log(`  - Midnight: ${WEBINAR_IDS.midnight}`);
       console.log(`  - Morning: ${WEBINAR_IDS.morning}`);
       console.log(`  - Afternoon: ${WEBINAR_IDS.afternoon}`);
       console.log(`  - Evening: ${WEBINAR_IDS.evening}`);
       
       try {
-        // Fetch occurrences from all three webinar IDs in parallel
-        const [morningResult, afternoonResult, eveningResult] = await Promise.all([
+        // Fetch occurrences from all four webinar IDs in parallel
+        const [midnightResult, morningResult, afternoonResult, eveningResult] = await Promise.all([
+          fetchOccurrences(WEBINAR_IDS.midnight),
           fetchOccurrences(WEBINAR_IDS.morning),
           fetchOccurrences(WEBINAR_IDS.afternoon),
           fetchOccurrences(WEBINAR_IDS.evening),
@@ -87,6 +90,22 @@ export default function RegistrationPage(): React.ReactElement {
         const allOccurrences: ExtendedOccurrenceItem[] = [];
         const now = new Date();
         console.log(`\n⏰ Current time: ${now.toISOString()}`);
+
+        // Process midnight webinar occurrences
+        if (midnightResult.success && midnightResult.data) {
+          const futureOccurrences = midnightResult.data.occurrences
+            .filter(occ => new Date(occ.start_time) > now)
+            .map(occ => ({ ...occ, webinarId: WEBINAR_IDS.midnight }));
+          console.log(`\n🌃 Midnight webinar (${WEBINAR_IDS.midnight}):`);
+          console.log(`  - Total: ${midnightResult.data.occurrences.length}`);
+          console.log(`  - Future: ${futureOccurrences.length}`);
+          if (futureOccurrences.length > 0) {
+            futureOccurrences.forEach((occ, idx) => {
+              console.log(`  ${idx + 1}. ${occ.date} at ${occ.time} (ID: ${occ.occurrence_id})`);
+            });
+          }
+          allOccurrences.push(...futureOccurrences);
+        }
 
         // Process morning webinar occurrences
         if (morningResult.success && morningResult.data) {
@@ -136,14 +155,14 @@ export default function RegistrationPage(): React.ReactElement {
           allOccurrences.push(...futureOccurrences);
         }
 
-        // Sort all occurrences by start_time and take next 3
-        const nextThree = allOccurrences
+        // Sort all occurrences by start_time and take next 4
+        const nextFour = allOccurrences
           .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime())
-          .slice(0, 3);
+          .slice(0, 4);
 
-        console.log(`\n📋 DROPDOWN OCCURRENCES (Next 3 upcoming sessions):`);
-        if (nextThree.length > 0) {
-          nextThree.forEach((occ, idx) => {
+        console.log(`\n📋 DROPDOWN OCCURRENCES (Next 4 upcoming sessions):`);
+        if (nextFour.length > 0) {
+          nextFour.forEach((occ, idx) => {
             console.log(`  ${idx + 1}. ${occ.date} at ${occ.time} PST`);
             console.log(`     - Webinar ID: ${occ.webinarId}`);
             console.log(`     - Occurrence ID: ${occ.occurrence_id}`);
@@ -154,11 +173,11 @@ export default function RegistrationPage(): React.ReactElement {
         }
         console.log('==========================================================\n');
 
-        setOccurrences(nextThree);
+        setOccurrences(nextFour);
         
           // Auto-select first occurrence if available
-          if (nextThree.length > 0) {
-            const firstOccurrence = nextThree[0];
+          if (nextFour.length > 0) {
+            const firstOccurrence = nextFour[0];
             
             // Store in localStorage
             if (typeof window !== 'undefined') {

@@ -5,9 +5,14 @@ import { useMemo, useState } from "react";
 const TOPIC_FILTER_OPTIONS = [
   { value: "all", label: "All topics", matches: [] as string[] },
   {
-    value: "orientation-10am",
-    label: "Orientation Webinar 10 AM",
-    matches: ["orientation webinar 10 am", "orientation webinar at 10 am"],
+    value: "orientation-12am",
+    label: "Orientation Webinar 12 AM",
+    matches: ["orientation webinar 12 am", "orientation webinar at 12 am", "midnight orientation webinar"],
+  },
+  {
+    value: "orientation-9am",
+    label: "Orientation Webinar 9 AM",
+    matches: ["orientation webinar 9 am", "orientation webinar at 9 am"],
   },
   {
     value: "orientation-2pm",
@@ -186,7 +191,7 @@ export default function WebinarRegistrationPage() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#026fe2] dark:text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#026fe2] dark:text-white mb-4 pt-20">
           Webinar Registration Details
         </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300">
@@ -198,7 +203,7 @@ export default function WebinarRegistrationPage() {
               disabled={allRegsLoading}
               className="px-6 py-3 bg-[#026fe2] hover:bg-[#0256b8] text-white font-semibold rounded-lg shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {allRegsLoading ? "Loading registrations..." : "Registrations"}
+              {allRegsLoading ? "Loading registrations..." : "View Registrations"}
             </button>
           </div>
           {allRegsError && (

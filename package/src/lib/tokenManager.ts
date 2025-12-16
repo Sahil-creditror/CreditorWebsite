@@ -12,9 +12,9 @@ const REFRESH_TOKEN_KEY = 'zoom_refresh_token';
 // Get backend base URL from environment or default
 const getBackendBaseUrl = () => {
   if (typeof window !== 'undefined') {
-    return process.env.NEXT_PUBLIC_API_BASE_URL || 'https://testbackend-hcoy.onrender.com/api'; // TODO: Change to testbackend-hcoy.onrender.com/api
+    return process.env.NEXT_PUBLIC_API_BASE_URL || 'https://creditor.onrender.com/api'; // TODO: Change to testbackend-hcoy.onrender.com/api
   }
-  return 'https://testbackend-hcoy.onrender.com/api'; // TODO: Change to testbackend-hcoy.onrender.com/api 
+  return 'https://creditor.onrender.com/api'; // TODO: Change to testbackend-hcoy.onrender.com/api 
 };
 
 interface TokenData {

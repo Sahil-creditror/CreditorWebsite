@@ -4,32 +4,55 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 /**
- * Fixed daily webinar times in PST (12am, 9am, 2pm, 7pm).
+ * Fixed daily webinar times in PST (every 20 minutes from 9 AM to 12 AM).
  */
-const WEBINAR_SESSION_HOURS_PST = [0, 9, 14, 19];
+const WEBINAR_SESSION_HOURS_PST: number[] = [];
+const WEBINAR_SESSION_MINUTES_PST: number[] = [];
+
+// Generate all time slots from 9:00 AM to 12:00 AM (every 20 minutes)
+for (let hour = 9; hour < 24; hour++) {
+  for (let minute = 0; minute < 60; minute += 20) {
+    WEBINAR_SESSION_HOURS_PST.push(hour);
+    WEBINAR_SESSION_MINUTES_PST.push(minute);
+  }
+}
+// Add midnight (12:00 AM = 0:00)
+WEBINAR_SESSION_HOURS_PST.push(0);
+WEBINAR_SESSION_MINUTES_PST.push(0);
 
 /**
- * Countdown hook: next scheduled webinar (12am, 9am, 2pm, 7pm PST).
+ * Countdown hook: next scheduled webinar (every 20 minutes from 9 AM to 12 AM PST).
  */
 function useCountdown() {
   const getNextSessionTarget = () => {
     const now = new Date();
 
-    const todaySessions = WEBINAR_SESSION_HOURS_PST.map((hour) => {
-      const session = new Date(now);
-      session.setHours(hour, 0, 0, 0);
-      return session;
-    });
-
-    const nextToday = todaySessions.find((session) => session.getTime() > now.getTime());
-    if (nextToday) {
-      return nextToday;
+    // Build all possible sessions for today and tomorrow
+    const allSessions: Date[] = [];
+    
+    // Today's sessions
+    for (let i = 0; i < WEBINAR_SESSION_HOURS_PST.length; i++) {
+      const d = new Date(now);
+      d.setHours(WEBINAR_SESSION_HOURS_PST[i], WEBINAR_SESSION_MINUTES_PST[i], 0, 0);
+      if (d.getTime() > now.getTime()) {
+        allSessions.push(d);
+      }
     }
 
-    const tomorrow = new Date(now);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow.setHours(WEBINAR_SESSION_HOURS_PST[0], 0, 0, 0);
-    return tomorrow;
+    // Tomorrow's sessions (if needed)
+    if (allSessions.length === 0) {
+      const tomorrow = new Date(now);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      for (let i = 0; i < WEBINAR_SESSION_HOURS_PST.length; i++) {
+        const d = new Date(tomorrow);
+        d.setHours(WEBINAR_SESSION_HOURS_PST[i], WEBINAR_SESSION_MINUTES_PST[i], 0, 0);
+        allSessions.push(d);
+      }
+    }
+
+    // Sort by time and get the nearest upcoming session
+    allSessions.sort((a, b) => a.getTime() - b.getTime());
+    return allSessions[0] || new Date(now.getTime() + 20 * 60 * 1000); // Fallback: 20 minutes from now
   };
 
   const [targetTime, setTargetTime] = useState<Date>(getNextSessionTarget);

@@ -14,9 +14,22 @@ import {
 /**
  * Fixed daily webinar times in PST (24h format).
  * These are used for the countdown logic and upcoming-session dropdown.
- * Updated for four daily sessions: 12 AM, 9 AM, 2 PM, 7 PM.
+ * Updated for sessions every 20 minutes from 9:00 AM to 12:00 AM (midnight).
  */
-const WEBINAR_SESSION_HOURS_PST = [0, 9, 14, 19];
+const WEBINAR_SESSION_HOURS_PST: number[] = [];
+const WEBINAR_SESSION_MINUTES_PST: number[] = [];
+
+// Generate all time slots from 9:00 AM to 12:00 AM (every 20 minutes)
+// 9:00 AM = 9:00, 9:20, 9:40, 10:00, ... 11:40 PM, 12:00 AM (midnight)
+for (let hour = 9; hour < 24; hour++) {
+  for (let minute = 0; minute < 60; minute += 20) {
+    WEBINAR_SESSION_HOURS_PST.push(hour);
+    WEBINAR_SESSION_MINUTES_PST.push(minute);
+  }
+}
+// Add midnight (12:00 AM = 0:00)
+WEBINAR_SESSION_HOURS_PST.push(0);
+WEBINAR_SESSION_MINUTES_PST.push(0);
 
 /**
  * Hard stop for this webinar series (final occurrence).
@@ -27,31 +40,40 @@ const WEBINAR_SESSION_HOURS_PST = [0, 9, 14, 19];
 const WEBINAR_SERIES_END = new Date("2026-02-01T23:59:59-08:00");
 
 /**
- * Countdown hook: next scheduled webinar (12am, 9am, 2pm, 7pm PST) from current time.
- * If we've passed 7pm, it rolls over to tomorrow's 12am.
+ * Countdown hook: next scheduled webinar (every 20 minutes from 9 AM to 12 AM PST) from current time.
+ * Shows countdown to the nearest upcoming session start time.
+ * When a session time passes, automatically moves to the next session.
  */
 function useCountdown() {
   const getNextSessionTarget = () => {
     const now = new Date();
 
-    // Build today's sessions at fixed hours
-    const todaySessions = WEBINAR_SESSION_HOURS_PST.map((hour) => {
+    // Build all possible sessions for today and tomorrow
+    const allSessions: Date[] = [];
+    
+    // Today's sessions
+    for (let i = 0; i < WEBINAR_SESSION_HOURS_PST.length; i++) {
       const d = new Date(now);
-      d.setHours(hour, 0, 0, 0);
-      return d;
-    });
-
-    // Find the first session later than "now"
-    const upcomingToday = todaySessions.find((session) => session.getTime() > now.getTime());
-    if (upcomingToday) {
-      return upcomingToday;
+      d.setHours(WEBINAR_SESSION_HOURS_PST[i], WEBINAR_SESSION_MINUTES_PST[i], 0, 0);
+      if (d.getTime() > now.getTime()) {
+        allSessions.push(d);
+      }
     }
 
-    // Otherwise, go to tomorrow's first session (12am)
-    const tomorrow = new Date(now);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow.setHours(WEBINAR_SESSION_HOURS_PST[0], 0, 0, 0);
-    return tomorrow;
+    // Tomorrow's sessions (if needed)
+    if (allSessions.length === 0) {
+      const tomorrow = new Date(now);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      for (let i = 0; i < WEBINAR_SESSION_HOURS_PST.length; i++) {
+        const d = new Date(tomorrow);
+        d.setHours(WEBINAR_SESSION_HOURS_PST[i], WEBINAR_SESSION_MINUTES_PST[i], 0, 0);
+        allSessions.push(d);
+      }
+    }
+
+    // Sort by time and get the nearest upcoming session
+    allSessions.sort((a, b) => a.getTime() - b.getTime());
+    return allSessions[0] || new Date(now.getTime() + 20 * 60 * 1000); // Fallback: 20 minutes from now
   };
 
   const [targetTime, setTargetTime] = useState<Date>(getNextSessionTarget);
@@ -99,10 +121,64 @@ type WebinarSession = {
   label: string;
   time: string;
   description: string;
+  occurrenceDate: Date; // Store the actual date for sorting
 };
 
 /**
- * Base templates for the three daily webinar slots.
+ * Webinar ID mapping for each time slot.
+ * Maps time slots (hour:minute) to their corresponding Zoom Webinar IDs.
+ */
+const WEBINAR_ID_MAP: Record<string, string> = {
+  "9:0": process.env.NEXT_PUBLIC_WEBINAR_ID_9_00 || "85345478550",
+  "9:20": process.env.NEXT_PUBLIC_WEBINAR_ID_9_20 || "84025714942",
+  "9:40": process.env.NEXT_PUBLIC_WEBINAR_ID_9_40 || "88069720130",
+  "10:0": process.env.NEXT_PUBLIC_WEBINAR_ID_10_00 || "83407669064",
+  "10:20": process.env.NEXT_PUBLIC_WEBINAR_ID_10_20 || "87147336148",
+  "10:40": process.env.NEXT_PUBLIC_WEBINAR_ID_10_40 || "85247127947",
+  "11:0": process.env.NEXT_PUBLIC_WEBINAR_ID_11_00 || "89594830823",
+  "11:20": process.env.NEXT_PUBLIC_WEBINAR_ID_11_20 || "82978557986",
+  "11:40": process.env.NEXT_PUBLIC_WEBINAR_ID_11_40 || "88590684526",
+  "12:0": process.env.NEXT_PUBLIC_WEBINAR_ID_12_00 || "82820883271",
+  "12:20": process.env.NEXT_PUBLIC_WEBINAR_ID_12_20 || "86790401487",
+  "12:40": process.env.NEXT_PUBLIC_WEBINAR_ID_12_40 || "81397341406",
+  "13:0": process.env.NEXT_PUBLIC_WEBINAR_ID_13_00 || "88431434222",
+  "13:20": process.env.NEXT_PUBLIC_WEBINAR_ID_13_20 || "82736752329",
+  "13:40": process.env.NEXT_PUBLIC_WEBINAR_ID_13_40 || "88516407451",
+  "14:0": process.env.NEXT_PUBLIC_WEBINAR_ID_14_00 || "85009970371",
+  "14:20": process.env.NEXT_PUBLIC_WEBINAR_ID_14_20 || "81687485195",
+  "14:40": process.env.NEXT_PUBLIC_WEBINAR_ID_14_40 || "88004203092",
+  "15:0": process.env.NEXT_PUBLIC_WEBINAR_ID_15_00 || "82602140461",
+  "15:20": process.env.NEXT_PUBLIC_WEBINAR_ID_15_20 || "84565337034",
+  "15:40": process.env.NEXT_PUBLIC_WEBINAR_ID_15_40 || "81055148799",
+  "16:0": process.env.NEXT_PUBLIC_WEBINAR_ID_16_00 || "82712967074",
+  "16:20": process.env.NEXT_PUBLIC_WEBINAR_ID_16_20 || "83402332029",
+  "16:40": process.env.NEXT_PUBLIC_WEBINAR_ID_16_40 || "89184864298",
+  "17:0": process.env.NEXT_PUBLIC_WEBINAR_ID_17_00 || "89004632115",
+  "17:20": process.env.NEXT_PUBLIC_WEBINAR_ID_17_20 || "82414041370",
+  "17:40": process.env.NEXT_PUBLIC_WEBINAR_ID_17_40 || "81100579049",
+  "18:0": process.env.NEXT_PUBLIC_WEBINAR_ID_18_00 || "84754397951",
+  "18:20": process.env.NEXT_PUBLIC_WEBINAR_ID_18_20 || "83709383501",
+  "18:40": process.env.NEXT_PUBLIC_WEBINAR_ID_18_40 || "87324155325",
+  "19:0": process.env.NEXT_PUBLIC_WEBINAR_ID_19_00 || "84323907773",
+  "19:20": process.env.NEXT_PUBLIC_WEBINAR_ID_19_20 || "87488320536",
+  "19:40": process.env.NEXT_PUBLIC_WEBINAR_ID_19_40 || "84436856616",
+  "20:0": process.env.NEXT_PUBLIC_WEBINAR_ID_20_00 || "83351902482",
+  "20:20": process.env.NEXT_PUBLIC_WEBINAR_ID_20_20 || "81579764439",
+  "20:40": process.env.NEXT_PUBLIC_WEBINAR_ID_20_40 || "84010459642",
+  "21:0": process.env.NEXT_PUBLIC_WEBINAR_ID_21_00 || "88014118083",
+  "21:20": process.env.NEXT_PUBLIC_WEBINAR_ID_21_20 || "84741812359",
+  "21:40": process.env.NEXT_PUBLIC_WEBINAR_ID_21_40 || "84509036766",
+  "22:0": process.env.NEXT_PUBLIC_WEBINAR_ID_22_00 || "88357985730",
+  "22:20": process.env.NEXT_PUBLIC_WEBINAR_ID_22_20 || "81461797359",
+  "22:40": process.env.NEXT_PUBLIC_WEBINAR_ID_22_40 || "85661956630",
+  "23:0": process.env.NEXT_PUBLIC_WEBINAR_ID_23_00 || "83724542857",
+  "23:20": process.env.NEXT_PUBLIC_WEBINAR_ID_23_20 || "86553620476",
+  "23:40": process.env.NEXT_PUBLIC_WEBINAR_ID_23_40 || "87637581703",
+  "0:0": process.env.NEXT_PUBLIC_WEBINAR_ID_0_00 || "81368819394",
+};
+
+/**
+ * Base templates for all daily webinar slots (every 20 minutes from 9 AM to 12 AM).
  * We derive the actual upcoming occurrences (date + time) from these.
  */
 type WebinarTemplate = {
@@ -114,56 +190,57 @@ type WebinarTemplate = {
   description: string;
 };
 
-const webinarTemplates: WebinarTemplate[] = [
-  {
-    baseKey: "midnight",
-    id: process.env.NEXT_PUBLIC_WEBINAR_ID_MIDNIGHT || DEFAULT_WEBINAR_ID,
-    label: "Midnight Kickoff",
-    hour: 0,
-    minute: 0,
-    description: "Great for night owls who want a fresh start.",
-  },
-  {
-    baseKey: "morning",
-    id: process.env.NEXT_PUBLIC_WEBINAR_ID_MORNING || DEFAULT_WEBINAR_ID,
-    label: "Morning Intensive",
-    hour: 9,
-    minute: 0,
-    description: "Perfect if you want to take action before lunch.",
-  },
-  {
-    baseKey: "afternoon",
-    id: process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON || DEFAULT_WEBINAR_ID,
-    label: "Afternoon Deep-Dive",
-    hour: 14,
-    minute: 0,
-    description: "Great for regrouping mid-day and asking questions live.",
-  },
-  {
-    baseKey: "evening",
-    id:
-      process.env.NEXT_PUBLIC_WEBINAR_ID_EVENING ||
-      process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON ||
-      DEFAULT_WEBINAR_ID,
-    label: "Evening Session",
-    hour: 19,
-    minute: 0,
-    description: "Catch the training after work with zero rush.",
-  },
-];
+// Generate webinar templates for all time slots
+const webinarTemplates: WebinarTemplate[] = WEBINAR_SESSION_HOURS_PST.map((hour, index) => {
+  const minute = WEBINAR_SESSION_MINUTES_PST[index];
+  const timeKey = `${hour}:${minute}`;
+  const hour12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+  const ampm = hour < 12 ? "AM" : "PM";
+  const minuteStr = minute.toString().padStart(2, "0");
+  
+  // Special labels for specific times
+  let label: string;
+  if (hour === 9 && minute === 0) {
+    label = "Orientation Webinar 9 AM";
+  } else if (hour === 14 && minute === 0) {
+    label = "Orientation Webinar 2 PM";
+  } else if (hour === 19 && minute === 0) {
+    label = "Orientation Webinar 7 PM";
+  } else if (hour === 0 && minute === 0) {
+    label = "Orientation Webinar 12 AM";
+  } else {
+    // Format: "Orientation at 9:20 AM" or "Orientation at 10:40" (without AM/PM if obvious)
+    if (minute === 0) {
+      label = `Orientation at ${hour12} ${ampm}`;
+    } else {
+      label = `Orientation at ${hour12}:${minuteStr} ${ampm}`;
+    }
+  }
+  
+  return {
+    baseKey: `time_${hour}_${minute}`,
+    id: WEBINAR_ID_MAP[timeKey] || DEFAULT_WEBINAR_ID,
+    label,
+    hour,
+    minute,
+    description: `Join us at ${hour12}:${minuteStr} ${ampm} for this orientation session.`,
+  };
+});
 
 /**
  * Build the next N upcoming webinar slots (date + time) in PST,
- * constrained so that they never extend past the final series date.
+ * sorted by nearest to current time, then farthest.
+ * Constrained so that they never extend past the final series date.
  */
 const buildUpcomingSessions = (count: number): WebinarSession[] => {
   const now = new Date();
-  const sessions: WebinarSession[] = [];
+  const allSessions: WebinarSession[] = [];
 
-  // Iterate day-by-day until we gather the requested number of upcoming slots
+  // Iterate day-by-day to gather all upcoming slots
   const cursor = new Date(now);
+  const maxDays = 7; // Look ahead up to 7 days
 
-  while (sessions.length < count) {
+  for (let day = 0; day < maxDays; day++) {
     for (const template of webinarTemplates) {
       const occurrence = new Date(cursor);
       occurrence.setHours(template.hour, template.minute, 0, 0);
@@ -171,9 +248,9 @@ const buildUpcomingSessions = (count: number): WebinarSession[] => {
       // Only include future occurrences
       if (occurrence.getTime() <= now.getTime()) continue;
 
-      // Stop if we’re past the series end date
+      // Stop if we're past the series end date
       if (occurrence.getTime() > WEBINAR_SERIES_END.getTime()) {
-        return sessions;
+        break;
       }
 
       const dateLabel = occurrence.toLocaleString("en-US", {
@@ -191,25 +268,28 @@ const buildUpcomingSessions = (count: number): WebinarSession[] => {
         timeZone: "America/Los_Angeles",
       });
 
-      sessions.push({
+      allSessions.push({
         key: `${template.baseKey}-${occurrence.toISOString()}`,
         baseKey: template.baseKey,
         id: template.id,
         label: `${template.label} — ${dateLabel}`,
         time: timeLabel,
         description: template.description,
+        occurrenceDate: occurrence,
       });
-
-      if (sessions.length === count) {
-        return sessions;
-      }
     }
 
-    // Move to the next day and continue
+    // Move to the next day
     cursor.setDate(cursor.getDate() + 1);
   }
 
-  return sessions;
+  // Sort by time (nearest first, then farthest)
+  allSessions.sort((a, b) => {
+    return a.occurrenceDate.getTime() - b.occurrenceDate.getTime();
+  });
+
+  // Return the requested count
+  return allSessions.slice(0, count);
 };
 
 export default function WebclassSection() {
@@ -222,7 +302,8 @@ export default function WebclassSection() {
   // Modal and form state
   const [widgetOpen, setWidgetOpen] = useState(false);
   const [formData, setFormData] = useState<FormState>({ ...initialFormState });
-  const [sessions, setSessions] = useState<WebinarSession[]>(() => buildUpcomingSessions(webinarTemplates.length));
+  // Show more sessions in dropdown (e.g., next 20 sessions)
+  const [sessions, setSessions] = useState<WebinarSession[]>(() => buildUpcomingSessions(20));
   const [selectedSessionKey, setSelectedSessionKey] = useState<string>(sessions[0]?.key || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -239,7 +320,7 @@ export default function WebclassSection() {
   const resetFormState = useCallback(() => {
     setFormData({ ...initialFormState });
     setTouched({ email: false, first_name: false, last_name: false, session: false });
-    const refreshedSessions = buildUpcomingSessions(webinarTemplates.length);
+    const refreshedSessions = buildUpcomingSessions(20);
     setSessions(refreshedSessions);
     setSelectedSessionKey(refreshedSessions[0]?.key || "");
     setError(null);

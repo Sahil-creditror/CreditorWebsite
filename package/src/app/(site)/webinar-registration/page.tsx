@@ -366,8 +366,9 @@ export default function WebinarRegistrationPage() {
                       typeof reg.duration === "number" && reg.duration > 0
                         ? `${Math.floor(reg.duration / 60)}m ${reg.duration % 60}s`
                         : "0s";
+                    const globalIndex = allRegsPage * 5 + idx;
                     return (
-                      <tr key={reg.registrant_id || `${reg.email}-${idx}`} className="hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
+                      <tr key={reg.registrant_id ? `${reg.registrant_id}-${globalIndex}` : `${reg.email}-${globalIndex}`} className="hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
                         <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{allRegsPage * 5 + idx + 1}</td>
                         <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{name}</td>
                         <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{email}</td>

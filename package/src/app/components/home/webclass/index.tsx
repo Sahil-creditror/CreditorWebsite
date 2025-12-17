@@ -107,7 +107,7 @@ export default function WebclassSection() {
   return (
     <>
       {/* Webclass hero section - matching exact design from image */}
-      <section className="relative overflow-hidden py-10 md:py-20 bg-white text-gray-900 dark:bg-[#0f1419] dark:text-white">
+      <section className="relative overflow-hidden py-5 md:py-10 bg-white text-gray-900 dark:bg-[#0f1419] dark:text-white">
         {/* Background image with opacity - light mode only */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden dark:hidden">
           <div
@@ -121,7 +121,7 @@ export default function WebclassSection() {
           />
         </div>
 
-        {/* Subtle grid pattern background overlay - light blue */}
+        {/* Subtle grid pattern background overlay */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {/* Grid pattern for light mode */}
           <div
@@ -143,98 +143,162 @@ export default function WebclassSection() {
           />
         </div>
 
-        {/* Top header with logo and tagline */}
-        <div className="container mx-auto px-6 py-6 relative z-10">
-          <div className="text-center mb-8">
-            {/* Logo */}
-            <div className="flex items-center justify-center mb-4">
-              <Image
-                src="/images/logo/creditorlogo.webp"
-                alt="Creditor Academy Logo"
-                width={250}
-                height={60}
-                className="dark:hidden"
-                priority
-              />
-              <Image
-                src="/images/logo/creditorlogo.webp"
-                alt="Creditor Academy Logo"
-                width={250}
-                height={60}
-                className="hidden dark:block"
-                priority
-              />
+        {/* Top header with logo */}
+        <div className="relative z-10 bg-transparent py-2">
+          <div className="container mx-auto px-8 md:px-16 lg:px-24 xl:px-32">
+            <div className="text-center">
+              {/* Logo */}
+              <div className="flex items-center justify-center">
+                <Image
+                  src="/images/logo/creditorlogo.webp"
+                  alt="Creditor Academy Logo"
+                  width={250}
+                  height={60}
+                  className="dark:hidden"
+                  priority
+                />
+                <Image
+                  src="/images/logo/creditorlogo.webp"
+                  alt="Creditor Academy Logo"
+                  width={250}
+                  height={60}
+                  className="hidden dark:block"
+                  priority
+                />
+              </div>
             </div>
-            {/* Tagline */}
-            <p className="text-base md:text-lg text-black dark:text-gray-300">
-              How To Legally Crush Debt Collectors, Stop Lawsuits &amp; Delete Debts – Even If They Already Have A Judgment Against You!
+          </div>
+        </div>
+
+        {/* Top banner */}
+        <div className="relative z-10 bg-transparent py-3">
+          <div className="container mx-auto px-8 md:px-16 lg:px-24 xl:px-32">
+            <p className="text-center text-black dark:text-white text-sm md:text-base" style={{ fontFamily: "Arial, sans-serif" }}>
+              This <strong>FREE Webclass</strong> Is For Business Owners, Individuals, &amp; Anyone Ready for Change…
+            </p>
+          </div>
+        </div>
+
+        {/* Alert Banner - Webinar Closing Soon */}
+        <div className="relative z-10 bg-gradient-to-r from-red-600 to-orange-600 dark:from-red-700 dark:to-orange-700 py-3 my-3 shadow-lg">
+          <div className="container mx-auto px-8 md:px-16 lg:px-24 xl:px-32">
+            <div className="flex items-center justify-center gap-2 md:gap-3">
+              <svg className="w-5 h-5 md:w-6 md:h-6 text-white animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+              <p className="text-center text-white font-bold text-sm md:text-base lg:text-lg" style={{ fontFamily: "Arial, sans-serif" }}>
+                <strong>URGENT:</strong> This FREE Webinar Is Closing Soon - Limited Spots Available!
+              </p>
+              <svg className="w-5 h-5 md:w-6 md:h-6 text-white animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        {/* Description line below alert */}
+        <div className="relative z-10 py-2">
+          <div className="container mx-auto px-8 md:px-16 lg:px-24 xl:px-32">
+            <p className="text-center text-black dark:text-white text-sm md:text-base" style={{ fontFamily: "Arial, sans-serif" }}>
+              Learn how people step out of the public system and operate in private to gain control, limit liability, and achieve financial freedom.
             </p>
           </div>
         </div>
 
         {/* Main content */}
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="flex flex-col lg:flex-row items-stretch gap-8 lg:gap-12">
-            {/* Left image with background */}
-            <div className="lg:w-5/12 flex justify-center lg:justify-start lg:pl-20">
-              <div className="relative rounded-lg overflow-hidden w-full max-w-[420px]">
-                <div className="relative rounded-lg w-full h-[700px] bg-gray-100 dark:bg-[#0a0e14]">
+        <div className="container mx-auto px-8 md:px-16 lg:px-24 xl:px-32 relative z-10 pt-8">
+          <div className="flex flex-col lg:flex-row items-stretch gap-6 lg:gap-8">
+            {/* Left image with gold border */}
+            <div className="lg:w-5/12 flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-[420px]">
+                <div 
+                  className="relative w-full h-[700px] border-2 overflow-hidden"
+                  style={{ 
+                    borderColor: "#d4af37",
+                    backgroundColor: "#f3f4f6"
+                  }}
+                >
                   <Image
                     src={"/images/webinar/paul_webclass.webp"}
                     alt="Speaker"
                     fill
                     style={{ objectFit: "cover" }}
                     priority
-                    className="opacity-"
                   />
                 </div>
               </div>
             </div>
 
             {/* Right content */}
-            <div className="flex-1 flex flex-col justify-center">
+            <div className="flex-1 flex flex-col justify-center lg:pr-8 xl:pr-12">
               {/* Small uppercase text */}
-              <p className="text-xs md:text-sm tracking-[0.3em] uppercase mb-3 text-gray-600 dark:text-gray-400 font-medium">
+              <p className="text-xs md:text-sm tracking-wider uppercase mb-1 text-gray-600 dark:text-gray-400 font-medium" style={{ fontFamily: "Arial, sans-serif" }}>
                 Secrets To Easily Starting Your Own
               </p>
 
               {/* Main headline - very large, bold */}
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[1.1] mb-4 text-gray-900 dark:text-white">
-                <span className="block" style={{ color: "#026fe2" }}>100% FREE</span>
-                <span className="block">Webinar Class</span>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] mb-2 text-gray-900 dark:text-white" style={{ fontFamily: "Arial, sans-serif", fontWeight: 900 }}>
+                <span className="block" style={{ color: "#026fe2" }}>Become and</span>
+                <span className="block">Operate Private</span>
               </h1>
 
-              {/* Subtext */}
-              <p className="text-base md:text-lg mb-4 text-gray-700 dark:text-gray-300">
-                ZERO legal experience required.
+              {/* Subtext
+              <p className="text-base md:text-lg mb-3 text-black dark:text-gray-300 leading-relaxed" style={{ fontFamily: "Arial, sans-serif" }}>
+                WithOUT having any prior experience with private operation!
+              </p> */}
+
+              {/* Description paragraphs */}
+              <div className="mb-4 space-y-2">
+                {/* <p className="text-base md:text-lg text-black dark:text-gray-300 leading-relaxed" style={{ fontFamily: "Arial, sans-serif" }}>
+                  Learn how people step out of the public system and operate in private to gain control, limit liability, and achieve financial freedom.
+                </p> */}
+                <p className="text-base md:text-lg text-black dark:text-gray-300 leading-relaxed" style={{ fontFamily: "Arial, sans-serif" }}>
+                  This FREE webclass introduces Creditor Academy's principles on how private individuals and businesses operate differently in structure, credit, income, and responsibility—focused on positioning, private operation, and reducing dependency.
+                </p>
+              </div>
+
+              {/* Highlight text - bold with gold highlights */}
+              <p className="text-base md:text-lg font-bold mb-4 text-gray-900 dark:text-white" style={{ fontFamily: "Arial, sans-serif" }}>
+                <span style={{ color: "#ffc107" }}>100% FREE</span> - Next Class Is Starting <span style={{ color: "#ffc107" }}>TODAY!</span>
               </p>
 
-              {/* Highlight text - bold */}
-              <p className="text-base md:text-lg font-bold mb-8 text-gray-900 dark:text-white">
-                Next Class Is Starting TODAY!
-              </p>
+              {/* Alert Message - Closing Soon */}
+              <div className="mb-4 w-fit p-3 rounded-lg bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/30 dark:to-orange-900/30 border-2 border-red-300 dark:border-red-700">
+                <div className="flex items-center gap-2">
+                  <svg className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  <p className="text-sm md:text-base font-semibold text-red-800 dark:text-red-200 whitespace-nowrap" style={{ fontFamily: "Arial, sans-serif" }}>
+                    <strong>Closing Soon!</strong> Register now before spots fill up.
+                  </p>
+                </div>
+              </div>
 
-              {/* CTA Button */}
-              <div className="mb-8">
+              {/* CTA Button - blue */}
+              <div className="mb-4">
                 <a
                   href="/webinar"
-                  className="inline-flex items-center justify-center font-bold text-base md:text-lg px-8 py-4 rounded-lg shadow-lg  transition-colors bg-[#026fe2] hover:bg-[#45beff] text-white"
-                  style={{ boxShadow: "0 8px 20px rgba(54, 185, 246, 0.3)" }}
+                  className="inline-flex items-center justify-center font-bold text-base md:text-lg px-8 py-4 rounded-lg text-white transition-all hover:opacity-90"
+                  style={{ 
+                    backgroundColor: "#026fe2",
+                    fontFamily: "Arial, sans-serif",
+                    boxShadow: "0 8px 20px rgba(2, 111, 226, 0.3)"
+                  }}
                 >
                   Register For The Webclass Now!
                 </a>
-                <p className="mt-2 text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                  Save My Seat For The Credit Repair Business Webclass
+                <p className="mt-2 text-xs md:text-sm text-gray-600 dark:text-gray-400" style={{ fontFamily: "Arial, sans-serif" }}>
+                  Save My Seat For The Private Operation Webclass
                 </p>
               </div>
 
               {/* Countdown */}
-              <div className="mt-6">
-                <p className="text-base md:text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+              <div className="mt-3">
+                <p className="text-base md:text-lg font-semibold mb-3 text-gray-900 dark:text-white" style={{ fontFamily: "Arial, sans-serif" }}>
                   Next Webclass Begins In:
                 </p>
 
-                <div className="flex items-center gap-4 md:gap-6">
+                <div className="flex items-center gap-3 md:gap-4">
                   {[
                     { label: "HOUR", value: format(hours) },
                     { label: "MINUTES", value: format(minutes) },
@@ -242,16 +306,17 @@ export default function WebclassSection() {
                   ].map((item) => (
                     <div key={item.label} className="flex flex-col items-center">
                       <div
-                        className="rounded-full flex flex-col items-center justify-center bg-white border-[3px] border-gray-300 dark:border-gray-600"
+                        className="rounded-full flex flex-col items-center justify-center border-[3px] bg-white dark:bg-[#0a0e14]"
                         style={{
                           width: 120,
                           height: 120,
+                          borderColor: "#d1d5db"
                         }}
                       >
-                        <span className="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-gray-900 mb-1">
+                        <span className="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white mb-1" style={{ fontFamily: "Arial, sans-serif" }}>
                           {item.value}
                         </span>
-                        <span className="text-[10px] md:text-xs font-semibold text-gray-700 dark:text-gray-700 uppercase tracking-wide">
+                        <span className="text-[10px] md:text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide" style={{ fontFamily: "Arial, sans-serif" }}>
                           {item.label}
                         </span>
                       </div>

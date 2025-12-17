@@ -56,14 +56,21 @@ export default function ClientLayoutShell({ children }: PropsWithChildren) {
     "/private-wonder",
     "/projects-wonder",
   ];
-  const hideLayout = excludedRoutes.includes(pathname) || is404;
+  const hideHeader =
+    excludedRoutes.includes(pathname) ||
+    pathname.startsWith("/services_page/tradeline-exchange") ||
+    is404;
+  const hideFooter =
+    excludedRoutes.includes(pathname) ||
+    pathname.startsWith("/services_page/tradeline-exchange") ||
+    is404;
 
   return (
     <SessionProvider>
       <ThemeProvider attribute="class" enableSystem={false} defaultTheme="light">
-        {!hideLayout && <Header />}
+        {!hideHeader && <Header />}
         {children}
-        {!hideLayout && <Footer />}
+        {!hideFooter && <Footer />}
         <ScrollToTop />
         
         {/* Thanksgiving Modal - Auto-opens after 5 seconds only once per session */}

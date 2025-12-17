@@ -12,6 +12,7 @@ import {
   Calculator,
   ShieldCheck,
   AlertTriangle,
+  ArrowLeft,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -118,15 +119,19 @@ export default function Navbar() {
       } bg-[#0F6FD3] shadow-sm`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
-        {/* Left: text logo */}
-        <Link href="/services_page/tradeline-exchange" className="flex items-center shrink-0">
-          <div className="flex flex-col leading-none select-none">
-            <span className="text-white text-lg md:text-xl font-extrabold tracking-wide uppercase">
-              Tradeline Exchange
-            </span>
-
-          </div>
-        </Link>
+        {/* Left: back arrow and text logo */}
+        <div className="flex items-center shrink-0 gap-3">
+          <Link href="/services" className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-white/10 transition-colors group">
+            <ArrowLeft className="w-5 h-5 text-white group-hover:text-white/80 transition-colors" />
+          </Link>
+          <Link href="/services_page/tradeline-exchange" className="flex items-center shrink-0">
+            <div className="flex flex-col leading-none select-none">
+              <span className="text-white text-lg md:text-xl font-extrabold tracking-wide uppercase">
+                Tradeline Exchange
+              </span>
+            </div>
+          </Link>
+        </div>
 
         {/* Desktop nav (single line) */}
         <nav className="hidden lg:flex items-center gap-2 text-white text-[13px] font-semibold">
@@ -201,6 +206,9 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <div className="lg:hidden flex items-center gap-2">
+          <Link href="/services" className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-white/10 transition-colors">
+            <ArrowLeft className="w-5 h-5 text-white hover:text-white/80 transition-colors" />
+          </Link>
           <button
             onClick={() => {
               setMobileOpen((v) => !v);

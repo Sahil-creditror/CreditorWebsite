@@ -186,7 +186,7 @@ export default function BuyTradeline() {
                     View Details
                   </Link>
                   <Link
-                    href={`/tradeline/checkout/${item.id}`}
+                    href={`/services_page/tradeline-exchange/checkout/${item.id}`}
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md hover:translate-y-0.5 transition"
                   >
                     <ShoppingCart size={16} />

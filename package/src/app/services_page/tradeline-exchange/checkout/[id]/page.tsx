@@ -33,7 +33,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
             The tradeline you’re looking for is unavailable. Please browse the catalog again.
           </p>
           <Link
-            href="/tradeline/buy-tradelines"
+            href="/services/tradeline-exchange/buy-tradelines"
             className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-sky-500 to-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md"
           >
             Back to Tradelines
@@ -104,7 +104,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
 
           <div className="mt-6">
             <Link
-              href="/tradeline/buy-tradelines"
+              href="/services_page/tradeline-exchange/buy-tradelines"
               className="text-sm text-sky-300 hover:text-sky-200 underline underline-offset-4"
             >
               ← Browse other tradelines

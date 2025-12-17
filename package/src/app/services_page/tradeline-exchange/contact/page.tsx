@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import Script from "next/script";
 
-export default function Contact({ contactdataNumber }) {
+export default function Contact({}) {
   const [isFormLoaded, setIsFormLoaded] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 

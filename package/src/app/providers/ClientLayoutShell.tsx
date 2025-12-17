@@ -89,7 +89,7 @@ export default function ClientLayoutShell({ children }: PropsWithChildren) {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           className="fixed bottom-24 right-6 md:right-8 z-[9998] bg-gradient-to-tr from-orange-500 via-amber-500 to-yellow-500 hover:from-orange-600 hover:via-amber-600 hover:to-yellow-600 text-white p-4 rounded-full shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 group"
-          aria-label="View Thanksgiving Offers"
+          aria-label="View Christmas Offers"
         >
           <Gift className="h-6 w-6 animate-bounce" />
           <span className="absolute -top-1 -right-1 flex h-5 w-5">
@@ -97,7 +97,7 @@ export default function ClientLayoutShell({ children }: PropsWithChildren) {
             <span className="relative inline-flex rounded-full h-5 w-5 bg-red-500 items-center justify-center text-[10px] font-bold">🔥</span>
           </span>
           <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-2 bg-slate-900 text-white text-sm rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-            Thanksgiving Offers
+            Christmas Offers
           </span>
         </motion.button>
       </ThemeProvider>

@@ -5,7 +5,6 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
-import { useMousePosition } from "../../../../hooks/useMousePosition";
 import { useInView } from "react-intersection-observer";
 
 // Register GSAP plugins
@@ -18,8 +17,9 @@ function Aboutus() {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { x, y } = useMousePosition();
   const controls = useAnimation();
+  const [reduceMotion, setReduceMotion] = useState(false);
+  const [sectionActive, setSectionActive] = useState(false);
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: false
@@ -40,6 +40,36 @@ function Aboutus() {
       }
     >
   >(new Map());
+
+  // Respect prefers-reduced-motion and visibility
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduceMotion(mql.matches);
+    update();
+    mql.addEventListener("change", update);
+    return () => mql.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+    let lastIntersecting = false;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        lastIntersecting = entry.isIntersecting;
+        setSectionActive(entry.isIntersecting && !document.hidden);
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(node);
+    const onVis = () => setSectionActive(lastIntersecting && !document.hidden);
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,24 +117,6 @@ function Aboutus() {
     };
   }, [isVideoModalOpen, closeVideoModal]);
 
-  // Advanced mouse follower effect
-  useEffect(() => {
-    if (!sectionRef.current || x == null || y == null) return;
-    const follower = sectionRef.current.querySelector(
-      ".mouse-follower"
-    ) as HTMLElement | null;
-
-    if (follower) {
-      gsap.to(follower, {
-        x: x - 20,
-        y: y - 20,
-        duration: 0.8,
-        ease: "expo.out",
-        overwrite: "auto"
-      });
-    }
-  }, [x, y]);
-
   // Avatar list stagger animation
   useEffect(() => {
     if (Array.isArray(avatarList) && avatarList.length > 0) {
@@ -121,9 +133,9 @@ function Aboutus() {
     }
   }, [avatarList, controls]);
 
-  // GSAP animations setup
+  // GSAP animations setup (trimmed to entrance only; heavy loops removed)
   useEffect(() => {
-    if (!sectionRef.current || typeof window === "undefined") return;
+    if (!sectionRef.current || typeof window === "undefined" || reduceMotion || !sectionActive) return;
 
     const ctx = gsap.context(() => {
       const sectionEl = sectionRef.current as HTMLDivElement | null;
@@ -166,117 +178,11 @@ function Aboutus() {
         }
       );
 
-      // Card hover animations with 3D tilt effect
-      const cards = sectionEl.querySelectorAll<HTMLDivElement>(
-        ".interactive-card"
-      );
-
-      cards?.forEach((card) => {
-        // Set up transform perspective
-        gsap.set(card, { transformPerspective: 1000 });
-
-        const handleMouseEnter = (e: globalThis.MouseEvent) => {
-          const rect = card.getBoundingClientRect();
-          const cx = rect.width / 2;
-          const cy = rect.height / 2;
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-
-          const tween = gsap.to(card, {
-            duration: 0.5,
-            y: -15,
-            rotateY: (x - cx) / 20,
-            rotateX: (cy - y) / 20,
-            scale: 1.03,
-            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-            ease: "power2.out",
-            overwrite: "auto"
-          });
-          cardAnimations.current.push(tween);
-        };
-
-        const handleMouseMove = (e: globalThis.MouseEvent) => {
-          const rect = card.getBoundingClientRect();
-          const cx = rect.width / 2;
-          const cy = rect.height / 2;
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-
-          gsap.to(card, {
-            duration: 0.5,
-            rotateY: (x - cx) / 20,
-            rotateX: (cy - y) / 20,
-            ease: "power1.out",
-            overwrite: "auto"
-          });
-        };
-
-        const handleMouseLeave = () => {
-          const tween = gsap.to(card, {
-            duration: 0.7,
-            y: 0,
-            rotateY: 0,
-            rotateX: 0,
-            scale: 1,
-            boxShadow: "none",
-            ease: "elastic.out(1, 0.5)",
-            overwrite: "auto"
-          });
-          cardAnimations.current.push(tween);
-        };
-
-        card.addEventListener("mouseenter", handleMouseEnter);
-        card.addEventListener("mousemove", handleMouseMove);
-        card.addEventListener("mouseleave", handleMouseLeave);
-
-        cardHandlers.current.set(card, {
-          enter: handleMouseEnter,
-          move: handleMouseMove,
-          leave: handleMouseLeave
-        });
-      });
-
-      // Floating circles animation
-      const circles = sectionEl.querySelectorAll(".floating-circle");
-      circles.forEach((circle, i) => {
-        const circleTween = gsap.to(circle, {
-          duration: 15 + i * 3,
-          x: `${Math.random() * 100 - 50}px`,
-          y: `${Math.random() * 100 - 50}px`,
-          rotation: Math.random() * 360,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut"
-        });
-        cardAnimations.current.push(circleTween);
-      });
-
-      // Animated gradient background
-      const gradientEl = sectionEl.querySelector(
-        ".animated-gradient"
-      ) as HTMLElement | null;
-      if (gradientEl) {
-        const gradientTween = gsap.to(gradientEl, {
-          duration: 20,
-          backgroundPosition: "100% 50%",
-          repeat: -1,
-          yoyo: true,
-          ease: "none"
-        });
-        cardAnimations.current.push(gradientTween);
-      }
+      // Card hover tilt/looping and background animations removed for performance
     }, sectionRef);
 
     // Cleanup function
     return () => {
-      // Remove card listeners safely
-      cardHandlers.current.forEach((handlers, card) => {
-        card.removeEventListener("mouseenter", handlers.enter);
-        card.removeEventListener("mousemove", handlers.move);
-        card.removeEventListener("mouseleave", handlers.leave);
-      });
-      cardHandlers.current.clear();
-
       // Kill animations
       if (masterTL.current) {
         masterTL.current.kill();
@@ -288,7 +194,7 @@ function Aboutus() {
       // Revert GSAP context
       ctx.revert();
     };
-  }, []);
+  }, [reduceMotion, sectionActive]);
 
   return (
     <section
@@ -299,32 +205,7 @@ function Aboutus() {
         willChange: "clip-path"
       }}
     >
-      {/* Animated gradient background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div
-          className="animated-gradient absolute inset-0 opacity-10 dark:opacity-5"
-          style={{
-            background:
-              "linear-gradient(270deg, #ff00cc, #3333ff, #00ccff, #33cc33)",
-            backgroundSize: "800% 800%"
-          }}
-        />
-      </div>
-
-      {/* Enhanced mouse follower */}
-      <motion.div
-        className="mouse-follower fixed w-10 h-10 rounded-full bg-primary/20 pointer-events-none z-0 mix-blend-multiply dark:mix-blend-screen opacity-0 backdrop-blur-sm"
-        initial={{ scale: 0.5 }}
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0, 0.8, 0]
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          repeatType: "loop"
-        }}
-      />
+      {/* Background + mouse follower animations removed for performance */}
 
       <div className="container section-content relative z-10">
         <div className="flex flex-col 2xl:flex-row gap-5 2xl:gap-18">

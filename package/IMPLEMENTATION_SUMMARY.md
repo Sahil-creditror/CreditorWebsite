@@ -35,7 +35,7 @@ This implementation provides a complete webinar registration and email automatio
 
 ### 3. **Frontend Components**
 
-#### `src/app/components/Event/index.tsx` (Modified)
+#### `src/app/components/home/event/index.tsx` (Modified)
 **Changes:**
 - Added registration flow integration
 - Listens for form submission via postMessage

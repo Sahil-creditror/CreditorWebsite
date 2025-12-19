@@ -89,7 +89,7 @@ const Header = () => {
           }`}
         >
           <div className="flex items-center">
-            <Logo sticky={sticky} />
+            {sticky ? <Logo sticky={sticky} /> : null}
           </div>
 
           <div className="flex items-center gap-5 sm:gap-7">

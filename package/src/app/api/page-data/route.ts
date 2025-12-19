@@ -195,16 +195,30 @@ const pricingData = {
             link: "/services_page/website-service",
             
         },
+        // {
+        //     // planName: "Scale",
+        //     tag: "Paul Michael's",
+        //     planPrice: "Live Class",
+        //     // cancelPrice: "$2,199",
+        //     planDescp: "Perfect for growing brands needing more customization and flexibility.",
+        //     planIncludes: ["Join our interactive live classes every Tuesday & Thursday","Interactive Sessions","Hands-on learning","Session Replays"],
+        //     coverImage: "/images/pricing/Cover-2.webp", // Optional
+        //     link: "/services_page/live-class",
+        // },
         {
-            // planName: "Scale",
-            tag: "Paul Michael's",
-            planPrice: "Live Class",
-            // cancelPrice: "$2,199",
-            planDescp: "Perfect for growing brands needing more customization and flexibility.",
-            planIncludes: ["Join our interactive live classes every Tuesday & Thursday","Interactive Sessions","Hands-on learning","Session Replays"],
+            tag: "Tradeline Exchange",
+            planPrice: "Tradeline Exchange",
+            planDescp: "Buy and sell seasoned tradelines to strengthen credit profiles with a secure and compliant process.",
+            planIncludes: [
+              "Access to verified seasoned tradelines",
+              "Secure tradeline exchange platform",
+              "Compliance-focused process",
+              "Dedicated support and guidance"
+            ],
             coverImage: "/images/pricing/Cover-2.webp", // Optional
-            link: "/services_page/live-class",
-        },
+            link: "/services_page/tradeline-exchange"
+          },
+
         {
             // planName: "Elevate", 
             tag: "Private Merchant",   

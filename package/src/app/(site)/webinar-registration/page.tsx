@@ -111,6 +111,8 @@ export default function WebinarRegistrationPage() {
   const [topicFilter, setTopicFilter] = useState<string>("all");
   const [startDateFilter, setStartDateFilter] = useState<string>("");
   const [endDateFilter, setEndDateFilter] = useState<string>("");
+  const [startTimeFilter, setStartTimeFilter] = useState<string>("");
+  const [endTimeFilter, setEndTimeFilter] = useState<string>("");
 
   const filteredAllRegs = useMemo(() => {
     const selected = TOPIC_FILTER_OPTIONS.find((opt) => opt.value === topicFilter);
@@ -138,9 +140,47 @@ export default function WebinarRegistrationPage() {
         if (!recordDate || recordDate > endDateFilter) return false;
       }
 
+      // time range filter
+      if (startTimeFilter || endTimeFilter) {
+        const timeSource = reg.start_time || regTimeSource || reg.registered_at;
+        if (!timeSource) return false;
+        
+        try {
+          const regDate = new Date(timeSource);
+          if (Number.isNaN(regDate.getTime())) return false;
+          
+          // Get time in PST using Intl.DateTimeFormat for reliable parsing
+          const formatter = new Intl.DateTimeFormat("en-US", {
+            timeZone: "America/Los_Angeles",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false
+          });
+          
+          const parts = formatter.formatToParts(regDate);
+          const hours = parseInt(parts.find(p => p.type === "hour")?.value || "0", 10);
+          const minutes = parseInt(parts.find(p => p.type === "minute")?.value || "0", 10);
+          const regTimeMinutes = hours * 60 + minutes;
+          
+          if (startTimeFilter) {
+            const [startHours, startMinutes] = startTimeFilter.split(":").map(Number);
+            const startTimeMinutes = startHours * 60 + startMinutes;
+            if (regTimeMinutes < startTimeMinutes) return false;
+          }
+          
+          if (endTimeFilter) {
+            const [endHours, endMinutes] = endTimeFilter.split(":").map(Number);
+            const endTimeMinutes = endHours * 60 + endMinutes;
+            if (regTimeMinutes > endTimeMinutes) return false;
+          }
+        } catch {
+          return false;
+        }
+      }
+
       return true;
     });
-  }, [allRegistrations, topicFilter, startDateFilter, endDateFilter]);
+  }, [allRegistrations, topicFilter, startDateFilter, endDateFilter, startTimeFilter, endTimeFilter]);
 
   const dateSummary = useMemo(() => buildAttendanceSummary(filteredAllRegs), [filteredAllRegs]);
 
@@ -290,6 +330,48 @@ export default function WebinarRegistrationPage() {
                     )}
                   </div>
                 </div>
+                <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-blue-100 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10 shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-[#026fe2] dark:text-blue-300">Time range</span>
+                    <svg className="h-4 w-4 text-[#026fe2] dark:text-blue-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="time"
+                      value={startTimeFilter}
+                      onChange={(e) => {
+                        setStartTimeFilter(e.target.value);
+                        setAllRegsPage(0);
+                      }}
+                      className="px-2 py-1 text-sm rounded-lg border border-blue-200 dark:border-blue-700 bg-white dark:bg-[#1F2A2E]"
+                    />
+                    <span className="text-xs text-gray-500 dark:text-gray-400">to</span>
+                    <input
+                      type="time"
+                      value={endTimeFilter}
+                      onChange={(e) => {
+                        setEndTimeFilter(e.target.value);
+                        setAllRegsPage(0);
+                      }}
+                      className="px-2 py-1 text-sm rounded-lg border border-blue-200 dark:border-blue-700 bg-white dark:bg-[#1F2A2E]"
+                    />
+                  </div>
+                  {(startTimeFilter || endTimeFilter) && (
+                    <button
+                      onClick={() => {
+                        setStartTimeFilter("");
+                        setEndTimeFilter("");
+                        setAllRegsPage(0);
+                      }}
+                      className="text-xs px-2 py-1 rounded-md border border-blue-200 dark:border-blue-700 text-[#026fe2] dark:text-blue-300 bg-white dark:bg-[#1F2A2E] hover:bg-blue-50 dark:hover:bg-blue-800/40"
+                    >
+                      Clear
+                    </button>
+                  )}
+                </div>
                 <select
                   value={topicFilter}
                   onChange={(e) => {
@@ -314,16 +396,16 @@ export default function WebinarRegistrationPage() {
                 <button
                   onClick={() =>
                     setAllRegsPage((p) =>
-                      p + 1 < Math.ceil(sortedAllRegs.length / 5) ? p + 1 : p
+                      p + 1 < Math.ceil(sortedAllRegs.length / 10) ? p + 1 : p
                     )
                   }
-                  disabled={allRegsPage + 1 >= Math.max(1, Math.ceil(sortedAllRegs.length / 5))}
+                  disabled={allRegsPage + 1 >= Math.max(1, Math.ceil(sortedAllRegs.length / 10))}
                   className="px-3 py-1.5 text-sm rounded-lg border border-blue-200 dark:border-blue-700 bg-white dark:bg-[#1F2A2E] text-[#026fe2] dark:text-blue-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Next
                 </button>
                 <span className="text-xs text-gray-500 dark:text-gray-400">
-                  Page {allRegsPage + 1} of {Math.max(1, Math.ceil(sortedAllRegs.length / 5))}
+                  Page {allRegsPage + 1} of {Math.max(1, Math.ceil(sortedAllRegs.length / 10))}
                 </span>
               </div>
             </div>
@@ -345,7 +427,7 @@ export default function WebinarRegistrationPage() {
                 </thead>
                 <tbody className="bg-white dark:bg-[#1F2A2E] divide-y divide-gray-200 dark:divide-gray-700">
                   {sortedAllRegs
-                    .slice(allRegsPage * 5, allRegsPage * 5 + 5)
+                    .slice(allRegsPage * 10, allRegsPage * 10 + 10)
                     .map((reg, idx) => {
                     const name =
                       (reg.first_name && reg.last_name ? `${reg.first_name} ${reg.last_name}` : reg.first_name || reg.last_name) || "N/A";
@@ -366,10 +448,10 @@ export default function WebinarRegistrationPage() {
                       typeof reg.duration === "number" && reg.duration > 0
                         ? `${Math.floor(reg.duration / 60)}m ${reg.duration % 60}s`
                         : "0s";
-                    const globalIndex = allRegsPage * 5 + idx;
+                    const globalIndex = allRegsPage * 10 + idx;
                     return (
                       <tr key={reg.registrant_id ? `${reg.registrant_id}-${globalIndex}` : `${reg.email}-${globalIndex}`} className="hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
-                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{allRegsPage * 5 + idx + 1}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{allRegsPage * 10 + idx + 1}</td>
                         <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{name}</td>
                         <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{email}</td>
                         <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{phone}</td>

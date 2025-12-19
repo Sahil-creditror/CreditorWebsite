@@ -934,7 +934,7 @@ export default function WebclassSection() {
                   }}
                 >
                   <Image
-                    src={"/images/webinar/paul_webclass.webp"}
+                    src={"/images/webinar/paul_formal.webp"}
                     alt="Speaker"
                     fill
                     style={{ objectFit: "cover" }}

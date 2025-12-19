@@ -149,14 +149,14 @@ export default function HowToPurchase(): React.ReactElement {
           <p className="mt-3 text-slate-700">When you're ready, visit our tradeline list and add the items you want to your cart. If you need help, contact support.</p>
 
           <div className="mt-6 flex items-center justify-center gap-4">
-            <a href="/tradeline/list" className="px-6 py-3 bg-[#0b5fa8] text-white rounded-md font-semibold">View Tradeline List</a>
-            <a href="/tradeline/contact" className="px-6 py-3 border border-slate-200 rounded-md">Contact Support</a>
+            <a href="/services_page/tradeline-exchange/buy-tradelines" className="px-6 py-3 bg-[#0b5fa8] text-white rounded-md font-semibold">View Tradeline List</a>
+            <a href="/services_page/tradeline-exchange/contact" className="px-6 py-3 border border-slate-200 rounded-md">Contact Support</a>
           </div>
         </section>
       </main>
 
       <footer className="max-w-6xl mx-auto px-6 py-10 text-sm text-slate-500">
-        <div>Published by Tradeline Exchange Company, LLC • 06/21/2021</div>
+        <div>Published by Tradeline Exchange • 06/21/2021</div>
       </footer>
     </div>
   );

@@ -231,7 +231,7 @@ export default function Hero() {
                   in under a minute.
                 </p>
                 <Link
-                  href="/tradelines"
+                  href="/services_page/tradeline-exchange/buy-tradelines"
                   className="rounded-full bg-sky-500/90 px-4 py-2 text-[11px] font-semibold text-slate-950 hover:bg-sky-400 transition-colors"
                 >
                   Start demo
@@ -349,7 +349,7 @@ export default function Hero() {
 
             <div className="mt-6">
               <Link
-                href="/tradelines"
+                href="/services_page/tradeline-exchange/buy-tradelines"
                 className="inline-flex items-center gap-2 rounded-full bg-sky-500/90 px-6 py-3 text-xs md:text-sm font-semibold text-slate-950 hover:bg-sky-400 transition-colors"
               >
                 Explore available tradelines
@@ -448,7 +448,7 @@ export default function Hero() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Link
-              href="/projects"
+              href="/services_page/tradeline-exchange/contact"
               className="group flex items-center gap-3 rounded-full bg-slate-950/90 px-7 py-3 text-sm md:text-base font-semibold text-sky-100 shadow-[0_20px_40px_rgba(15,23,42,0.6)] transition-transform hover:-translate-y-0.5"
             >
               <span className="relative z-10">Start My Free Simulation</span>
@@ -468,7 +468,7 @@ export default function Hero() {
             </Link>
 
             <Link
-              href="/about"
+              href="/services_page/tradeline-exchange/about"
               className="text-xs md:text-sm font-medium text-sky-50/95 underline-offset-4 hover:underline"
             >
               Or learn more about our process

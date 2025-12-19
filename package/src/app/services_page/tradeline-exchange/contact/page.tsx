@@ -34,7 +34,9 @@ export default function Contact({}) {
                 </h2>
 
                 <p className="mt-4 md:mt-6 text-black text-base md:text-xl leading-relaxed">
-                  Let's collaborate and craft something extraordinary together. Share your vision—I'm all ears and ready to help bring it to life.
+                  Let’s connect and build a powerful credit strategy together.
+                  Share your goals—our team is ready to help you turn them into
+                  real tradeline opportunities.
                 </p>
               </div>
 
@@ -60,12 +62,14 @@ export default function Contact({}) {
                     </svg>
                   </div>
                   <p className="text-xl md:text-2xl font-bold text-gray-800">
-                    Ready to Step Into the Private?
+                    Ready to Strengthen Your Credit Profile?
                   </p>
                 </div>
 
                 <p className="text-base md:text-lg leading-relaxed text-gray-700 relative z-10">
-                  One message can change your life. We'll guide you with clarity, strategy, and purpose.
+                  One message can change your financial trajectory.
+                  We’ll guide you with precision, proven tradeline strategies,
+                  and a clear path forward.
                 </p>
               </div>
             </div>

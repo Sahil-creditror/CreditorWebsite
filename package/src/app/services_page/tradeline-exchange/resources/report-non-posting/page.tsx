@@ -44,7 +44,7 @@ export default function ReportNonPosting(): React.ReactElement {
 
           <ul className="mt-4 list-disc pl-5 text-slate-700 space-y-2">
             <li>Purchase the tradeline by the stated <strong>purchase deadline</strong>.</li>
-            <li>Report any non-posting in writing to <a href="mailto:Refunds@TradelineSupply.com" className="text-[#0b5fa8] underline">Refunds@TradelineSupply.com</a> within <strong>21 days</strong> of the first scheduled reporting date.</li>
+            <li>Report any non-posting in writing to <a href="mailto:counselor@creditoracademy.com" className="text-[#0b5fa8] underline">counselor@creditoracademy.com</a> within <strong>21 days</strong> of the first scheduled reporting date.</li>
             <li>Provide supporting credit monitoring credentials or credit reports (details below) so we can verify non-posting.</li>
           </ul>
 
@@ -56,7 +56,7 @@ export default function ReportNonPosting(): React.ReactElement {
 
         <section id="how-to" className="bg-white rounded-2xl p-8 shadow-lg border border-blue-100">
           <h3 className="text-2xl font-bold">How to Request a Refund — Step by Step</h3>
-          <p className="mt-3 text-slate-700">Email <a href="mailto:Refunds@TradelineSupply.com" className="text-[#0b5fa8] underline">Refunds@TradelineSupply.com</a> and include the following information and documentation:</p>
+          <p className="mt-3 text-slate-700">Email <a href="mailto:counselor@creditoracademy.com" className="text-[#0b5fa8] underline">counselor@creditoracademy.com</a> and include the following information and documentation:</p>
 
           <ol className="mt-4 list-decimal list-inside text-slate-700 space-y-3">
             <li><strong>Your full name and order number</strong> so we can locate your purchase quickly.</li>
@@ -95,17 +95,17 @@ export default function ReportNonPosting(): React.ReactElement {
 
         <section className="bg-white rounded-2xl p-8 shadow-lg border border-blue-100 text-center">
           <h3 className="text-2xl font-bold mb-3">Ready to submit a request?</h3>
-          <p className="text-slate-700">Email <a href="mailto:Refunds@TradelineSupply.com" className="text-[#0b5fa8] underline">Refunds@TradelineSupply.com</a> with your documentation and we’ll begin verification.</p>
+          <p className="text-slate-700">Email <a href="mailto:counselor@creditoracademy.com" className="text-[#0b5fa8] underline">counselor@creditoracademy.com</a> with your documentation and we’ll begin verification.</p>
 
           <div className="mt-6 flex items-center justify-center gap-4">
-            <a href="mailto:Refunds@TradelineSupply.com" className="px-6 py-3 bg-[#0b5fa8] text-white rounded-md font-semibold">Email Refunds@TradelineSupply.com</a>
-            <a href="/tradeline/help/report-non-posting" className="px-6 py-3 border border-slate-200 rounded-md">Read detailed instructions</a>
+            <a href="mailto:counselor@creditoracademy.com" className="px-6 py-3 bg-[#0b5fa8] text-white rounded-md font-semibold">counselor@creditoracademy.com</a>
+            <a href="/services_page/tradeline-exchange/resources/report-non-posting" className="px-6 py-3 border border-slate-200 rounded-md">Read detailed instructions</a>
           </div>
         </section>
       </main>
 
       <footer className="max-w-5xl mx-auto px-6 py-10 text-sm text-slate-500">
-        <div>Published by Tradeline Exchange Company, LLC • 06/21/2021</div>
+        <div>Published by Tradeline Exchange Company• 06/12/2025</div>
       </footer>
     </div>
   );

@@ -17,7 +17,7 @@ import React from "react";
 
               <div className="mt-6 flex gap-3">
                 <a href="#guarantees" className="px-5 py-3 bg-white text-[#0b5fa0] rounded-full font-semibold">View Guarantees</a>
-                <a href="/tradeline/contact" className="px-5 py-3 border border-white/20 rounded-full">Contact Support</a>
+                <a href="/services_page/tradeline-exchange/contact" className="px-5 py-3 border border-white/20 rounded-full">Contact Support</a>
               </div>
             </div>
 
@@ -39,7 +39,7 @@ import React from "react";
       <main id="guarantees" className="max-w-5xl mx-auto -mt-12 px-6 pb-20 space-y-10">
         <section className="bg-[#eaf6ff] rounded-2xl p-8 shadow-lg border border-blue-200">
           <h2 className="text-2xl font-bold text-slate-900">What We Guarantee</h2>
-          <p className="mt-3 text-slate-700">Tradeline Exchange Company, LLC stands behind the following commitments for tradelines purchased by the purchase deadline:</p>
+          <p className="mt-3 text-slate-700">Tradeline Exchange stands behind the following commitments for tradelines purchased by the purchase deadline:</p>
 
           <div className="mt-6 grid md:grid-cols-2 gap-6">
             <div className="p-6 bg-white rounded-xl border border-blue-100">
@@ -104,14 +104,14 @@ import React from "react";
           <h3 className="text-2xl font-bold mb-3">Questions about guarantees?</h3>
           <p className="text-slate-700">If anything on this page is unclear, contact our support team and we'll walk through your specific purchase and reporting windows.</p>
           <div className="mt-6 flex items-center justify-center gap-4">
-            <a href="/tradeline/contact" className="px-6 py-3 bg-[#0b5fa8] text-white rounded-md font-semibold">Contact Support</a>
-            <a href="/tradeline/list" className="px-6 py-3 border border-slate-200 rounded-md">View Tradeline List</a>
+            <a href="/services_page/tradeline-exchange/contact" className="px-6 py-3 bg-[#0b5fa8] text-white rounded-md font-semibold">Contact Support</a>
+            <a href="/services_page/tradeline-exchange/buy-tradelines" className="px-6 py-3 border border-slate-200 rounded-md">View Tradeline List</a>
           </div>
         </section>
       </main>
 
       <footer className="max-w-6xl mx-auto px-6 py-10 text-sm text-slate-500">
-        <div>Published by Tradeline Exchange Company, LLC • 12/12/2025</div>
+        <div>Published by Tradeline Exchange • 12/12/2025</div>
       </footer>
     </div>
   );

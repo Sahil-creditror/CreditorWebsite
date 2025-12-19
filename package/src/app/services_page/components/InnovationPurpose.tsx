@@ -43,7 +43,7 @@ export default function InnovationPurpose() {
             </h2>
 
             <p className="text-sm md:text-base text-slate-700 leading-relaxed">
-              Tradeline Exchange Company, LLC is a pioneer in making it possible
+              Tradeline Exchange, is a pioneer in making it possible
               for consumers to purchase authorized user tradelines 100% online
               with an easy automated checkout process. By leveraging innovative
               technology, we have been able to cut costs and streamline the
@@ -53,7 +53,7 @@ export default function InnovationPurpose() {
 
             <div className="rounded-3xl border border-sky-100 bg-white/80 p-5 shadow-[0_18px_40px_rgba(59,130,246,0.12)] backdrop-blur">
               <p className="text-sm md:text-base text-slate-800 leading-relaxed">
-                Tradeline Exchange Company, LLC is not a credit repair company,
+                Tradeline Exchange, is not a credit repair company,
                 does not advertise this product for the purpose of boosting
                 credit scores. Its products do not directly impact credit
                 scores. There is no guarantee of any improvements to credit in
@@ -97,7 +97,7 @@ export default function InnovationPurpose() {
                 <li className="flex gap-2">
                   <span className="mt-1 h-2 w-2 rounded-full bg-sky-500" />
                   <span>
-                    Tradeline Exchange Company, LLC helps reduce this
+                    Tradeline Exchange, helps reduce this
                     inequality by providing an equal opportunity for those who
                     were not fortunate enough to have a friend or family
                     member provide such a favor.

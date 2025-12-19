@@ -69,7 +69,7 @@ export default function BuyTradeline() {
         </div>
 
         {/* SECURE FORM CTA */}
-        <div className="mt-4 mb-8 rounded-xl border border-sky-200 bg-sky-50/80 p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        {/* <div className="mt-4 mb-8 rounded-xl border border-sky-200 bg-sky-50/80 p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           <div>
             <p className="text-sm font-semibold text-slate-900">
               Prefer a secure form for questions or booking?
@@ -86,7 +86,7 @@ export default function BuyTradeline() {
           >
             Open Secure Form
           </a>
-        </div>
+        </div> */}
 
         {/* FILTER / SORT BAR */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 rounded-xl border border-slate-200 bg-white/85 shadow-sm px-4 py-3 md:px-5 md:py-3">
@@ -180,7 +180,7 @@ export default function BuyTradeline() {
 
                 <div className="flex flex-wrap gap-3 justify-end">
                   <Link
-                    href={`/tradeline/checkout/${item.id}`}
+                    href={`/services_page/tradeline-exchange/checkout/${item.id}`}
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-white border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-800 shadow-sm hover:border-sky-400 transition"
                   >
                     View Details

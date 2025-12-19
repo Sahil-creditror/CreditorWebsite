@@ -125,7 +125,10 @@ export default function BuyersGuide() {
         {/* Credit limits & utilization - wide dark band */}
         <section className="rounded-md overflow-hidden" style={{ background: 'linear-gradient(180deg,#062d4f,#083d6a)' }}>
           <div className="p-10 text-white">
-            <h3 className="text-2xl font-bold">Credit Limits and Utilization Ratios</h3>
+          <h3 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+  Credit Limits and Utilization Ratios
+</h3>
+<div className="mt-2 h-1 w-20 rounded-full bg-sky-400"></div>
             <p className="mt-4 max-w-4xl leading-relaxed text-sky-100">
               Many score simulators only model a change in overall utilization (new limit). Those tools
               often ignore the age a seasoned tradeline brings. Utilization guidance often recommends
@@ -329,15 +332,15 @@ export default function BuyersGuide() {
           </p>
 
           <div className="mt-6 flex flex-wrap gap-4">
-            <a href="/tradeline/buy-tradelines" className="px-6 py-3 bg-[#0b5fa8] text-white rounded-md font-semibold">Shop Tradelines</a>
-            <a href="/tradeline/resources#buyers-guide" className="px-6 py-3 border border-slate-200 rounded-md">Read Buyer’s Guide</a>
-            <a href="/tradeline/contact" className="px-6 py-3 border border-slate-200 rounded-md">Contact Sales</a>
+            <a href="/services_page/tradeline-exchange/buy-tradelines" className="px-6 py-3 bg-[#0b5fa8] text-white rounded-md font-semibold">Shop Tradelines</a>
+            {/* <a href="/services_page/tradeline-exchange/resources#buyers-guide" className="px-6 py-3 border border-slate-200 rounded-md">Read Buyer’s Guide</a> */}
+            <a href="/services_page/tradeline-exchange/contact" className="px-6 py-3 border border-slate-200 rounded-md">Contact Sales</a>
           </div>
         </section>
       </main>
 
       <footer className="max-w-7xl mx-auto px-6 py-10 text-sm text-slate-500">
-        <div>Published by Tradeline Exchange Company, LLC • 06/21/2021</div>
+        <div>Published by Tradeline Exchange • 06/12/2025</div>
       </footer>
     </div>
   );

@@ -14,6 +14,10 @@ const ThanksgivingPopup = dynamic(() => import("../components/home/Thanksgiving"
   ssr: false,
 });
 
+const RegPopup = dynamic(() => import("../components/reg_popup"), {
+  ssr: false,
+});
+
 export default function ClientLayoutShell({ children }: PropsWithChildren) {
   const pathname = usePathname();
   const [is404, setIs404] = useState(false);
@@ -79,6 +83,9 @@ export default function ClientLayoutShell({ children }: PropsWithChildren) {
           delayMs={thanksgivingKey > 0 ? 0 : 5000} 
           disableAutoOpen={thanksgivingKey === 0 && hasShownModal}
         />
+
+        {/* Registration Notification Popup - Shows on all pages */}
+        <RegPopup />
 
         {/* Floating Offer Icon Button */}
         <motion.button

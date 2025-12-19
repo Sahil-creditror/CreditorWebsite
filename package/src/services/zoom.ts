@@ -131,13 +131,35 @@ export const fetchOccurrences = async (
 
     console.log(`[Occurrences] Response status: ${response.status}`);
 
-    const data = await response.json().catch(() => ({}));
+    // Try to parse response body, but handle empty or invalid responses gracefully
+    let data: any = {};
+    try {
+      const text = await response.text();
+      if (text && text.trim()) {
+        try {
+          data = JSON.parse(text);
+        } catch {
+          // If not valid JSON, treat as plain text error message
+          data = { message: text };
+        }
+      }
+    } catch (readError) {
+      // If response body cannot be read, continue with empty data
+      console.warn('[Occurrences] Could not read response body:', readError);
+    }
 
     if (!response.ok) {
-      console.error('[Occurrences] API call failed:', data);
+      // Use console.warn instead of console.error since this is handled gracefully
+      const errorMessage = data?.error || data?.message || `API returned status ${response.status}`;
+      console.warn(`[Occurrences] API call failed for webinar ${webinarId}:`, {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorMessage,
+        hasData: Object.keys(data).length > 0
+      });
       return {
         success: false,
-        error: data?.error || data?.message || "Failed to fetch occurrences",
+        error: errorMessage,
       };
     }
 

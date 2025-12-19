@@ -288,7 +288,7 @@ export default function EventRegistrationSuccess(): React.ReactElement {
         Great! You are now successfully registered and CONFIRMED for this Webclass...
       </div>
 
-      <div className="relative flex-1 overflow-hidden pb-16 bg-[#f7f9fc] dark:bg-[#050911]">
+      <div className="relative flex-1 pb-16 bg-[#f7f9fc] dark:bg-[#050911]">
         <div className="absolute inset-0 pointer-events-none opacity-40">
           <div
             className="w-full h-full"

@@ -310,8 +310,8 @@ export default function WhatIsTradelinePage() {
           </div>
 
           <div className="flex gap-4">
-            <a href="/tradeline/buy-tradelines" className="px-6 py-3 bg-[#0b5fa8] text-white rounded-md font-semibold shadow">Shop Tradelines</a>
-            <a href="/tradeline/contact" className="px-6 py-3 border border-slate-200 rounded-md text-slate-700">Contact Sales</a>
+            <a href="/services_page/tradeline-exchange/buy-tradelines" className="px-6 py-3 bg-[#0b5fa8] text-white rounded-md font-semibold shadow">Shop Tradelines</a>
+            <a href="/services_page/tradeline-exchange/contact" className="px-6 py-3 border border-slate-200 rounded-md text-slate-700">Contact Sales</a>
           </div>
         </section>
       </div>

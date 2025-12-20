@@ -132,7 +132,7 @@ function About() {
                   becomes sovereignty, because real freedom begins in the Private.
                 </p>
                            {/* Centered Blue Button */}
-    <div className="flex justify-center mt-4">
+    {/* <div className="flex justify-center mt-4">
       <a
         href="https://calendly.com/d/cwfz-k3q-w85/creditor-academy-education-counselor"
         target="_blank"
@@ -141,7 +141,7 @@ function About() {
       >
         Book a Slot
       </a>
-    </div>
+    </div> */}
               </div>
 
               {/* Subtle gradient background */}

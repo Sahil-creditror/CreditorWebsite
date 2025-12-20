@@ -18,6 +18,7 @@ import Offer from "./components/home/Offer";
 // import { AnimatedTestimonialsDemo } from "./components/home/testimonial/AnimatedDemo";
 import Event from "./components/home/event";
 import About from "./components/home/about";
+import PrivateTeaser from "./components/home/private-teaser";
 import ThanksgivingPopupSection from "./components/home/Thanksgiving/index";
 import ThanksgivingPopup from "./components/home/Thanksgiving/index";
 
@@ -34,6 +35,7 @@ export default function Home() {
       {/* <Aboutus /> */}
       <About />
       <Offer />
+      <PrivateTeaser />
       {/* <MasterInfo /> */}
       <Courses />
       {/* <ThanksgivingPopup /> */}

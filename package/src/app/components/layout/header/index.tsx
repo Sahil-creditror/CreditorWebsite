@@ -88,17 +88,61 @@ const Header = () => {
             sticky ? "py-5" : "py-7"
           }`}
         >
-          <div className="flex items-center">
-            {sticky ? <Logo sticky={sticky} /> : null}
+          <div className="flex items-center gap-4 lg:gap-6">
+            <Logo sticky={sticky} />
+            
+            {/* Navigation Links - Only visible on large screens */}
+            <nav className="hidden lg:flex items-center gap-2 sm:gap-3">
+              <Link
+                href="/services_page/website-service"
+                className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-4 transition-colors ${
+                  sticky 
+                    ? "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white" 
+                    : "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
+                }`}
+              >
+                Website Service
+              </Link>
+              <Link
+                href="/services_page/tradeline-exchange"
+                className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-4 transition-colors ${
+                  sticky 
+                    ? "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white" 
+                    : "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
+                }`}
+              >
+                Tradeline Exchange
+              </Link>
+              <Link
+                href="/services_page/private-merchant"
+                className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-4 transition-colors ${
+                  sticky 
+                    ? "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white" 
+                    : "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
+                }`}
+              >
+                Private Merchant
+              </Link>
+              <Link
+                href="/courses"
+                className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-4 transition-colors ${
+                  sticky 
+                    ? "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white" 
+                    : "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
+                }`}
+              >
+                Courses
+              </Link>
+            </nav>
           </div>
 
-          <div className="flex items-center gap-5 sm:gap-7">
+          <div className="flex items-center gap-2 sm:gap-3">
             <div className="flex items-center gap-2 sm:gap-3">
               <Link
                 href="/tncmasterclass"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex justify-center items-center gap-2 text-base sm:text-xl font-bold rounded-full py-1.5 px-4 transition-colors
+                className={`flex justify-center items-center gap-2 text-sm sm:text-base font-bold rounded-full py-1.5 px-4 transition-colors
                   ${sticky 
                     ? "bg-gray text-white hover:bg-secondary hover:text-white" 
                     : "bg-secondary text-white hover:bg-secondary/90"}
@@ -108,7 +152,7 @@ const Header = () => {
               </Link>
               <Link
                 href="https://lmsathena.com/login"
-                className={`flex justify-center items-center gap-2 text-base sm:text-xl font-bold rounded-full py-1.5 px-4 transition-colors
+                className={`flex justify-center items-center gap-2 text-sm sm:text-base font-bold rounded-full py-1.5 px-4 transition-colors
                   ${sticky 
                     ? "bg-white text-secondary hover:bg-secondary hover:text-white dark:bg-white dark:text-secondary dark:hover:bg-secondary dark:hover:text-white" 
                     : "bg-blue-600 text-white hover:bg-blue-700"}
@@ -167,9 +211,9 @@ const Header = () => {
                         : "/images/Icon/menu-button.svg"
                     }
                     alt="icon"
-                    width={40}
-                    height={40}
-                    className="cursor-pointer sm:w-[45px] sm:h-[45px]"
+                    width={35}
+                    height={35}
+                    className="cursor-pointer"
                   />
                 </button>
               ) : (

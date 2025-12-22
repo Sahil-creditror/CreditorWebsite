@@ -5,7 +5,7 @@
 export interface AgreementSection {
   title: string;
   content?: string;
-  subsections?: Array<{ title?: string; content: string }>;
+  subsections?: Array<{ title?: string; content?: string }>;
   listItems?: Array<{ type: "ordered" | "unordered"; items: string[] }>;
   table?: {
     headers: string[];
@@ -353,37 +353,14 @@ export const FULL_AGREEMENT_SECTIONS: AgreementSection[] = [
         content:
           "All financial companies need to share personal information to run their everyday business. In the section below, we list the reasons financial companies can share their personal information; the reasons we choose to share; and whether you can limit this sharing.",
       },
-    ],
-    table: {
-      headers: [
-        "Reasons we can share your info",
-        "Do we share your info?",
-        "Can you limit this sharing?",
-      ],
-      rows: [
-        [
-          "For our everyday business purposes— such as to process your transactions, maintain your account(s), respond to court orders and legal investigations, or report to credit bureaus.",
-          "Yes, we may share your info with necessary parties to help facilitate the products and services that you have contracted for.",
-          "No.",
-        ],
-        [
-          "For our marketing purposes— to offer our products and services to you.",
-          "We may share your information with vendors that assist us in offering various opportunities to you.",
-          "Yes, you can opt out of receiving any marketing from us for any products other than the products you have contracted for.",
-        ],
-        [
-          "For joint marketing with other financial companies.",
-          "We may share your information with other financial and non-financial entities.",
-          "Yes, you can opt out of any non-essential sharing with third parties.",
-        ],
-        [
-          "For our affiliates' everyday business purposes— information about your transactions and experiences.",
-          "Yes, we may share your info with affiliated parties to help facilitate your goals.",
-          "Yes, you can opt out of any non-essential sharing with third parties.",
-        ],
-      ],
-    },
-    subsections: [
+      {
+        content:
+          "To limit our sharing of information or for ANY Questions: Call us at (619) 255-9588.",
+      },
+      {
+        content:
+          "Please note if you are a new customer we can begin sharing your information 5 days from the date we sent this notice. When you are no longer our customer, we continue to share your information as described in this notice. However you can contact us at any time to limit our sharing.",
+      },
       {
         content:
           "To limit our sharing of information or for ANY Questions: Call us at (619) 255-9588.",
@@ -436,6 +413,35 @@ export const FULL_AGREEMENT_SECTIONS: AgreementSection[] = [
           "A formal agreement between non-affiliated financial companies that together market financial products or services to you.",
       },
     ],
+    table: {
+      headers: [
+        "Reasons we can share your info",
+        "Do we share your info?",
+        "Can you limit this sharing?",
+      ],
+      rows: [
+        [
+          "For our everyday business purposes— such as to process your transactions, maintain your account(s), respond to court orders and legal investigations, or report to credit bureaus.",
+          "Yes, we may share your info with necessary parties to help facilitate the products and services that you have contracted for.",
+          "No.",
+        ],
+        [
+          "For our marketing purposes— to offer our products and services to you.",
+          "We may share your information with vendors that assist us in offering various opportunities to you.",
+          "Yes, you can opt out of receiving any marketing from us for any products other than the products you have contracted for.",
+        ],
+        [
+          "For joint marketing with other financial companies.",
+          "We may share your information with other financial and non-financial entities.",
+          "Yes, you can opt out of any non-essential sharing with third parties.",
+        ],
+        [
+          "For our affiliates' everyday business purposes— information about your transactions and experiences.",
+          "Yes, we may share your info with affiliated parties to help facilitate your goals.",
+          "Yes, you can opt out of any non-essential sharing with third parties.",
+        ],
+      ],
+    },
   },
 ];
 

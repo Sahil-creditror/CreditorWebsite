@@ -3,11 +3,49 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import InnovationPurpose from "./InnovationPurpose";
+
+// Custom styles for video controls
+const videoControlsStyle = `
+  .slider::-webkit-slider-thumb {
+    appearance: none;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: #38bdf8;
+    cursor: pointer;
+    box-shadow: 0 0 2px rgba(0,0,0,0.3);
+  }
+
+  .slider::-webkit-slider-track {
+    background: rgba(255,255,255,0.3);
+    height: 4px;
+    border-radius: 2px;
+  }
+
+  .slider::-moz-range-thumb {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: #38bdf8;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 2px rgba(0,0,0,0.3);
+  }
+
+  .slider::-moz-range-track {
+    background: rgba(255,255,255,0.3);
+    height: 4px;
+    border-radius: 2px;
+    border: none;
+  }
+`;
 
 export default function Hero() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [volume, setVolume] = useState(0.5);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -17,11 +55,28 @@ export default function Hero() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  // Initialize video volume on mount
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.volume = volume;
+    }
+  }, []);
+
+
+
   // Simple parallax style helper (no TypeScript, no window at top-level)
   const parallaxStyle = (factorX, factorY) => ({
     x: mousePos.x * factorX,
     y: mousePos.y * factorY,
   });
+
+  const handleVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (videoRef.current) {
+      videoRef.current.volume = newVolume;
+    }
+  };
 
   const fadeInUp = (delay = 0) => ({
     initial: { opacity: 0, y: 40 },
@@ -31,7 +86,9 @@ export default function Hero() {
   });
 
   return (
-    <div className="w-full bg-slate-950 text-slate-900">
+    <>
+      <style dangerouslySetInnerHTML={{ __html: videoControlsStyle }} />
+      <div className="w-full bg-slate-950 text-slate-900">
       {/* ===================== SECTION 1 – HERO (DARK BLUE) ===================== */}
       <section className="relative min-h-[90vh] flex items-center justify-center px-6 md:px-10 lg:px-16 pt-16 pb-10 overflow-hidden bg-gradient-to-br from-slate-950 via-slate-950 to-slate-900">
         {/* Background grid + glow */}
@@ -59,10 +116,21 @@ export default function Hero() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-3 rounded-full border border-sky-400/40 bg-sky-500/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-sky-200"
+              className="inline-flex items-center gap-3 rounded-full border border-sky-400/40 bg-sky-500/10 px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-sky-200 shadow-lg backdrop-blur-sm"
             >
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              Credit Boost • 2025
+              <motion.span
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+                className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-sm"
+              />
+              <span className="bg-gradient-to-r from-sky-300 to-cyan-300 bg-clip-text text-transparent">
+                Credit Boost • 2025
+              </span>
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
+                className="h-4 w-4 rounded-full border border-sky-400/50 border-t-sky-300"
+              />
             </motion.div>
 
             <motion.h1
@@ -71,11 +139,35 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.05 }}
               className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight"
             >
-              Boost Your{" "}
-              <span className="bg-gradient-to-r from-sky-400 via-blue-300 to-cyan-300 bg-clip-text text-transparent">
+              <motion.span
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+              >
+                Boost Your{" "}
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 200 }}
+                className="bg-gradient-to-r from-sky-400 via-blue-300 to-cyan-300 bg-clip-text text-transparent relative"
+              >
                 Credit Score
-              </span>{" "}
-              in Weeks, Not Years.
+                <motion.div
+                  animate={{
+                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                  }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                  className="absolute inset-0 bg-gradient-to-r from-sky-400/20 via-blue-300/20 to-cyan-300/20 blur-xl -z-10"
+                />
+              </motion.span>{" "}
+              <motion.span
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                in Weeks, Not Years.
+              </motion.span>
             </motion.h1>
 
             <motion.p
@@ -96,35 +188,62 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.25 }}
               className="flex flex-wrap items-center gap-4"
             >
-              <Link
-                href="/services_page/tradeline-exchange/buy-tradelines"
-                className="group relative inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-sky-500 via-sky-400 to-blue-500 px-7 py-3 text-sm md:text-base font-semibold text-slate-950 shadow-[0_20px_40px_rgba(56,189,248,0.6)] transition-transform duration-300 hover:translate-y-0.5 hover:shadow-[0_24px_60px_rgba(56,189,248,0.85)]"
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <span className="relative z-10">Get Started Now</span>
-                <motion.svg
-                  animate={{ x: [0, 6, 0] }}
-                  transition={{ repeat: Infinity, duration: 1.8 }}
-                  className="relative z-10 h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+                <Link
+                  href="/services_page/tradeline-exchange/buy-tradelines"
+                  className="group relative inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-sky-500 via-sky-400 to-blue-500 px-8 py-4 text-sm md:text-base font-semibold text-slate-950 shadow-[0_20px_40px_rgba(56,189,248,0.6)] transition-all duration-300 hover:translate-y-1 hover:shadow-[0_28px_70px_rgba(56,189,248,0.9)] hover:from-sky-400 hover:via-sky-300 hover:to-blue-400"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  <span className="relative z-10">Get Started Now</span>
+                  <motion.svg
+                    animate={{ x: [0, 6, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.8 }}
+                    className="relative z-10 h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
+                  </motion.svg>
+                  <motion.span
+                    animate={{ opacity: [0, 1, 0] }}
+                    transition={{ repeat: Infinity, duration: 2 }}
+                    className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-white/50 to-transparent opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"
                   />
-                </motion.svg>
-                <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-white/40 to-transparent opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
-              </Link>
+                </Link>
+              </motion.div>
 
-              <Link
-                href="/services_page/tradeline-exchange/about"
-                className="inline-flex items-center gap-2 rounded-full border border-sky-200/40 bg-slate-950/60 px-6 py-3 text-sm md:text-base font-medium text-slate-100 backdrop-blur-xl transition-all hover:bg-sky-500/15 hover:border-sky-200"
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                Learn how it works
-              </Link>
+                <Link
+                  href="/services_page/tradeline-exchange/about"
+                  className="inline-flex items-center gap-2 rounded-full border border-sky-200/40 bg-slate-950/70 px-6 py-3 text-sm md:text-base font-medium text-slate-100 backdrop-blur-xl transition-all duration-300 hover:bg-sky-500/20 hover:border-sky-200/60 hover:shadow-lg"
+                >
+                  <span>Learn how it works</span>
+                  <motion.svg
+                    className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </motion.svg>
+                </Link>
+              </motion.div>
             </motion.div>
 
             <motion.div
@@ -150,95 +269,38 @@ export default function Hero() {
 
           {/* Right: interactive card */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative"
-          >
-            <motion.div
-              whileHover={{ y: -6 }}
-              className="relative mx-auto max-w-md rounded-3xl border border-sky-400/40 bg-slate-950/80 p-6 shadow-[0_24px_60px_rgba(15,23,42,0.9)] backdrop-blur-2xl"
-            >
-              <div className="mb-4 flex items-center justify-between">
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.25em] text-slate-400">
-                    Projection
-                  </p>
-                  <p className="mt-1 text-sm font-semibold text-slate-50">
-                    90-Day Credit Boost
-                  </p>
-                </div>
-                <div className="flex items-center gap-1 rounded-full bg-slate-900/80 px-3 py-1 text-[11px] text-slate-100">
-                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                  Live estimate
-                </div>
-              </div>
+  initial={{ opacity: 0, x: 40 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.8, delay: 0.25 }}
+  className="relative"
+>
+  <motion.div
+    whileHover={{ y: -8 }}
+    className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-sky-400/40 bg-slate-950/80 shadow-[0_30px_80px_rgba(56,189,248,0.45)] backdrop-blur-2xl"
+  >
+    {/* Glow */}
+    <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-sky-500/20 via-transparent to-cyan-400/20" />
 
-              {/* Score circle */}
-              <div className="relative flex flex-col items-center justify-center mb-6">
-                <div className="relative h-40 w-40">
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-sky-500 via-blue-500 to-cyan-400 opacity-70 blur-xl" />
-                  <div className="absolute inset-[12px] rounded-full border border-sky-500/40 bg-slate-950/90" />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-[11px] uppercase tracking-[0.25em] text-slate-400">
-                      Estimated
-                    </span>
-                    <span className="mt-1 text-4xl font-black text-slate-50">
-                      740
-                    </span>
-                    <span className="mt-1 text-[9px] text-slate-400">
-                      from 580 in ~3 months
-                    </span>
-                  </div>
-                </div>
-                <p className="mt-3 text-[11px] text-slate-300 flex items-center gap-2">
-                  <span className="inline-flex h-1.5 w-6 rounded-full bg-sky-400" />
-                  With recommended tradeline package
-                </p>
-              </div>
+    {/* Rectangular aspect ratio wrapper (16:9) */}
+    <div className="relative aspect-video">
+      <video
+        ref={videoRef}
+        src="/video/tradeline.mp4"
+        autoPlay
+        controls
+        playsInline
+        preload="metadata"
+        className="absolute inset-0 h-full w-full object-cover rounded-t-3xl"
+      />
 
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-3 text-xs mb-4">
-                <div className="rounded-2xl border border-sky-500/25 bg-slate-950/90 p-3">
-                  <p className="text-slate-400 mb-1">Utilization</p>
-                  <p className="text-slate-50 font-semibold">↓ 64%</p>
-                  <p className="mt-1 text-[10px] text-emerald-300">
-                    Optimized with new limits
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-sky-500/25 bg-slate-950/90 p-3">
-                  <p className="text-slate-400 mb-1">History</p>
-                  <p className="text-slate-50 font-semibold">+7 yrs</p>
-                  <p className="mt-1 text-[10px] text-sky-300">
-                    Seasoned tradelines added
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-sky-500/25 bg-slate-950/90 p-3">
-                  <p className="text-slate-400 mb-1">Risk</p>
-                  <p className="text-slate-50 font-semibold">Low</p>
-                  <p className="mt-1 text-[10px] text-emerald-300">
-                    Balanced exposure
-                  </p>
-                </div>
-              </div>
+    </div>
 
-              <div className="mt-3 flex items-center justify-between gap-3">
-                <p className="text-[11px] text-slate-400">
-                  Run a{" "}
-                  <span className="font-semibold text-sky-300">
-                    free credit scenario
-                  </span>{" "}
-                  in under a minute.
-                </p>
-                <Link
-                  href="/services_page/tradeline-exchange/buy-tradelines"
-                  className="rounded-full bg-sky-500/90 px-4 py-2 text-[11px] font-semibold text-slate-950 hover:bg-sky-400 transition-colors"
-                >
-                  Start demo
-                </Link>
-              </div>
-            </motion.div>
-          </motion.div>
+
+    {/* Subtle bottom fade for depth */}
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950/90 to-transparent" />
+  </motion.div>
+</motion.div>
+
         </div>
       </section>
 
@@ -477,5 +539,6 @@ export default function Hero() {
         </div>
       </section>
     </div>
+    </>
   );
 }

@@ -36,7 +36,7 @@ export default function Home() {
       <About />
       <WebclassSection />
       <Offer />
-      <PrivateTeaser />
+      {/* <PrivateTeaser /> */}
       {/* <MasterInfo /> */}
       <Courses />
       {/* <ThanksgivingPopup /> */}

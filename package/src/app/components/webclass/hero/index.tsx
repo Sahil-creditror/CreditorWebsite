@@ -405,6 +405,18 @@ export default function WebclassSection() {
     loadOccurrencesForModal();
   }, [widgetOpen]);
 
+  // Listen for custom event from CTA section to open the modal
+  useEffect(() => {
+    const handleOpenRegistration = () => {
+      handleWidgetOpen();
+    };
+
+    window.addEventListener('openWebinarRegistration', handleOpenRegistration);
+    return () => {
+      window.removeEventListener('openWebinarRegistration', handleOpenRegistration);
+    };
+  }, [handleWidgetOpen]);
+
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -506,7 +518,7 @@ export default function WebclassSection() {
   return (
     <>
       {/* Webclass hero section - matching exact design from image */}
-      <section className="relative overflow-hidden py-5 md:py-10 text-white dark:text-white">
+      <section className="relative overflow-hidden py-20 md:py-25 text-white dark:text-white">
         {/* Base gradient background using website blue shades */}
         <div 
           className="absolute inset-0"
@@ -635,7 +647,7 @@ export default function WebclassSection() {
                   }}
                 >
                   <Image
-                    src={"/images/webinar/paul_formal.webp"}
+                    src={"/images/avatar/paul.png"}
                     alt="Speaker"
                     fill
                     style={{ objectFit: "cover" }}

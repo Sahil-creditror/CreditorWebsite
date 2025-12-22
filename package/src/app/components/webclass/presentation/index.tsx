@@ -28,7 +28,7 @@ export default function PresentationSection() {
 
           <div className="inline-flex flex-col gap-4">
             <span className="text-3xl md:text-5xl font-extrabold tracking-tight text-white px-6 py-3 rounded-lg bg-white/15 backdrop-blur">
-              Join This FREE Training And Discover Exactly How Thousands Of Regular People Just Like You Are…
+              This FREE live webclass introduces the core principles taught at Creditor Academy...
             </span>
           </div>
 
@@ -39,12 +39,7 @@ export default function PresentationSection() {
           </div>
 
           <p className="mt-6 text-lg md:text-2xl font-semibold leading-relaxed text-white/90 max-w-5xl mx-auto">
-            ...And Find Out What{" "}
-            <span className="text-[#ffe08a]">THOUSANDS Of Entrepreneurs, Who Are Just Like You,</span>{" "}
-            Are Doing To Start And Grow Their Very Own{" "}
-            <span className="text-white underline decoration-2">Credit Repair Businesses!</span>{" "}
-            — legally destroying junk debt buyers, wiping out old debts, stopping garnishments cold,
-            and turning the tables on collectors – all without spending $10,000+ on a lawyer!
+           ...and shows how private individuals and private businesses operate differently in matters of structure, credit, income, and responsibility.
           </p>
 
 

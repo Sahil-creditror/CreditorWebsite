@@ -69,10 +69,45 @@ const SignUp = () => {
 
         setLoading(true);
         try {
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-            localStorage.setItem("user", JSON.stringify({ user: formData.name }));
-            router.push("/");
+            const response = await fetch("/api/auth/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    password: formData.password,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                // Show detailed error message
+                const errorMsg = data.details 
+                    ? `${data.error}\n\nDetails: ${data.details}` 
+                    : data.error || "Signup failed. Please try again.";
+                alert(errorMsg);
+                console.error("Signup API error:", data);
+                return;
+            }
+
+            // Store user data in localStorage
+            localStorage.setItem("user", JSON.stringify({
+                user: data.user.name || data.user.email,
+                email: data.user.email,
+                name: data.user.name,
+                id: data.user.id,
+            }));
+
+            // Check for redirect parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirect = urlParams.get("redirect");
+            router.push(redirect || "/");
         } catch (error) {
+            console.error("Signup error:", error);
+            alert("Something went wrong. Please try again.");
         } finally {
             setLoading(false);
         }

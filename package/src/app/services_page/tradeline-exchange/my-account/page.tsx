@@ -2,25 +2,45 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { orderStore } from "../lib/orders";
 import { MOCK_TRADELINES } from "../lib/tradelines";
 
+type TabType = "dashboard" | "orders" | "store-credit" | "account-details";
+
 export default function MyAccountPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const initialEmail = searchParams.get("email") || "";
 
+  const [activeTab, setActiveTab] = useState<TabType>("dashboard");
+  const [user, setUser] = useState<any>(null);
   const [email, setEmail] = useState(initialEmail);
   const [orders, setOrders] = useState([]);
   const [lookedUp, setLookedUp] = useState(false);
 
   useEffect(() => {
-    if (initialEmail) {
-      handleLookup(initialEmail);
+    if (typeof window !== "undefined") {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        const parsed = JSON.parse(storedUser);
+        setUser(parsed);
+        setEmail(parsed.user || parsed.email || "");
+      } else {
+        // Redirect to login if not logged in
+        router.push("/signin?redirect=/services_page/tradeline-exchange/my-account");
+      }
+    }
+  }, [router]);
+
+  useEffect(() => {
+    if (initialEmail || email) {
+      handleLookup(initialEmail || email);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialEmail]);
+  }, [initialEmail, email]);
 
   const handleLookup = (targetEmail?: string) => {
     const e = (targetEmail ?? email).trim();
@@ -43,91 +63,230 @@ export default function MyAccountPage() {
     [orders]
   );
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100 px-4 py-12 sm:py-16">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900">My Account</h1>
-          <p className="text-slate-600 mt-2">
-            Enter your email to view tradeline orders and their status.
-          </p>
-        </div>
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    // Redirect to tradeline main page
+    router.push("/services_page/tradeline-exchange");
+  };
 
-        <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 md:p-8 mb-8">
-          <div className="flex flex-col md:flex-row md:items-end gap-4">
-            <div className="flex-1">
-              <label className="text-sm font-semibold text-slate-800">Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm focus:ring-2 focus:ring-sky-500/70 focus:outline-none"
-                placeholder="you@example.com"
-              />
-            </div>
+  const getUserName = () => {
+    if (!user) return "";
+    const userValue = user.user || user.name || user.email || "";
+    // If it's an email, extract name part or use email
+    if (userValue.includes("@")) {
+      return userValue.split("@")[0];
+    }
+    return userValue;
+  };
+
+  const getUserEmail = () => {
+    if (!user) return "";
+    return user.email || user.user || "";
+  };
+
+  if (!user) {
+    return null; // Will redirect
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-100">
+      {/* Header */}
+      <div className="bg-gray-800 text-white py-12">
+        <div className="max-w-6xl mx-auto px-4">
+          <h1 className="text-4xl font-bold">My Account</h1>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        {/* Navigation Tabs */}
+        <div className="bg-white border-b border-gray-200 mb-6">
+          <div className="flex flex-wrap gap-4">
             <button
-              onClick={() => handleLookup()}
-              className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md hover:translate-y-0.5 transition"
+              onClick={() => setActiveTab("dashboard")}
+              className={`px-4 py-3 font-semibold border-b-2 transition ${
+                activeTab === "dashboard"
+                  ? "border-yellow-400 text-yellow-400"
+                  : "border-transparent text-gray-600 hover:text-gray-900"
+              }`}
             >
-              View Orders
+              Dashboard
+            </button>
+            <button
+              onClick={() => setActiveTab("orders")}
+              className={`px-4 py-3 font-semibold border-b-2 transition ${
+                activeTab === "orders"
+                  ? "border-yellow-400 text-yellow-400"
+                  : "border-transparent text-gray-600 hover:text-gray-900"
+              }`}
+            >
+              Orders
+            </button>
+            <button
+              onClick={() => setActiveTab("store-credit")}
+              className={`px-4 py-3 font-semibold border-b-2 transition ${
+                activeTab === "store-credit"
+                  ? "border-yellow-400 text-yellow-400"
+                  : "border-transparent text-gray-600 hover:text-gray-900"
+              }`}
+            >
+              Store Credit
+            </button>
+            <button
+              onClick={() => setActiveTab("account-details")}
+              className={`px-4 py-3 font-semibold border-b-2 transition ${
+                activeTab === "account-details"
+                  ? "border-yellow-400 text-yellow-400"
+                  : "border-transparent text-gray-600 hover:text-gray-900"
+              }`}
+            >
+              Account details
+            </button>
+            <button
+              onClick={handleLogout}
+              className="px-4 py-3 font-semibold text-gray-600 hover:text-gray-900 transition ml-auto"
+            >
+              Logout
             </button>
           </div>
         </div>
 
-        {lookedUp && enrichedOrders.length === 0 && (
-          <div className="bg-white rounded-2xl border border-dashed border-slate-300 p-10 text-center text-slate-500">
-            <p className="text-lg font-semibold mb-2">No orders yet</p>
-            <p className="mb-4">Book your first tradeline to see it here.</p>
-            <Link
-              href="/tradeline/buy-tradelines"
-              className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-sky-500 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md"
-            >
-              Browse Tradelines
-            </Link>
-          </div>
-        )}
+        {/* Content Area */}
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          {activeTab === "dashboard" && (
+            <div>
+              <p className="text-lg mb-4">
+                Hello {getUserName()} ({getUserEmail()})
+              </p>
+              <p className="text-sm text-gray-600 mb-4">
+                (not {getUserName()}?{" "}
+                <button
+                  onClick={handleLogout}
+                  className="text-blue-600 hover:underline"
+                >
+                  Log out
+                </button>
+                )
+              </p>
+              <p className="text-gray-700 mb-4">
+                From your account dashboard you can view your{" "}
+                <Link
+                  href="#"
+                  onClick={() => setActiveTab("orders")}
+                  className="text-blue-600 hover:underline"
+                >
+                  recent orders
+                </Link>
+                , manage your shipping and billing addresses and edit your
+                password and account details.
+              </p>
+            </div>
+          )}
 
-        {enrichedOrders.length > 0 && (
-          <div className="space-y-4">
-            {enrichedOrders.map((order) => (
-              <div
-                key={order.id}
-                className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
-              >
-                <div>
-                  <p className="text-xs uppercase tracking-[0.15em] text-slate-500">
-                    {new Date(order.createdAt).toLocaleString()}
-                  </p>
-                  <h3 className="text-xl font-bold text-slate-900">
-                    {order.tradeline?.bankName ?? "Tradeline"} • {order.tradeline?.creditLimit ? `$${order.tradeline.creditLimit.toLocaleString()}` : ""}
-                  </h3>
-                  <p className="text-slate-600 text-sm">
-                    Status:{" "}
-                    <span className="font-semibold text-slate-900 capitalize">{order.status.replace("_", " ")}</span>
-                  </p>
-                  {order.creditGoal && (
-                    <p className="text-slate-500 text-sm mt-1">Goal: {order.creditGoal}</p>
-                  )}
+          {activeTab === "orders" && (
+            <div>
+              {lookedUp && enrichedOrders.length === 0 && (
+                <div className="text-center py-10 text-gray-500">
+                  <p className="text-lg font-semibold mb-2">No orders yet</p>
+                  <p className="mb-4">Book your first tradeline to see it here.</p>
+                  <Link
+                    href="/services_page/tradeline-exchange/buy-tradelines"
+                    className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-sky-500 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md"
+                  >
+                    Browse Tradelines
+                  </Link>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-800">
-                    ID: {order.tradelineId}
-                  </span>
-                  {order.tradeline?.ageYears && (
-                    <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-800">
-                      Age: {order.tradeline.ageYears} yrs
-                    </span>
-                  )}
-                  {order.tradeline?.utilizationPercent !== undefined && (
-                    <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-800">
-                      Util: {order.tradeline.utilizationPercent}%
-                    </span>
-                  )}
+              )}
+
+              {enrichedOrders.length > 0 && (
+                <div className="space-y-4">
+                  {enrichedOrders.map((order) => (
+                    <div
+                      key={order.id}
+                      className="border border-gray-200 rounded-lg p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+                    >
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.15em] text-gray-500">
+                          {new Date(order.createdAt).toLocaleString()}
+                        </p>
+                        <h3 className="text-xl font-bold text-gray-900">
+                          {order.tradeline?.bankName ?? "Tradeline"} •{" "}
+                          {order.tradeline?.creditLimit
+                            ? `$${order.tradeline.creditLimit.toLocaleString()}`
+                            : ""}
+                        </h3>
+                        <p className="text-gray-600 text-sm">
+                          Status:{" "}
+                          <span className="font-semibold text-gray-900 capitalize">
+                            {order.status.replace("_", " ")}
+                          </span>
+                        </p>
+                        {order.creditGoal && (
+                          <p className="text-gray-500 text-sm mt-1">
+                            Goal: {order.creditGoal}
+                          </p>
+                        )}
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-800">
+                          ID: {order.tradelineId}
+                        </span>
+                        {order.tradeline?.ageYears && (
+                          <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-800">
+                            Age: {order.tradeline.ageYears} yrs
+                          </span>
+                        )}
+                        {order.tradeline?.utilizationPercent !== undefined && (
+                          <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-800">
+                            Util: {order.tradeline.utilizationPercent}%
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeTab === "store-credit" && (
+            <div>
+              <h2 className="text-xl font-bold mb-4">Store Credit</h2>
+              <p className="text-gray-600 mb-4">
+                You currently have no store credit available.
+              </p>
+            </div>
+          )}
+
+          {activeTab === "account-details" && (
+            <div>
+              <h2 className="text-xl font-bold mb-4">Account Details</h2>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    value={getUserEmail()}
+                    readOnly
+                    className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm bg-gray-50"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">
+                    Display Name
+                  </label>
+                  <input
+                    type="text"
+                    value={getUserName()}
+                    readOnly
+                    className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm bg-gray-50"
+                  />
                 </div>
               </div>
-            ))}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

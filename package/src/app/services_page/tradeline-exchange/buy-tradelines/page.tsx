@@ -1,19 +1,47 @@
 // @ts-nocheck
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowUpDown, Filter, Info, ShoppingCart } from "lucide-react";
 import { MOCK_TRADELINES } from "../lib/tradelines";
+import { cartStore } from "../lib/cart";
+import AddToCartModal from "../components/AddToCartModal";
 
 const INQUIRY_FORM_URL =
   process.env.NEXT_PUBLIC_BROKER_FORM_URL ??
   "https://forms.gle/your-broker-form-id";
 
 export default function BuyTradeline() {
+  const router = useRouter();
   const [minAge, setMinAge] = useState(0);
   const [minLimit, setMinLimit] = useState(0);
   const [sortBy, setSortBy] = useState("best");
+  const [showModal, setShowModal] = useState(false);
+  const [addedItemCount, setAddedItemCount] = useState(0);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    }
+  }, []);
+
+  const handleAddToCart = (tradelineId: string) => {
+    // Check if user is logged in
+    if (!user) {
+      router.push("/signin?redirect=/services_page/tradeline-exchange/buy-tradelines");
+      return;
+    }
+
+    cartStore.addItem(tradelineId);
+    setAddedItemCount(1);
+    setShowModal(true);
+  };
 
   const filtered = useMemo(() => {
     let list = [...MOCK_TRADELINES];
@@ -185,19 +213,25 @@ export default function BuyTradeline() {
                   >
                     View Details
                   </Link>
-                  <Link
-                    href={`/services_page/tradeline-exchange/checkout/${item.id}`}
+                  <button
+                    onClick={() => handleAddToCart(item.id)}
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md hover:translate-y-0.5 transition"
                   >
                     <ShoppingCart size={16} />
-                    Proceed to Checkout
-                  </Link>
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      <AddToCartModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        itemCount={addedItemCount}
+      />
     </div>
   );
 }

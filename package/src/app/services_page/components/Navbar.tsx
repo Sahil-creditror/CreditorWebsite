@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   AlertTriangle,
   ArrowLeft,
+  ShoppingCart,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -21,7 +22,26 @@ export default function Navbar() {
   const [lastScroll, setLastScroll] = useState(0);
   const [openResources, setOpenResources] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const resourcesRef = useRef(null);
+
+  // Get cart count
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const updateCartCount = () => {
+        try {
+          const { cartStore } = require("@/app/services_page/tradeline-exchange/lib/cart");
+          setCartCount(cartStore.getItemCount());
+        } catch (e) {
+          // Cart store not available
+        }
+      };
+      updateCartCount();
+      // Update cart count periodically
+      const interval = setInterval(updateCartCount, 1000);
+      return () => clearInterval(interval);
+    }
+  }, []);
 
   /* ---------------- PRIMARY LINKS ---------------- */
   const links = [
@@ -167,6 +187,19 @@ export default function Navbar() {
               {l.name}
             </Link>
           ))}
+
+          {/* CART ICON */}
+          <Link
+            href="/services_page/tradeline-exchange/cart"
+            className="relative px-3 py-2 rounded-full hover:bg-white/10 flex items-center"
+          >
+            <ShoppingCart className="w-5 h-5 text-white" />
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-yellow-400 text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {cartCount}
+              </span>
+            )}
+          </Link>
         </nav>
 
         {/* MOBILE */}
@@ -205,6 +238,18 @@ export default function Navbar() {
               </Link>
             ))}
           </div>
+
+          {/* MOBILE CART */}
+          <Link
+            href="/services_page/tradeline-exchange/cart"
+            onClick={() => setMobileOpen(false)}
+            className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-white/10 text-white border-t border-white/10 mt-2 pt-2"
+          >
+            <ShoppingCart className="w-5 h-5" />
+            <span className="font-semibold">
+              Cart {cartCount > 0 && `(${cartCount})`}
+            </span>
+          </Link>
         </div>
       )}
     </header>

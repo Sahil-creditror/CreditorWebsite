@@ -3,13 +3,14 @@ import Image from "next/image";
 import MenuList from "./MenuList";
 import Link from "next/link";
 import ThemeToggler from "./ThemeToggle";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Logo from "../logo";
 
 const Header = () => {
   const { data: session } = useSession();
+  const router = useRouter();
   const [user, setUser] = useState<{ user: any } | null>(null);
   const [menuData, setMenuData] = useState<any>(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -37,6 +38,8 @@ const Header = () => {
     localStorage.removeItem("user");
     signOut();
     setUser(null);
+    // Redirect to tradeline main page
+    router.push("/services_page/tradeline-exchange");
   };
 
   // Close menu with animation when clicking outside
@@ -160,44 +163,10 @@ const Header = () => {
               >
                 Sign In
               </Link>
-              {user?.user || session?.user ? (
-                <div className="relative group flex items-center justify-center">
-                  <Image
-                    src="/images/avatar/avatar_1.webp"
-                    alt="Image"
-                    width={32}
-                    height={32}
-                    quality={100}
-                    className="rounded-full cursor-pointer"
-                  />
-                  <p className="absolute w-fit text-xs sm:text-sm font-medium text-center z-10 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200 bg-gray text-white py-1 px-2 min-w-24 sm:min-w-28 rounded-full shadow-2xl top-full left-1/2 transform -translate-x-1/2 mt-3">
-                    {user?.user || session?.user?.name}
-                  </p>
-                </div>
-              ) : (
-                ""
-              )}
             </div>
 
             <div className="flex items-center gap-2 sm:gap-3">
               <ThemeToggler />
-              {user?.user || session?.user ? (
-                <div className="relative group flex items-center justify-center">
-                  <Image
-                    src="/images/avatar/avatar_1.webp"
-                    alt="Image"
-                    width={32}
-                    height={32}
-                    quality={100}
-                    className="rounded-full cursor-pointer"
-                  />
-                  <p className="absolute w-fit text-xs sm:text-sm font-medium text-center z-10 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200 bg-gray text-white py-1 px-2 min-w-24 sm:min-w-28 rounded-full shadow-2xl top-full left-1/2 transform -translate-x-1/2 mt-3">
-                    {user?.user || session?.user?.name}
-                  </p>
-                </div>
-              ) : (
-                ""
-              )}
             </div>
 
             {/* Menu Toggle */}

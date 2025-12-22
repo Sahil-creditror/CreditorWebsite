@@ -96,7 +96,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           success: false,
-          error: (registerResult.data as { message?: string })?.message || "Zoom webinar registration failed.",
+          error: (registerResult.data as { message?: string })?.message || "Zoom webinar registration failed, Try again.",
         },
         { status: registerResult.status || 500 }
       );

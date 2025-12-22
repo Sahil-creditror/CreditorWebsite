@@ -78,7 +78,7 @@ export const registerZoomWebinar = async (
     if (!response.ok) {
       return {
         success: false,
-        error: data?.error || data?.message || "Zoom webinar registration failed",
+        error: data?.error || data?.message || "Zoom webinar registration failed, Try again",
       };
     }
 
@@ -88,7 +88,7 @@ export const registerZoomWebinar = async (
       message: data?.message || "Registration successful",
     };
   } catch (error: unknown) {
-    console.error("Zoom webinar registration failed:", error);
+    console.error("Zoom webinar registration failed, Try again:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Unable to complete webinar registration",

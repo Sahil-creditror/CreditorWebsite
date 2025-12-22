@@ -56,16 +56,10 @@ const US_CITIES = [
 ];
 
 const ACTIONS = [
-  "Registered for FREE training",
-  "Became Member",
-  "Choose website service",
-  "Joined the webclass",
-  "Signed up for webinar",
-  "Registered for FREE webclass",
-  "Became a member",
-  "Selected website package",
-  "Registered for training",
-  "Joined the program"
+  "Become a Member",
+  "Choose Website Service",
+  "Registered For Webinar",
+  "For Private Merchant Account"
 ];
 
 type NotificationData = {

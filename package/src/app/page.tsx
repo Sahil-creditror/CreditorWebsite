@@ -19,7 +19,7 @@ import Offer from "./components/home/Offer";
 import Event from "./components/home/event";
 import About from "./components/home/about";
 import PrivateTeaser from "./components/home/private-teaser";
-import ThanksgivingPopupSection from "./components/home/Thanksgiving/index";
+import WebclassSection from "./components/home/webclass";
 import ThanksgivingPopup from "./components/home/Thanksgiving/index";
 
 export const metadata: Metadata = {
@@ -34,8 +34,9 @@ export default function Home() {
       {/* <Masterclass /> */}
       {/* <Aboutus /> */}
       <About />
+      <WebclassSection />
       <Offer />
-      <PrivateTeaser />
+      {/* <PrivateTeaser /> */}
       {/* <MasterInfo /> */}
       <Courses />
       {/* <ThanksgivingPopup /> */}

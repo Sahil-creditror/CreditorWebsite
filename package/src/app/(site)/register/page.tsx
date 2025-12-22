@@ -2,9 +2,26 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { registerForWebinar, RegisterWebinarPayload } from "@/lib/api";
 import { DEFAULT_WEBINAR_ID } from "@/config/api";
+import { registerZoomWebinar, ZoomWebinarRegistrationPayload, fetchOccurrences, OccurrenceItem } from "@/services/zoom";
+import { initializeToken } from "@/lib/tokenManager";
 import { GraduationCap, Building2, CreditCard, Users, Calendar, Clock, DollarSign, ArrowRight, AlertCircle } from "lucide-react";
+
+type FormState = Omit<ZoomWebinarRegistrationPayload, "webinarId"> & {
+  selectedWebinarId?: string;
+};
+
+interface ExtendedOccurrenceItem extends OccurrenceItem {
+  webinarId: string;
+}
+
+// Webinar IDs from environment - defined outside component to avoid re-creation
+const WEBINAR_IDS = {
+  midnight: process.env.NEXT_PUBLIC_WEBINAR_ID_MIDNIGHT || '81368819394',
+  morning: process.env.NEXT_PUBLIC_WEBINAR_ID_MORNING || '85345478550',
+  afternoon: process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON || '85009970371',
+  evening: process.env.NEXT_PUBLIC_WEBINAR_ID_EVENING || '84323907773',
+};
 
 export default function RegistrationPage(): React.ReactElement {
   const router = useRouter();
@@ -13,19 +30,24 @@ export default function RegistrationPage(): React.ReactElement {
   // Get session date from URL params (passed from Event component)
   const sessionDate = searchParams.get('session_date') || '';
   
-  const [formData, setFormData] = useState<RegisterWebinarPayload>({
+  const [formData, setFormData] = useState<FormState>({
     email: '',
     first_name: '',
     last_name: '',
-    phone: '',
+    phone_number: '',
+    occurrence_id: '',
+    selectedWebinarId: '',
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [occurrences, setOccurrences] = useState<ExtendedOccurrenceItem[]>([]);
+  const [loadingOccurrences, setLoadingOccurrences] = useState(true);
   const [touched, setTouched] = useState({
     email: false,
     first_name: false,
     last_name: false,
+    occurrence_id: false,
   });
 
   useEffect(() => {
@@ -36,6 +58,148 @@ export default function RegistrationPage(): React.ReactElement {
         el.classList.add('visible');
       }, index * 100);
     });
+
+    // Initialize token and fetch occurrences
+    const initializeAndLoadOccurrences = async () => {
+      // Initialize token first
+      await initializeToken();
+      
+      // Then fetch occurrences from all four webinar IDs
+      await loadOccurrences();
+    };
+
+    // Fetch occurrences from all four webinar IDs
+    const loadOccurrences = async () => {
+      setLoadingOccurrences(true);
+      console.log('\n🔄 ========== LOADING OCCURRENCES FOR DROPDOWNS ==========');
+      console.log('📅 Fetching from 4 webinar IDs:');
+      console.log(`  - Midnight: ${WEBINAR_IDS.midnight}`);
+      console.log(`  - Morning: ${WEBINAR_IDS.morning}`);
+      console.log(`  - Afternoon: ${WEBINAR_IDS.afternoon}`);
+      console.log(`  - Evening: ${WEBINAR_IDS.evening}`);
+      
+      try {
+        // Fetch occurrences from all four webinar IDs in parallel
+        const [midnightResult, morningResult, afternoonResult, eveningResult] = await Promise.all([
+          fetchOccurrences(WEBINAR_IDS.midnight),
+          fetchOccurrences(WEBINAR_IDS.morning),
+          fetchOccurrences(WEBINAR_IDS.afternoon),
+          fetchOccurrences(WEBINAR_IDS.evening),
+        ]);
+
+        const allOccurrences: ExtendedOccurrenceItem[] = [];
+        const now = new Date();
+        console.log(`\n⏰ Current time: ${now.toISOString()}`);
+
+        // Process midnight webinar occurrences
+        if (midnightResult.success && midnightResult.data) {
+          const futureOccurrences = midnightResult.data.occurrences
+            .filter(occ => new Date(occ.start_time) > now)
+            .map(occ => ({ ...occ, webinarId: WEBINAR_IDS.midnight }));
+          console.log(`\n🌃 Midnight webinar (${WEBINAR_IDS.midnight}):`);
+          console.log(`  - Total: ${midnightResult.data.occurrences.length}`);
+          console.log(`  - Future: ${futureOccurrences.length}`);
+          if (futureOccurrences.length > 0) {
+            futureOccurrences.forEach((occ, idx) => {
+              console.log(`  ${idx + 1}. ${occ.date} at ${occ.time} (ID: ${occ.occurrence_id})`);
+            });
+          }
+          allOccurrences.push(...futureOccurrences);
+        }
+
+        // Process morning webinar occurrences
+        if (morningResult.success && morningResult.data) {
+          const futureOccurrences = morningResult.data.occurrences
+            .filter(occ => new Date(occ.start_time) > now)
+            .map(occ => ({ ...occ, webinarId: WEBINAR_IDS.morning }));
+          console.log(`\n🌅 Morning webinar (${WEBINAR_IDS.morning}):`);
+          console.log(`  - Total: ${morningResult.data.occurrences.length}`);
+          console.log(`  - Future: ${futureOccurrences.length}`);
+          if (futureOccurrences.length > 0) {
+            futureOccurrences.forEach((occ, idx) => {
+              console.log(`  ${idx + 1}. ${occ.date} at ${occ.time} (ID: ${occ.occurrence_id})`);
+            });
+          }
+          allOccurrences.push(...futureOccurrences);
+        }
+
+        // Process afternoon webinar occurrences
+        if (afternoonResult.success && afternoonResult.data) {
+          const futureOccurrences = afternoonResult.data.occurrences
+            .filter(occ => new Date(occ.start_time) > now)
+            .map(occ => ({ ...occ, webinarId: WEBINAR_IDS.afternoon }));
+          console.log(`\n☀️ Afternoon webinar (${WEBINAR_IDS.afternoon}):`);
+          console.log(`  - Total: ${afternoonResult.data.occurrences.length}`);
+          console.log(`  - Future: ${futureOccurrences.length}`);
+          if (futureOccurrences.length > 0) {
+            futureOccurrences.forEach((occ, idx) => {
+              console.log(`  ${idx + 1}. ${occ.date} at ${occ.time} (ID: ${occ.occurrence_id})`);
+            });
+          }
+          allOccurrences.push(...futureOccurrences);
+        }
+
+        // Process evening webinar occurrences
+        if (eveningResult.success && eveningResult.data) {
+          const futureOccurrences = eveningResult.data.occurrences
+            .filter(occ => new Date(occ.start_time) > now)
+            .map(occ => ({ ...occ, webinarId: WEBINAR_IDS.evening }));
+          console.log(`\n🌙 Evening webinar (${WEBINAR_IDS.evening}):`);
+          console.log(`  - Total: ${eveningResult.data.occurrences.length}`);
+          console.log(`  - Future: ${futureOccurrences.length}`);
+          if (futureOccurrences.length > 0) {
+            futureOccurrences.forEach((occ, idx) => {
+              console.log(`  ${idx + 1}. ${occ.date} at ${occ.time} (ID: ${occ.occurrence_id})`);
+            });
+          }
+          allOccurrences.push(...futureOccurrences);
+        }
+
+        // Sort all occurrences by start_time and take next 4
+        const nextFour = allOccurrences
+          .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime())
+          .slice(0, 4);
+
+        console.log(`\n📋 DROPDOWN OCCURRENCES (Next 4 upcoming sessions):`);
+        if (nextFour.length > 0) {
+          nextFour.forEach((occ, idx) => {
+            console.log(`  ${idx + 1}. ${occ.date} at ${occ.time} PST`);
+            console.log(`     - Webinar ID: ${occ.webinarId}`);
+            console.log(`     - Occurrence ID: ${occ.occurrence_id}`);
+            console.log(`     - Start Time: ${occ.start_time}`);
+          });
+        } else {
+          console.log('  ⚠️ No upcoming occurrences found!');
+        }
+        console.log('==========================================================\n');
+
+        setOccurrences(nextFour);
+        
+          // Auto-select first occurrence if available
+          if (nextFour.length > 0) {
+            const firstOccurrence = nextFour[0];
+            
+            // Store in localStorage
+            if (typeof window !== 'undefined') {
+              localStorage.setItem('selected_occurrence_id', firstOccurrence.occurrence_id);
+              localStorage.setItem('selected_webinar_id', firstOccurrence.webinarId);
+              console.log('[Register] Auto-selected and stored occurrence_id:', firstOccurrence.occurrence_id);
+            }
+            
+            setFormData(prev => ({ 
+              ...prev, 
+              occurrence_id: firstOccurrence.occurrence_id,
+              selectedWebinarId: firstOccurrence.webinarId
+            }));
+          }
+      } catch (error) {
+        console.error("❌ Error loading occurrences:", error);
+      } finally {
+        setLoadingOccurrences(false);
+      }
+    };
+
+    initializeAndLoadOccurrences();
   }, []);
 
   const validateEmail = (email: string): boolean => {
@@ -47,9 +211,43 @@ export default function RegistrationPage(): React.ReactElement {
     setTouched({ ...touched, [field]: true });
   };
 
-  const handleChange = (field: keyof RegisterWebinarPayload, value: string) => {
-    setFormData({ ...formData, [field]: value });
+  const handleChange = (field: keyof FormState, value: string) => {
+    if (field === 'occurrence_id') {
+      // Find the selected occurrence to get its webinarId
+      const selectedOcc = occurrences.find(occ => occ.occurrence_id === value);
+      
+      // Store occurrence_id in localStorage
+      if (value && typeof window !== 'undefined') {
+        localStorage.setItem('selected_occurrence_id', value);
+        localStorage.setItem('selected_webinar_id', selectedOcc?.webinarId || '');
+        console.log('[Register] Stored occurrence_id in localStorage:', value);
+      }
+      
+      setFormData({ 
+        ...formData, 
+        [field]: value,
+        selectedWebinarId: selectedOcc?.webinarId || ''
+      });
+    } else {
+      setFormData({ ...formData, [field]: value });
+    }
     setError(null);
+  };
+
+  const formatOccurrenceLabel = (occurrence: ExtendedOccurrenceItem) => {
+    // Convert start_time (UTC) to PST timezone and format: "Monday, Dec 8 at 6:00 PM PST"
+    const date = new Date(occurrence.start_time);
+    const options: Intl.DateTimeFormatOptions = { 
+      weekday: 'long', 
+      month: 'short', 
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+      timeZone: 'America/Los_Angeles', // PST/PDT timezone
+      timeZoneName: 'short' // Shows "PST" or "PDT"
+    };
+    return date.toLocaleString('en-US', options);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -60,6 +258,7 @@ export default function RegistrationPage(): React.ReactElement {
       email: true,
       first_name: true,
       last_name: true,
+      occurrence_id: true,
     });
 
     // Validate
@@ -79,13 +278,38 @@ export default function RegistrationPage(): React.ReactElement {
       setError('Please enter a valid email address');
       return;
     }
+    if (!formData.occurrence_id) {
+      setError('Please select a webinar session');
+      return;
+    }
 
     setIsSubmitting(true);
     setError(null);
 
     try {
-      // Call backend API to register user
-      const result = await registerForWebinar(DEFAULT_WEBINAR_ID, formData);
+      // Get occurrence_id and webinar_id from formData or localStorage as backup
+      const occurrenceId = formData.occurrence_id || 
+        (typeof window !== 'undefined' ? localStorage.getItem('selected_occurrence_id') : null) || 
+        '';
+      
+      const webinarId = formData.selectedWebinarId || 
+        (typeof window !== 'undefined' ? localStorage.getItem('selected_webinar_id') : null) || 
+        DEFAULT_WEBINAR_ID;
+
+      console.log('[Register] Submitting registration with:', {
+        occurrence_id: occurrenceId,
+        webinar_id: webinarId,
+      });
+
+      // Call WebX API to register user for the webinar
+      const result = await registerZoomWebinar({
+        email: formData.email,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        phone_number: formData.phone_number,
+        occurrence_id: occurrenceId,
+        webinarId: webinarId,
+      });
 
       if (result.success && result.data) {
         // Registration successful - redirect to success page
@@ -102,8 +326,8 @@ export default function RegistrationPage(): React.ReactElement {
         setError(result.error || 'Registration failed. Please try again.');
         setIsSubmitting(false);
       }
-    } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred. Please try again.');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred. Please try again.');
       setIsSubmitting(false);
     }
   };
@@ -250,6 +474,48 @@ export default function RegistrationPage(): React.ReactElement {
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 
+                {/* Occurrence Selection */}
+                <div>
+                  <label htmlFor="occurrence_id" className="block text-sm font-bold text-secondary dark:text-white mb-2">
+                    Select Webinar Session <span className="text-red-500">*</span>
+                  </label>
+                  {loadingOccurrences ? (
+                    <div className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-white/10 bg-white dark:bg-secondary/60 text-secondary/40 dark:text-white/40">
+                      Loading available sessions...
+                    </div>
+                  ) : occurrences.length > 0 ? (
+                    <select
+                      id="occurrence_id"
+                      className={`w-full px-4 py-3 rounded-xl border-2 transition-all duration-300 font-medium
+                        ${touched.occurrence_id && !formData.occurrence_id
+                          ? 'border-red-500 bg-red-50 dark:bg-red-900/10'
+                          : 'border-gray-200 dark:border-white/10 bg-white dark:bg-secondary/60'
+                        } 
+                        text-secondary dark:text-white
+                        focus:border-primary focus:ring-4 focus:ring-primary/10 focus:outline-none
+                        disabled:opacity-60 disabled:cursor-not-allowed`}
+                      value={formData.occurrence_id}
+                      onChange={(e) => handleChange('occurrence_id', e.target.value)}
+                      onBlur={() => handleBlur('occurrence_id')}
+                      disabled={isSubmitting}
+                    >
+                      <option value="">Choose a session</option>
+                      {occurrences.map((occ) => (
+                        <option key={occ.occurrence_id} value={occ.occurrence_id}>
+                          {formatOccurrenceLabel(occ)}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <div className="w-full px-4 py-3 rounded-xl border-2 border-yellow-500 bg-yellow-50 dark:bg-yellow-900/10 text-yellow-700 dark:text-yellow-400">
+                      No upcoming sessions available. Please check back later.
+                    </div>
+                  )}
+                  {touched.occurrence_id && !formData.occurrence_id && (
+                    <p className="mt-1.5 text-xs text-red-600 dark:text-red-400 font-medium">Please select a session</p>
+                  )}
+                </div>
+
                 <div>
                   <label htmlFor="first_name" className="block text-sm font-bold text-secondary dark:text-white mb-2">
                     First Name <span className="text-red-500">*</span>
@@ -335,15 +601,15 @@ export default function RegistrationPage(): React.ReactElement {
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-bold text-secondary dark:text-white mb-2">
+                  <label htmlFor="phone_number" className="block text-sm font-bold text-secondary dark:text-white mb-2">
                     Phone Number <span className="text-secondary/50 dark:text-white/50 font-normal">(Optional)</span>
                   </label>
                   <input
                     type="tel"
-                    id="phone"
+                    id="phone_number"
                     className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-white/10 bg-white dark:bg-secondary/60 text-secondary dark:text-white placeholder:text-secondary/40 dark:placeholder:text-white/40 focus:border-primary focus:ring-4 focus:ring-primary/10 focus:outline-none transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed font-medium"
-                    value={formData.phone}
-                    onChange={(e) => handleChange('phone', e.target.value)}
+                    value={formData.phone_number || ''}
+                    onChange={(e) => handleChange('phone_number', e.target.value)}
                     disabled={isSubmitting}
                     placeholder="+1 (555) 123-4567"
                     autoComplete="tel"

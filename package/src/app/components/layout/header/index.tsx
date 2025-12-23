@@ -124,7 +124,7 @@ const Header = () => {
                     : "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
                 }`}
               >
-                Private Merchant
+                Become Member
               </Link>
               <Link
                 href="/courses"

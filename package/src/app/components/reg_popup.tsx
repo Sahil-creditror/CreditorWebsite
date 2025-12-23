@@ -56,10 +56,10 @@ const US_CITIES = [
 ];
 
 const ACTIONS = [
-  "Become a Member",
-  "Choose Website Service",
+  "Became a Member",
+  // "Choose Website Service",
   "Registered For Webinar",
-  "For Private Merchant Account"
+  // "For Private Merchant Account"
 ];
 
 type NotificationData = {

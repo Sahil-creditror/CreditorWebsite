@@ -221,8 +221,8 @@ const pricingData = {
 
         {
             // planName: "Elevate", 
-            tag: "Private Merchant",   
-            planPrice: "Private Merchant Processing",
+            tag: "Become Member",   
+            planPrice: "Become Member",
             planDescp: "Best suited for established businesses wanting a fully tailored experience.",
             planIncludes: ["Tailored payment solutions","Empower your business","Customized experience","Seamless Payment Solutions"],
             coverImage: "/images/pricing/Cover-3.webp" ,// Optional

@@ -17,7 +17,7 @@ import Commitment from "./components/home/Commitment";
 import Offer from "./components/home/Offer";
 // import { AnimatedTestimonialsDemo } from "./components/home/testimonial/AnimatedDemo";
 import Event from "./components/home/event";
-import About from "./components/home/about";
+// import About from "./components/home/about";
 import PrivateTeaser from "./components/home/private-teaser";
 import WebclassSection from "./components/home/webclass";
 import ThanksgivingPopup from "./components/home/Thanksgiving/index";
@@ -33,7 +33,7 @@ export default function Home() {
       {/* <StatsFacts /> */}
       {/* <Masterclass /> */}
       {/* <Aboutus /> */}
-      <About />
+      {/* <About /> */}
       <WebclassSection />
       <Offer />
       {/* <PrivateTeaser /> */}

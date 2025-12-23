@@ -413,7 +413,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
             </div> */}
           </div>
 
-          <p className="desc reveal" data-delay="300">Join our Free Non-Member Orientation held every Saturday and discover everything we offer — from private education and trust setup to credit mastery and financial freedom. See why thousands are choosing to live, build, and thrive in the private.</p>
+          <p className="desc reveal" data-delay="300">Join our Exclusive Non-Member Orientation held every Saturday and discover everything we offer — from private education and trust setup to credit mastery and financial freedom. You and your friend can both be part of this premium presentation. See why thousands are choosing to live, build, and thrive in the private.</p>
 
           <div className="cta-row">
             <button
@@ -421,11 +421,11 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
               id="primaryCta"
               className={`btn btn-primary reveal ${timeLeft.expired ? 'is-closed' : ''}`}
               data-delay="380"
-              aria-label={timeLeft.expired ? 'Entry closed' : 'Enter to win a free consultation — opens form'}
+              aria-label={timeLeft.expired ? 'Entry closed' : 'Join premium orientation - $49 for you and a friend'}
               disabled={timeLeft.expired}
-              onClick={() => { if (!timeLeft.expired) handleWidgetOpen(); }}
+              onClick={() => { if (!timeLeft.expired) window.location.href = 'https://quickclick.com/r/oh051bejpnw86hvnmcq5gan6b29thi'; }}
             >
-              <span className="btn-content">{timeLeft.expired ? 'Entry Closed' : 'Join Now'}</span>
+              <span className="btn-content">{timeLeft.expired ? 'Entry Closed' : 'Join Now - $49'}</span>
             </button>
 
             <div className="countdown-wrap reveal" data-delay="420" aria-live="polite">
@@ -481,7 +481,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
             <div className="stripe" aria-hidden="true"></div>
 
             <div className="speaker-photo-wrap">
-              <img src='/images/event/event20.webp' alt="Paul Michael Rowland" className="speaker-photo" />
+              <img src='/images/event/event27.webp' alt="Paul Michael Rowland" className="speaker-photo" />
             </div>
 
             {/* <div className="speaker-overlay" aria-hidden="true">

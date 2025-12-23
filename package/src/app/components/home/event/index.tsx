@@ -413,7 +413,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
             </div> */}
           </div>
 
-          <p className="desc reveal" data-delay="300">Join our Exclusive Non-Member Orientation held every Saturday and discover everything we offer — from private education and trust setup to credit mastery and financial freedom. You and your friend can both be part of this premium presentation. See why thousands are choosing to live, build, and thrive in the private.</p>
+          <p className="desc reveal" data-delay="300">Join our Saturday Strategy Session with PaulMichael Rowland, a live group consult led by the founder of Creditor Academy. This guided conversation is designed to walk through what the Academy offers, discuss your goals, and answer questions directly with PaulMichael in an open, interactive setting. Gain clarity, understanding, and direction so you can decide your next steps with confidence.</p>
 
           <div className="cta-row">
             <button
@@ -423,9 +423,9 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
               data-delay="380"
               aria-label={timeLeft.expired ? 'Entry closed' : 'Join premium orientation - $49 for you and a friend'}
               disabled={timeLeft.expired}
-              onClick={() => { if (!timeLeft.expired) window.location.href = 'https://quickclick.com/r/oh051bejpnw86hvnmcq5gan6b29thi'; }}
+              onClick={() => { if (!timeLeft.expired) window.location.href = 'https://quickclick.com/r/umyn8o8j0efneovv79fuxl2bom7cfl'; }}
             >
-              <span className="btn-content">{timeLeft.expired ? 'Entry Closed' : 'Join Now - $49'}</span>
+              <span className="btn-content">{timeLeft.expired ? 'Entry Closed' : 'Join Now - $24.99'}</span>
             </button>
 
             <div className="countdown-wrap reveal" data-delay="420" aria-live="polite">
@@ -481,7 +481,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
             <div className="stripe" aria-hidden="true"></div>
 
             <div className="speaker-photo-wrap">
-              <img src='/images/event/event27.webp' alt="Paul Michael Rowland" className="speaker-photo" />
+              <img src='/images/event/event28.webp' alt="Paul Michael Rowland" className="speaker-photo" />
             </div>
 
             {/* <div className="speaker-overlay" aria-hidden="true">

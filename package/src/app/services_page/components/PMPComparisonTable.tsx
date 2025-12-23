@@ -83,7 +83,7 @@ export default function PMPComparisonTable() {
 
         <div className="flex justify-center mb-10">
           <a
-            href="/pmaform"
+            // href="/pmaform"
             className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 text-white font-bold text-lg shadow-xl transition-all duration-200 transform hover:scale-105 hover:brightness-110 hover:shadow-2xl active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-400/80"
             aria-label="Learn how a private account benefits you"
           >

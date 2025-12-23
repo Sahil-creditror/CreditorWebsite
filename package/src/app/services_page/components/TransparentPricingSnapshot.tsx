@@ -178,7 +178,7 @@ export default function TransparentPricingSnapshot() {
           </p> */}
 
           <a
-            href="/pmaform"
+            // href="/pmaform"
             className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 text-white font-bold text-xl shadow-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-3xl active:scale-95 focus:outline-none focus:ring-4 focus:ring-blue-400/50"
             aria-label="Request a custom quote"
           >

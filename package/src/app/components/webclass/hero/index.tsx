@@ -304,11 +304,13 @@ export default function WebclassSection() {
 
   // Modal and form state
   const [widgetOpen, setWidgetOpen] = useState(false);
+  const [formStep, setFormStep] = useState<1 | 2>(1);
   const [formData, setFormData] = useState<FormState>({ ...initialFormState });
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>(undefined);
   // Show more sessions in dropdown (e.g., next 20 sessions)
   const [sessions, setSessions] = useState<WebinarSession[]>(() => buildUpcomingSessions(20));
   const [selectedSessionKey, setSelectedSessionKey] = useState<string>(sessions[0]?.key || "");
+  const [watchRecording, setWatchRecording] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [touched, setTouched] = useState({
@@ -324,12 +326,31 @@ export default function WebclassSection() {
   const resetFormState = useCallback(() => {
     setFormData({ ...initialFormState });
     setPhoneNumber(undefined);
+    setWatchRecording(false);
+    setFormStep(1);
     setTouched({ email: false, first_name: false, last_name: false, session: false });
     const refreshedSessions = buildUpcomingSessions(20);
     setSessions(refreshedSessions);
     setSelectedSessionKey(refreshedSessions[0]?.key || "");
     setError(null);
   }, []);
+
+  const handleNextStep = () => {
+    // Validate step 1 before proceeding - must have either session selected or recording checked
+    if (!watchRecording && !selectedSessionKey) {
+      setTouched({ ...touched, session: true });
+      setError('Please choose either a live session or select to watch the previous recording');
+      return;
+    }
+    // Clear any errors and proceed to next step
+    setError(null);
+    setFormStep(2);
+  };
+
+  const handleBackStep = () => {
+    setFormStep(1);
+    setError(null);
+  };
 
   const handleWidgetOpen = useCallback(() => {
     resetFormState();
@@ -439,6 +460,11 @@ export default function WebclassSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Only submit if we're on step 2
+    if (formStep !== 2) {
+      return;
+    }
+    
     // Mark all fields as touched
     setTouched({
       email: true,
@@ -464,15 +490,60 @@ export default function WebclassSection() {
       setError('Please enter a valid email address');
       return;
     }
-    if (!selectedSessionKey) {
-      setError('Please choose the webinar session you want to attend');
-      return;
-    }
 
     setIsSubmitting(true);
     setError(null);
 
     try {
+      // Check if user selected "Watch Previous Recording" option
+      if (watchRecording) {
+        // For recording option, save to our recording registrations endpoint
+        // This ensures the registration appears in /webinar-registration page
+        console.log("[Webclass Modal] Submitting recording registration with:", {
+          email: formData.email,
+          first_name: formData.first_name,
+          last_name: formData.last_name,
+          phone_number: phoneNumber || formData.phone_number || '',
+          type: 'recording',
+        });
+
+        try {
+          const response = await fetch('/api/webx/recording-registrations', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: formData.email,
+              first_name: formData.first_name,
+              last_name: formData.last_name,
+              phone_number: phoneNumber || formData.phone_number || '',
+              webinar_id: DEFAULT_WEBINAR_ID,
+            }),
+          });
+
+          const result = await response.json();
+          
+          if (result.success && result.data) {
+            console.log("[Webclass Modal] Recording registration saved successfully");
+          } else {
+            console.warn("[Webclass Modal] Recording registration save failed (non-blocking):", result.error);
+          }
+        } catch (err) {
+          console.warn("[Webclass Modal] Error saving recording registration (non-blocking):", err);
+        }
+
+        // Always redirect to video page regardless of save result
+        const params = new URLSearchParams({
+          name: `${formData.first_name} ${formData.last_name}`,
+          email: formData.email,
+          type: 'recording',
+        });
+
+        router.push(`/webinar-recording?${params.toString()}`);
+        return;
+      }
+
       // Determine baseKey for selected session
       const baseKey = selectedSession?.baseKey || selectedSession?.key.split("-")[0] || "morning";
 
@@ -817,162 +888,267 @@ export default function WebclassSection() {
               </div>
 
               <form onSubmit={handleSubmit} className="registration-form">
-                <div className="form-group">
-                  <label htmlFor="webinar_session" className="form-label">
-                    Choose Your Session <span className="required">*</span>
-                  </label>
-                  <div className="form-select-wrapper">
-                    <select
-                      id="webinar_session"
-                      className={`form-input form-select-input ${touched.session && !selectedSessionKey ? 'form-input-error' : ''}`}
-                      value={selectedSessionKey}
-                      onChange={(e) => {
-                        setSelectedSessionKey(e.target.value);
-                        setError(null);
-                      }}
-                      onBlur={() => handleBlur('session')}
-                      disabled={isSubmitting || sessions.length === 0}
+                {/* Step Indicator */}
+                <div className="form-step-indicator">
+                  <div className={`form-step ${formStep === 1 ? 'form-step-active' : formStep > 1 ? 'form-step-completed' : ''}`}>
+                    <div className="form-step-number">1</div>
+                    <div className="form-step-label">Choose Session</div>
+                  </div>
+                  <div className={`form-step-line ${formStep === 2 ? 'form-step-line-active' : ''}`}></div>
+                  <div className={`form-step ${formStep === 2 ? 'form-step-active' : ''}`}>
+                    <div className="form-step-number">2</div>
+                    <div className="form-step-label">Personal Details</div>
+                  </div>
+                </div>
+
+                {/* Step 1: Session Selection */}
+                {formStep === 1 && (
+                  <div className="form-step-content">
+                    <div className="form-group">
+                      <label htmlFor="webinar_session" className="form-label">
+                        Choose Your Live Session <span className="required">*</span>
+                      </label>
+                      <div className="form-select-wrapper">
+                        <select
+                          id="webinar_session"
+                          className={`form-input form-select-input ${touched.session && !selectedSessionKey && !watchRecording ? 'form-input-error' : ''}`}
+                          value={selectedSessionKey}
+                          onChange={(e) => {
+                            setSelectedSessionKey(e.target.value);
+                            if (e.target.value) {
+                              setWatchRecording(false);
+                            }
+                            setError(null);
+                          }}
+                          onBlur={() => handleBlur('session')}
+                          disabled={isSubmitting || sessions.length === 0 || watchRecording}
+                        >
+                          <option value="">Select a session time...</option>
+                          {sessions.map((session: WebinarSession) => (
+                            <option key={session.key} value={session.key}>
+                              {session.label} — {session.time}
+                            </option>
+                          ))}
+                        </select>
+                        <span className="form-select-icon" aria-hidden="true">
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </span>
+                      </div>
+                      {selectedSession && !watchRecording && (
+                        <p className="form-select-detail">
+                          You're reserving the <strong>{selectedSession.label}</strong> starting at {selectedSession.time} {sessionTimezoneLabel}.
+                        </p>
+                      )}
+                      {touched.session && !selectedSessionKey && !watchRecording && (
+                        <p className="form-error">Please select the time you plan to attend</p>
+                      )}
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                        Times listed in Pacific Time (PST). Choose whichever works best for you.
+                      </p>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="form-divider">
+                      <span className="form-divider-text">OR</span>
+                    </div>
+
+                    {/* Watch Recording Option */}
+                    <div className="form-group">
+                      <div className={`form-recording-option ${watchRecording ? 'form-recording-option-selected' : ''}`}>
+                        <label className="form-recording-label">
+                          <input
+                            type="checkbox"
+                            checked={watchRecording}
+                            onChange={(e) => {
+                              setWatchRecording(e.target.checked);
+                              if (e.target.checked) {
+                                setSelectedSessionKey("");
+                              }
+                              setError(null);
+                            }}
+                            disabled={isSubmitting}
+                            className="form-recording-checkbox"
+                          />
+                          <div className="form-recording-content">
+                            <div className="form-recording-header">
+                              <span className="form-recording-title">In a Hurry? Watch Previous Recording</span>
+                            </div>
+                          </div>
+                        </label>
+                      </div>
+                      {watchRecording && (
+                        <p className="form-select-detail mt-2">
+                          You'll watch the <strong>previous session recording</strong> immediately after registration.
+                        </p>
+                      )}
+                    </div>
+
+                    {error && (
+                      <div className="form-error-message">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <line x1="12" y1="8" x2="12" y2="12"></line>
+                          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <span>{error}</span>
+                      </div>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={handleNextStep}
+                      className="btn btn-primary form-submit"
+                      disabled={isSubmitting || (!watchRecording && !selectedSessionKey)}
                     >
-                      {sessions.map((session: WebinarSession) => (
-                        <option key={session.key} value={session.key}>
-                          {session.label} — {session.time}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="form-select-icon" aria-hidden="true">⌄</span>
-                  </div>
-                  {selectedSession && (
-                    <p className="form-select-detail">
-                      You’re reserving the <strong>{selectedSession.label}</strong> starting at {selectedSession.time} {sessionTimezoneLabel}.
-                    </p>
-                  )}
-                  {touched.session && !selectedSessionKey && (
-                    <p className="form-error">Please select the time you plan to attend</p>
-                  )}
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    Times listed in Pacific Time (PST). Choose whichever works best for you.
-                  </p>
-                </div>
-
-                <div className="form-row">
-                  <div className="form-group">
-                    <label htmlFor="first_name" className="form-label">
-                      First Name <span className="required">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="first_name"
-                      className={`form-input ${touched.first_name && !formData.first_name.trim() ? 'form-input-error' : ''}`}
-                      value={formData.first_name}
-                      onChange={(e) => handleChange('first_name', e.target.value)}
-                      onBlur={() => handleBlur('first_name')}
-                      disabled={isSubmitting}
-                      placeholder="Enter your first name"
-                      autoComplete="given-name"
-                    />
-                    {touched.first_name && !formData.first_name.trim() && (
-                      <p className="form-error">First name is required</p>
-                    )}
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="last_name" className="form-label">
-                      Last Name <span className="required">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="last_name"
-                      className={`form-input ${touched.last_name && !formData.last_name.trim() ? 'form-input-error' : ''}`}
-                      value={formData.last_name}
-                      onChange={(e) => handleChange('last_name', e.target.value)}
-                      onBlur={() => handleBlur('last_name')}
-                      disabled={isSubmitting}
-                      placeholder="Enter your last name"
-                      autoComplete="family-name"
-                    />
-                    {touched.last_name && !formData.last_name.trim() && (
-                      <p className="form-error">Last name is required</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email" className="form-label">
-                    Email Address <span className="required">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    className={`form-input ${touched.email && (!formData.email.trim() || !validateEmail(formData.email)) ? 'form-input-error' : ''}`}
-                    value={formData.email}
-                    onChange={(e) => handleChange('email', e.target.value)}
-                    onBlur={() => handleBlur('email')}
-                    disabled={isSubmitting}
-                    placeholder="your.email@example.com"
-                    autoComplete="email"
-                  />
-                  {touched.email && !formData.email.trim() && (
-                    <p className="form-error">Email is required</p>
-                  )}
-                  {touched.email && formData.email.trim() && !validateEmail(formData.email) && (
-                    <p className="form-error">Please enter a valid email</p>
-                  )}
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="phone_number" className="form-label">
-                    Phone Number <span className="optional">(Optional)</span>
-                  </label>
-                  <PhoneInput
-                    international
-                    defaultCountry="US"
-                    value={phoneNumber}
-                    onChange={setPhoneNumber}
-                    disabled={isSubmitting}
-                    className="form-phone-input-wrapper"
-                    numberInputProps={{
-                      id: "phone_number",
-                      className: "form-input form-phone-input",
-                      placeholder: "(555) 123-4567",
-                      autoComplete: "tel",
-                    }}
-                  />
-                </div>
-
-                {error && (
-                  <div className="form-error-message">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <line x1="12" y1="8" x2="12" y2="12"></line>
-                      <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                    </svg>
-                    <span>{error}</span>
-                  </div>
-                )}
-
-                <button
-                  type="submit"
-                  className="btn btn-primary form-submit"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <svg className="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <circle className="opacity-25" cx="12" cy="12" r="10"></circle>
-                        <path className="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Registering...
-                    </>
-                  ) : (
-                    <>
-                      Complete Registration
+                      Next
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                         <polyline points="12 5 19 12 12 19"></polyline>
                       </svg>
-                    </>
-                  )}
-                </button>
+                    </button>
+                  </div>
+                )}
+
+                {/* Step 2: Personal Details */}
+                {formStep === 2 && (
+                  <div className="form-step-content">
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label htmlFor="first_name" className="form-label">
+                          First Name <span className="required">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="first_name"
+                          className={`form-input ${touched.first_name && !formData.first_name.trim() ? 'form-input-error' : ''}`}
+                          value={formData.first_name}
+                          onChange={(e) => handleChange('first_name', e.target.value)}
+                          onBlur={() => handleBlur('first_name')}
+                          disabled={isSubmitting}
+                          placeholder="Enter your first name"
+                          autoComplete="given-name"
+                        />
+                        {touched.first_name && !formData.first_name.trim() && (
+                          <p className="form-error">First name is required</p>
+                        )}
+                      </div>
+
+                      <div className="form-group">
+                        <label htmlFor="last_name" className="form-label">
+                          Last Name <span className="required">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="last_name"
+                          className={`form-input ${touched.last_name && !formData.last_name.trim() ? 'form-input-error' : ''}`}
+                          value={formData.last_name}
+                          onChange={(e) => handleChange('last_name', e.target.value)}
+                          onBlur={() => handleBlur('last_name')}
+                          disabled={isSubmitting}
+                          placeholder="Enter your last name"
+                          autoComplete="family-name"
+                        />
+                        {touched.last_name && !formData.last_name.trim() && (
+                          <p className="form-error">Last name is required</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="email" className="form-label">
+                        Email Address <span className="required">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        className={`form-input ${touched.email && (!formData.email.trim() || !validateEmail(formData.email)) ? 'form-input-error' : ''}`}
+                        value={formData.email}
+                        onChange={(e) => handleChange('email', e.target.value)}
+                        onBlur={() => handleBlur('email')}
+                        disabled={isSubmitting}
+                        placeholder="your.email@example.com"
+                        autoComplete="email"
+                      />
+                      {touched.email && !formData.email.trim() && (
+                        <p className="form-error">Email is required</p>
+                      )}
+                      {touched.email && formData.email.trim() && !validateEmail(formData.email) && (
+                        <p className="form-error">Please enter a valid email</p>
+                      )}
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="phone_number" className="form-label">
+                        Phone Number <span className="optional">(Optional)</span>
+                      </label>
+                      <PhoneInput
+                        international
+                        defaultCountry="US"
+                        value={phoneNumber}
+                        onChange={setPhoneNumber}
+                        disabled={isSubmitting}
+                        className="form-phone-input-wrapper"
+                        numberInputProps={{
+                          id: "phone_number",
+                          className: "form-input form-phone-input",
+                          placeholder: "(555) 123-4567",
+                          autoComplete: "tel",
+                        }}
+                      />
+                    </div>
+
+                    {error && (
+                      <div className="form-error-message">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <line x1="12" y1="8" x2="12" y2="12"></line>
+                          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <span>{error}</span>
+                      </div>
+                    )}
+
+                    <div className="form-step-actions">
+                      <button
+                        type="button"
+                        onClick={handleBackStep}
+                        className="btn btn-secondary form-back-button"
+                        disabled={isSubmitting}
+                      >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <line x1="19" y1="12" x2="5" y2="12"></line>
+                          <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        Back
+                      </button>
+                      <button
+                        type="submit"
+                        className="btn btn-primary form-submit"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <svg className="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <circle className="opacity-25" cx="12" cy="12" r="10"></circle>
+                              <path className="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Registering...
+                          </>
+                        ) : (
+                          <>
+                            Complete Registration
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <line x1="5" y1="12" x2="19" y2="12"></line>
+                              <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 <div className="form-footer">
                   <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
@@ -1102,14 +1278,23 @@ export default function WebclassSection() {
         }
         .form-row {
           display: flex;
-          flex-wrap: wrap;
+          flex-direction: column;
           gap: 16px;
         }
         .form-row .form-group {
-          flex: 1;
-          min-width: 220px;
+          width: 100%;
         }
-        @media (max-width: 640px) {
+        @media (min-width: 768px) {
+          .form-row {
+            flex-direction: row;
+            flex-wrap: nowrap;
+          }
+          .form-row .form-group {
+            flex: 1;
+            min-width: 0;
+          }
+        }
+        @media (max-width: 767px) {
           .form-row {
             flex-direction: column;
           }
@@ -1162,15 +1347,34 @@ export default function WebclassSection() {
         }
         .form-select-icon {
           position: absolute;
-          right: 16px;
+          right: 12px;
           top: 50%;
           transform: translateY(-50%);
-          font-size: 20px;
           color: #555;
           pointer-events: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          background: #f3f4f6;
+          transition: all 0.2s;
+        }
+        .form-select-icon svg {
+          width: 12px;
+          height: 12px;
+          display: block;
         }
         .dark .form-select-icon {
           color: #ccc;
+          background: #374151;
+        }
+        .form-select-input:focus ~ .form-select-icon {
+          background: #e0e7ff;
+        }
+        .dark .form-select-input:focus ~ .form-select-icon {
+          background: rgba(69, 190, 255, 0.2);
         }
         .form-select-detail {
           font-size: 12px;
@@ -1276,6 +1480,266 @@ export default function WebclassSection() {
         }
         .dark .form-footer svg {
           color: #45beff;
+        }
+        /* Step Indicator Styling */
+        .form-step-indicator {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          margin-bottom: 32px;
+          padding: 0 8px;
+        }
+        .form-step {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+          flex: 0 0 auto;
+          min-width: 120px;
+        }
+        .form-step-number {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 600;
+          font-size: 16px;
+          background: #e5e5e5;
+          color: #9ca3af;
+          border: 2px solid #e5e5e5;
+          transition: all 0.3s;
+        }
+        .dark .form-step-number {
+          background: #2a2a2a;
+          border-color: #444;
+          color: #666;
+        }
+        .form-step-active .form-step-number {
+          background: #026fe2;
+          border-color: #026fe2;
+          color: white;
+          box-shadow: 0 0 0 4px rgba(2, 111, 226, 0.1);
+        }
+        .dark .form-step-active .form-step-number {
+          background: #45beff;
+          border-color: #45beff;
+          color: #0a0e14;
+          box-shadow: 0 0 0 4px rgba(69, 190, 255, 0.1);
+        }
+        .form-step-completed .form-step-number {
+          background: #10b981;
+          border-color: #10b981;
+          color: white;
+        }
+        .form-step-label {
+          font-size: 13px;
+          font-weight: 500;
+          color: #6b7280;
+          text-align: center;
+          white-space: nowrap;
+        }
+        .dark .form-step-label {
+          color: #9ca3af;
+        }
+        .form-step-active .form-step-label {
+          color: #026fe2;
+          font-weight: 600;
+        }
+        .dark .form-step-active .form-step-label {
+          color: #45beff;
+        }
+        .form-step-completed .form-step-label {
+          color: #10b981;
+        }
+        .form-step-line {
+          flex: 1;
+          height: 2px;
+          background: #e5e7eb;
+          max-width: 80px;
+          margin: 0 4px;
+          position: relative;
+          transition: background 0.3s;
+        }
+        .dark .form-step-line {
+          background: #444;
+        }
+        .form-step-line-active {
+          background: #026fe2;
+        }
+        .dark .form-step-line-active {
+          background: #45beff;
+        }
+        .form-step-content {
+          animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .form-step-actions {
+          display: flex;
+          gap: 12px;
+          margin-top: 8px;
+        }
+        .form-back-button {
+          padding: 14px 24px;
+          background: #f3f4f6;
+          color: #374151;
+          border: 2px solid #e5e5e5;
+          border-radius: 8px;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          transition: all 0.2s;
+          flex: 0 0 auto;
+        }
+        .dark .form-back-button {
+          background: #2a2a2a;
+          border-color: #444;
+          color: #e5e5e5;
+        }
+        .form-back-button:hover:not(:disabled) {
+          background: #e5e7eb;
+          border-color: #d1d5db;
+        }
+        .dark .form-back-button:hover:not(:disabled) {
+          background: #333;
+          border-color: #555;
+        }
+        .form-back-button:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+        .form-step-actions .form-submit {
+          flex: 1;
+          margin-top: 0;
+        }
+        /* Recording Option Styling */
+        .form-recording-option {
+          border: 2px solid #e5e7eb;
+          border-radius: 8px;
+          padding: 16px;
+          background: white;
+          transition: all 0.2s;
+          cursor: pointer;
+        }
+        .dark .form-recording-option {
+          background: #1a1a1a;
+          border-color: #444;
+        }
+        .form-recording-option:hover {
+          border-color: #026fe2;
+          background: #f8fafc;
+        }
+        .dark .form-recording-option:hover {
+          border-color: #45beff;
+          background: #1a1f2e;
+        }
+        .form-recording-option-selected {
+          border-color: #026fe2;
+          background: #eff6ff;
+        }
+        .dark .form-recording-option-selected {
+          border-color: #45beff;
+          background: rgba(69, 190, 255, 0.1);
+        }
+        .form-recording-label {
+          display: flex;
+          align-items: flex-start;
+          gap: 12px;
+          cursor: pointer;
+          margin: 0;
+        }
+        .form-recording-checkbox {
+          width: 20px;
+          height: 20px;
+          margin-top: 2px;
+          cursor: pointer;
+          accent-color: #026fe2;
+          flex-shrink: 0;
+        }
+        .dark .form-recording-checkbox {
+          accent-color: #45beff;
+        }
+        .form-recording-checkbox:disabled {
+          cursor: not-allowed;
+          opacity: 0.6;
+        }
+        .form-recording-content {
+          flex: 1;
+        }
+        .form-recording-header {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 6px;
+        }
+        .form-recording-icon {
+          font-size: 24px;
+        }
+        .form-recording-title {
+          font-size: 15px;
+          font-weight: 500;
+          color: #111;
+        }
+        .dark .form-recording-title {
+          color: #e5e5e5;
+        }
+        .form-recording-option-selected .form-recording-title {
+          color: #026fe2;
+          font-weight: 600;
+        }
+        .dark .form-recording-option-selected .form-recording-title {
+          color: #45beff;
+        }
+        .form-recording-description {
+          font-size: 14px;
+          color: #666;
+          margin: 0;
+          line-height: 1.5;
+        }
+        .dark .form-recording-description {
+          color: #999;
+        }
+        .form-divider {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin: 0px 0;
+        }
+        .form-divider::before,
+        .form-divider::after {
+          content: '';
+          flex: 1;
+          height: 1px;
+          background: #e5e5e5;
+        }
+        .dark .form-divider::before,
+        .dark .form-divider::after {
+          background: #444;
+        }
+        .form-divider-text {
+          font-size: 14px;
+          font-weight: 600;
+          color: #666;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+        .dark .form-divider-text {
+          color: #999;
         }
         /* React Phone Number Input Styling */
         .form-phone-input-wrapper {

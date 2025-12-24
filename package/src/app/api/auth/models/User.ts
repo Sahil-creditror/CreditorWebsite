@@ -38,8 +38,7 @@ const UserSchema: Schema = new Schema(
   }
 );
 
-// Create index on email for faster lookups
-UserSchema.index({ email: 1 });
+// Note: No need for explicit index on email - 'unique: true' automatically creates an index
 
 // Export the model
 const User: Model<IUser> =

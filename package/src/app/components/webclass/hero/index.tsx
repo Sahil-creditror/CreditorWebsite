@@ -10,6 +10,8 @@ import {
   fetchOccurrences,
   OccurrenceItem,
 } from "@/services/zoom";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
 /**
  * Fixed daily webinar times in PST (24h format).
@@ -113,6 +115,7 @@ const initialFormState: FormState = {
   last_name: '',
   phone_number: '',
 };
+
 
 type WebinarSession = {
   key: string;
@@ -302,6 +305,7 @@ export default function WebclassSection() {
   // Modal and form state
   const [widgetOpen, setWidgetOpen] = useState(false);
   const [formData, setFormData] = useState<FormState>({ ...initialFormState });
+  const [phoneNumber, setPhoneNumber] = useState<string | undefined>(undefined);
   // Show more sessions in dropdown (e.g., next 20 sessions)
   const [sessions, setSessions] = useState<WebinarSession[]>(() => buildUpcomingSessions(20));
   const [selectedSessionKey, setSelectedSessionKey] = useState<string>(sessions[0]?.key || "");
@@ -319,6 +323,7 @@ export default function WebclassSection() {
 
   const resetFormState = useCallback(() => {
     setFormData({ ...initialFormState });
+    setPhoneNumber(undefined);
     setTouched({ email: false, first_name: false, last_name: false, session: false });
     const refreshedSessions = buildUpcomingSessions(20);
     setSessions(refreshedSessions);
@@ -488,6 +493,7 @@ export default function WebclassSection() {
 
       const result = await registerZoomWebinar({
         ...formData,
+        phone_number: phoneNumber || formData.phone_number || '',
         webinarId: sessionId,
         occurrence_id: occurrenceId,
       });
@@ -917,15 +923,19 @@ export default function WebclassSection() {
                   <label htmlFor="phone_number" className="form-label">
                     Phone Number <span className="optional">(Optional)</span>
                   </label>
-                  <input
-                    type="tel"
-                    id="phone_number"
-                    className="form-input"
-                    value={formData.phone_number || ''}
-                    onChange={(e) => handleChange('phone_number', e.target.value)}
+                  <PhoneInput
+                    international
+                    defaultCountry="US"
+                    value={phoneNumber}
+                    onChange={setPhoneNumber}
                     disabled={isSubmitting}
-                    placeholder="+1 (555) 123-4567"
-                    autoComplete="tel"
+                    className="form-phone-input-wrapper"
+                    numberInputProps={{
+                      id: "phone_number",
+                      className: "form-input form-phone-input",
+                      placeholder: "(555) 123-4567",
+                      autoComplete: "tel",
+                    }}
                   />
                 </div>
 
@@ -1266,6 +1276,93 @@ export default function WebclassSection() {
         }
         .dark .form-footer svg {
           color: #45beff;
+        }
+        /* React Phone Number Input Styling */
+        .form-phone-input-wrapper {
+          width: 100%;
+        }
+        .PhoneInput {
+          display: flex;
+          align-items: stretch;
+          gap: 8px;
+        }
+        .PhoneInputCountry {
+          flex-shrink: 0;
+        }
+        .PhoneInputCountryIcon {
+          width: 20px;
+          height: 15px;
+          box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+          border-radius: 2px;
+        }
+        .PhoneInputCountrySelect {
+          padding: 12px 36px 12px 12px;
+          border: 2px solid #e5e5e5;
+          border-radius: 8px;
+          font-size: 16px;
+          transition: all 0.2s;
+          background: white;
+          color: #111;
+          cursor: pointer;
+          min-width: 100px;
+          appearance: none;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 12px center;
+          background-size: 12px;
+        }
+        .dark .PhoneInputCountrySelect {
+          background: #2a2a2a;
+          border-color: #444;
+          color: #e5e5e5;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23e5e5e5' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+        }
+        .PhoneInputCountrySelect:focus {
+          outline: none;
+          border-color: #026fe2;
+          box-shadow: 0 0 0 3px rgba(2, 111, 226, 0.1);
+        }
+        .dark .PhoneInputCountrySelect:focus {
+          border-color: #45beff;
+          box-shadow: 0 0 0 3px rgba(69, 190, 255, 0.1);
+        }
+        .PhoneInputCountrySelect:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+        .PhoneInputInput {
+          flex: 1;
+          padding: 12px 16px;
+          border: 2px solid #e5e5e5;
+          border-radius: 8px;
+          font-size: 16px;
+          transition: all 0.2s;
+          background: white;
+          color: #111;
+        }
+        .dark .PhoneInputInput {
+          background: #2a2a2a;
+          border-color: #444;
+          color: #e5e5e5;
+        }
+        .PhoneInputInput:focus {
+          outline: none;
+          border-color: #026fe2;
+          box-shadow: 0 0 0 3px rgba(2, 111, 226, 0.1);
+        }
+        .dark .PhoneInputInput:focus {
+          border-color: #45beff;
+          box-shadow: 0 0 0 3px rgba(69, 190, 255, 0.1);
+        }
+        .PhoneInputInput:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+        .PhoneInputInput::placeholder {
+          color: #999;
+        }
+        .dark .PhoneInputInput::placeholder {
+          color: #666;
         }
       `}</style>
     </>

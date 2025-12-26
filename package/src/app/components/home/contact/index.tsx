@@ -22,7 +22,7 @@ export default function Contact(props: ContactProps) {
   return (
     <section className="relative py-20 md:py-24 overflow-hidden">
       {/* Festive corner illustrations */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden z-40">
+      {/* <div className="pointer-events-none absolute inset-0 overflow-hidden z-40">
       <Image
         src="/images/contact/banner/contact_bg.png"
         alt="Santa waving"
@@ -39,8 +39,6 @@ export default function Contact(props: ContactProps) {
           select-none
         "
       />
-
-
         <Image
           src="/images/hero/santa.png"
           alt="Santa waving"
@@ -57,7 +55,7 @@ export default function Contact(props: ContactProps) {
           priority
           className="absolute bottom-0 right-0 w-36 md:w-52 h-auto drop-shadow-xl select-none"
         />
-      </div>
+      </div> */}
 
       <div className="container relative z-10">
         <div className="mx-auto flex flex-col gap-8 md:gap-12">
@@ -67,25 +65,6 @@ export default function Contact(props: ContactProps) {
             <div className="flex flex-col gap-8">
               {/* Title and Subtitle */}
               <div>
-                <span className="inline-flex items-center justify-center px-5 py-2 mb-5 text-sm font-semibold tracking-wide rounded-full overflow-hidden bg-gradient-to-r from-blue-500/20 via-blue-400/10 to-blue-600/20 dark:from-blue-400/10 dark:via-blue-500/5 dark:to-blue-600/10 border border-blue-500/30 dark:border-blue-400/30 backdrop-blur-md text-blue-800 dark:text-blue-300 shadow-[0_0_15px_rgba(59,130,246,0.15)]">
-                  <span className="flex items-center gap-2">
-                    <svg
-                      className="w-4 h-4 text-blue-600 dark:text-blue-400"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                      />
-                    </svg>
-                    Contact Us
-                  </span>
-                </span>
-
                 <div className="relative inline-block">
                   <span className="absolute inset-0 -inset-x-2 -inset-y-1 rounded-full bg-gradient-to-r from-sky-100 via-blue-50 to-blue-100 dark:from-blue-900/40 dark:via-blue-800/30 dark:to-sky-900/30 blur-sm" />
                   <h2 className="relative px-3 py-1 bg-clip-text text-transparent bg-gradient-to-r from-sky-500 via-blue-500 to-blue-700 drop-shadow-sm">

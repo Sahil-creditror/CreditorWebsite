@@ -12,13 +12,11 @@ function Courses() {
         bannerimage="/images/courses/course-banner.webp"
         heading="Explore Our Premium Catalogs"
         desc="Learn Differently. Grow Distinctively. Become Private with Our Premium Catalogs."
-        // badgeNumber="03"
-        // badgeText="Courses"
       />
 
       <section className="relative py-20 md:py-20 overflow-hidden">
         {/* Christmas bell in top right corner */}
-        <div className="absolute top-0 left-0 z-20 pointer-events-none">
+        {/* <div className="absolute top-0 left-0 z-20 pointer-events-none">
           <Image
             src="/images/hero/bell.png"
             alt="Christmas Bell"
@@ -27,15 +25,19 @@ function Courses() {
             priority
             className="w-32 md:w-44 lg:w-52 h-auto drop-shadow-xl select-none"
           />
-        </div>
+        </div> */}
 
         {/* Light-mode background image (hidden in dark mode) */}
-        
-        <img
-          src="/images/courses/course_bg.webp"
-          alt="Background"
-          className="absolute top-0 left-0 w-full h-full object-cover -z-20 dark:hidden"
-        />
+        <video
+          className="absolute top-0 left-0 w-full h-full object-cover -z-20 block dark:hidden"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="/video/course-bg-light.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
 
         {/* Dark-mode background video (hidden in light mode) */}
         <video
@@ -59,7 +61,7 @@ function Courses() {
         </div>
 
         {/* Snow image at bottom right of section */}
-        <div className="absolute bottom-0 right-0 z-20">
+        {/* <div className="absolute bottom-0 right-0 z-20">
           <Image
             src="/images/courses/santa.webp"
             alt="Snow decoration"
@@ -67,7 +69,7 @@ function Courses() {
             height={200}
             className="object-contain"
           />
-        </div>
+        </div> */}
       </section>
 
     </>

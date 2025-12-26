@@ -73,7 +73,7 @@ const HerobannerWithTag: React.FC<HeroBannerWithTagProps> = ({
           {/* Logo (replaces previous description area) */}
           <div className="flex items-start">
             <Image
-              src="/images/logo/creditorlogo.webp"
+              src="/images/logo/creditorlogowhite.webp"
               alt="Creditor Logo"
               width={600}
               height={120}

@@ -291,10 +291,10 @@ export default function WebclassSection() {
                     boxShadow: "0 8px 20px rgba(255, 193, 7, 0.4)"
                   }}
                 >
-                  Register For The Webclass Now!
+                  Go to Registration Page
                 </a>
                 <p className="mt-2 text-xs md:text-sm text-white dark:text-gray-400" style={{ fontFamily: "Arial, sans-serif" }}>
-                  Save My Seat For The Private Operation Webclass
+                  Learn More About The Private Operation Webclass
                 </p>
               </div>
 

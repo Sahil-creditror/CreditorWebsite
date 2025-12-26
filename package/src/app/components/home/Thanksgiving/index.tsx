@@ -47,10 +47,10 @@ const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000, d
                 🎓 Exclusive Webinar – Limited Time!
               </div>
               <h2 className="text-[clamp(20px,2.5vw,32px)] md:text-[clamp(24px,2.5vw,32px)] font-extrabold text-white leading-tight">
-                Join Our Exclusive Webinar
+                Become & Operate Private
               </h2>
               <p className="text-sm md:text-[14px] text-[rgba(230,240,255,0.9)] leading-relaxed">
-                Don't miss out on this incredible opportunity! Join our exclusive webinar to learn from industry experts, gain valuable insights, and take your skills to the next level. Register now and secure your spot!
+                Learn how people are stepping out of the public system, reclaiming sovereignty, and operating in private to gain more control, limit unnecessary liability, and work toward true financial freedom — regardless of their current situation.
               </p>
 
               {/* <div className="bg-gradient-to-r from-[#2563eb] to-[#0ea5e9] text-white px-4 py-2.5 md:px-5 md:py-3 rounded-lg text-xs md:text-sm font-semibold inline-block animate-pulse">

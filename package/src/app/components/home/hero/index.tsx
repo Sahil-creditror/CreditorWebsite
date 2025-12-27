@@ -217,8 +217,8 @@ const HeroSection = () => {
             animate="visible"
             variants={contentVariants}
           >
-            {/* Logo only (replace previous subtext) */}
-            <div className="flex justify-start sm:justify-start md:justify-start lg:justify-start ml-12 sm:ml-14 md:ml-16 lg:ml-20 mt-4 sm:mt-6">
+       {/* Logo only (replace previous subtext) */}
+<div className="relative z-10 flex justify-start sm:justify-start md:justify-start lg:justify-start ml-12 sm:ml-14 md:ml-16 lg:ml-20 mt-4 sm:mt-6">
   <Image
     src="/images/logo/credi_logoo.png"
     alt="Creditor Logo"
@@ -229,6 +229,7 @@ const HeroSection = () => {
                w-52 sm:w-60 md:w-80 lg:w-[420px]"
   />
 </div>
+
 
 
             {/* Title */}

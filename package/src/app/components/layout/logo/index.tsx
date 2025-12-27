@@ -4,7 +4,7 @@ import Link from 'next/link';
 const Logo = (props: { sticky: boolean }) => {
     const { sticky } = props;
     return (
-        <Link href="/">
+        <Link href="/" className={sticky ? "opacity-100 transition-opacity duration-300" : "opacity-0 pointer-events-none transition-opacity duration-300"}>
             <Image
                 src={sticky ? "/images/logo/creditorlogowhite.webp" : "/images/logo/creditorlogo.webp"}
                 alt="logo"

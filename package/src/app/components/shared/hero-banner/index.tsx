@@ -44,17 +44,22 @@ const Herobanner: React.FC<HeroBannerProps> = ({
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-left">
-        <div className="flex flex-col gap-4 sm:gap-6 pb-10 sm:pb-16 xl:pb-20">
+      <div className="flex flex-col gap-2 sm:gap-3 pb-10 sm:pb-14 xl:pb-16">
+
           {/* Logo (replaces previous description area) */}
-          <div className="flex items-start">
-            <Image
-              src="/images/logo/creditorlogo.webp"
-              alt="Creditor Logo"
-              width={600}
-              height={120}
-              priority
-            />
-          </div>
+   {/* Logo */}
+<div className="flex justify-start ml-10 sm:ml-12 md:ml-14 lg:ml-16 mt-6 sm:mt-8 mb-2">
+  <Image
+    src="/images/logo/credi_logoo.png"
+    alt="Creditor Logo"
+    width={320}
+    height={80}
+    priority
+    className="object-contain 
+               w-44 sm:w-52 md:w-64 lg:w-[300px]"
+  />
+</div>
+
 
           {/* Heading + Button Row */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">

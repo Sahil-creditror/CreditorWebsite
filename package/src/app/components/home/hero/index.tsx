@@ -212,21 +212,24 @@ const HeroSection = () => {
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 sm:px-6 text-left pb-0 sm:pb-20">
           <motion.div
-            className="flex flex-col gap-4 sm:gap-6"
+            className="flex flex-col gap-1 sm:gap-2"
             initial="hidden"
             animate="visible"
             variants={contentVariants}
           >
             {/* Logo only (replace previous subtext) */}
-            <div className="flex items-start">
-              <Image
-                src="/images/logo/creditorlogo.webp"
-                alt="Creditor Logo"
-                width={600}
-                height={120}
-                priority
-              />
-            </div>
+            <div className="flex justify-start sm:justify-start md:justify-start lg:justify-start ml-12 sm:ml-14 md:ml-16 lg:ml-20 mt-4 sm:mt-6">
+  <Image
+    src="/images/logo/credi_logoo.png"
+    alt="Creditor Logo"
+    width={450}
+    height={110}
+    priority
+    className="object-contain 
+               w-52 sm:w-60 md:w-80 lg:w-[420px]"
+  />
+</div>
+
 
             {/* Title */}
             <h1 className="text-3xl sm:text-3xl md:text-6xl xl:text-7xl font-extrabold tracking-tight leading-tight">

@@ -6,24 +6,24 @@ export default function LearningSection() {
   const learningPoints = [
     {
       secret: "SECRET #1",
-      title: "The Validation Bomb",
+      title: "Status and Standing",
       description:
-        "One 37-word paragraph that forces ANY collector to prove they own your debt in 30 days… or the debt is PERMANENTLY deleted from your credit – even if you actually owed it!",
-      image: "/images/webinar/validation.webp",
+        "Learn what it actually means to become private—how the public system defines you by default, how private people think about status, capacity, and positioning, and the lawful framework we teach so you can move with clarity, confidence, and control.",
+      image: "/images/webinar/3.webp",
     },
     {
       secret: "SECRET #2",
-      title: "The Cease & Desist Trilogy",
+      title: "The Private Operating System",
       description:
-        "The exact 3-letter sequence that legally GAGS collectors, stops ALL calls, kills lawsuits before they're filed, and makes them pay YOU up to $1,000 every time they break the rules.",
-      image: "/images/webinar/cease.webp",
+        "Discover the core structures of private operation—how business trusts and private associations are used to create separation, privacy, and protection in commerce, assets, and family legacy planning, so your life and business stop being exposed to the public world's rules by default.",
+      image: "/images/webinar/2.webp",
     },
     {
       secret: "SECRET #3",
-      title: "The Nuclear Dismissal Blueprint",
+      title: "Financial Freedom",
       description:
-        "Paulmichael's courtroom motion template that has dismissed over 9,000 debt lawsuits (90% success rate) – works even if you've already been served, garnished, or have a default judgment!",
-      image: "/images/webinar/nuclear.webp",
+        "Learn how to build real financial leverage the private way—strengthening personal credit fundamentals, building elite business credit with an unincorporated business trust strategy, and setting up private merchant processing so you can run transactions cleanly, scale smoothly, and operate like a serious private enterprise.",
+      image: "/images/webinar/1.webp",
     },
   ];
 

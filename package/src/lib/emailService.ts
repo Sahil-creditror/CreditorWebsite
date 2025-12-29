@@ -94,10 +94,50 @@ function getTeamEmails(): string[] {
 }
 
 /**
+ * Format date/time string to PST timezone
+ * Returns formatted string with both date and time like "Monday, January 15, 2024 at 11:15 AM PST"
+ */
+function formatToPST(dateString?: string): string | null {
+  if (!dateString) return null;
+  
+  try {
+    const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) {
+      return null;
+    }
+    
+    // Format date part in PST timezone
+    const datePart = date.toLocaleDateString("en-US", {
+      timeZone: "America/Los_Angeles",
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    
+    // Format time part in PST timezone
+    const timePart = date.toLocaleTimeString("en-US", {
+      timeZone: "America/Los_Angeles",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+      timeZoneName: "short",
+    });
+    
+    // Combine date and time
+    return `${datePart} at ${timePart}`;
+  } catch (error) {
+    console.error("[EMAIL] Error formatting date to PST:", error);
+    return null;
+  }
+}
+
+/**
  * Generate HTML email template for team notification
  */
 function generateTeamNotificationEmail(data: TeamNotificationData): string {
   const { attendeeName, attendeeEmail, attendeePhone, meetingLink, sessionDate } = data;
+  const sessionTimePST = formatToPST(sessionDate);
 
   return `
     <!DOCTYPE html>
@@ -129,10 +169,10 @@ function generateTeamNotificationEmail(data: TeamNotificationData): string {
             <td style="padding: 8px 0; color: #333;">${attendeePhone}</td>
           </tr>
           ` : ""}
-          ${sessionDate ? `
+          ${sessionTimePST ? `
           <tr>
-            <td style="padding: 8px 0; font-weight: bold; color: #555;">Session Date:</td>
-            <td style="padding: 8px 0; color: #333;">${sessionDate}</td>
+            <td style="padding: 8px 0; font-weight: bold; color: #555;">Session Time:</td>
+            <td style="padding: 8px 0; color: #333;">${sessionTimePST}</td>
           </tr>
           ` : ""}
         </table>
@@ -172,6 +212,7 @@ function generateTeamNotificationEmail(data: TeamNotificationData): string {
  */
 function generateTeamNotificationText(data: TeamNotificationData): string {
   const { attendeeName, attendeeEmail, attendeePhone, meetingLink, sessionDate } = data;
+  const sessionTimePST = formatToPST(sessionDate);
 
   return `
 New Webinar Registration
@@ -180,7 +221,7 @@ Attendee Information:
 - Name: ${attendeeName}
 - Email: ${attendeeEmail}
 ${attendeePhone ? `- Phone: ${attendeePhone}` : ""}
-${sessionDate ? `- Session Date: ${sessionDate}` : ""}
+${sessionTimePST ? `- Session Time: ${sessionTimePST}` : ""}
 
 Meeting Link:
 ${meetingLink}

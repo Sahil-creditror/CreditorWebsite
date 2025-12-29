@@ -18,11 +18,19 @@ interface TeamNotificationData {
  * Optimized for Gmail SMTP with proper connection settings
  */
 function getEmailTransporter() {
-  const host = process.env.SMTP_HOST || "smtp.gmail.com";
-  const port = parseInt(process.env.SMTP_PORT || "587");
+  const host = process.env.SMTP_HOST;
+  const port = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT) : undefined;
   const secure = process.env.SMTP_SECURE === "true"; // true for 465, false for other ports
   const user = process.env.SMTP_USER || process.env.EMAIL_USER;
   const pass = process.env.SMTP_PASS || process.env.EMAIL_PASSWORD;
+
+  if (!host) {
+    throw new Error("SMTP_HOST is not configured. Please set SMTP_HOST in environment variables.");
+  }
+
+  if (!port) {
+    throw new Error("SMTP_PORT is not configured. Please set SMTP_PORT in environment variables.");
+  }
 
   if (!user || !pass) {
     throw new Error("SMTP credentials are not configured. Please set SMTP_USER and SMTP_PASS in environment variables.");
@@ -219,10 +227,13 @@ export async function sendTeamNotificationEmail(data: TeamNotificationData): Pro
     console.log("Meeting Link:", data.meetingLink);
     console.log("═══════════════════════════════════════════════════");
     console.log("⚠️  To actually send emails, add to .env.local:");
-    console.log("   SMTP_USER=" + (process.env.SMTP_USER || process.env.EMAIL_USER || "your-email@example.com"));
-    console.log("   SMTP_PASS=" + (process.env.SMTP_PASS || process.env.EMAIL_PASSWORD ? "***configured***" : "your-app-password"));
-    const teamEmailsConfig = process.env.TEAM_EMAILS || process.env.WEBINAR_TEAM_EMAILS || "team1@example.com,team2@example.com";
-    console.log("   TEAM_EMAILS=" + teamEmailsConfig);
+    console.log("   SMTP_HOST=smtp.gmail.com");
+    console.log("   SMTP_PORT=587");
+    console.log("   SMTP_SECURE=false");
+    console.log("   SMTP_USER=your-email@example.com");
+    console.log("   SMTP_PASS=your-app-password");
+    console.log("   EMAIL_FROM=noreply@example.com");
+    console.log("   TEAM_EMAILS=email1@example.com,email2@example.com");
     console.log("═══════════════════════════════════════════════════");
     return;
   }
@@ -232,7 +243,11 @@ export async function sendTeamNotificationEmail(data: TeamNotificationData): Pro
     console.log("[EMAIL] Recipients:", teamEmails.length, "team members");
     
     const transporter = getEmailTransporter();
-    const fromEmail = process.env.EMAIL_FROM || process.env.SMTP_USER || "noreply@creditoracademy.com";
+    const fromEmail = process.env.EMAIL_FROM || process.env.SMTP_USER;
+    
+    if (!fromEmail) {
+      throw new Error("EMAIL_FROM is not configured. Please set EMAIL_FROM in environment variables.");
+    }
 
     // Skip verification to avoid timeout - go straight to sending
     // Verification can sometimes pass but actual sending fails

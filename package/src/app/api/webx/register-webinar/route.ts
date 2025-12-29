@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { API_CONFIG } from "@/config/api";
 import { ZoomWebinarRegistrationPayload, ZoomWebinarRegistrationResponse } from "@/services/zoom";
+import { sendTeamNotificationEmail } from "@/lib/emailService";
 
 const WEBX_ROUTES = {
   CONNECT: "/zoom/connect",
@@ -116,6 +117,36 @@ export async function POST(request: Request) {
         },
         { status: 502 }
       );
+    }
+
+    // Send team notification email (non-blocking - don't fail registration if email fails)
+    console.log("[WEBX] Attempting to send team notification email...");
+    console.log("[WEBX] Email data:", {
+      attendeeName: `${first_name} ${last_name}`,
+      attendeeEmail: email,
+      attendeePhone: phone_number || "not provided",
+      meetingLink: responseData.join_url,
+      sessionDate: responseData.start_time || "not provided",
+    });
+    
+    try {
+      await sendTeamNotificationEmail({
+        attendeeName: `${first_name} ${last_name}`,
+        attendeeEmail: email,
+        attendeePhone: phone_number,
+        meetingLink: responseData.join_url,
+        sessionDate: responseData.start_time,
+        webinarId: webinarId,
+      });
+      console.log("[WEBX] ✅ Team notification email process completed");
+    } catch (emailError: any) {
+      // Log error but don't fail the registration
+      console.error("═══════════════════════════════════════════════════");
+      console.error("[WEBX] ❌ Failed to send team notification email");
+      console.error("[WEBX] Registration still successful, but email failed");
+      console.error("[WEBX] Error:", emailError?.message || String(emailError));
+      console.error("[WEBX] Error stack:", emailError?.stack);
+      console.error("═══════════════════════════════════════════════════");
     }
 
     return NextResponse.json({ success: true, data: responseData });

@@ -17,6 +17,18 @@ NEXT_PUBLIC_WEBINAR_ID=YOUR_WEBINAR_ID
 
 # Cron Job Authentication (Optional)
 CRON_SECRET=your-secret-key-here
+
+# Email Configuration (for team notifications)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=ankit@creditoracademy.com
+SMTP_PASS=fvohslyupytgunhh
+EMAIL_FROM=noreply@creditoracademy.com
+
+# Team Email Addresses (comma-separated)
+# These emails will receive notifications when someone registers for a webinar
+TEAM_EMAILS=ankit@creditoracademy.com,rupali@creditoracademy.com,paulmichael@creditoracademy.com,aleena@creditoracademy.com,patricia@creditoracademy.com,james@creditoracademy.com,komal@creditoracademy.com
 ```
 
 **Where to get these values:**
@@ -30,6 +42,16 @@ CRON_SECRET=your-secret-key-here
   
 - `CRON_SECRET`: Generate a secure random string
   - Use: `openssl rand -hex 32` or any password generator
+
+- `SMTP_USER` and `SMTP_PASS`: Email credentials for sending notifications
+  - For Gmail: Use an [App Password](https://support.google.com/accounts/answer/185833) (not your regular password)
+  - Enable 2-factor authentication first, then generate an app password
+  - Format: `SMTP_USER=your-email@gmail.com` and `SMTP_PASS=your-16-char-app-password`
+
+- `TEAM_EMAILS`: Comma-separated list of team member emails
+  - These emails will receive notifications when someone registers for a webinar
+  - Format: `TEAM_EMAILS=team1@example.com,team2@example.com,team3@example.com`
+  - The notification includes the attendee's information and the meeting link
 
 ### Step 2: Install Dependencies
 
@@ -214,6 +236,9 @@ Before going live:
 - [ ] ✅ Test email processing endpoint
 - [ ] ✅ Cron endpoint secured with authentication (production)
 - [ ] ✅ Confirmation emails being sent on registration
+- [ ] ✅ Team notification emails configured and working
+- [ ] ✅ SMTP credentials configured correctly
+- [ ] ✅ Team email addresses set in `TEAM_EMAILS`
 - [ ] ✅ Missed session emails working
 - [ ] ✅ Feedback emails working
 
@@ -258,6 +283,18 @@ Before going live:
 3. Test endpoint manually
 4. Check backend email service configuration
 5. Verify email addresses in registrant list
+
+### Team notification emails not sending
+
+**Problem**: Team members not receiving registration notifications
+
+**Solution**:
+1. Verify `TEAM_EMAILS` environment variable is set with comma-separated email addresses
+2. Check `SMTP_USER` and `SMTP_PASS` are configured correctly
+3. For Gmail: Make sure you're using an App Password, not your regular password
+4. Check server logs for email sending errors
+5. Verify SMTP settings (host, port, secure) match your email provider
+6. Test in development mode - emails will be logged to console if SMTP is not configured
 
 ### Zoom link not activating
 

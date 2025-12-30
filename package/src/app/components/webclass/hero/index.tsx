@@ -11,6 +11,7 @@ import {
   OccurrenceItem,
 } from "@/services/zoom";
 import PhoneInput from "react-phone-number-input";
+import { isValidPhoneNumber } from "libphonenumber-js";
 import "react-phone-number-input/style.css";
 
 /**
@@ -318,6 +319,7 @@ export default function WebclassSection() {
     first_name: false,
     last_name: false,
     session: false,
+    phone_number: false,
   });
   const selectedSession =
     sessions.find((session) => session.key === selectedSessionKey) ?? sessions[0];
@@ -328,7 +330,7 @@ export default function WebclassSection() {
     setPhoneNumber(undefined);
     setWatchRecording(false);
     setFormStep(1);
-    setTouched({ email: false, first_name: false, last_name: false, session: false });
+    setTouched({ email: false, first_name: false, last_name: false, session: false, phone_number: false });
     const refreshedSessions = buildUpcomingSessions(20);
     setSessions(refreshedSessions);
     setSelectedSessionKey(refreshedSessions[0]?.key || "");
@@ -448,6 +450,17 @@ export default function WebclassSection() {
     return emailRegex.test(email);
   };
 
+  const validatePhoneNumber = (phone: string | undefined): boolean => {
+    if (!phone || !phone.trim()) {
+      return false;
+    }
+    try {
+      return isValidPhoneNumber(phone);
+    } catch {
+      return false;
+    }
+  };
+
   const handleBlur = (field: keyof typeof touched) => {
     setTouched({ ...touched, [field]: true });
   };
@@ -471,6 +484,7 @@ export default function WebclassSection() {
       first_name: true,
       last_name: true,
       session: true,
+      phone_number: true,
     });
 
     // Validate
@@ -488,6 +502,14 @@ export default function WebclassSection() {
     }
     if (!validateEmail(formData.email)) {
       setError('Please enter a valid email address');
+      return;
+    }
+    if (!phoneNumber || !phoneNumber.trim()) {
+      setError('Phone number is required');
+      return;
+    }
+    if (!validatePhoneNumber(phoneNumber)) {
+      setError('Please enter a valid phone number');
       return;
     }
 
@@ -1081,22 +1103,32 @@ export default function WebclassSection() {
 
                     <div className="form-group">
                       <label htmlFor="phone_number" className="form-label">
-                        Phone Number <span className="optional">(Optional)</span>
+                        Phone Number <span className="required">*</span>
                       </label>
                       <PhoneInput
                         international
                         defaultCountry="US"
                         value={phoneNumber}
-                        onChange={setPhoneNumber}
+                        onChange={(value) => {
+                          setPhoneNumber(value);
+                          setError(null);
+                        }}
+                        onBlur={() => handleBlur('phone_number')}
                         disabled={isSubmitting}
                         className="form-phone-input-wrapper"
                         numberInputProps={{
                           id: "phone_number",
-                          className: "form-input form-phone-input",
+                          className: `form-input form-phone-input ${touched.phone_number && (!phoneNumber || !phoneNumber.trim() || !validatePhoneNumber(phoneNumber)) ? 'form-input-error' : ''}`,
                           placeholder: "(555) 123-4567",
                           autoComplete: "tel",
                         }}
                       />
+                      {touched.phone_number && (!phoneNumber || !phoneNumber.trim()) && (
+                        <p className="form-error">Phone number is required</p>
+                      )}
+                      {touched.phone_number && phoneNumber && phoneNumber.trim() && !validatePhoneNumber(phoneNumber) && (
+                        <p className="form-error">Please enter a valid phone number</p>
+                      )}
                     </div>
 
                     {error && (

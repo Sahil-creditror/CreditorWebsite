@@ -225,7 +225,7 @@ export default function WebclassSection() {
           <div className="flex flex-col lg:flex-row items-stretch gap-6 lg:gap-8">
             {/* Left image with gold border */}
             <div className="lg:w-5/12 flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-[420px]">
+              <div className="relative w-full max-w-[500px]">
                 <div 
                   className="relative w-full h-[700px] border-2 overflow-hidden"
                   style={{ 
@@ -234,7 +234,7 @@ export default function WebclassSection() {
                   }}
                 >
                   <Image
-                    src={"/images/avatar/paul.webp"}
+                    src={"/images/avatar/paul2.webp"}
                     alt="Speaker"
                     fill
                     style={{ objectFit: "cover" }}

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { S3Client, PutObjectCommand, ListObjectsV2Command, GetObjectCommand } from "@aws-sdk/client-s3";
+import { sendTeamNotificationEmail } from "@/lib/emailService";
 
 // Reuse the same AWS setup pattern as other routes
 const s3 = new S3Client({
@@ -76,6 +77,37 @@ export async function POST(req: NextRequest) {
     } else {
       // Fallback: log so we don't lose the registration during local/dev
       console.log("[recording-registrations] registration received (no S3 configured)", registration);
+    }
+
+    // Send team notification email for pre-recorded session (non-blocking - don't fail registration if email fails)
+    console.log("[recording-registrations] Attempting to send team notification email for pre-recorded session...");
+    console.log("[recording-registrations] Email data:", {
+      attendeeName: `${first_name} ${last_name}`,
+      attendeeEmail: email,
+      attendeePhone: phone_number || "not provided",
+      sessionType: "pre-recorded",
+      sessionDate: registered_at,
+    });
+    
+    try {
+      await sendTeamNotificationEmail({
+        attendeeName: `${first_name} ${last_name}`,
+        attendeeEmail: email,
+        attendeePhone: phone_number || undefined,
+        meetingLink: undefined, // No meeting link for pre-recorded sessions
+        sessionDate: registered_at,
+        webinarId: webinar_id || "recording",
+        sessionType: "pre-recorded",
+      });
+      console.log("[recording-registrations] ✅ Team notification email process completed");
+    } catch (emailError: any) {
+      // Log error but don't fail the registration
+      console.error("═══════════════════════════════════════════════════");
+      console.error("[recording-registrations] ❌ Failed to send team notification email");
+      console.error("[recording-registrations] Registration still successful, but email failed");
+      console.error("[recording-registrations] Error:", emailError?.message || String(emailError));
+      console.error("[recording-registrations] Error stack:", emailError?.stack);
+      console.error("═══════════════════════════════════════════════════");
     }
 
     return NextResponse.json({ 

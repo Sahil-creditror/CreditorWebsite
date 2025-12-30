@@ -4,13 +4,51 @@ import nodemailer from "nodemailer";
  * Email service for sending notifications to team members
  */
 
+/**
+ * Convert a date string to PST timezone and format it nicely
+ * @param dateString - ISO date string or any valid date string
+ * @returns Formatted date string in PST timezone (e.g., "January 15, 2024 at 2:30 PM PST")
+ */
+function formatDateToPST(dateString?: string | null): string | null {
+  if (!dateString) {
+    return null;
+  }
+
+  try {
+    const date = new Date(dateString);
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return dateString; // Return original if invalid
+    }
+
+    // Format date in PST timezone
+    const pstDate = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Los_Angeles",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+      timeZoneName: "short",
+    });
+
+    return pstDate.format(date);
+  } catch (error) {
+    console.error("[EMAIL] Error formatting date to PST:", error);
+    return dateString; // Return original if conversion fails
+  }
+}
+
 interface TeamNotificationData {
   attendeeName: string;
   attendeeEmail: string;
   attendeePhone?: string;
-  meetingLink: string;
+  meetingLink?: string; // Optional - not needed for pre-recorded sessions
   sessionDate?: string;
   webinarId?: string;
+  sessionType?: "live" | "pre-recorded"; // Type of session
 }
 
 /**
@@ -97,7 +135,10 @@ function getTeamEmails(): string[] {
  * Generate HTML email template for team notification
  */
 function generateTeamNotificationEmail(data: TeamNotificationData): string {
-  const { attendeeName, attendeeEmail, attendeePhone, meetingLink, sessionDate } = data;
+  const { attendeeName, attendeeEmail, attendeePhone, meetingLink, sessionDate, sessionType } = data;
+  // If sessionType is explicitly set, use it; otherwise fall back to checking meetingLink
+  const isPreRecorded = sessionType === "pre-recorded" || (sessionType !== "live" && !meetingLink);
+  const formattedSessionDate = formatDateToPST(sessionDate);
 
   return `
     <!DOCTYPE html>
@@ -129,15 +170,20 @@ function generateTeamNotificationEmail(data: TeamNotificationData): string {
             <td style="padding: 8px 0; color: #333;">${attendeePhone}</td>
           </tr>
           ` : ""}
-          ${sessionDate ? `
+          <tr>
+            <td style="padding: 8px 0; font-weight: bold; color: #555;">Session Type:</td>
+            <td style="padding: 8px 0; color: #333;">${isPreRecorded ? "Pre-Recorded Session" : "Live Webinar Session"}</td>
+          </tr>
+          ${formattedSessionDate ? `
           <tr>
             <td style="padding: 8px 0; font-weight: bold; color: #555;">Session Date:</td>
-            <td style="padding: 8px 0; color: #333;">${sessionDate}</td>
+            <td style="padding: 8px 0; color: #333;">${formattedSessionDate}</td>
           </tr>
           ` : ""}
         </table>
       </div>
 
+      ${!isPreRecorded && meetingLink ? `
       <div style="background: #fff; padding: 20px; border: 2px solid #026fe2; border-radius: 8px; margin-bottom: 20px;">
         <h2 style="color: #001428; margin-top: 0;">Meeting Link</h2>
         <p style="color: #666; margin-bottom: 15px;">
@@ -158,6 +204,14 @@ function generateTeamNotificationEmail(data: TeamNotificationData): string {
           <strong>Note:</strong> Please join the meeting at the scheduled time to connect with the attendee and answer their questions.
         </p>
       </div>
+      ` : `
+      <div style="background: #e7f3ff; padding: 20px; border: 2px solid #026fe2; border-radius: 8px; margin-bottom: 20px;">
+        <h2 style="color: #001428; margin-top: 0;">Pre-Recorded Session</h2>
+        <p style="color: #666; margin-bottom: 15px;">
+          This attendee has registered to watch a pre-recorded session. They will be able to access the recording through the website.
+        </p>
+      </div>
+      `}
 
       <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; color: #999; font-size: 12px; text-align: center;">
         <p>This is an automated notification from Creditor Academy Webinar System</p>
@@ -171,7 +225,10 @@ function generateTeamNotificationEmail(data: TeamNotificationData): string {
  * Generate plain text email for team notification
  */
 function generateTeamNotificationText(data: TeamNotificationData): string {
-  const { attendeeName, attendeeEmail, attendeePhone, meetingLink, sessionDate } = data;
+  const { attendeeName, attendeeEmail, attendeePhone, meetingLink, sessionDate, sessionType } = data;
+  // If sessionType is explicitly set, use it; otherwise fall back to checking meetingLink
+  const isPreRecorded = sessionType === "pre-recorded" || (sessionType !== "live" && !meetingLink);
+  const formattedSessionDate = formatDateToPST(sessionDate);
 
   return `
 New Webinar Registration
@@ -180,12 +237,17 @@ Attendee Information:
 - Name: ${attendeeName}
 - Email: ${attendeeEmail}
 ${attendeePhone ? `- Phone: ${attendeePhone}` : ""}
-${sessionDate ? `- Session Date: ${sessionDate}` : ""}
+- Session Type: ${isPreRecorded ? "Pre-Recorded Session" : "Live Webinar Session"}
+${formattedSessionDate ? `- Session Date: ${formattedSessionDate}` : ""}
 
+${!isPreRecorded && meetingLink ? `
 Meeting Link:
 ${meetingLink}
 
 Please join the meeting at the scheduled time to connect with the attendee and answer their questions.
+` : `
+This attendee has registered to watch a pre-recorded session. They will be able to access the recording through the website.
+`}
 
 ---
 This is an automated notification from Creditor Academy Webinar System
@@ -217,14 +279,20 @@ export async function sendTeamNotificationEmail(data: TeamNotificationData): Pro
 
   // Check if SMTP is configured
   if (!process.env.SMTP_USER && !process.env.EMAIL_USER) {
+    const sessionTypeLabel = data.sessionType === "pre-recorded" ? "Pre-Recorded Session" : "Live Webinar";
     console.log("═══════════════════════════════════════════════════");
     console.log("📧 EMAIL TEST MODE (SMTP not configured)");
     console.log("═══════════════════════════════════════════════════");
     console.log("Team Notification Email:");
     console.log("To:", teamEmails.join(", "));
-    console.log("Subject: New Webinar Registration - " + data.attendeeName);
+    console.log("Subject: New " + sessionTypeLabel + " Registration - " + data.attendeeName);
     console.log("Attendee:", data.attendeeName, `(${data.attendeeEmail})`);
-    console.log("Meeting Link:", data.meetingLink);
+    console.log("Session Type:", sessionTypeLabel);
+    if (data.meetingLink) {
+      console.log("Meeting Link:", data.meetingLink);
+    } else {
+      console.log("Meeting Link: N/A (Pre-Recorded Session)");
+    }
     console.log("═══════════════════════════════════════════════════");
     console.log("⚠️  To actually send emails, add to .env.local:");
     console.log("   SMTP_HOST=smtp.gmail.com");
@@ -241,6 +309,8 @@ export async function sendTeamNotificationEmail(data: TeamNotificationData): Pro
   try {
     console.log("[EMAIL] Preparing to send team notification email...");
     console.log("[EMAIL] Recipients:", teamEmails.length, "team members");
+    console.log("[EMAIL] Session Type:", data.sessionType || "not specified");
+    console.log("[EMAIL] Meeting Link:", data.meetingLink || "not provided");
     
     const transporter = getEmailTransporter();
     const fromEmail = process.env.EMAIL_FROM || process.env.SMTP_USER;
@@ -253,12 +323,25 @@ export async function sendTeamNotificationEmail(data: TeamNotificationData): Pro
     // Verification can sometimes pass but actual sending fails
     console.log("[EMAIL] Skipping connection verification (going straight to send)...");
 
+    // Generate email templates with error handling
+    let htmlContent: string;
+    let textContent: string;
+    try {
+      htmlContent = generateTeamNotificationEmail(data);
+      textContent = generateTeamNotificationText(data);
+      console.log("[EMAIL] Email templates generated successfully");
+    } catch (templateError: any) {
+      console.error("[EMAIL] Error generating email templates:", templateError);
+      throw new Error(`Failed to generate email templates: ${templateError.message}`);
+    }
+
+    const sessionTypeLabel = data.sessionType === "pre-recorded" ? "Pre-Recorded Session" : "Live Webinar";
     const mailOptions = {
       from: `"Creditor Academy" <${fromEmail}>`,
       to: teamEmails.join(", "),
-      subject: `New Webinar Registration - ${data.attendeeName}`,
-      text: generateTeamNotificationText(data),
-      html: generateTeamNotificationEmail(data),
+      subject: `New ${sessionTypeLabel} Registration - ${data.attendeeName}`,
+      text: textContent,
+      html: htmlContent,
       // Add reply-to for better email handling
       replyTo: data.attendeeEmail,
       // Gmail-specific headers
@@ -272,7 +355,7 @@ export async function sendTeamNotificationEmail(data: TeamNotificationData): Pro
     console.log("[EMAIL] Sending email to team members...");
     console.log("[EMAIL] From:", fromEmail);
     console.log("[EMAIL] To:", teamEmails.join(", "));
-    console.log("[EMAIL] Subject: New Webinar Registration - " + data.attendeeName);
+    console.log("[EMAIL] Subject: New " + sessionTypeLabel + " Registration - " + data.attendeeName);
     
     // Send email with increased timeout
     const info = await Promise.race([

@@ -137,6 +137,7 @@ export async function POST(request: Request) {
         meetingLink: responseData.join_url,
         sessionDate: responseData.start_time,
         webinarId: webinarId,
+        sessionType: "live",
       });
       console.log("[WEBX] ✅ Team notification email process completed");
     } catch (emailError: any) {

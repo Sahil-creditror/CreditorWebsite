@@ -79,6 +79,99 @@ const formatToPST = (value?: string | number | Date | null) => {
   return date.toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
 };
 
+/**
+ * Convert registrations data to CSV format
+ */
+const convertToCSV = (registrations: Registrant[]): string => {
+  // CSV headers
+  const headers = [
+    "Name",
+    "Email",
+    "Phone",
+    "Topic",
+    "Registration Time (PST)",
+    "Start Time",
+    "Status",
+    "Duration",
+    "Join URL",
+    "Registrant ID",
+    "Webinar ID",
+  ];
+
+  // Convert each registration to CSV row
+  const rows = registrations.map((reg) => {
+    const name =
+      (reg.first_name && reg.last_name ? `${reg.first_name} ${reg.last_name}` : reg.first_name || reg.last_name) || "N/A";
+    const email = reg.email || "N/A";
+    const phone = reg.phone_number || "N/A";
+    const topic = reg.topic || "N/A";
+    
+    const regTimeSource = (reg as unknown as { registration_time?: string }).registration_time;
+    const regTime =
+      regTimeSource && typeof regTimeSource === "string"
+        ? formatToPST(regTimeSource)
+        : reg.registered_at
+        ? formatToPST(reg.registered_at)
+        : reg.start_time
+        ? formatToPST(reg.start_time)
+        : "N/A";
+    
+    const start = reg.start_time ? formatToPST(reg.start_time) : "N/A";
+    const status = reg.status || "N/A";
+    const duration =
+      typeof reg.duration === "number" && reg.duration > 0
+        ? `${Math.floor(reg.duration / 60)}m ${reg.duration % 60}s`
+        : "0s";
+    const joinUrl = reg.join_url || "N/A";
+    const registrantId = reg.registrant_id || "N/A";
+    const webinarId = reg.webinar_id || "N/A";
+
+    // Escape CSV values (handle commas, quotes, newlines)
+    const escapeCSV = (value: string): string => {
+      if (value.includes(",") || value.includes('"') || value.includes("\n")) {
+        return `"${value.replace(/"/g, '""')}"`;
+      }
+      return value;
+    };
+
+    return [
+      escapeCSV(name),
+      escapeCSV(email),
+      escapeCSV(phone),
+      escapeCSV(topic),
+      escapeCSV(regTime),
+      escapeCSV(start),
+      escapeCSV(status),
+      escapeCSV(duration),
+      escapeCSV(joinUrl),
+      escapeCSV(registrantId),
+      escapeCSV(webinarId),
+    ].join(",");
+  });
+
+  // Combine headers and rows
+  return [headers.join(","), ...rows].join("\n");
+};
+
+/**
+ * Download CSV file
+ */
+const downloadCSV = (csvContent: string, filename: string) => {
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const link = document.createElement("a");
+  const url = URL.createObjectURL(blob);
+  
+  link.setAttribute("href", url);
+  link.setAttribute("download", filename);
+  link.style.visibility = "hidden";
+  
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  
+  URL.revokeObjectURL(url);
+};
+
 const normalizeTopic = (topic?: string | null) => topic?.trim().toLowerCase() ?? "";
 const toInputDate = (date: Date) => date.toISOString().split("T")[0];
 
@@ -407,6 +500,24 @@ export default function WebinarRegistrationPage() {
                 <span className="text-xs text-gray-500 dark:text-gray-400">
                   Page {allRegsPage + 1} of {Math.max(1, Math.ceil(sortedAllRegs.length / 10))}
                 </span>
+                <button
+                  onClick={() => {
+                    const csvContent = convertToCSV(sortedAllRegs);
+                    const timestamp = new Date().toISOString().split("T")[0];
+                    const filename = `webinar-registrations-${timestamp}.csv`;
+                    downloadCSV(csvContent, filename);
+                  }}
+                  disabled={sortedAllRegs.length === 0}
+                  className="px-4 py-2 text-sm font-semibold rounded-lg border border-green-200 dark:border-green-700 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/40 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  title="Export filtered registrations to CSV"
+                >
+                  <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  Export CSV
+                </button>
               </div>
             </div>
             <div className="overflow-x-auto">

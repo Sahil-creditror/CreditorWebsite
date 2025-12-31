@@ -4,7 +4,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
-import InnovationPurpose from "./InnovationPurpose";
+// import InnovationPurpose from "./InnovationPurpose";
 
 // Custom styles for video controls
 const videoControlsStyle = `
@@ -482,7 +482,7 @@ available tradelines with transparency and clear expectations.
       </section>
 
       {/* ===================== SECTION 3.5 – INNOVATION & PURPOSE ===================== */}
-      <InnovationPurpose />
+      {/* <InnovationPurpose /> */}
 
       {/* ===================== SECTION 4 – CTA (LIGHT BLUE) ===================== */}
       <section className="relative overflow-hidden bg-gradient-to-r from-sky-500 via-sky-400 to-blue-500 py-16 md:py-20 px-6 md:px-10 lg:px-16">

@@ -167,7 +167,7 @@ const CourseRoadmap: React.FC = () => {
 
       <div className="max-w-7xl mx-auto">
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <CourseCard
             title="Become Private + Sovereignty101"
             image="/images/projects/projectlist/become.webp"
@@ -194,9 +194,83 @@ const CourseRoadmap: React.FC = () => {
             // badge="JUNIOR"
             highlight
             onLearnMore={() => router.push("/operate")}
-          />
+          /> */}
+                  {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"> */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:flex lg:justify-center">
 
-          <CourseCard
+{/* <CourseCard
+  title="Become Private"
+  image="/images/projects/projectlist/become.webp"
+  subtitle="Reclaim Your Lawful Identity"
+  description="Learn how to step out of the public and establish your affairs in the private."
+  learnings={[
+    "Status correction principles",
+    "Remove from public jurisdiction",
+    "Essential lawful documents",
+    "Estate protection basics",
+  ]}
+  outcomes={["Sovereignty consulting", "Private education", "Trust services", "Debt discharge"]}
+  // badge="FOUNDATION"
+  onLearnMore={() => router.push("/become")}
+/> */}
+<div className="w-full max-w-sm">
+<CourseCard
+title="Become Private"
+image="/images/projects/projectlist/become.webp"
+subtitle="Reclaim Your Lawful Identity"
+description="Learn how to step out of the public and establish your affairs in the private."
+learnings={[
+"Status correction principles",
+"Remove from public jurisdiction",
+"Essential lawful documents",
+"Estate protection basics",
+]}
+outcomes={[
+"Sovereignty consulting",
+"Private education",
+"Trust services",
+"Debt discharge",
+]}
+onLearnMore={() => router.push("/become")}
+/>
+</div>
+
+
+{/* <CourseCard
+  title="Operate Private"
+  image="/images/projects/projectlist/operate.webp"
+  subtitle="Asset Protection & Business"
+  description="Build, manage, and grow an Empire in the private, independent of the public system."
+  learnings={["Unincorporated Business Trusts", "Private Membership Associations", "Real estate in trusts", "Family legacy planning"]}
+  outcomes={["Real estate trusts", "Wellness PMAs", "Private coaching", "Trade guilds"]}
+  // badge="JUNIOR"
+  highlight
+  onLearnMore={() => router.push("/operate")}
+/> */}
+<div className="w-full max-w-sm">
+<CourseCard
+title="Operate Private"
+image="/images/projects/projectlist/operate.webp"
+subtitle="Asset Protection & Business"
+description="Build, manage, and grow an Empire in the private, independent of the public system."
+learnings={[
+"Unincorporated Business Trusts",
+"Private Membership Associations",
+"Real estate in trusts",
+"Family legacy planning",
+]}
+outcomes={[
+"Real estate trusts",
+"Wellness PMAs",
+"Private coaching",
+"Trade guilds",
+]}
+highlight
+onLearnMore={() => router.push("/operate")}
+/>
+</div>
+
+          {/* <CourseCard
             title="Financial Freedom"
             image="/images/projects/projectlist/financial.webp"
             subtitle="200k with Vendors, Banks & Credit Unions"
@@ -205,7 +279,7 @@ const CourseRoadmap: React.FC = () => {
             outcomes={["Rental businesses", "E-commerce", "Merchant services", "15+ other models"]}
             // badge="SENIOR"
             onLearnMore={() => router.push("/private")}
-          />
+          /> */}
         </div>
       </div>
     </section>

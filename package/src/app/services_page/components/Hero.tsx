@@ -112,7 +112,7 @@ export default function Hero() {
         <div className="relative z-10 grid w-full max-w-6xl gap-12 lg:grid-cols-[1.2fr_minmax(0,1fr)] items-center">
           {/* Left: content */}
           <div className="space-y-8 text-slate-50">
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -124,14 +124,14 @@ export default function Hero() {
                 className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-sm"
               />
               <span className="bg-gradient-to-r from-sky-300 to-cyan-300 bg-clip-text text-transparent">
-                Credit Boost • 2025
+              Authorized Tradelines
               </span>
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
                 className="h-4 w-4 rounded-full border border-sky-400/50 border-t-sky-300"
               />
-            </motion.div>
+            </motion.div> */}
 
             <motion.h1
               initial={{ opacity: 0, y: 15 }}
@@ -144,7 +144,8 @@ export default function Hero() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.1 }}
               >
-                Boost Your{" "}
+                A Secure Marketplace
+                {" "}
               </motion.span>
               <motion.span
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -152,7 +153,7 @@ export default function Hero() {
                 transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 200 }}
                 className="bg-gradient-to-r from-sky-400 via-blue-300 to-cyan-300 bg-clip-text text-transparent relative"
               >
-                Credit Score
+                for Authorized 
                 <motion.div
                   animate={{
                     backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
@@ -166,7 +167,7 @@ export default function Hero() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-                in Weeks, Not Years.
+                 User Tradelines
               </motion.span>
             </motion.h1>
 
@@ -176,10 +177,15 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.15 }}
               className="max-w-xl text-sm md:text-base text-slate-200/90 leading-relaxed"
             >
-              Tradeline Exchange Company gives you secure access to premium
+              {/* Tradeline Exchange Company gives you secure access to premium
               authorized user tradelines. Break free from credit invisibility
               with a transparent, data-driven approach that actually makes
-              sense.
+              sense. */}
+              Tradeline Exchange Company provides access to authorized user
+tradelines through a secure, structured, and compliance-focused
+marketplace. Our platform is designed to help users explore
+available tradelines with transparency and clear expectations.
+
             </motion.p>
 
             <motion.div

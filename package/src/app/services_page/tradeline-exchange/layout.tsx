@@ -1,5 +1,5 @@
 // src/app/services_page/tradeline-exchange/layout.tsx
-import Navbar from "@/app/services_page/components/Navbar";
+import Navbar from "@/app/components/layout/header/index";
 import Footer from "@/app/components/layout/footer/index";
 
 export const metadata = {

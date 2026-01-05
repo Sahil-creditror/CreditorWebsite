@@ -21,42 +21,6 @@ export default function Contact(props: ContactProps) {
 
   return (
     <section className="relative py-20 md:py-24 overflow-hidden">
-      {/* Festive corner illustrations */}
-      {/* <div className="pointer-events-none absolute inset-0 overflow-hidden z-40">
-      <Image
-        src="/images/contact/banner/contact_bg.png"
-        alt="Santa waving"
-        width={400}      // increase actual image size
-        height={500}
-        priority
-        className="
-          absolute 
-          top-0 
-          left-0 
-          w-72 md:w-100     // bigger display size
-          h-auto 
-          drop-shadow-xl 
-          select-none
-        "
-      />
-        <Image
-          src="/images/hero/santa.png"
-          alt="Santa waving"
-          width={260}
-          height={360}
-          priority
-          className="absolute bottom-0 left-0 w-32 md:w-44 h-auto drop-shadow-xl select-none"
-        />
-        <Image
-          src="/images/hero/side.png"
-          alt="Snowman with reindeer"
-          width={300}
-          height={300}
-          priority
-          className="absolute bottom-0 right-0 w-36 md:w-52 h-auto drop-shadow-xl select-none"
-        />
-      </div> */}
-
       <div className="container relative z-10">
         <div className="mx-auto flex flex-col gap-8 md:gap-12">
           {/* Two Column Layout */}
@@ -119,7 +83,10 @@ export default function Contact(props: ContactProps) {
             <div className="w-full">
               {/* Form loading state */}
               {!isFormLoaded && (
-                <div className="w-full h-96 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-xl animate-pulse flex items-center justify-center">
+                <div 
+                  className="w-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-xl animate-pulse flex items-center justify-center"
+                  style={{ height: "400px" }}
+                >
                   <div className="text-center">
                     <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
                     <p className="text-gray-500 dark:text-gray-400">
@@ -135,7 +102,7 @@ export default function Contact(props: ContactProps) {
                   src="https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls"
                   style={{
                     width: "100%",
-                    height: "380px",
+                    height: "400px",
                     border: "none",
                     borderRadius: "12px",
                     display: isFormLoaded ? "block" : "none",

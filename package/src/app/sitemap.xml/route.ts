@@ -4,6 +4,16 @@ import { getPostSlugs } from '@/lib/markdown';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://creditoracademy.com';
 
+// Helper function to escape XML special characters
+function escapeXml(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
 export async function GET() {
   try {
     // Get all blog and project slugs
@@ -42,7 +52,7 @@ export async function GET() {
     const urls = [
       // Static pages
       ...staticPages.map((path) => {
-        const url = `${siteUrl}${path}`;
+        const url = escapeXml(`${siteUrl}${path}`);
         const priority = path === '' ? '1.0' : '0.8';
         const changeFreq = path === '' ? 'daily' : 'weekly';
         return `  <url>
@@ -54,7 +64,7 @@ export async function GET() {
       }),
       // Blog pages
       ...blogSlugs.map((slug) => {
-        const url = `${siteUrl}/blog/${slug}`;
+        const url = escapeXml(`${siteUrl}/blog/${slug}`);
         return `  <url>
     <loc>${url}</loc>
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
@@ -64,7 +74,7 @@ export async function GET() {
       }),
       // Project pages
       ...projectSlugs.map((slug) => {
-        const url = `${siteUrl}/projects/${slug}`;
+        const url = escapeXml(`${siteUrl}/projects/${slug}`);
         return `  <url>
     <loc>${url}</loc>
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
@@ -74,7 +84,7 @@ export async function GET() {
       }),
       // Projects-wonder pages
       ...projectSlugs.map((slug) => {
-        const url = `${siteUrl}/projects-wonder/${slug}`;
+        const url = escapeXml(`${siteUrl}/projects-wonder/${slug}`);
         return `  <url>
     <loc>${url}</loc>
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>

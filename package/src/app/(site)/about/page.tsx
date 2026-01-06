@@ -10,8 +10,13 @@ import Team from "@/app/components/home/team";
 import Herobanner from "@/app/components/shared/hero-banner";
 import { Metadata } from "next";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
+
 export const metadata: Metadata = {
     title: "Aboutus | Creditor",
+    alternates: {
+        canonical: `${siteUrl}/about`,
+    },
 };
 
 export default function Page() {

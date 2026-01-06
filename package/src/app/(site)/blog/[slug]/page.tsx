@@ -16,15 +16,19 @@ export async function generateMetadata({ params }: Props) {
     const authorName = process.env.AUTHOR_NAME || "Your Author Name";
 
     if (blog) {
+        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
         const metadata = {
             title: `${blog.title || "Single Post Page"} | ${siteName}`,
+            alternates: {
+                canonical: `${siteUrl}/blog/${slug}`,
+            },
             robots: {
                 index: true,
                 follow: true,
                 nocache: true,
                 googleBot: {
                     index: true,
-                    follow: false,
+                    follow: true,
                     "max-video-preview": -1,
                     "max-image-preview": "large",
                     "max-snippet": -1,

@@ -22,8 +22,13 @@ import PrivateTeaser from "./components/home/private-teaser";
 import WebclassSection from "./components/home/webclass";
 import ThanksgivingPopup from "./components/home/Thanksgiving/index";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
+
 export const metadata: Metadata = {
     title: "Creditor Academy",
+    alternates: {
+        canonical: siteUrl,
+    },
 };
 
 export default function Home() {

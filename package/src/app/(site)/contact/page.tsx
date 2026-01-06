@@ -1,8 +1,14 @@
 import Contact from "@/app/components/home/contact";
 import Herobanner from "@/app/components/shared/hero-banner";
 import { Metadata } from "next";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
+
 export const metadata: Metadata = {
     title: "Contact | Creditor",
+    alternates: {
+        canonical: `${siteUrl}/contact`,
+    },
 };
 
 export default function Page() {

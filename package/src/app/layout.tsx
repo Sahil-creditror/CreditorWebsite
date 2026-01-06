@@ -2,11 +2,29 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import ClientLayoutShell from "./providers/ClientLayoutShell";
+import type { Metadata } from "next";
 // Root layout must be a Server Component. Client-only logic moved into ClientLayoutShell.
 
 const manrope = Manrope({
   subsets: ["latin"],
 });
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
 
 export default function RootLayout({
   children,

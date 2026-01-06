@@ -13,8 +13,14 @@ import Works from "@/app/components/masterclass/works";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
+
 export const metadata: Metadata = {
     title: "Membership | Creditor",
+    alternates: {
+        canonical: `${siteUrl}/projects`,
+    },
 };
 
 export default function Page() {

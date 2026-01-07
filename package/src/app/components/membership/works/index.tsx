@@ -110,24 +110,24 @@ export default function Pricing() {
     return () => clearInterval(id);
   }, [sliderImages.length]);
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#eef5ff] to-[#f8fbff] dark:from-[#0b1220] dark:to-[#0e1a2b] text-slate-900 dark:text-white pt-30 pb-16">
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#1e3a8a] to-[#1e40af] dark:from-[#0c1929] dark:to-[#1e3a8a] text-white pt-30 pb-16">
       {/* subtle background accents */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl" />
-        <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
+        <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" />
+        <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-blue-300/15 blur-3xl" />
       </div>
       <div className="relative container mx-auto px-6">
         <div className="relative mb-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
             <div className="text-left">
-              <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/70 dark:border-white/10 bg-white/70 dark:bg-white/5 px-3 py-1 text-s text-slate-700 dark:text-slate-300 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400" />
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-s text-white/90 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-cyan-400" />
                 Membership & Programs
               </div>
-              <h2 className="mt-3 text-4xl md:text-5xl font-black tracking-tight text-black dark:text-white" style={{ fontWeight: 900 }}>
+              <h2 className="mt-3 text-4xl md:text-5xl font-black tracking-tight text-white" style={{ fontWeight: 900 }}>
                 Invest In Becoming Private
               </h2>
-              <p className="mt-3 text-slate-700 dark:text-slate-300 max-w-2xl">
+              <p className="mt-3 text-blue-100/90 max-w-2xl">
                 Start with Masterclass membership and scale into premium catalogs at your own pace.
               </p>
             </div>
@@ -154,14 +154,14 @@ export default function Pricing() {
                   {sliderImages.map((_, idx) => (
                     <span
                       key={idx}
-                      className={`h-1.5 w-1.5 rounded-full transition-colors ${idx === currentSlide ? "bg-blue-600 dark:bg-blue-400" : "bg-slate-300 dark:bg-white/20"}`}
+                      className={`h-1.5 w-1.5 rounded-full transition-colors ${idx === currentSlide ? "bg-cyan-400" : "bg-white/30"}`}
                     />
                   ))}
                 </div>
               </div>
             </div>
           </div>
-          <div className="mt-8 h-px w-full bg-gradient-to-r from-transparent via-slate-300/70 dark:via-white/10 to-transparent" />
+          <div className="mt-8 h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         </div>
 
         {/* Billing toggle
@@ -333,7 +333,7 @@ export default function Pricing() {
             className="lg:col-span-2 w-full"
           >
             <motion.h2
-              className="text-3xl md:text-4xl font-extrabold tracking-tight text-blue-900 dark:text-blue-100 mb-6"
+              className="text-3xl md:text-4xl font-extrabold tracking-tight text-white mb-6"
               initial={{ opacity: 0, y: -10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
@@ -341,9 +341,9 @@ export default function Pricing() {
               How It Works
             </motion.h2>
 
-            <div className="relative rounded-2xl border border-slate-200 dark:border-[#1e3352] bg-white/70 dark:bg-[#0f1b2d]/60 p-6 md:p-8">
+            <div className="relative rounded-2xl border border-white/10 bg-white/10 backdrop-blur-sm p-6 md:p-8">
               {/* vertical line */}
-              <div className="absolute md:left-[60px] top-10 bottom-10 w-[2px] bg-blue-300 dark:bg-blue-600 opacity-70 hidden md:block" />
+              <div className="absolute md:left-[60px] top-10 bottom-10 w-[2px] bg-cyan-400/50 hidden md:block" />
 
               <motion.ul className="space-y-8" variants={containerVariants}>
                 {steps.map((s) => (
@@ -358,7 +358,7 @@ export default function Pricing() {
                         initial={{ scale: 0.9 }}
                         whileInView={{ scale: 1 }}
                         transition={{ duration: 0.3 }}
-                        className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-white font-bold shadow-lg bg-blue-600 dark:bg-blue-500"
+                        className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-blue-900 font-bold shadow-lg bg-cyan-400"
                       >
                         <span className="text-lg md:text-xl">{s.id}</span>
                       </motion.div>
@@ -367,13 +367,13 @@ export default function Pricing() {
                     {/* content */}
                     <div className="mt-2 md:mt-0">
                       <motion.h3
-                        className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight"
+                        className="text-2xl md:text-3xl font-extrabold text-white tracking-tight"
                         variants={itemVariants}
                       >
                         {s.title}
                       </motion.h3>
 
-                      <motion.p className="mt-2 text-slate-600 dark:text-slate-300 leading-relaxed" variants={itemVariants}>
+                      <motion.p className="mt-2 text-blue-100/80 leading-relaxed" variants={itemVariants}>
                         {s.description}
                       </motion.p>
                     </div>

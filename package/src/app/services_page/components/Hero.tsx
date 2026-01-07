@@ -326,15 +326,13 @@ available tradelines with transparency and clear expectations.
               </span>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
-              A Clear, Fair Path to{" "}
+            Transparent{" "}
               <span className="bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent">
-                Stronger Credit.
+                Tradeline Access.
               </span>
             </h2>
             <p className="text-sm md:text-base text-slate-600">
-              We make premium tradeline access simple, safe, and understandable.
-              No confusing jargon. Just a guided experience tailored to your
-              goals.
+            Our platform provides informational access to tradeline listings in a clear and secure manner. We focus on straightforward explanations and a guided process, without making representations regarding outcomes.
             </p>
           </motion.div>
 

@@ -255,9 +255,7 @@ const CourseRoadmap: React.FC = () => {
     onLearnMore={() => router.push("/operate")}
   />
 </div>
-
-
-          {/* <CourseCard
+          <CourseCard
             title="Financial Freedom"
             image="/images/projects/projectlist/financial.webp"
             subtitle="200k with Vendors, Banks & Credit Unions"
@@ -266,7 +264,7 @@ const CourseRoadmap: React.FC = () => {
             outcomes={["Rental businesses", "E-commerce", "Merchant services", "15+ other models"]}
             // badge="SENIOR"
             onLearnMore={() => router.push("/private")}
-          /> */}
+          />
         </div>
       </div>
     </section>

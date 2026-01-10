@@ -254,17 +254,19 @@ const CourseRoadmap: React.FC = () => {
     highlight
     onLearnMore={() => router.push("/operate")}
   />
-</div>
-          <CourseCard
-            title="Financial Freedom"
-            image="/images/projects/projectlist/financial.webp"
-            subtitle="200k with Vendors, Banks & Credit Unions"
-            description="Discover the foundation of private commerce and take control of how you get paid"
-            learnings={["Private Business Credit","Personal Credit Repair","Private Merchant Accounts", "Credit card stacking strategies"]}//"Unlock vendor accounts",
-            outcomes={["Rental businesses", "E-commerce", "Merchant services", "15+ other models"]}
-            // badge="SENIOR"
-            onLearnMore={() => router.push("/private")}
-          />
+          </div>
+          <div className="w-full max-w-sm">
+            <CourseCard
+              title="Financial Freedom"
+              image="/images/projects/projectlist/financial.webp"
+              subtitle="200k with Vendors, Banks & Credit Unions"
+              description="Discover the foundation of private commerce and take control of how you get paid"
+              learnings={["Private Business Credit","Personal Credit Repair","Private Merchant Accounts", "Credit card stacking strategies"]}//"Unlock vendor accounts",
+              outcomes={["Rental businesses", "E-commerce", "Merchant services", "15+ other models"]}
+              // badge="SENIOR"
+              onLearnMore={() => router.push("/private")}
+            />
+          </div>
         </div>
       </div>
     </section>

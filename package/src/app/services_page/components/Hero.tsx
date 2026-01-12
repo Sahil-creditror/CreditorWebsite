@@ -202,7 +202,7 @@ available tradelines with transparency and clear expectations.
                   href="/services_page/tradeline-exchange/buy-tradelines"
                   className="group relative inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-sky-500 via-sky-400 to-blue-500 px-8 py-4 text-sm md:text-base font-semibold text-slate-950 shadow-[0_20px_40px_rgba(56,189,248,0.6)] transition-all duration-300 hover:translate-y-1 hover:shadow-[0_28px_70px_rgba(56,189,248,0.9)] hover:from-sky-400 hover:via-sky-300 hover:to-blue-400"
                 >
-                  <span className="relative z-10">Get Started Now</span>
+                  <span className="relative z-10">View Available Tradelines</span>
                   <motion.svg
                     animate={{ x: [0, 6, 0] }}
                     transition={{ repeat: Infinity, duration: 1.8 }}

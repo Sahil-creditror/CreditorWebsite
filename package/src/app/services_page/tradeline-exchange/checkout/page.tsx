@@ -3,7 +3,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { cartStore } from "../lib/cart";
+import { cartStore, CartItem } from "../lib/cart";
 
 interface Tradeline {
   id: string;
@@ -27,7 +27,7 @@ const PAYMENT_LINK_BASE =
 export default function CheckoutPage() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
-  const [cart, setCart] = useState(cartStore.getCart());
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [tradelines, setTradelines] = useState<Tradeline[]>([]);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
@@ -100,6 +100,19 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
+      // Load cart from localStorage first
+      const loadCart = async () => {
+        try {
+          const localCart = await cartStore.getCart();
+          if (Array.isArray(localCart) && localCart.length > 0) {
+            setCart(localCart);
+          }
+        } catch (err) {
+          console.error("[checkout] Error loading cart:", err);
+        }
+      };
+      loadCart();
+
       const storedUser = localStorage.getItem("user");
       const agreementSigned = localStorage.getItem("user_agreement_signed");
       
@@ -125,6 +138,7 @@ export default function CheckoutPage() {
   }, [router]);
 
   const enrichedCart = useMemo(() => {
+    if (!Array.isArray(cart)) return [];
     return cart.map((item) => {
       // Try to find tradeline by multiple ID formats
       const tradeline = tradelines.find(
@@ -367,8 +381,39 @@ export default function CheckoutPage() {
     }
   };
 
-  if (!user || cart.length === 0) {
+  // Show loading state while checking user/cart
+  if (loading || (!user && typeof window !== "undefined")) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 pt-24">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500 mx-auto mb-4"></div>
+          <p className="text-slate-600">Loading checkout...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // If user is not logged in, will redirect in useEffect
+  if (!user) {
     return null;
+  }
+
+  // If cart is empty after loading, show message
+  if (cart.length === 0 && user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 pt-24">
+        <div className="text-center max-w-md">
+          <p className="text-xl font-semibold text-slate-700 mb-2">Your cart is empty</p>
+          <p className="text-slate-600 mb-6">Please add tradelines to your cart before checkout</p>
+          <button
+            onClick={() => router.push("/services_page/tradeline-exchange/cart")}
+            className="inline-flex items-center gap-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-semibold px-5 py-2.5 transition"
+          >
+            Go to Cart
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (

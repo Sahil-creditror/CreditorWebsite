@@ -112,9 +112,9 @@ export default function FaqPage(): React.ReactElement {
     .filter((s) => s.items.length > 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#07243a] to-[#0b5fa0] text-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#07243a] to-[#0b5fa0] text-white pt-24">
       {/* HERO */}
-      <header className="py-20">
+      <header className="py-20 mt-8">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col lg:flex-row items-center gap-8">
             <div className="flex-1">

@@ -60,10 +60,10 @@ export default function BuyersGuide() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   return (
-    <div className="w-full min-h-screen font-sans text-slate-800">
+    <div className="w-full min-h-screen font-sans text-slate-800 pt-24">
       {/* HERO */}
       <header className="w-full bg-gradient-to-r from-[#03253b] to-[#0b5fa0] text-white">
-        <div className="max-w-7xl mx-auto px-6 py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-6 py-24 lg:py-32 mt-8">
           <div className="grid lg:grid-cols-2 gap-8 items-start">
             <div>
               <h1 className="text-4xl lg:text-5xl font-extrabold leading-tight">How to Choose a Tradeline: A Buyer’s Guide</h1>

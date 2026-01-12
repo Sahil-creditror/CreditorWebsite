@@ -26,12 +26,12 @@ const fadeUp = {
 
 export default function AboutUs() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-100 py-28 px-6 md:px-12">
+    <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-100 pt-24 pb-28 px-6 md:px-12">
       {/* floating background accents */}
       <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-blue-400/20 blur-[180px] rounded-full" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-sky-300/20 blur-[180px] rounded-full" />
 
-      <div className="relative max-w-7xl mx-auto space-y-32">
+      <div className="relative max-w-7xl mx-auto space-y-32 mt-8">
 
         {/* ================= HERO ================= */}
         <motion.div

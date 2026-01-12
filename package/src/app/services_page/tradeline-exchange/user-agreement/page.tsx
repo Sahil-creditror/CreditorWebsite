@@ -225,10 +225,10 @@ export default function UserAgreementPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 pt-24 pb-8 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="mb-6">
+        <div className="mb-6 mt-8">
           <button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 px-4 rounded-lg shadow-sm transition">
             Service Terms & Disclosures
           </button>

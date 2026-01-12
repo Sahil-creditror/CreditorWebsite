@@ -44,10 +44,10 @@ export default function WhatIsTradelinePage() {
   }
 
   return (
-    <main className="w-full min-h-screen text-slate-800">
+    <main className="w-full min-h-screen text-slate-800 pt-24">
       {/* HERO - full bleed */}
       <section className="w-full bg-gradient-to-r from-[#02283b] to-[#0a5fa0] text-white">
-        <div className="max-w-7xl mx-auto px-6 py-20 lg:py-28">
+        <div className="max-w-7xl mx-auto px-6 py-20 lg:py-28 mt-8">
           <div className="grid lg:grid-cols-2 gap-10 items-start">
             <div>
               <h1 className="text-4xl lg:text-5xl font-extrabold leading-tight">What Is a Tradeline?</h1>

@@ -4,10 +4,26 @@
 import React, { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowUpDown, Filter, Info, ShoppingCart } from "lucide-react";
-import { MOCK_TRADELINES } from "../lib/tradelines";
+import { ArrowUpDown, Filter, Info, ShoppingCart, Loader2, AlertCircle, RefreshCw } from "lucide-react";
 import { cartStore } from "../lib/cart";
 import AddToCartModal from "../components/AddToCartModal";
+import CheckoutModal from "../components/CheckoutModal";
+
+// Tradeline type matching the API response
+interface Tradeline {
+  id: string;
+  tradelineId: string;
+  bankName: string;
+  last4: string;
+  ageYears: number;
+  creditLimit: number;
+  utilizationPercent: number;
+  statementDate: string;
+  price: number;
+  slotsTotal: number;
+  slotsAvailable: number;
+  notes?: string;
+}
 
 const INQUIRY_FORM_URL =
   process.env.NEXT_PUBLIC_BROKER_FORM_URL ??
@@ -19,32 +35,161 @@ export default function BuyTradeline() {
   const [minLimit, setMinLimit] = useState(0);
   const [sortBy, setSortBy] = useState("best");
   const [showModal, setShowModal] = useState(false);
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const [selectedTradeline, setSelectedTradeline] = useState<Tradeline | null>(null);
   const [addedItemCount, setAddedItemCount] = useState(0);
   const [user, setUser] = useState<any>(null);
+  
+  // API state
+  const [tradelines, setTradelines] = useState<Tradeline[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch tradelines from API
+  useEffect(() => {
+    fetchTradelines();
+  }, []);
+
+  const fetchTradelines = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch("/api/tradelines");
+      
+      // Check if response is ok before parsing JSON
+      if (!response.ok) {
+        // Try to parse error response
+        let errorMessage = "Failed to fetch tradelines";
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error || errorData.message || errorMessage;
+        } catch {
+          // If JSON parsing fails, use status text
+          errorMessage = response.statusText || `Server error (${response.status})`;
+        }
+        throw new Error(errorMessage);
+      }
+      
+      // Parse successful response
+      const data = await response.json();
+      
+      // Check if data structure is valid
+      if (!data || typeof data !== "object") {
+        throw new Error("Invalid response from server");
+      }
+      
+      // Check success flag
+      if (data.success === false) {
+        throw new Error(data.error || "Failed to fetch tradelines");
+      }
+      
+      // Set tradelines (handle both array and nested structure)
+      const tradelinesList = data.tradelines || data.data || [];
+      if (Array.isArray(tradelinesList)) {
+        // Log for debugging
+        console.log(`[buy-tradelines] Loaded ${tradelinesList.length} tradelines`);
+        if (tradelinesList.length > 0) {
+          const sample = tradelinesList[0];
+          console.log("[buy-tradelines] Sample tradeline:", {
+            id: sample.id,
+            tradelineId: sample.tradelineId,
+            bankName: sample.bankName,
+            price: sample.price,
+            creditLimit: sample.creditLimit,
+            ageYears: sample.ageYears,
+            slotsAvailable: sample.slotsAvailable,
+            fullObject: sample,
+          });
+          
+          // Check for issues
+          if (!sample.bankName || sample.bankName === "Unknown Bank") {
+            console.error("[buy-tradelines] WARNING: Sample tradeline has unknown bank:", sample);
+          }
+          if (!sample.price || sample.price === 0) {
+            console.error("[buy-tradelines] WARNING: Sample tradeline has no price:", sample);
+          }
+        }
+        
+        // Filter out any invalid items before setting
+        const validTradelines = tradelinesList.filter((t: Tradeline) => {
+          const isValid = t.id && t.bankName && t.bankName !== "Unknown Bank" && t.price > 0;
+          if (!isValid) {
+            console.warn("[buy-tradelines] Filtering out invalid tradeline:", t);
+          }
+          return isValid;
+        });
+        
+        console.log(`[buy-tradelines] Valid tradelines after filtering: ${validTradelines.length} of ${tradelinesList.length}`);
+        setTradelines(validTradelines);
+      } else {
+        throw new Error("Invalid tradelines data format");
+      }
+    } catch (err: any) {
+      console.error("Error fetching tradelines:", err);
+      setError(err.message || "Failed to load tradelines. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedUser = localStorage.getItem("user");
       if (storedUser) {
-        setUser(JSON.parse(storedUser));
+        try {
+          setUser(JSON.parse(storedUser));
+        } catch (e) {
+          console.error("Error parsing user data:", e);
+          localStorage.removeItem("user");
+        }
       }
     }
   }, []);
 
-  const handleAddToCart = (tradelineId: string) => {
-    // Check if user is logged in
+  const handleAddToCart = async (tradelineId: string) => {
+    // REQUIRE LOGIN: Check if user is logged in
     if (!user) {
       router.push("/signin?redirect=/services_page/tradeline-exchange/buy-tradelines");
       return;
     }
 
-    cartStore.addItem(tradelineId);
+    // Find tradeline to get API ID
+    const tradeline = tradelines.find((t) => t.id === tradelineId);
+    const tradelineApiId = tradeline?.tradelineId || tradelineId.replace("tl-", "");
+
+    await cartStore.addItem(tradelineId, tradelineApiId);
     setAddedItemCount(1);
     setShowModal(true);
   };
 
+  const handleViewDetails = (tradelineId: string) => {
+    // REQUIRE LOGIN: Check if user is logged in
+    if (!user) {
+      router.push("/signin?redirect=/services_page/tradeline-exchange/buy-tradelines");
+      return;
+    }
+
+    // Find the tradeline and show checkout modal
+    const tradeline = tradelines.find((t) => t.id === tradelineId);
+    if (tradeline) {
+      setSelectedTradeline(tradeline);
+      setShowCheckoutModal(true);
+    }
+  };
+
+  const handleProceedToCheckout = () => {
+    if (selectedTradeline) {
+      router.push(`/services_page/tradeline-exchange/checkout/${selectedTradeline.id}`);
+    }
+  };
+
+  const getUserDisplayName = () => {
+    if (!user) return "";
+    return user.name || user.user || user.email?.split("@")[0] || "User";
+  };
+
   const filtered = useMemo(() => {
-    let list = [...MOCK_TRADELINES];
+    let list = [...tradelines];
 
     if (minAge > 0) list = list.filter((t) => t.ageYears >= minAge);
     if (minLimit > 0) list = list.filter((t) => t.creditLimit >= minLimit);
@@ -68,13 +213,13 @@ export default function BuyTradeline() {
     }
 
     return list;
-  }, [minAge, minLimit, sortBy]);
+  }, [tradelines, minAge, minLimit, sortBy]);
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-sky-50 via-white to-slate-50 pt-12 pb-16 px-4 md:px-6">
+    <div className="w-full min-h-screen bg-gradient-to-b from-sky-50 via-white to-slate-50 pt-24 pb-16 px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
         {/* HEADER */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 mt-8">
           <div>
             <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
               Buy{" "}
@@ -89,9 +234,34 @@ export default function BuyTradeline() {
           </div>
 
           <div className="flex items-center gap-3 self-start md:self-auto">
+            {/* User Status Indicator */}
+            {user ? (
+              <div className="flex items-center gap-2 rounded-full bg-green-100 px-3 py-1.5 text-xs font-medium text-green-800 border border-green-200">
+                <span className="w-2 h-2 rounded-full bg-green-500" />
+                <span>Logged in as {getUserDisplayName()}</span>
+                <Link
+                  href="/services_page/tradeline-exchange/my-account"
+                  className="text-green-700 hover:text-green-900 underline"
+                >
+                  Dashboard
+                </Link>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1.5 text-xs font-medium text-amber-800 border border-amber-200">
+                <span className="w-2 h-2 rounded-full bg-amber-500" />
+                <span>Please</span>
+                <Link
+                  href="/signin?redirect=/services_page/tradeline-exchange/buy-tradelines"
+                  className="text-amber-700 hover:text-amber-900 font-semibold underline"
+                >
+                  Sign In
+                </Link>
+                <span>to add to cart</span>
+              </div>
+            )}
             <div className="flex items-center gap-2 rounded-full bg-sky-100 px-3 py-1.5 text-xs font-medium text-sky-800 border border-sky-200">
               <Filter size={14} />
-              <span>{filtered.length} results</span>
+              <span>{loading ? "..." : `${filtered.length} results`}</span>
             </div>
           </div>
         </div>
@@ -154,9 +324,52 @@ export default function BuyTradeline() {
           </div>
         </div>
 
+        {/* LOADING STATE */}
+        {loading && (
+          <div className="flex flex-col items-center justify-center py-16">
+            <Loader2 className="w-8 h-8 animate-spin text-sky-500 mb-4" />
+            <p className="text-slate-600">Loading tradelines...</p>
+          </div>
+        )}
+
+        {/* ERROR STATE */}
+        {error && !loading && (
+          <div className="rounded-xl border border-red-200 bg-red-50/80 p-6 mb-8">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <h3 className="text-sm font-semibold text-red-900 mb-1">Error Loading Tradelines</h3>
+                <p className="text-sm text-red-700 mb-4">{error}</p>
+                <button
+                  onClick={fetchTradelines}
+                  className="inline-flex items-center gap-2 rounded-full bg-red-600 text-white px-4 py-2 text-sm font-semibold hover:bg-red-700 transition"
+                >
+                  <RefreshCw size={14} />
+                  Try Again
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* LIST */}
-        <div className="grid gap-5 mt-8">
-          {filtered.map((item) => (
+        {!loading && !error && (
+          <div className="grid gap-5 mt-8">
+            {filtered.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-slate-600 mb-2">No tradelines match your filters.</p>
+                <button
+                  onClick={() => {
+                    setMinAge(0);
+                    setMinLimit(0);
+                  }}
+                  className="text-sm text-sky-600 hover:text-sky-700 underline"
+                >
+                  Clear filters
+                </button>
+              </div>
+            ) : (
+              filtered.map((item) => (
             <div
               key={item.id}
               className="bg-white/95 rounded-2xl shadow-[0_10px_28px_rgba(15,23,42,0.12)] border border-slate-100 overflow-hidden"
@@ -170,19 +383,26 @@ export default function BuyTradeline() {
                     </span>
                   </h3>
                   <p className="text-xs text-sky-50/90">
-                    Statement: {item.statementDate} • Util: {item.utilizationPercent}% • Age:{" "}
-                    {item.ageYears} yrs
+                    Statement: {item.statementDate || "N/A"} • Util: {item.utilizationPercent || 0}% • Age:{" "}
+                    {item.ageYears || 0} {item.ageYears === 1 ? "yr" : "yrs"}
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="text-right">
                     <p className="text-sm text-sky-100">Credit Limit</p>
-                    <p className="text-xl font-bold">${item.creditLimit.toLocaleString()}</p>
+                    <p className="text-xl font-bold">
+                      ${(item.creditLimit || 0).toLocaleString()}
+                    </p>
                   </div>
                   <div className="h-10 w-px bg-white/20" />
                   <div className="text-right">
                     <p className="text-xs text-sky-100">Price</p>
-                    <p className="text-xl font-bold">${item.price.toFixed(0)}</p>
+                    <p className="text-xl font-bold">
+                      ${(item.price || 0).toFixed(0)}
+                    </p>
+                    {(!item.price || item.price === 0) && (
+                      <p className="text-xs text-red-200 mt-1">Price N/A</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -207,30 +427,64 @@ export default function BuyTradeline() {
                 </div>
 
                 <div className="flex flex-wrap gap-3 justify-end">
-                  <Link
-                    href={`/services_page/tradeline-exchange/checkout/${item.id}`}
+                  <button
+                    onClick={() => handleViewDetails(item.id)}
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-white border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-800 shadow-sm hover:border-sky-400 transition"
                   >
                     View Details
-                  </Link>
+                  </button>
                   <button
                     onClick={() => handleAddToCart(item.id)}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md hover:translate-y-0.5 transition"
+                    disabled={!user}
+                    className={`inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold shadow-md transition ${
+                      user
+                        ? "bg-gradient-to-r from-sky-500 to-blue-600 text-white hover:translate-y-0.5"
+                        : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    }`}
+                    title={!user ? "Please sign in to add to cart" : ""}
                   >
                     <ShoppingCart size={16} />
-                    Add to Cart
+                    {user ? "Add to Cart" : "Sign In Required"}
                   </button>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+          ))
+            )}
+          </div>
+        )}
+
+        {/* COMPLIANCE DISCLAIMER */}
+        {!loading && !error && filtered.length > 0 && (
+          <div className="mt-12 rounded-xl border border-amber-200 bg-amber-50/80 p-6">
+            <div className="flex items-start gap-3">
+              <Info className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <h3 className="text-sm font-semibold text-amber-900 mb-2">Important Information</h3>
+                <p className="text-sm text-amber-800 leading-relaxed">
+                  Tradelines are authorized user accounts. Results may vary and are not guaranteed. 
+                  Tradelines are not advertised for the purpose of obtaining loans, funding, or credit approval.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <AddToCartModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
         itemCount={addedItemCount}
+      />
+
+      <CheckoutModal
+        isOpen={showCheckoutModal}
+        onClose={() => {
+          setShowCheckoutModal(false);
+          setSelectedTradeline(null);
+        }}
+        tradeline={selectedTradeline}
+        onProceed={handleProceedToCheckout}
       />
     </div>
   );

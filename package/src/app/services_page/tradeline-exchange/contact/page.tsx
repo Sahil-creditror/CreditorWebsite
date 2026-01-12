@@ -13,9 +13,9 @@ export default function Contact({}) {
   }, []);
 
   return (
-    <section className="relative pt-12 md:pt-16 px-6 md:px-20 overflow-hidden bg-white">
+    <section className="relative pt-24 md:pt-28 px-6 md:px-20 overflow-hidden bg-white">
       <div className="container relative z-10">
-        <div className="mx-auto flex flex-col gap-12 md:gap-16">
+        <div className="mx-auto flex flex-col gap-12 md:gap-16 mt-8">
 
           {/* GRID */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">

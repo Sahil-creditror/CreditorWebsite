@@ -1194,10 +1194,10 @@ export default function Resources() {
   const paginatedPosts = cappedPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-white text-slate-900 pt-24">
       {/* Hero */}
       <section id="hero" className="bg-gradient-to-br from-sky-50 via-white to-blue-50 border-b border-sky-100">
-        <div className="max-w-6xl mx-auto px-6 py-16 text-center space-y-6">
+        <div className="max-w-6xl mx-auto px-6 py-16 text-center space-y-6 mt-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

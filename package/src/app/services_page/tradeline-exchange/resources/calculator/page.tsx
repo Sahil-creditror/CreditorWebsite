@@ -41,11 +41,11 @@ export default function TradelineCalculatorPage(): React.ReactElement {
   const individualUtil = (a: Account) => (!a.limit ? 0 : (a.balance / a.limit) * 100);
 
   return (
-    <main className="min-h-screen w-full bg-slate-50">
+    <main className="min-h-screen w-full bg-slate-50 pt-24">
 
       {/* 🔵 HERO */}
       <section className="w-full bg-gradient-to-br from-[#0F6FD3] via-[#0b5fa8] to-[#083f7a] text-white">
-        <div className="max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-12">
+        <div className="max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-12 mt-8">
 
           <div>
             <span className="inline-block mb-4 px-4 py-1 text-sm rounded-full bg-white/15 border border-white/20">

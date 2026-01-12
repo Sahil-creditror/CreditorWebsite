@@ -149,11 +149,11 @@ export default function Resources() {
   const prevPage = () => currentPage > 1 && setCurrentPage((prev) => prev - 1);
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100">
+    <div className="min-h-screen bg-gray-950 text-gray-100 pt-24">
       {/* Dark Hero Section */}
       <section id="hero" className="relative bg-gradient-to-br from-gray-900 via-blue-950 to-indigo-950 py-16 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-black/40" />
-        <div className="relative z-10 max-w-7xl mx-auto text-center">
+        <div className="relative z-10 max-w-7xl mx-auto text-center mt-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

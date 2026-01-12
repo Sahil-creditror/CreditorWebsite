@@ -13,8 +13,8 @@ const fadeIn = (delay = 0) => ({
 
 export default function SellTradelines() {
   return (
-    <div className="min-h-screen w-full bg-slate-950 text-slate-50">
-      <section className="relative overflow-hidden px-6 md:px-10 lg:px-16 py-16 md:py-20">
+    <div className="min-h-screen w-full bg-slate-950 text-slate-50 pt-24">
+      <section className="relative overflow-hidden px-6 md:px-10 lg:px-16 py-16 md:py-20 mt-8">
         {/* Background accents */}
         <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(56,189,248,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(56,189,248,0.12)_1px,transparent_1px)] [background-size:60px_60px]" />
         <div className="pointer-events-none absolute -top-32 -left-24 h-72 w-72 rounded-full bg-sky-500/25 blur-3xl" />

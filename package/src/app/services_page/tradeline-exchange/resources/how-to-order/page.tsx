@@ -5,10 +5,10 @@ export default function HowToPurchase(): React.ReactElement {
   const [showRefundSteps, setShowRefundSteps] = useState<boolean>(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 text-slate-900 font-sans">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 text-slate-900 font-sans pt-24">
       {/* HERO - dark blue */}
       <header className="w-full bg-gradient-to-r from-[#03253b] via-[#043a63] to-[#0b5fa0] text-white">
-        <div className="max-w-6xl mx-auto px-6 py-24 lg:py-32">
+        <div className="max-w-6xl mx-auto px-6 py-24 lg:py-32 mt-8">
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             <div>
               <h1 className="text-4xl lg:text-5xl font-extrabold leading-tight drop-shadow">How to Purchase Tradelines — What to Expect</h1>

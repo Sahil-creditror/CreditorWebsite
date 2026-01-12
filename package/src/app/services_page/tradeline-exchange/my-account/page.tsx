@@ -42,16 +42,46 @@ export default function MyAccountPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialEmail, email]);
 
-  const handleLookup = (targetEmail?: string) => {
+  const handleLookup = async (targetEmail?: string) => {
     const e = (targetEmail ?? email).trim();
     if (!e) {
       setOrders([]);
       setLookedUp(true);
       return;
     }
-    const found = orderStore.getOrdersByEmail(e);
-    setOrders(found);
-    setLookedUp(true);
+
+    try {
+      // Fetch orders from MongoDB
+      const response = await fetch(`/api/orders?email=${encodeURIComponent(e)}`);
+      const data = await response.json();
+      
+      if (data.success && Array.isArray(data.orders)) {
+        // Convert MongoDB orders to the format expected by the component
+        const formattedOrders = data.orders.map((order: any) => ({
+          id: order._id || order.id,
+          tradelineId: order.tradelines?.[0]?.tradelineId || "",
+          fullName: `${order.clientFirstName} ${order.clientLastName}`,
+          email: order.email,
+          phone: order.clientPhone,
+          creditGoal: order.creditGoal,
+          createdAt: order.createdAt,
+          status: order.status,
+        }));
+        setOrders(formattedOrders);
+        setLookedUp(true);
+      } else {
+        // Fallback to localStorage
+        const found = orderStore.getOrdersByEmail(e);
+        setOrders(found);
+        setLookedUp(true);
+      }
+    } catch (error) {
+      console.error("[my-account] Error fetching orders:", error);
+      // Fallback to localStorage
+      const found = orderStore.getOrdersByEmail(e);
+      setOrders(found);
+      setLookedUp(true);
+    }
   };
 
   const enrichedOrders = useMemo(
@@ -89,9 +119,9 @@ export default function MyAccountPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 pt-24">
       {/* Header */}
-      <div className="bg-gray-800 text-white py-12">
+      <div className="bg-gray-800 text-white py-12 mt-8">
         <div className="max-w-6xl mx-auto px-4">
           <h1 className="text-4xl font-bold">My Account</h1>
         </div>

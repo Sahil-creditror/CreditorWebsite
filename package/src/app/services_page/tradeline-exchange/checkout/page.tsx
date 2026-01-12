@@ -4,7 +4,21 @@
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { cartStore } from "../lib/cart";
-import { MOCK_TRADELINES } from "../lib/tradelines";
+
+interface Tradeline {
+  id: string;
+  tradelineId: string;
+  bankName: string;
+  last4: string;
+  ageYears: number;
+  creditLimit: number;
+  utilizationPercent: number;
+  statementDate: string;
+  price: number;
+  slotsTotal: number;
+  slotsAvailable: number;
+  notes?: string;
+}
 
 const PAYMENT_LINK_BASE =
   process.env.NEXT_PUBLIC_PAYMENT_LINK_BASE ??
@@ -14,6 +28,8 @@ export default function CheckoutPage() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [cart, setCart] = useState(cartStore.getCart());
+  const [tradelines, setTradelines] = useState<Tradeline[]>([]);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     // Billing Details
     billingFirstName: "",
@@ -60,6 +76,28 @@ export default function CheckoutPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
 
+  // Fetch tradelines from API
+  useEffect(() => {
+    const fetchTradelines = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch("/api/tradelines");
+        const data = await response.json();
+        
+        if (data.success && Array.isArray(data.tradelines)) {
+          setTradelines(data.tradelines);
+          console.log(`[checkout] Loaded ${data.tradelines.length} tradelines`);
+        }
+      } catch (err: any) {
+        console.error("[checkout] Error fetching tradelines:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTradelines();
+  }, []);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedUser = localStorage.getItem("user");
@@ -87,11 +125,22 @@ export default function CheckoutPage() {
   }, [router]);
 
   const enrichedCart = useMemo(() => {
-    return cart.map((item) => ({
-      ...item,
-      tradeline: MOCK_TRADELINES.find((t) => t.id === item.tradelineId),
-    }));
-  }, [cart]);
+    return cart.map((item) => {
+      // Try to find tradeline by multiple ID formats
+      const tradeline = tradelines.find(
+        (t) => 
+          t.id === item.tradelineId ||
+          t.id === `tl-${item.tradelineId}` ||
+          t.tradelineId === item.tradelineId ||
+          t.tradelineId === item.tradelineId.replace("tl-", "")
+      );
+      
+      return {
+        ...item,
+        tradeline,
+      };
+    });
+  }, [cart, tradelines]);
 
   const subtotal = useMemo(() => {
     return enrichedCart.reduce(
@@ -206,14 +255,114 @@ export default function CheckoutPage() {
       return;
     }
 
+    if (!user || !user.id || !user.email) {
+      alert("Please log in to complete your order.");
+      return;
+    }
+
     setSubmitting(true);
     try {
-      // Here you would typically send the form data to your backend
-      // For now, we'll just redirect to payment
-      const paymentLink = `${PAYMENT_LINK_BASE}?amount=${subtotal.toFixed(2)}`;
+      // Prepare order data with tradeline details
+      const orderTradelines = enrichedCart.map((item) => ({
+        tradelineId: item.tradelineId,
+        tradelineApiId: item.tradeline?.tradelineId || item.tradelineId,
+        bankName: item.tradeline?.bankName || "Unknown",
+        creditLimit: item.tradeline?.creditLimit || 0,
+        price: item.tradeline?.price || 0,
+        quantity: item.quantity,
+      }));
+
+      // Parse DOB if provided
+      let clientDOB: Date | undefined;
+      if (formData.clientDOBYear && formData.clientDOBMonth && formData.clientDOBDay) {
+        clientDOB = new Date(
+          parseInt(formData.clientDOBYear),
+          parseInt(formData.clientDOBMonth) - 1,
+          parseInt(formData.clientDOBDay)
+        );
+      }
+
+      // Prepare order payload
+      const orderData = {
+        userId: user.id,
+        email: user.email.toLowerCase(),
+        tradelines: orderTradelines,
+        
+        // Billing Details
+        billingFirstName: formData.billingFirstName,
+        billingLastName: formData.billingLastName,
+        companyName: formData.companyName || undefined,
+        billingAddress: formData.billingAddress,
+        billingAddress2: formData.billingAddress2 || undefined,
+        billingCity: formData.billingCity,
+        billingState: formData.billingState,
+        billingZip: formData.billingZip,
+        billingPhone: formData.billingPhone,
+        billingEmail: formData.billingEmail,
+        
+        // Authorized User Info
+        sameAsBilling: formData.sameAsBilling,
+        clientFirstName: formData.clientFirstName,
+        clientLastName: formData.clientLastName,
+        clientAddress: formData.clientAddress,
+        clientAddress2: formData.clientAddress2 || undefined,
+        clientCity: formData.clientCity,
+        clientState: formData.clientState,
+        clientZip: formData.clientZip,
+        clientPhone: formData.clientPhone,
+        clientEmail: formData.clientEmail,
+        clientDOB: clientDOB || undefined,
+        clientSSN: formData.clientSSN || undefined,
+        
+        // Payment Details
+        routingNumber: formData.routingNumber || undefined,
+        accountNumber: formData.accountNumber || undefined,
+        paymentMethod: "echeck",
+        
+        // Document paths (files would be uploaded separately to S3)
+        billingDLPath: formData.billingDL ? formData.billingDL.name : undefined,
+        clientDLPath: formData.clientDL ? formData.clientDL.name : undefined,
+        clientSSNCardPath: formData.clientSSNCard ? formData.clientSSNCard.name : undefined,
+        
+        // Order Status
+        status: "pending",
+        
+        // Totals
+        subtotal: subtotal,
+        total: subtotal,
+        
+        // Additional Info
+        orderNotes: formData.orderNotes || undefined,
+        creditGoal: formData.creditGoal || undefined,
+      };
+
+      // Save order to MongoDB
+      const orderResponse = await fetch("/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      const orderResult = await orderResponse.json();
+
+      if (!orderResponse.ok || !orderResult.success) {
+        throw new Error(orderResult.error || "Failed to save order");
+      }
+
+      console.log("Order saved successfully:", orderResult.order.id);
+
+      // Clear cart after successful order
+      await cartStore.clearCart();
+
+      // Redirect to payment
+      const orderId = orderResult.order._id || orderResult.order.id;
+      const paymentLink = `${PAYMENT_LINK_BASE}?orderId=${orderId}&amount=${subtotal.toFixed(2)}`;
       window.location.href = paymentLink;
-    } catch (error) {
-      alert("An error occurred. Please try again.");
+    } catch (error: any) {
+      console.error("Order submission error:", error);
+      alert(error.message || "An error occurred while processing your order. Please try again.");
       setSubmitting(false);
     }
   };
@@ -223,10 +372,10 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen bg-gray-50 pt-24 pb-8 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Service Terms Button */}
-        <div className="mb-6">
+        <div className="mb-6 mt-8">
           <button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 px-4 rounded flex items-center gap-2">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

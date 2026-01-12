@@ -15,44 +15,21 @@ function Courses() {
       />
 
       <section className="relative py-20 md:py-20 overflow-hidden">
-        {/* Christmas bell in top right corner */}
-        {/* <div className="absolute top-0 left-0 z-20 pointer-events-none">
-          <Image
-            src="/images/hero/bell.png"
-            alt="Christmas Bell"
-            width={200}
-            height={200}
-            priority
-            className="w-32 md:w-44 lg:w-52 h-auto drop-shadow-xl select-none"
-          />
-        </div> */}
-
-        {/* Light-mode background image (hidden in dark mode) */}
-        <video
-          className="absolute top-0 left-0 w-full h-full object-cover -z-20 block dark:hidden"
-          autoPlay
-          loop
-          muted
-          playsInline
-        >
-          <source src="/video/course-bg-light.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-
-        {/* Dark-mode background video (hidden in light mode) */}
-        <video
-          className="absolute top-0 left-0 w-full h-full object-cover -z-20 hidden dark:block"
-          autoPlay
-          loop
-          muted
-          playsInline
-        >
-          <source src="/video/course-bg-dark.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-
-        {/* Overlay for darkening video / image (above background) */}
-        <div className="absolute inset-0 bg-black/20 dark:bg-black/60 -z-10" />
+        {/* Static gradient background - Light mode (Blue gradient) */}
+        <div 
+          className="pointer-events-none absolute inset-0 -z-10 block dark:hidden"
+          style={{
+            background: "linear-gradient(to bottom, #1e40af, #60a5fa)",
+          }}
+        />
+        
+        {/* Static gradient background - Dark mode (Dark slate gradient) */}
+        <div 
+          className="pointer-events-none absolute inset-0 -z-10 hidden dark:block"
+          style={{
+            background: "linear-gradient(to bottom, #0f172a, #334155)",
+          }}
+        />
 
         <div className="relative flex flex-col gap-24">
           <div className="px-3.5">

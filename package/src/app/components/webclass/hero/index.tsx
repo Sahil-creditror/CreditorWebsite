@@ -750,6 +750,8 @@ export default function WebclassSection() {
                     fill
                     style={{ objectFit: "cover" }}
                     priority
+                    quality={85}
+                    sizes="(max-width: 1024px) 100vw, 500px"
                   />
                 </div>
               </div>

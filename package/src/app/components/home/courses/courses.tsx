@@ -134,50 +134,21 @@ const CourseRoadmap: React.FC = () => {
 
   return (
     <section className="relative w-full mx-auto py-12 px-4 sm:px-6 lg:px-8 font-sans overflow-hidden">
-      {/* Ripple background: SVG based (performs well and respects reduced-motion) */}
-      <div className="pointer-events-none absolute inset-0 -z-20 opacity-90">
-        <svg className="w-full h-full" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-          <defs>
-            <radialGradient id="r1" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#0369a1" stopOpacity="0.28" />
-              <stop offset="100%" stopColor="#0369a1" stopOpacity="0" />
-            </radialGradient>
-
-            <radialGradient id="r2" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#7c3aed" stopOpacity="0.18" />
-              <stop offset="100%" stopColor="#7c3aed" stopOpacity="0" />
-            </radialGradient>
-
-            <radialGradient id="r3" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.12" />
-              <stop offset="100%" stopColor="#06b6d4" stopOpacity="0" />
-            </radialGradient>
-          </defs>
-
-          {/* big slow ripple */}
-          <circle cx="20%" cy="30%" r="60" fill="url(#r1)">
-            <animate attributeName="r" from="60" to="520" dur="8s" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="0.35" to="0" dur="8s" repeatCount="indefinite" />
-          </circle>
-
-          {/* staggered ripple */}
-          <circle cx="80%" cy="70%" r="40" fill="url(#r2)">
-            <animate attributeName="r" from="40" to="420" dur="7s" begin="1.8s" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="0.3" to="0" dur="7s" begin="1.8s" repeatCount="indefinite" />
-          </circle>
-
-          <circle cx="50%" cy="50%" r="30" fill="url(#r3)">
-            <animate attributeName="r" from="30" to="300" dur="6s" begin="0.9s" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="0.25" to="0" dur="6s" begin="0.9s" repeatCount="indefinite" />
-          </circle>
-        </svg>
-
-        {/* overlay gradient to tint the content slightly */}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-blue-50/30 via-transparent to-transparent mix-blend-normal" />
-
-        {/* respect user motion preferences */}
-        <style>{`@media (prefers-reduced-motion: reduce) { svg { display: none !important; } }`}</style>
-      </div>
+      {/* Static gradient background - Light mode (Blue gradient) */}
+      <div 
+        className="pointer-events-none absolute inset-0 -z-10 block dark:hidden"
+        style={{
+          background: "linear-gradient(to bottom, #1e40af, #60a5fa)",
+        }}
+      />
+      
+      {/* Static gradient background - Dark mode (Dark slate gradient) */}
+      <div 
+        className="pointer-events-none absolute inset-0 -z-10 hidden dark:block"
+        style={{
+          background: "linear-gradient(to bottom, #0f172a, #334155)",
+        }}
+      />
 
       <div className="max-w-7xl mx-auto">
 

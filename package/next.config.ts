@@ -7,7 +7,18 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    unoptimized: true,
+    // Enable Next.js image optimization for better performance
+    unoptimized: false,
+    // Image formats to use (WebP is preferred for better compression)
+    formats: ['image/webp', 'image/avif'],
+    // Device sizes for responsive images
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    // Image sizes for different breakpoints
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // Minimum quality for optimized images
+    minimumCacheTTL: 60,
+    // Cloudflare CDN configuration (if using Cloudflare)
+    // The images will be served through Cloudflare automatically when deployed
     remotePatterns: [
       {
         protocol: "https",

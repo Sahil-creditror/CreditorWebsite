@@ -6,18 +6,16 @@ import { useEffect, useState } from "react";
 /**
  * Fixed daily webinar times in PST (24h format).
  * These are used for the countdown logic and upcoming-session dropdown.
- * Updated for sessions every 20 minutes from 9:00 AM to 12:00 AM (midnight).
+ * Updated for hourly sessions from 9:00 AM to 12:00 AM (midnight).
  */
 const WEBINAR_SESSION_HOURS_PST: number[] = [];
 const WEBINAR_SESSION_MINUTES_PST: number[] = [];
 
-// Generate all time slots from 9:00 AM to 12:00 AM (every 20 minutes)
-// 9:00 AM = 9:00, 9:20, 9:40, 10:00, ... 11:40 PM, 12:00 AM (midnight)
+// Generate hourly time slots from 9:00 AM to 12:00 AM (midnight)
+// 9:00 AM, 10:00 AM, 11:00 AM, 12:00 PM, 1:00 PM, ..., 11:00 PM, 12:00 AM
 for (let hour = 9; hour < 24; hour++) {
-  for (let minute = 0; minute < 60; minute += 20) {
-    WEBINAR_SESSION_HOURS_PST.push(hour);
-    WEBINAR_SESSION_MINUTES_PST.push(minute);
-  }
+  WEBINAR_SESSION_HOURS_PST.push(hour);
+  WEBINAR_SESSION_MINUTES_PST.push(0); // Only hourly slots (minute = 0)
 }
 // Add midnight (12:00 AM = 0:00)
 WEBINAR_SESSION_HOURS_PST.push(0);
@@ -32,7 +30,7 @@ WEBINAR_SESSION_MINUTES_PST.push(0);
 const WEBINAR_SERIES_END = new Date("2026-02-01T23:59:59-08:00");
 
 /**
- * Countdown hook: next scheduled webinar (every 20 minutes from 9 AM to 12 AM PST) from current time.
+ * Countdown hook: next scheduled webinar (hourly from 9 AM to 12 AM PST) from current time.
  * Shows countdown to the nearest upcoming session start time.
  * When a session time passes, automatically moves to the next session.
  */
@@ -65,7 +63,7 @@ function useCountdown() {
 
     // Sort by time and get the nearest upcoming session
     allSessions.sort((a, b) => a.getTime() - b.getTime());
-    return allSessions[0] || new Date(now.getTime() + 20 * 60 * 1000); // Fallback: 20 minutes from now
+    return allSessions[0] || new Date(now.getTime() + 60 * 60 * 1000); // Fallback: 1 hour from now
   };
 
   const [targetTime, setTargetTime] = useState<Date>(getNextSessionTarget);

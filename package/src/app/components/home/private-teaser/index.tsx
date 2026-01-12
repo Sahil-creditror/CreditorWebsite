@@ -76,11 +76,13 @@ function PrivateTeaser() {
             >
               <div className="relative aspect-[1/1] rounded-2xl overflow-hidden shadow-2xl bg-secondary dark:bg-darkblack">
                 <Image
-                  src="/images/avatar/paul.png"
+                  src="/images/avatar/paul.webp"
                   alt="Private Operation"
                   fill
                   className="object-cover"
-                  priority
+                  loading="lazy"
+                  quality={85}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-secondary/60 via-transparent to-transparent dark:from-secondary/70" />
                 <div className="absolute top-4 left-4 bg-primary text-white dark:text-secondary px-4 py-2 rounded-full text-sm font-bold shadow-lg">

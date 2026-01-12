@@ -6,32 +6,21 @@ import Premium from "./courses";
 function Courses() {
   return (
     <section className="relative py-20 md:py-20 overflow-hidden">
-      {/* 🔹 Light Mode Video */}
-      <video
-        className="absolute top-0 left-0 w-full h-full object-cover -z-10 dark:hidden"
-        autoPlay
-        loop
-        muted
-        playsInline
-      >
-        <source src="/video/course-bg-new-light.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-
-      {/* 🔹 Dark Mode Video */}
-      <video
-        className="absolute top-0 left-0 w-full h-full object-cover -z-10 hidden dark:block"
-        autoPlay
-        loop
-        muted
-        playsInline
-      >
-        <source src="/video/course-bg-dark.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-
-      {/* 🔹 Overlay for darkening video */}
-      <div className="absolute inset-0 bg-black/20 dark:bg-black/60 -z-10" />
+      {/* Static gradient background - Light mode (Blue gradient) */}
+      <div 
+        className="pointer-events-none absolute inset-0 -z-10 block dark:hidden"
+        style={{
+          background: "linear-gradient(to bottom, #1e40af, #60a5fa)",
+        }}
+      />
+      
+      {/* Static gradient background - Dark mode (Dark slate gradient) */}
+      <div 
+        className="pointer-events-none absolute inset-0 -z-10 hidden dark:block"
+        style={{
+          background: "linear-gradient(to bottom, #0f172a, #334155)",
+        }}
+      />
 
       <div className="relative flex flex-col gap-24">
         {/* <div className="container">

@@ -191,17 +191,19 @@ const HeroSection = () => {
             className="absolute inset-0 w-full h-full"
           >
             <Parallax speed={-20} style={{ height: "100%" }}>
-              {/* Poster image as primary LCP element - loads immediately for better performance */}
-              <div className="absolute inset-0 w-full h-full">
-                <Image
+              {/* Poster image as primary LCP element - use native img for fastest load */}
+              <div className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
+                {/* Native img tag for fastest LCP - no React hydration delay, loads immediately */}
+                <img
                   src={videos[currentIndex].poster}
                   alt={videos[currentIndex].title}
-                  fill
-                  priority={currentIndex === 0}
-                  quality={85}
-                  sizes="100vw"
-                  className="object-cover"
-                  style={{ zIndex: 1 }}
+                  width={1920}
+                  height={1080}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  fetchPriority={currentIndex === 0 ? "high" : "auto"}
+                  loading={currentIndex === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
               </div>
               {/* Video loads lazily - only metadata for first, none for others */}

@@ -8,7 +8,6 @@ const nextConfig: NextConfig = {
   },
   // Performance optimizations
   compress: true,
-  optimizeFonts: true,
   productionBrowserSourceMaps: false,
   // Optimize package imports to reduce bundle size
   experimental: {

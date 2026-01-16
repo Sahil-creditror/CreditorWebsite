@@ -22,8 +22,8 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     // Image sizes for different breakpoints
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    // Minimum quality for optimized images
-    minimumCacheTTL: 60,
+    // Increased cache TTL for better performance (1 year for static assets)
+    minimumCacheTTL: 31536000,
     // Cloudflare CDN configuration (if using Cloudflare)
     // The images will be served through Cloudflare automatically when deployed
     remotePatterns: [
@@ -40,6 +40,38 @@ const nextConfig: NextConfig = {
         hostname: "source.unsplash.com",
       },
     ],
+  },
+  // Add headers for better caching and performance
+  async headers() {
+    return [
+      {
+        source: '/images/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/video/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
   },
   env: {
     NEXT_PUBLIC_API_BASE_URL:

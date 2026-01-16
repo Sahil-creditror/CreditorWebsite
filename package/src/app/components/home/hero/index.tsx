@@ -200,6 +200,7 @@ const HeroSection = () => {
                 preload={currentIndex === 0 ? "auto" : "metadata"}
                 poster={videos[currentIndex].poster}
                 key={videos[currentIndex].src}
+                style={{ width: "100%", height: "100%" }}
               >
                 <source src={videos[currentIndex].src} type="video/mp4" />
                 Your browser does not support the video tag.
@@ -226,8 +227,8 @@ const HeroSection = () => {
                 height={110}
                 priority
                 quality={85}
-                className="object-contain 
-               w-52 sm:w-60 md:w-80 lg:w-[420px]"
+                sizes="(max-width: 640px) 208px, (max-width: 768px) 240px, (max-width: 1024px) 320px, 420px"
+                className="object-contain w-52 sm:w-60 md:w-80 lg:w-[420px]"
               />
 </div>
 

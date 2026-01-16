@@ -83,6 +83,7 @@ const HerobannerWithTag: React.FC<HeroBannerWithTagProps> = ({
               height={120}
               priority
               quality={85}
+              sizes="(max-width: 640px) 200px, (max-width: 768px) 300px, (max-width: 1024px) 400px, 600px"
             />
           </div>
           {/* Description

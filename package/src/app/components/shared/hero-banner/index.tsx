@@ -60,8 +60,8 @@ const Herobanner: React.FC<HeroBannerProps> = ({
     height={80}
     priority
     quality={85}
-    className="object-contain 
-               w-44 sm:w-52 md:w-64 lg:w-[300px]"
+    sizes="(max-width: 640px) 176px, (max-width: 768px) 208px, (max-width: 1024px) 256px, 300px"
+    className="object-contain w-44 sm:w-52 md:w-64 lg:w-[300px]"
   />
 </div>
 

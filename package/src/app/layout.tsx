@@ -7,6 +7,8 @@ import type { Metadata } from "next";
 
 const manrope = Manrope({
   subsets: ["latin"],
+  display: "swap", // Optimize font loading - prevents invisible text during font load
+  preload: true,
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
@@ -39,12 +41,15 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://creditor.onrender.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        {/* Preload critical hero resources for LCP optimization */}
+        <link rel="preload" as="image" href="/images/hero/banner-1.webp" fetchPriority="high" />
+        <link rel="preload" as="video" href="/video/hero-1.mp4" />
         {/* Google Site Verification */}
         <meta name="google-site-verification" content="pH5h_UHFyDB48WepO74L0KD0hE-6UE7vSYLxpv_9vK4" />
-        {/* Google Tag Manager */}
+        {/* Google Tag Manager - Deferred to improve LCP */}
         <Script
           id="gtm-head"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -55,10 +60,10 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* Google Ads */}
+        {/* Google Ads - Deferred to improve LCP */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-17542559364"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
       </head>
       <body className={manrope.className}>
@@ -71,10 +76,10 @@ export default function RootLayout({
             style={{display:'none',visibility:'hidden'}}
           />
         </noscript>
-        {/* Microsoft Clarity Analytics */}
+        {/* Microsoft Clarity Analytics - Deferred to improve LCP */}
         <Script
           id="microsoft-clarity"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               (function(c,l,a,r,i,t,y){
@@ -85,14 +90,14 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* Google Analytics 4 */}
+        {/* Google Analytics 4 - Deferred to improve LCP */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-QMSV3WP8T5"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
         <Script
           id="ga4-init"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -102,10 +107,10 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* Google Ads */}
+        {/* Google Ads - Deferred to improve LCP */}
         <Script
           id="google-ads-init"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];

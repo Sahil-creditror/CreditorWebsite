@@ -14,21 +14,8 @@ export function HeroSectionOne() {
       {/* Overlay for better text contrast */}
       <div className="absolute inset-0 bg-black/30 dark:bg-black/50"></div>
 
-      <div className="absolute inset-y-0 left-4 md:left-8 h-full w-px bg-neutral-200/80 dark:bg-neutral-800/80">
-        <div className="absolute top-0 h-40 w-px bg-gradient-to-b from-transparent via-blue-500 to-transparent" />
-      </div>
-      <div className="absolute inset-y-0 right-4 md:right-8 h-full w-px bg-neutral-200/80 dark:bg-neutral-800/80">
-        <div className="absolute h-40 w-px bg-gradient-to-b from-transparent via-blue-500 to-transparent" />
-      </div>
-
-      {/* Bottom horizontal line */}
-      <div className="absolute inset-x-0 bottom-0 h-px w-full bg-neutral-200/80 dark:bg-neutral-800/80">
-        <div className="absolute mx-auto h-px w-40 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
-      </div>
-
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-start justify-center px-4">
-        <div className="relative w-full max-w-5xl pl-6">
-          <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-blue-500/70 to-transparent" />
+        <div className="relative w-full max-w-5xl">
           <h1 className="text-left text-2xl md:text-4xl lg:text-7xl font-bold text-white leading-tight tracking-tight">
             {"Launch Your Private Dream Website Today"
               .split(" ")

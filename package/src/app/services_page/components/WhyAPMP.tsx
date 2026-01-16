@@ -281,7 +281,8 @@ export default function WhyAPMP({
                 alt="Private merchant processing visual"
                 width={1600}
                 height={1000}
-                priority
+                priority={false}
+                loading="lazy"
                 className="w-full h-auto object-contain"
                 sizes="(max-width: 1024px) 100vw, 600px"
               />

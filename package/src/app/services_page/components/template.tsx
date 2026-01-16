@@ -76,7 +76,7 @@ const contentItemVariants = {
 
 export default function WebsiteCreationSection() {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-slate-50 to-white dark:from-[#060617] dark:to-[#071024]">
+    <section className="py-16 md:py-24 bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 dark:from-[#0a0f1a] dark:via-[#0d1525] dark:to-[#0f1a2e]">
       <div className="container mx-auto px-6">
         {/* Heading */}
         <div className="max-w-3xl mx-auto text-center mb-12">
@@ -200,7 +200,7 @@ export default function WebsiteCreationSection() {
           <p className="text-slate-700 dark:text-slate-300">Want these templates customised? </p>
           <Link
             href="/contact"
-            className="inline-block mt-4 rounded-full px-6 py-3 bg-slate-900 text-white font-semibold shadow-lg hover:scale-105 transition-transform duration-200"
+            className="inline-block mt-4 rounded-full px-6 py-3 bg-slate-900 dark:bg-gradient-to-r dark:from-yellow-500 dark:to-yellow-600 text-white dark:text-gray-900 font-semibold shadow-lg hover:scale-105 transition-transform duration-200"
           >
             Request a custom build
           </Link>

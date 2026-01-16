@@ -10,6 +10,7 @@ const Logoslider = ({ logo }: { logo?: { light: string; dark: string } }) => {
                 height={80}
                 width={200}
                 className="block dark:hidden"
+                loading="lazy"
             />
             
             <Image
@@ -18,6 +19,7 @@ const Logoslider = ({ logo }: { logo?: { light: string; dark: string } }) => {
                 height={80}
                 width={200}
                 className="hidden dark:block"
+                loading="lazy"
             />
         </Slider.Slide>
     );

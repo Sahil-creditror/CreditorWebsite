@@ -197,7 +197,7 @@ const HeroSection = () => {
                 autoPlay
                 muted
                 playsInline
-                preload="auto"
+                preload={currentIndex === 0 ? "auto" : "metadata"}
                 poster={videos[currentIndex].poster}
                 key={videos[currentIndex].src}
               >

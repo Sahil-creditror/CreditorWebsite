@@ -6,6 +6,13 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // Performance optimizations
+  compress: true,
+  optimizeFonts: true,
+  productionBrowserSourceMaps: false,
+  experimental: {
+    optimizePackageImports: ['framer-motion', 'react-infinite-logo-slider'],
+  },
   images: {
     // Enable Next.js image optimization for better performance
     unoptimized: false,

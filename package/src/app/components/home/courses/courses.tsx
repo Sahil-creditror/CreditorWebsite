@@ -48,6 +48,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover"
           priority={false}
+          loading="lazy"
         />
 
         {/* badge overlay removed */}

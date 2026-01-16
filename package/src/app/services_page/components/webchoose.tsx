@@ -104,7 +104,7 @@ export default function WhyChooseUs({
 }: WhyChooseUsProps) {
   return (
     <section
-      className={`why-choose-us relative overflow-hidden py-12 sm:py-20 lg:py-28 ${className}`}
+      className={`why-choose-us relative overflow-hidden py-12 sm:py-20 lg:py-28 bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 dark:from-[#0a0f1a] dark:via-[#0d1525] dark:to-[#0f1a2e] ${className}`}
       aria-labelledby="why-choose-us-title"
     >
       {/* Decorative blurred gradient shapes */}

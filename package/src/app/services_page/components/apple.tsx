@@ -266,6 +266,7 @@ export const Card = ({
           alt={card.title}
           fill
           className="absolute inset-0 z-10 object-cover"
+          loading="lazy"
         />
       </motion.button>
     </>
@@ -295,6 +296,7 @@ export const BlurImage = ({
         onLoadingComplete={() => setLoading(false)}
         placeholder="blur"
         blurDataURL={typeof src === "string" ? src : undefined}
+        loading="lazy"
         {...rest}
       />
     </div>

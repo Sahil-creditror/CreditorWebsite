@@ -155,6 +155,7 @@ export default function MasterclassBenefits() {
                   width={800}
                   height={200}
                   className="w-full h-auto object-contain object-top"
+                  loading="lazy"
                 />
               </div>
 
@@ -238,6 +239,7 @@ export default function MasterclassBenefits() {
                     height={400}
                     className={`w-full object-contain rounded-xl relative mt-5 z-20 ${idx === 1 ? 'h-28 md:h-32' : 'h-36 md:h-44'}`}
                     sizes="(max-width: 768px) 100vw, 33vw"
+                    loading="lazy"
                   />
 
                   {/* Description at bottom */}

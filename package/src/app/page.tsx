@@ -1,26 +1,25 @@
 import { Metadata } from "next";
-import Aboutus from "./components/home/about-us";
-import Contact from "./components/home/contact";
-import Faq from "./components/home/faq";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import HeroSection from "./components/home/hero";
 import Courses from "./components/home/courses";
-import Pricing from "./components/home/pricing";
-import Resources from "./components/home/resources";
-import Roadmap from "./components/home/services";
-import StatsFacts from "./components/home/stats-facts";
-import Team from "./components/home/team";
-import Testimonial from "./components/home/testimonial";
-import Masterclass from "./components/home/masterclass";
-import MasterInfo from "./components/home/masterinfo";
-import Game from "./components/home/Game";
-import Commitment from "./components/home/Commitment";
-import Offer from "./components/home/Offer";
-// import { AnimatedTestimonialsDemo } from "./components/home/testimonial/AnimatedDemo";
-import Event from "./components/home/event";
-// import About from "./components/home/about";
-import PrivateTeaser from "./components/home/private-teaser";
-import WebclassSection from "./components/home/webclass";
-import ThanksgivingPopup from "./components/home/Thanksgiving/index";
+
+// Dynamic imports for below-the-fold components to improve initial load
+const WebclassSection = dynamic(() => import("./components/home/webclass"), {
+  loading: () => <div className="min-h-[400px]" />,
+});
+
+const Offer = dynamic(() => import("./components/home/Offer"), {
+  loading: () => <div className="min-h-[400px]" />,
+});
+
+const Contact = dynamic(() => import("./components/home/contact"), {
+  loading: () => <div className="min-h-[400px]" />,
+});
+
+const Event = dynamic(() => import("./components/home/event"), {
+  loading: () => <div className="min-h-[400px]" />,
+});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
@@ -39,14 +38,22 @@ export default function Home() {
       {/* <Masterclass /> */}
       {/* <Aboutus /> */}
       {/* <About /> */}
-      <WebclassSection />
-      <Offer />
+      <Suspense fallback={<div className="min-h-[400px]" />}>
+        <WebclassSection />
+      </Suspense>
+      <Suspense fallback={<div className="min-h-[400px]" />}>
+        <Offer />
+      </Suspense>
       {/* <PrivateTeaser /> */}
       {/* <MasterInfo /> */}
       <Courses />
       {/* <ThanksgivingPopup /> */}
-      <Contact contactdataNumber="4" />
-      <Event />
+      <Suspense fallback={<div className="min-h-[400px]" />}>
+        <Contact contactdataNumber="4" />
+      </Suspense>
+      <Suspense fallback={<div className="min-h-[400px]" />}>
+        <Event />
+      </Suspense>
       {/* <Roadmap /> */}
       {/* <Testimonial /> */}
       {/* <AnimatedTestimonialsDemo /> */}

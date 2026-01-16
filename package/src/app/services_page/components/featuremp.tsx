@@ -248,7 +248,7 @@ export default function MasterclassBenefits() {
                     className="relative bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl overflow-hidden shadow-md transition-shadow duration-300 flex flex-col w-full"
                   >
                     <div className="relative w-full h-40 sm:h-44 lg:h-40">
-                      <Image src={item.image} alt={item.title} fill className="object-cover" />
+                      <Image src={item.image} alt={item.title} fill className="object-cover" loading="lazy" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                     </div>
 

@@ -1,6 +1,15 @@
-import Services from "@/app/components/home/pricing";
-import Herobanner from "@/app/components/shared/hero-banner";
 import { Metadata } from "next";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
+
+const Services = dynamic(() => import("@/app/components/home/pricing"), {
+  loading: () => <div className="min-h-[400px]" />,
+});
+
+const Herobanner = dynamic(() => import("@/app/components/shared/hero-banner"), {
+  loading: () => <div className="min-h-[300px]" />,
+});
+
 export const metadata: Metadata = {
     title: "Services | Creditor",
 };
@@ -8,11 +17,15 @@ export const metadata: Metadata = {
 export default function Page() {
     return (
         <main>
-            <Herobanner
-                bannerimage="/images/services/service-banner.webp"
-                heading="Creditor Academy Services"
-                desc="Ready to <span>start something</span> great? Reach out  we’d love to hear from you." />
-            <Services />
+            <Suspense fallback={<div className="min-h-[300px]" />}>
+                <Herobanner
+                    bannerimage="/images/services/service-banner.webp"
+                    heading="Creditor Academy Services"
+                    desc="Ready to <span>start something</span> great? Reach out  we'd love to hear from you." />
+            </Suspense>
+            <Suspense fallback={<div className="min-h-[400px]" />}>
+                <Services />
+            </Suspense>
         </main>
     );
 };

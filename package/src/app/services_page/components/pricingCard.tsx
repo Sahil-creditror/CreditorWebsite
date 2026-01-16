@@ -28,55 +28,7 @@ function Pricing() {
   ];
 
   return (
-    <section className="relative overflow-hidden py-30 md:py-44">
-      {/* Animated decorative background (behind everything) */}
-      <div className="absolute inset-0 -z-20 pointer-events-none">
-        {/* Subtle base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-slate-100 dark:from-neutral-900 dark:via-neutral-900/60 dark:to-neutral-900/80" />
-
-        {/* Blurred color blobs (static) */}
-        <div
-          aria-hidden="true"
-          className="absolute -left-20 -top-20 w-[36rem] h-[36rem] rounded-full mix-blend-multiply filter blur-3xl opacity-60"
-          style={{
-            background:
-              "radial-gradient(circle at 30% 30%, rgba(99,102,241,0.55), rgba(139,92,246,0.25) 35%, transparent 60%)",
-          }}
-        />
-
-        <div
-          aria-hidden="true"
-          className="absolute right-[-4rem] top-10 w-[28rem] h-[28rem] rounded-full mix-blend-multiply filter blur-2xl opacity-50"
-          style={{
-            background:
-              "radial-gradient(circle at 60% 40%, rgba(6,182,212,0.45), rgba(59,130,246,0.22) 40%, transparent 65%)",
-          }}
-        />
-
-        <div
-          aria-hidden="true"
-          className="absolute left-10 bottom-[-6rem] w-[30rem] h-[30rem] rounded-full mix-blend-multiply filter blur-3xl opacity-45"
-          style={{
-            background:
-              "radial-gradient(circle at 20% 70%, rgba(250,204,21,0.40), rgba(250,113,113,0.18) 35%, transparent 70%)",
-          }}
-        />
-
-        {/* Very subtle noise/texture overlay for depth */}
-        <svg
-          className="absolute inset-0 w-full h-full opacity-5"
-          preserveAspectRatio="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <filter id="grain">
-            <feTurbulence baseFrequency="0.8" numOctaves="2" stitchTiles="stitch" />
-            <feColorMatrix type="saturate" values="0" />
-            <feBlend mode="overlay" />
-          </filter>
-          <rect width="100%" height="100%" filter="url(#grain)" />
-        </svg>
-      </div>
+    <section className="relative overflow-hidden py-12 md:py-20 bg-white dark:bg-neutral-900">
 
       {/* Content container (above background blobs) */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 flex flex-col gap-16">
@@ -153,7 +105,7 @@ function Pricing() {
                         rel="noopener noreferrer"
                         className="relative inline-flex justify-center items-center w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white font-bold py-4 rounded-full shadow-lg transition-all duration-300 hover:-translate-y-1 hover:scale-105"
                       >
-                        Opt Service Now
+                        Get Started
                       </a>
                     </div>
                   </div>
@@ -164,22 +116,6 @@ function Pricing() {
         </div>
       </div>
 
-      {/* Static bottom wave for extra polish */}
-      <div
-        className="absolute bottom-0 left-0 w-full -z-10 pointer-events-none"
-        aria-hidden="true"
-      >
-        <svg viewBox="0 0 1440 120" width="100%" height="120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="g1" x1="0" x2="1" y1="0" y2="0">
-              <stop offset="0%" stopColor="rgba(99,102,241,0.12)" />
-              <stop offset="50%" stopColor="rgba(6,182,212,0.08)" />
-              <stop offset="100%" stopColor="rgba(250,204,21,0.06)" />
-            </linearGradient>
-          </defs>
-          <path d="M0 60 C 240 10 480 110 720 60 C 960 10 1200 110 1440 60 L1440 120 L0 120 Z" fill="url(#g1)" />
-        </svg>
-      </div>
     </section>
   );
 }

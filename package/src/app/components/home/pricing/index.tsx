@@ -114,6 +114,7 @@ function Pricing() {
                           alt={`${value?.planName ?? 'Plan'} cover`}
                           fill
                           className="object-cover"
+                          loading="lazy"
                         />
 
                         {/* Dynamic Top-right icon */}

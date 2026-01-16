@@ -10,8 +10,51 @@ const nextConfig: NextConfig = {
   compress: true,
   optimizeFonts: true,
   productionBrowserSourceMaps: false,
+  // Optimize package imports to reduce bundle size
   experimental: {
-    optimizePackageImports: ['framer-motion', 'react-infinite-logo-slider'],
+    optimizePackageImports: [
+      'framer-motion',
+      'react-infinite-logo-slider',
+      'lucide-react',
+      '@tabler/icons-react',
+      'react-icons',
+    ],
+  },
+  // Webpack optimizations for better code splitting
+  webpack: (config: any, { isServer }: any) => {
+    if (!isServer) {
+      // Optimize chunk splitting to reduce initial bundle size
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+            default: false,
+            vendors: false,
+            // Separate framework chunks
+            framework: {
+              name: 'framework',
+              chunks: 'all',
+              test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+              priority: 40,
+              enforce: true,
+            },
+            // Separate large libraries
+            lib: {
+              test: /[\\/]node_modules[\\/]/,
+              name(module: any) {
+                const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)?.[1];
+                return packageName ? `npm.${packageName.replace('@', '')}` : null;
+              },
+              priority: 30,
+              minChunks: 1,
+              reuseExistingChunk: true,
+            },
+          },
+        },
+      };
+    }
+    return config;
   },
   images: {
     // Enable Next.js image optimization for better performance

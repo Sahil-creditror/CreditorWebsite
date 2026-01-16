@@ -191,16 +191,40 @@ const HeroSection = () => {
             className="absolute inset-0 w-full h-full"
           >
             <Parallax speed={-20} style={{ height: "100%" }}>
+              {/* Poster image as primary LCP element - loads immediately for better performance */}
+              <div className="absolute inset-0 w-full h-full">
+                <Image
+                  src={videos[currentIndex].poster}
+                  alt={videos[currentIndex].title}
+                  fill
+                  priority={currentIndex === 0}
+                  quality={85}
+                  sizes="100vw"
+                  className="object-cover"
+                  style={{ zIndex: 1 }}
+                />
+              </div>
+              {/* Video loads lazily - only metadata for first, none for others */}
               <video
                 className="absolute inset-0 w-full h-full object-cover"
                 loop
                 autoPlay
                 muted
                 playsInline
-                preload={currentIndex === 0 ? "auto" : "metadata"}
+                preload={currentIndex === 0 ? "metadata" : "none"}
                 poster={videos[currentIndex].poster}
                 key={videos[currentIndex].src}
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: "100%", height: "100%", zIndex: 2, opacity: 0, transition: "opacity 0.5s ease-in-out" }}
+                onCanPlay={(e) => {
+                  // Fade in video when ready, fade out poster
+                  const video = e.currentTarget;
+                  video.style.opacity = "1";
+                  const posterContainer = video.previousElementSibling as HTMLElement;
+                  if (posterContainer) {
+                    posterContainer.style.opacity = "0";
+                    posterContainer.style.transition = "opacity 0.5s ease-in-out";
+                  }
+                }}
               >
                 <source src={videos[currentIndex].src} type="video/mp4" />
                 Your browser does not support the video tag.

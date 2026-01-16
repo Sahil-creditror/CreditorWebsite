@@ -2,23 +2,31 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import HeroSection from "./components/home/hero";
-import Courses from "./components/home/courses";
 
-// Dynamic imports for below-the-fold components to improve initial load
+// Dynamic imports for all below-the-fold components to improve initial load
+const Courses = dynamic(() => import("./components/home/courses"), {
+  loading: () => <div className="min-h-[400px]" />,
+  ssr: false, // Disable SSR for heavy component with Swiper
+});
+
 const WebclassSection = dynamic(() => import("./components/home/webclass"), {
   loading: () => <div className="min-h-[400px]" />,
+  ssr: false,
 });
 
 const Offer = dynamic(() => import("./components/home/Offer"), {
   loading: () => <div className="min-h-[400px]" />,
+  ssr: false,
 });
 
 const Contact = dynamic(() => import("./components/home/contact"), {
   loading: () => <div className="min-h-[400px]" />,
+  ssr: false,
 });
 
 const Event = dynamic(() => import("./components/home/event"), {
   loading: () => <div className="min-h-[400px]" />,
+  ssr: false,
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";

@@ -27,31 +27,31 @@ const HeroSection = () => {
   const videos: VideoSlide[] = [
     {
       src: "/video/hero-1.mp4",
-      poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883550/creditor-website-assets/images/hero/banner-1.png",
+      poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883550/creditor-website-assets/images/hero/banner-1.webp",
       title: "Creditor Academy",
       description: "Protect What You Build. Pass On What Matters",
     },
     {
       src: "/video/Banner.mp4",
-      poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883555/creditor-website-assets/images/hero/banner-2.png",
+      poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883555/creditor-website-assets/images/hero/banner-2.webp",
       title: "MASTERCLASS MEMBERSHIP",
       description:"Reclaim Your Lawful Identity and Exit the Public System",
     },
     // {
     //   src: "/video/hero-3.mp4",
-    //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883559/creditor-website-assets/images/hero/banner-3.png",
+    //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883559/creditor-website-assets/images/hero/banner-3.webp",
     //   title: "Creditor Academy",
     //   description: "Board as a Student. Land as a Sovereign.",
     // },
     // {
     //   src: "/video/hero-4.mp4",
-    //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883562/creditor-website-assets/images/hero/banner-4.png",
+    //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883562/creditor-website-assets/images/hero/banner-4.webp",
     //   title: "Creditor Academy",
     //   description: "Operate Private. Take Control. Live Sovereign",
     // },
     // {
     //   src: "/video/hero-5.mp4",
-    //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883566/creditor-website-assets/images/hero/banner-5.png",
+    //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883566/creditor-website-assets/images/hero/banner-5.webp",
     //   title: "Creditor Academy",
     //   description:
     //     "Restore Your Credit. Discharge Debt. Take Your Power Back.",
@@ -220,7 +220,7 @@ const HeroSection = () => {
           {/* Logo only (replace previous subtext) */}
           <div className="flex items-start">
             <Image
-              src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"
+              src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp"
               alt="Creditor Logo"
               width={120}
               height={120}

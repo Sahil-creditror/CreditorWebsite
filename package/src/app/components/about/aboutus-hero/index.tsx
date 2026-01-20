@@ -9,7 +9,7 @@ function AboutusHero() {
             <Image
                 className="absolute top-0 left-0 w-full h-full object-cover"
                 alt="Image"
-                src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883278/creditor-website-assets/images/about-us/banner/aboutus-banner.png"}
+                src={"https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883278/creditor-website-assets/images/about-us/banner/aboutus-banner.webp"}
                 height={694}
                 width={1800}
             />

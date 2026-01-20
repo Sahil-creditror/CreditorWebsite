@@ -34,7 +34,7 @@ export const Introduction = () => {
     {
       id: "5",
       packageName: "Next Auth",
-      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883485/creditor-website-assets/images/documentation/nextauth.png",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883485/creditor-website-assets/images/documentation/nextauth.webp",
       version: "4.24.11"
     }
   ]

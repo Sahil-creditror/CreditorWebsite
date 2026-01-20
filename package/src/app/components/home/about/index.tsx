@@ -28,7 +28,7 @@ function About() {
       {/* Christmas bell in top right corner */}
       <div className="absolute top-0 right-0 z-20 pointer-events-none">
         <Image
-          src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883574/creditor-website-assets/images/hero/bell.png"
+          src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883574/creditor-website-assets/images/hero/bell.webp"
           alt="Christmas Bell"
           width={200}
           height={200}
@@ -57,7 +57,7 @@ function About() {
             <div className="flex flex-col gap-5 2xl:gap-7">
             <h2 className="relative inline-block 2xl:max-w-3xl text-secondary dark:text-white">
               <Image
-                src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883576/creditor-website-assets/images/hero/hat.png"
+                src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883576/creditor-website-assets/images/hero/hat.webp"
                 alt="Christmas Hat"
                 width={80}
                 height={200}
@@ -111,14 +111,14 @@ function About() {
               <div className="flex flex-col gap-4 relative z-10">
                 <div>
                   <Image
-                    src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"}
+                    src={"https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp"}
                     alt="Logo Image"
                     height={60}
                     width={250}
                     className="dark:hidden"
                   />
                   <Image
-                    src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"}
+                    src={"https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp"}
                     alt="Logo Image"
                     height={60}
                     width={250}
@@ -165,7 +165,7 @@ function About() {
       {/* Snow image at bottom right of section */}
       <div className="absolute bottom-0 right-0 z-20">
           <Image
-            src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883587/creditor-website-assets/images/home/aboutusIndex/about_snow.png"
+            src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883587/creditor-website-assets/images/home/aboutusIndex/about_snow.webp"
             alt="Snow decoration"
             width={150}
             height={150}

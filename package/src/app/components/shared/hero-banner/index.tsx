@@ -54,7 +54,7 @@ const Herobanner: React.FC<HeroBannerProps> = ({
    {/* Logo */}
 <div className="flex justify-start ml-10 sm:ml-12 md:ml-14 lg:ml-16 mt-6 sm:mt-8 mb-2">
   <Image
-    src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883696/creditor-website-assets/images/logo/credi_logoo.png"
+    src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883696/creditor-website-assets/images/logo/credi_logoo.webp"
     alt="Creditor Logo"
     width={320}
     height={80}

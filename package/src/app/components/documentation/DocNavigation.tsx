@@ -41,8 +41,8 @@ export const DocNavigation = () => {
     return (
         <div className="flex flex-col gap-0.5 mt-4 items-start fixed pe-4" >
             <Link href={"/"} className="pb-8 flex justify-center">
-                <Image src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"} alt="Image" width={187} height={30} className="dark:hidden" />
-                <Image src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"} alt="Image" width={187} height={30} className="hidden dark:block" />
+                <Image src={"https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp"} alt="Image" width={187} height={30} className="dark:hidden" />
+                <Image src={"https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp"} alt="Image" width={187} height={30} className="hidden dark:block" />
             </Link>
             {
                 DocsNav.map((item) => {

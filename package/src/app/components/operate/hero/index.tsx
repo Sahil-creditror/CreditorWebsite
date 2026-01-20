@@ -40,7 +40,7 @@ const Herobanner = ({
           {/* Logo (replaces previous description area) */}
           <div className="flex items-start">
             <Image
-              src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"
+              src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp"
               alt="Creditor Logo"
               width={280}
               height={72}

@@ -6,7 +6,7 @@ export default function Loading() {
     <div className="fixed inset-0 z-[9998] grid place-items-center bg-black/10 backdrop-blur-[2px]">
       <div className="flex flex-col items-center gap-4 bg-white/80 backdrop-blur-lg rounded-xl px-6 py-5 shadow">
         <Image
-          src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883706/creditor-website-assets/images/logo/logo_roadmap.png"
+          src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883706/creditor-website-assets/images/logo/logo_roadmap.webp"
           alt="Creditor"
           width={140}
           height={40}

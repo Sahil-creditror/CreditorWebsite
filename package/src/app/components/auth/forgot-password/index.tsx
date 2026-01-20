@@ -46,8 +46,8 @@ const ForgotPassword = () => {
             <div className="w-full">
               <div className="relative shadow-xl mx-auto max-w-lg overflow-hidden bg-white dark:bg-darkblack px-8 py-14 text-center sm:px-12 md:px-16">
                 <div className="mb-10 flex justify-center">
-                  <Image src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"} alt="Image" width={187} height={30} className="dark:hidden" />
-                  <Image src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"} alt="Image" width={187} height={30} className="hidden dark:block" />
+                  <Image src={"https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp"} alt="Image" width={187} height={30} className="dark:hidden" />
+                  <Image src={"https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp"} alt="Image" width={187} height={30} className="hidden dark:block" />
                 </div>
 
                 {isEmailSent ? (

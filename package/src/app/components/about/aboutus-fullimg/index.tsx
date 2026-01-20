@@ -22,7 +22,7 @@ const AboutusFullimg = () => {
         <section>
             <div className="w-full h-50vh lg:h-80vh">
                 <Image
-                    src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883293/creditor-website-assets/images/about-us/image-section/full-w-image.png"}
+                    src={"https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883293/creditor-website-assets/images/about-us/image-section/full-w-image.webp"}
                     alt="Image"
                     width={1800}
                     height={800}

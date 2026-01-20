@@ -23,7 +23,7 @@ export default function Page() {
     return (
         <main>
             <Herobanner
-                bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883280/creditor-website-assets/images/about-us/banner/aboutus-banner1.png"
+                bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883280/creditor-website-assets/images/about-us/banner/aboutus-banner1.webp"
                 heading="About us"
                 desc="We create <span>transformative credit education</span> that drives real financial freedom." 
             />

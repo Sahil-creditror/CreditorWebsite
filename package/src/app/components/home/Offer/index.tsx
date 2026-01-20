@@ -31,7 +31,7 @@ export default function MasterclassBenefits() {
       title: "Become a Member",
       description:
         "Join the movement. Step inside Creditor Academy and unlock access to a world of private education and financial freedom.",
-      bg: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883732/creditor-website-assets/images/offers/enrollnew.png",
+      bg: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883732/creditor-website-assets/images/offers/enrollnew.webp",
     },
     {
       type: "block",
@@ -54,7 +54,7 @@ export default function MasterclassBenefits() {
       title: "Become Private",
       description:
         "Take control of your sovereignty. Apply what you learn to live free, operate privately, and build wealth on your own terms.",
-      bg: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883751/creditor-website-assets/images/offers/sovnew.png",
+      bg: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883751/creditor-website-assets/images/offers/sovnew.webp",
     },
   ];
 
@@ -150,7 +150,7 @@ export default function MasterclassBenefits() {
               {/* --- Snow Layer Above Card (Outside Card Container) --- */}
               <div className="absolute -top-3 left-0 right-0 w-full h-auto z-40 pointer-events-none">
                 <Image
-                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883749/creditor-website-assets/images/offers/snow.png"
+                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883749/creditor-website-assets/images/offers/snow.webp"
                   alt=""
                   width={800}
                   height={200}

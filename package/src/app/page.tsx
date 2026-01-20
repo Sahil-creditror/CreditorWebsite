@@ -27,10 +27,10 @@ const Event = dynamic(() => import("./components/home/event"), {
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
 export const metadata: Metadata = {
-    title: "Creditor Academy",
-    alternates: {
-        canonical: siteUrl,
-    },
+  title: "Creditor Academy",
+  alternates: {
+    canonical: siteUrl,
+  },
 };
 
 export default function Home() {

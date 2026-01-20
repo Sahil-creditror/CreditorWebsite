@@ -48,7 +48,7 @@ export default function Page() {
             />
             <main>
             <Herobanner
-                bannerimage="/images/projects/banner/masterclass-banner.webp"
+                bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883842/creditor-website-assets/images/projects/banner/masterclass-banner.jpg"
                 heading="Masterclass Membership"
                 desc="Learn how to <span>set up your Trust</span>, your Private Identity, and Business Credit step-by-step."
                 buttonPath="/tncmasterclass" 

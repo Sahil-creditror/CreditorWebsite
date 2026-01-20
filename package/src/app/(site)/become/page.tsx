@@ -21,7 +21,7 @@ export default function Page() {
     return (
         <main>
             <Herobanner
-                bannerimage="/images/projects/projectlist/freshman.webp"
+                bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883855/creditor-website-assets/images/projects/projectlist/freshman.jpg"
                 heading="Become Private"
                 desc="Reclaim Your <span>Lawful Identity</span> and Exit the Public System."
                 buttonPath="/tncmasterclass" // 👈 you now define the path here

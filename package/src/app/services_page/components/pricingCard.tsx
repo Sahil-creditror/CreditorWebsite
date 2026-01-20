@@ -22,9 +22,9 @@ function Pricing() {
   }, []);
 
   const defaultCoverImages = [
-    "/images/pricing/Cover-1.webp",
-    "/images/pricing/Cover-2.webp",
-    "/images/pricing/Cover-3.webp"
+    "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883797/creditor-website-assets/images/pricing/Cover-1.jpg",
+    "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883800/creditor-website-assets/images/pricing/Cover-2.jpg",
+    "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883811/creditor-website-assets/images/pricing/Cover-3.jpg"
   ];
 
   return (
@@ -89,7 +89,7 @@ function Pricing() {
                             className="flex items-center gap-3"
                           >
                             <div className="bg-primary w-6 h-6 flex items-center justify-center rounded-full flex-shrink-0">
-                              <Image src="/images/Icon/right-check.svg" alt="check" width={16} height={16} />
+                              <Image src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883682/creditor-website-assets/images/Icon/right-check.svg" alt="check" width={16} height={16} />
                             </div>
                             <span className="text-black-700 dark:text-gray-200">{item}</span>
                           </li>

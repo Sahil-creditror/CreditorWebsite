@@ -456,7 +456,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
             <div className="stripe" aria-hidden="true"></div>
 
             <div className="speaker-photo-wrap">
-              <img src='/public/images/event/event10.webp' alt="Paul Michael Rowland" className="speaker-photo" />
+              <img src='/publichttps://res.cloudinary.com/dlndnmuq1/image/upload/v1768883493/creditor-website-assets/images/event/event10.jpg' alt="Paul Michael Rowland" className="speaker-photo" />
             </div>
 
             <div className="speaker-overlay" aria-hidden="true">
@@ -539,7 +539,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
         .event-section{
           background:linear-gradient(180deg,var(--bg-start) 0%, var(--bg-mid) 50%, var(--bg-end) 100%);
           background-image: 
-            url('/images/haloween/christmas.webp'),
+            url('https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883541/creditor-website-assets/images/haloween/christmas.jpg'),
             radial-gradient(circle at 20% 30%, rgba(22, 163, 74, 0.15) 0%, transparent 50%),
             radial-gradient(circle at 80% 70%, rgba(220, 38, 38, 0.15) 0%, transparent 50%),
             radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.1) 0%, transparent 70%);

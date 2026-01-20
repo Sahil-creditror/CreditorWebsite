@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Youtube } from 'lucide-react';
 
-import img1 from "../../../../public/images/pricing/Cover-2.webp";
+const img1 = "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883800/creditor-website-assets/images/pricing/Cover-2.jpg";
 
 type LiveHeroProps = {
   channelUrl: string;

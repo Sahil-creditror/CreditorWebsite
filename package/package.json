@@ -7,7 +7,8 @@
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate:images": "node scripts/migrate-to-cloudinary.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.894.0",
@@ -20,6 +21,7 @@
     "@types/nodemailer": "^7.0.4",
     "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",
+    "cloudinary": "^2.9.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.26",
     "googleapis": "^160.0.0",
@@ -48,6 +50,7 @@
     "react-swipeable": "^7.0.2",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
+    "sharp": "^0.34.5",
     "swiper": "^11.2.5",
     "tailwind-merge": "^3.3.1",
     "tw-animate-css": "^1.2.4"
@@ -58,6 +61,7 @@
     "@types/node": "^20",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
+    "dotenv": "^17.2.3",
     "eslint": "^9",
     "eslint-config-next": "15.2.1",
     "next-sitemap": "^4.2.3",

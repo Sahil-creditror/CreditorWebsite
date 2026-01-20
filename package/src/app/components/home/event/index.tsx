@@ -122,23 +122,23 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
     setCurrentEventDate(nextEvent);
     // Prime immediately on mount, then tick every second
     setTimeLeft(calcTimeLeft(nextEvent));
-    
+
     const t = window.setInterval(() => {
       setTimeLeft(prevTimeLeft => {
         const currentEvent = getNextSaturdayEvent();
         const timeLeftResult = calcTimeLeft(currentEvent);
-        
+
         // If event has expired, get the next Saturday event and restart countdown
         if (timeLeftResult.expired) {
           const newEventDate = getNextSaturdayEvent();
           setCurrentEventDate(newEventDate);
           return calcTimeLeft(newEventDate);
         }
-        
+
         return timeLeftResult;
       });
     }, 1000);
-    
+
     return () => window.clearInterval(t);
   }, []);
 
@@ -161,158 +161,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
     return () => io.disconnect();
   }, []);
 
-  // Mouse-driven parallax (translation-only) — tilt removed
-  useEffect(() => {
-    const card = cardRef.current;
-    const speaker = speakerCardRef.current;
-    if (!card || !speaker) return;
-
-    const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)');
-    if (prefersReduced?.matches) return;
-
-    let active = false;
-    const stopLoop = () => {
-      if (rafRef.current != null) {
-        cancelAnimationFrame(rafRef.current);
-        rafRef.current = null;
-      }
-    };
-
-    const onPointerEnter = () => {
-      active = true;
-      if (rafRef.current == null) rafRef.current = requestAnimationFrame(loop);
-    };
-    const onPointerMove = (e: PointerEvent) => {
-      if (!active) return;
-      const rect = card.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const px = (e.clientX - cx) / rect.width;
-      const py = (e.clientY - cy) / rect.height;
-      stateRef.current.tx = px;
-      stateRef.current.ty = py;
-      card.style.setProperty('--mx', (px * 36).toFixed(2) + 'px');
-      card.style.setProperty('--my', (py * 36).toFixed(2) + 'px');
-    };
-    const onPointerLeave = () => {
-      active = false;
-      stateRef.current.tx = 0;
-      stateRef.current.ty = 0;
-      card.style.setProperty('--mx', '0px');
-      card.style.setProperty('--my', '0px');
-      speaker.style.transform = 'translate3d(0px, 0px, 0)';
-      stateRef.current.x = 0;
-      stateRef.current.y = 0;
-      if (rafRef.current == null) rafRef.current = requestAnimationFrame(loop);
-    };
-
-    const loop = () => {
-      const s = stateRef.current;
-      s.x += (s.tx - s.x) * 0.22;
-      s.y += (s.ty - s.y) * 0.22;
-
-      const translateX = (s.x * 8).toFixed(2);
-      const translateY = (s.y * 5).toFixed(2);
-
-      speaker.style.transform = `translate3d(${translateX}px, ${translateY}px, 0)`;
-
-      const nearlyIdle = !active && Math.abs(s.tx - s.x) < 0.001 && Math.abs(s.ty - s.y) < 0.001;
-      if (nearlyIdle) {
-        stopLoop();
-        return;
-      }
-
-      rafRef.current = requestAnimationFrame(loop);
-    };
-
-    card.addEventListener('pointerenter', onPointerEnter);
-    window.addEventListener('pointermove', onPointerMove as EventListener);
-    card.addEventListener('pointerleave', onPointerLeave);
-
-    const onVisibility = () => {
-      if (!document.hidden) return;
-      active = false;
-      stateRef.current.tx = 0;
-      stateRef.current.ty = 0;
-      speaker.style.transform = 'translate3d(0px, 0px, 0)';
-      stopLoop();
-    };
-
-    document.addEventListener('visibilitychange', onVisibility);
-
-    return () => {
-      card.removeEventListener('pointerenter', onPointerEnter);
-      window.removeEventListener('pointermove', onPointerMove as EventListener);
-      card.removeEventListener('pointerleave', onPointerLeave);
-      document.removeEventListener('visibilitychange', onVisibility);
-      stopLoop();
-    };
-  }, []);
-
-  // CTA ripple (mouse + keyboard)
-  useEffect(() => {
-    const btn = primaryCtaRef.current;
-    if (!btn) return;
-
-    const makeRipple = (clientX: number, clientY: number) => {
-      const rect = btn.getBoundingClientRect();
-      const ripple = document.createElement('span');
-      ripple.className = 'cta-ripple';
-      const size = Math.max(rect.width, rect.height) * 2.2;
-      ripple.style.width = ripple.style.height = size + 'px';
-      ripple.style.left = (clientX - rect.left) + 'px';
-      ripple.style.top = (clientY - rect.top) + 'px';
-      btn.appendChild(ripple);
-      setTimeout(() => ripple.remove(), 850);
-    };
-
-    const handleClick = (e: MouseEvent) => {
-      if (timeLeft.expired) return;
-      makeRipple(e.clientX, e.clientY);
-    };
-    const handleKey = (e: KeyboardEvent) => {
-      if (timeLeft.expired) return;
-      if (e.key === 'Enter' || e.key === ' ') {
-        const rect = btn.getBoundingClientRect();
-        makeRipple(rect.left + rect.width / 2, rect.top + rect.height / 2);
-      }
-    };
-
-    btn.addEventListener('click', handleClick as EventListener);
-    btn.addEventListener('keydown', handleKey as EventListener);
-
-    return () => {
-      btn.removeEventListener('click', handleClick as EventListener);
-      btn.removeEventListener('keydown', handleKey as EventListener);
-    };
-  }, [timeLeft.expired]);
-
-  // Floating particle layer (creates decorative orbs)
-  useEffect(() => {
-    const card = cardRef.current;
-    if (!card) return;
-    const layer = document.createElement('div');
-    layer.className = 'particle-layer';
-    card.appendChild(layer);
-
-    const particles: HTMLElement[] = [];
-    const count = 12;
-    for (let i = 0; i < count; i++) {
-      const p = document.createElement('span');
-      p.className = 'particle';
-      const s = (Math.random() * 10 + 6).toFixed(2);
-      p.style.width = p.style.height = `${s}px`;
-      p.style.left = `${Math.random() * 100}%`;
-      p.style.top = `${Math.random() * 100}%`;
-      p.style.opacity = `${0.06 + Math.random() * 0.18}`;
-      layer.appendChild(p);
-      particles.push(p);
-    }
-
-    return () => {
-      layer.remove();
-    };
-  }, []);
+  // Mouse-driven parallax and particle effects removed for performance optimization
 
   const [widgetOpen, setWidgetOpen] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
@@ -397,12 +246,12 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
 
           <h1 id="eventTitle" className="hero reveal" data-delay="140">
             Exciting Opportunity
-            {/* <span className="highlight">Giveaway</span>  */} 
+            {/* <span className="highlight">Giveaway</span>  */}
             <span className="highlight"> Alert! </span>
             <span className="title-sheen" aria-hidden="true" />
           </h1>
 
-          <div className="sub reveal" data-delay="220" style={{ marginTop: '2rem' }}>Curious what it's like to be part of Creditor Academy? 
+          <div className="sub reveal" data-delay="220" style={{ marginTop: '2rem' }}>Curious what it's like to be part of Creditor Academy?
             {/* <div className="winners-pill" aria-hidden="true">
               <span className="winners-number">
                 $1000
@@ -481,7 +330,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
             <div className="stripe" aria-hidden="true"></div>
 
             <div className="speaker-photo-wrap">
-              <img src='/images/event/event17.webp' alt="Paul Michael Rowland" className="speaker-photo" />
+              <img src='https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883500/creditor-website-assets/images/event/event17.png' alt="Paul Michael Rowland" className="speaker-photo" />
             </div>
 
             {/* <div className="speaker-overlay" aria-hidden="true">
@@ -544,7 +393,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
               )}
             </div>
           </div>
-        </div> //background-attachment:fixed; , url('/images/haloween/christmas.webp');background-size:cover;background-position:center;background-repeat:no-repeat;background-blend-mode:overlay;
+        </div> //background-attachment:fixed; , url('https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883541/creditor-website-assets/images/haloween/christmas.jpg');background-size:cover;background-position:center;background-repeat:no-repeat;background-blend-mode:overlay;
       )}
 
       <style>{`
@@ -560,16 +409,14 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
         .event-content, .speaker-wrap, .speaker-card { min-width: 0 }
 
         .neon-outline{position:absolute;left:6px;right:6px;top:6px;bottom:6px;width:auto;height:auto;pointer-events:none;border-radius:20px;z-index:0}
-        .neon-path{stroke:#66baff44;stroke-linejoin:round;filter:drop-shadow(0 8px 28px rgba(102,186,255,0.08));stroke-opacity:0.95;stroke-dasharray: 1600;stroke-dashoffset:1600;animation: dash 6s linear infinite}
-        @keyframes dash{0%{stroke-dashoffset:1600}50%{stroke-dashoffset:0}100%{stroke-dashoffset:-1600}}
+        .neon-path{stroke:#66baff44;stroke-linejoin:round;filter:drop-shadow(0 8px 28px rgba(102,186,255,0.08));stroke-opacity:0.95;stroke-dasharray: 1600;stroke-dashoffset:0; }
 
         .bg-layers{position:absolute;inset:0;pointer-events:none;border-radius:20px;overflow:hidden;z-index:0}
         .gradient-blob{position:absolute;filter:blur(64px);opacity:0.9;mix-blend-mode:screen}
-        .g1{width:560px;height:560px;left:-8vw;top:-10vw;background:radial-gradient(circle at 30% 30%, rgba(4,80,160,0.36), rgba(4,80,160,0.02));animation: blob 14s infinite linear}
-        .g2{width:420px;height:420px;right:-8vw;bottom:-6vw;background:radial-gradient(circle at 70% 30%, rgba(0,150,255,0.22), rgba(0,150,255,0.01));animation: blob 18s infinite linear reverse}
-        @keyframes blob{0%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(8px) rotate(28deg)}100%{transform:translateY(0) rotate(0deg)}}
-        .scanline{position:absolute;inset:0;background-image:repeating-linear-gradient(180deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.00) 2px);opacity:0.04;mix-blend-mode:overlay;animation: scan 8s linear infinite}
-        @keyframes scan{0%{transform:translateY(-4%)}100%{transform:translateY(4%)}}
+        .g1{width:560px;height:560px;left:-8vw;top:-10vw;background:radial-gradient(circle at 30% 30%, rgba(4,80,160,0.36), rgba(4,80,160,0.02));}
+        .g2{width:420px;height:420px;right:-8vw;bottom:-6vw;background:radial-gradient(circle at 70% 30%, rgba(0,150,255,0.22), rgba(0,150,255,0.01));}
+        
+        .scanline{position:absolute;inset:0;background-image:repeating-linear-gradient(180deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.00) 2px);opacity:0.04;mix-blend-mode:overlay;}
 
         .event-content{position:relative;z-index:4;display:flex;flex-direction:column;gap:12px;padding-right:6px;min-width:0}
         .eyebrow{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#00121a;padding:8px 14px;border-radius:999px;font-weight:700;font-size:12px;letter-spacing:0.6px;box-shadow:0 8px 22px rgba(75,170,255,0.06)}
@@ -577,26 +424,21 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
         /* use clamp so the hero scales across device sizes */
         .hero{font-size:clamp(22px, 4.4vw, 40px);line-height:1.02;margin:4px 0 0;font-weight:800;color:rgba(255,255,255,0.98);letter-spacing:-0.4px;position:relative}
         .highlight{background:#ffd119;-webkit-background-clip:text;background-clip:text;color:transparent}
-        .title-sheen{position:absolute;right:0;top:-6px;width:160px;height:28px;transform:skewX(-18deg);background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.18));mix-blend-mode:overlay;border-radius:6px;opacity:0.0;animation: sheent 3.6s infinite}
-        @keyframes sheent{0%{opacity:0;transform:translateX(-40px) skewX(-18deg)}50%{opacity:0.9;transform:translateX(120px) skewX(-18deg)}100%{opacity:0;transform:translateX(300px) skewX(-18deg)}}
+        .title-sheen{position:absolute;right:0;top:-6px;width:160px;height:28px;transform:skewX(-18deg);background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.18));mix-blend-mode:overlay;border-radius:6px;opacity:0.0;}
+        
         .sub{font-weight:700;color:rgba(235,245,255,0.95);margin-top:6px}
         .desc{color:var(--muted);font-size:15px;margin-top:10px;max-width:640px}
 
-        .winners-pill{display:inline-flex;align-items:center;gap:10px;margin-top:10px;margin-left:20px;padding:10px 12px;border-radius:100px;background:linear-gradient(90deg,#f8584aff,#fc4929ff);color:#fff;font-weight:700;box-shadow:0 8px 30px rgba(255,200,60,0.25);transform:translateZ(0);animation: pulse 3.2s ease-in-out infinite}
-        @keyframes pulse{0%{box-shadow:0 8px 22px rgba(255,60,60,0.12)}50%{box-shadow:0 18px 60px rgba(255,60,60,0.3)}100%{box-shadow:0 8px 22px rgba(255,109,60,0.12)}}
-
+        .winners-pill{display:inline-flex;align-items:center;gap:10px;margin-top:10px;margin-left:20px;padding:10px 12px;border-radius:100px;background:linear-gradient(90deg,#f8584aff,#fc4929ff);color:#fff;font-weight:700;box-shadow:0 8px 30px rgba(255,200,60,0.25);transform:translateZ(0);}
+        
         .cta-row { display: flex; gap: 12px; align-items: center; margin-top: 18px; }
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 22px; border-radius: 999px; border: 0; font-weight: 800; font-size: 15px; cursor: pointer; outline-offset: 4px; position: relative; overflow: hidden; min-width: 170px; perspective: 1000px; }
-        .btn-primary { background: linear-gradient(135deg, #00eaff, #0080ff, #7a00ff, #ff00c8, #ff6a00, #00eaff); background-size: 400% 400%; animation: gradientShift 10s ease infinite; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.35); box-shadow: 0 12px 30px rgba(0, 200, 255, 0.25); transform: translateZ(0); transition: transform 300ms ease, box-shadow 300ms ease; }
-        @keyframes gradientShift { 0% { background-position: 0% 50% } 50% { background-position: 100% 50% } 100% { background-position: 0% 50% } }
-        .btn-primary:hover { transform: translateY(-6px) scale(1.08) rotateX(6deg) rotateY(-6deg); box-shadow: 0 32px 80px rgba(0, 200, 255, 0.45), 0 0 40px rgba(255, 0, 200, 0.65); }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 22px; border-radius: 999px; border: 0; font-weight: 800; font-size: 15px; cursor: pointer; outline-offset: 4px; position: relative; overflow: hidden; min-width: 170px; }
+        .btn-primary { background: linear-gradient(135deg, #00eaff, #0080ff, #7a00ff, #ff00c8, #ff6a00, #00eaff); background-size: 100% 100%; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.35); box-shadow: 0 12px 30px rgba(0, 200, 255, 0.25); transform: translateZ(0); transition: transform 300ms ease, box-shadow 300ms ease; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 18px 50px rgba(0, 200, 255, 0.35); }
         .btn-primary::after { content: ""; position: absolute; left: -40%; top: -20%; width: 120%; height: 120%; transform: skewX(-20deg); background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.6), rgba(255,255,255,0.05)); opacity: 0; transition: all 600ms ease; }
         .btn-primary:hover::after { opacity: 1; left: 40%; }
-        .btn-primary::before { content: ""; position: absolute; inset: -3px; border-radius: inherit; padding: 2px; background: linear-gradient(135deg, #00eaff, #0080ff, #7a00ff, #ff00c8, #ff6a00, #00eaff); background-size: 500% 500%; animation: borderShift 8s linear infinite; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity 0.4s ease; }
-        .btn-primary:hover::before { opacity: 1; }
-        @keyframes borderShift { 0% { background-position: 0% 0% } 50% { background-position: 100% 100% } 100% { background-position: 0% 0% } }
-        .cta-ripple { position: absolute; border-radius: 999px; transform: translate(-50%, -50%) scale(0); background: radial-gradient(circle at center, rgba(255,255,255,0.95), rgba(0, 200, 255,0.2)); pointer-events: none; animation: ripple-anim 700ms ease-out forwards; }
-        @keyframes ripple-anim { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0.9 } 100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0 } }
+        
+        .cta-ripple { display: none; }
 
         .countdown-wrap{display:flex;align-items:center}
         .countdown{display:flex;flex-direction:column;gap:6px;padding:10px 14px;border-radius:12px;background:linear-gradient(180deg, rgba(0,20,40,0.65), rgba(0,30,60,0.7));backdrop-filter: blur(8px);border:1px solid rgba(255,255,255,0.12);min-width:240px;text-align:center}
@@ -614,7 +456,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
         .phone-pill{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
 
         .speaker-wrap{position:relative;z-index:5;display:flex;align-items:flex-end;justify-content:center}
-        .speaker-card{width:100%;max-width:440px;border-radius:20px;background:linear-gradient(180deg, rgba(0,20,40,0.75), rgba(0,30,60,0.8));padding:12px;border:1px solid rgba(255,255,255,0.1);box-shadow:0 20px 50px rgba(0,12,30,0.6);position:relative;overflow:visible;transform-origin:center center;transition:transform 360ms cubic-bezier(.2,.9,.26,1)}
+        .speaker-card{width:100%;max-width:440px;border-radius:20px;background:linear-gradient(180deg, rgba(0,20,40,0.75), rgba(0,30,60,0.8));padding:12px;border:1px solid rgba(255,255,255,0.1);box-shadow:0 20px 50px rgba(0,12,30,0.6);position:relative;overflow:visible;}
         .speaker-card:focus{outline:2px solid rgba(102,186,255,0.12);outline-offset:6px}
         .speaker-photo-wrap{width:100%;border-radius:14px;padding:6px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:block}
         .speaker-photo{display:block;max-width:100%;height:auto;max-height:520px;object-fit:contain;border-radius:10px}
@@ -624,9 +466,8 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
         .speaker-card:hover .speaker-overlay,.speaker-card:focus .speaker-overlay{opacity:1}
         .overlay-text{color:white;font-weight:700;background:linear-gradient(90deg,rgba(0,0,0,0.35),rgba(0,0,0,0.55));padding:8px 12px;border-radius:8px}
 
-        .particle-layer{position:absolute;inset:0;pointer-events:none;border-radius:20px;overflow:hidden;z-index:1}
-        .particle{position:absolute;border-radius:50%;background:linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));animation: floaty 8s infinite ease-in-out}
-        @keyframes floaty{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.06)}100%{transform:translateY(0) scale(1)}}
+        .particle-layer{display:none;}
+        .particle{display:none;}
 
         .reveal{opacity:0;transform:translateY(18px) translateZ(0);transition:all 700ms cubic-bezier(.2,.9,.26,1)}
         .reveal.in-view{opacity:1;transform:translateY(0)}
@@ -675,8 +516,8 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
           .speaker-photo{max-height:300px}
           .cta-row .btn{padding:10px 14px}
         }
-        @media (prefers-reduced-motion:reduce){ .gradient-blob,.scanline,.cta-ripple,.particle{animation:none} .reveal{transition:none} }
+        @media (prefers-reduced-motion:reduce){ .reveal{transition:none} }
       `}</style>
-    </section>
+    </section >
   );
 }

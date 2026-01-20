@@ -9,21 +9,21 @@ export default function LearningSection() {
       title: "SECRET #1",
       description:
         "How To Find People Who Are More Than Willing To Pay You, And Land Clients Within 24 Hours, Even If You Have ZERO Experience...",
-      image: "/images/squeeze/webex.jpeg",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883921/creditor-website-assets/images/squeeze/webex.jpg",
     },
     {
       secret: "SECRET #2",
       title: "SECRET #2",
       description:
         'How To Use Our Step-By-Step "Dispute Process Blueprint" To Get EASY Credit Repair Results Without Being A Credit Expert...',
-      image: "/images/squeeze/webex.jpeg",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883921/creditor-website-assets/images/squeeze/webex.jpg",
     },
     {
       secret: "SECRET #3",
       title: "SECRET #3",
       description:
         "How To Scale Using Our Easy-To-Follow Process To Bring In A Flood Of New Customers, Without Paying For Advertising...",
-      image: "/images/squeeze/webex.jpeg",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883921/creditor-website-assets/images/squeeze/webex.jpg",
     },
   ];
 

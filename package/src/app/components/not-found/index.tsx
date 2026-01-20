@@ -7,8 +7,8 @@ const NotFound = () => {
       <div className="container">
         <div className="flex flex-col gap-10 justify-center items-center ">
           <div className="w-full h-full flex justify-center items-center">
-            <Image src={"/images/notfound/404.svg"} alt="Image" height={150} width={550} className="dark:hidden"/>
-            <Image src={"/images/notfound/404-dark.svg"} alt="Image" height={150} width={550} className="hidden dark:block"/>
+            <Image src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883725/creditor-website-assets/images/notfound/404.svg"} alt="Image" height={150} width={550} className="dark:hidden"/>
+            <Image src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883724/creditor-website-assets/images/notfound/404-dark.svg"} alt="Image" height={150} width={550} className="hidden dark:block"/>
           </div>
           <div className="text-center">
             <h2>Oops! Page Not Found</h2>

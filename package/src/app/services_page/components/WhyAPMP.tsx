@@ -25,7 +25,7 @@ const FEATURES: Array<{ icon: string; title: string; desc: string }> = [
 export default function WhyAPMP({
   title = "Why a Private Merchant Account?",
   subtitle = "",
-  sideImageSrc = "/images/services/intro-pmp.webp",
+  sideImageSrc = "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883871/creditor-website-assets/images/services/intro-pmp.jpg",
   highlightedPhrase = "Private Merchant Account",
 }: MerchantFeaturesProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -277,7 +277,7 @@ export default function WhyAPMP({
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/40 via-blue-400/20 to-white/30 mix-blend-multiply" />
             <div className="relative w-full flex items-center justify-center">
               <Image
-                src="/images/services/pmabanner.webp"
+                src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883881/creditor-website-assets/images/services/pmabanner.webp"
                 alt="Private merchant processing visual"
                 width={1600}
                 height={1000}

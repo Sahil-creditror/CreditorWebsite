@@ -46,9 +46,9 @@ const itemVariants: Variants = {
 };
 
 const sliderImages = [
-  "/images/services/credit-repair/1.webp",
-  "/images/services/credit-repair/2.webp",
-  "/images/services/credit-repair/3.webp",
+  "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883866/creditor-website-assets/images/services/credit-repair/1.webp",
+  "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883867/creditor-website-assets/images/services/credit-repair/2.webp",
+  "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883867/creditor-website-assets/images/services/credit-repair/3.webp",
 ];
 
 export default function HowItWorks() {

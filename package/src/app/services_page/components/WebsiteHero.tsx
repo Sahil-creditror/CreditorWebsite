@@ -1,14 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import img1 from "../../../../public/images/pricing/Cover-2.webp"
+
+const img1 = "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883800/creditor-website-assets/images/pricing/Cover-2.jpg";
 
 export function HeroSectionOne() {
   return (
     <div
       className="relative w-full bg-cover bg-center py-20 md:py-40"
       style={{
-        backgroundImage: `url(${img1.src})`,
+        backgroundImage: `url(${img1})`,
       }}
     >
       {/* Overlay for better text contrast */}
@@ -68,7 +69,7 @@ export function HeroSectionOne() {
         >
           <div className="w-full overflow-hidden rounded-xl border border-gray-300 dark:border-gray-700">
             <img
-              src="/images/services/Webhero.webp"
+              src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883906/creditor-website-assets/images/services/Webhero.webp"
               alt="Landing page preview"
               className="aspect-[16/9] h-auto w-full object-cover"
               height={1000}

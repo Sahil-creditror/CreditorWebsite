@@ -9,7 +9,7 @@ export default function Page() {
     return (
         <main>
             <Herobanner
-                bannerimage="/images/TnC/banner.webp"
+                bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883934/creditor-website-assets/images/TnC/banner.jpg"
                 heading="Terms & Conditions"
                 desc="Understand the <span>Rules & Guidelines</span> Before Using Our Services" />
             <TermsAndCondition />

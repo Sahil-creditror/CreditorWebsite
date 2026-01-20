@@ -10,25 +10,25 @@ export default function MasterclassBenefits() {
       title: "Pay-As-You-Go Learning",
       description:
         "Access every course in our library at a member-only rate — only pay for what you need, when you need it.",
-      image: "/images/courses/become/learning.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883414/creditor-website-assets/images/courses/become/learning.webp",
     },
     {
       title: "Introductory Access",
       description:
         "Try the first module of premium courses for free so you can decide before committing.",
-      image: "/images/courses/become/access.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883385/creditor-website-assets/images/courses/become/access.webp",
     },
     {
       title: "Private Community Groups",
       description:
         "Connect with entrepreneurs and pros, get fast answers, and share wins in exclusive groups.",
-      image: "/images/courses/become/group.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883403/creditor-website-assets/images/courses/become/group.webp",
     },
     {
       title: "Live Weekly Trainings",
       description:
         "Attend live sessions with instructors — ask questions, get critiques, and stay ahead.",
-      image: "/images/courses/become/trainingnew.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883452/creditor-website-assets/images/courses/become/trainingnew.webp",
     },
   ];
 

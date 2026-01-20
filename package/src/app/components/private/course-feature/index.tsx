@@ -25,25 +25,25 @@ const WhatYoullLearnSlider: React.FC = () => {
       title: "Fix Credit Fast",
       desc: "Clears bad credit, opens doors, and boosts your score so money stress disappears.",
       color: "#426be6",
-      img: "/images/private/Fixcredit.webp",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883824/creditor-website-assets/images/private/Fixcredit.webp",
     },
     {
       title: "Get Cash Quick",
       desc: "Gives you safe payments, private accounts, and funding you can count on.",
       color: "#7648be",
-      img: "/images/private/Payment.webp",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883827/creditor-website-assets/images/private/Payment.webp",
     },
     {
       title: "Grow Business Credit",
       desc: "Builds your company's credit, separates it from you, and unlocks $50k–$200k.",
       color: "#23a26c",
-      img: "/images/private/GrowBusiness.webp",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883826/creditor-website-assets/images/private/GrowBusiness.webp",
     },
     {
       title: "Escape Money Stress",
       desc: "All three together give you freedom, funding, and private control over your money.",
       color: "#e28019",
-        img: "/images/private/Freedom.webp",
+        img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883825/creditor-website-assets/images/private/Freedom.webp",
     }
   ];
 

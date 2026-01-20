@@ -73,15 +73,15 @@ export default function ClientLayoutShell({ children }: PropsWithChildren) {
         {!hideHeader && <Header />}
         {children}
         {!hideFooter && <Footer />}
-        
+
         {/* Floating Buttons: Special Offer, Contact Form, Scroll to Top */}
         <FloatingButtons onSpecialOfferClick={() => setThanksgivingKey(prev => prev + 1)} />
-        
-        {/* Thanksgiving Modal - Auto-opens after 5 seconds only once per session */}
-         <ThanksgivingPopup 
-          key={thanksgivingKey} 
-          delayMs={thanksgivingKey > 0 ? 0 : 5000} 
-          disableAutoOpen={thanksgivingKey === 0 && hasShownModal}
+
+        {/* Thanksgiving Modal - Auto-opens after 5 seconds */}
+        <ThanksgivingPopup
+          delayMs={5000}
+          disableAutoOpen={false}
+          manualTrigger={thanksgivingKey}
         />
 
         {/* Registration Notification Popup - Shows on all pages */}

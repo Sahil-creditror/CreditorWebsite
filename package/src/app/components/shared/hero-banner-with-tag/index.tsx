@@ -77,7 +77,7 @@ const HerobannerWithTag: React.FC<HeroBannerWithTagProps> = ({
           {/* Logo (replaces previous description area) */}
           <div className="flex items-start">
             <Image
-              src="/images/logo/creditorlogowhite.webp"
+              src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png"
               alt="Creditor Logo"
               width={600}
               height={120}
@@ -90,7 +90,7 @@ const HerobannerWithTag: React.FC<HeroBannerWithTagProps> = ({
           <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-6">
             <div className="w-9 h-9 sm:w-11 sm:h-11 flex-shrink-0">
               <Image
-                src={"/images/Icon/primary-leaf.svg"}
+                src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883679/creditor-website-assets/images/Icon/primary-leaf.svg"}
                 alt="icon"
                 width={44}
                 height={44}

@@ -6,11 +6,11 @@ import { useEffect, useState } from "react";
 const Footer = () => {
     const [footerData, setFooterData] = useState<any>(null);
     const socials = [
-        { name: 'Facebook', href: 'https://www.facebook.com/groups/1455118361753321/', icon: '/images/footer/facebook.webp' },
-        { name: 'X', href: 'https://x.com/CreditorAcademy', icon: '/images/footer/twitter.webp' },
-        { name: 'YouTube', href: 'https://www.youtube.com/@creditoracademy', icon: '/images/footer/youtube.webp' },
-        { name: 'Rumble', href: 'https://rumble.com/user/CreditorAcademy', icon: '/images/footer/rumble.webp' },
-        { name: 'TikTok', href: 'https://www.tiktok.com/@creditoracademy', icon: '/images/footer/tiktok.webp' },
+        { name: 'Facebook', href: 'https://www.facebook.com/groups/1455118361753321/', icon: 'https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883527/creditor-website-assets/images/footer/facebook.png' },
+        { name: 'X', href: 'https://x.com/CreditorAcademy', icon: 'https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883533/creditor-website-assets/images/footer/twitter.png' },
+        { name: 'YouTube', href: 'https://www.youtube.com/@creditoracademy', icon: 'https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883538/creditor-website-assets/images/footer/youtube.png' },
+        { name: 'Rumble', href: 'https://rumble.com/user/CreditorAcademy', icon: 'https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883531/creditor-website-assets/images/footer/rumble.png' },
+        { name: 'TikTok', href: 'https://www.tiktok.com/@creditoracademy', icon: 'https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883532/creditor-website-assets/images/footer/tiktok.png' },
     ];
     useEffect(() => {
         const fetchData = async () => {

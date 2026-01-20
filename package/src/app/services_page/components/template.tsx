@@ -14,37 +14,37 @@ const SERVICES: ServiceCard[] = [
   {
     id: "digital-marketing",
     title: "Digital Marketing",
-    image: "/images/services/template/digital.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883896/creditor-website-assets/images/services/template/digital.jpg",
     gradient: "from-slate-800/80 via-slate-700/70 to-slate-900/80",
   },
   {
     id: "music-studio",
     title: "Music & Studio",
-    image: "/images/services/template/music.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883904/creditor-website-assets/images/services/template/music.jpg",
     gradient: "from-gray-800/80 via-gray-700/70 to-gray-900/80",
   },
   {
     id: "health-care",
     title: "Health Care",
-    image: "/images/services/template/health.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883902/creditor-website-assets/images/services/template/health.jpg",
     gradient: "from-zinc-800/80 via-zinc-700/70 to-zinc-900/80",
   },
   {
     id: "real-estate",
     title: "Real Estate",
-    image: "/images/services/template/estate.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883900/creditor-website-assets/images/services/template/estate.jpg",
     gradient: "from-neutral-800/80 via-neutral-700/70 to-neutral-900/80",
   },
   {
     id: "business-consulting",
     title: "Business Consulting",
-    image: "/images/services/template/business.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883895/creditor-website-assets/images/services/template/business.jpg",
     gradient: "from-stone-800/80 via-stone-700/70 to-stone-900/80",
   },
   {
     id: "e-commerce",
     title: "E‑Commerce",
-    image: "/images/services/template/ecommerce.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883898/creditor-website-assets/images/services/template/ecommerce.jpg",
     gradient: "from-slate-900/80 via-gray-800/70 to-slate-800/80",
   },
 ];

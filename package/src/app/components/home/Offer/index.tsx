@@ -31,12 +31,12 @@ export default function MasterclassBenefits() {
       title: "Become a Member",
       description:
         "Join the movement. Step inside Creditor Academy and unlock access to a world of private education and financial freedom.",
-      bg: "/images/offers/enrollnew.webp",
+      bg: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883732/creditor-website-assets/images/offers/enrollnew.png",
     },
     {
       type: "block",
       title: "Charge Your Card",
-      img: "/images/offers/card.webp",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883727/creditor-website-assets/images/offers/card.webp",
       description:
         "Charge your \"Creditor Card\" and step into the private economy. Each swipe unlocks access, wealth, and opportunity reserved for members only.",
       color: "from-slate-800 to-slate-900 dark:from-slate-900 dark:to-black",
@@ -44,7 +44,7 @@ export default function MasterclassBenefits() {
     {
       type: "block",
       title: "Unlock Courses & Connect",
-      img: "/images/offers/courses.webp",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883729/creditor-website-assets/images/offers/courses.webp",
       description:
         "Instantly access premium courses, join daily live masterclasses, and a private network of like-minded achievers. Learn, grow, and collaborate.",
       color: "from-[#0a1e3f] to-[#1a2e5f] dark:from-[#0a1e3f] dark:to-[#101b36]",
@@ -54,7 +54,7 @@ export default function MasterclassBenefits() {
       title: "Become Private",
       description:
         "Take control of your sovereignty. Apply what you learn to live free, operate privately, and build wealth on your own terms.",
-      bg: "/images/offers/sovnew.webp",
+      bg: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883751/creditor-website-assets/images/offers/sovnew.png",
     },
   ];
 
@@ -62,7 +62,7 @@ export default function MasterclassBenefits() {
     <section className="relative overflow-hidden py-10 md:py-20 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <div className="absolute inset-0 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800" />
       {/* <div
-        className="absolute inset-0 bg-[url('/images/home/aboutusIndex/about_christmas4.webp')] bg-cover bg-center dark:opacity-0 transition-opacity duration-300"
+        className="absolute inset-0 bg-[url('https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883586/creditor-website-assets/images/home/aboutusIndex/about_christmas4.webp')] bg-cover bg-center dark:opacity-0 transition-opacity duration-300"
         aria-hidden="true"
       /> */}
       <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/30 to-white/60 dark:hidden pointer-events-none" />
@@ -150,7 +150,7 @@ export default function MasterclassBenefits() {
               {/* --- Snow Layer Above Card (Outside Card Container) --- */}
               <div className="absolute -top-3 left-0 right-0 w-full h-auto z-40 pointer-events-none">
                 <Image
-                  src="/images/offers/snow.png"
+                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883749/creditor-website-assets/images/offers/snow.png"
                   alt=""
                   width={800}
                   height={200}

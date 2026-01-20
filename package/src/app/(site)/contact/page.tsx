@@ -15,7 +15,7 @@ export default function Page() {
     return (
         <main>
             <Herobanner
-                bannerimage="/images/contact/banner/you.webp"
+                bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883362/creditor-website-assets/images/contact/banner/you.jpg"
                 heading="Contact"
                 desc="Ready to <span>start something</span> great? Reach out  we’d love to hear from you." />
             <Contact contactdataNumber="01"/>

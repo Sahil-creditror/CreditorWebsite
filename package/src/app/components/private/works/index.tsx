@@ -97,9 +97,9 @@ export default function Pricing() {
   const [isYearly, setIsYearly] = useState(false);
   // Simple auto-advancing slider (3 images, 3s interval)
   const sliderImages = [
-    "/images/plan/credit1.webp",
-    "/images/plan/credit2.webp",
-    "/images/plan/credit3.webp",
+    "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883786/creditor-website-assets/images/plan/credit1.webp",
+    "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883791/creditor-website-assets/images/plan/credit2.webp",
+    "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883793/creditor-website-assets/images/plan/credit3.webp",
   ];
   const [currentSlide, setCurrentSlide] = useState(0);
 

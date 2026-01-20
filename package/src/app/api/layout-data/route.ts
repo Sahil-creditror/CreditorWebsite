@@ -51,12 +51,12 @@ const footerData = {
     tagline: "Learn the Law. Know the Difference",
     info: [
         {
-            icon: "/images/footer/email-arrow.svg",
+            icon: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883525/creditor-website-assets/images/footer/email-arrow.svg",
             link: "counselor@creditoracademy.com",
             href: "mailto:counselor@creditoracademy.com"
         },
         {
-            icon: "/images/footer/Location.svg",
+            icon: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883529/creditor-website-assets/images/footer/Location.svg",
             link: "USA",
             href: "https://maps.app.goo.gl/hpDp81fqzGt5y4bC8"
         }

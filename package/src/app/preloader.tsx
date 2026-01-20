@@ -131,7 +131,7 @@ export default function PreloaderWrapper({ children }: { children: React.ReactNo
             <div className="relative w-[180px] h-[180px] rounded-full bg-gradient-to-br from-[#005A9C] to-[#00A8CC] flex items-center justify-center shadow-[0_10px_25px_rgba(0,90,156,0.3)] md:w-[160px] md:h-[160px] sm:w-[140px] sm:h-[140px]">
               <div className="w-[130px] h-[130px] rounded-full bg-white flex items-center justify-center shadow-[inset_0_2px_8px_rgba(0,0,0,0.1)] md:w-[120px] md:h-[120px] sm:w-[110px] sm:h-[110px]">
                 <img 
-                  src="/images/logo/logo_roadmap.webp" 
+                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883706/creditor-website-assets/images/logo/logo_roadmap.png" 
                   alt="Creditor Logo" 
                   className="w-20 h-20 object-contain md:w-[70px] md:h-[70px] sm:w-[60px] sm:h-[60px]"
                 />

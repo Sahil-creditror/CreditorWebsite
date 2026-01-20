@@ -168,7 +168,7 @@ const PrivateBusinessCredit: React.FC = () => {
     {
       title: "I Want Remedy Now",
       subtitle: "Personal Credit Repair",
-      imageSrc: "/images/courses/become/iwrn.webp",
+      imageSrc: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883405/creditor-website-assets/images/courses/become/iwrn.webp",
       imageAlt: "Status Correction Illustration",
       theme: "blue" as const,
       animationDelay: 0,
@@ -256,7 +256,7 @@ const PrivateBusinessCredit: React.FC = () => {
     {
       title: "Private Merchant Processing",
       subtitle: "Foundations Mastery",
-      imageSrc: "/images/courses/become/pmp.webp",
+      imageSrc: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883429/creditor-website-assets/images/courses/become/pmp.webp",
       imageAlt: "Sovereignty Foundations Illustration",
       theme: "indigo" as const,
       animationDelay: 0.05,
@@ -337,7 +337,7 @@ const PrivateBusinessCredit: React.FC = () => {
     {
       title: "Private Business Credit",
       subtitle: "Foundations Mastery",
-      imageSrc: "/images/courses/become/pbccard.webp",
+      imageSrc: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883427/creditor-website-assets/images/courses/become/pbccard.webp",
       imageAlt: "Sovereignty Foundations Illustration",
       theme: "blue" as const,
       animationDelay: 0.1,

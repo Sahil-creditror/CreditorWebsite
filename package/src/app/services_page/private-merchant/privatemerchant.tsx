@@ -40,7 +40,7 @@ export function PrivateMerchant() {
   return (
     <>
       <HeroBanner
-        bannerimage="/images/services/pma-banner.webp"
+        bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883879/creditor-website-assets/images/services/pma-banner.jpg"
         heading="Your Merchant Account"
         desc="Ditch the restrictions of mainstream processors. Get a fully underwritten <span>Private Merchant Account</span> with fast approvals."
         buttonPath="/pmaform"
@@ -49,7 +49,7 @@ export function PrivateMerchant() {
         <WhyAPMP />
       </Suspense>
       {/* <PrivateMerchantBanner 
-        imageSrc="/images/services/pmabanner.webp"
+        imageSrc="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883881/creditor-website-assets/images/services/pmabanner.webp"
       /> */}
       <Suspense fallback={<div className="min-h-[400px]" />}>
         <Feature/>

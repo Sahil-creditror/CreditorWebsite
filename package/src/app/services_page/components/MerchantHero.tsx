@@ -15,7 +15,7 @@ export default function HeroSection({
   subheading = "Ditch the restrictions of mainstream processors. Get a fully underwritten Private Merchant Account with fast approvals, transparent pricing, and 24–48 hour payouts.",
   ctaHref = "/contact",
   ctaText = "Apply to your Private Account",
-  coverImageSrc = "/images/services/service-banner.webp",
+  coverImageSrc = "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883893/creditor-website-assets/images/services/service-banner.jpg",
 }: MerchantHeroProps) {
   return (
     <section className="relative w-full overflow-hidden bg-black min-h-[60vh] md:min-h-[85vh]">

@@ -22,14 +22,14 @@ const DEFAULT_ITEMS: LearnItem[] = [
     title: "Interactive Live Classes",
     description:
       "Join our interactive live classes every Tuesday & Thursday and engage in real-time learning.",
-    image: "/images/operate/img2.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883767/creditor-website-assets/images/operate/img2.webp",
     span: "wide",
   },
   {
     title: "Insights & Q&A",
     description:
       "Enjoy powerful insights, Q&A, and engaging sessions that keep you involved and learning.",
-    image: "/images/operate/img5.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883770/creditor-website-assets/images/operate/img5.jpg",
   },
   {
     title: "Deep Insights",
@@ -42,13 +42,13 @@ const DEFAULT_ITEMS: LearnItem[] = [
     title: "Hands-on Learning",
     description:
       "Apply concepts directly through guided, hands-on learning experiences.",
-    image: "/images/operate/img1.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883766/creditor-website-assets/images/operate/img1.webp",
   },
   {
     title: "Expert Mentor — Paul Michael",
     description:
       "Learn directly from Paul Michael, an experienced mentor guiding you with clarity and expertise.",
-    image: "/images/operate/img3.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883768/creditor-website-assets/images/operate/img3.webp",
     span: "wide",
   },
 ];

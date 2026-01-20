@@ -25,25 +25,25 @@ const WhatYoullLearnSlider: React.FC = () => {
       title: "Step Out of the Public Trap",
       desc: "Shifts you from risky corporations and licenses into unincorporated business trusts and PMAs that keep you private, safe, and beyond government overreach.",
       color: "#426be6",
-      img: "/images/operate/img1.webp",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883766/creditor-website-assets/images/operate/img1.webp",
     },
     {
       title: "Build & Protect Real Wealth",
       desc: "Holds your real estate in trusts, shields assets from lawsuits, and creates private systems that grow your business without exposure.",
       color: "#7648be",
-      img: "/images/operate/protect.webp",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883776/creditor-website-assets/images/operate/protect.jpg",
     },
     {
       title: "Gives You the Private Blueprint",
       desc: "Teaches you how to set up trusts, operate through PMAs, structure real estate holdings, and design a legacy plan that lasts generations.",
       color: "#23a26c",
-      img: "/images/operate/trust.webp",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883782/creditor-website-assets/images/operate/trust.jpg",
     },
     {
       title: "When Control Slips Away",
       desc: "If you're paying heavy taxes, risking property in your own name, or worried about what happens to your family's wealth—you're ready to Operate Private.",
       color: "#e28019",
-      img: "/images/operate/tax.webp",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883780/creditor-website-assets/images/operate/tax.jpg",
     }
   ];
 

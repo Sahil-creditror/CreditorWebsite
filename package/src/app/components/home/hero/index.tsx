@@ -6,6 +6,7 @@ import { useSwipeable } from "react-swipeable";
 import { Parallax, ParallaxProvider } from "react-scroll-parallax";
 import Image from "next/image";
 import Link from "next/link";
+import HeroContactOverlay from "./ContactOverlay"; // Import the overlay
 
 interface VideoSlide {
   src: string;
@@ -29,31 +30,31 @@ const HeroSection = () => {
   const videos: VideoSlide[] = [
     {
       src: "/video/hero-1.mp4",
-      poster: "/images/hero/banner-1.webp",
+      poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883550/creditor-website-assets/images/hero/banner-1.png",
       title: "Become a Member",
       description: "Protect What You Build. Pass On What Matters",
     },
     {
       src: "/video/Banner.mp4",
-      poster: "/images/hero/Banner.webp",
+      poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883571/creditor-website-assets/images/hero/Banner.png",
       title: "Masterclass Membership",
       description: "Reclaim Your Lawful Identity and Exit the Public System",
     },
     // {
     //   src: "/video/hero-3.mp4",
-    //   poster: "/images/hero/banner-3.webp",
+    //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883559/creditor-website-assets/images/hero/banner-3.png",
     //   title: "Creditor Academy",
     //   description: "Board as a Student. Land as a Sovereign.",
     // },
     // {
     //   src: "/video/hero-4.mp4",
-    //   poster: "/images/hero/banner-4.webp",
+    //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883562/creditor-website-assets/images/hero/banner-4.png",
     //   title: "Creditor Academy",
     //   description: "Operate Private. Take Control. Live Sovereign",
     // },
     // {
     //   src: "/video/hero-5.mp4",
-    //   poster: "/images/hero/banner-5.webp",
+    //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883566/creditor-website-assets/images/hero/banner-5.png",
     //   title: "Creditor Academy",
     //   description:
     //     "Restore Your Credit. Discharge Debt. Take Your Power Back.",
@@ -179,62 +180,70 @@ const HeroSection = () => {
         }}
         {...swipeHandlers}
       >
-        {/* 🎥 Video Carousel */}
-        <AnimatePresence custom={direction} initial={false}>
-          <motion.div
-            key={currentIndex}
-            custom={direction}
-            variants={slideVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            className="absolute inset-0 w-full h-full"
-          >
-            <Parallax speed={-20} style={{ height: "100%" }}>
-              {/* Poster image as primary LCP element - use native img for fastest load */}
-              <div className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
-                {/* Native img tag for fastest LCP - no React hydration delay, loads immediately */}
-                <img
-                  src={videos[currentIndex].poster}
-                  alt={videos[currentIndex].title}
-                  width={1920}
-                  height={1080}
+        {/* 🚀 LCP OPTIMIZATION: Static Background Layer 
+            This layer sits behind everything and loads INSTANTLY (SSR).
+            On Mobile: This IS the hero (Video Carousel hidden).
+            On Desktop: This is the placeholder until Video loads (Video Carousel visible).
+        */}
+        <div className="absolute inset-0 w-full h-full z-0">
+          <img
+            src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883571/creditor-website-assets/images/hero/Banner.png"
+            alt="Hero Banner"
+            width={1920}
+            height={1080}
+            className="w-full h-full object-cover"
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
+          />
+          <div className="absolute inset-0 bg-black/40"></div>
+        </div>
+
+        {/* 🎥 Video Carousel - Placed on top (z-index 1) - HIDDEN ON MOBILE */}
+        <div className="hidden md:block absolute inset-0 w-full h-full z-1">
+          <AnimatePresence custom={direction} initial={false}>
+            <motion.div
+              key={currentIndex}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="absolute inset-0 w-full h-full"
+            >
+              <Parallax speed={-20} style={{ height: "100%" }}>
+                {/* Active Slide Image/Video */}
+                <div className="absolute inset-0 w-full h-full">
+                  <img
+                    src={videos[currentIndex].poster}
+                    alt={videos[currentIndex].title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    loading={currentIndex === 0 ? "eager" : "lazy"}
+                  />
+                </div>
+
+                <video
                   className="absolute inset-0 w-full h-full object-cover"
-                  fetchPriority={currentIndex === 0 ? "high" : "auto"}
-                  loading={currentIndex === 0 ? "eager" : "lazy"}
-                  decoding="async"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-              </div>
-              {/* Video loads lazily - only metadata for first, none for others */}
-              <video
-                className="absolute inset-0 w-full h-full object-cover"
-                loop
-                autoPlay
-                muted
-                playsInline
-                preload={currentIndex === 0 ? "metadata" : "none"}
-                poster={videos[currentIndex].poster}
-                key={videos[currentIndex].src}
-                style={{ width: "100%", height: "100%", zIndex: 2, opacity: 0, transition: "opacity 0.5s ease-in-out" }}
-                onCanPlay={(e) => {
-                  // Fade in video when ready, fade out poster
-                  const video = e.currentTarget;
-                  video.style.opacity = "1";
-                  const posterContainer = video.previousElementSibling as HTMLElement;
-                  if (posterContainer) {
-                    posterContainer.style.opacity = "0";
-                    posterContainer.style.transition = "opacity 0.5s ease-in-out";
-                  }
-                }}
-              >
-                <source src={videos[currentIndex].src} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </Parallax>
-            <div className="absolute inset-0 bg-black/40"></div>
-          </motion.div>
-        </AnimatePresence>
+                  loop
+                  autoPlay
+                  muted
+                  playsInline
+                  preload={currentIndex === 0 ? "metadata" : "none"}
+                  poster={videos[currentIndex].poster}
+                  key={videos[currentIndex].src}
+                  style={{ width: "100%", height: "100%", zIndex: 2, opacity: 0, transition: "opacity 0.5s ease-in-out" }}
+                  onCanPlay={(e) => {
+                    const video = e.currentTarget;
+                    video.style.opacity = "1";
+                  }}
+                >
+                  <source src={videos[currentIndex].src} type="video/mp4" />
+                </video>
+              </Parallax>
+              <div className="absolute inset-0 bg-black/40"></div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 sm:px-6 text-left pb-0 sm:pb-20">
@@ -244,10 +253,10 @@ const HeroSection = () => {
             animate="visible"
             variants={contentVariants}
           >
-       {/* Logo only (replace previous subtext) */}
-<div className="relative z-10 flex justify-start sm:justify-start md:justify-start lg:justify-start ml-12 sm:ml-14 md:ml-16 lg:ml-20 mt-4 sm:mt-6">
+            {/* Logo only (replace previous subtext) */}
+            <div className="relative z-10 flex justify-start sm:justify-start md:justify-start lg:justify-start ml-12 sm:ml-14 md:ml-16 lg:ml-20 mt-4 sm:mt-6">
               <Image
-                src="/images/logo/credi_logoo.png"
+                src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883696/creditor-website-assets/images/logo/credi_logoo.png"
                 alt="Creditor Logo"
                 width={450}
                 height={110}
@@ -256,7 +265,7 @@ const HeroSection = () => {
                 sizes="(max-width: 640px) 208px, (max-width: 768px) 240px, (max-width: 1024px) 320px, 420px"
                 className="object-contain w-52 sm:w-60 md:w-80 lg:w-[420px]"
               />
-</div>
+            </div>
 
 
 
@@ -420,7 +429,7 @@ const HeroSection = () => {
         </button>
 
         {/* 🔘 Indicators (bottom center) */}
-        <div className="absolute left-0 right-0 bottom-4 flex justify-center gap-2 z-20">
+        <div className="absolute left-0 right-0 bottom-4 hidden md:flex justify-center gap-2 z-20">
           {videos.map((_, idx) => (
             <button
               key={idx}

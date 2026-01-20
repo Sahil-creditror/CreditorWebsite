@@ -291,7 +291,7 @@ const GameBanner = () => {
         viewport={{ once: false, amount: 0.2 }}
         style={{
           position: 'relative',
-          background: `linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95)), url('/images/home/game/game_banner.webp') center center / cover no-repeat`,
+          background: `linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95)), url('https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883604/creditor-website-assets/images/home/game/game_banner.png') center center / cover no-repeat`,
           padding: '80px 5% 120px',
           color: 'white',
           textAlign: 'left',

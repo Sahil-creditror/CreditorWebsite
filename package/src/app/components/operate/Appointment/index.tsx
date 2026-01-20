@@ -10,7 +10,7 @@ export default function HeroSection() {
       id="hero"
       className="relative min-h-[60vh] flex items-center justify-center text-center bg-fixed bg-cover bg-center py-8 sm:py-12 md:py-16 lg:py-20"
       style={{
-        backgroundImage: "url('/images/masterclass/consult.webp')", // Replace with your Creditor Academy image
+        backgroundImage: "url('https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883714/creditor-website-assets/images/masterclass/consult.jpg')", // Replace with your Creditor Academy image
       }}
     >
       {/* Dark overlay */}

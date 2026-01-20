@@ -121,7 +121,7 @@ export default async function Post({ params }: Props) {
                                     className="group flex gap-3 items-center w-fit bg-primary hover:bg-secondary dark:border dark:border-primary dark:hover:border dark:hover:border-white/30 rounded-full transition-all duration-500 ease-in-out"
                                 >
                                     <Image
-                                        src={"/images/Icon/back-btn.svg"}
+                                        src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883669/creditor-website-assets/images/Icon/back-btn.svg"}
                                         alt="Image"
                                         width={42}
                                         height={42}

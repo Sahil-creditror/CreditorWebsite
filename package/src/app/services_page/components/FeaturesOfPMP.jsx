@@ -7,7 +7,7 @@ export default function FeaturesOfPMP({
   heading = "Ready to Ditch",
   highlightedText = "Stripe, PayPal & Big Tech?",
   description = "Big processors don't understand private commerce. They're built for W-2s, corporations, and mainstream compliance. You deserve a processor that works with — not against — your structure. With Creditor Academy Private Merchant Processing, you keep your autonomy, your terms, and your peace of mind.",
-  imageSrc = "/images/services/PMP4.webp",
+  imageSrc = "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883886/creditor-website-assets/images/services/PMP4.jpg",
 }) {
   return (
     <section className="py-16 md:py-20 bg-white dark:bg-[#101828]">

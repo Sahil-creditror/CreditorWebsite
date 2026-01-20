@@ -25,25 +25,25 @@ const WhatYoullLearnSlider: React.FC = () => {
       title: "Step Out of Public Control",
       desc: "Breaks you free from government overreach and flips the script—putting you in power as creditor, not debtor - restoring your right to live sovereign under constitutional & common law.",
       color: "#426be6",
-      img: "/images/become/Stepout.webp",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883352/creditor-website-assets/images/become/Stepout.webp",
     },
     {
       title: "Claim Your True Standing",
       desc: "Gives you the knowledge and filings to operate as a sovereign capitalist in the constitutional Republic of the United States with recognized rights and protections.",
       color: "#7648be",
-      img: "/images/become/Claim.webp",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883350/creditor-website-assets/images/become/Claim.webp",
     },
     {
       title: "Teaches Sovereignty From the Ground Up",
       desc: "Explains America's shift from liberty to control, while showing you how to reclaim your place in the private.",
       color: "#23a26c",
-      img: "/images/become/Teaches.webp",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883354/creditor-website-assets/images/become/Teaches.webp",
     },
     {
       title: "When Freedom Feels Out of Reach",
       desc: "If you sense the system doesn't serve you, and you're ready to secure your rights and live privately—it's time to Become Private.",
       color: "#e28019",
-      img: "/images/become/Freedomfeels.webp",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883351/creditor-website-assets/images/become/Freedomfeels.webp",
     }
   ];
 

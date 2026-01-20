@@ -278,14 +278,14 @@ function StatsFacts() {
       {/* Background */}
       <div className="absolute -bottom-20 -left-60 animate-spin-slow opacity-50">
         <Image
-          src={"/images/home/statsfact/sectionbg.webp"}
+          src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883651/creditor-website-assets/images/home/statsfact/sectionbg.png"}
           alt="background"
           height={800}
           width={800}
           className="dark:hidden"
         />
         <Image
-          src={"/images/home/statsfact/sectionbg.webp"}  //darktheme
+          src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883651/creditor-website-assets/images/home/statsfact/sectionbg.png"}  //darktheme
           alt="background dark"
           height={800}
           width={800}

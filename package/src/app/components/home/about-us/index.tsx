@@ -596,14 +596,14 @@ function Aboutus() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <Image
-                    src={"/images/logo/creditorlogo.webp"}
+                    src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"}
                     alt="Logo Image"
                     height={60}
                     width={250}
                     className="dark:hidden"
                   />
                   <Image
-                    src={"/images/logo/creditorlogo.webp"}
+                    src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"}
                     alt="Logo Image"
                     height={60}
                     width={250}
@@ -800,7 +800,7 @@ function Aboutus() {
                     }}
                   >
                     <Image
-                      src={"/images/home/aboutusIndex/avatar.svg"}
+                      src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883592/creditor-website-assets/images/home/aboutusIndex/avatar.svg"}
                       alt="Image"
                       width={64}
                       height={64}

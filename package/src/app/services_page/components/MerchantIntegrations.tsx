@@ -13,31 +13,31 @@ const defaultCards: IntegrationCard[] = [
     title: "Private Merchant Accounts",
     description:
       "You're not renting access to a third-party processor. Operate through your own secure, fully underwritten account.",
-    image: "/images/services/PMP1.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883882/creditor-website-assets/images/services/PMP1.jpg",
   },
   {
     title: "Full Shopify Integration",
     description:
       "Our platform syncs with Shopify, WooCommerce, and other major platforms while keeping your data in your hands.",
-    image: "/images/services/PMP2.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883883/creditor-website-assets/images/services/PMP2.jpg",
   },
   {
     title: "No Freezes, No Holds",
     description:
       "We aren't Stripe. We aren't PayPal. You won't wake up one day with your funds frozen.",
-    image: "/images/services/PMP3.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883884/creditor-website-assets/images/services/PMP3.jpg",
   },
   {
     title: "Total Privacy & Security",
     description:
       "Encrypted payment flows, fraud prevention, and private settlement rails by design.",
-    image: "/images/services/PMP4.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883886/creditor-website-assets/images/services/PMP4.jpg",
   },
   {
     title: "Custom Rates, Human Support",
     description:
       "We offer custom pricing and real human support based on your private business structure",
-    image: "/images/services/PMP5.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883887/creditor-website-assets/images/services/PMP5.jpg",
   },
 ];
 

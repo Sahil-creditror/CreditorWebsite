@@ -7,7 +7,7 @@ const AboutusTeam = () => {
   const member = {
     name: "PaulMichael Rowland",
     role: "Founder & CEO",
-    image: "/images/team/Paul.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883922/creditor-website-assets/images/team/Paul.png",
     bio: "Paul founded Creditor Academy with the mission to make financial literacy accessible and transformative.",
   };
 

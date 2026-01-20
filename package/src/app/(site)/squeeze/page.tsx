@@ -155,7 +155,7 @@ export default function Page() {
                         ].map((text, idx) => (
                         <li key={idx} className="flex items-start gap-3">
                             <Image
-                            src="/images/Icon/right-check.svg"
+                            src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883682/creditor-website-assets/images/Icon/right-check.svg"
                             alt="Check"
                             width={20}
                             height={20}

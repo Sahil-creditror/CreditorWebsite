@@ -324,7 +324,7 @@ const AboutusDetail = () => {
       long_desc:
         "Our comprehensive curriculum covers everything from the basics of credit scores to advanced investment strategies. We offer workshops, one-on-one coaching, and a rich library of resources.",
       icon: OfferSVG,
-      image: "/images/about-us/offer.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883303/creditor-website-assets/images/about-us/offer.jpg",
       color: "from-blue-500 to-cyan-500",
       bgColor:
         "bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20",
@@ -336,7 +336,7 @@ const AboutusDetail = () => {
       long_desc:
         "Our team of financial experts creates engaging learning experiences with real-world examples and practical exercises to ensure students can apply what they learn.",
       icon: DoSVG,
-      image: "/images/about-us/do.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883285/creditor-website-assets/images/about-us/do.jpg",
       color: "from-purple-500 to-pink-500",
       bgColor:
         "bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20",
@@ -348,7 +348,7 @@ const AboutusDetail = () => {
       long_desc:
         "We believe that everyone deserves financial freedom. By empowering individuals with knowledge, we help create a more equitable and prosperous society.",
       icon: WhySVG,
-      image: "/images/about-us/why.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883333/creditor-website-assets/images/about-us/why.jpg",
       color: "from-amber-500 to-orange-500",
       bgColor:
         "bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20",
@@ -692,7 +692,7 @@ const AboutusDetail = () => {
                   <div className="absolute inset-0 border-2 border-white/30 rounded-3xl"></div>
 
                   <Image
-                    src="/images/about-us/masterclass.webp"
+                    src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883299/creditor-website-assets/images/about-us/masterclass.jpg"
                     alt="Financial Freedom Master Class"
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"

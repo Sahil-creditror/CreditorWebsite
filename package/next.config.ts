@@ -60,6 +60,7 @@ const nextConfig: NextConfig = {
     unoptimized: false,
     // Image formats to use (WebP is preferred for better compression)
     formats: ['image/webp', 'image/avif'],
+    qualities: [85, 90, 100],
     // Device sizes for responsive images
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     // Image sizes for different breakpoints
@@ -80,6 +81,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "source.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
       },
     ],
   },

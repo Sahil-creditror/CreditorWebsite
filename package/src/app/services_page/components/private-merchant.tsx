@@ -11,7 +11,7 @@ type PrivateMerchantBannerProps = {
 };
 
 export default function PrivateMerchantBanner({
-  imageSrc = "/images/services/pmabanner.webp",
+  imageSrc = "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883881/creditor-website-assets/images/services/pmabanner.webp",
   alt = "Private Merchant Banner",
   title,
   subtitle,

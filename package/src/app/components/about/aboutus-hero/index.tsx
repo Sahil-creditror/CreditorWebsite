@@ -9,7 +9,7 @@ function AboutusHero() {
             <Image
                 className="absolute top-0 left-0 w-full h-full object-cover"
                 alt="Image"
-                src={"/images/about-us/banner/aboutus-banner.webp"}
+                src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883278/creditor-website-assets/images/about-us/banner/aboutus-banner.png"}
                 height={694}
                 width={1800}
             />
@@ -20,7 +20,7 @@ function AboutusHero() {
                     <div className="flex items-start gap-2 md:gap-6">
                         <div className="w-11 h-11 flex-shrink-0">
                             <Image
-                                src={"/images/Icon/primary-leaf.svg"}
+                                src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883679/creditor-website-assets/images/Icon/primary-leaf.svg"}
                                 alt="icon"
                                 width={44}
                                 height={44}

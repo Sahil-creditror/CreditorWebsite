@@ -168,7 +168,7 @@ const PrivateBusinessCredit: React.FC = () => {
     {
       title: "Business Trust",
       subtitle: "Form and Operate UBTs",
-      imageSrc: "/images/projects/projectlist/bt.webp",
+      imageSrc: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883852/creditor-website-assets/images/projects/projectlist/bt.webp",
       imageAlt: "Business Trust Illustration",
       theme: "blue" as const,
       animationDelay: 0,
@@ -225,7 +225,7 @@ const PrivateBusinessCredit: React.FC = () => {
     {
       title: "Private Membership Association",
       subtitle: "PMA Formation & Operation",
-      imageSrc: "/images/projects/projectlist/pma.webp",
+      imageSrc: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883859/creditor-website-assets/images/projects/projectlist/pma.webp",
       imageAlt: "Private Membership Association Illustration",
       theme: "indigo" as const,
       animationDelay: 0.05,
@@ -283,7 +283,7 @@ const PrivateBusinessCredit: React.FC = () => {
     {
       title: "Real Estate & Legacy Planning",
       subtitle: "Property Trusts & Estate",
-      imageSrc: "/images/projects/projectlist/re.webp",
+      imageSrc: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883860/creditor-website-assets/images/projects/projectlist/re.webp",
       imageAlt: "Real Estate and Legacy Planning Illustration",
       theme: "blue" as const,
       animationDelay: 0.1,

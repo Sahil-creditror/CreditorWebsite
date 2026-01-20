@@ -10,31 +10,31 @@ export const Introduction = () => {
     {
       id: "1",
       packageName: "NextJs",
-      img: "images/documentation/Categories=Nextjs.svg",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883476/creditor-website-assets/images/documentation/Categories_Nextjs.svg",
       version: "15.2.2"
     },
     {
       id: "2",
       packageName: "React",
-      img: "images/documentation/Categories=React.svg",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883478/creditor-website-assets/images/documentation/Categories_React.svg",
       version: "19.0.0"
     },
     {
       id: "3",
       packageName: "Tailwindcss",
-      img: "images/documentation/Categories=Tailwind.svg",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883479/creditor-website-assets/images/documentation/Categories_Tailwind.svg",
       version: "4"
     },
     {
       id: "4",
       packageName: "Typescript",
-      img: "images/documentation/Categories=Typescript.svg",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883482/creditor-website-assets/images/documentation/Categories_Typescript.svg",
       version: "5.6.3"
     },
     {
       id: "5",
       packageName: "Next Auth",
-      img: "/images/documentation/nextauth.webp",
+      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883485/creditor-website-assets/images/documentation/nextauth.png",
       version: "4.24.11"
     }
   ]

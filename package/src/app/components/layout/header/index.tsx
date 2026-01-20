@@ -177,8 +177,8 @@ const Header = () => {
                   <Image
                     src={
                       sticky
-                        ? "/images/Icon/menu-button-sticky.svg"
-                        : "/images/Icon/menu-button.svg"
+                        ? "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883675/creditor-website-assets/images/Icon/menu-button-sticky.svg"
+                        : "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883677/creditor-website-assets/images/Icon/menu-button.svg"
                     }
                     alt="icon"
                     width={35}
@@ -206,14 +206,14 @@ const Header = () => {
                       className="p-2 cursor-pointer"
                     >
                       <Image
-                        src="/images/Icon/close-icon.svg"
+                        src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883673/creditor-website-assets/images/Icon/close-icon.svg"
                         alt="icon"
                         width={16}
                         height={16}
                         className="dark:hidden"
                       />
                       <Image
-                        src="/images/Icon/close-icon-dark.svg"
+                        src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883671/creditor-website-assets/images/Icon/close-icon-dark.svg"
                         alt="icon"
                         width={16}
                         height={16}

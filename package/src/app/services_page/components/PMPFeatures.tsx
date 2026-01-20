@@ -13,31 +13,31 @@ const defaultCards: IntegrationCard[] = [
     title: "POS & Gateway Options",
     description:
       "EMV-compliant terminals, mobile readers, and online gateways.",
-    image: "/images/services/PMP1.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883882/creditor-website-assets/images/services/PMP1.jpg",
   },
   {
     title: "Fraud & Chargeback Protection",
     description:
       "Real-time monitoring and dispute support.",
-    image: "/images/services/PMP2.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883883/creditor-website-assets/images/services/PMP2.jpg",
   },
   {
     title: "PCI & EMV Compliant",
     description:
       "Security built into every account.",
-    image: "/images/services/PMP3.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883884/creditor-website-assets/images/services/PMP3.jpg",
   },
   {
     title: "Multi-Currency Settlement",
     description:
       "Process payments worldwide and settle in your preferred currency.",
-    image: "/images/services/PMP4.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883886/creditor-website-assets/images/services/PMP4.jpg",
   },
   {
     title: "Detailed Reporting",
     description:
       "Merchant statements, analytics, and dashboards.",
-    image: "/images/services/PMP5.webp",
+    image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883887/creditor-website-assets/images/services/PMP5.jpg",
   },
 ];
 

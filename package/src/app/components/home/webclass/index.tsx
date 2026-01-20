@@ -163,7 +163,7 @@ export default function WebclassSection() {
               {/* Logo */}
               <div className="flex items-center justify-center">
                 <Image
-                  src="/images/logo/creditorlogowhite.webp"
+                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png"
                   alt="Creditor Academy Logo"
                   width={250}
                   height={60}
@@ -171,7 +171,7 @@ export default function WebclassSection() {
                   priority
                 />
                 <Image
-                  src="/images/logo/creditorlogowhite.webp"
+                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png"
                   alt="Creditor Academy Logo"
                   width={250}
                   height={60}
@@ -232,7 +232,7 @@ export default function WebclassSection() {
                   }}
                 >
                   <Image
-                    src={"/images/avatar/paul2.webp"}
+                    src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883348/creditor-website-assets/images/avatar/paul2.webp"}
                     alt="Speaker"
                     fill
                     style={{ objectFit: "cover" }}

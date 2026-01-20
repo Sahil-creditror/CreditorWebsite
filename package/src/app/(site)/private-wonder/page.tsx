@@ -41,7 +41,7 @@ const PrivatePage = () => {
         <Herobanner
           heading="Financial Freedom"
           desc="Your gateway to financial sovereignty."
-          bannerimage="/images/projects/banner/private.webp"
+          bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883846/creditor-website-assets/images/projects/banner/private.webp"
           buttonPath="/tncmasterclass"
         />
         <CourseDetail />

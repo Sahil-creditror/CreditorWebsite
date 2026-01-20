@@ -79,7 +79,7 @@ export default function PresentationSection() {
             </div>
             {/* <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/10 via-transparent to-transparent" />
             <Image
-              src="/images/squeeze/squeeze.webp"
+              src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883920/creditor-website-assets/images/squeeze/squeeze.webp"
               alt="Millionaires Club Awards"
               width={1800}
               height={700}

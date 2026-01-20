@@ -5,6 +5,8 @@ import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Gift, MessageCircle } from "lucide-react";
 import Script from "next/script";
+import { usePathname } from "next/navigation";
+import HeroContactOverlay from "../home/hero/ContactOverlay";
 
 // Contact Form Modal Component
 function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
@@ -152,9 +154,19 @@ interface FloatingButtonsProps {
 export default function FloatingButtons({ onSpecialOfferClick }: FloatingButtonsProps) {
   const [isScrollVisible, setIsScrollVisible] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isHeroContactClosed, setIsHeroContactClosed] = useState(false);
+  const pathname = usePathname();
+
+  // Logic: Show Hero Form when on Home Page AND NOT scrolled down, AND not manually closed by user
+  const isHeroSection = pathname === "/" && !isScrollVisible && !isHeroContactClosed;
 
   useEffect(() => {
     const toggleVisibility = () => {
+      // Reset the closed state if we scroll down and back up?
+      // User decision to close usually means "get out of my way for this session".
+      // Let's keep it closed for the session if they close it, or just until page refresh.
+      // For now, simpler is better: once closed, it stays closed until refresh or navigation back?
+
       if (window.pageYOffset > 300) {
         setIsScrollVisible(true);
       } else {
@@ -163,6 +175,7 @@ export default function FloatingButtons({ onSpecialOfferClick }: FloatingButtons
     };
 
     window.addEventListener("scroll", toggleVisibility);
+    toggleVisibility(); // Check initial state
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
@@ -175,6 +188,21 @@ export default function FloatingButtons({ onSpecialOfferClick }: FloatingButtons
 
   return (
     <>
+      {/* Hero Contact Card (Shows only on Home Hero) */}
+      <AnimatePresence>
+        {isHeroSection && (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.5 }}
+            className="fixed z-40"
+          >
+            {/* <HeroContactOverlay onClose={() => setIsHeroContactClosed(true)} /> */}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Floating Buttons Container */}
       <div className="fixed bottom-8 right-6 md:right-8 z-[9999] flex flex-col gap-3 items-end">
         {/* 1. Special Offer Button */}
@@ -198,22 +226,24 @@ export default function FloatingButtons({ onSpecialOfferClick }: FloatingButtons
           </span>
         </motion.button>
 
-        {/* 2. Contact Form Button */}
-        <motion.button
-          onClick={() => setIsContactOpen(true)}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.1, duration: 0.4, ease: "easeOut" }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          className="bg-gradient-to-tr from-blue-500 via-blue-600 to-blue-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 text-white p-4 rounded-full shadow-2xl hover:shadow-blue-500/50 transition-all duration-300 group relative"
-          aria-label="Contact Us"
-        >
-          <MessageCircle className="h-6 w-6" />
-          <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-2 bg-slate-900 text-white text-sm rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-            Contact Us
-          </span>
-        </motion.button>
+        {/* 2. Contact Form Button (Hidden when on Hero Section is active) */}
+        {!isHeroSection && (
+          <motion.button
+            onClick={() => setIsContactOpen(true)}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-gradient-to-tr from-blue-500 via-blue-600 to-blue-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 text-white p-4 rounded-full shadow-2xl hover:shadow-blue-500/50 transition-all duration-300 group relative"
+            aria-label="Contact Us"
+          >
+            <MessageCircle className="h-6 w-6" />
+            <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-2 bg-slate-900 text-white text-sm rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+              Contact Us
+            </span>
+          </motion.button>
+        )}
 
         {/* 3. Scroll to Top Button */}
         {isScrollVisible && (
@@ -226,7 +256,7 @@ export default function FloatingButtons({ onSpecialOfferClick }: FloatingButtons
             aria-label="scroll to top"
             className="flex cursor-pointer items-center justify-center transition duration-300 ease-in-out hover:scale-110"
           >
-            <Image src={"/images/Icon/up-arrow.webp"} alt="Scroll to top" width={55} height={55} />
+            <Image src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883685/creditor-website-assets/images/Icon/up-arrow.png"} alt="Scroll to top" width={55} height={55} />
           </motion.div>
         )}
       </div>

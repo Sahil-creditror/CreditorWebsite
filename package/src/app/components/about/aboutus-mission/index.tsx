@@ -90,7 +90,7 @@ const AboutusMission: React.FC = () => {
               >
                 <div className="relative h-56 md:h-64 lg:h-72">
                   <Image
-                    src="/images/about-us/offer.webp"
+                    src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883303/creditor-website-assets/images/about-us/offer.jpg"
                     alt="Our Mission"
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -124,7 +124,7 @@ const AboutusMission: React.FC = () => {
               >
                 <div className="relative h-56 md:h-64 lg:h-72">
                   <Image
-                    src="/images/about-us/why.webp"
+                    src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883333/creditor-website-assets/images/about-us/why.jpg"
                     alt="Our Vision"
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"

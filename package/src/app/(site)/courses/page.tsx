@@ -9,7 +9,7 @@ export default function Page() {
     return (
         <main>
             <Herobanner
-                bannerimage="/images/courses/course-banner.webp"
+                bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883453/creditor-website-assets/images/courses/course-banner.webp"
                 heading="Explore Our Premium Catalogs"
                 desc="Learn Differently. Grow Distinctively. Become Private with Our Premium Catalogs." />
             <Courses />

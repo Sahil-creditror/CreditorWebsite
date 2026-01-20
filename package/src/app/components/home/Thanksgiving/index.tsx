@@ -6,16 +6,25 @@ import Link from "next/link";
 interface ThanksgivingPopupProps {
   delayMs?: number;
   disableAutoOpen?: boolean;
+  manualTrigger?: number;
 }
 
-const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000, disableAutoOpen = false }) => {
+const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000, disableAutoOpen = false, manualTrigger = 0 }) => {
   const [open, setOpen] = useState(false);
 
+  // Auto-open logic
   useEffect(() => {
     if (disableAutoOpen) return;
     const timer = setTimeout(() => setOpen(true), delayMs);
     return () => clearTimeout(timer);
   }, [delayMs, disableAutoOpen]);
+
+  // Manual trigger logic
+  useEffect(() => {
+    if (manualTrigger > 0) {
+      setOpen(true);
+    }
+  }, [manualTrigger]);
 
   if (!open) return null;
 
@@ -75,7 +84,7 @@ const ThanksgivingPopup: React.FC<ThanksgivingPopupProps> = ({ delayMs = 1000, d
 
             <div className="bg-[#020712] rounded-2xl overflow-hidden flex items-center justify-center border border-white/10 aspect-square w-full max-w-[250px] mx-auto md:max-w-none md:mx-0" aria-hidden="true">
               <img
-                src="/images/webinar/popbanner.webp"
+                src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883946/creditor-website-assets/images/webinar/popbanner.webp"
                 alt="Webinar Event"
                 className="w-full h-full object-cover"
               />

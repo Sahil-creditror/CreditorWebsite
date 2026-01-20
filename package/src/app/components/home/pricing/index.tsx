@@ -46,9 +46,9 @@ function Pricing() {
   }, [])
 
   const defaultCoverImages = [
-    "/images/pricing/Cover-1.webp",
-    "/images/pricing/Cover-2.webp",
-    "/images/pricing/Cover-3.webp"
+    "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883797/creditor-website-assets/images/pricing/Cover-1.jpg",
+    "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883800/creditor-website-assets/images/pricing/Cover-2.jpg",
+    "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883811/creditor-website-assets/images/pricing/Cover-3.jpg"
   ];
 
   return (
@@ -161,7 +161,7 @@ function Pricing() {
                             {(value?.planIncludes ?? []).map((item: string, itemIndex: number) => (
                               <li key={`${value.planName}-inc-${itemIndex}`} className="flex items-center gap-1.5 sm:gap-4">
                                 <div className="bg-primary w-fit p-1 sm:p-1.5 rounded-full flex-shrink-0">
-                                  <Image src={"/images/Icon/right-check.svg"} alt="Included item" width={20} height={20} />
+                                  <Image src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883682/creditor-website-assets/images/Icon/right-check.svg"} alt="Included item" width={20} height={20} />
                                 </div>
                                 <span className="flex-1">{item}</span>
                               </li>

@@ -9,21 +9,21 @@ export default function LearningSection() {
       title: "Status and Standing",
       description:
         "Learn what it actually means to become private—how the public system defines you by default, how private people think about status, capacity, and positioning, and the lawful framework we teach so you can move with clarity, confidence, and control.",
-      image: "/images/webinar/3.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883940/creditor-website-assets/images/webinar/3.webp",
     },
     {
       secret: "SECRET #2",
       title: "The Private Operating System",
       description:
         "Discover the core structures of private operation—how business trusts and private associations are used to create separation, privacy, and protection in commerce, assets, and family legacy planning, so your life and business stop being exposed to the public world's rules by default.",
-      image: "/images/webinar/2.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883939/creditor-website-assets/images/webinar/2.webp",
     },
     {
       secret: "SECRET #3",
       title: "Financial Freedom",
       description:
         "Learn how to build real financial leverage the private way—strengthening personal credit fundamentals, building elite business credit with an unincorporated business trust strategy, and setting up private merchant processing so you can run transactions cleanly, scale smoothly, and operate like a serious private enterprise.",
-      image: "/images/webinar/1.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883938/creditor-website-assets/images/webinar/1.webp",
     },
   ];
 

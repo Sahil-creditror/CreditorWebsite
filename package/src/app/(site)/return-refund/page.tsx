@@ -9,7 +9,7 @@ export default function Page() {
     return (
         <main>
             <Herobanner
-                bannerimage="/images/ReturnRefund/banner.webp"
+                bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883862/creditor-website-assets/images/ReturnRefund/banner.jpg"
                 heading="Return & Refund"
                 desc="Understand the <span>Rules & Guidelines</span> Before Using Our Services"
                 // buttonPath="/projects/become-private-Sovereignty 101" 

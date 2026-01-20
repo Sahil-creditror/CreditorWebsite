@@ -158,7 +158,7 @@ const CourseRoadmap: React.FC = () => {
 
           {/* <CourseCard
             title="Become Private"
-            image="/images/projects/projectlist/become.webp"
+            image="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883850/creditor-website-assets/images/projects/projectlist/become.webp"
             subtitle="Reclaim Your Lawful Identity"
             description="Learn how to step out of the public and establish your affairs in the private."
             learnings={[
@@ -174,7 +174,7 @@ const CourseRoadmap: React.FC = () => {
           <div className="w-full max-w-sm">
   <CourseCard
     title="Become Private"
-    image="/images/projects/projectlist/become.webp"
+    image="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883850/creditor-website-assets/images/projects/projectlist/become.webp"
     subtitle="Reclaim Your Lawful Identity"
     description="Learn how to step out of the public and establish your affairs in the private."
     learnings={[
@@ -196,7 +196,7 @@ const CourseRoadmap: React.FC = () => {
 
           {/* <CourseCard
             title="Operate Private"
-            image="/images/projects/projectlist/operate.webp"
+            image="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883858/creditor-website-assets/images/projects/projectlist/operate.webp"
             subtitle="Asset Protection & Business"
             description="Build, manage, and grow an Empire in the private, independent of the public system."
             learnings={["Unincorporated Business Trusts", "Private Membership Associations", "Real estate in trusts", "Family legacy planning"]}
@@ -208,7 +208,7 @@ const CourseRoadmap: React.FC = () => {
           <div className="w-full max-w-sm">
   <CourseCard
     title="Operate Private"
-    image="/images/projects/projectlist/operate.webp"
+    image="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883858/creditor-website-assets/images/projects/projectlist/operate.webp"
     subtitle="Asset Protection & Business"
     description="Build, manage, and grow an Empire in the private, independent of the public system."
     learnings={[
@@ -230,7 +230,7 @@ const CourseRoadmap: React.FC = () => {
           <div className="w-full max-w-sm">
             <CourseCard
               title="Financial Freedom"
-              image="/images/projects/projectlist/financial.webp"
+              image="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883854/creditor-website-assets/images/projects/projectlist/financial.webp"
               subtitle="200k with Vendors, Banks & Credit Unions"
               description="Discover the foundation of private commerce and take control of how you get paid"
               learnings={["Private Business Credit","Personal Credit Repair","Private Merchant Accounts", "Credit card stacking strategies"]}//"Unlock vendor accounts",

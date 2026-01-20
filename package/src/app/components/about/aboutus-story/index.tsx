@@ -55,28 +55,28 @@ const AboutusStory = () => {
       title: "The Beginning",
       description:
         "Creditor Academy started with a vision to make credit education accessible to everyone.",
-      image: "/images/about-us/story1.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883312/creditor-website-assets/images/about-us/story1.jpg",
     },
     {
       year: "2020",
       title: "First Growth",
       description:
         "Expanded reach to students and professionals, gaining recognition as a trusted learning platform.",
-      image: "/images/about-us/story2.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883321/creditor-website-assets/images/about-us/story2.jpg",
     },
     {
       year: "2022",
       title: "Global Impact",
       description:
         "Our community grew worldwide, empowering learners with financial literacy and credit management skills.",
-      image: "/images/about-us/story3.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883328/creditor-website-assets/images/about-us/story3.jpg",
     },
     {
       year: "Future",
       title: "What’s Next",
       description:
         "We continue to innovate and expand, shaping the future of credit education for generations to come.",
-      image: "/images/about-us/story4.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883332/creditor-website-assets/images/about-us/story4.jpg",
     },
   ];
 

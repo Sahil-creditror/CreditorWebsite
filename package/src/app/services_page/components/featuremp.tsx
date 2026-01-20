@@ -11,31 +11,31 @@ export default function MasterclassBenefits() {
       title: "POS & Gateway Options",
       description:
         "EMV-compliant terminals, mobile readers, and online gateways.",
-      image: "/images/services/private-merchant/gateway.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883890/creditor-website-assets/images/services/private-merchant/gateway.webp",
     },
     {
       title: "Fraud & Chargeback Protection",
       description:
         "Real-time monitoring and dispute support.",
-      image: "/images/services/private-merchant/protection.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883891/creditor-website-assets/images/services/private-merchant/protection.webp",
     },
     {
       title: "PCI & EMV Compliant",
       description:
         "Security built into every account.",
-      image: "/images/services/template/business.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883895/creditor-website-assets/images/services/template/business.jpg",
     },
     {
       title: "Multi-Currency Settlement",
       description:
         "Process payments worldwide and settle in your preferred currency.",
-      image: "/images/services/private-merchant/currency.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883889/creditor-website-assets/images/services/private-merchant/currency.webp",
     },
     {
       title: "Detailed Reporting",
       description:
         "Merchant statements, analytics, and dashboards.",
-      image: "/images/services/private-merchant/report.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883892/creditor-website-assets/images/services/private-merchant/report.webp",
     },
   ];
 

@@ -414,7 +414,7 @@ export default function EventRegistrationSuccess(): React.ReactElement {
               <div className="flex items-center gap-3 border-t border-gray-100 dark:border-white/10 pt-4">
                 <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 dark:bg-white/5">
                   <Image
-                    src="/images/squeeze/webex.jpeg"
+                    src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883921/creditor-website-assets/images/squeeze/webex.jpg"
                     alt="Host avatar"
                     width={48}
                     height={48}

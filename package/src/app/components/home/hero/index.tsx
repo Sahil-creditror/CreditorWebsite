@@ -13,6 +13,7 @@ interface VideoSlide {
   poster: string;
   title: string;
   description: string;
+  type?: "video" | "image";
 }
 
 type Direction = "left" | "right";
@@ -28,18 +29,20 @@ const HeroSection = () => {
   const intervalRef = useRef<number | null>(null);
 
   const videos: VideoSlide[] = [
-    // {
-    //   src: "/video/hero-1.mp4",
-    //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883550/creditor-website-assets/images/hero/banner-1.png",
-    //   title: "Become a Member",
-    //   description: "Protect What You Build. Pass On What Matters",
-    // },
     {
-      src: "/video/Banner.mp4",
-      poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883571/creditor-website-assets/images/hero/Banner.png",
-      title: "Masterclass Membership",
-      description: "Reclaim Your Lawful Identity and Exit the Public System",
+      src: "",
+      poster: "/images/hero/Bannerhero.webp",
+      title: "Become a Member",
+      description: "Protect What You Build. Pass On What Matters",
+      type: "image",
     },
+    // {
+    //   src: "/video/Banner.mp4",
+    //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883571/creditor-website-assets/images/hero/Banner.png",
+    //   title: "Masterclass Membership",
+    //   description: "Reclaim Your Lawful Identity and Exit the Public System",
+    //   type: "video",
+    // },
     // {
     //   src: "/video/hero-3.mp4",
     //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883559/creditor-website-assets/images/hero/banner-3.png",
@@ -187,7 +190,7 @@ const HeroSection = () => {
         */}
         <div className="absolute inset-0 w-full h-full z-0">
           <img
-            src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883571/creditor-website-assets/images/hero/Banner.png"
+            src="/images/hero/Bannerhero.webp"
             alt="Hero Banner"
             width={1920}
             height={1080}
@@ -199,7 +202,7 @@ const HeroSection = () => {
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
 
-        {/* 🎥 Video Carousel - Placed on top (z-index 1) - HIDDEN ON MOBILE */}
+        {/* 🎥 Video/Image Carousel - Placed on top (z-index 1) - HIDDEN ON MOBILE */}
         <div className="hidden md:block absolute inset-0 w-full h-full z-1">
           <AnimatePresence custom={direction} initial={false}>
             <motion.div
@@ -214,31 +217,53 @@ const HeroSection = () => {
               <Parallax speed={-20} style={{ height: "100%" }}>
                 {/* Active Slide Image/Video */}
                 <div className="absolute inset-0 w-full h-full">
-                  <img
-                    src={videos[currentIndex].poster}
-                    alt={videos[currentIndex].title}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    loading={currentIndex === 0 ? "eager" : "lazy"}
-                  />
-                </div>
+                  {videos[currentIndex].type === "image" ? (
+                    <img
+                      src={videos[currentIndex].poster}
+                      alt={videos[currentIndex].title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading={currentIndex === 0 ? "eager" : "lazy"}
+                    />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 w-full h-full">
+                        <img
+                          src={videos[currentIndex].poster}
+                          alt={videos[currentIndex].title}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
 
-                <video
-                  className="absolute inset-0 w-full h-full object-cover"
-                  loop
-                  autoPlay
-                  muted
-                  playsInline
-                  preload={currentIndex === 0 ? "metadata" : "none"}
-                  poster={videos[currentIndex].poster}
-                  key={videos[currentIndex].src}
-                  style={{ width: "100%", height: "100%", zIndex: 2, opacity: 0, transition: "opacity 0.5s ease-in-out" }}
-                  onCanPlay={(e) => {
-                    const video = e.currentTarget;
-                    video.style.opacity = "1";
-                  }}
-                >
-                  <source src={videos[currentIndex].src} type="video/mp4" />
-                </video>
+                      <video
+                        className="absolute inset-0 w-full h-full object-cover"
+                        loop
+                        autoPlay
+                        muted
+                        playsInline
+                        preload="metadata"
+                        poster={videos[currentIndex].poster}
+                        key={videos[currentIndex].src}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          zIndex: 2,
+                          opacity: 0,
+                          transition: "opacity 0.5s ease-in-out",
+                        }}
+                        onCanPlay={(e) => {
+                          const video = e.currentTarget;
+                          video.style.opacity = "1";
+                        }}
+                      >
+                        <source
+                          src={videos[currentIndex].src}
+                          type="video/mp4"
+                        />
+                      </video>
+                    </>
+                  )}
+                </div>
               </Parallax>
               <div className="absolute inset-0 bg-black/40"></div>
             </motion.div>

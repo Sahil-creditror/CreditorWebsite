@@ -111,14 +111,14 @@ function About() {
               <div className="flex flex-col gap-4 relative z-10">
                 <div>
                   <Image
-                    src={"https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp"}
+                    src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"}
                     alt="Logo Image"
                     height={60}
                     width={250}
                     className="dark:hidden"
                   />
                   <Image
-                    src={"https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp"}
+                    src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"}
                     alt="Logo Image"
                     height={60}
                     width={250}

@@ -32,31 +32,34 @@ function processFiles() {
         let content = fs.readFileSync(file, 'utf8');
         const originalContent = content;
 
-        // Regex to capture the double URL pattern
-        // We look for: https://res.cloudinary.com...creditor-website-assetshttps://res.cloudinary.com...
-        // And we keep the second one.
-
         // Pattern: 
-        // (https:\/\/res\.cloudinary\.com\/[^"'\s]*?creditor-website-assets)(https:\/\/res\.cloudinary\.com\/[^"'\s]*)
-        // The first group is the prefix to discard. The second group is the one to keep.
-        // Note: We use non-greedy matching `*?` to handle multiple instances on a line if possible, 
-        // though the specific case `assetshttps` is the key.
+        // Any Cloudinary URL prefix followed by another Cloudinary URL prefix
+        // We look for the nested occurrences and keep only the last valid one.
 
-        const regex = /(https:\/\/res\.cloudinary\.com\/[^"'\s]*?creditor-website-assets)(https:\/\/res\.cloudinary\.com\/)/g;
+        // This regex matches a prefix + optional transform + timestamp + assets-folder
+        // followed by another https://res.cloudinary.com
+        // We replace the first part with nothing, keeping the second part.
 
-        if (regex.test(content)) {
-            // Replace with only the second part (and whatever follows it is preserved naturally as we only matched the prefix and the start of the second url)
-            // Wait, if I replace `(prefix)(start_of_valid)` with `$2`, I keep `start_of_valid`.
-            // The rest of valid URL is not part of the match, so it stays.
+        // More robust: Keep only the LAST instance of https://res.cloudinary.com in a sequence
+        const regex = /https:\/\/res\.cloudinary\.com\/[^"'\s]*?(https:\/\/res\.cloudinary\.com\/)/g;
 
-            content = content.replace(regex, '$2');
-
-            if (content !== originalContent) {
-                fs.writeFileSync(file, content, 'utf8');
-                console.log(`Fixed ${file}`);
-                modifiedFiles++;
-                totalFixes++;
+        let changed = true;
+        let fileFixes = 0;
+        while (changed) {
+            const newContent = content.replace(regex, '$1');
+            if (newContent === content) {
+                changed = false;
+            } else {
+                content = newContent;
+                fileFixes++;
             }
+        }
+
+        if (content !== originalContent) {
+            fs.writeFileSync(file, content, 'utf8');
+            console.log(`Fixed ${file} (${fileFixes} iterative fixes)`);
+            modifiedFiles++;
+            totalFixes += fileFixes;
         }
     });
 

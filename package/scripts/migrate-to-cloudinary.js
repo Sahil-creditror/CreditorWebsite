@@ -34,15 +34,38 @@ function getAllFiles(dirPath, arrayOfFiles) {
 async function uploadImages() {
     console.log('Starting migration to Cloudinary...');
 
+    const force = process.argv.includes('--force');
+    const fileIndex = process.argv.findIndex(arg => arg === '--file' || arg.startsWith('--file='));
+    let targetFile = null;
+    if (fileIndex !== -1) {
+        const arg = process.argv[fileIndex];
+        if (arg.startsWith('--file=')) {
+            targetFile = arg.split('=')[1];
+        } else if (fileIndex + 1 < process.argv.length) {
+            targetFile = process.argv[fileIndex + 1];
+        }
+    }
+
     if (!process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME === 'your_cloud_name') {
         console.error('ERROR: Please fill in your Cloudinary credentials in .env.local');
         process.exit(1);
     }
 
     const allFiles = getAllFiles(PUBLIC_DIR);
-    const imageFiles = allFiles.filter(file => ALLOWED_EXTENSIONS.includes(path.extname(file).toLowerCase()));
+    let imageFiles = allFiles.filter(file => ALLOWED_EXTENSIONS.includes(path.extname(file).toLowerCase()));
 
-    console.log(`Found ${imageFiles.length} images to upload.`);
+    if (targetFile) {
+        imageFiles = imageFiles.filter(file => {
+            const rel = path.relative(PUBLIC_DIR, file).replace(/\\/g, '/');
+            return rel === targetFile || ('/' + rel) === targetFile || file === targetFile;
+        });
+        if (imageFiles.length === 0) {
+            console.error(`ERROR: File not found: ${targetFile}`);
+            process.exit(1);
+        }
+    }
+
+    console.log(`Found ${imageFiles.length} images to process.`);
 
     const urlMap = {};
     if (fs.existsSync(MAP_FILE)) {
@@ -59,33 +82,21 @@ async function uploadImages() {
 
     for (const file of imageFiles) {
         const relativePath = path.relative(PUBLIC_DIR, file).replace(/\\/g, '/');
-        const publicKey = '/' + relativePath; // Standardize key as /path/to/image.png
+        const publicKey = '/' + relativePath;
 
-        if (urlMap[publicKey]) {
+        if (urlMap[publicKey] && !force && !targetFile) {
             console.log(`Skipping (already mapped): ${relativePath}`);
             skippedCount++;
             continue;
         }
 
-        console.log(`Uploading: ${relativePath}...`);
+        console.log(`${force || targetFile ? 'Updating' : 'Uploading'}: ${relativePath}...`);
         try {
-            // Use the file path as the public_id to maintain structure, removing extension for cleaner IDs
-            // Cloudinary handles extensions, but typically public_id doesn't have it.
-            // However, to avoid conflicts, let's just let Cloudinary convert or keep it.
-            // We will use the relative path (without extension) as folder/name
-
-            const folder = path.dirname(relativePath) === '.' ? 'root' : path.dirname(relativePath);
-            const filename = path.basename(relativePath, path.extname(relativePath));
-
-            // Construct a public_id that mirrors the folder structure
-            // e.g. images/hero/bg becomes images/hero/bg
-            const publicId = relativePath.replace(/\.[^/.]+$/, "");
-
             const result = await cloudinary.uploader.upload(file, {
-                folder: 'creditor-website-assets/' + path.dirname(relativePath).replace(/^\.\/?/, ''), // Namespace it
+                folder: 'creditor-website-assets/' + path.dirname(relativePath).replace(/^\.\/?/, ''),
                 use_filename: true,
                 unique_filename: false,
-                overwrite: false,
+                overwrite: true,
                 resource_type: 'auto'
             });
 
@@ -97,9 +108,15 @@ async function uploadImages() {
         }
     }
 
-    fs.writeFileSync(MAP_FILE, JSON.stringify(urlMap, null, 2));
+    // Sort the map for cleanliness
+    const sortedMap = {};
+    Object.keys(urlMap).sort().forEach(key => {
+        sortedMap[key] = urlMap[key];
+    });
+
+    fs.writeFileSync(MAP_FILE, JSON.stringify(sortedMap, null, 2));
     console.log('\nMigration complete!');
-    console.log(`Uploaded: ${successCount}`);
+    console.log(`Processed: ${successCount}`);
     console.log(`Skipped: ${skippedCount}`);
     console.log(`Errors: ${errorCount}`);
     console.log(`Map saved to: ${MAP_FILE}`);

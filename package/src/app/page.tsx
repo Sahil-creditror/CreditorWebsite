@@ -27,9 +27,31 @@ const Event = dynamic(() => import("./components/home/event"), {
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
 export const metadata: Metadata = {
-  title: "Creditor Academy",
+  title: "Creditor Academy | Join The Private Economy & Master Sovereign Wealth",
+  description: "Learn how to step out of the public system and operate in private. Creditor Academy provides expert guidance on sovereign wealth, private business operation, and financial freedom.",
   alternates: {
     canonical: siteUrl,
+  },
+  openGraph: {
+    title: "Creditor Academy | Join The Private Economy & Master Sovereign Wealth",
+    description: "Learn how to step out of the public system and operate in private.",
+    url: siteUrl,
+    siteName: "Creditor Academy",
+    images: [
+      {
+        url: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883571/creditor-website-assets/images/hero/Banner.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Creditor Academy | Join The Private Economy & Master Sovereign Wealth",
+    description: "Learn how to step out of the public system and operate in private.",
+    images: ["https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883571/creditor-website-assets/images/hero/Banner.png"],
   },
 };
 

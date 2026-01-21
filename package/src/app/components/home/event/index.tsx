@@ -330,7 +330,7 @@ export default function EventPromoSectionEnhanced(): React.ReactElement {
             <div className="stripe" aria-hidden="true"></div>
 
             <div className="speaker-photo-wrap">
-              <img src='https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883500/creditor-website-assets/images/event/event17.webp' alt="Paul Michael Rowland" className="speaker-photo" />
+              <img src='https://res.cloudinary.com/dlndnmuq1/image/upload/v1768980411/creditor-website-assets/images/event/eventsat.webp' alt="Paul Michael Rowland" className="speaker-photo" />
             </div>
 
             {/* <div className="speaker-overlay" aria-hidden="true">

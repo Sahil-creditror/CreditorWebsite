@@ -105,7 +105,7 @@ const teamData = {
     number: '06',
     data: [
         {
-            image: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883656/creditor-website-assets/images/home/team/team-img-1.webp",
+            image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883656/creditor-website-assets/images/home/team/team-img-1.png",
             name: "Martha Finley",
             position: "Creative Director",
             socialLinks: [
@@ -124,7 +124,7 @@ const teamData = {
             ]
         },
         {
-            image: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883658/creditor-website-assets/images/home/team/team-img-2.webp",
+            image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883658/creditor-website-assets/images/home/team/team-img-2.png",
             name: "Floyd Miles",
             position: "Marketing Strategist",
             socialLinks: [
@@ -143,7 +143,7 @@ const teamData = {
             ]
         },
         {
-            image: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883662/creditor-website-assets/images/home/team/team-img-3.webp",
+            image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883662/creditor-website-assets/images/home/team/team-img-3.png",
             name: "Glenna Snyder",
             position: "Lead Designer",
             socialLinks: [
@@ -162,7 +162,7 @@ const teamData = {
             ]
         },
         {
-            image: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883664/creditor-website-assets/images/home/team/team-img-4.webp",
+            image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883664/creditor-website-assets/images/home/team/team-img-4.png",
             name: "Albert Flores",
             position: "UX/UI Developer",
             socialLinks: [
@@ -230,12 +230,12 @@ const pricingData = {
         },
     ],
     partnerLogo: [
-        { light: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp", dark: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp" },
-        { light: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883693/creditor-website-assets/images/logo/creditorlogoblack.webp", dark: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.webp" },
-        { light: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp", dark: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp" },
-        { light: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883693/creditor-website-assets/images/logo/creditorlogoblack.webp", dark: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.webp" },
-        { light: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp", dark: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883691/creditor-website-assets/images/logo/creditorlogo.webp" },
-        { light: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883693/creditor-website-assets/images/logo/creditorlogoblack.webp", dark: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.webp" },
+        { light: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png", dark: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png" },
+        { light: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883693/creditor-website-assets/images/logo/creditorlogoblack.png", dark: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png" },
+        { light: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png", dark: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png" },
+        { light: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883693/creditor-website-assets/images/logo/creditorlogoblack.png", dark: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png" },
+        { light: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png", dark: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png" },
+        { light: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883693/creditor-website-assets/images/logo/creditorlogoblack.png", dark: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png" },
       ],
 };
 

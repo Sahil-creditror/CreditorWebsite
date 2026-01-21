@@ -76,7 +76,7 @@ function PrivateTeaser() {
             >
               <div className="relative aspect-[1/1] rounded-2xl overflow-hidden shadow-2xl bg-secondary dark:bg-darkblack">
                 <Image
-                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883345/creditor-website-assets/images/avatar/paul.webp"
+                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883345/creditor-website-assets/images/avatar/paul.png"
                   alt="Private Operation"
                   fill
                   className="object-cover"

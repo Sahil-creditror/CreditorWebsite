@@ -175,10 +175,9 @@ function processFiles() {
                     // I can check if the match is preceded by `creditor-website-assets/`.
                     // If so, SKIP.
 
-                    const precedingChar = index > 0 ? content[index - 1] : '';
-                    const precedingChunk = content.substring(Math.max(0, index - 25), index);
+                    const precedingChunk = content.substring(Math.max(0, index - 60), index);
 
-                    if (precedingChunk.endsWith('creditor-website-assets/')) {
+                    if (precedingChunk.includes('res.cloudinary.com')) {
                         continue;
                     }
 

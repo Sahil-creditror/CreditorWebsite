@@ -256,7 +256,7 @@ export default function FloatingButtons({ onSpecialOfferClick }: FloatingButtons
             aria-label="scroll to top"
             className="flex cursor-pointer items-center justify-center transition duration-300 ease-in-out hover:scale-110"
           >
-            <Image src={"https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883685/creditor-website-assets/images/Icon/up-arrow.webp"} alt="Scroll to top" width={55} height={55} />
+            <Image src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883685/creditor-website-assets/images/Icon/up-arrow.png"} alt="Scroll to top" width={55} height={55} />
           </motion.div>
         )}
       </div>

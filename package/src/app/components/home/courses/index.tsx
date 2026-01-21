@@ -40,7 +40,7 @@ function Courses() {
         {/* Snow image at bottom right of section */}
         {/* <div className="absolute bottom-0 right-0 z-20">
           <Image
-            src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883471/creditor-website-assets/images/courses/santa.webp"
+            src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883471/creditor-website-assets/images/courses/santa.png"
             alt="Snow decoration"
             width={200}
             height={200}

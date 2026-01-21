@@ -676,7 +676,7 @@ export default function WebclassSection() {
               {/* Logo */}
               <div className="flex items-center justify-center">
                 <Image
-                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.webp"
+                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png"
                   alt="Creditor Academy Logo"
                   width={250}
                   height={60}
@@ -684,7 +684,7 @@ export default function WebclassSection() {
                   priority
                 />
                 <Image
-                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.webp"
+                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png"
                   alt="Creditor Academy Logo"
                   width={250}
                   height={60}
@@ -896,7 +896,7 @@ export default function WebclassSection() {
               <div className="modal-header">
               <div className="modal-icon flex items-center justify-center">
                 <Image 
-                  src={"https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883706/creditor-website-assets/images/logo/logo_roadmap.webp"} 
+                  src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883706/creditor-website-assets/images/logo/logo_roadmap.png"} 
                   alt="Logo" 
                   width={80}
                   height={60}

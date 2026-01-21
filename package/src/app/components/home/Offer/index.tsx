@@ -31,7 +31,7 @@ export default function MasterclassBenefits() {
       title: "Become a Member",
       description:
         "Join the movement. Step inside Creditor Academy and unlock access to a world of private education and financial freedom.",
-      bg: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883732/creditor-website-assets/images/offers/enrollnew.webp",
+      bg: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883732/creditor-website-assets/images/offers/enrollnew.png",
     },
     {
       type: "block",
@@ -54,7 +54,7 @@ export default function MasterclassBenefits() {
       title: "Become Private",
       description:
         "Take control of your sovereignty. Apply what you learn to live free, operate privately, and build wealth on your own terms.",
-      bg: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883751/creditor-website-assets/images/offers/sovnew.webp",
+      bg: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883751/creditor-website-assets/images/offers/sovnew.png",
     },
   ];
 
@@ -68,7 +68,7 @@ export default function MasterclassBenefits() {
       <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/30 to-white/60 dark:hidden pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/20 to-slate-900/60 hidden dark:block pointer-events-none" />
       <div className="container mx-auto px-4 relative z-10">
-        
+
         {/* --- Section Heading --- */}
         <div ref={ref} className="mt-0 md:mt-5">
           {/* Top Row - Left Aligned */}
@@ -130,7 +130,7 @@ export default function MasterclassBenefits() {
               We Offer You
             </motion.p>
           </motion.div> */}
-          
+
           {/* Section Title - Center Aligned */}
           <div className="text-center">
             <h3 className="text-3xl md:text-5xl font-extrabold text-slate-800 dark:text-white leading-tight">
@@ -139,118 +139,82 @@ export default function MasterclassBenefits() {
                 Freedom
               </span>{' '}
               Formula
-            </h3> 
-          </div> 
+            </h3>
+          </div>
         </div>
 
         {/* --- Cards Grid --- */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10 md:mt-16">
           {benefits.map((item, idx) => (
             <div key={idx} className="relative">
-              {/* --- Snow Layer Above Card (Outside Card Container) --- */}
-              <div className="absolute -top-3 left-0 right-0 w-full h-auto z-40 pointer-events-none">
-                <Image
-                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883749/creditor-website-assets/images/offers/snow.webp"
-                  alt=""
-                  width={800}
-                  height={200}
-                  className="w-full h-auto object-contain object-top"
-                  loading="lazy"
-                />
-              </div>
 
               {/* --- Card Container --- */}
               <div
-                className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 h-full group"
+                className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 h-full group border border-slate-200/50 dark:border-slate-700/50"
               >
                 {/* --- Large Number Overlay --- */}
                 <span
-                  className={`absolute top-3 right-5 text-[90px] md:text-[120px] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-blue-400/40 to-amber-400/40 dark:from-blue-300/50 dark:to-yellow-300/50 select-none pointer-events-none leading-none z-30 drop-shadow-[0_0_20px_rgba(255,215,0,0.25)] group-hover:scale-110 group-hover:opacity-100 opacity-90 transition-transform duration-500 ease-out`}
+                  className={`absolute top-2 right-4 text-[70px] md:text-[100px] lg:text-[120px] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-blue-400/30 to-amber-400/30 select-none pointer-events-none leading-none z-30 opacity-60 group-hover:scale-110 transition-transform duration-500 ease-out`}
                 >
-                  {String(idx + 1).padStart(1, "0")}
+                  {idx + 1}
                 </span>
 
-              {/* Shared overlays for ALL card types (subtle glass + gradient + radial glow) */}
-              <div className="absolute inset-0 pointer-events-none z-10">
-                {/* soft tint to unify cards */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10 dark:to-black/40 opacity-60 mix-blend-overlay" />
+                {/* Shared overlays */}
+                <div className="absolute inset-0 pointer-events-none z-10">
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20 dark:to-black/60 opacity-60 mix-blend-overlay" />
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
+                </div>
 
-                {/* radial glow (top-right) */}
-                <div className="absolute -top-10 -right-10 w-36 h-36 blur-3xl opacity-60 rounded-full bg-gradient-to-tr from-blue-400/30 to-indigo-600/20" /> 
+                {/* --- BG type cards (1 & 4) --- */}
+                {item.type === "bg" && (
+                  <div
+                    className="relative h-full min-h-[22rem] md:min-h-[25rem] flex flex-col justify-between overflow-hidden"
+                    style={{
+                      backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(2,6,23,0.7) 100%), url(${item.bg})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  >
+                    <div className="p-6 md:p-8 relative z-30">
+                      <h3 className="text-xl md:text-2xl font-bold text-white drop-shadow-md">
+                        {item.title}
+                      </h3>
+                    </div>
 
-                {/* subtle bottom vignette */}
-                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent" />
+                    <div className="p-6 md:p-8 relative z-30 mt-auto">
+                      <p className="text-sm md:text-base text-white/95 leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                )}
 
-                {/* translucent glass layer for readable text */}
-                <div className="absolute inset-0 bg-white/0 dark:bg-black/0 backdrop-blur-[2px]" />
-              </div>
-
-              {/* --- BG type cards (1 & 4) --- */}
-              {item.type === "bg" && (
-                <div
-                  className="relative h-full min-h-[20rem] flex flex-col justify-between overflow-hidden border rounded-2xl border-slate-200 dark:border-slate-700"
-                  style={{
-                    backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.12) 0%, rgba(2,6,23,0.38) 60%), url(${item.bg})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                >
-                  {/* Additional overlay specific to BG cards for contrast */}
-                  <div className="absolute inset-0 mix-blend-overlay opacity-40 pointer-events-none z-20" />
-
-                  <div className="absolute -top-8 -right-8 w-36 h-36 bg-gradient-to-tr from-blue-400/30 to-indigo-600/20 rounded-full blur-3xl pointer-events-none opacity-80 z-15" />
-
-                  {/* Top heading overlay for BG cards */}
-                  <div className="p-6 md:p-8 absolute top-0 left-0 right-0 bg-gradient-to-b from-black/40 via-black/10 to-transparent z-30">
-                    <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-md">
+                {/* --- Block type cards (2 & 3) --- */}
+                {item.type === "block" && (
+                  <div
+                    className={`relative flex flex-col justify-between rounded-2xl p-6 md:p-8 h-full bg-gradient-to-b ${item.color} overflow-hidden`}
+                  >
+                    <h3 className="text-xl md:text-2xl font-bold text-white drop-shadow-md relative z-20">
                       {item.title}
                     </h3>
-                  </div>
 
-                  <div className="p-6 md:p-8 relative z-30 mt-auto">
-                    <p className="text-sm md:text-base text-white/90 leading-relaxed max-w-prose text-justify">
+                    <div className="relative z-20 my-6 flex justify-center">
+                      <Image
+                        src={(item as BlockCard).img}
+                        alt={`Benefit: ${item.title}`}
+                        width={300}
+                        height={200}
+                        className="object-contain h-32 md:h-40"
+                        sizes="(max-width: 640px) 200px, 300px"
+                        loading="lazy"
+                      />
+                    </div>
+
+                    <p className="text-sm md:text-base text-white/95 leading-relaxed relative z-20">
                       {item.description}
                     </p>
                   </div>
-
-                  {/* Hover accent */}
-                  <div className="absolute inset-0 z-0 transition-opacity duration-500 opacity-0 group-hover:opacity-30 bg-gradient-to-br from-blue-400/20 to-amber-300/10" />
-                </div>
-              )}
-
-              {/* --- Block type cards (2 & 3) --- */}
-              {item.type === "block" && (
-                <div
-                  className={`relative flex flex-col justify-between rounded-2xl p-6 md:p-8 h-full bg-gradient-to-b ${item.color} border border-slate-200 dark:border-slate-700 overflow-hidden`}
-                >
-                  {/* layered gradients to improve readability */}
-                  <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/50 via-black/30 to-transparent" />
-
-                  {/* Heading */}
-                  <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-md relative z-20">
-                    {item.title}
-                  </h3>
-
-                  {/* Image */}
-                  <Image
-                    src={(item as BlockCard).img}
-                    alt={item.title}
-                    width={800}
-                    height={400}
-                    className={`w-full object-contain rounded-xl relative mt-5 z-20 ${idx === 1 ? 'h-28 md:h-32' : 'h-36 md:h-44'}`}
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    loading="lazy"
-                  />
-
-                  {/* Description at bottom */}
-                  <p className="mt-4 text-sm md:text-base text-white/90 leading-relaxed max-w-prose z-20 text-justify">
-                    {item.description}
-                  </p>
-
-                  {/* Hover accent */}
-                  <div className="absolute inset-0 z-10 transition-opacity duration-500 opacity-0 group-hover:opacity-25 bg-gradient-to-br from-white/5 to-black/20 pointer-events-none" />
-                </div>
-              )}
+                )}
               </div>
             </div>
           ))}

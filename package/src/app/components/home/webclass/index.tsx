@@ -40,7 +40,7 @@ function useCountdown() {
 
     // Build all possible sessions for today and tomorrow
     const allSessions: Date[] = [];
-    
+
     // Today's sessions
     for (let i = 0; i < WEBINAR_SESSION_HOURS_PST.length; i++) {
       const d = new Date(now);
@@ -105,25 +105,25 @@ export default function WebclassSection() {
       {/* Webclass hero section - matching exact design from image */}
       <section className="relative overflow-hidden py-5 md:py-10 text-white dark:text-white">
         {/* Base gradient background using website blue shades */}
-        <div 
+        <div
           className="absolute inset-0"
           style={{
             background: "linear-gradient(to bottom, #001428 0%, #002b5c 30%, #026fe2 60%, #45beff 85%, #bfdbfe 100%)",
           }}
         />
-        
+
         {/* Split design with diagonal lines on right side - light mode */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden dark:hidden">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden dark:hidden hidden md:block">
           {/* Left side - gradient dark blue */}
-          <div 
+          <div
             className="absolute inset-0 left-0 right-[40%]"
             style={{
               background: "linear-gradient(to bottom right, #001428 0%, #002b5c 50%, #026fe2 100%)",
             }}
           />
-          
+
           {/* Right side - lighter blue gradient with diagonal streaks */}
-          <div 
+          <div
             className="absolute inset-0 left-[40%] right-0"
             style={{
               background: "linear-gradient(to bottom right, #026fe2 0%, #45beff 40%, #93c5fd 70%, #bfdbfe 100%)",
@@ -135,17 +135,17 @@ export default function WebclassSection() {
         </div>
 
         {/* Split design for dark mode */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden hidden dark:block">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden hidden dark:md:block">
           {/* Left side - dark gradient */}
-          <div 
+          <div
             className="absolute inset-0 left-0 right-[40%]"
             style={{
               background: "linear-gradient(to bottom right, #000000 0%, #001428 50%, #002b5c 100%)",
             }}
           />
-          
+
           {/* Right side - darker gradient with subtle diagonal lines */}
-          <div 
+          <div
             className="absolute inset-0 left-[40%] right-0"
             style={{
               background: "linear-gradient(to bottom right, #001428 0%, #002b5c 40%, #026fe2 70%, #0a0a0a 100%)",
@@ -163,7 +163,7 @@ export default function WebclassSection() {
               {/* Logo */}
               <div className="flex items-center justify-center">
                 <Image
-                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.webp"
+                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png"
                   alt="Creditor Academy Logo"
                   width={250}
                   height={60}
@@ -171,7 +171,7 @@ export default function WebclassSection() {
                   priority
                 />
                 <Image
-                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.webp"
+                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png"
                   alt="Creditor Academy Logo"
                   width={250}
                   height={60}
@@ -224,19 +224,20 @@ export default function WebclassSection() {
             {/* Left image with gold border */}
             <div className="lg:w-5/12 flex justify-center lg:justify-end">
               <div className="relative w-full max-w-[500px]">
-                <div 
-                  className="relative w-full h-[700px] border-2 overflow-hidden"
-                  style={{ 
+                <div
+                  className="relative w-full h-[400px] md:h-[550px] lg:h-[700px] border-2 overflow-hidden shadow-2xl"
+                  style={{
                     borderColor: "#d4af37",
                     backgroundColor: "#f3f4f6"
                   }}
                 >
                   <Image
                     src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883348/creditor-website-assets/images/avatar/paul2.webp"}
-                    alt="Speaker"
+                    alt="Paul Michael Rowland - Founder of Creditor Academy"
                     fill
                     style={{ objectFit: "cover" }}
                     priority
+                    sizes="(max-width: 768px) 100vw, 500px"
                   />
                 </div>
               </div>
@@ -250,7 +251,7 @@ export default function WebclassSection() {
               </p>
 
               {/* Main headline - very large, bold */}
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] mb-2 text-white dark:text-white" style={{ fontFamily: "Arial, sans-serif", fontWeight: 900 }}>
+              <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] mb-2 text-white dark:text-white" style={{ fontFamily: "Arial, sans-serif", fontWeight: 900 }}>
                 <span className="block" style={{ color: "#ffc107" }}>Become and</span>
                 <span className="block">Operate Private</span>
               </h1>
@@ -284,7 +285,7 @@ export default function WebclassSection() {
                 <a
                   href="/webinar"
                   className="inline-flex items-center justify-center font-bold text-base md:text-lg px-8 py-4 rounded-lg shadow-lg transition-colors bg-[#FFC107] hover:bg-[#FFD700] text-gray-900"
-                  style={{ 
+                  style={{
                     fontFamily: "Arial, sans-serif",
                     boxShadow: "0 8px 20px rgba(255, 193, 7, 0.4)"
                   }}
@@ -302,7 +303,7 @@ export default function WebclassSection() {
                   Next Webclass Begins In:
                 </p>
 
-                <div className="flex items-center gap-3 md:gap-4">
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 md:gap-6">
                   {[
                     { label: "HOUR", value: format(hours) },
                     { label: "MINUTES", value: format(minutes) },
@@ -310,17 +311,17 @@ export default function WebclassSection() {
                   ].map((item) => (
                     <div key={item.label} className="flex flex-col items-center">
                       <div
-                        className="rounded-full flex flex-col items-center justify-center border-[3px] bg-white dark:bg-[#0a0e14]"
+                        className="rounded-full flex flex-col items-center justify-center border-[3px] bg-white dark:bg-[#0a0e14] shadow-inner"
                         style={{
-                          width: 120,
-                          height: 120,
+                          width: "min(30vw, 100px)",
+                          height: "min(30vw, 100px)",
                           borderColor: "#d1d5db"
                         }}
                       >
-                        <span className="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white mb-1" style={{ fontFamily: "Arial, sans-serif" }}>
+                        <span className="text-xl md:text-2xl font-extrabold text-gray-900 dark:text-white" style={{ fontFamily: "Arial, sans-serif" }}>
                           {item.value}
                         </span>
-                        <span className="text-[10px] md:text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide" style={{ fontFamily: "Arial, sans-serif" }}>
+                        <span className="text-[8px] md:text-[10px] font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-tighter" style={{ fontFamily: "Arial, sans-serif" }}>
                           {item.label}
                         </span>
                       </div>

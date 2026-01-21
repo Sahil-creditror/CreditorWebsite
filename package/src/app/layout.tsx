@@ -42,7 +42,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         {/* Preload critical hero resources for LCP optimization - poster image only, video loads lazily */}
-        <link rel="preload" as="image" href="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883550/creditor-website-assets/images/hero/banner-1.webp" fetchPriority="high" />
+        <link rel="preload" as="image" href="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883550/creditor-website-assets/images/hero/banner-1.png" fetchPriority="high" />
         <link rel="dns-prefetch" href="/video/hero-1.mp4" />
         {/* Google Site Verification */}
         <meta name="google-site-verification" content="pH5h_UHFyDB48WepO74L0KD0hE-6UE7vSYLxpv_9vK4" />

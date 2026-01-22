@@ -31,7 +31,7 @@ const HeroSection = () => {
   const videos: VideoSlide[] = [
     {
       src: "",
-      poster: "/images/hero/Bannerhero.webp",
+      poster: "/images/hero/herobann.webp",
       title: "Become a Member",
       description: "Protect What You Build. Pass On What Matters",
       type: "image",

@@ -21,7 +21,9 @@ const Header = () => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = () => {
-    setSticky(window.scrollY >= 80);
+    const isHomePage = pathname === "/";
+    const threshold = isHomePage ? 450 : 350; // Higher threshold for home page hero
+    setSticky(window.scrollY >= threshold);
   };
 
   useEffect(() => {

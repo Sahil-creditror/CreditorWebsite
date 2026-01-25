@@ -14,7 +14,9 @@ import {
   Sparkles,
   SunMedium,
   MoonStar,
+  ArrowLeft,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 /**
  * MasterclassMembershipTC – Premium T&C page
@@ -180,6 +182,18 @@ export default function MasterclassMembershipTC() {
   const [darkHint, setDarkHint] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<"monthly" | "annual">("monthly");
+  const router = useRouter();
+
+  // Scroll state to hide back button
+  const [sticky, setSticky] = useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setSticky(window.scrollY >= 350);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Reduced-motion preference
   const prefersReduced = useMemo(
@@ -191,6 +205,26 @@ export default function MasterclassMembershipTC() {
     <main className="relative min-h-screen overflow-hidden bg-blue-100 text-slate-800 dark:bg-blue-950 dark:text-slate-200 pt-10">
       {/* Animated Background */}
       <AnimatedBackground paused={prefersReduced} />
+
+      {/* Back Button */}
+      {!sticky && (
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="fixed top-5 left-5 sm:top-8 sm:left-10 z-[70]"
+        >
+          <button
+            onClick={() => router.push("/")}
+            className="flex items-center gap-2 px-4 py-2 bg-white/40 dark:bg-black/20 backdrop-blur-md rounded-full border border-black/10 dark:border-white/10 text-slate-800 dark:text-white hover:bg-white dark:hover:bg-white hover:text-blue-600 dark:hover:text-blue-600 transition-all duration-300 group shadow-lg"
+          >
+            <ArrowLeft
+              size={20}
+              className="group-hover:-translate-x-1 transition-transform"
+            />
+            <span className="text-sm font-bold uppercase tracking-wider">Back</span>
+          </button>
+        </motion.div>
+      )}
 
       {/* Content Card */}
       <section className="relative mx-auto max-w-4xl px-4 py-10 md:py-14">
@@ -235,19 +269,17 @@ export default function MasterclassMembershipTC() {
                   <button
                     type="button"
                     onClick={() => setSelectedPlan("monthly")}
-                    className={`w-full py-4 px-4 rounded-xl border-2 transition-all duration-200 ${
-                      selectedPlan === "monthly"
-                        ? "bg-white dark:bg-neutral-800 border-indigo-500 dark:border-indigo-400 shadow-md"
-                        : "bg-white/60 dark:bg-neutral-800/40 border-slate-200/60 dark:border-slate-700/40 hover:border-indigo-300 dark:hover:border-indigo-500"
-                    }`}
+                    className={`w-full py-4 px-4 rounded-xl border-2 transition-all duration-200 ${selectedPlan === "monthly"
+                      ? "bg-white dark:bg-neutral-800 border-indigo-500 dark:border-indigo-400 shadow-md"
+                      : "bg-white/60 dark:bg-neutral-800/40 border-slate-200/60 dark:border-slate-700/40 hover:border-indigo-300 dark:hover:border-indigo-500"
+                      }`}
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex items-start gap-3 flex-1">
-                        <div className={`w-5 h-5 mt-0.5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                          selectedPlan === "monthly"
-                            ? "border-indigo-500 dark:border-indigo-400"
-                            : "border-slate-300 dark:border-slate-600"
-                        }`}>
+                        <div className={`w-5 h-5 mt-0.5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${selectedPlan === "monthly"
+                          ? "border-indigo-500 dark:border-indigo-400"
+                          : "border-slate-300 dark:border-slate-600"
+                          }`}>
                           {selectedPlan === "monthly" && (
                             <div className="w-3 h-3 rounded-full bg-indigo-500 dark:bg-indigo-400" />
                           )}
@@ -278,11 +310,10 @@ export default function MasterclassMembershipTC() {
                   <button
                     type="button"
                     onClick={() => setSelectedPlan("annual")}
-                    className={`relative w-full py-4 px-4 rounded-xl border-2 transition-all duration-200 ${
-                      selectedPlan === "annual"
-                        ? "bg-white dark:bg-neutral-800 border-indigo-500 dark:border-indigo-400 shadow-md"
-                        : "bg-white/60 dark:bg-neutral-800/40 border-slate-200/60 dark:border-slate-700/40 hover:border-indigo-300 dark:hover:border-indigo-500"
-                    }`}
+                    className={`relative w-full py-4 px-4 rounded-xl border-2 transition-all duration-200 ${selectedPlan === "annual"
+                      ? "bg-white dark:bg-neutral-800 border-indigo-500 dark:border-indigo-400 shadow-md"
+                      : "bg-white/60 dark:bg-neutral-800/40 border-slate-200/60 dark:border-slate-700/40 hover:border-indigo-300 dark:hover:border-indigo-500"
+                      }`}
                   >
                     {/* Limited Time Badge */}
                     <div className="absolute -top-2 -right-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg flex items-center gap-1 z-10">
@@ -291,11 +322,10 @@ export default function MasterclassMembershipTC() {
                     </div>
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex items-start gap-3 flex-1">
-                        <div className={`w-5 h-5 mt-0.5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                          selectedPlan === "annual"
-                            ? "border-indigo-500 dark:border-indigo-400"
-                            : "border-slate-300 dark:border-slate-600"
-                        }`}>
+                        <div className={`w-5 h-5 mt-0.5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${selectedPlan === "annual"
+                          ? "border-indigo-500 dark:border-indigo-400"
+                          : "border-slate-300 dark:border-slate-600"
+                          }`}>
                           {selectedPlan === "annual" && (
                             <div className="w-3 h-3 rounded-full bg-indigo-500 dark:bg-indigo-400" />
                           )}
@@ -326,7 +356,7 @@ export default function MasterclassMembershipTC() {
                   </button>
                 </div>
                 <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
-                  {selectedPlan === "monthly" 
+                  {selectedPlan === "monthly"
                     ? "Ongoing monthly access to our exclusive community"
                     : "Annual access + 1000 credit points to unlock premium courses on LMS"
                   }
@@ -361,18 +391,17 @@ export default function MasterclassMembershipTC() {
                 type="button"
                 onClick={() => {
                   if (!agreed) return;
-                  const url = selectedPlan === "monthly" 
+                  const url = selectedPlan === "monthly"
                     ? "https://quickclick.com/r/m7o5skh90z5o7s6x6bg9yeklf7ql3f"
                     : "https://quickclick.com/r/ylju71tqiulsto3pqq6w9mq9tbrnmn";
                   window.open(url, '_blank', 'noopener,noreferrer');
                 }}
                 disabled={!agreed}
                 whileTap={{ scale: agreed ? 0.98 : 1 }}
-                className={`relative inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold transition focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-neutral-900 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-70 ${
-                  agreed
-                    ? "bg-gradient-to-tr from-indigo-600 via-blue-600 to-cyan-500 text-white shadow-lg hover:shadow-xl"
-                    : "bg-slate-200 dark:bg-neutral-800 text-slate-500 dark:text-slate-400"
-                }`}
+                className={`relative inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold transition focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-neutral-900 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-70 ${agreed
+                  ? "bg-gradient-to-tr from-indigo-600 via-blue-600 to-cyan-500 text-white shadow-lg hover:shadow-xl"
+                  : "bg-slate-200 dark:bg-neutral-800 text-slate-500 dark:text-slate-400"
+                  }`}
               >
                 <span>
                   {selectedPlan === "monthly" ? "Enroll Now @ $69/mo" : "Enroll Now @ $828/year"}
@@ -384,8 +413,8 @@ export default function MasterclassMembershipTC() {
 
               <p className="text-sm text-slate-600 dark:text-slate-400 text-center">
                 Any doubts?{" "}
-                <a 
-                  href="/contact" 
+                <a
+                  href="/contact"
                   className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 underline underline-offset-2 hover:underline-offset-4 transition-all duration-200 font-medium"
                 >
                   Contact Sales
@@ -501,13 +530,13 @@ function AnimatedBackground({ paused = false }: { paused?: boolean }) {
       {/* Floating gradient blobs */}
       <motion.div
         initial={{ x: -200, y: -120 }}
-        animate={paused ? { x: -200, y: -120 } : { x: [ -200, 40, -60, -200 ], y: [ -120, -60, 30, -120 ] }}
+        animate={paused ? { x: -200, y: -120 } : { x: [-200, 40, -60, -200], y: [-120, -60, 30, -120] }}
         transition={paused ? { duration: 12 } : { duration: 26, repeat: Infinity, ease: "linear" }}
         className="absolute -top-24 -left-24 h-96 w-96 rounded-full blur-3xl bg-gradient-to-tr from-sky-400/35 to-fuchsia-400/35 dark:from-sky-500/25 dark:to-fuchsia-500/25"
       />
       <motion.div
         initial={{ x: 220, y: 160 }}
-        animate={paused ? { x: 220, y: 160 } : { x: [ 220, -20, 80, 220 ], y: [ 160, 80, -20, 160 ] }}
+        animate={paused ? { x: 220, y: 160 } : { x: [220, -20, 80, 220], y: [160, 80, -20, 160] }}
         transition={paused ? { duration: 12 } : { duration: 30, repeat: Infinity, ease: "linear" }}
         className="absolute -bottom-24 -right-24 h-[28rem] w-[28rem] rounded-full blur-3xl bg-gradient-to-tr from-amber-300/35 to-rose-400/35 dark:from-amber-300/20 dark:to-rose-400/20"
       />

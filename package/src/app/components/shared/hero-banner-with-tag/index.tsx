@@ -3,6 +3,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 interface HeroBannerWithTagProps {
   bannerimage: string;
@@ -25,6 +26,7 @@ const HerobannerWithTag: React.FC<HeroBannerWithTagProps> = ({
   badgeNumber,
   badgeText,
 }) => {
+  const pathname = usePathname();
   const splitDesc = desc.split(/<\/?span>/);
 
   // For button animation
@@ -76,15 +78,29 @@ const HerobannerWithTag: React.FC<HeroBannerWithTagProps> = ({
         <div className="flex flex-col gap-4 sm:gap-6 pb-10 sm:pb-16 xl:pb-20">
           {/* Logo (replaces previous description area) */}
           <div className="flex items-start">
-            <Image
-              src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png"
-              alt="Creditor Logo"
-              width={600}
-              height={120}
-              priority
-              quality={85}
-              sizes="(max-width: 640px) 200px, (max-width: 768px) 300px, (max-width: 1024px) 400px, 600px"
-            />
+            {pathname !== "/" ? (
+              <Link href="/" className="hover:opacity-80 transition-opacity">
+                <Image
+                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png"
+                  alt="Creditor Logo"
+                  width={600}
+                  height={120}
+                  priority
+                  quality={85}
+                  sizes="(max-width: 640px) 200px, (max-width: 768px) 300px, (max-width: 1024px) 400px, 600px"
+                />
+              </Link>
+            ) : (
+              <Image
+                src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png"
+                alt="Creditor Logo"
+                width={600}
+                height={120}
+                priority
+                quality={85}
+                sizes="(max-width: 640px) 200px, (max-width: 768px) 300px, (max-width: 1024px) 400px, 600px"
+              />
+            )}
           </div>
           {/* Description
           <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-6">

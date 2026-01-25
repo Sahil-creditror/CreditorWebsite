@@ -1,8 +1,11 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { Icon } from "@iconify/react";
+
+import { usePathname } from "next/navigation";
 
 interface HeroBannerProps {
   bannerimage: string;
@@ -21,7 +24,19 @@ const Herobanner: React.FC<HeroBannerProps> = ({
   buttonPath,
   buttonText = "Start Now",
 }) => {
+  const pathname = usePathname();
   const splitDesc = desc.split(/<\/?span>/);
+
+  // Scroll state to hide back button
+  const [sticky, setSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setSticky(window.scrollY >= 350);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // For button animation
   const btnRef = useRef<HTMLDivElement | null>(null);
@@ -46,24 +61,64 @@ const Herobanner: React.FC<HeroBannerProps> = ({
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/50" />
 
+      {/* Back Button */}
+      <AnimatePresence>
+        {pathname !== "/" && !sticky && (
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="fixed top-5 left-5 sm:top-8 sm:left-10 z-[70]"
+          >
+            <Link
+              href="/"
+              className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white hover:text-primary transition-all duration-300 group"
+            >
+              <Icon
+                icon="solar:alt-arrow-left-linear"
+                width="20"
+                height="20"
+                className="group-hover:-translate-x-1 transition-transform"
+              />
+              <span className="text-sm font-bold uppercase tracking-wider">Back</span>
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-left">
-      <div className="flex flex-col gap-2 sm:gap-3 pb-10 sm:pb-14 xl:pb-16">
+        <div className="flex flex-col gap-2 sm:gap-3 pb-10 sm:pb-14 xl:pb-16">
 
           {/* Logo (replaces previous description area) */}
-   {/* Logo */}
-<div className="flex justify-start ml-10 sm:ml-12 md:ml-14 lg:ml-16 mt-6 sm:mt-8 mb-2">
-  <Image
-    src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883696/creditor-website-assets/images/logo/credi_logoo.webp"
-    alt="Creditor Logo"
-    width={320}
-    height={80}
-    priority
-    quality={85}
-    sizes="(max-width: 640px) 176px, (max-width: 768px) 208px, (max-width: 1024px) 256px, 300px"
-    className="object-contain w-44 sm:w-52 md:w-64 lg:w-[300px]"
-  />
-</div>
+          {/* Logo */}
+          <div className="flex justify-start ml-10 sm:ml-12 md:ml-14 lg:ml-16 mt-6 sm:mt-8 mb-2">
+            {pathname !== "/" ? (
+              <Link href="/" className="hover:opacity-80 transition-opacity">
+                <Image
+                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883696/creditor-website-assets/images/logo/credi_logoo.webp"
+                  alt="Creditor Logo"
+                  width={320}
+                  height={80}
+                  priority
+                  quality={85}
+                  sizes="(max-width: 640px) 176px, (max-width: 768px) 208px, (max-width: 1024px) 256px, 300px"
+                  className="object-contain w-44 sm:w-52 md:w-64 lg:w-[300px]"
+                />
+              </Link>
+            ) : (
+              <Image
+                src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883696/creditor-website-assets/images/logo/credi_logoo.webp"
+                alt="Creditor Logo"
+                width={320}
+                height={80}
+                priority
+                quality={85}
+                sizes="(max-width: 640px) 176px, (max-width: 768px) 208px, (max-width: 1024px) 256px, 300px"
+                className="object-contain w-44 sm:w-52 md:w-64 lg:w-[300px]"
+              />
+            )}
+          </div>
 
 
           {/* Heading + Button Row */}

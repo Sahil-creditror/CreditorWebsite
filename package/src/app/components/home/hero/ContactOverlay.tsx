@@ -19,7 +19,7 @@ export default function HeroContactOverlay({ onClose }: HeroContactOverlayProps)
 
     // Fixed position card, always visible (controlled by parent mounting/unmounting)
     return (
-        <div className="fixed right-4 md:right-10 top-16 md:top-20 z-30 max-w-[90vw] md:max-w-md w-full flex flex-col items-end pointer-events-none">
+        <div className="fixed right-4 md:right-10 top-24 md:top-20 z-[9999] max-w-[92vw] md:max-w-md w-full flex flex-col items-end">
 
             {/* Main Card */}
             <motion.div
@@ -27,17 +27,21 @@ export default function HeroContactOverlay({ onClose }: HeroContactOverlayProps)
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -20, scale: 0.95 }}
                 transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                className="pointer-events-auto w-full bg-[#091011]/60 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] overflow-hidden relative"
+                className="pointer-events-auto w-full bg-neutral-900/95 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] relative z-[100] mt-10 md:mt-0"
             >
                 {/* Header */}
-                <div className="relative p-6 pt-7 pb-4 border-b border-white/10 flex items-center justify-between bg-gradient-to-b from-white/5 to-transparent">
+                <div className="relative p-6 pt-7 pb-4 border-b border-white/10 flex items-center justify-between bg-gradient-to-b from-white/5 to-transparent rounded-t-3xl">
                     {/* Decorative background glow */}
-                    <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/20 rounded-full blur-[50px] pointer-events-none -translate-y-1/2 translate-x-1/2" />
+                    <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/10 rounded-full blur-[50px] pointer-events-none -translate-y-1/2 translate-x-1/2" />
 
-                    {/* Mobile Close Button */}
+                    {/* Close Button - Now Premium Dark and fully visible */}
                     <button
-                        onClick={onClose}
-                        className="absolute top-3 right-3 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white/70 hover:text-white transition-all md:hidden z-20 backdrop-blur-sm"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            onClose?.();
+                        }}
+                        className="absolute -top-3 -right-3 p-2.5 bg-neutral-800 hover:bg-neutral-700 rounded-full text-white shadow-2xl transition-all z-[110] border border-white/20 hover:scale-110 active:scale-95"
                         aria-label="Close form"
                     >
                         <X className="w-5 h-5" />

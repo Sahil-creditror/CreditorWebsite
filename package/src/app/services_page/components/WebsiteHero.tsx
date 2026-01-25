@@ -1,10 +1,25 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Icon } from "@iconify/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const img1 = "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883800/creditor-website-assets/images/pricing/Cover-2.jpg";
 
 export function HeroSectionOne() {
+  const pathname = usePathname();
+  const [sticky, setSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setSticky(window.scrollY >= 350);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div
       className="relative w-full bg-cover bg-center py-20 md:py-40"
@@ -14,6 +29,31 @@ export function HeroSectionOne() {
     >
       {/* Overlay for better text contrast */}
       <div className="absolute inset-0 bg-black/30 dark:bg-black/50"></div>
+
+      {/* Back Button */}
+      <AnimatePresence>
+        {!sticky && (
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="fixed top-5 left-5 sm:top-8 sm:left-10 z-[70]"
+          >
+            <Link
+              href="/"
+              className="flex items-center gap-2 px-4 py-2 bg-white/40 dark:bg-black/20 backdrop-blur-md rounded-full border border-black/10 dark:border-white/10 text-slate-800 dark:text-white hover:bg-white dark:hover:bg-white hover:text-blue-600 dark:hover:text-blue-600 transition-all duration-300 group shadow-lg"
+            >
+              <Icon
+                icon="solar:alt-arrow-left-linear"
+                width="20"
+                height="20"
+                className="group-hover:-translate-x-1 transition-transform"
+              />
+              <span className="text-sm font-bold uppercase tracking-wider">Back</span>
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-start justify-center px-4">
         <div className="relative w-full max-w-5xl">

@@ -51,7 +51,7 @@ function useCountdown() {
 
     // Build all possible sessions for today and tomorrow
     const allSessions: Date[] = [];
-    
+
     // Today's sessions
     for (let i = 0; i < WEBINAR_SESSION_HOURS_PST.length; i++) {
       const d = new Date(now);
@@ -200,7 +200,7 @@ const webinarTemplates: WebinarTemplate[] = WEBINAR_SESSION_HOURS_PST.map((hour,
   const hour12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
   const ampm = hour < 12 ? "AM" : "PM";
   const minuteStr = minute.toString().padStart(2, "0");
-  
+
   // Special labels for specific times
   let label: string;
   if (hour === 9 && minute === 0) {
@@ -219,7 +219,7 @@ const webinarTemplates: WebinarTemplate[] = WEBINAR_SESSION_HOURS_PST.map((hour,
       label = `Orientation at ${hour12}:${minuteStr} ${ampm}`;
     }
   }
-  
+
   return {
     baseKey: `time_${hour}_${minute}`,
     id: WEBINAR_ID_MAP[timeKey] || DEFAULT_WEBINAR_ID,
@@ -471,12 +471,12 @@ export default function WebclassSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Only submit if we're on step 2
     if (formStep !== 2) {
       return;
     }
-    
+
     // Mark all fields as touched
     setTouched({
       email: true,
@@ -544,7 +544,7 @@ export default function WebclassSection() {
           });
 
           const result = await response.json();
-          
+
           if (result.success && result.data) {
             console.log("[Webclass Modal] Recording registration saved successfully");
           } else {
@@ -618,25 +618,25 @@ export default function WebclassSection() {
       {/* Webclass hero section - matching exact design from image */}
       <section className="relative overflow-hidden py-20 md:py-25 text-white dark:text-white">
         {/* Base gradient background using website blue shades */}
-        <div 
+        <div
           className="absolute inset-0"
           style={{
             background: "linear-gradient(to bottom, #001428 0%, #002b5c 30%, #026fe2 60%, #45beff 85%, #bfdbfe 100%)",
           }}
         />
-        
+
         {/* Split design with diagonal lines on right side - light mode */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden dark:hidden">
           {/* Left side - gradient dark blue */}
-          <div 
+          <div
             className="absolute inset-0 left-0 right-[40%]"
             style={{
               background: "linear-gradient(to bottom right, #001428 0%, #002b5c 50%, #026fe2 100%)",
             }}
           />
-          
+
           {/* Right side - lighter blue gradient with diagonal streaks */}
-          <div 
+          <div
             className="absolute inset-0 left-[40%] right-0"
             style={{
               background: "linear-gradient(to bottom right, #026fe2 0%, #45beff 40%, #93c5fd 70%, #bfdbfe 100%)",
@@ -650,15 +650,15 @@ export default function WebclassSection() {
         {/* Split design for dark mode */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden hidden dark:block">
           {/* Left side - dark gradient */}
-          <div 
+          <div
             className="absolute inset-0 left-0 right-[40%]"
             style={{
               background: "linear-gradient(to bottom right, #000000 0%, #001428 50%, #002b5c 100%)",
             }}
           />
-          
+
           {/* Right side - darker gradient with subtle diagonal lines */}
-          <div 
+          <div
             className="absolute inset-0 left-[40%] right-0"
             style={{
               background: "linear-gradient(to bottom right, #001428 0%, #002b5c 40%, #026fe2 70%, #0a0a0a 100%)",
@@ -737,9 +737,9 @@ export default function WebclassSection() {
             {/* Left image with gold border */}
             <div className="lg:w-5/12 flex justify-center lg:justify-end">
               <div className="relative w-full max-w-[500px]">
-                <div 
+                <div
                   className="relative w-full h-[700px] border-2 overflow-hidden"
-                  style={{ 
+                  style={{
                     borderColor: "#d4af37",
                     backgroundColor: "#f3f4f6"
                   }}
@@ -822,7 +822,7 @@ export default function WebclassSection() {
                 <button
                   onClick={handleWidgetOpen}
                   className="inline-flex items-center justify-center font-bold text-base md:text-lg px-8 py-4 rounded-lg shadow-lg transition-colors bg-[#FFC107] hover:bg-[#FFD700] text-gray-900"
-                  style={{ 
+                  style={{
                     fontFamily: "Arial, sans-serif",
                     boxShadow: "0 8px 20px rgba(255, 193, 7, 0.4)"
                   }}
@@ -894,16 +894,16 @@ export default function WebclassSection() {
 
             <div className="modal-form-wrapper">
               <div className="modal-header">
-              <div className="modal-icon flex items-center justify-center">
-                <Image 
-                  src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883706/creditor-website-assets/images/logo/logo_roadmap.png"} 
-                  alt="Logo" 
-                  width={80}
-                  height={60}
-                  className="w-20 h-15 object-contain" 
-                  priority
-                />
-              </div>
+                <div className="modal-icon flex items-center justify-center">
+                  <Image
+                    src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883706/creditor-website-assets/images/logo/logo_roadmap.png"}
+                    alt="Logo"
+                    width={80}
+                    height={60}
+                    className="w-20 h-15 object-contain"
+                    priority
+                  />
+                </div>
                 <div className="modal-title-group">
                   <h2 className="modal-title">Register for FREE Webinar</h2>
                   <p className="modal-subtitle">Fill out the form below to register for our free webinar</p>
@@ -955,7 +955,7 @@ export default function WebclassSection() {
                         </select>
                         <span className="form-select-icon" aria-hidden="true">
                           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
                         </span>
                       </div>

@@ -23,6 +23,7 @@ const HeroSection = () => {
   const [direction, setDirection] = useState<Direction>("right");
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isInView, setIsInView] = useState<boolean>(false); // start false, will flip when intersecting
+  const [showContactForm, setShowContactForm] = useState<boolean>(false);
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
   // intervalRef holds the interval id so we can clear it immediately when needed
@@ -36,32 +37,6 @@ const HeroSection = () => {
       description: "Protect What You Build. Pass On What Matters",
       type: "image",
     },
-    // {
-    //   src: "/video/Banner.mp4",
-    //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883571/creditor-website-assets/images/hero/Banner.png",
-    //   title: "Masterclass Membership",
-    //   description: "Reclaim Your Lawful Identity and Exit the Public System",
-    //   type: "video",
-    // },
-    // {
-    //   src: "/video/hero-3.mp4",
-    //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883559/creditor-website-assets/images/hero/banner-3.png",
-    //   title: "Creditor Academy",
-    //   description: "Board as a Student. Land as a Sovereign.",
-    // },
-    // {
-    //   src: "/video/hero-4.mp4",
-    //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883562/creditor-website-assets/images/hero/banner-4.png",
-    //   title: "Creditor Academy",
-    //   description: "Operate Private. Take Control. Live Sovereign",
-    // },
-    // {
-    //   src: "/video/hero-5.mp4",
-    //   poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883566/creditor-website-assets/images/hero/banner-5.png",
-    //   title: "Creditor Academy",
-    //   description:
-    //     "Restore Your Credit. Discharge Debt. Take Your Power Back.",
-    // },
   ];
 
   // animation variants (unchanged)
@@ -91,13 +66,6 @@ const HeroSection = () => {
     },
   };
 
-  const leafVariants: Variants = {
-    spin: {
-      rotate: 360,
-      transition: { duration: 10, repeat: Infinity, ease: "linear" },
-    },
-  };
-
   // stable navigation functions
   const goToPrevious = useCallback((): void => {
     setDirection("left");
@@ -119,7 +87,6 @@ const HeroSection = () => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // user came into view -> reset to first video and mark in-view
           setCurrentIndex(0);
           setDirection("right");
           setIsInView(true);
@@ -140,20 +107,17 @@ const HeroSection = () => {
 
   // Autoplay interval: runs only when in view and not hovered
   useEffect(() => {
-    // clear any previous interval before creating a new one
     if (intervalRef.current) {
       window.clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
 
     if (isInView && !isHovered) {
-      // start interval
       intervalRef.current = window.setInterval(() => {
         goToNext();
-      }, 4000) as unknown as number; // cast for TS in browser env
+      }, 4000) as unknown as number;
     }
 
-    // cleanup on dependency change / unmount
     return () => {
       if (intervalRef.current) {
         window.clearInterval(intervalRef.current);
@@ -175,19 +139,11 @@ const HeroSection = () => {
       <div
         ref={sectionRef}
         className="relative flex items-end text-white bg-black min-h-screen overflow-hidden"
-        onMouseEnter={() => {
-          setIsHovered(true);
-        }}
-        onMouseLeave={() => {
-          setIsHovered(false);
-        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         {...swipeHandlers}
       >
-        {/* 🚀 LCP OPTIMIZATION: Static Background Layer 
-            This layer sits behind everything and loads INSTANTLY (SSR).
-            On Mobile: This IS the hero (Video Carousel hidden).
-            On Desktop: This is the placeholder until Video loads (Video Carousel visible).
-        */}
+        {/* 🚀 LCP OPTIMIZATION: Static Background Layer */}
         <div className="absolute inset-0 w-full h-full z-0">
           <img
             src="/images/hero/Bannerhero.webp"
@@ -202,7 +158,7 @@ const HeroSection = () => {
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
 
-        {/* 🎥 Video/Image Carousel - Placed on top (z-index 1) - HIDDEN ON MOBILE */}
+        {/* 🎥 Video/Image Carousel */}
         <div className="hidden md:block absolute inset-0 w-full h-full z-1">
           <AnimatePresence custom={direction} initial={false}>
             <motion.div
@@ -215,7 +171,6 @@ const HeroSection = () => {
               className="absolute inset-0 w-full h-full"
             >
               <Parallax speed={-20} style={{ height: "100%" }}>
-                {/* Active Slide Image/Video */}
                 <div className="absolute inset-0 w-full h-full">
                   {videos[currentIndex].type === "image" ? (
                     <img
@@ -234,7 +189,6 @@ const HeroSection = () => {
                           loading="lazy"
                         />
                       </div>
-
                       <video
                         className="absolute inset-0 w-full h-full object-cover"
                         loop
@@ -256,10 +210,7 @@ const HeroSection = () => {
                           video.style.opacity = "1";
                         }}
                       >
-                        <source
-                          src={videos[currentIndex].src}
-                          type="video/mp4"
-                        />
+                        <source src={videos[currentIndex].src} type="video/mp4" />
                       </video>
                     </>
                   )}
@@ -270,6 +221,23 @@ const HeroSection = () => {
           </AnimatePresence>
         </div>
 
+        {/* 🔘 Get In Touch Button - Positioned top right below hamburger */}
+        <div className="absolute top-28 right-4 sm:right-6 md:right-8 z-20">
+          <button
+            onClick={() => setShowContactForm(true)}
+            className="group flex items-center gap-4 bg-neutral-900/80 hover:bg-neutral-800 border-2 border-white/10 hover:border-white/30 rounded-full pl-6 pr-3 py-2 text-white transition-all duration-300 shadow-[0_0_30px_rgba(0,0,0,0.5)] backdrop-blur-xl"
+          >
+            <span className="text-sm font-black uppercase tracking-widest whitespace-nowrap">
+              Get In Touch
+            </span>
+            <div className="w-10 h-10 bg-white flex items-center justify-center rounded-full group-hover:rotate-12 transition-transform duration-300 shadow-inner">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F2A2E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+            </div>
+          </button>
+        </div>
+
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 sm:px-6 text-left pb-0 sm:pb-20">
           <motion.div
@@ -278,32 +246,29 @@ const HeroSection = () => {
             animate="visible"
             variants={contentVariants}
           >
-            {/* Logo only */}
+            {/* Logo */}
             <div className="relative z-10 flex justify-center sm:justify-start ml-0 sm:ml-14 md:ml-16 lg:ml-20 mt-4 sm:mt-6">
               <Image
                 src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883696/creditor-website-assets/images/logo/credi_logoo.webp"
-                alt="Creditor Academy - Premium Private Education Logo"
+                alt="Creditor Academy Logo"
                 width={450}
                 height={110}
                 priority
                 quality={85}
-                sizes="(max-width: 640px) 208px, (max-width: 768px) 240px, (max-width: 1024px) 320px, 420px"
                 className="object-contain w-52 sm:w-60 md:w-80 lg:w-[420px]"
               />
             </div>
-
-
 
             {/* Title */}
             <h1 className="text-3xl sm:text-3xl md:text-6xl xl:text-7xl font-extrabold tracking-tight leading-tight">
               {videos[currentIndex].title}
             </h1>
 
-            {/* 🔘 Button directly under the title */}
+            {/* Start Now Button */}
             <div className="mt-2">
               <Link
                 href="/projects"
-                className="group flex gap-4 items-center w-fit bg-primary border border-primary hover:border hover:border-white/30 hover:bg-secondary rounded-full transition-all duration-200 ease-in-out"
+                className="group flex gap-4 items-center w-fit bg-primary border border-primary hover:border-white/30 hover:bg-secondary rounded-full transition-all duration-200 ease-in-out"
               >
                 <span className="pl-6 text-lg font-bold text-secondary group-hover:text-white group-hover:translate-x-12 transform transition-transform duration-200 ease-in-out">
                   Start Now
@@ -316,53 +281,14 @@ const HeroSection = () => {
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <g filter="url(#filter0_d_1_873)">
-                    <rect x="3" y="2" width="52" height="52" rx="26" fill="white" />
-                    <path
-                      d="M24 23H34M34 23V33M34 23L24 33"
-                      stroke="#1F2A2E"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </g>
-                  <defs>
-                    <filter
-                      id="filter0_d_1_873"
-                      x="0"
-                      y="0"
-                      width="58"
-                      height="58"
-                      filterUnits="userSpaceOnUse"
-                      colorInterpolationFilters="sRGB"
-                    >
-                      <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                      <feColorMatrix
-                        in="SourceAlpha"
-                        type="matrix"
-                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                        result="hardAlpha"
-                      />
-                      <feOffset dy="1" />
-                      <feGaussianBlur stdDeviation="1.5" />
-                      <feComposite in2="hardAlpha" operator="out" />
-                      <feColorMatrix
-                        type="matrix"
-                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
-                      />
-                      <feBlend
-                        mode="normal"
-                        in2="BackgroundImageFix"
-                        result="effect1_dropShadow_1_873"
-                      />
-                      <feBlend
-                        mode="normal"
-                        in="SourceGraphic"
-                        in2="effect1_dropShadow_1_873"
-                        result="shape"
-                      />
-                    </filter>
-                  </defs>
+                  <rect x="3" y="2" width="52" height="52" rx="26" fill="white" />
+                  <path
+                    d="M24 23H34M34 23V33M34 23L24 33"
+                    stroke="#1F2A2E"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </Link>
             </div>
@@ -371,41 +297,6 @@ const HeroSection = () => {
             <p className="text-base sm:text-xl text-white/80 max-w-xl sm:max-w-2xl leading-relaxed pb-8">
               {videos[currentIndex].description}
             </p>
-
-            {/* 📱 Mobile Thumbnails */}
-            {/* <div className="flex sm:hidden gap-2 mt-4 overflow-x-auto pb-2">
-              {videos.map((video, index) => (
-                <motion.button
-                  key={index}
-                  className={`w-20 h-12 rounded-lg overflow-hidden relative flex-shrink-0 shadow-md ${
-                    index === currentIndex
-                      ? "ring-2 ring-primary"
-                      : "opacity-70 hover:opacity-100"
-                  }`}
-                  onClick={() => goToSlide(index)}
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.95 }}
-                  aria-label={`Thumbnail for ${video.title}`}
-                >
-                  <video
-                    className="w-full h-full object-cover"
-                    muted
-                    playsInline
-                    preload="metadata"
-                    poster={video.poster}
-                  >
-                    <source src={video.src} type="video/mp4" />
-                  </video>
-                  {index === currentIndex && (
-                    <motion.div
-                      className="absolute inset-0 bg-primary/25"
-                      layoutId="activeThumbnail"
-                      transition={{ type: "spring", stiffness: 400, damping: 28 }}
-                    />
-                  )}
-                </motion.button>
-              ))}
-            </div> */}
           </motion.div>
         </div>
 
@@ -415,20 +306,8 @@ const HeroSection = () => {
           onClick={goToPrevious}
           aria-label="Previous slide"
         >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M15 18L9 12L15 6"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M15 18L9 12L15 6" />
           </svg>
         </button>
         <button
@@ -436,24 +315,12 @@ const HeroSection = () => {
           onClick={goToNext}
           aria-label="Next slide"
         >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M9 18L15 12L9 6"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 18L15 12L9 6" />
           </svg>
         </button>
 
-        {/* 🔘 Indicators (bottom center) */}
+        {/* 🔘 Indicators */}
         <div className="absolute left-0 right-0 bottom-4 hidden md:flex justify-center gap-2 z-20">
           {videos.map((_, idx) => (
             <button
@@ -464,42 +331,13 @@ const HeroSection = () => {
             />
           ))}
         </div>
-
-        {/* 💻 Desktop Thumbnails
-        <div className="absolute right-2 sm:right-6 bottom-6 hidden sm:flex flex-col gap-3 z-20">
-          {videos.map((video, index) => (
-            <motion.button
-              key={index}
-              className={`w-24 h-14 rounded-lg overflow-hidden relative shadow-md ${
-                index === currentIndex
-                  ? "ring-2 ring-primary"
-                  : "opacity-70 hover:opacity-100"
-              }`}
-              onClick={() => goToSlide(index)}
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              aria-label={`Thumbnail for ${video.title}`}
-            >
-              <video
-                className="w-full h-full object-cover"
-                muted
-                playsInline
-                preload="metadata"
-                poster={video.poster}
-              >
-                <source src={video.src} type="video/mp4" />
-              </video>
-              {index === currentIndex && (
-                <motion.div
-                  className="absolute inset-0 bg-primary/25"
-                  layoutId="activeThumbnail"
-                  transition={{ type: "spring", stiffness: 400, damping: 28 }}
-                />
-              )}
-            </motion.button>
-          ))}
-        </div> */}
       </div>
+
+      <AnimatePresence>
+        {showContactForm && (
+          <HeroContactOverlay onClose={() => setShowContactForm(false)} />
+        )}
+      </AnimatePresence>
     </ParallaxProvider>
   );
 };

@@ -1,18 +1,21 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
 const Herobanner = ({
   bannerimage,
   heading,
   desc,
-  headingClass = "large-heading",
+  headingClass,
 }: {
   bannerimage: string;
   heading: string;
   desc: string;
   headingClass?: string;
 }) => {
+  const pathname = usePathname();
   const splitDesc = desc.split(/<\/?span>/);
 
   return (
@@ -39,22 +42,34 @@ const Herobanner = ({
         <div className="flex flex-col gap-4 sm:gap-6 pb-10 sm:pb-16 xl:pb-20">
           {/* Logo (replaces previous description area) */}
           <div className="flex items-start">
-            <Image
-              src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"
-              alt="Creditor Logo"
-              width={280}
-              height={72}
-              priority
-              className="w-40 sm:w-48 md:w-56 lg:w-64 h-auto object-contain"
-            />
+            {pathname !== "/" ? (
+              <Link href="/" className="hover:opacity-80 transition-opacity">
+                <Image
+                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"
+                  alt="Creditor Logo"
+                  width={280}
+                  height={72}
+                  priority
+                  className="w-40 sm:w-48 md:w-56 lg:w-64 h-auto object-contain"
+                />
+              </Link>
+            ) : (
+              <Image
+                src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"
+                alt="Creditor Logo"
+                width={280}
+                height={72}
+                priority
+                className="w-40 sm:w-48 md:w-56 lg:w-64 h-auto object-contain"
+              />
+            )}
           </div>
 
           {/* Heading + Button */}
           <div className="flex items-baseline gap-4 flex-wrap">
             <h1
-              className={`${
-                headingClass ? headingClass : "medium-heading"
-              } text-base sm:text-2xl md:text-3xl font-semibold`}
+              className={`${headingClass ? headingClass : "medium-heading"
+                } text-base sm:text-2xl md:text-3xl font-semibold`}
             >
               {heading}
             </h1>

@@ -7,7 +7,7 @@ import AboutusValues from "@/app/components/about/aboutus-values";
 import AboutusTeam from "@/app/components/about/aboutus-team";
 import AboutusTestimonials from "@/app/components/about/aboutus-testimonials";
 import Team from "@/app/components/home/team";
-import Herobanner from "@/app/components/shared/hero-banner";
+import { Herobanner } from "@/app/components/shared/hero-banner";
 import { Metadata } from "next";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
@@ -25,7 +25,7 @@ export default function Page() {
             <Herobanner
                 bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883280/creditor-website-assets/images/about-us/banner/aboutus-banner1.png"
                 heading="About us"
-                desc="We create <span>transformative credit education</span> that drives real financial freedom." 
+                desc="We create <span>transformative credit education</span> that drives real financial freedom."
             />
             <AboutusDetail />
             {/* <AboutusStory /> */}

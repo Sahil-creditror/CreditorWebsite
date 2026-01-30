@@ -1,4 +1,4 @@
-import Herobanner from "@/app/components/shared/hero-banner";
+import { Herobanner } from "@/app/components/shared/hero-banner";
 import TnC from "@/app/components/enterprise-tnc";
 
 
@@ -16,9 +16,9 @@ export default function Page() {
                 bannerimage="/images/courses/banner-tnc.webp"
                 heading="Become Private, Operate Private And Private Credit"
                 desc="Access to all Catalogs"
-                // buttonPath="/terms-and-conditions" //
+            // buttonPath="/terms-and-conditions" //
             />
-            <TnC/>
+            <TnC />
         </main>
     );
 };

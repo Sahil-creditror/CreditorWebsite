@@ -45,8 +45,8 @@ export function Website() {
         <Appointment />
       </Suspense>
       <Suspense fallback={<div className="min-h-[400px]" />}>
-        <Table 
-          starterPrototypeLink="https://digi-market-simple.vercel.app/" 
+        <Table
+          starterPrototypeLink="https://digi-market-simple.vercel.app/"
           cadillacPrototypeLink="https://rhythmic-vibe.vercel.app/"
         />
       </Suspense>

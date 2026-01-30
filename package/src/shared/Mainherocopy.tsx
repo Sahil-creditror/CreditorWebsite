@@ -35,7 +35,7 @@ const HeroSection = () => {
       src: "/video/Banner.mp4",
       poster: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883555/creditor-website-assets/images/hero/banner-2.png",
       title: "MASTERCLASS MEMBERSHIP",
-      description:"Reclaim Your Lawful Identity and Exit the Public System",
+      description: "Reclaim Your Lawful Identity and Exit the Public System",
     },
     // {
     //   src: "/video/hero-3.mp4",
@@ -217,16 +217,16 @@ const HeroSection = () => {
             animate="visible"
             variants={contentVariants}
           >
-          {/* Logo only (replace previous subtext) */}
-          <div className="flex items-start">
-            <Image
-              src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"
-              alt="Creditor Logo"
-              width={120}
-              height={120}
-              priority
-            />
-          </div>
+            {/* Logo only (replace previous subtext) */}
+            <div className="flex items-start">
+              <Image
+                src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"
+                alt="Creditor Logo"
+                width={120}
+                height={120}
+                priority
+              />
+            </div>
 
             {/* Title */}
             <h1 className="text-3xl sm:text-5xl md:text-7xl xl:text-9xl font-extrabold tracking-tight leading-tight">
@@ -236,69 +236,69 @@ const HeroSection = () => {
             {/* 🔘 Button directly under the title */}
             <div className="mt-2">
               <Link
-                  href="/projects"
-                  className="group flex gap-4 items-center w-fit bg-primary border border-primary hover:border hover:border-white/30 hover:bg-secondary rounded-full transition-all duration-200 ease-in-out"
+                href="/projects"
+                className="group flex gap-4 items-center w-fit bg-primary border border-primary hover:border hover:border-white/30 hover:bg-secondary rounded-full transition-all duration-200 ease-in-out"
+              >
+                <span className="pl-6 text-lg font-bold text-secondary group-hover:text-white group-hover:translate-x-12 transform transition-transform duration-200 ease-in-out">
+                  Start Now
+                </span>
+                <svg
+                  className="py-1 group-hover:-translate-x-37 group-hover:rotate-45 transition-all duration-300 ease-in-out"
+                  width="58"
+                  height="58"
+                  viewBox="0 0 58 58"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <span className="pl-6 text-lg font-bold text-secondary group-hover:text-white group-hover:translate-x-12 transform transition-transform duration-200 ease-in-out">
-                    Start Now
-                  </span>
-                  <svg
-                    className="py-1 group-hover:-translate-x-37 group-hover:rotate-45 transition-all duration-300 ease-in-out"
-                    width="58"
-                    height="58"
-                    viewBox="0 0 58 58"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g filter="url(#filter0_d_1_873)">
-                      <rect x="3" y="2" width="52" height="52" rx="26" fill="white" />
-                      <path
-                        d="M24 23H34M34 23V33M34 23L24 33"
-                        stroke="#1F2A2E"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                  <g filter="url(#filter0_d_1_873)">
+                    <rect x="3" y="2" width="52" height="52" rx="26" fill="white" />
+                    <path
+                      d="M24 23H34M34 23V33M34 23L24 33"
+                      stroke="#1F2A2E"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </g>
+                  <defs>
+                    <filter
+                      id="filter0_d_1_873"
+                      x="0"
+                      y="0"
+                      width="58"
+                      height="58"
+                      filterUnits="userSpaceOnUse"
+                      colorInterpolationFilters="sRGB"
+                    >
+                      <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                      <feColorMatrix
+                        in="SourceAlpha"
+                        type="matrix"
+                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                        result="hardAlpha"
                       />
-                    </g>
-                    <defs>
-                      <filter
-                        id="filter0_d_1_873"
-                        x="0"
-                        y="0"
-                        width="58"
-                        height="58"
-                        filterUnits="userSpaceOnUse"
-                        colorInterpolationFilters="sRGB"
-                      >
-                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                        <feColorMatrix
-                          in="SourceAlpha"
-                          type="matrix"
-                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                          result="hardAlpha"
-                        />
-                        <feOffset dy="1" />
-                        <feGaussianBlur stdDeviation="1.5" />
-                        <feComposite in2="hardAlpha" operator="out" />
-                        <feColorMatrix
-                          type="matrix"
-                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
-                        />
-                        <feBlend
-                          mode="normal"
-                          in2="BackgroundImageFix"
-                          result="effect1_dropShadow_1_873"
-                        />
-                        <feBlend
-                          mode="normal"
-                          in="SourceGraphic"
-                          in2="effect1_dropShadow_1_873"
-                          result="shape"
-                        />
-                      </filter>
-                    </defs>
-                  </svg>
-                </Link>
+                      <feOffset dy="1" />
+                      <feGaussianBlur stdDeviation="1.5" />
+                      <feComposite in2="hardAlpha" operator="out" />
+                      <feColorMatrix
+                        type="matrix"
+                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
+                      />
+                      <feBlend
+                        mode="normal"
+                        in2="BackgroundImageFix"
+                        result="effect1_dropShadow_1_873"
+                      />
+                      <feBlend
+                        mode="normal"
+                        in="SourceGraphic"
+                        in2="effect1_dropShadow_1_873"
+                        result="shape"
+                      />
+                    </filter>
+                  </defs>
+                </svg>
+              </Link>
             </div>
 
             {/* Description */}
@@ -311,11 +311,10 @@ const HeroSection = () => {
               {videos.map((video, index) => (
                 <motion.button
                   key={index}
-                  className={`w-20 h-12 rounded-lg overflow-hidden relative flex-shrink-0 shadow-md ${
-                    index === currentIndex
+                  className={`w-20 h-12 rounded-lg overflow-hidden relative flex-shrink-0 shadow-md ${index === currentIndex
                       ? "ring-2 ring-primary"
                       : "opacity-70 hover:opacity-100"
-                  }`}
+                    }`}
                   onClick={() => goToSlide(index)}
                   whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.95 }}
@@ -404,11 +403,10 @@ const HeroSection = () => {
           {videos.map((video, index) => (
             <motion.button
               key={index}
-              className={`w-24 h-14 rounded-lg overflow-hidden relative shadow-md ${
-                index === currentIndex
+              className={`w-24 h-14 rounded-lg overflow-hidden relative shadow-md ${index === currentIndex
                   ? "ring-2 ring-primary"
                   : "opacity-70 hover:opacity-100"
-              }`}
+                }`}
               onClick={() => goToSlide(index)}
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}

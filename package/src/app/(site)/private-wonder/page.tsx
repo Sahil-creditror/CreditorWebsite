@@ -1,5 +1,5 @@
 import React from 'react';
-import Herobanner from '@/app/components/shared/hero-banner';
+import { Herobanner } from "@/app/components/shared/hero-banner";
 import Cards from '@/app/components/private/cards';
 import CourseFeatures from '@/app/components/private/course-feature';
 import CourseDetail from '@/app/components/private/course-detail';
@@ -13,18 +13,18 @@ import FaqSection from '@/app/components/private/faq';
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
 export const metadata: Metadata = {
-    title: "Financial Freedom | Creditor",
+  title: "Financial Freedom | Creditor",
 };
 
 const PrivatePage = () => {
   const become = getAllProjects();
   return (
     <>
-    <Script
-                id="affiliate-manager"
-                strategy="afterInteractive"
-                dangerouslySetInnerHTML={{
-                    __html: `(function() {
+      <Script
+        id="affiliate-manager"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `(function() {
       var t = document.createElement("script");
       t.type = "text/javascript", t.async = !0, t.src = 'https://link.msgsndr.com/js/am.js', t.onload = t.onreadystatechange = function() {
           var t = this.readyState;
@@ -35,8 +35,8 @@ const PrivatePage = () => {
       var e = document.getElementsByTagName("script")[0];
       e.parentNode.insertBefore(t, e)
   })();`,
-                }}
-            />
+        }}
+      />
       <main>
         <Herobanner
           heading="Financial Freedom"

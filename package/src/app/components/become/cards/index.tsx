@@ -43,7 +43,7 @@ const BecomePrivateCourse: React.FC = () => {
 
   const fadeIn: Variants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
       transition: { duration: 0.8, ease: "easeOut" as const }
     }
@@ -51,11 +51,11 @@ const BecomePrivateCourse: React.FC = () => {
 
   const hexToRgba = (hex: string, alpha: number = 1): string => {
     hex = hex.replace('#', '');
-    
+
     const r = parseInt(hex.length === 3 ? hex.slice(0, 1).repeat(2) : hex.slice(0, 2), 16);
     const g = parseInt(hex.length === 3 ? hex.slice(1, 2).repeat(2) : hex.slice(2, 4), 16);
     const b = parseInt(hex.length === 3 ? hex.slice(2, 3).repeat(2) : hex.slice(4, 6), 16);
-    
+
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   };
 
@@ -63,7 +63,7 @@ const BecomePrivateCourse: React.FC = () => {
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number>(0);
-  
+
 
   return (
     <div className="font-sans bg-gray-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 p-5 relative overflow-hidden">
@@ -80,7 +80,7 @@ const BecomePrivateCourse: React.FC = () => {
           className="my-10 relative"
         >
           {/* Section header */}
-          <motion.div 
+          <motion.div
             className="text-center mb-20 relative"
             variants={fadeIn}
           >
@@ -92,9 +92,9 @@ const BecomePrivateCourse: React.FC = () => {
               transition={{ duration: 1, delay: 0.2 }}
               viewport={{ once: false, amount: 0.3 }}
             /> */}
-            
+
             {/* Main title */}
-            <motion.h2 
+            <motion.h2
               className="text-2xl md:text-4xl lg:text-5xl font-bold mb-6 relative"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -113,7 +113,7 @@ const BecomePrivateCourse: React.FC = () => {
             </motion.h2>
 
             {/* Subtitle */}
-            <motion.p 
+            <motion.p
               className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed font-medium"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -167,7 +167,7 @@ const BecomePrivateCourse: React.FC = () => {
 
               {/* Image container */}
               <div className="w-full h-60 overflow-hidden relative">
-                <img 
+                <img
                   src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883388/creditor-website-assets/images/courses/become/bp.webp"
                   alt="Status Correction Illustration"
                   className="w-full h-full object-cover object-center"
@@ -192,7 +192,7 @@ const BecomePrivateCourse: React.FC = () => {
                   <p className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left mb-4">
                     Learn how to step out of the public and establish your affairs in the private.
                   </p>
-                  
+
                   {/* Learning Points */}
                   <div className="space-y-3 text-left">
                     <div className="flex items-start gap-3">
@@ -203,7 +203,7 @@ const BecomePrivateCourse: React.FC = () => {
                         Correct your status and reclaim your lawful standing
                       </p>
                     </div>
-                    
+
                     <div className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <FaFlag className="w-3 h-3 text-blue-600 dark:text-blue-400" />
@@ -212,7 +212,7 @@ const BecomePrivateCourse: React.FC = () => {
                         Establish yourself as an American National
                       </p>
                     </div>
-                    
+
                     <div className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <FaFileSignature className="w-3 h-3 text-blue-600 dark:text-blue-400" />
@@ -221,7 +221,7 @@ const BecomePrivateCourse: React.FC = () => {
                         Complete your Secured Party Creditor process
                       </p>
                     </div>
-                    
+
                     <div className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <FaIdCard className="w-3 h-3 text-blue-600 dark:text-blue-400" />
@@ -230,7 +230,7 @@ const BecomePrivateCourse: React.FC = () => {
                         Create your private identity and foundational documents
                       </p>
                     </div>
-                    
+
                     <div className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <FaHandsHelping className="w-3 h-3 text-blue-600 dark:text-blue-400" />
@@ -240,7 +240,7 @@ const BecomePrivateCourse: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                  
+
                   {/* <div className="mt-4">
                     <button className="w-full bg-blue-100 dark:bg-blue-800/40 hover:bg-blue-200 dark:hover:bg-blue-700/60 text-blue-700 dark:text-blue-300 font-medium py-3 rounded-lg transition-colors">
                       Explore Course
@@ -279,7 +279,7 @@ const BecomePrivateCourse: React.FC = () => {
 
               {/* Image container */}
               <div className="w-full h-60 overflow-hidden relative">
-                <img 
+                <img
                   src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883446/creditor-website-assets/images/courses/become/sovcard.webp"
                   alt="Sovereignty Foundations Illustration"
                   className="w-full h-full object-cover object-center"
@@ -303,7 +303,7 @@ const BecomePrivateCourse: React.FC = () => {
                   <p className="text-slate-700 dark:text-slate-300 leading-relaxed m-0 text-left mb-4">
                     Discover how America shifted from liberty to control—and what it takes to reclaim independence once again.
                   </p>
-                  
+
                   {/* Learning Points */}
                   <div className="space-y-3 text-left">
                     <div className="flex items-start gap-3">
@@ -314,7 +314,7 @@ const BecomePrivateCourse: React.FC = () => {
                         Foundations of American sovereignty and law
                       </p>
                     </div>
-                    
+
                     <div className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <FaHistory className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
@@ -323,7 +323,7 @@ const BecomePrivateCourse: React.FC = () => {
                         Evolution of lawful identity post-Civil War
                       </p>
                     </div>
-                    
+
                     <div className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <FaCoins className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
@@ -332,7 +332,7 @@ const BecomePrivateCourse: React.FC = () => {
                         Origins of commercial law and currency
                       </p>
                     </div>
-                    
+
                     <div className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <FaLock className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
@@ -341,7 +341,7 @@ const BecomePrivateCourse: React.FC = () => {
                         Public system as a managed debt trap
                       </p>
                     </div>
-                    
+
                     <div className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-800/40 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <FaUserCheck className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
@@ -351,7 +351,7 @@ const BecomePrivateCourse: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                  
+
                   {/* <div className="mt-4">
                     <button className="w-full bg-indigo-100 dark:bg-indigo-800/40 hover:bg-indigo-200 dark:hover:bg-indigo-700/60 text-indigo-700 dark:text-indigo-300 font-medium py-3 rounded-lg transition-colors">
                       Explore Course
@@ -371,7 +371,7 @@ const BecomePrivateCourse: React.FC = () => {
             viewport={{ once: true }}
           >
             Learn to establish your <strong className="text-violet-700 dark:text-blue-400 font-semibold relative">
-            Sovereign Status
+              Sovereign Status
             </strong>
           </motion.p>
         </motion.section>

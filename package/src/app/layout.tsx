@@ -1,7 +1,7 @@
 import { Manrope } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
-import ClientLayoutShell from "./providers/ClientLayoutShell";
+import { ClientLayoutShell } from "./providers/ClientLayoutShell";
 import type { Metadata } from "next";
 // Root layout must be a Server Component. Client-only logic moved into ClientLayoutShell.
 
@@ -69,11 +69,11 @@ export default function RootLayout({
       <body className={manrope.className}>
         {/* Google Tag Manager (noscript) */}
         <noscript>
-          <iframe 
+          <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-TDRQ44S4"
-            height="0" 
-            width="0" 
-            style={{display:'none',visibility:'hidden'}}
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
           />
         </noscript>
         {/* Microsoft Clarity Analytics - Deferred to improve LCP */}

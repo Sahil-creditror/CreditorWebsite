@@ -1,4 +1,4 @@
-import Herobanner from "@/app/components/shared/hero-banner";
+import { Herobanner } from "@/app/components/shared/hero-banner";
 import Intro from "@/app/components/masterclass/intro";
 import Learn from "@/app/components/masterclass/learn";
 import Get from "@/app/components/masterclass/getwithmaster";
@@ -47,23 +47,23 @@ export default function Page() {
                 }}
             />
             <main>
-            <Herobanner
-                bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883842/creditor-website-assets/images/projects/banner/masterclass-banner.jpg"
-                heading="Masterclass Membership"
-                desc="Learn how to <span>set up your Trust</span>, your Private Identity, and Business Credit step-by-step."
-                buttonPath="/tncmasterclass" 
-            />
-            <Preview />
-            <Get />
-            {/* <Intro /> */}
-            <Works />
-            {/* <Pricing /> */}
-            {/* <Learn /> */}
-            {/* <Appoint /> */}
-            {/* <Join /> */}
-            {/* <About /> */}
-            <Event />
-            <CTA />
+                <Herobanner
+                    bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883842/creditor-website-assets/images/projects/banner/masterclass-banner.jpg"
+                    heading="Masterclass Membership"
+                    desc="Learn how to <span>set up your Trust</span>, your Private Identity, and Business Credit step-by-step."
+                    buttonPath="/tncmasterclass"
+                />
+                <Preview />
+                <Get />
+                {/* <Intro /> */}
+                <Works />
+                {/* <Pricing /> */}
+                {/* <Learn /> */}
+                {/* <Appoint /> */}
+                {/* <Join /> */}
+                {/* <About /> */}
+                <Event />
+                <CTA />
             </main>
         </>
     );

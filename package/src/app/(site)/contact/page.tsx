@@ -1,5 +1,5 @@
 import Contact from "@/app/components/home/contact";
-import Herobanner from "@/app/components/shared/hero-banner";
+import { Herobanner } from "@/app/components/shared/hero-banner";
 import { Metadata } from "next";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
@@ -18,7 +18,7 @@ export default function Page() {
                 bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883362/creditor-website-assets/images/contact/banner/you.jpg"
                 heading="Contact"
                 desc="Ready to <span>start something</span> great? Reach out  we’d love to hear from you." />
-            <Contact contactdataNumber="01"/>
+            <Contact contactdataNumber="01" />
         </main>
     );
 };

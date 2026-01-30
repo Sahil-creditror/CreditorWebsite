@@ -1,5 +1,6 @@
-import Herobanner from "@/app/components/shared/hero-banner";
+import { Herobanner } from "@/app/components/shared/hero-banner";
 import BecomeIntro from "@/app/components/become/cards";
+
 import Intro2 from "@/app/components/become/intro";
 import Content from "@/app/components/become/content";
 import Appoint from "@/app/components/become/appointment";
@@ -9,6 +10,9 @@ import Event from "@/app/components/home/event";
 import Pricing from "@/app/components/shared/plan";
 import HowItWorks from "@/app/components/become/works";
 import FaqSection from "@/app/components/become/faq";
+
+import WebinarBootcamp from "@/app/components/shared/WebinarBootcamp";
+import { FaCrown, FaUserCheck, FaBrain } from "react-icons/fa";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
@@ -27,8 +31,21 @@ export default function Page() {
                 buttonPath="/tncmasterclass" // 👈 you now define the path here
             />
             <Intro2 />
+            <WebinarBootcamp
+                title="Become Private"
+                imageSrc="/images/webinar/become/bootcampbecome.webp"
+                description="Step into your authority. This elite bootcamp guides you through the process of status correction and reclaiming your sovereignty in a world of conformity."
+                features={[
+                    { title: "Status Correction", description: "Reclaim your lawful standing and identity.", iconName: "status" },
+                    { title: "Elite Authority", description: "Command respect and operate with supreme confidence.", iconName: "crown" },
+                    { title: "Sovereign Mindset", description: "Break free from the public matrix.", iconName: "mindset" }
+                ]}
+            />
             <Content />
-            <BecomeIntro />
+            {/* <BecomeIntro /> */}
+
+
+
             {/* <Pricing /> */}
             <HowItWorks />
             <Appoint />

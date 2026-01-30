@@ -1,4 +1,4 @@
-import HeroBanner from "@/app/components/shared/hero-banner";
+import { Herobanner as HeroBanner } from "@/app/components/shared/hero-banner";
 import BecomeIntro from "@/app/components/operate/card";
 import Intro2 from "@/app/components/operate/intro";
 import BusinessCardsGrid from "@/app/components/operate/business";
@@ -8,7 +8,7 @@ import Pricing from "@/app/components/shared/plan";
 import Script from "next/script";
 import HowItWorks from "@/app/components/operate/works";
 import Event from "@/app/components/home/event";
-import FaqSection from "@/app/components/operate/faq";  
+import FaqSection from "@/app/components/operate/faq";
 import Cards from "@/app/components/operate/cards";
 
 import { getAllProjects } from "@/lib/markdown";
@@ -38,7 +38,7 @@ export default function Page() {
   })();`,
                 }}
             />
-        
+
             <main>
                 <HeroBanner
                     bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883456/creditor-website-assets/images/courses/junior.jpg"
@@ -57,5 +57,5 @@ export default function Page() {
                 <Contact />
             </main>
         </>
-    ); 
+    );
 }

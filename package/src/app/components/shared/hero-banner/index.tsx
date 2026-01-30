@@ -16,7 +16,7 @@ interface HeroBannerProps {
   buttonText?: string;
 }
 
-const Herobanner: React.FC<HeroBannerProps> = ({
+export const Herobanner: React.FC<HeroBannerProps> = ({
   bannerimage,
   heading,
   desc,
@@ -171,4 +171,4 @@ const Herobanner: React.FC<HeroBannerProps> = ({
   );
 };
 
-export default Herobanner;
+

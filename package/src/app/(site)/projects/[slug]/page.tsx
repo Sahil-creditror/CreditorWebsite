@@ -1,4 +1,4 @@
-import Herobanner from "@/app/components/shared/hero-banner";
+import { Herobanner } from "@/app/components/shared/hero-banner";
 import { getProjectsBySlug } from "@/lib/markdown";
 import markdownToHtml from "@/lib/markdownToHtml";
 import Image from "next/image";

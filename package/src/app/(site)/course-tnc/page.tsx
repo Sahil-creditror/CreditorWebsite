@@ -1,4 +1,4 @@
-import Herobanner from "@/app/components/shared/hero-banner";
+import { Herobanner } from "@/app/components/shared/hero-banner";
 import TnC from "@/app/components/shared/course-tnc";
 
 
@@ -16,9 +16,9 @@ export default function Page() {
                 bannerimage="/images/courses/banner-tnc.webp"
                 heading="Charge Your Card"
                 desc="Reclaim Your <span>Lawful Identity</span> and Exit the Public System."
-                // buttonPath="/terms-and-conditions" //
+            // buttonPath="/terms-and-conditions" //
             />
-            <TnC/>
+            <TnC />
         </main>
     );
 };

@@ -1,6 +1,6 @@
 
 // import ProjectList from "@/app/components/projects";
-import Herobanner from "@/app/components/shared/hero-banner";
+import { Herobanner } from "@/app/components/shared/hero-banner";
 import MasterclassMembershipTC from "@/app/components/tncmasterclass";
 
 import { getAllProjects } from "@/lib/markdown";

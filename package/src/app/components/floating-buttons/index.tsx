@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Gift, MessageCircle } from "lucide-react";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
-import HeroContactOverlay from "../home/hero/ContactOverlay";
+
 
 // Contact Form Modal Component
 function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {

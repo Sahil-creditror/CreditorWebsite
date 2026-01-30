@@ -1,4 +1,4 @@
-import Herobanner from "@/app/components/shared/hero-banner";
+import { Herobanner } from "@/app/components/shared/hero-banner";
 import Courses from "@/app/components/courses";
 import { Metadata } from "next";
 export const metadata: Metadata = {

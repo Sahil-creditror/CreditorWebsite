@@ -34,9 +34,15 @@ export async function fetchNewToken(): Promise<string | null> {
   try {
     const backendUrl = getBackendBaseUrl();
     const refreshTokenUrl = `${backendUrl}/zoom/refresh-token`;
-    
+
+    // Safety check for placeholder URL to avoid CORS errors in browser
+    if (refreshTokenUrl.includes('your-backend-api.com')) {
+      console.warn('[Token Manager] Placeholder backend URL detected. Skipping token fetch.');
+      return null;
+    }
+
     console.log('[Token Manager] Fetching token from:', refreshTokenUrl);
-    
+
     const response = await fetch(refreshTokenUrl, {
       method: 'GET',
       headers: {
@@ -53,30 +59,30 @@ export async function fetchNewToken(): Promise<string | null> {
 
     const result = await response.json();
     console.log('[Token Manager] Token response received');
-    
+
     // Handle direct token response or wrapped response
     const tokenData: TokenData = result.data || result;
-    
+
     // Support both snake_case (access_token) and camelCase (accessToken)
     const accessToken = tokenData.access_token || tokenData.accessToken;
     const refreshToken = tokenData.refresh_token || tokenData.refreshToken;
     const expiresIn = tokenData.expires_in || tokenData.expiresIn || 3600;
-    
+
     if (accessToken) {
       // Store access token
       localStorage.setItem(TOKEN_STORAGE_KEY, accessToken);
       console.log('[Token Manager] Access token stored');
-      
+
       // Store refresh token if provided
       if (refreshToken) {
         localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
         console.log('[Token Manager] Refresh token stored');
       }
-      
+
       // Calculate and store expiry time (default to 1 hour if not provided)
       const expiryTime = Date.now() + (expiresIn * 1000);
       localStorage.setItem(TOKEN_EXPIRY_KEY, expiryTime.toString());
-      
+
       console.log('[Token Manager] New token fetched and stored successfully');
       console.log('[Token Manager] Token expires in:', expiresIn, 'seconds');
       return accessToken;
@@ -103,13 +109,13 @@ export function getStoredToken(): string | null {
  */
 export function isTokenExpired(): boolean {
   if (typeof window === 'undefined') return true;
-  
+
   const expiryTime = localStorage.getItem(TOKEN_EXPIRY_KEY);
   if (!expiryTime) return true;
-  
+
   const expiry = parseInt(expiryTime, 10);
   const now = Date.now();
-  
+
   // Consider token expired if it expires in less than 5 minutes
   const bufferTime = 5 * 60 * 1000; // 5 minutes
   return now >= (expiry - bufferTime);
@@ -121,13 +127,13 @@ export function isTokenExpired(): boolean {
 export async function getValidToken(): Promise<string | null> {
   // Check if we have a stored token
   const storedToken = getStoredToken();
-  
+
   // If token exists and is not expired, return it
   if (storedToken && !isTokenExpired()) {
     console.log('[Token Manager] Using cached token');
     return storedToken;
   }
-  
+
   // Token is missing or expired, fetch a new one
   console.log('[Token Manager] Token expired or missing, fetching new token');
   return await fetchNewToken();
@@ -138,7 +144,7 @@ export async function getValidToken(): Promise<string | null> {
  */
 export function clearTokens(): void {
   if (typeof window === 'undefined') return;
-  
+
   localStorage.removeItem(TOKEN_STORAGE_KEY);
   localStorage.removeItem(TOKEN_EXPIRY_KEY);
   localStorage.removeItem(REFRESH_TOKEN_KEY);

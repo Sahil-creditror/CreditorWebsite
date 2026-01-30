@@ -3,7 +3,7 @@
 import React from "react";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
-import HeroBanner from "@/app/components/shared/hero-banner"; // Keep hero as priority
+import { Herobanner as HeroBanner } from "@/app/components/shared/hero-banner"; // Keep hero as priority
 
 // Dynamic imports for below-the-fold components
 const WhyAPMP = dynamic(() => import("../components/WhyAPMP"), {
@@ -52,22 +52,22 @@ export function PrivateMerchant() {
         imageSrc="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883881/creditor-website-assets/images/services/pmabanner.webp"
       /> */}
       <Suspense fallback={<div className="min-h-[400px]" />}>
-        <Feature/>
+        <Feature />
       </Suspense>
       <Suspense fallback={<div className="min-h-[400px]" />}>
-        <TransparentPricingSnapshot/>
+        <TransparentPricingSnapshot />
       </Suspense>
       <Suspense fallback={<div className="min-h-[400px]" />}>
-        <Work/>
+        <Work />
       </Suspense>
       <Suspense fallback={<div className="min-h-[400px]" />}>
-        <PMPComparisonTable/>
+        <PMPComparisonTable />
       </Suspense>
       <Suspense fallback={<div className="min-h-[400px]" />}>
-        <Faq/>
+        <Faq />
       </Suspense>
       <Suspense fallback={<div className="min-h-[400px]" />}>
-        <Contact/>
+        <Contact />
       </Suspense>
     </>
   );

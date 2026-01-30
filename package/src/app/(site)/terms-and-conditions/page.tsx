@@ -1,4 +1,4 @@
-import Herobanner from "@/app/components/shared/hero-banner";
+import { Herobanner } from "@/app/components/shared/hero-banner";
 import TermsAndCondition from "@/app/components/terms-and-condition";
 import { Metadata } from "next";
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export default function Page() {
                 heading="Terms & Conditions"
                 desc="Understand the <span>Rules & Guidelines</span> Before Using Our Services" />
             <TermsAndCondition />
-            
+
         </main>
     );
 };

@@ -3,11 +3,11 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 
 const Services = dynamic(() => import("@/app/components/home/pricing"), {
-  loading: () => <div className="min-h-[400px]" />,
+    loading: () => <div className="min-h-[400px]" />,
 });
 
-const Herobanner = dynamic(() => import("@/app/components/shared/hero-banner"), {
-  loading: () => <div className="min-h-[300px]" />,
+const Herobanner = dynamic(() => import("@/app/components/shared/hero-banner").then(mod => mod.Herobanner), {
+    loading: () => <div className="min-h-[300px]" />,
 });
 
 export const metadata: Metadata = {

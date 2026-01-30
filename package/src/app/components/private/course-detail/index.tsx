@@ -61,12 +61,12 @@ export default function CourseOverviewSection() {
       }
 
       // Section entrance animation
-      gsap.fromTo(containerRef.current, 
-        { opacity: 0, y: 30 }, 
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 1.2, 
+      gsap.fromTo(containerRef.current,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
           ease: "power3.out",
           delay: 0.3
         }
@@ -117,7 +117,7 @@ export default function CourseOverviewSection() {
         boxShadow: "0 25px 50px -12px rgba(79, 70, 229, 0.4)",
         duration: 0.5
       });
-      
+
       // Simulate video playing (in a real app, this would trigger actual video playback)
       setTimeout(() => {
         setIsPlaying(false);
@@ -138,8 +138,8 @@ export default function CourseOverviewSection() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { 
-        when: "beforeChildren", 
+      transition: {
+        when: "beforeChildren",
         staggerChildren: 0.15,
         duration: 0.8,
         ease: [0.25, 0.46, 0.45, 0.94]
@@ -149,8 +149,8 @@ export default function CourseOverviewSection() {
 
   const fadeUp: Variants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         duration: 0.7,
@@ -210,14 +210,14 @@ export default function CourseOverviewSection() {
         {/* Embedded Drive Video */}
         <div className="flex-1 min-w-[18rem] max-w-3xl relative rounded-2xl overflow-hidden shadow-2xl">
           <div className="w-full aspect-video rounded-2xl relative overflow-hidden">
-          <iframe
-            className="absolute inset-0 w-full h-full"
-            src="https://drive.google.com/file/d/1dMh3rb8cDq-WOna8IKCRdNQX3egHrJyH/preview"
-            allow="autoplay"
-            allowFullScreen
-            title="Course detail video"
-            style={{ border: 0 }}
-          />
+            <iframe
+              className="absolute inset-0 w-full h-full"
+              src="https://drive.google.com/file/d/1dMh3rb8cDq-WOna8IKCRdNQX3egHrJyH/preview"
+              allow="autoplay"
+              allowFullScreen
+              title="Course detail video"
+              style={{ border: 0 }}
+            />
           </div>
         </div>
 
@@ -231,12 +231,12 @@ export default function CourseOverviewSection() {
             transition={transition}
             className="text-3xl md:text-4xl font-bold mb-6 text-indigo-800 dark:text-indigo-300 relative inline-block"
           >
-            Course Overview
-            <motion.span 
+            Bootcamp Overview
+            <motion.span
               initial={{ width: 0 }}
               animate={{ width: "3.5rem" }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="absolute -bottom-3 left-0 h-1 bg-gradient-to-r from-indigo-600 to-blue-500 dark:from-indigo-400 dark:to-blue-400 rounded" 
+              className="absolute -bottom-3 left-0 h-1 bg-gradient-to-r from-indigo-600 to-blue-500 dark:from-indigo-400 dark:to-blue-400 rounded"
             />
           </motion.h2>
 

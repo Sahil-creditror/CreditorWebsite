@@ -131,8 +131,8 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
                                     ))}
                                 </div>
                                 <div className="text-xs font-medium text-slate-500">
-                                    <div className="text-slate-900 font-bold">4,200+</div>
-                                    <div>Waitlisted</div>
+                                    <div className="text-slate-900 font-bold">100+</div>
+                                    <div>Registered</div>
                                 </div>
                             </div>
                         </div>

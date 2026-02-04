@@ -6,7 +6,8 @@
 
 @theme {
   /* breakpoint */
-  --breakpoint-Xxl: 1440px; /*1440 px*/
+  --breakpoint-Xxl: 1440px;
+  /*1440 px*/
   --breakpoint-2xl: 1536px;
   --breakpoint-xsm: 500px;
 
@@ -20,7 +21,8 @@
   --color-gray: #365564;
 
   /* padding */
-  --spacing-35: 35rem; /*550px*/
+  --spacing-35: 35rem;
+  /*550px*/
 
   /* text */
   --text-28: 28px;
@@ -51,7 +53,7 @@ body {
     @apply text-6xl md:text-7xl 2xl:text-8xl leading-none;
   }
 
-  .blog-heading{
+  .blog-heading {
     @apply text-4xl md:text-5xl xl:text-7xl;
   }
 
@@ -59,23 +61,23 @@ body {
     @apply text-base font-medium text-white bg-secondary dark:bg-white/10;
   }
 
-  .project-descp p{
+  .project-descp p {
     @apply text-secondary/70 dark:text-white/70 pt-2;
   }
 
-  .project-descp h4{
-    @apply  pt-5;
+  .project-descp h4 {
+    @apply pt-5;
   }
 
-  .project-descp h5{
-    @apply  pt-4;
+  .project-descp h5 {
+    @apply pt-4;
   }
 
-  .blog-content p{
+  .blog-content p {
     @apply text-secondary/70 dark:text-white/70;
   }
 
-  .blog-content h4{
+  .blog-content h4 {
     @apply mt-5 mb-3.5;
   }
 

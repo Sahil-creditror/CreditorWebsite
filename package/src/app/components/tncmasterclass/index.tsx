@@ -17,6 +17,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import MembershipContactForm from "./MembershipContactForm";
 
 /**
  * MasterclassMembershipTC – Premium T&C page
@@ -182,6 +183,7 @@ export default function MasterclassMembershipTC() {
   const [darkHint, setDarkHint] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<"monthly" | "annual">("monthly");
+  const [showContactForm, setShowContactForm] = useState(false);
   const router = useRouter();
 
   // Scroll state to hide back button
@@ -391,10 +393,7 @@ export default function MasterclassMembershipTC() {
                 type="button"
                 onClick={() => {
                   if (!agreed) return;
-                  const url = selectedPlan === "monthly"
-                    ? "https://quickclick.com/r/m7o5skh90z5o7s6x6bg9yeklf7ql3f"
-                    : "https://quickclick.com/r/ylju71tqiulsto3pqq6w9mq9tbrnmn";
-                  window.open(url, '_blank', 'noopener,noreferrer');
+                  setShowContactForm(true);
                 }}
                 disabled={!agreed}
                 whileTap={{ scale: agreed ? 0.98 : 1 }}
@@ -443,6 +442,13 @@ export default function MasterclassMembershipTC() {
           )}
         </motion.div>
       </section>
+
+      {/* Membership Contact Form Modal */}
+      <MembershipContactForm
+        isOpen={showContactForm}
+        onClose={() => setShowContactForm(false)}
+        selectedPlan={selectedPlan}
+      />
 
       {/* Bottom padding */}
       <div className="h-16" />

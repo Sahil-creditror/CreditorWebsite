@@ -36,9 +36,9 @@ WEBINAR_SESSION_MINUTES_PST.push(0);
  * Hard stop for this webinar series (final occurrence).
  * Used so that "upcoming" logic never goes past the last scheduled date.
  *
- * NOTE: Feb 1, 2026 11:59 PM PST (adjust if the series end date changes).
+ * NOTE: Dec 31, 2026 11:59 PM PST (adjust if the series end date changes).
  */
-const WEBINAR_SERIES_END = new Date("2026-02-01T23:59:59-08:00");
+const WEBINAR_SERIES_END = new Date("2026-12-31T23:59:59-08:00");
 
 /**
  * Countdown hook: next scheduled webinar (hourly from 9 AM to 12 AM PST) from current time.
@@ -239,6 +239,10 @@ const buildUpcomingSessions = (count: number): WebinarSession[] => {
   const now = new Date();
   const allSessions: WebinarSession[] = [];
 
+  console.log('[buildUpcomingSessions] Current time:', now.toISOString());
+  console.log('[buildUpcomingSessions] Series end date:', WEBINAR_SERIES_END.toISOString());
+  console.log('[buildUpcomingSessions] Number of templates:', webinarTemplates.length);
+
   // Iterate day-by-day to gather all upcoming slots
   const cursor = new Date(now);
   const maxDays = 7; // Look ahead up to 7 days
@@ -247,6 +251,16 @@ const buildUpcomingSessions = (count: number): WebinarSession[] => {
     for (const template of webinarTemplates) {
       const occurrence = new Date(cursor);
       occurrence.setHours(template.hour, template.minute, 0, 0);
+
+      // Debug first iteration
+      if (day === 0 && template.hour === 9) {
+        console.log('[buildUpcomingSessions] Sample occurrence:', {
+          occurrenceTime: occurrence.toISOString(),
+          nowTime: now.toISOString(),
+          isFuture: occurrence.getTime() > now.getTime(),
+          isPastSeriesEnd: occurrence.getTime() > WEBINAR_SERIES_END.getTime(),
+        });
+      }
 
       // Only include future occurrences
       if (occurrence.getTime() <= now.getTime()) continue;
@@ -286,6 +300,8 @@ const buildUpcomingSessions = (count: number): WebinarSession[] => {
     cursor.setDate(cursor.getDate() + 1);
   }
 
+  console.log('[buildUpcomingSessions] Total sessions generated:', allSessions.length);
+
   // Sort by time (nearest first, then farthest)
   allSessions.sort((a, b) => {
     return a.occurrenceDate.getTime() - b.occurrenceDate.getTime();
@@ -308,8 +324,12 @@ export default function WebclassSection() {
   const [formData, setFormData] = useState<FormState>({ ...initialFormState });
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>(undefined);
   // Show more sessions in dropdown (e.g., next 20 sessions)
-  const [sessions, setSessions] = useState<WebinarSession[]>(() => buildUpcomingSessions(20));
-  const [selectedSessionKey, setSelectedSessionKey] = useState<string>(sessions[0]?.key || "");
+  const [sessions, setSessions] = useState<WebinarSession[]>(() => {
+    const initialSessions = buildUpcomingSessions(20);
+    console.log('[Webclass] Initial sessions built:', initialSessions.length, 'sessions');
+    return initialSessions;
+  });
+  const [selectedSessionKey, setSelectedSessionKey] = useState<string>("");
   const [watchRecording, setWatchRecording] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -356,7 +376,9 @@ export default function WebclassSection() {
   const handleWidgetOpen = useCallback(() => {
     resetFormState();
     setWidgetOpen(true);
-  }, [resetFormState]);
+    console.log('[Webclass] Modal opened. Sessions available:', sessions.length);
+    console.log('[Webclass] First 3 sessions:', sessions.slice(0, 3));
+  }, [resetFormState, sessions]);
 
   const handleWidgetClose = useCallback(() => {
     setWidgetOpen(false);
@@ -944,7 +966,7 @@ export default function WebclassSection() {
                             setError(null);
                           }}
                           onBlur={() => handleBlur('session')}
-                          disabled={isSubmitting || sessions.length === 0 || watchRecording}
+                          disabled={isSubmitting || sessions.length === 0}
                         >
                           <option value="">Select a session time...</option>
                           {sessions.map((session: WebinarSession) => (
@@ -1377,6 +1399,11 @@ export default function WebclassSection() {
         }
         .form-select-input:disabled {
           cursor: not-allowed;
+          opacity: 0.5;
+          background: #f3f4f6 !important;
+        }
+        .dark .form-select-input:disabled {
+          background: #1f2937 !important;
         }
         .form-select-icon {
           position: absolute;

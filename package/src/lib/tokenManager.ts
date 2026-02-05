@@ -35,11 +35,11 @@ export async function fetchNewToken(): Promise<string | null> {
     const backendUrl = getBackendBaseUrl();
     const refreshTokenUrl = `${backendUrl}/zoom/refresh-token`;
 
-    // Safety check for placeholder URL to avoid CORS errors in browser
-    if (refreshTokenUrl.includes('your-backend-api.com')) {
-      console.warn('[Token Manager] Placeholder backend URL detected. Skipping token fetch.');
-      return null;
-    }
+    // // Safety check for placeholder URL to avoid CORS errors in browser
+    // if (refreshTokenUrl.includes('your-backend-api.com')) {
+    //   console.warn('[Token Manager] Placeholder backend URL detected. Skipping token fetch.');
+    //   return null;
+    // }
 
     console.log('[Token Manager] Fetching token from:', refreshTokenUrl);
 

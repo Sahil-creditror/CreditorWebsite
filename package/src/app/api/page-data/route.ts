@@ -187,13 +187,13 @@ const pricingData = {
     data: [
         {
             // planName: "Laurich",
-            tag:"Website Launch",
+            tag: "Website Launch",
             planPrice: "Website Service",
             planDescp: "Ideal for startups and small businesses taking their first steps online.",
-            planIncludes: ["Custom design for up to 10 pages","Responsive and mobile-friendly layout","Fast page load and security optimizations","On-page SEO optimization for key pages"],
+            planIncludes: ["Custom design for up to 10 pages", "Responsive and mobile-friendly layout", "Fast page load and security optimizations", "On-page SEO optimization for key pages"],
             coverImage: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883797/creditor-website-assets/images/pricing/Cover-1.jpg", // Optional
             link: "/services_page/website-service",
-            
+
         },
         // {
         //     // planName: "Scale",
@@ -205,27 +205,40 @@ const pricingData = {
         //     coverImage: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883800/creditor-website-assets/images/pricing/Cover-2.jpg", // Optional
         //     link: "/services_page/live-class",
         // },
+        // {
+        //     tag: "Tradeline Exchange",
+        //     planPrice: "Tradeline Exchange",
+        //     planDescp: "Buy and sell seasoned tradelines to strengthen credit profiles with a secure and compliant process.",
+        //     planIncludes: [
+        //       "Access to verified seasoned tradelines",
+        //       "Secure tradeline exchange platform",
+        //       "Compliance-focused process",
+        //       "Dedicated support and guidance"
+        //     ],
+        //     coverImage: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883800/creditor-website-assets/images/pricing/Cover-2.jpg", // Optional
+        //     link: "/services_page/tradeline-exchange"
+        //   },
         {
-            tag: "Tradeline Exchange",
-            planPrice: "Tradeline Exchange",
-            planDescp: "Buy and sell seasoned tradelines to strengthen credit profiles with a secure and compliant process.",
+            tag: "Premium Education",
+            planPrice: "Course Catalog",
+            planDescp: "Comprehensive roadmap for reclaiming sovereignty, building wealth, and operating in the private.",
             planIncludes: [
-              "Access to verified seasoned tradelines",
-              "Secure tradeline exchange platform",
-              "Compliance-focused process",
-              "Dedicated support and guidance"
+                "Become Private - Lawful identity",
+                "Operate Private - Asset protection",
+                "Financial Freedom - Business credit",
+                "Master Sovereign Wealth"
             ],
-            coverImage: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883800/creditor-website-assets/images/pricing/Cover-2.jpg", // Optional
-            link: "/services_page/tradeline-exchange"
-          },
+            coverImage: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883453/creditor-website-assets/images/courses/course-banner.webp",
+            link: "/courses"
+        },
 
         {
             // planName: "Elevate", 
-            tag: "Private Merchant",   
+            tag: "Private Merchant",
             planPrice: "Private Merchant",
             planDescp: "Best suited for established businesses wanting a fully tailored experience.",
-            planIncludes: ["Tailored payment solutions","Empower your business","Customized experience","Seamless Payment Solutions"],
-            coverImage: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883811/creditor-website-assets/images/pricing/Cover-3.jpg" ,// Optional
+            planIncludes: ["Tailored payment solutions", "Empower your business", "Customized experience", "Seamless Payment Solutions"],
+            coverImage: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883811/creditor-website-assets/images/pricing/Cover-3.jpg",// Optional
             link: "/services_page/private-merchant"
         },
     ],
@@ -236,18 +249,18 @@ const pricingData = {
         { light: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883693/creditor-website-assets/images/logo/creditorlogoblack.png", dark: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png" },
         { light: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png", dark: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png" },
         { light: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883693/creditor-website-assets/images/logo/creditorlogoblack.png", dark: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png" },
-      ],
+    ],
 };
 
 const pricingData2 = {
     data: [
         {
             planName: "Starter Plan",
-            tag:"Basic",
+            tag: "Basic",
             planPrice: "$99",
             cancelPrice: "$500",
             planDescp: "Ideal for startups and small businesses taking their first steps online.",
-            planIncludes: ["Competitive research & insights","Wireframing and prototyping","Basic tracking setup (Google Analytics, etc.)","Standard contact form integration"],
+            planIncludes: ["Competitive research & insights", "Wireframing and prototyping", "Basic tracking setup (Google Analytics, etc.)", "Standard contact form integration"],
             coverImage: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883797/creditor-website-assets/images/pricing/Cover-1.jpg",
             payLink: "https://quickclick.com/r/mq0rtcnac7tng6qnl2wk009ddrgrly"
         },
@@ -257,7 +270,7 @@ const pricingData2 = {
             planPrice: "$998",
             cancelPrice: "$2,199",
             planDescp: "Perfect for growing brands needing more customization and flexibility.",
-            planIncludes: ["Everything in the Launch Plan","Custom design for up to 10 pages","Seamless social media integration","SEO enhancements for key pages"],
+            planIncludes: ["Everything in the Launch Plan", "Custom design for up to 10 pages", "Seamless social media integration", "SEO enhancements for key pages"],
             coverImage: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883800/creditor-website-assets/images/pricing/Cover-2.jpg",
             payLink: "https://quickclick.com/r/ktwk1pon618kihkfhnfioqm9n1caap"
         },
@@ -285,18 +298,18 @@ const faqData = {
 };
 
 const contactData = {
-    keypoint:["Always-On Customer Support","Service Across the Globe"],
-    managerProfile:{
-        image:"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883335/creditor-website-assets/images/avatar/avatar_1.jpg",
-        name:"Courtney Henry",
-        position:"Onboarding & Success Manager"
+    keypoint: ["Always-On Customer Support", "Service Across the Globe"],
+    managerProfile: {
+        image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883335/creditor-website-assets/images/avatar/avatar_1.jpg",
+        name: "Courtney Henry",
+        position: "Onboarding & Success Manager"
     }
 }
 
 const aboutusStats = [
     {
         number: 45,
-        postfix:"+",
+        postfix: "+",
         title: 'Presence in global markets',
         descp: "Expanding reach across international regions with localized expertise and worldwide impact."
     },
@@ -316,7 +329,7 @@ const aboutusStats = [
 ]
 
 const servicesSliderData = [
-    "Master class ", "Roadmap Series", "Private Business Credit","Operate Private","Sovereignity","Become Private"
+    "Master class ", "Roadmap Series", "Private Business Credit", "Operate Private", "Sovereignity", "Become Private"
 ]
 
 

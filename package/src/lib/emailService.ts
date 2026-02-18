@@ -16,7 +16,7 @@ function formatDateToPST(dateString?: string | null): string | null {
 
   try {
     const date = new Date(dateString);
-    
+
     // Check if date is valid
     if (isNaN(date.getTime())) {
       return dateString; // Return original if invalid
@@ -48,6 +48,7 @@ interface TeamNotificationData {
   meetingLink?: string; // Optional - not needed for pre-recorded sessions
   sessionDate?: string;
   webinarId?: string;
+  occurrenceId?: string;
   sessionType?: "live" | "pre-recorded"; // Type of session
 }
 
@@ -118,7 +119,7 @@ function getEmailTransporter() {
  */
 function getTeamEmails(): string[] {
   const teamEmailsEnv = process.env.TEAM_EMAILS || process.env.WEBINAR_TEAM_EMAILS;
-  
+
   if (!teamEmailsEnv) {
     console.warn("⚠️  TEAM_EMAILS environment variable not set. No team notifications will be sent.");
     return [];
@@ -261,13 +262,13 @@ export async function sendTeamNotificationEmail(data: TeamNotificationData): Pro
   console.log("[EMAIL] =================================================");
   console.log("[EMAIL] Starting team notification email process");
   console.log("[EMAIL] =================================================");
-  
+
   // Check environment variables first
   console.log("[EMAIL] Checking environment variables...");
   console.log("[EMAIL] SMTP_USER:", process.env.SMTP_USER ? "✅ SET" : "❌ NOT SET");
   console.log("[EMAIL] SMTP_PASS:", process.env.SMTP_PASS ? "✅ SET" : "❌ NOT SET");
   console.log("[EMAIL] TEAM_EMAILS:", process.env.TEAM_EMAILS ? "✅ SET" : "❌ NOT SET");
-  
+
   const teamEmails = getTeamEmails();
   console.log("[EMAIL] Parsed team emails:", teamEmails.length, "addresses");
 
@@ -311,10 +312,10 @@ export async function sendTeamNotificationEmail(data: TeamNotificationData): Pro
     console.log("[EMAIL] Recipients:", teamEmails.length, "team members");
     console.log("[EMAIL] Session Type:", data.sessionType || "not specified");
     console.log("[EMAIL] Meeting Link:", data.meetingLink || "not provided");
-    
+
     const transporter = getEmailTransporter();
     const fromEmail = process.env.EMAIL_FROM || process.env.SMTP_USER;
-    
+
     if (!fromEmail) {
       throw new Error("EMAIL_FROM is not configured. Please set EMAIL_FROM in environment variables.");
     }
@@ -356,15 +357,15 @@ export async function sendTeamNotificationEmail(data: TeamNotificationData): Pro
     console.log("[EMAIL] From:", fromEmail);
     console.log("[EMAIL] To:", teamEmails.join(", "));
     console.log("[EMAIL] Subject: New " + sessionTypeLabel + " Registration - " + data.attendeeName);
-    
+
     // Send email with increased timeout
     const info = await Promise.race([
       transporter.sendMail(mailOptions),
-      new Promise((_, reject) => 
+      new Promise((_, reject) =>
         setTimeout(() => reject(new Error("Email send timeout after 30 seconds")), 30000)
       )
     ]) as any;
-    
+
     console.log("═══════════════════════════════════════════════════");
     console.log("✅ Team notification email sent successfully!");
     console.log("═══════════════════════════════════════════════════");
@@ -381,7 +382,7 @@ export async function sendTeamNotificationEmail(data: TeamNotificationData): Pro
     console.error("═══════════════════════════════════════════════════");
     console.error("Error Message:", error.message);
     console.error("Error Code:", error.code || "N/A");
-    
+
     if (error.code === "EAUTH") {
       console.error("⚠️  AUTHENTICATION FAILED");
       console.error("   - Check SMTP_USER and SMTP_PASS in .env.local");
@@ -408,7 +409,7 @@ export async function sendTeamNotificationEmail(data: TeamNotificationData): Pro
       console.error("⚠️  UNKNOWN ERROR");
       console.error("   - Error details:", JSON.stringify(error, Object.getOwnPropertyNames(error), 2));
     }
-    
+
     console.error("═══════════════════════════════════════════════════");
     console.error("⚠️  Registration will continue despite email failure.");
     console.error("═══════════════════════════════════════════════════");

@@ -45,6 +45,15 @@ export async function POST(request: Request) {
         }
       ).webinar_id ?? undefined);
 
+    // Accept both occurrence_id (snake) and occurrenceId (camel) from the client
+    const occurrenceId =
+      payload.occurrence_id ||
+      ((
+        payload as {
+          occurrenceId?: string;
+        }
+      ).occurrenceId ?? undefined);
+
     if (!webinarId) {
       return NextResponse.json({ success: false, error: "Missing webinar_id" }, { status: 400 });
     }
@@ -57,16 +66,16 @@ export async function POST(request: Request) {
       last_name: payload.last_name,
       phone_number: payload.phone_number,
       webinarId,
-      occurrence_id: payload.occurrence_id,
+      occurrenceId,
     });
 
     // Get token from Authorization header, fallback to static token
     const authHeader = request.headers.get("authorization");
     const accessToken = authHeader?.replace("Bearer ", "") || STATIC_ZOOM_ACCESS_TOKEN;
-    
+
     console.log("[WEBX] Using", authHeader ? "client-provided" : "static", "access token");
 
-    const { email, first_name, last_name, phone_number, occurrence_id } = payload;
+    const { email, first_name, last_name, phone_number } = payload;
 
     const webxBody = {
       email,
@@ -75,7 +84,7 @@ export async function POST(request: Request) {
       // phone_number is sent as a string
       phone_number: phone_number ? String(phone_number) : undefined,
       webinar_id: webinarId,
-      occurrence_id,
+      occurrence_id: occurrenceId,
     };
 
     console.log("[WEBX] Calling backend register endpoint:", {
@@ -127,8 +136,9 @@ export async function POST(request: Request) {
       attendeePhone: phone_number || "not provided",
       meetingLink: responseData.join_url,
       sessionDate: responseData.start_time || "not provided",
+      occurrenceId: occurrenceId,
     });
-    
+
     try {
       await sendTeamNotificationEmail({
         attendeeName: `${first_name} ${last_name}`,
@@ -137,6 +147,7 @@ export async function POST(request: Request) {
         meetingLink: responseData.join_url,
         sessionDate: responseData.start_time,
         webinarId: webinarId,
+        occurrenceId: occurrenceId,
         sessionType: "live",
       });
       console.log("[WEBX] ✅ Team notification email process completed");

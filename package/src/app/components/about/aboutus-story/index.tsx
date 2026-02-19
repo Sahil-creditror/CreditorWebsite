@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useInView, useScroll, useTransform, Variants } from "framer-motion";
-import { useRef } from "react";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 // ✅ Bubble props type
 interface BubbleProps {
@@ -80,8 +80,10 @@ const AboutusStory = () => {
     },
   ];
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const isInView = useInView(containerRef, { once: true, amount: 0.2 });
+  const { ref: containerRef, inView: isInView } = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
 
   // ✅ updated for framer-motion v7
   const { scrollYProgress } = useScroll();

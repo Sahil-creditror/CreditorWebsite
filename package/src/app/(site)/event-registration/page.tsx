@@ -4,7 +4,21 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { CheckCircle2, Copy } from "lucide-react";
-import FreedomFormula from "@/app/components/home/Offer";
+// Temporarily disabled to fix webpack error
+// import dynamic from "next/dynamic";
+// import { Suspense } from "react";
+
+// // Dynamically import to avoid webpack module resolution issues
+// const FreedomFormula = dynamic(
+//   () => import("@/app/components/home/Offer"),
+//   { 
+//     ssr: false,
+//     loading: () => <div className="min-h-[400px]" />
+//   }
+// );
+
+// Temporary fallback component
+const FreedomFormula = () => null;
 
 interface TimeLeft {
   expired: boolean;
@@ -430,7 +444,12 @@ export default function EventRegistrationSuccess(): React.ReactElement {
           </div>
         </section>
       </div>
-      <FreedomFormula />
+      {/* Temporarily disabled to fix webpack error */}
+      {/* {isMounted && (
+        <Suspense fallback={<div className="min-h-[400px]" />}>
+          <FreedomFormula />
+        </Suspense>
+      )} */}
     </main>
   );
 }

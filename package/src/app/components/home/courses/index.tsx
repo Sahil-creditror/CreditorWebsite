@@ -2,8 +2,14 @@
 
 import "swiper/css";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import Premium from "./courses";
-import HerobannerWithTag from "@/app/components/shared/hero-banner-with-tag";
+
+// Dynamically import to avoid webpack module resolution issues
+const HerobannerWithTag = dynamic(
+  () => import("@/app/components/shared/hero-banner-with-tag"),
+  { ssr: true }
+);
 
 function Courses() {
   return (

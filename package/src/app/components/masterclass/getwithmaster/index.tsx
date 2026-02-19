@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, Variants, useInView } from "framer-motion";
+import React from "react";
+import { motion, Variants } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import Image from "next/image";
 
 export default function MasterclassBenefits() {
@@ -182,8 +183,11 @@ export default function MasterclassBenefits() {
         {/* Benefits Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {benefits.map((item, index) => {
-            const cardRef = useRef<HTMLDivElement>(null);
-            const isInView = useInView(cardRef, { once: true, margin: "-80px" });
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            const { ref: cardRef, inView: isInView } = useInView({
+              triggerOnce: true,
+              rootMargin: "-80px",
+            });
 
             return (
               <motion.article

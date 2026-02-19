@@ -17,20 +17,17 @@ import "react-phone-number-input/style.css";
 /**
  * Fixed daily webinar times in PST (24h format).
  * These are used for the countdown logic and upcoming-session dropdown.
- * Updated for hourly sessions from 9:00 AM to 12:00 AM (midnight).
+ * Updated for hourly sessions from 12:00 AM (midnight) to 11:00 PM (all 24 hours).
  */
 const WEBINAR_SESSION_HOURS_PST: number[] = [];
 const WEBINAR_SESSION_MINUTES_PST: number[] = [];
 
-// Generate hourly time slots from 9:00 AM to 12:00 AM (midnight)
-// 9:00 AM, 10:00 AM, 11:00 AM, 12:00 PM, 1:00 PM, ..., 11:00 PM, 12:00 AM
-for (let hour = 9; hour < 24; hour++) {
+// Generate hourly time slots for all 24 hours (0:00 to 23:00)
+// 12:00 AM, 1:00 AM, 2:00 AM, 3:00 AM, ..., 11:00 PM
+for (let hour = 0; hour < 24; hour++) {
   WEBINAR_SESSION_HOURS_PST.push(hour);
   WEBINAR_SESSION_MINUTES_PST.push(0); // Only hourly slots (minute = 0)
 }
-// Add midnight (12:00 AM = 0:00)
-WEBINAR_SESSION_HOURS_PST.push(0);
-WEBINAR_SESSION_MINUTES_PST.push(0);
 
 /**
  * Hard stop for this webinar series (final occurrence).
@@ -41,7 +38,7 @@ WEBINAR_SESSION_MINUTES_PST.push(0);
 const WEBINAR_SERIES_END = new Date("2026-12-31T23:59:59-08:00");
 
 /**
- * Countdown hook: next scheduled webinar (hourly from 9 AM to 12 AM PST) from current time.
+ * Countdown hook: next scheduled webinar (hourly, all 24 hours PST) from current time.
  * Shows countdown to the nearest upcoming session start time.
  * When a session time passes, automatically moves to the next session.
  */
@@ -132,56 +129,59 @@ type WebinarSession = {
  * Only hourly slots are active (9:00, 10:00, 11:00, ..., 12:00 AM).
  */
 const WEBINAR_ID_MAP: Record<string, string> = {
-  "9:0": process.env.NEXT_PUBLIC_WEBINAR_ID_9_00 || "85345478550",
+  "9:0": process.env.NEXT_PUBLIC_WEBINAR_ID_9_00 || "83714099773",
   // "9:20": process.env.NEXT_PUBLIC_WEBINAR_ID_9_20 || "84025714942",
   // "9:40": process.env.NEXT_PUBLIC_WEBINAR_ID_9_40 || "88069720130",
-  "10:0": process.env.NEXT_PUBLIC_WEBINAR_ID_10_00 || "83407669064",
+  "10:0": process.env.NEXT_PUBLIC_WEBINAR_ID_10_00 || "81791098294",
   // "10:20": process.env.NEXT_PUBLIC_WEBINAR_ID_10_20 || "87147336148",
   // "10:40": process.env.NEXT_PUBLIC_WEBINAR_ID_10_40 || "85247127947",
-  "11:0": process.env.NEXT_PUBLIC_WEBINAR_ID_11_00 || "89594830823",
+  "11:0": process.env.NEXT_PUBLIC_WEBINAR_ID_11_00 || "82020563134",
   // "11:20": process.env.NEXT_PUBLIC_WEBINAR_ID_11_20 || "82978557986",
   // "11:40": process.env.NEXT_PUBLIC_WEBINAR_ID_11_40 || "88590684526",
-  "12:0": process.env.NEXT_PUBLIC_WEBINAR_ID_12_00 || "82820883271",
+  "12:0": process.env.NEXT_PUBLIC_WEBINAR_ID_12_00 || "83019894049",
   // "12:20": process.env.NEXT_PUBLIC_WEBINAR_ID_12_20 || "86790401487",
   // "12:40": process.env.NEXT_PUBLIC_WEBINAR_ID_12_40 || "81397341406",
-  "13:0": process.env.NEXT_PUBLIC_WEBINAR_ID_13_00 || "88431434222",
+  "13:0": process.env.NEXT_PUBLIC_WEBINAR_ID_13_00 || "81760965028",
   // "13:20": process.env.NEXT_PUBLIC_WEBINAR_ID_13_20 || "82736752329",
   // "13:40": process.env.NEXT_PUBLIC_WEBINAR_ID_13_40 || "88516407451",
-  "14:0": process.env.NEXT_PUBLIC_WEBINAR_ID_14_00 || "85009970371",
+  "14:0": process.env.NEXT_PUBLIC_WEBINAR_ID_14_00 || "82535773783",
   // "14:20": process.env.NEXT_PUBLIC_WEBINAR_ID_14_20 || "81687485195",
   // "14:40": process.env.NEXT_PUBLIC_WEBINAR_ID_14_40 || "88004203092",
-  "15:0": process.env.NEXT_PUBLIC_WEBINAR_ID_15_00 || "82602140461",
+  "15:0": process.env.NEXT_PUBLIC_WEBINAR_ID_15_00 || "89804122112",
   // "15:20": process.env.NEXT_PUBLIC_WEBINAR_ID_15_20 || "84565337034",
   // "15:40": process.env.NEXT_PUBLIC_WEBINAR_ID_15_40 || "81055148799",
-  "16:0": process.env.NEXT_PUBLIC_WEBINAR_ID_16_00 || "82712967074",
+  "16:0": process.env.NEXT_PUBLIC_WEBINAR_ID_16_00 || "85643875195",
   // "16:20": process.env.NEXT_PUBLIC_WEBINAR_ID_16_20 || "83402332029",
   // "16:40": process.env.NEXT_PUBLIC_WEBINAR_ID_16_40 || "89184864298",
-  "17:0": process.env.NEXT_PUBLIC_WEBINAR_ID_17_00 || "89004632115",
+  "17:0": process.env.NEXT_PUBLIC_WEBINAR_ID_17_00 || "85862841627",
   // "17:20": process.env.NEXT_PUBLIC_WEBINAR_ID_17_20 || "82414041370",
   // "17:40": process.env.NEXT_PUBLIC_WEBINAR_ID_17_40 || "81100579049",
-  "18:0": process.env.NEXT_PUBLIC_WEBINAR_ID_18_00 || "84754397951",
+  "18:0": process.env.NEXT_PUBLIC_WEBINAR_ID_18_00 || "85885160584",
   // "18:20": process.env.NEXT_PUBLIC_WEBINAR_ID_18_20 || "83709383501",
   // "18:40": process.env.NEXT_PUBLIC_WEBINAR_ID_18_40 || "87324155325",
-  "19:0": process.env.NEXT_PUBLIC_WEBINAR_ID_19_00 || "84323907773",
+  "19:0": process.env.NEXT_PUBLIC_WEBINAR_ID_19_00 || "83058065233",
   // "19:20": process.env.NEXT_PUBLIC_WEBINAR_ID_19_20 || "87488320536",
   // "19:40": process.env.NEXT_PUBLIC_WEBINAR_ID_19_40 || "84436856616",
-  "20:0": process.env.NEXT_PUBLIC_WEBINAR_ID_20_00 || "83351902482",
+  "20:0": process.env.NEXT_PUBLIC_WEBINAR_ID_20_00 || "86026778255",
   // "20:20": process.env.NEXT_PUBLIC_WEBINAR_ID_20_20 || "81579764439",
   // "20:40": process.env.NEXT_PUBLIC_WEBINAR_ID_20_40 || "84010459642",
-  "21:0": process.env.NEXT_PUBLIC_WEBINAR_ID_21_00 || "88014118083",
+  "21:0": process.env.NEXT_PUBLIC_WEBINAR_ID_21_00 || "82439433153",
   // "21:20": process.env.NEXT_PUBLIC_WEBINAR_ID_21_20 || "84741812359",
   // "21:40": process.env.NEXT_PUBLIC_WEBINAR_ID_21_40 || "84509036766",
-  "22:0": process.env.NEXT_PUBLIC_WEBINAR_ID_22_00 || "88357985730",
+  "22:0": process.env.NEXT_PUBLIC_WEBINAR_ID_22_00 || "86228662125",
   // "22:20": process.env.NEXT_PUBLIC_WEBINAR_ID_22_20 || "81461797359",
   // "22:40": process.env.NEXT_PUBLIC_WEBINAR_ID_22_40 || "85661956630",
-  "23:0": process.env.NEXT_PUBLIC_WEBINAR_ID_23_00 || "83724542857",
+  "23:0": process.env.NEXT_PUBLIC_WEBINAR_ID_23_00 || "84501530874",
   // "23:20": process.env.NEXT_PUBLIC_WEBINAR_ID_23_20 || "86553620476",
   // "23:40": process.env.NEXT_PUBLIC_WEBINAR_ID_23_40 || "87637581703",
-  "0:0": process.env.NEXT_PUBLIC_WEBINAR_ID_0_00 || "81368819394",
+  "0:0": process.env.NEXT_PUBLIC_WEBINAR_ID_0_00 || "81770671957",
+  "1:0": process.env.NEXT_PUBLIC_WEBINAR_ID_1_00 || "81314744802",
+  "2:0": process.env.NEXT_PUBLIC_WEBINAR_ID_2_00 || "85093947802",
+  "3:0": process.env.NEXT_PUBLIC_WEBINAR_ID_3_00 || "84500398491",
 };
 
 /**
- * Base templates for all daily webinar slots (hourly from 9 AM to 12 AM).
+ * Base templates for all daily webinar slots (hourly, all 24 hours).
  * We derive the actual upcoming occurrences (date + time) from these.
  */
 type WebinarTemplate = {

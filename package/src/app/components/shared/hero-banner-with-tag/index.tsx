@@ -1,8 +1,8 @@
 "use client";
-import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import { usePathname } from "next/navigation";
 
 interface HeroBannerWithTagProps {
@@ -30,8 +30,10 @@ const HerobannerWithTag: React.FC<HeroBannerWithTagProps> = ({
   const splitDesc = desc.split(/<\/?span>/);
 
   // For button animation
-  const btnRef = useRef<HTMLDivElement | null>(null);
-  const inView = useInView(btnRef, { once: true, amount: 0.25 });
+  const { ref: btnRef, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.25,
+  });
 
   return (
     <section className="relative flex items-end text-white bg-black h-[70vh] bg-fixed sm:h-[80vh] max-h-[450px]">

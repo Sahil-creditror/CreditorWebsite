@@ -6,20 +6,17 @@ import { useEffect, useState } from "react";
 /**
  * Fixed daily webinar times in PST (24h format).
  * These are used for the countdown logic and upcoming-session dropdown.
- * Updated for hourly sessions from 9:00 AM to 12:00 AM (midnight).
+ * Updated for hourly sessions from 12:00 AM (midnight) to 11:00 PM (all 24 hours).
  */
 const WEBINAR_SESSION_HOURS_PST: number[] = [];
 const WEBINAR_SESSION_MINUTES_PST: number[] = [];
 
-// Generate hourly time slots from 9:00 AM to 12:00 AM (midnight)
-// 9:00 AM, 10:00 AM, 11:00 AM, 12:00 PM, 1:00 PM, ..., 11:00 PM, 12:00 AM
-for (let hour = 9; hour < 24; hour++) {
+// Generate hourly time slots for all 24 hours (0:00 to 23:00)
+// 12:00 AM, 1:00 AM, 2:00 AM, 3:00 AM, ..., 11:00 PM
+for (let hour = 0; hour < 24; hour++) {
   WEBINAR_SESSION_HOURS_PST.push(hour);
   WEBINAR_SESSION_MINUTES_PST.push(0); // Only hourly slots (minute = 0)
 }
-// Add midnight (12:00 AM = 0:00)
-WEBINAR_SESSION_HOURS_PST.push(0);
-WEBINAR_SESSION_MINUTES_PST.push(0);
 
 /**
  * Hard stop for this webinar series (final occurrence).
@@ -30,7 +27,7 @@ WEBINAR_SESSION_MINUTES_PST.push(0);
 const WEBINAR_SERIES_END = new Date("2026-02-01T23:59:59-08:00");
 
 /**
- * Countdown hook: next scheduled webinar (hourly from 9 AM to 12 AM PST) from current time.
+ * Countdown hook: next scheduled webinar (hourly, all 24 hours PST) from current time.
  * Shows countdown to the nearest upcoming session start time.
  * When a session time passes, automatically moves to the next session.
  */

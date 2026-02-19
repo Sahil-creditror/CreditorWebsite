@@ -53,6 +53,18 @@ const nextConfig: NextConfig = {
         },
       };
     }
+    
+    // Ensure react-intersection-observer resolves correctly
+    try {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        'react-intersection-observer': require.resolve('react-intersection-observer'),
+      };
+    } catch (e) {
+      // If require.resolve fails, webpack will use default resolution
+      console.warn('Could not resolve react-intersection-observer alias:', e);
+    }
+    
     return config;
   },
   images: {
@@ -124,11 +136,11 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_API_BASE_URL:
       //process.env.NEXT_PUBLIC_API_BASE_URL ?? "https://testbackend-hcoy.onrender.com/api",
       process.env.NEXT_PUBLIC_API_BASE_URL ?? "https://creditor.onrender.com/api",
-    NEXT_PUBLIC_WEBINAR_ID: process.env.NEXT_PUBLIC_WEBINAR_ID ?? "85345478550",
-    NEXT_PUBLIC_WEBINAR_ID_MIDNIGHT: process.env.NEXT_PUBLIC_WEBINAR_ID_MIDNIGHT ?? "81368819394",
-    NEXT_PUBLIC_WEBINAR_ID_MORNING: process.env.NEXT_PUBLIC_WEBINAR_ID_MORNING ?? "85345478550",
-    NEXT_PUBLIC_WEBINAR_ID_AFTERNOON: process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON ?? "85009970371",
-    NEXT_PUBLIC_WEBINAR_ID_EVENING: process.env.NEXT_PUBLIC_WEBINAR_ID_EVENING ?? "84323907773",
+    NEXT_PUBLIC_WEBINAR_ID: process.env.NEXT_PUBLIC_WEBINAR_ID ?? "83714099773",
+    NEXT_PUBLIC_WEBINAR_ID_MIDNIGHT: process.env.NEXT_PUBLIC_WEBINAR_ID_MIDNIGHT ?? "81770671957",
+    NEXT_PUBLIC_WEBINAR_ID_MORNING: process.env.NEXT_PUBLIC_WEBINAR_ID_MORNING ?? "83714099773",
+    NEXT_PUBLIC_WEBINAR_ID_AFTERNOON: process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON ?? "82535773783",
+    NEXT_PUBLIC_WEBINAR_ID_EVENING: process.env.NEXT_PUBLIC_WEBINAR_ID_EVENING ?? "83058065233",
   },
 };
 

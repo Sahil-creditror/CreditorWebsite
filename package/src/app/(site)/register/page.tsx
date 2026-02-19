@@ -15,13 +15,31 @@ interface ExtendedOccurrenceItem extends OccurrenceItem {
   webinarId: string;
 }
 
-// Webinar IDs from environment - defined outside component to avoid re-creation
-const WEBINAR_IDS = {
-  midnight: process.env.NEXT_PUBLIC_WEBINAR_ID_MIDNIGHT || '81368819394',
-  morning: process.env.NEXT_PUBLIC_WEBINAR_ID_MORNING || '85345478550',
-  afternoon: process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON || '85009970371',
-  evening: process.env.NEXT_PUBLIC_WEBINAR_ID_EVENING || '84323907773',
+// Webinar ID mapping for each time slot - matches the hero component
+const WEBINAR_ID_MAP: Record<string, string> = {
+  "9:0": process.env.NEXT_PUBLIC_WEBINAR_ID_9_00 || "83714099773",
+  "10:0": process.env.NEXT_PUBLIC_WEBINAR_ID_10_00 || "81791098294",
+  "11:0": process.env.NEXT_PUBLIC_WEBINAR_ID_11_00 || "82020563134",
+  "12:0": process.env.NEXT_PUBLIC_WEBINAR_ID_12_00 || "83019894049",
+  "13:0": process.env.NEXT_PUBLIC_WEBINAR_ID_13_00 || "81760965028",
+  "14:0": process.env.NEXT_PUBLIC_WEBINAR_ID_14_00 || "82535773783",
+  "15:0": process.env.NEXT_PUBLIC_WEBINAR_ID_15_00 || "89804122112",
+  "16:0": process.env.NEXT_PUBLIC_WEBINAR_ID_16_00 || "85643875195",
+  "17:0": process.env.NEXT_PUBLIC_WEBINAR_ID_17_00 || "85862841627",
+  "18:0": process.env.NEXT_PUBLIC_WEBINAR_ID_18_00 || "85885160584",
+  "19:0": process.env.NEXT_PUBLIC_WEBINAR_ID_19_00 || "83058065233",
+  "20:0": process.env.NEXT_PUBLIC_WEBINAR_ID_20_00 || "86026778255",
+  "21:0": process.env.NEXT_PUBLIC_WEBINAR_ID_21_00 || "82439433153",
+  "22:0": process.env.NEXT_PUBLIC_WEBINAR_ID_22_00 || "86228662125",
+  "23:0": process.env.NEXT_PUBLIC_WEBINAR_ID_23_00 || "84501530874",
+  "0:0": process.env.NEXT_PUBLIC_WEBINAR_ID_0_00 || "81770671957",
+  "1:0": process.env.NEXT_PUBLIC_WEBINAR_ID_1_00 || "81314744802",
+  "2:0": process.env.NEXT_PUBLIC_WEBINAR_ID_2_00 || "85093947802",
+  "3:0": process.env.NEXT_PUBLIC_WEBINAR_ID_3_00 || "84500398491",
 };
+
+// Get all unique webinar IDs from the map
+const ALL_WEBINAR_IDS = Array.from(new Set(Object.values(WEBINAR_ID_MAP)));
 
 export default function RegistrationPage(): React.ReactElement {
   const router = useRouter();
@@ -64,105 +82,107 @@ export default function RegistrationPage(): React.ReactElement {
       // Initialize token first
       await initializeToken();
       
-      // Then fetch occurrences from all four webinar IDs
+      // Then fetch occurrences from all webinar IDs
       await loadOccurrences();
     };
 
-    // Fetch occurrences from all four webinar IDs
+    // Fetch occurrences from all webinar IDs
     const loadOccurrences = async () => {
       setLoadingOccurrences(true);
       console.log('\n🔄 ========== LOADING OCCURRENCES FOR DROPDOWNS ==========');
-      console.log('📅 Fetching from 4 webinar IDs:');
-      console.log(`  - Midnight: ${WEBINAR_IDS.midnight}`);
-      console.log(`  - Morning: ${WEBINAR_IDS.morning}`);
-      console.log(`  - Afternoon: ${WEBINAR_IDS.afternoon}`);
-      console.log(`  - Evening: ${WEBINAR_IDS.evening}`);
+      console.log(`📅 Fetching from ${ALL_WEBINAR_IDS.length} unique webinar IDs`);
+      console.log(`📋 Webinar IDs:`, ALL_WEBINAR_IDS);
+      console.log(`📋 Time slot mapping:`, WEBINAR_ID_MAP);
+      
+      // Verify 1-3 AM IDs are included
+      const earlyMorningIds = [
+        WEBINAR_ID_MAP["1:0"],
+        WEBINAR_ID_MAP["2:0"],
+        WEBINAR_ID_MAP["3:0"]
+      ];
+      console.log(`🌙 Early morning (1-3 AM) webinar IDs:`, earlyMorningIds);
+      console.log(`✅ Are they in ALL_WEBINAR_IDS?`, earlyMorningIds.every(id => ALL_WEBINAR_IDS.includes(id)));
       
       try {
-        // Fetch occurrences from all four webinar IDs in parallel
-        const [midnightResult, morningResult, afternoonResult, eveningResult] = await Promise.all([
-          fetchOccurrences(WEBINAR_IDS.midnight),
-          fetchOccurrences(WEBINAR_IDS.morning),
-          fetchOccurrences(WEBINAR_IDS.afternoon),
-          fetchOccurrences(WEBINAR_IDS.evening),
-        ]);
-
         const allOccurrences: ExtendedOccurrenceItem[] = [];
         const now = new Date();
         console.log(`\n⏰ Current time: ${now.toISOString()}`);
+        // Fetch occurrences from all webinar IDs in parallel
+        const results = await Promise.allSettled(
+          ALL_WEBINAR_IDS.map(webinarId => fetchOccurrences(webinarId))
+        );
 
-        // Process midnight webinar occurrences
-        if (midnightResult.success && midnightResult.data) {
-          const futureOccurrences = midnightResult.data.occurrences
-            .filter(occ => new Date(occ.start_time) > now)
-            .map(occ => ({ ...occ, webinarId: WEBINAR_IDS.midnight }));
-          console.log(`\n🌃 Midnight webinar (${WEBINAR_IDS.midnight}):`);
-          console.log(`  - Total: ${midnightResult.data.occurrences.length}`);
-          console.log(`  - Future: ${futureOccurrences.length}`);
-          if (futureOccurrences.length > 0) {
-            futureOccurrences.forEach((occ, idx) => {
-              console.log(`  ${idx + 1}. ${occ.date} at ${occ.time} (ID: ${occ.occurrence_id})`);
-            });
+        // Process results from all webinar IDs
+        // Get the next occurrence from EACH time slot to ensure all slots are represented
+        results.forEach((result, index) => {
+          const webinarId = ALL_WEBINAR_IDS[index];
+          
+          // Handle Promise.allSettled results
+          if (result.status === 'fulfilled') {
+            const fetchResult = result.value;
+            
+            if (fetchResult.success && fetchResult.data) {
+              // Get all occurrences and filter future ones
+              const allOccs = fetchResult.data.occurrences || [];
+              const futureOccurrences = allOccs
+                .filter((occ: OccurrenceItem) => {
+                  const occDate = new Date(occ.start_time);
+                  const isFuture = occDate > now;
+                  if (!isFuture && earlyMorningIds.includes(webinarId)) {
+                    // Special logging for 1-3 AM slots
+                    console.log(`  ⏰ Early morning occurrence (${webinarId}): ${occ.start_time} - isFuture: ${isFuture}, now: ${now.toISOString()}`);
+                  }
+                  return isFuture;
+                })
+                .map((occ: OccurrenceItem) => ({ ...occ, webinarId }))
+                .sort((a: ExtendedOccurrenceItem, b: ExtendedOccurrenceItem) => 
+                  new Date(a.start_time).getTime() - new Date(b.start_time).getTime()
+                );
+              
+              // Find which time slot this webinar ID belongs to
+              const timeSlot = Object.entries(WEBINAR_ID_MAP).find(([_, id]) => id === webinarId)?.[0] || 'unknown';
+              
+              console.log(`\n📅 Webinar ${webinarId} (Time slot: ${timeSlot}):`);
+              console.log(`  - Total occurrences: ${allOccs.length}`);
+              console.log(`  - Future occurrences: ${futureOccurrences.length}`);
+              
+              // Add ALL future occurrences from this time slot (not just the next one)
+              // This ensures users can see multiple dates for each time slot
+              if (futureOccurrences.length > 0) {
+                futureOccurrences.forEach((occ: ExtendedOccurrenceItem, idx: number) => {
+                  console.log(`  ${idx + 1}. ${occ.date} at ${occ.time} (ID: ${occ.occurrence_id})`);
+                });
+                // Add all future occurrences, not just the first one
+                allOccurrences.push(...futureOccurrences);
+              } else {
+                console.log(`  ⚠️ No future occurrences for this time slot`);
+              }
+            } else {
+              console.log(`\n❌ Failed to fetch occurrences for webinar ${webinarId}:`, fetchResult.error);
+            }
+          } else if (result.status === 'rejected') {
+            console.log(`\n❌ Promise rejected for webinar ${webinarId}:`, result.reason);
           }
-          allOccurrences.push(...futureOccurrences);
+        });
+
+        // Sort all occurrences by start_time - show ALL occurrences from all time slots
+        const sortedOccurrences = allOccurrences
+          .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime());
+
+        // Check which time slots have occurrences
+        const timeSlotsWithOccurrences = new Set(sortedOccurrences.map(occ => occ.webinarId));
+        const missingTimeSlots = Object.entries(WEBINAR_ID_MAP)
+          .filter(([timeSlot, webinarId]) => !timeSlotsWithOccurrences.has(webinarId))
+          .map(([timeSlot]) => timeSlot);
+        
+        if (missingTimeSlots.length > 0) {
+          console.log(`\n⚠️ Time slots with NO occurrences:`, missingTimeSlots);
+          console.log(`   This includes: ${missingTimeSlots.join(', ')}`);
         }
 
-        // Process morning webinar occurrences
-        if (morningResult.success && morningResult.data) {
-          const futureOccurrences = morningResult.data.occurrences
-            .filter(occ => new Date(occ.start_time) > now)
-            .map(occ => ({ ...occ, webinarId: WEBINAR_IDS.morning }));
-          console.log(`\n🌅 Morning webinar (${WEBINAR_IDS.morning}):`);
-          console.log(`  - Total: ${morningResult.data.occurrences.length}`);
-          console.log(`  - Future: ${futureOccurrences.length}`);
-          if (futureOccurrences.length > 0) {
-            futureOccurrences.forEach((occ, idx) => {
-              console.log(`  ${idx + 1}. ${occ.date} at ${occ.time} (ID: ${occ.occurrence_id})`);
-            });
-          }
-          allOccurrences.push(...futureOccurrences);
-        }
-
-        // Process afternoon webinar occurrences
-        if (afternoonResult.success && afternoonResult.data) {
-          const futureOccurrences = afternoonResult.data.occurrences
-            .filter(occ => new Date(occ.start_time) > now)
-            .map(occ => ({ ...occ, webinarId: WEBINAR_IDS.afternoon }));
-          console.log(`\n☀️ Afternoon webinar (${WEBINAR_IDS.afternoon}):`);
-          console.log(`  - Total: ${afternoonResult.data.occurrences.length}`);
-          console.log(`  - Future: ${futureOccurrences.length}`);
-          if (futureOccurrences.length > 0) {
-            futureOccurrences.forEach((occ, idx) => {
-              console.log(`  ${idx + 1}. ${occ.date} at ${occ.time} (ID: ${occ.occurrence_id})`);
-            });
-          }
-          allOccurrences.push(...futureOccurrences);
-        }
-
-        // Process evening webinar occurrences
-        if (eveningResult.success && eveningResult.data) {
-          const futureOccurrences = eveningResult.data.occurrences
-            .filter(occ => new Date(occ.start_time) > now)
-            .map(occ => ({ ...occ, webinarId: WEBINAR_IDS.evening }));
-          console.log(`\n🌙 Evening webinar (${WEBINAR_IDS.evening}):`);
-          console.log(`  - Total: ${eveningResult.data.occurrences.length}`);
-          console.log(`  - Future: ${futureOccurrences.length}`);
-          if (futureOccurrences.length > 0) {
-            futureOccurrences.forEach((occ, idx) => {
-              console.log(`  ${idx + 1}. ${occ.date} at ${occ.time} (ID: ${occ.occurrence_id})`);
-            });
-          }
-          allOccurrences.push(...futureOccurrences);
-        }
-
-        // Sort all occurrences by start_time and take next 4
-        const nextFour = allOccurrences
-          .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime())
-          .slice(0, 4);
-
-        console.log(`\n📋 DROPDOWN OCCURRENCES (Next 4 upcoming sessions):`);
-        if (nextFour.length > 0) {
-          nextFour.forEach((occ, idx) => {
+        console.log(`\n📋 DROPDOWN OCCURRENCES (All ${sortedOccurrences.length} upcoming sessions from all time slots):`);
+        if (sortedOccurrences.length > 0) {
+          sortedOccurrences.forEach((occ, idx) => {
             console.log(`  ${idx + 1}. ${occ.date} at ${occ.time} PST`);
             console.log(`     - Webinar ID: ${occ.webinarId}`);
             console.log(`     - Occurrence ID: ${occ.occurrence_id}`);
@@ -173,25 +193,25 @@ export default function RegistrationPage(): React.ReactElement {
         }
         console.log('==========================================================\n');
 
-        setOccurrences(nextFour);
+        setOccurrences(sortedOccurrences);
         
-          // Auto-select first occurrence if available
-          if (nextFour.length > 0) {
-            const firstOccurrence = nextFour[0];
-            
-            // Store in localStorage
-            if (typeof window !== 'undefined') {
-              localStorage.setItem('selected_occurrence_id', firstOccurrence.occurrence_id);
-              localStorage.setItem('selected_webinar_id', firstOccurrence.webinarId);
-              console.log('[Register] Auto-selected and stored occurrence_id:', firstOccurrence.occurrence_id);
-            }
-            
-            setFormData(prev => ({ 
-              ...prev, 
-              occurrence_id: firstOccurrence.occurrence_id,
-              selectedWebinarId: firstOccurrence.webinarId
-            }));
+        // Auto-select first occurrence if available
+        if (sortedOccurrences.length > 0) {
+          const firstOccurrence = sortedOccurrences[0];
+          
+          // Store in localStorage
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('selected_occurrence_id', firstOccurrence.occurrence_id);
+            localStorage.setItem('selected_webinar_id', firstOccurrence.webinarId);
+            console.log('[Register] Auto-selected and stored occurrence_id:', firstOccurrence.occurrence_id);
           }
+          
+          setFormData(prev => ({ 
+            ...prev, 
+            occurrence_id: firstOccurrence.occurrence_id,
+            selectedWebinarId: firstOccurrence.webinarId
+          }));
+        }
       } catch (error) {
         console.error("❌ Error loading occurrences:", error);
       } finally {

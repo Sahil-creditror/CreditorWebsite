@@ -20,7 +20,7 @@ export default function Contact(props: ContactProps) {
   }, []);
 
   return (
-    <section className="relative py-20 md:py-24 overflow-hidden">
+    <section id="contact" className="relative py-20 md:py-24 overflow-hidden">
       <div className="container relative z-10">
         <div className="mx-auto flex flex-col gap-8 md:gap-12">
           {/* Two Column Layout */}
@@ -83,7 +83,7 @@ export default function Contact(props: ContactProps) {
             <div className="w-full">
               {/* Form loading state */}
               {!isFormLoaded && (
-                <div 
+                <div
                   className="w-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-xl animate-pulse flex items-center justify-center"
                   style={{ height: "400px" }}
                 >

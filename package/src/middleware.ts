@@ -8,7 +8,6 @@ export async function middleware(request: NextRequest) {
 
     if (token &&
         (
-            url.pathname.startsWith('/signin') ||
             url.pathname.startsWith('/signup') ||
             url.pathname.startsWith('/forgot-password') 
     )) {
@@ -19,5 +18,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/signin', '/signup', '/forgot-password', '/'],
+    matcher: ['/signup', '/forgot-password', '/'],
 };

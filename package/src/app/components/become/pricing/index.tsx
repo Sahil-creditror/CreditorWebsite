@@ -214,7 +214,7 @@ export default function Pricing() {
                   whileHover={{ scale: 1.01 }}
                   href={
                     plan.id === "masterclass"
-                      ? "/tncmasterclass"
+                      ? "/signup"
                       : plan.id === "bundle"
                       ? "/course-tnc"
                       : plan.id === "enterprise"

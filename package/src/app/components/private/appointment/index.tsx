@@ -61,7 +61,7 @@ export default function HeroSection() {
 
         {/* CTA Button */}
         <motion.a
-          href="/tncmasterclass"
+          href="/signup"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold shadow-lg transition-transform duration-300 hover:shadow-xl"

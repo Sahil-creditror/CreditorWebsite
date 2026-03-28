@@ -51,8 +51,7 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
   }, []);
 
   const excludedRoutes = [
-    "/signin",
-    "/signup",
+    "https://lmsathena.com/login",
     "/forgot-password",
     "/documentation",
     "/become-wonder",
@@ -66,6 +65,7 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
     is404;
   const hideFooter =
     excludedRoutes.includes(pathname) ||
+    pathname === "/signup" ||
     pathname.startsWith("/services_page/tradeline-exchange") ||
     is404;
 

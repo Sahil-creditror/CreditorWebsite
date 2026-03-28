@@ -51,7 +51,7 @@ export default function Page() {
                     bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883842/creditor-website-assets/images/projects/banner/masterclass-banner.jpg"
                     heading="Masterclass Membership"
                     desc="Learn how to <span>set up your Trust</span>, your Private Identity, and Business Credit step-by-step."
-                    buttonPath="/tncmasterclass"
+                    buttonPath="/signup"
                 />
                 <Preview />
                 <Get />

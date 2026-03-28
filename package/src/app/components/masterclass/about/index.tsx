@@ -264,7 +264,7 @@ export default function ProgramSection({ onEnroll }: ProgramSectionProps) {
                     if (onEnroll) {
                       onEnroll();
                     } else {
-                      router.push("/tncmasterclass");
+                      router.push("/signup");
                     }
                   }}
                   className="relative overflow-hidden rounded-xl px-6 py-3 font-semibold text-lg sm:text-xl text-white bg-gradient-to-r from-sky-500 to-sky-600 shadow-lg hover:brightness-105 transition-all duration-200"

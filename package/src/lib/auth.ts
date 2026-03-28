@@ -4,7 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions: NextAuthOptions = {
   pages: {
-    signIn: "/auth/signin",
+    signIn: "https://lmsathena.com/login",
   },
   secret: process.env.NEXTAUTH_SECRET || process.env.SECRET,
   session: {

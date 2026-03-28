@@ -201,7 +201,7 @@ export default function OffersSection() {
                   whileHover={{ scale: 1.01 }}
                   href={
                     offer.id === "masterclass"
-                      ? "/tncmasterclass"
+                      ? "/signup"
                       : offer.id === "bundle"
                       ? "/course-tnc"
                       : offer.id === "enterprise"

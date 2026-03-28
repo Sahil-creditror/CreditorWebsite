@@ -117,7 +117,7 @@ export default function CheckoutPage() {
       const agreementSigned = localStorage.getItem("user_agreement_signed");
       
       if (!storedUser) {
-        router.push("/signin?redirect=/services_page/tradeline-exchange/checkout");
+        router.push("https://lmsathena.com/login?redirect=/services_page/tradeline-exchange/checkout");
         return;
       }
       

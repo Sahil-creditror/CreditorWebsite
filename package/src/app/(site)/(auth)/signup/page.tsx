@@ -1,15 +1,14 @@
 import { Metadata } from "next";
-import SignUp from "@/app/components/auth/sign-up";
+import AuthSignup from "@/app/components/auth/auth-signup";
 
 export const metadata: Metadata = {
-  title:
-    "Sign Up | Creditor",
+  title: "Sign Up | Creditor",
 };
 
 const SignupPage = () => {
   return (
     <>
-      <SignUp />
+      <AuthSignup />
     </>
   );
 };

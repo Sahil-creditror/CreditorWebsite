@@ -169,7 +169,7 @@ export default function MasterclassBenefits() {
 
           {/* <motion.div className="mt-6 flex items-center justify-center" variants={sectionVariants}>
             <motion.a
-              href="/tncmasterclass"
+              href="/signup"
               className="inline-flex items-center gap-3 rounded-full px-8 py-4 md:px-12 md:py-5 bg-blue-600 text-white font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 text-lg md:text-xl"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}

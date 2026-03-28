@@ -150,7 +150,7 @@ const Header = () => {
             </a>
             <div className="flex items-center gap-2 sm:gap-3">
               <Link
-                href="/tncmasterclass"
+                href="/signup"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`flex justify-center items-center gap-2 text-sm sm:text-base font-bold rounded-full py-1.5 px-4 transition-colors

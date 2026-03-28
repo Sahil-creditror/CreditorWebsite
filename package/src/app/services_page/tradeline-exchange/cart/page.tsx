@@ -37,7 +37,7 @@ export default function CartPage() {
       if (storedUser) {
         setUser(JSON.parse(storedUser));
       } else {
-        router.push("/signin?redirect=/services_page/tradeline-exchange/cart");
+        router.push("https://lmsathena.com/login?redirect=/services_page/tradeline-exchange/cart");
       }
     }
   }, [router]);

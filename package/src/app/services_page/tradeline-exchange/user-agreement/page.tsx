@@ -32,7 +32,7 @@ export default function UserAgreementPage() {
         setUserName(name);
         setUserEmail(email);
       } else {
-        router.push("/signin?redirect=/services_page/tradeline-exchange/user-agreement");
+        router.push("https://lmsathena.com/login?redirect=/services_page/tradeline-exchange/user-agreement");
         return;
       }
 

@@ -332,7 +332,7 @@ export default function MasterClassLaunchpad() {
               className="flex flex-col sm:flex-row sm:items-center sm:gap-4 justify-center lg:justify-start"
             >
               {/* <button
-                onClick={() => router.push("/tncmasterclass")}
+                onClick={() => router.push("/signup")}
                 className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-lg font-bold text-white bg-gradient-to-r from-blue-600 via-sky-600 to-blue-800 hover:from-blue-700 hover:via-sky-700 hover:to-blue-900 shadow-lg hover:shadow-xl transition-colors duration-200"
                 aria-label="Sign up for Master Class"
               >

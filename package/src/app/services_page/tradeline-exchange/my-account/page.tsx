@@ -30,7 +30,7 @@ export default function MyAccountPage() {
         setEmail(parsed.user || parsed.email || "");
       } else {
         // Redirect to login if not logged in
-        router.push("/signin?redirect=/services_page/tradeline-exchange/my-account");
+        router.push("https://lmsathena.com/login?redirect=/services_page/tradeline-exchange/my-account");
       }
     }
   }, [router]);

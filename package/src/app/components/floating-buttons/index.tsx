@@ -156,6 +156,7 @@ export default function FloatingButtons({ onSpecialOfferClick }: FloatingButtons
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isHeroContactClosed, setIsHeroContactClosed] = useState(false);
   const pathname = usePathname();
+  const stackBottom = pathname === "/" ? "13rem" : "2rem";
 
   // Logic: Show Hero Form when on Home Page AND NOT scrolled down, AND not manually closed by user
   const isHeroSection = pathname === "/" && !isScrollVisible && !isHeroContactClosed;
@@ -204,7 +205,10 @@ export default function FloatingButtons({ onSpecialOfferClick }: FloatingButtons
       </AnimatePresence>
 
       {/* Floating Buttons Container */}
-      <div className="fixed bottom-8 right-6 md:right-8 z-[9999] flex flex-col gap-3 items-end">
+      <div
+        className="fixed right-6 md:right-8 z-[9999] flex flex-col gap-3 items-end"
+        style={{ bottom: stackBottom }}
+      >
         {/* 1. Special Offer Button */}
         <motion.button
           onClick={onSpecialOfferClick}

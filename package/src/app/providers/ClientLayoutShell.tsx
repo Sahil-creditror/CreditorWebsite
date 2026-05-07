@@ -18,6 +18,10 @@ const FloatingButtons = dynamic(() => import("../components/floating-buttons"), 
   ssr: false,
 });
 
+const FloatingVideoChatbot = dynamic(() => import("../components/chatbot/FloatingMiniChatbot"), {
+  ssr: false,
+});
+
 export function ClientLayoutShell({ children }: PropsWithChildren) {
   const pathname = usePathname();
   const [is404, setIs404] = useState(false);
@@ -78,6 +82,9 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
 
         {/* Floating Buttons: Special Offer, Contact Form, Scroll to Top */}
         <FloatingButtons onSpecialOfferClick={() => setThanksgivingKey(prev => prev + 1)} />
+
+        {/* Landing page video chatbot */}
+        {pathname === "/" && <FloatingVideoChatbot />}
 
         {/* Thanksgiving Modal - Auto-opens after 5 seconds */}
         <ThanksgivingPopup

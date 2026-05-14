@@ -44,7 +44,7 @@ export default function Page() {
                     bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883456/creditor-website-assets/images/courses/junior.jpg"
                     heading="Operate Private"
                     desc="Build Wealth & Privacy Through Private Business Structures"
-                    buttonPath="/signup"
+                    buttonPath="/tncmasterclass"
                 />
                 <Intro2 />
                 <BecomeIntro />

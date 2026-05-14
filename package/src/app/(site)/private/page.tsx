@@ -27,7 +27,7 @@ const PrivatePage = () => {
         heading="Financial Freedom"
         desc="Your gateway to financial sovereignty."
         bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883838/creditor-website-assets/images/projects/banner/financial.png"
-        buttonPath="/signup"
+        buttonPath="/tncmasterclass"
       />
       <CourseDetail />
       <WebinarBootcamp

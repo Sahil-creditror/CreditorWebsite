@@ -149,18 +149,20 @@ const Header = () => {
               <span>(425-400-9246)</span>
             </a>
             <div className="flex items-center gap-2 sm:gap-3">
-              <Link
-                href="/signup"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex justify-center items-center gap-2 text-sm sm:text-base font-bold rounded-full py-1.5 px-4 transition-colors
-                  ${sticky
-                    ? "bg-gray text-white hover:bg-secondary hover:text-white"
-                    : "bg-secondary text-white hover:bg-secondary/90"}
-                `}
-              >
-                Sign Up
-              </Link>
+              {/*
+                <Link
+                  href="/signup"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex justify-center items-center gap-2 text-sm sm:text-base font-bold rounded-full py-1.5 px-4 transition-colors
+                    ${sticky
+                      ? "bg-gray text-white hover:bg-secondary hover:text-white"
+                      : "bg-secondary text-white hover:bg-secondary/90"}
+                  `}
+                >
+                  Sign Up
+                </Link>
+              */}
               <Link
                 href="https://lmsathena.com/login"
                 className={`flex justify-center items-center gap-2 text-sm sm:text-base font-bold rounded-full py-1.5 px-4 transition-colors

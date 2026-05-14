@@ -64,7 +64,7 @@ const Footer = () => {
                                         <a href="/return-refund" className='text-lg text-white hover:text-primary'>Return and Refunds</a>
                                     </li>
                                     <li>
-                                        <a href="/signup" className='text-lg text-white hover:text-primary'>Membership Terms and Conditions</a>
+                                        <a href="/tncmasterclass" className='text-lg text-white hover:text-primary'>Membership Terms and Conditions</a>
                                     </li>
                                 </ul>
                             </div>

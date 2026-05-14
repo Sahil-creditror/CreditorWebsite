@@ -416,7 +416,7 @@ const PrivateBusinessCredit: React.FC = () => {
           </motion.p>
         </motion.section>
 
-        <a href="/signup">
+        <a href="/tncmasterclass">
           <motion.button
             whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
             whileTap={{ scale: 0.98 }}

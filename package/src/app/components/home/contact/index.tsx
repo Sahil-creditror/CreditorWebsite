@@ -77,6 +77,20 @@ export default function Contact(props: ContactProps) {
                   clarity, strategy, and purpose.
                 </p>
               </div>
+
+              <div>
+                <button
+                  onClick={() =>
+                    window.open(
+                      "https://scheduler.zoom.us/d/yryit5gx/athena-lms-platform-demo",
+                      "_blank"
+                    )
+                  }
+                  className="inline-flex items-center cursor-pointer justify-center px-6 py-3 mt-8 text-sm font-medium text-gray-800 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 hover:shadow-md transition-all duration-300 active:scale-95"
+                >
+                  Need assistance or have questions? Schedule a meeting
+                </button>
+              </div>
             </div>
 
             {/* Right Column - Form */}
@@ -132,6 +146,8 @@ export default function Contact(props: ContactProps) {
                 />
               )}
             </div>
+
+
           </div>
         </div>
       </div>

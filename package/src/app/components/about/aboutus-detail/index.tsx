@@ -619,7 +619,7 @@ const AboutusDetail = () => {
               >
                 <Button
                   as="a"
-                  href="/projects"
+                  href="/masterclass-membership"
                   borderRadius="3rem"
                   containerClassName="
     relative w-full sm:w-auto min-w-[200px] h-14 px-8 py-0

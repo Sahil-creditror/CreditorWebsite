@@ -2,6 +2,7 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import { ClientLayoutShell } from "./providers/ClientLayoutShell";
+import { MetaPixelHead, MetaPixelNoscript } from "./components/analytics/MetaPixel";
 import type { Metadata } from "next";
 // Root layout must be a Server Component. Client-only logic moved into ClientLayoutShell.
 
@@ -66,8 +67,11 @@ export default function RootLayout({
           src="https://www.googletagmanager.com/gtag/js?id=AW-17542559364"
           strategy="lazyOnload"
         />
+        {/* Meta Pixel Code */}
+        <MetaPixelHead />
       </head>
       <body className={manrope.className}>
+        <MetaPixelNoscript />
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

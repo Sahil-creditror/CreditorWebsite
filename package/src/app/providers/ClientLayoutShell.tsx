@@ -6,15 +6,14 @@ import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import Header from "../components/layout/header";
 import Footer from "../components/layout/footer";
+import FloatingButtons from "../components/floating-buttons";
+import { MetaPixelPageView } from "../components/analytics/MetaPixelPageView";
+
 const ThanksgivingPopup = dynamic(() => import("../components/home/Thanksgiving"), {
   ssr: false,
 });
 
 const RegPopup = dynamic(() => import("../components/reg_popup"), {
-  ssr: false,
-});
-
-const FloatingButtons = dynamic(() => import("../components/floating-buttons"), {
   ssr: false,
 });
 
@@ -72,6 +71,7 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
   return (
     <SessionProvider>
       <ThemeProvider attribute="class" enableSystem={false} defaultTheme="light">
+        <MetaPixelPageView />
         {!hideHeader && <Header />}
         {children}
         {!hideFooter && <Footer />}

@@ -15,7 +15,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com
 export const metadata: Metadata = {
     title: "Aboutus | Creditor",
     alternates: {
-        canonical: `${siteUrl}/about`,
+        canonical: `${siteUrl}/about-us`,
     },
 };
 

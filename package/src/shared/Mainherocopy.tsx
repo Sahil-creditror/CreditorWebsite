@@ -236,7 +236,7 @@ const HeroSection = () => {
             {/* 🔘 Button directly under the title */}
             <div className="mt-2">
               <Link
-                href="/projects"
+                href="/masterclass-membership"
                 className="group flex gap-4 items-center w-fit bg-primary border border-primary hover:border hover:border-white/30 hover:bg-secondary rounded-full transition-all duration-200 ease-in-out"
               >
                 <span className="pl-6 text-lg font-bold text-secondary group-hover:text-white group-hover:translate-x-12 transform transition-transform duration-200 ease-in-out">

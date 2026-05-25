@@ -4,8 +4,7 @@ import Intro2 from "@/app/components/become/intro";
 import Content from "@/app/components/become/content";
 import Appoint from "@/app/components/become/appointment";
 import CTA from "@/app/components/shared/cta";
-//import Event from "@/app/components/home/event";
-import Event from "@/app/components/home/event";
+// import Event from "@/app/components/home/event";
 import Pricing from "@/app/components/shared/plan";
 import Script from "next/script";
 import HowItWorks from "@/app/components/become/works";
@@ -51,7 +50,7 @@ export default function Page() {
                 {/* <Pricing /> */}
                 <HowItWorks />
                 <Appoint />
-                <Event />
+                {/* <Event /> */}
                 {/* <Learn2 /> */}
                 {/* <FaqSection /> */}
                 <CTA />

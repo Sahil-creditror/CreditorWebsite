@@ -147,6 +147,7 @@ export default function Pricing() {
                     width={560}
                     height={320}
                     className="relative rounded-xl ring-1 ring-slate-200/70 dark:ring-white/10 shadow-lg object-cover w-full h-full"
+                    style={{ width: "100%", height: "auto" }}
                     priority
                   />
                 </motion.div>

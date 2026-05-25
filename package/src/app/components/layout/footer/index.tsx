@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image"
 import { useEffect, useState } from "react";
 
 const Footer = () => {
@@ -41,7 +40,8 @@ const Footer = () => {
                                     return (
                                         <div key={index}>
                                             <a href={value.href} className='flex gap-4'>
-                                                <Image src={value.icon} alt="icon" width={24} height={24} />
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img src={value.icon} alt="" width={24} height={24} className="h-6 w-6 shrink-0" />
                                                 <span className='text-white hover:text-primary text-lg'>{value.link}</span>
                                             </a>
                                         </div>

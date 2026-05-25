@@ -9,14 +9,14 @@ const MenuData = [
   },
   {
     id: 2,
-    title: "About",
-    path: "/about",
+    title: "About Us",
+    path: "/about-us",
     newTab: false,
   },
   {
     id: 3,
     title: "Membership",
-    path: "/projects",
+    path: "/masterclass-membership",
     newTab: false,
   },
   {
@@ -63,9 +63,9 @@ const footerData = {
     ],
     links: [
         { name: "Home", href: "/" },
-        { name: "About", href: "/about" },
+        { name: "About Us", href: "/about-us" },
         { name: "Services", href: "/#services" },
-        { name: "Membership", href: "/projects" },
+        { name: "Membership", href: "/masterclass-membership" },
         { name: "Terms & Conditions", href: "/terms-and-conditions" },
         { name: "Privacy Policy", href: "/privacy-policy" },
         { name: "Return & Refund", href: "/return-refund" },

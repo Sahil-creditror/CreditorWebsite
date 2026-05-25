@@ -100,6 +100,75 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/become",
+        destination: "/become-private",
+        permanent: true,
+      },
+      {
+        source: "/operate",
+        destination: "/operate-private",
+        permanent: true,
+      },
+      {
+        source: "/private",
+        destination: "/financial-freedom",
+        permanent: true,
+      },
+      {
+        source: "/projects",
+        destination: "/masterclass-membership",
+        permanent: true,
+      },
+      {
+        source: "/projects/BecomeSov",
+        destination: "/become-private",
+        permanent: true,
+      },
+      {
+        source: "/projects/BusinessCredit",
+        destination: "/financial-freedom",
+        permanent: true,
+      },
+      {
+        source: "/projects/OperatePrivate",
+        destination: "/operate-private",
+        permanent: true,
+      },
+      {
+        source: "/masterclass-membership/BecomeSov",
+        destination: "/become-private",
+        permanent: true,
+      },
+      {
+        source: "/masterclass-membership/BusinessCredit",
+        destination: "/financial-freedom",
+        permanent: true,
+      },
+      {
+        source: "/masterclass-membership/OperatePrivate",
+        destination: "/operate-private",
+        permanent: true,
+      },
+      {
+        source: "/projects-wonder/BecomeSov",
+        destination: "/become-private",
+        permanent: true,
+      },
+      {
+        source: "/projects-wonder/BusinessCredit",
+        destination: "/financial-freedom",
+        permanent: true,
+      },
+      {
+        source: "/projects-wonder/OperatePrivate",
+        destination: "/operate-private",
+        permanent: true,
+      },
+    ];
+  },
   // Add headers for better caching and performance
   async headers() {
     return [

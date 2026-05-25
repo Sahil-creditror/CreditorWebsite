@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Logo from "../logo";
+import { COURSES_PAGE_PATH } from "@/lib/coursePaths";
 
 const Header = () => {
   const { data: session } = useSession();
@@ -125,7 +126,7 @@ const Header = () => {
                 Private Merchant
               </Link>
               <Link
-                href="/courses"
+                href={COURSES_PAGE_PATH}
                 className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-4 transition-colors ${sticky
                   ? "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
                   : "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"

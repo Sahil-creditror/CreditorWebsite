@@ -5,7 +5,8 @@ import { join } from "path";
 const postsDirectory = join(process.cwd(), "markdown/projects");
 
 export function getPostSlugs() {
-  return fs.readdirSync(postsDirectory);
+  if (!fs.existsSync(postsDirectory)) return [];
+  return fs.readdirSync(postsDirectory).filter((file) => file.endsWith(".mdx"));
 }
 
 export function getProjectsBySlug(slug: string, fields: string[] = []) {

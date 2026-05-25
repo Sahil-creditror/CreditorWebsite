@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { FaShieldAlt, FaCreditCard, FaBolt } from 'react-icons/fa';
 
 type Props = {
@@ -164,7 +165,23 @@ export default function HeroSection({
 		{/* Bottom Closing Copy (Centered) */}
 		<div className="container mx-auto px-4 sm:px-6">
     <p className="mt-8 sm:mt-12 text-sm sm:text-base text-slate-700 dark:text-slate-300 max-w-2xl mx-auto text-center leading-relaxed">
-      Start with our <span className="font-semibold text-blue-600 dark:text-blue-400">Masterclass</span> to learn these basics, then advance through our <span className="font-semibold text-blue-600 dark:text-blue-400">Premium Courses — Become Private, Operate Private, and Financial Freedom —</span> to master every stage of your journey from public to private.
+      Start with our{" "}
+      <Link href="/masterclass-membership" className="font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+        Masterclass
+      </Link>{" "}
+      to learn these basics, then advance through our Premium Courses —{" "}
+      <Link href="/become-private" className="font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+        Become Private
+      </Link>
+      ,{" "}
+      <Link href="/operate-private" className="font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+        Operate Private
+      </Link>
+      , and{" "}
+      <Link href="/financial-freedom" className="font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+        Financial Freedom
+      </Link>{" "}
+      — to master every stage of your journey from public to private.
     </p>
 		</div>
 		</section>

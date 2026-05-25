@@ -16,8 +16,13 @@ import {
     MoonStar,
     ArrowLeft,
 } from "lucide-react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import MembershipContactForm from "./MembershipContactForm";
+
+/** Lazy-load modal (Wonder Script + iframe) so the main T&C chunk stays stable in dev */
+const MembershipContactForm = dynamic(() => import("./MembershipContactForm"), {
+    ssr: false,
+});
 
 /**
  * MasterclassMembershipTC – Premium T&C page

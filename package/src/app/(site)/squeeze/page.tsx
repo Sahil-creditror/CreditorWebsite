@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Clock, BookOpen, Shield, DollarSign, ArrowRight, Play, Pause } from "lucide-react";
 import SqueezeEmbed from "@/app/components/squeeze/Embed";
 import Script from "next/script";
@@ -289,10 +290,13 @@ export default function Page() {
                     },
                     ].map((item, idx) => {
                       const Icon = item.icon;
+                      const courseHrefs = ["/become-private", "/operate-private", "/financial-freedom"] as const;
+                      const href = courseHrefs[idx];
                       return (
-                      <div
+                      <Link
                           key={idx}
-                          className={`group relative flex flex-col gap-3 bg-gradient-to-br ${item.gradient} dark:from-slate-800/80 dark:to-slate-800/60 rounded-xl p-6 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
+                          href={href}
+                          className={`group relative flex flex-col gap-3 bg-gradient-to-br ${item.gradient} dark:from-slate-800/80 dark:to-slate-800/60 rounded-xl p-6 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 no-underline`}
                       >
                           <div className="flex items-start gap-4">
                             <div className={`flex-none w-12 h-12 rounded-xl ${item.iconBg} flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
@@ -315,7 +319,7 @@ export default function Page() {
                           <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <ArrowRight className="w-4 h-4 text-primary" />
                           </div>
-                      </div>
+                      </Link>
                       );
                     })}
                 </div>

@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import HeroSection from "./components/home/hero";
 import BootcampBanner from "./components/home/bootcamp-banner";
+import MasterclassEbook from "./components/home/MasterclassEbook";
 
 // Dynamic imports for all below-the-fold components to improve initial load
 const Courses = dynamic(() => import("./components/home/courses"), {
@@ -21,9 +22,9 @@ const Contact = dynamic(() => import("./components/home/contact"), {
   loading: () => <div className="min-h-[400px]" />,
 });
 
-const Event = dynamic(() => import("./components/home/event"), {
-  loading: () => <div className="min-h-[400px]" />,
-});
+// const Event = dynamic(() => import("./components/home/event"), {
+//   loading: () => <div className="min-h-[400px]" />,
+// });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
@@ -78,9 +79,10 @@ export default function Home() {
       <Suspense fallback={<div className="min-h-[400px]" />}>
         <Contact contactdataNumber="4" />
       </Suspense>
-      <Suspense fallback={<div className="min-h-[400px]" />}>
+      {/* <Suspense fallback={<div className="min-h-[400px]" />}>
         <Event />
-      </Suspense>
+      </Suspense> */}
+      <MasterclassEbook />
       {/* <Roadmap /> */}
       {/* <Testimonial /> */}
       {/* <AnimatedTestimonialsDemo /> */}

@@ -28,7 +28,7 @@ const MenuData = [
   {
     id: 5,
     title: "Services",
-    path: "/services",
+    path: "/services_page",
     newTab: false,
   },
   {
@@ -64,7 +64,7 @@ const footerData = {
     links: [
         { name: "Home", href: "/" },
         { name: "About Us", href: "/about-us" },
-        { name: "Services", href: "/#services" },
+        { name: "Services", href: "/services_page" },
         { name: "Membership", href: "/masterclass-membership" },
         { name: "Terms & Conditions", href: "/terms-and-conditions" },
         { name: "Privacy Policy", href: "/privacy-policy" },

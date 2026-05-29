@@ -12,6 +12,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { userStore } from "@/app/api/auth/users-store";
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     // ⚠️ TODO: Add authentication check here for production

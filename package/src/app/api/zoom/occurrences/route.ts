@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { API_CONFIG } from "@/config/api";
 
+export const dynamic = 'force-dynamic';
+
 const ZOOM_ROUTES = {
   OCCURRENCES: "/zoom/occurrences",
 };

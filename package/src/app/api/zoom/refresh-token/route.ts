@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { API_CONFIG } from "@/config/api";
 
+export const dynamic = 'force-dynamic';
+
 const ZOOM_ROUTES = {
   REFRESH_TOKEN: "/zoom/refresh-token",
 };

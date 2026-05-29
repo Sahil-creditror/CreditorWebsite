@@ -32,13 +32,21 @@ const MenuData = [
     newTab: false,
   },
   {
-    id: 6,
+   id: 6,
+    title: "Blogs",
+    path: "/blog",
+    newTab: false,
+  },
+  
+  {
+    id: 7,
     title: "Contact",
     path: "/contact",
     newTab: false,
   },
+  
   // {
-  //   id: 7,
+  //   id: 8,
   //   title: "Docs",
   //   path: "/documentation",
   //   newTab: false,
@@ -66,6 +74,7 @@ const footerData = {
         { name: "About Us", href: "/about-us" },
         { name: "Services", href: "/#services" },
         { name: "Membership", href: "/masterclass-membership" },
+        { name: "Blog", href: "/blog" },
         { name: "Terms & Conditions", href: "/terms-and-conditions" },
         { name: "Privacy Policy", href: "/privacy-policy" },
         { name: "Return & Refund", href: "/return-refund" },

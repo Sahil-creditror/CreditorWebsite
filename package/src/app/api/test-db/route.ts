@@ -10,6 +10,8 @@ import { NextResponse } from "next/server";
 import connectDB from "@/app/api/auth/db/mongodb";
 import User from "@/app/api/auth/models/User";
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     // Test connection

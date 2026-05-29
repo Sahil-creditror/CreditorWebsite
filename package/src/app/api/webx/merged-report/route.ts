@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { API_CONFIG } from "@/config/api";
 
+export const dynamic = 'force-dynamic';
+
 const WEBX_ROUTES = {
   MERGED_REPORT: "/zoom/webinar/merged-report",
 };

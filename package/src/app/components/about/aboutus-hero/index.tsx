@@ -16,7 +16,7 @@ function AboutusHero() {
 
             {/* Content */}
             <div className="relative z-10 container text-left">
-                <div className="flex flex-col gap-6 Xxl:pb-20 pb-10">
+                <div className="flex flex-col gap-6 xxl:pb-20 pb-10">
                     <div className="flex items-start gap-2 md:gap-6">
                         <div className="w-11 h-11 flex-shrink-0">
                             <Image

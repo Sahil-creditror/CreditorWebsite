@@ -30,6 +30,11 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
     }
     (async () => {
       try {
+        if (!pathname) {
+          setIs404(false);
+          return;
+        }
+
         const res = await fetch(pathname, { method: "HEAD" });
         setIs404(res.status === 404);
       } catch {
@@ -59,13 +64,15 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
     "/projects-wonder",
   ];
   const hideHeader =
-    excludedRoutes.includes(pathname) ||
-    pathname.startsWith("/services_page/tradeline-exchange") ||
+    (typeof pathname === "string" &&
+      (excludedRoutes.includes(pathname) ||
+        pathname.startsWith("/services_page/tradeline-exchange"))) ||
     is404;
   const hideFooter =
-    excludedRoutes.includes(pathname) ||
-    pathname === "/signup" ||
-    pathname.startsWith("/services_page/tradeline-exchange") ||
+    (typeof pathname === "string" &&
+      (excludedRoutes.includes(pathname) ||
+        pathname === "/signup" ||
+        pathname.startsWith("/services_page/tradeline-exchange"))) ||
     is404;
 
   return (

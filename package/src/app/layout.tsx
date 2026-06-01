@@ -38,8 +38,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Resource hints for performance */}
-        <link rel="preconnect" href="https://creditor.onrender.com" />
-        <link rel="dns-prefetch" href="https://creditor.onrender.com" />
+        <link rel="preconnect" href="https://api.lmsathena.com" />
+        <link rel="dns-prefetch" href="https://api.lmsathena.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         {/* Preload critical hero resources for LCP optimization - poster image only, video loads lazily */}

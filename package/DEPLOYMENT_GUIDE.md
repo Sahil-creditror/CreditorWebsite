@@ -42,7 +42,7 @@ MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/database-name
 # ============================================
 # Backend API Configuration
 # ============================================
-NEXT_PUBLIC_API_BASE_URL=https://creditor.onrender.com/api
+NEXT_PUBLIC_API_BASE_URL=https://api.lmsathena.com/api
 # OR your custom backend:
 # NEXT_PUBLIC_API_BASE_URL=https://api.creditoracademy.com/api
 
@@ -175,7 +175,7 @@ After deployment, test:
 ### Backend API Setup
 
 Your backend API should be running and accessible. Current configuration points to:
-- **Production**: `https://creditor.onrender.com/api`
+- **Production**: `https://api.lmsathena.com/api`
 
 If you have a custom backend:
 

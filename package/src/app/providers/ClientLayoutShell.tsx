@@ -8,10 +8,11 @@ import Header from "../components/layout/header";
 import Footer from "../components/layout/footer";
 import FloatingButtons from "../components/floating-buttons";
 import { MetaPixelPageView } from "../components/analytics/MetaPixelPageView";
+import EventPopup from "../components/home/EventPopup";
 
-const ThanksgivingPopup = dynamic(() => import("../components/home/Thanksgiving"), {
-  ssr: false,
-});
+// const ThanksgivingPopup = dynamic(() => import("../components/home/Thanksgiving"), {
+//   ssr: false,
+// });
 
 const RegPopup = dynamic(() => import("../components/reg_popup"), {
   ssr: false,
@@ -79,8 +80,15 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
         {/* Floating Buttons: Special Offer, Contact Form, Scroll to Top */}
         <FloatingButtons onSpecialOfferClick={() => setThanksgivingKey(prev => prev + 1)} />
 
-        {/* Thanksgiving Modal - Auto-opens after 5 seconds */}
-        <ThanksgivingPopup
+        {/* Previous Thanksgiving / webinar popup — kept for reference */}
+        {/* <ThanksgivingPopup
+          delayMs={5000}
+          disableAutoOpen={false}
+          manualTrigger={thanksgivingKey}
+        /> */}
+
+        {/* CA7 June — Business Credit event (auto-opens after 5s; Special Offer button) */}
+        <EventPopup
           delayMs={5000}
           disableAutoOpen={false}
           manualTrigger={thanksgivingKey}

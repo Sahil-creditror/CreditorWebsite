@@ -21,7 +21,7 @@ const BootcampBanner = () => {
         {
             imageSrc: "/images/todayclasstopic/BecomePrivate.png",
             imageAlt: "Become Private Class - LLC, EIN & Business Structure",
-            badge: "Today's Topic",
+            badge: "Become Private",
             heading: <>LLC, EIN & <span className="text-primary">Business Structure</span></>,
             description: "Build your entrepreneurial foundation. Learn step-by-step how to protect your assets, establish real credibility, and unlock critical tax advantages.",
             benefits: [

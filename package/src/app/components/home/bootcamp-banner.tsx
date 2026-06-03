@@ -143,14 +143,14 @@ const BootcampBanner = () => {
 
                         {/* Static Bottom Controls/CTA Block */}
                         <motion.div variants={itemVariants} className="flex flex-col gap-5 mt-4">
-                            <div className="p-4 rounded-sm bg-white border border-gray-100 shadow-[0_15px_40px_-10px_rgba(2,111,226,0.08)] max-w-xl">
+                            {/* <div className="p-4 rounded-sm bg-white border border-gray-100 shadow-[0_15px_40px_-10px_rgba(2,111,226,0.08)] max-w-xl">
                                 <p className="text-secondary font-medium text-[14px] flex items-center gap-3">
                                     <svg className="w-5 h-5 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                     <span>Creditor Academy Pass: <strong className="text-primary ">$69/month</strong> — Immediate access to all upcoming classes.</span>
                                 </p>
-                            </div>
+                            </div> */}
 
                             <div className="flex flex-wrap items-center gap-4">
                                 {/* <Link

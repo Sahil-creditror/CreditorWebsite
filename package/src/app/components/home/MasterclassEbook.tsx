@@ -117,9 +117,25 @@ export default function MasterclassEbook(): React.ReactElement {
               href={MEMBERSHIP_PATH}
               className="btn btn-primary reveal"
               data-delay="380"
-              aria-label="Join Masterclass"
+              aria-label="Join Masterclass membership"
             >
               <span className="btn-content">Join Masterclass</span>
+              <svg
+                className="btn-arrow"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden
+              >
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </Link>
 
             <div className="countdown-wrap reveal" data-delay="420" aria-live="polite">
@@ -208,7 +224,7 @@ export default function MasterclassEbook(): React.ReactElement {
         .g2{width:420px;height:420px;right:-8vw;bottom:-6vw;background:radial-gradient(circle at 70% 30%, rgba(0,150,255,0.22), rgba(0,150,255,0.01));}
         .scanline{position:absolute;inset:0;background-image:repeating-linear-gradient(180deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.00) 2px);opacity:0.04;mix-blend-mode:overlay;}
         .event-content{position:relative;z-index:4;display:flex;flex-direction:column;gap:12px;padding-right:6px;min-width:0}
-        .eyebrow{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#00121a;padding:8px 14px;border-radius:999px;font-weight:700;font-size:12px;letter-spacing:0.6px;box-shadow:0 8px 22px rgba(75,170,255,0.06)}
+        .eyebrow{display:inline-block;width:fit-content;background:linear-gradient(90deg,#9dd4f5,#c5e9ff);color:#0a2540;padding:5px 10px;border-radius:999px;font-weight:700;font-size:10px;letter-spacing:0.35px;line-height:1.2;box-shadow:0 2px 8px rgba(75,170,255,0.08)}
         .hero{font-size:clamp(20px, 3.2vw, 32px);line-height:1.08;margin:4px 0 0;font-weight:800;color:rgba(255,255,255,0.98);letter-spacing:-0.4px;position:relative}
         .highlight{background:#ffd119;-webkit-background-clip:text;background-clip:text;color:transparent}
         .sub{font-weight:700;color:rgba(235,245,255,0.95);margin-top:4px;font-size:15px;line-height:1.45}
@@ -217,11 +233,13 @@ export default function MasterclassEbook(): React.ReactElement {
         .benefit-list li{font-size:14px;font-weight:600;color:rgba(255,255,255,0.92);padding-left:14px;position:relative;line-height:1.4}
         .benefit-list li::before{content:"•";position:absolute;left:0;color:#66d0ff;font-weight:700}
         .cta-row { display: flex; gap: 12px; align-items: center; margin-top: 14px; flex-wrap:wrap }
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 22px; border-radius: 999px; border: 0; font-weight: 800; font-size: 15px; cursor: pointer; outline-offset: 4px; position: relative; overflow: hidden; min-width: 170px; text-decoration: none; }
-        .btn-primary { background: linear-gradient(135deg, #00eaff, #0080ff, #7a00ff, #ff00c8, #ff6a00, #00eaff); background-size: 100% 100%; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.35); box-shadow: 0 12px 30px rgba(0, 200, 255, 0.25); transform: translateZ(0); transition: transform 300ms ease, box-shadow 300ms ease; }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 18px 50px rgba(0, 200, 255, 0.35); color:#fff }
-        .btn-primary::after { content: ""; position: absolute; left: -40%; top: -20%; width: 120%; height: 120%; transform: skewX(-20deg); background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.6), rgba(255,255,255,0.05)); opacity: 0; transition: all 600ms ease; }
-        .btn-primary:hover::after { opacity: 1; left: 40%; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 28px; border-radius: 999px; border: 0; font-weight: 700; font-size: 15px; letter-spacing: 0.02em; cursor: pointer; outline-offset: 3px; position: relative; min-width: 180px; text-decoration: none; }
+        .btn-primary { background: #026fe2; color: #fff; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 14px rgba(2, 111, 226, 0.22); transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }
+        .btn-primary:hover { background: #1a7ee8; color: #fff; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(2, 111, 226, 0.28); }
+        .btn-primary:active { transform: translateY(0); background: #0259bd; box-shadow: 0 2px 10px rgba(2, 111, 226, 0.2); }
+        .btn-primary:focus-visible { outline: 2px solid #66d0ff; outline-offset: 3px; }
+        .btn-arrow { flex-shrink: 0; opacity: 0.95; transition: transform 0.2s ease; }
+        .btn-primary:hover .btn-arrow { transform: translateX(3px); }
         .countdown-wrap{display:flex;align-items:center}
         .countdown{display:flex;flex-direction:column;gap:6px;padding:10px 14px;border-radius:12px;background:linear-gradient(180deg, rgba(0,20,40,0.65), rgba(0,30,60,0.7));backdrop-filter: blur(8px);border:1px solid rgba(255,255,255,0.12);min-width:240px;text-align:center}
         .cd-label{font-size:12px;color:rgba(255,255,255,0.82);font-weight:700}

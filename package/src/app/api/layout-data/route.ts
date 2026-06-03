@@ -21,18 +21,24 @@ const MenuData = [
   },
   {
     id: 4,
+    title: "Workshop",
+    path: "/workshop",
+    newTab: false,
+  },
+  {
+    id: 5,
     title: "Courses",
     path: "/courses",
     newTab: false,
   },
   {
-    id: 5,
+    id: 6,
     title: "Services",
     path: "/services_page",
     newTab: false,
   },
   {
-    id: 6,
+    id: 7,
     title: "Contact",
     path: "/contact",
     newTab: false,

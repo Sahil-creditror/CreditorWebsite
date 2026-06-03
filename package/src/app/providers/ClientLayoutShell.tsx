@@ -95,7 +95,7 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
         />
 
         {/* Registration Notification Popup - Shows on all pages */}
-        <RegPopup />
+        {/* <RegPopup /> */}
       </ThemeProvider>
     </SessionProvider>
   );

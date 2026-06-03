@@ -75,12 +75,11 @@ const BootcampBanner = () => {
         },
     };
 
-    // Text fade transitions for content syncing
-    const contentFadeVariants = {
-        initial: { opacity: 0, x: -15 },
-        animate: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" } },
-        exit: { opacity: 0, x: 15, transition: { duration: 0.3, ease: "easeIn" } }
-    };
+const contentFadeVariants: Variants = {
+  initial: { opacity: 0, x: -15 },
+  animate: { opacity: 1, x: 0, transition: { duration: 0.4, ease: [0.215, 0.610, 0.355, 1.000] } },
+  exit: { opacity: 0, x: 15, transition: { duration: 0.3, ease: [0.215, 0.610, 0.355, 1.000] } }
+};
 
     return (
         <section

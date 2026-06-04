@@ -16,37 +16,37 @@ const BootcampBanner = () => {
     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Dynamic Content Mapping synced with the sliding images
+    // Dynamic Content Mapping synced with your new posters
     const slidesData = [
         {
-            imageSrc: "/images/todayclasstopic/BecomePrivate.png",
-            imageAlt: "Become Private Class - LLC, EIN & Business Structure",
-            badge: "Become Private",
-            heading: <>LLC, EIN & <span className="text-primary">Business Structure</span></>,
-            description: "Build your entrepreneurial foundation. Learn step-by-step how to protect your assets, establish real credibility, and unlock critical tax advantages.",
+            imageSrc: "/images/todayclasstopic/a.png",
+            imageAlt: "AI Tools for Real Estate & Business Investors Masterclass",
+            badge: "AI Tools Masterclass",
+            heading: <>AI Tools for <span className="text-primary">Real Estate & Business Investors</span></>,
+            description: "Discover modern AI strategies tailored for real estate investing and business growth. Learn how to implement cutting-edge automated pipelines to efficiently scale your operations.",
             benefits: [
-                "Protect Your Assets",
-                "Establish Credibility",
-                "Optimize Structure",
-                "Unlock Tax Advantages"
+                "AI Strategies",
+                "Real Estate Investing",
+                "Business Growth",
+                "Automate & Scale"
             ]
         },
         {
-            imageSrc: "/images/todayclasstopic/MasterclassBanner.png",
-            imageAlt: "Seller Financing 101 Masterclass",
-            badge: "Featured Masterclass",
-            heading: <>Seller Financing 101: <span className="text-primary">Buy Without Banks</span></>,
-            description: "Master the strategy of buying real estate completely bypassing traditional banks. Close more deals with flexible terms and less hassle.",
+            imageSrc: "/images/todayclasstopic/b.png",
+            imageAlt: "BNB Riches Deep Dive Masterclass",
+            badge: "BNB Riches Deep Dive",
+            heading: <>Running a <span className="text-primary">6-Figure Airbnb Portfolio</span></>,
+            description: "Take a deep dive into hyper-profitable short-term rental management. Master the proven strategies and expert systems required to establish a high-yielding Airbnb ecosystem.",
             benefits: [
-                "No Bank Required",
-                "Flexible Deal Terms",
-                "More Deals, Less Hassle",
-                "Build Wealth Smarter"
+                "Proven Strategies",
+                "Airbnb Expertise",
+                "6-Figure Potential",
+                "Live Q&A Sessions"
             ]
         }
     ];
 
-    // Slide transition changed to 4000ms (4 seconds)
+    // Slide transition running at 4000ms (4 seconds)
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % slidesData.length);
@@ -75,11 +75,11 @@ const BootcampBanner = () => {
         },
     };
 
-const contentFadeVariants: Variants = {
-  initial: { opacity: 0, x: -15 },
-  animate: { opacity: 1, x: 0, transition: { duration: 0.4, ease: [0.215, 0.610, 0.355, 1.000] } },
-  exit: { opacity: 0, x: 15, transition: { duration: 0.3, ease: [0.215, 0.610, 0.355, 1.000] } }
-};
+    const contentFadeVariants: Variants = {
+        initial: { opacity: 0, x: -15 },
+        animate: { opacity: 1, x: 0, transition: { duration: 0.4, ease: [0.215, 0.610, 0.355, 1.000] } },
+        exit: { opacity: 0, x: 15, transition: { duration: 0.3, ease: [0.215, 0.610, 0.355, 1.000] } }
+    };
 
     return (
         <section
@@ -117,7 +117,7 @@ const contentFadeVariants: Variants = {
                                     {slidesData[currentIndex].badge}
                                 </div>
 
-                                <h2 className="text-3xl md:text-4xl lg:text-5xl  text-secondary leading-[1.1] tracking-tight">
+                                <h2 className="text-3xl md:text-4xl lg:text-5xl text-secondary leading-[1.1] tracking-tight">
                                     {slidesData[currentIndex].heading}
                                 </h2>
 
@@ -140,25 +140,9 @@ const contentFadeVariants: Variants = {
                             </motion.div>
                         </AnimatePresence>
 
-                        {/* Static Bottom Controls/CTA Block */}
+                        {/* Static Bottom Controls */}
                         <motion.div variants={itemVariants} className="flex flex-col gap-5 mt-4">
-                            {/* <div className="p-4 rounded-sm bg-white border border-gray-100 shadow-[0_15px_40px_-10px_rgba(2,111,226,0.08)] max-w-xl">
-                                <p className="text-secondary font-medium text-[14px] flex items-center gap-3">
-                                    <svg className="w-5 h-5 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <span>Creditor Academy Pass: <strong className="text-primary ">$69/month</strong> — Immediate access to all upcoming classes.</span>
-                                </p>
-                            </div> */}
-
                             <div className="flex flex-wrap items-center gap-4">
-                                {/* <Link
-                                    href="/contact"
-                                    className="px-10 py-4 bg-primary hover:bg-secondary border-2 border-primary hover:border-secondary text-white text-[15px] font-bold rounded-sm transition-all duration-300 transform hover:-translate-y-0.5 shadow-[0_15px_35px_-5px_rgba(2,111,226,0.3)]"
-                                >
-                                    RESERVE YOUR SEAT
-                                </Link> */}
-                                
                                 {/* Visual Slider Pagination Dots */}
                                 <div className="flex gap-2 ml-2">
                                     {slidesData.map((_, index) => (
@@ -177,7 +161,7 @@ const contentFadeVariants: Variants = {
                     {/* Right Image Slider Column */}
                     <div className="lg:col-span-5 relative w-full max-w-md lg:max-w-none mx-auto">
                         <div className="absolute -inset-4 bg-primary/10 blur-[60px] rounded-full opacity-30" />
-                        <div className="relative aspect-[2/1] lg:aspect-[1.1/1] w-full rounded-sm overflow-hidden shadow-[0_25px_55px_-12px_rgba(0,0,0,0.12)] bg-gray-50 border border-gray-100">
+                        <div className="relative aspect-[1/1] w-full rounded-sm overflow-hidden shadow-[0_25px_55px_-12px_rgba(0,0,0,0.12)] bg-white border border-gray-100">
                             <AnimatePresence mode="wait">
                                 <motion.img
                                     key={currentIndex}
@@ -187,7 +171,7 @@ const contentFadeVariants: Variants = {
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.98 }}
                                     transition={{ duration: 0.45, ease: "easeInOut" }}
-                                    className="absolute inset-0 w-full h-full object-cover lg:object-contain bg-white"
+                                    className="absolute inset-0 w-full h-full object-cover bg-white"
                                 />
                             </AnimatePresence>
                         </div>

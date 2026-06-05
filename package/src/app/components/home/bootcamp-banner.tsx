@@ -16,32 +16,32 @@ const BootcampBanner = () => {
     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Dynamic Content Mapping synced with your new posters
+    // Dynamic Content Mapping synced with posters b.png and c.png
     const slidesData = [
         {
-            imageSrc: "/images/todayclasstopic/a.png",
-            imageAlt: "AI Tools for Real Estate & Business Investors Masterclass",
-            badge: "AI Tools Masterclass",
-            heading: <>AI Tools for <span className="text-primary">Real Estate & Business Investors</span></>,
-            description: "Discover modern AI strategies tailored for real estate investing and business growth. Learn how to implement cutting-edge automated pipelines to efficiently scale your operations.",
+            imageSrc: "/images/todayclasstopic/b.png",
+            imageAlt: "Business Funding Blueprint Masterclass",
+            badge: "Business Funding Blueprint",
+            heading: <>Business Funding Blueprint: <span className="text-primary">Get Approved for $100K+</span></>,
+            description: "Unlock the financial potential of your enterprise. Discover how to get approved for substantial funding using step-by-step corporate financial strategies designed to help you build, grow, and scale.",
             benefits: [
-                "AI Strategies",
-                "Real Estate Investing",
-                "Business Growth",
-                "Automate & Scale"
+                "Access Up To $100K+",
+                "Step-By-Step Strategies",
+                "Build & Grow Your Business",
+                "Scale to Financial Freedom"
             ]
         },
         {
-            imageSrc: "/images/todayclasstopic/b.png",
-            imageAlt: "BNB Riches Deep Dive Masterclass",
-            badge: "BNB Riches Deep Dive",
-            heading: <>Running a <span className="text-primary">6-Figure Airbnb Portfolio</span></>,
-            description: "Take a deep dive into hyper-profitable short-term rental management. Master the proven strategies and expert systems required to establish a high-yielding Airbnb ecosystem.",
+            imageSrc: "/images/todayclasstopic/c.png",
+            imageAlt: "Creative Finance Mastery Masterclass",
+            badge: "Creative Finance Mastery",
+            heading: <>Creative Finance Mastery: <span className="text-primary">Subject-To, Wraps & Lease Options</span></>,
+            description: "Master the art of structuring real estate transactions without relying on traditional lending paths. Learn alternative asset control mechanics that give you an edge in any market condition.",
             benefits: [
-                "Proven Strategies",
-                "Airbnb Expertise",
-                "6-Figure Potential",
-                "Live Q&A Sessions"
+                "Subject-To Deals",
+                "Wrap Mortgages",
+                "Lease Option Strategies",
+                "Alternative Asset Control"
             ]
         }
     ];

@@ -61,12 +61,12 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
   ];
   const hideHeader =
     excludedRoutes.includes(pathname) ||
-    pathname.startsWith("/services_page/tradeline-exchange") ||
+    pathname.startsWith("/services/tradeline-exchange") ||
     is404;
   const hideFooter =
     excludedRoutes.includes(pathname) ||
     pathname === "/signup" ||
-    pathname.startsWith("/services_page/tradeline-exchange") ||
+    pathname.startsWith("/services/tradeline-exchange") ||
     is404;
 
   return (
@@ -100,5 +100,6 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
     </SessionProvider>
   );
 }
+
 
 

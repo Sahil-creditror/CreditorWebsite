@@ -103,18 +103,33 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/about-us",
+        destination: "/about",
+        permanent: true,
+      },
+      {
+        source: "/services_page",
+        destination: "/services",
+        permanent: true,
+      },
+      {
+        source: "/services_page/:path*",
+        destination: "/services/:path*",
+        permanent: true,
+      },
+      {
         source: "/become",
-        destination: "/become-private",
+        destination: "/services/course-cataloges/become-private",
         permanent: true,
       },
       {
         source: "/operate",
-        destination: "/operate-private",
+        destination: "/services/course-cataloges/operate-private",
         permanent: true,
       },
       {
         source: "/private",
-        destination: "/financial-freedom",
+        destination: "/services/course-cataloges/financial-freedom",
         permanent: true,
       },
       {
@@ -124,47 +139,47 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/projects/BecomeSov",
-        destination: "/become-private",
+        destination: "/services/course-cataloges/become-private",
         permanent: true,
       },
       {
         source: "/projects/BusinessCredit",
-        destination: "/financial-freedom",
+        destination: "/services/course-cataloges/financial-freedom",
         permanent: true,
       },
       {
         source: "/projects/OperatePrivate",
-        destination: "/operate-private",
+        destination: "/services/course-cataloges/operate-private",
         permanent: true,
       },
       {
         source: "/masterclass-membership/BecomeSov",
-        destination: "/become-private",
+        destination: "/services/course-cataloges/become-private",
         permanent: true,
       },
       {
         source: "/masterclass-membership/BusinessCredit",
-        destination: "/financial-freedom",
+        destination: "/services/course-cataloges/financial-freedom",
         permanent: true,
       },
       {
         source: "/masterclass-membership/OperatePrivate",
-        destination: "/operate-private",
+        destination: "/services/course-cataloges/operate-private",
         permanent: true,
       },
       {
         source: "/projects-wonder/BecomeSov",
-        destination: "/become-private",
+        destination: "/services/course-cataloges/become-private",
         permanent: true,
       },
       {
         source: "/projects-wonder/BusinessCredit",
-        destination: "/financial-freedom",
+        destination: "/services/course-cataloges/financial-freedom",
         permanent: true,
       },
       {
         source: "/projects-wonder/OperatePrivate",
-        destination: "/operate-private",
+        destination: "/services/course-cataloges/operate-private",
         permanent: true,
       },
     ];

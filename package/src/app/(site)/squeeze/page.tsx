@@ -290,7 +290,7 @@ export default function Page() {
                     },
                     ].map((item, idx) => {
                       const Icon = item.icon;
-                      const courseHrefs = ["/become-private", "/operate-private", "/financial-freedom"] as const;
+                      const courseHrefs = ["/services/course-cataloges/become-private", "/services/course-cataloges/operate-private", "/services/course-cataloges/financial-freedom"] as const;
                       const href = courseHrefs[idx];
                       return (
                       <Link

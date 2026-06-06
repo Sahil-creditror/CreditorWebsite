@@ -10,7 +10,7 @@ const MenuData = [
   {
     id: 2,
     title: "About Us",
-    path: "/about-us",
+    path: "/about",
     newTab: false,
   },
   {
@@ -28,13 +28,13 @@ const MenuData = [
   {
     id: 5,
     title: "Courses",
-    path: "/courses",
+    path: "/services/course-cataloges",
     newTab: false,
   },
   {
     id: 6,
     title: "Services",
-    path: "/services_page",
+    path: "/services",
     newTab: false,
   },
   {
@@ -69,8 +69,8 @@ const footerData = {
     ],
     links: [
         { name: "Home", href: "/" },
-        { name: "About Us", href: "/about-us" },
-        { name: "Services", href: "/services_page" },
+        { name: "About Us", href: "/about" },
+        { name: "Services", href: "/services" },
         { name: "Membership", href: "/masterclass-membership" },
         { name: "Terms & Conditions", href: "/terms-and-conditions" },
         { name: "Privacy Policy", href: "/privacy-policy" },

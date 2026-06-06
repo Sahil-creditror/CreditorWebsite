@@ -51,7 +51,7 @@ const Header = () => {
     signOut();
     setUser(null);
     // Redirect to tradeline main page
-    router.push("/services_page/tradeline-exchange");
+    router.push("/services/tradeline-exchange");
   };
 
   // Close menu with animation when clicking outside
@@ -107,7 +107,7 @@ const Header = () => {
             {/* Navigation Links - Only visible on large screens */}
             <nav className="hidden lg:flex items-center gap-2 sm:gap-3">
               <Link
-                href="/services_page/website-service"
+                href="/services/website-service"
                 className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-4 transition-colors ${sticky
                   ? "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
                   : "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
@@ -116,7 +116,7 @@ const Header = () => {
                 Website Service
               </Link>
               {/* <Link
-                href="/services_page/tradeline-exchange"
+                href="/services/tradeline-exchange"
                 className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-4 transition-colors ${sticky
                   ? "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
                   : "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
@@ -125,7 +125,7 @@ const Header = () => {
                 Tradeline Exchange
               </Link> */}
               <Link
-                href="/services_page/private-merchant"
+                href="/services/private-merchant"
                 className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-4 transition-colors ${sticky
                   ? "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
                   : "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
@@ -298,3 +298,4 @@ const Header = () => {
 };
 
 export default Header;
+

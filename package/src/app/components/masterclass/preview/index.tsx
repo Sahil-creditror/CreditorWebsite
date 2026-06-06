@@ -170,15 +170,15 @@ export default function HeroSection({
         Masterclass
       </Link>{" "}
       to learn these basics, then advance through our Premium Courses —{" "}
-      <Link href="/become-private" className="font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+      <Link href="/services/course-cataloges/become-private" className="font-semibold text-blue-600 dark:text-blue-400 hover:underline">
         Become Private
       </Link>
       ,{" "}
-      <Link href="/operate-private" className="font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+      <Link href="/services/course-cataloges/operate-private" className="font-semibold text-blue-600 dark:text-blue-400 hover:underline">
         Operate Private
       </Link>
       , and{" "}
-      <Link href="/financial-freedom" className="font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+      <Link href="/services/course-cataloges/financial-freedom" className="font-semibold text-blue-600 dark:text-blue-400 hover:underline">
         Financial Freedom
       </Link>{" "}
       — to master every stage of your journey from public to private.

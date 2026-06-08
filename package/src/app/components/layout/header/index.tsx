@@ -10,12 +10,12 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import Logo from "../logo";
 import { COURSES_PAGE_PATH } from "@/lib/coursePaths";
 import { WORKSHOP_PATH } from "@/lib/workshop";
+import { ChevronDown } from "lucide-react";
 
 const navPillClass = (sticky: boolean) =>
-  `flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-4 transition-colors ${
-    sticky
-      ? "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
-      : "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
+  `flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-3 transition-colors ${sticky
+    ? " text-white hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
+    : " text-white hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
   }`;
 
 const Header = () => {
@@ -51,7 +51,7 @@ const Header = () => {
     signOut();
     setUser(null);
     // Redirect to tradeline main page
-    router.push("/services/tradeline-exchange");
+    router.push("/services_page/tradeline-exchange");
   };
 
   // Close menu with animation when clicking outside
@@ -69,7 +69,10 @@ const Header = () => {
     const fetchData = async () => {
       try {
         // Skip when running from file:// where fetch will fail
-        if (typeof window !== 'undefined' && window.location.protocol === 'file:') {
+        if (
+          typeof window !== "undefined" &&
+          window.location.protocol === "file:"
+        ) {
           return;
         }
         const res = await fetch("/api/layout-data");
@@ -101,22 +104,83 @@ const Header = () => {
           className={`relative flex items-center justify-between ${sticky ? "py-5" : "py-7"
             }`}
         >
-          <div className="flex items-center gap-4 lg:gap-6">
+          {/* Navigation Links - Only visible on large screens */}
+          <div className="flex items-center gap-2 lg:gap-4">
             <Logo sticky={sticky} />
-
-            {/* Navigation Links - Only visible on large screens */}
-            <nav className="hidden lg:flex items-center gap-2 sm:gap-3">
+            <nav className="hidden lg:flex items-center  gap-1 lg:gap-1 sm:gap-1 pl-50">
               <Link
-                href="/services/website-service"
-                className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-4 transition-colors ${sticky
-                  ? "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
-                  : "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
+                href="/"
+                className={`flex justify-center items-center gap-1 text-xs sm:text-sm font-bold rounded-lg py-1 px-3 transition-colors ${sticky
+                  ? " text-white hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
+                  : " text-white hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
                   }`}
               >
-                Website Service
+                Home
               </Link>
+              <Link
+                href="/about-us"
+                className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-3 transition-colors ${sticky
+                  ? " text-white hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
+                  : " text-white hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
+                  }`}
+              >
+                About Us
+              </Link>
+              <div className="relative group">
+                <Link href={COURSES_PAGE_PATH} className={navPillClass(sticky)}>
+                  Services
+                </Link>
+
+                <div
+                  className="
+                                    absolute top-full left-8 mt-1
+                                    w-4 h-4 bg-white rotate-45
+                                    opacity-0 invisible translate-y-2
+                                    group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
+                                    transition-all duration-300
+                                    z-50
+                                  "
+                />
+                {/* Dropdown */}
+                <div
+                  className="
+                                      absolute top-full left-0 mt-3 w-44
+                                      bg-white rounded-xl shadow-2xl border border-gray-100
+                                      opacity-0 invisible translate-y-3
+                                      group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
+                                      transition-all duration-300 ease-out
+                                      z-50 overflow-hidden
+                                                           "
+                >
+                  <div className="py-2">
+                    <Link
+                      href="/services/website-service"
+                      className="group/item flex items-center justify-between px-3 py-3 text-gray-800 hover:bg-gray-50 hover:text-primary transition-all duration-200 border-l-4 border-transparent hover:border-primary"
+                    >
+                      <span>Website Services</span>
+
+                    </Link>
+
+                    <Link
+                      href="/services/course-cataloges"
+                      className="group/item flex items-center justify-between px-3 py-3 text-gray-800 hover:bg-gray-50 hover:text-primary transition-all duration-200 border-l-4 border-transparent hover:border-primary"
+                    >
+                      <span>course catalogs</span>
+
+                    </Link>
+
+                    <Link
+                      href="/services/private-merchant"
+                      className="group/item flex items-center justify-between px-3 py-3 text-gray-800 hover:bg-gray-50 hover:text-primary transition-all duration-200 border-l-4 border-transparent hover:border-primary"
+                    >
+                      <span>Private Merchant</span>
+
+                    </Link>
+                  </div>
+                </div>
+              </div>
               {/* <Link
-                href="/services/tradeline-exchange"
+                href="/services_page/tradeline-exchange"
                 className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-4 transition-colors ${sticky
                   ? "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
                   : "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
@@ -124,26 +188,34 @@ const Header = () => {
               >
                 Tradeline Exchange
               </Link> */}
-              <Link
-                href="/services/private-merchant"
-                className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-4 transition-colors ${sticky
-                  ? "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
-                  : "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
-                  }`}
+              {/* <Link
+                href="/services_page/private-merchant"
+                className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-3 transition-colors ${
+                  sticky
+                    ? " text-white hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
+                    : " text-white hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
+                }`}
               >
                 Private Merchant
-              </Link>
+              </Link> */}
               <Link href={WORKSHOP_PATH} className={navPillClass(sticky)}>
                 Workshop
               </Link>
-              <Link href={COURSES_PAGE_PATH} className={navPillClass(sticky)}>
-                Course Catalogs
+
+              <Link
+                href="/contact"
+                className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-3 transition-colors ${sticky
+                  ? " text-white hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
+                  : " text-white hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
+                  }`}
+              >
+                Contact Us
               </Link>
             </nav>
           </div>
 
           <div className="flex items-center gap-4 sm:gap-6">
-            <a
+            {/* <a
               href="tel:+14254009246"
               className={`hidden md:flex items-center gap-2 text-sm font-bold transition-colors 
                 ${sticky ? "text-white hover:text-secondary" : "text-white hover:text-blue-500"}
@@ -153,7 +225,7 @@ const Header = () => {
                 <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.11.37 2.31.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.4 21 3 13.6 3 4a1 1 0 0 1 1-1h3.49a1 1 0 0 1 1 1c0 1.27.19 2.47.57 3.58a1 1 0 0 1-.25 1.01l-2.19 2.2z" />
               </svg>
               <span>(425-400-9246)</span>
-            </a>
+            </a> */}
             <div className="flex items-center gap-2 sm:gap-3">
               {/*
                 <Link
@@ -171,29 +243,40 @@ const Header = () => {
               */}
               <Link
                 href="https://lmsathena.com/login"
-                className={`flex justify-center items-center gap-2 text-sm sm:text-base font-bold rounded-full py-1.5 px-4 transition-colors
+                className={`flex justify-center items-center gap-2 text-sm sm:text-base font-bold rounded-full py-1.5 px-6 transition-colors
                   ${sticky
                     ? "bg-white text-secondary hover:bg-secondary hover:text-white dark:bg-white dark:text-secondary dark:hover:bg-secondary dark:hover:text-white"
-                    : "bg-blue-600 text-white hover:bg-blue-700"}
+                    : "bg-blue-600 text-white hover:bg-blue-700"
+                  }
                 `}
               >
                 Sign In
               </Link>
             </div>
 
-            <div className="flex items-center gap-2 sm:gap-3">
+            {/* <div className="flex items-center gap-2 sm:gap-3">
               <ThemeToggler />
-            </div>
+            </div> */}
 
             {/* Mobile Phone Icon */}
-            <a href="tel:+14254009246" className="md:hidden p-2 text-white hover:text-primary transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            {/* <a
+              href="tel:+14254009246"
+              className="md:hidden p-2 text-white hover:text-primary transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
                 <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.11.37 2.31.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.4 21 3 13.6 3 4a1 1 0 0 1 1-1h3.49a1 1 0 0 1 1 1c0 1.27.19 2.47.57 3.58a1 1 0 0 1-.25 1.01l-2.19 2.2z" />
               </svg>
-            </a>
+            </a> */}
 
             {/* Menu Toggle */}
-            <div className="relative flex items-center">
+            <div className="relative flex items-center lg:hidden">
               {!menuOpen ? (
                 <button onClick={() => setMenuOpen(true)}>
                   <Image
@@ -298,4 +381,3 @@ const Header = () => {
 };
 
 export default Header;
-

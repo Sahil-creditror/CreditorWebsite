@@ -1,7 +1,7 @@
 export const BECOME_PRIVATE_PATH = "/services/course-cataloges/become-private";
 export const OPERATE_PRIVATE_PATH = "/services/course-cataloges/operate-private";
 export const FINANCIAL_FREEDOM_PATH = "/services/course-cataloges/financial-freedom";
-export const COURSES_PAGE_PATH = "/services/course-cataloges";
+export const COURSES_PAGE_PATH = "/services";
 
 export const COURSE_LINKS = [
   {

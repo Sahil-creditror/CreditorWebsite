@@ -184,8 +184,6 @@
 
 // export default BootcampBanner;
 
-
-
 "use client";
 
 import React, { useRef } from "react";
@@ -296,7 +294,7 @@ const BootcampBanner = () => {
                         </motion.div>
 
                         {/* Interactive Action Button */}
-                        <motion.div variants={itemVariants} className="mt-4">
+                        {/* <motion.div variants={itemVariants} className="mt-4">
                             <Link
                                 href={classData.ctaLink}
                                 target="_blank"
@@ -313,7 +311,7 @@ const BootcampBanner = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                 </svg>
                             </Link>
-                        </motion.div>
+                        </motion.div> */}
                     </div>
 
                     {/* Right Static Image Column */}

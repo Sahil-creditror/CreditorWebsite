@@ -184,6 +184,7 @@
 
 // export default BootcampBanner;
 
+
 "use client";
 
 import React, { useRef } from "react";
@@ -201,22 +202,22 @@ const BootcampBanner = () => {
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
 
-    // Data mapping extracted directly from CA.png
+    // Data mapping accurately synchronized with a.png text assets
     const classData = {
-        imageSrc: "/images/todayclasstopic/CA.png",
-        imageAlt: "Business Builder Bootcamp Live Webinar",
-        badge: "Sunday Webinar - 13th June 2026",
+        imageSrc:"/images/todayclasstopic/am.png",
+        imageAlt: "Business Builder Bootcamp Masterclass Poster",
+        badge: "Saturday Live Class - 11:00 AM PST",
         heading: (
             <>
-                Business Builder Bootcamp: <span className="text-primary block mt-1">Build, Structure & Scale Your Business</span>
+                Business Builder Bootcamp: <span className="text-primary block mt-1">Build, Structure & Scale Your Business the Right Way</span>
             </>
         ),
-        description: "Discover practical strategies for business formation, operations, funding readiness, branding, and sustainable growth. Learn to structure your enterprise the right way.",
+        description: "Discover practical strategies for business formation, operations, funding readiness, branding, and sustainable growth during this comprehensive live session.",
         benefits: [
-            "Practical Business Education",
-            "Funding Readiness Strategies",
-            "Operational Structure",
-            "Sustainable Growth Blueprints"
+            "Saturday, June 13, 2026",
+            "Online Practical Webinar",
+            "Business Education Strategies",
+            "Streaming Live Across Social Platforms"
         ],
         ctaText: "Register Now",
         ctaLink: "https://www.creditoracademy.com"

@@ -10,7 +10,7 @@ const MenuData = [
   {
     id: 2,
     title: "About Us",
-    path: "/about",
+    path: "/about-us",
     newTab: false,
   },
   {
@@ -69,7 +69,7 @@ const footerData = {
     ],
     links: [
         { name: "Home", href: "/" },
-        { name: "About Us", href: "/about" },
+        { name: "About Us", href: "/about-us" },
         { name: "Services", href: "/services" },
         { name: "Membership", href: "/masterclass-membership" },
         { name: "Terms & Conditions", href: "/terms-and-conditions" },

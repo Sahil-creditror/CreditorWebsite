@@ -184,9 +184,6 @@
 
 // export default BootcampBanner;
 
-
-
-
 "use client";
 
 import React, { useRef } from "react";
@@ -204,24 +201,24 @@ const BootcampBanner = () => {
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
 
-    // Static data mapping extracted directly from r.png
+    // Data mapping extracted directly from CA.png
     const classData = {
-        imageSrc: "/images/todayclasstopic/r.png",
-        imageAlt: "Generational Wealth 101 Masterclass",
-        badge: "Today - Master Class",
+        imageSrc: "/images/todayclasstopic/CA.png",
+        imageAlt: "Business Builder Bootcamp Live Webinar",
+        badge: "Sunday Webinar - 13th June 2026",
         heading: (
             <>
-                Generational Wealth 101: <span className="text-primary block mt-1">Building Assets Your Kids Inherit</span>
+                Business Builder Bootcamp: <span className="text-primary block mt-1">Build, Structure & Scale Your Business</span>
             </>
         ),
-        description: "Learn proven strategies to create lasting wealth and secure a brighter future for the next generation. Educate today, empower tomorrow.",
+        description: "Discover practical strategies for business formation, operations, funding readiness, branding, and sustainable growth. Learn to structure your enterprise the right way.",
         benefits: [
-            "6th June 2026 Live Session",
-            "Proven Wealth Creation Strategies",
-            "Asset Building Systems",
-            "Secure Next-Gen Futures"
+            "Practical Business Education",
+            "Funding Readiness Strategies",
+            "Operational Structure",
+            "Sustainable Growth Blueprints"
         ],
-        ctaText: "Register Now!",
+        ctaText: "Register Now",
         ctaLink: "https://www.creditoracademy.com"
     };
 

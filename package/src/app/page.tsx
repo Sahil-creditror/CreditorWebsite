@@ -82,7 +82,7 @@ export default function Home() {
       {/* <Suspense fallback={<div className="min-h-[400px]" />}>
         <Event />
       </Suspense> */}
-      <MasterclassEbook />
+      {/* <MasterclassEbook /> */}
       {/* <Roadmap /> */}
       {/* <Testimonial /> */}
       {/* <AnimatedTestimonialsDemo /> */}

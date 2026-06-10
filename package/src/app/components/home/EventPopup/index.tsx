@@ -4,13 +4,13 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import {
-  WORKSHOP_EVENT_CLOSE_MS,
-  WORKSHOP_EVENT_IMAGE,
   WORKSHOP_REGISTER_URL,
 } from "@/lib/workshop";
 
-const EVENT_CLOSE_MS = WORKSHOP_EVENT_CLOSE_MS;
-const EVENT_IMAGE = WORKSHOP_EVENT_IMAGE;
+// Target Event Time: Saturday, June 11, 2026, at 11:00 AM PST
+// 11:00 AM PST is 7:00 PM (19:00) UTC
+const TARGET_EVENT_MS = Date.UTC(2026, 5, 11, 19, 0, 0);
+const EVENT_IMAGE = "/images/todayclasstopic/am.png";
 
 interface EventPopupProps {
   delayMs?: number;
@@ -38,7 +38,7 @@ export default function EventPopup({
   manualTrigger = 0,
 }: EventPopupProps) {
   const [open, setOpen] = useState(false);
-  const [countdown, setCountdown] = useState(() => getCountdown(EVENT_CLOSE_MS));
+  const [countdown, setCountdown] = useState(() => getCountdown(TARGET_EVENT_MS));
 
   useEffect(() => {
     if (disableAutoOpen) return;
@@ -50,9 +50,17 @@ export default function EventPopup({
     if (manualTrigger > 0) setOpen(true);
   }, [manualTrigger]);
 
+  // Active interval loop that drives the countdown calculation forward every single second
   useEffect(() => {
     if (!open) return;
-    const id = setInterval(() => setCountdown(getCountdown(EVENT_CLOSE_MS)), 1000);
+    
+    // Update immediately upon opening
+    setCountdown(getCountdown(TARGET_EVENT_MS));
+    
+    const id = setInterval(() => {
+      setCountdown(getCountdown(TARGET_EVENT_MS));
+    }, 1000);
+    
     return () => clearInterval(id);
   }, [open]);
 
@@ -66,7 +74,7 @@ export default function EventPopup({
       onClick={(e) => {
         if (e.target === e.currentTarget) setOpen(false);
       }}
-      data-event-popup="ca7-business-credit-exact-v4"
+      data-event-popup="ca7-business-builder-bootcamp-v2"
     >
       <div
         role="dialog"
@@ -90,37 +98,46 @@ export default function EventPopup({
             <div className="event-popup-badges">
               <span className="event-badge event-badge--live">
                 <span className="event-badge-dot" aria-hidden />
-                BUSINESS CREDIT EVENT
+                LIVE WORKSHOP
               </span>
-              <span className="event-badge event-badge--date">June 7</span>
+              <span className="event-badge event-badge--date">Saturday, June 11</span>
             </div>
 
             <h2 id="event-popup-title" className="event-popup-title">
-              Build Elite <span className="event-popup-title-accent">Business Credit</span>
+              Business Builder <span className="event-popup-title-accent">Bootcamp</span>
             </h2>
 
             <p className="event-popup-desc">
-              Learn how to establish Tier 1 business credit, unlock funding opportunities, and
-              grow your company&apos;s credit profile — live with Creditor Academy.
+              Build, Structure & Scale Your Business the Right Way. Learn essential strategies 
+              for corporate compliance, operational frameworks, and institutional funding access.
             </p>
 
             <div className="event-popup-tags">
-              <span>Tier 1 Credit</span>
-              <span>Funding Path</span>
-              <span>Live Session</span>
+              <span>Structure & Scale</span>
+              <span>Funding Blueprint</span>
+              <span>11:00 AM PST</span>
             </div>
 
             <div className="event-popup-countdown-wrap">
-              <p className="event-popup-countdown-label">CLOSES IN</p>
-              <div className="event-popup-countdown-row">
-                <CountdownBox value={days} label="DAYS" />
-                <span className="event-popup-colon">:</span>
-                <CountdownBox value={pad(hours)} label="HRS" />
-                <span className="event-popup-colon">:</span>
-                <CountdownBox value={pad(minutes)} label="MIN" />
-                <span className="event-popup-colon">:</span>
-                <CountdownBox value={pad(seconds)} label="SEC" />
-              </div>
+              {Date.now() >= TARGET_EVENT_MS ? (
+                <div style={{textAlign: 'center'}}>
+                  <p className="event-popup-countdown-label">LIVE NOW</p>
+                  <p style={{color: '#2ec0ff', fontWeight: 800, fontSize: 18}}>Joining live — streaming now</p>
+                </div>
+              ) : (
+                <>
+                  <p className="event-popup-countdown-label">STARTS IN</p>
+                  <div className="event-popup-countdown-row">
+                    <CountdownBox value={days} label="DAYS" />
+                    <span className="event-popup-colon">:</span>
+                    <CountdownBox value={pad(hours)} label="HRS" />
+                    <span className="event-popup-colon">:</span>
+                    <CountdownBox value={pad(minutes)} label="MIN" />
+                    <span className="event-popup-colon">:</span>
+                    <CountdownBox value={pad(seconds)} label="SEC" />
+                  </div>
+                </>
+              )}
             </div>
 
             <a
@@ -129,7 +146,7 @@ export default function EventPopup({
               rel="noopener noreferrer"
               className="event-popup-cta"
             >
-              Register Now
+              Register For Bootcamp
             </a>
           </div>
 
@@ -137,9 +154,9 @@ export default function EventPopup({
             <div className="event-popup-poster-card">
               <Image
                 src={EVENT_IMAGE}
-                alt="$50K–$250K Business Credit — Sunday 7th June 2026, 11:00 AM PST"
+                alt="Business Builder Bootcamp Masterclass Flyer detailing structure and scaling plans on Saturday, June 13, 2026"
                 width={480}
-                height={600}
+                height={480}
                 className="event-popup-poster-img"
                 priority
                 unoptimized
@@ -276,7 +293,7 @@ export default function EventPopup({
           color: #fff;
         }
         .event-popup-title-accent {
-          color: #ffb400;
+          color: #2ec0ff;
         }
         .event-popup-desc {
           margin: 0;
@@ -318,6 +335,7 @@ export default function EventPopup({
           align-items: center;
           justify-content: center;
           gap: 6px;
+          font-variant-numeric: tabular-nums;
         }
         .event-popup-colon {
           padding-bottom: 18px;

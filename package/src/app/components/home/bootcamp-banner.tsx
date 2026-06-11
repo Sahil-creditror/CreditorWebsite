@@ -18,30 +18,30 @@ const BootcampBanner = () => {
     // Dynamic Content Mapping synced perfectly with your c.png and p.png posters
     const slidesData = [
         {
-            imageSrc: "/images/todayclasstopic/cash.png",
-            imageAlt: "Cash Flow Investing: Creating Multiple Streams of Income Masterclass",
-            badge: "10th June 2026",
-            heading: <>Cash Flow Investing: <span className="text-primary">Creating Multiple Streams of Income</span></>,
-            description: "Unlock alternative investment frameworks designed to build wealth safely bypassing traditional barriers. Discover structural methods to optimize commercial liquidity and cash strategies.",
+            imageSrc: "/images/todayclasstopic/11june.webp",
+            imageAlt: "Business Credit Foundations - Building a Fundable Business Profile",
+            badge: "Today • Financial Freedom Class • June 11, 2026",
+            heading: <>  Business Credit Foundations: <span className="text-primary">Building a Fundable Business Profile</span></>,
+            description:"Learn how to establish a strong business credit foundation, increase credibility, improve fundability, and position your business for future growth opportunities through proven business credit strategies.",
             benefits: [
-                "Multiple Income Streams",
-                "Cash Flow Investing",
-                "Live Master Class Session",
-                "Join Master Class Today"
-            ]
+              "Build Strong Business Credit",
+              "Establish Credibility & Fundability",
+              "Unlock Growth Opportunities",
+              "1:1 Personalized Counseling"]
         },
         {
-            imageSrc: "/images/todayclasstopic/p.png",
-            imageAlt: "Privacy Strategies for Business Owners",
-            badge: "Operate Private",
-            heading: <>Privacy Strategies <span className="text-primary">for Business Owners</span></>,
-            description: "Learn. Protect. Grow. Move into an advanced operational architecture to isolate vulnerabilities. Implement corporate and structural protocols to secure your business and protect your future.",
-            benefits: [
-                "Protect Your Business",
-                "Protect Your Future",
-                "Secure Your Assets",
-                "Operate Private Protocols"
-            ]
+            imageSrc: "/images/todayclasstopic/11CA.webp",
+            imageAlt: "Wealth Preservation Protecting Assets During Economic Uncertainty",
+            badge: "Master Class • June 11, 2026",
+            heading: <> Wealth Preservation:<span className="text-primary">  Protecting Assets During Economic Uncertainty</span></>,
+            description:
+            "Discover strategies to safeguard assets, preserve wealth, and create a secure financial future. Learn practical approaches to wealth protection during changing economic conditions.",
+          benefits: [
+            "Protect Your Assets",
+            "Preserve Your Wealth",
+            "Secure Your Future",
+            "Live Master Class Session"
+          ]
         }
     ];
 
@@ -183,7 +183,6 @@ const BootcampBanner = () => {
 };
 
 export default BootcampBanner;
-
 
 
 

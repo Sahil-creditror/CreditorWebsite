@@ -15,33 +15,33 @@ const BootcampBanner = () => {
     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Dynamic Content Mapping synced perfectly with your t.jpg and u.jpg posters
+    // Dynamic Content Mapping synced perfectly with your c.png and p.png posters
     const slidesData = [
         {
-            imageSrc: "/images/todayclasstopic/t.jpg",
-            imageAlt: "Tax Freedom for Entrepreneurs Starts Here",
-            badge: "9th June 2026",
-            heading: <>Tax Freedom for <span className="text-primary">Entrepreneurs Starts Here</span></>,
-            description: "Unlock powerful financial, operational, and structural strategies most CPAs won't tell you. Step out of traditional tax bounds and transition your commercial enterprise into optimized protection.",
+            imageSrc: "/images/todayclasstopic/11june.webp",
+            imageAlt: "Business Credit Foundations - Building a Fundable Business Profile",
+            badge: "Today • Financial Freedom Class • June 11, 2026",
+            heading: <>  Business Credit Foundations: <span className="text-primary">Building a Fundable Business Profile</span></>,
+            description:"Learn how to establish a strong business credit foundation, increase credibility, improve fundability, and position your business for future growth opportunities through proven business credit strategies.",
             benefits: [
-                "Operate Private",
-                "Save More Wealth",
-                "Grow Businesses Faster",
-                "Advanced CPA Stratagems"
-            ]
+              "Build Strong Business Credit",
+              "Establish Credibility & Fundability",
+              "Unlock Growth Opportunities",
+              "1:1 Personalized Counseling"]
         },
         {
-            imageSrc: "/images/todayclasstopic/u.jpg",
-            imageAlt: "Understanding Trusts vs LLCs Masterclass",
-            badge: "Status Correction",
-            heading: <>Understanding <span className="text-primary">Trusts vs LLCs</span></>,
-            description: "Private Power Moves Body. Move beyond public fiction. Choose the framework that matches your path to lawful independence, financial sovereignty, and absolute creditor-proofing.",
-            benefits: [
-                "Lawful Independence",
-                "Absolute Creditor-Proofing",
-                "Move Beyond Public Fiction",
-                "Sovereignty Structures"
-            ]
+            imageSrc: "/images/todayclasstopic/11CA.webp",
+            imageAlt: "Wealth Preservation Protecting Assets During Economic Uncertainty",
+            badge: "Master Class • June 11, 2026",
+            heading: <> Wealth Preservation:<span className="text-primary">  Protecting Assets During Economic Uncertainty</span></>,
+            description:
+            "Discover strategies to safeguard assets, preserve wealth, and create a secure financial future. Learn practical approaches to wealth protection during changing economic conditions.",
+          benefits: [
+            "Protect Your Assets",
+            "Preserve Your Wealth",
+            "Secure Your Future",
+            "Live Master Class Session"
+          ]
         }
     ];
 
@@ -70,7 +70,7 @@ const BootcampBanner = () => {
         visible: {
             y: 0,
             opacity: 1,
-            transition: { duration: 0.4, ease: [0.215, 0.610, 0.355, 1.000] },
+            transition: { duration: 0.4, ease: [0.215, 0.61, 0.355, 1.0] },
         },
     };
 
@@ -143,9 +143,6 @@ const BootcampBanner = () => {
                         {/* Static Bottom Controls */}
                         <motion.div variants={itemVariants} className="flex flex-col gap-5 mt-4">
                             <div className="flex flex-wrap items-center gap-4">
-                                {/* <button className="px-8 py-4 bg-primary hover:bg-secondary text-white font-bold tracking-wide transition-all duration-300 rounded-sm shadow-md shadow-primary/20">
-                                    START YOUR JOURNEY
-                                </button> */}
                                 {/* Visual Slider Pagination Dots */}
                                 <div className="flex gap-2 ml-2">
                                     {slidesData.map((_, index) => (
@@ -186,7 +183,6 @@ const BootcampBanner = () => {
 };
 
 export default BootcampBanner;
-
 
 
 

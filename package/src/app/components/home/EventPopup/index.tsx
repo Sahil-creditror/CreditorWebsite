@@ -7,10 +7,11 @@ import {
   WORKSHOP_REGISTER_URL,
 } from "@/lib/workshop";
 
-// Target Event Time: Saturday, June 11, 2026, at 11:00 AM PST
-// 11:00 AM PST is 7:00 PM (19:00) UTC
-const TARGET_EVENT_MS = Date.UTC(2026, 5, 11, 19, 0, 0);
+// Saturday, June 13, 2026 — 11:00 AM Pacific (matches flyer image)
+const TARGET_EVENT_MS = new Date("2026-06-13T11:00:00-07:00").getTime();
 const EVENT_IMAGE = "/images/todayclasstopic/am.png";
+const EVENT_DATE_LABEL = "Saturday, June 13";
+const EVENT_TIME_LABEL = "11:00 AM PST";
 
 interface EventPopupProps {
   delayMs?: number;
@@ -100,7 +101,7 @@ export default function EventPopup({
                 <span className="event-badge-dot" aria-hidden />
                 LIVE WORKSHOP
               </span>
-              <span className="event-badge event-badge--date">Saturday, June 11</span>
+              <span className="event-badge event-badge--date">{EVENT_DATE_LABEL}</span>
             </div>
 
             <h2 id="event-popup-title" className="event-popup-title">
@@ -115,7 +116,7 @@ export default function EventPopup({
             <div className="event-popup-tags">
               <span>Structure & Scale</span>
               <span>Funding Blueprint</span>
-              <span>11:00 AM PST</span>
+              <span>{EVENT_TIME_LABEL}</span>
             </div>
 
             <div className="event-popup-countdown-wrap">
@@ -154,7 +155,7 @@ export default function EventPopup({
             <div className="event-popup-poster-card">
               <Image
                 src={EVENT_IMAGE}
-                alt="Business Builder Bootcamp Masterclass Flyer detailing structure and scaling plans on Saturday, June 13, 2026"
+                alt={`Business Builder Bootcamp — ${EVENT_DATE_LABEL}, 2026, ${EVENT_TIME_LABEL}`}
                 width={480}
                 height={480}
                 className="event-popup-poster-img"

@@ -146,6 +146,8 @@ export default function RegPopup() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [dataset, setDataset] = useState<NotificationData[]>([]);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isClosed, setIsClosed] = useState(false);
 
   // Only render on client to avoid hydration mismatch
   useEffect(() => {
@@ -155,22 +157,22 @@ export default function RegPopup() {
   }, []);
 
   useEffect(() => {
-    if (!mounted || dataset.length === 0) return;
+    if (!mounted || dataset.length === 0 || isClosed) return;
     
     let timeoutId: NodeJS.Timeout;
     
     const scheduleNext = () => {
-      // Show notification for 3 seconds
+      // Show notification for 4 seconds (longer when interactive)
       timeoutId = setTimeout(() => {
         setIsVisible(false);
         
-        // After fade out animation (300ms), wait 3 seconds, then show next
+        // After fade out animation (300ms), wait 2 seconds, then show next
         setTimeout(() => {
           setCurrentIndex((prev) => (prev + 1) % dataset.length);
           setIsVisible(true);
           scheduleNext(); // Schedule the next notification
-        }, 3000 + 300); // 3 seconds wait + 300ms fade out
-      }, 3000); // Show for 3 seconds
+        }, 2000 + 300); // 2 seconds wait + 300ms fade out
+      }, isHovered ? 999999 : 4000); // Pause when hovering
     };
     
     scheduleNext();
@@ -178,17 +180,25 @@ export default function RegPopup() {
     return () => {
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [mounted, dataset.length]);
+  }, [mounted, dataset.length, isHovered, isClosed]);
+
+  const goToPrevious = () => {
+    setCurrentIndex((prev) => (prev - 1 + dataset.length) % dataset.length);
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % dataset.length);
+  };
 
   // Don't render until mounted on client
-  if (!mounted || dataset.length === 0) {
+  if (!mounted || dataset.length === 0 || isClosed) {
     return null;
   }
 
   const notification = dataset[currentIndex];
 
   return (
-    <div className="fixed bottom-6 left-6 z-50" style={{ maxWidth: "320px" }}>
+    <div className="fixed bottom-4 left-4 z-50" style={{ maxWidth: "280px" }}>
       {/* Individual Notification */}
       <div
         className={`transition-all duration-500 ease-out ${
@@ -196,14 +206,16 @@ export default function RegPopup() {
             ? "opacity-100 translate-y-0" 
             : "opacity-0 translate-y-8"
         }`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         {/* Person Notification */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-4">
-          <div className="flex items-start gap-3">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-3 hover:shadow-xl transition-shadow">
+          <div className="flex items-start gap-2">
             {/* Map/Location Icon */}
             <div className="flex-shrink-0 mt-0.5">
               <svg
-                className="w-5 h-5 text-blue-600 dark:text-blue-400"
+                className="w-4 h-4 text-blue-600 dark:text-blue-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -225,25 +237,25 @@ export default function RegPopup() {
 
             {/* Content */}
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">
+              <div className="flex items-center gap-1 mb-0.5">
+                <span className="text-xs font-semibold text-gray-900 dark:text-white truncate">
                   {notification.name}
                 </span>
-                <span className="text-xs text-gray-500 dark:text-gray-400">
+                <span className="text-[10px] text-gray-500 dark:text-gray-400 truncate">
                   from {notification.city}
                 </span>
               </div>
-              <p className="text-xs text-gray-700 dark:text-gray-300 mb-1">
+              <p className="text-[11px] text-gray-700 dark:text-gray-300 mb-1 line-clamp-1">
                 {notification.action}
               </p>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-500 dark:text-gray-400">
+              <div className="flex items-center gap-1.5">
+                <span className="text-[10px] text-gray-500 dark:text-gray-400">
                   {formatTimeAgo(notification.minutesAgo)}
                 </span>
                 {/* Verified Badge */}
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-0.5">
                   <svg
-                    className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400"
+                    className="w-3 h-3 text-blue-600 dark:text-blue-400"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -253,13 +265,49 @@ export default function RegPopup() {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <span className="text-[10px] text-blue-600 dark:text-blue-400 font-medium">
-                    verified by Proof
+                  <span className="text-[9px] text-blue-600 dark:text-blue-400 font-medium">
+                    verified
                   </span>
                 </div>
               </div>
             </div>
+
+            {/* Close Button */}
+            <button
+              onClick={() => setIsClosed(true)}
+              className="flex-shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+              aria-label="Close notification"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
           </div>
+
+          {/* Interactive Controls */}
+          {isHovered && (
+            <div className="flex items-center justify-between gap-2 mt-2 pt-2 border-t border-gray-200 dark:border-gray-600">
+              <button
+                onClick={goToPrevious}
+                className="flex-1 px-2 py-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 rounded transition-colors"
+              >
+                ← Prev
+              </button>
+              <span className="text-[10px] text-gray-500 dark:text-gray-400">
+                {currentIndex + 1} / {dataset.length}
+              </span>
+              <button
+                onClick={goToNext}
+                className="flex-1 px-2 py-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 rounded transition-colors"
+              >
+                Next →
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

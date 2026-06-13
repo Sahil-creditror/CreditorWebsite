@@ -4,10 +4,11 @@ import React from "react";
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 
 export default function MasterclassBenefits() {
   const { ref, inView } = useInView({
-    threshold: 0.1,
+    threshold: 0.05,
     triggerOnce: true,
   });
 
@@ -39,7 +40,7 @@ export default function MasterclassBenefits() {
       img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883727/creditor-website-assets/images/offers/card.webp",
       description:
         "Charge your \"Creditor Card\" and step into the private economy. Each swipe unlocks access, wealth, and opportunity reserved for members only.",
-      color: "from-slate-800 to-slate-900 dark:from-slate-900 dark:to-black",
+      color: "from-slate-50 via-slate-100 to-slate-200",
     },
     {
       type: "block",
@@ -47,7 +48,7 @@ export default function MasterclassBenefits() {
       img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883729/creditor-website-assets/images/offers/courses.webp",
       description:
         "Instantly access premium courses, join daily live masterclasses, and a private network of like-minded achievers. Learn, grow, and collaborate.",
-      color: "from-[#0a1e3f] to-[#1a2e5f] dark:from-[#0a1e3f] dark:to-[#101b36]",
+      color: "from-blue-50 via-indigo-50/50 to-slate-100",
     },
     {
       type: "bg",
@@ -59,176 +60,128 @@ export default function MasterclassBenefits() {
   ];
 
   return (
-    <section className="relative overflow-hidden py-10 md:py-20 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800" />
-      {/* <div
-        className="absolute inset-0 bg-[url('https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883586/creditor-website-assets/images/home/aboutusIndex/about_christmas4.webp')] bg-cover bg-center dark:opacity-0 transition-opacity duration-300"
-        aria-hidden="true"
-      /> */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/30 to-white/60 dark:hidden pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/20 to-slate-900/60 hidden dark:block pointer-events-none" />
-      <div className="container mx-auto px-4 relative z-10">
+    <section className="relative overflow-hidden py-16 md:py-28 bg-white text-slate-900">
+      {/* ── AMBIENT STRUCTURAL BACKGROUND ── */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-blue-500/[0.03] rounded-full blur-[160px]" />
+        <div className="absolute top-2/3 left-1/3 w-[600px] h-[300px] bg-amber-500/[0.03] rounded-full blur-[140px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000004_1px,transparent_1px),linear-gradient(to_bottom,#00000004_1px,transparent_1px)] bg-[size:40px_40px]" />
+      </div>
 
-        {/* --- Section Heading --- */}
-        <div ref={ref} className="mt-0 md:mt-5">
-          {/* Top Row - Left Aligned */}
-          {/* <motion.div
-            className="flex items-center gap-4 md:gap-8 mb-6"
-            initial={{ opacity: 0 }}
-            animate={
-              inView
-                ? {
-                    opacity: 1,
-                    transition: { delay: 0.2 }
-                  }
-                : {}
-            }
-          >
-            <motion.span
-              className="bg-primary py-1.5 px-2.5 text-base font-medium rounded-full dark:text-secondary"
-              initial={{ scale: 0 }}
-              animate={
-                inView
-                  ? {
-                      scale: 1,
-                      transition: {
-                        type: "spring",
-                        stiffness: 500,
-                        damping: 15
-                      }
-                    }
-                  : {}
-              }
-            >
-              02
-            </motion.span>
-            <motion.div
-              className="h-px w-16 bg-secondary/12 dark:bg-white/12"
-              initial={{ scaleX: 0 }}
-              animate={
-                inView
-                  ? {
-                      scaleX: 1,
-                      transition: { delay: 0.3 }
-                    }
-                  : {}
-              }
-            />
-            <motion.p
-              className="text-base font-medium text-white bg-secondary dark:bg-white/10 py-1.5 px-4 rounded-full"
-              initial={{ y: 20, opacity: 0 }}
-              animate={
-                inView
-                  ? {
-                      y: 0,
-                      opacity: 1,
-                      transition: { delay: 0.4 }
-                    }
-                  : {}
-              }
-            >
-              We Offer You
-            </motion.p>
-          </motion.div> */}
-
-          {/* Section Title - Center Aligned */}
-          <div className="text-center">
-            <h3 className="text-3xl md:text-5xl font-extrabold text-slate-800 dark:text-white leading-tight">
-              The{' '}
-              <span className="bg-clip-text text-blue-600 dark:text-blue-400 bg-gradient-to-r from-blue-500 to-blue-400">
-                Freedom
-              </span>{' '}
-              Formula
-            </h3>
+      <div className="container mx-auto px-4 relative z-10 max-w-6xl">
+        
+        {/* ── HEADER INTRO BLOCK ── */}
+        <div className="text-center max-w-2xl mx-auto mb-16 md:mb-24">
+          <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-full px-3 py-1 text-xs font-bold tracking-widest text-blue-600 uppercase mb-4">
+            Strategic Architecture
           </div>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-tight text-slate-900">
+            The{" "}
+            <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 bg-clip-text text-transparent">
+              Freedom
+            </span>{" "}
+            Formula
+          </h2>
+          <p className="text-sm md:text-base text-slate-500 mt-3 font-normal leading-relaxed">
+            A linear operational map designed to transition entities step-by-step out of traditional friction and into sovereign private commerce.
+          </p>
         </div>
 
-        {/* --- Cards Grid --- */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10 md:mt-16">
-          {benefits.map((item, idx) => (
-            <div key={idx} className="relative">
-
-              {/* --- Card Container --- */}
-              <div
-                className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 h-full group border border-slate-200/50 dark:border-slate-700/50"
+        {/* ── TIMELINE ENGINE ROW & CONTAINER ── */}
+        <div ref={ref} className="relative space-y-12 md:space-y-20 before:absolute before:inset-y-4 before:left-4 md:before:left-1/2 before:w-0.5 before:bg-gradient-to-b before:from-blue-500/20 before:via-slate-200 before:to-transparent">
+          {benefits.map((item, idx) => {
+            const isEven = idx % 2 === 0;
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: idx * 0.15, ease: "easeOut" }}
+                className={`flex flex-col md:flex-row items-stretch gap-6 md:gap-12 relative ${
+                  isEven ? "md:flex-row" : "md:flex-row-reverse"
+                }`}
               >
-                {/* --- Large Number Overlay --- */}
-                <span
-                  className={`absolute top-2 right-4 text-[70px] md:text-[100px] lg:text-[120px] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-blue-400/30 to-amber-400/30 select-none pointer-events-none leading-none z-30 opacity-60 group-hover:scale-110 transition-transform duration-500 ease-out`}
-                >
-                  {idx + 1}
-                </span>
+                {/* Timeline Geometric Hub */}
+                <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-white border-2 border-blue-500 z-30 shadow-[0_0_12px_rgba(59,130,246,0.3)] mt-6 hidden sm:block" />
 
-                {/* Shared overlays */}
-                <div className="absolute inset-0 pointer-events-none z-10">
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20 dark:to-black/60 opacity-60 mix-blend-overlay" />
-                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
-                </div>
-
-                {/* --- BG type cards (1 & 4) --- */}
-                {item.type === "bg" && (
-                  <div
-                    className="relative h-full min-h-[22rem] md:min-h-[25rem] flex flex-col justify-between overflow-hidden"
-                    style={{
-                      backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(2,6,23,0.7) 100%), url(${item.bg})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  >
-                    <div className="p-6 md:p-8 relative z-30">
-                      <h3 className="text-xl md:text-2xl font-bold text-white drop-shadow-md">
-                        {item.title}
-                      </h3>
+                {/* ── CONTENT INTERACTION HALF ── */}
+                <div className="w-full md:w-1/2 flex flex-col justify-center pl-8 md:pl-0 md:px-4">
+                  <div className="space-y-3 max-w-md mx-auto md:mx-0 w-full">
+                    <div className="text-xs font-black tracking-widest text-amber-600 uppercase">
+                      Stage 0{idx + 1}
                     </div>
-
-                    <div className="p-6 md:p-8 relative z-30 mt-auto">
-                      <p className="text-sm md:text-base text-white/95 leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {/* --- Block type cards (2 & 3) --- */}
-                {item.type === "block" && (
-                  <div
-                    className={`relative flex flex-col justify-between rounded-2xl p-6 md:p-8 h-full bg-gradient-to-b ${item.color} overflow-hidden`}
-                  >
-                    <h3 className="text-xl md:text-2xl font-bold text-white drop-shadow-md relative z-20">
+                    <h3 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900">
                       {item.title}
                     </h3>
-
-                    <div className="relative z-20 my-6 flex justify-center">
-                      <Image
-                        src={(item as BlockCard).img}
-                        alt={`Benefit: ${item.title}`}
-                        width={300}
-                        height={200}
-                        className="object-contain h-32 md:h-40"
-                        sizes="(max-width: 640px) 200px, 300px"
-                        loading="lazy"
-                      />
-                    </div>
-
-                    <p className="text-sm md:text-base text-white/95 leading-relaxed relative z-20">
+                    <p className="text-sm leading-relaxed text-slate-500 font-normal">
                       {item.description}
                     </p>
                   </div>
-                )}
-              </div>
-            </div>
-          ))}
+                </div>
+
+                {/* ── GRAPHIC CANVAS INTERACTION HALF ── */}
+                <div className="w-full md:w-1/2 pl-8 md:pl-0">
+                  <div className="relative rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/60 shadow-xl group h-[220px] md:h-[260px] flex items-center justify-center transition-all duration-300 hover:border-slate-300 hover:shadow-2xl">
+                    
+                    {/* Background Overlay Controls */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/5 via-transparent to-transparent z-10" />
+
+                    {/* BG TYPE PANEL LAYER RENDER */}
+                    {item.type === "bg" && (
+                      <div className="absolute inset-0 w-full h-full">
+                        <Image
+                          src={item.bg}
+                          alt={item.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-slate-900/10 mix-blend-multiply" />
+                      </div>
+                    )}
+
+                    {/* BLOCK TYPE CARD RENDER */}
+                    {item.type === "block" && (
+                      <>
+                        <div className={`absolute inset-0 bg-gradient-to-br ${item.color}`} />
+                        <div className="relative z-20 w-4/5 h-4/5 flex items-center justify-center transition-transform duration-500 ease-out group-hover:scale-105">
+                          <Image
+                            src={(item as BlockCard).img}
+                            alt={item.title}
+                            width={280}
+                            height={180}
+                            className="object-contain max-h-full drop-shadow-[0_8px_16px_rgba(0,0,0,0.08)]"
+                            loading="lazy"
+                          />
+                        </div>
+                      </>
+                    )}
+
+                    {/* Linear Node Index Identification Stamp */}
+                    <div className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/80 border border-slate-200 flex items-center justify-center text-xs font-bold text-slate-600 shadow-sm backdrop-blur-md select-none">
+                      0{idx + 1}
+                    </div>
+                  </div>
+                </div>
+
+              </motion.div>
+            );
+          })}
         </div>
 
-        {/* CTA Button */}
-        <div className="mt-12 flex flex-col items-center gap-4">
+        {/* ── ACTION CONVERSION TRIGGER ── */}
+        <div className="mt-20 md:mt-28 flex flex-col items-center">
           <a
-            className="relative w-full max-w-md inline-flex items-center justify-center px-10 py-3.5 md:px-10 md:py-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-semibold text-lg md:text-xl shadow-lg ring-1 ring-white/10 dark:ring-black/10 transition-transform duration-200"
             href="/masterclass-membership"
+            className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold text-base md:text-lg shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300 hover:-translate-y-0.5 overflow-hidden"
           >
-            Become a Member
+            <span className="relative z-10">Initialize Membership Protocols</span>
+            <ArrowUpRight className="w-5 h-5 relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </a>
         </div>
+
       </div>
     </section>
   );

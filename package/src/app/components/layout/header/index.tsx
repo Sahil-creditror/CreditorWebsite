@@ -107,7 +107,7 @@ const Header = () => {
           {/* Navigation Links - Only visible on large screens */}
           <div className="flex items-center gap-2 lg:gap-4 pr-10">
             <Logo sticky={sticky} />
-            <nav className="hidden lg:flex items-center  gap-1 lg:gap-1 sm:gap-1">
+            <nav className="hidden lg:flex items-center  gap-1 lg:gap-1 sm:gap-1 pl-30">
               <Link
                 href="/"
                 className={`flex justify-center items-center gap-1 text-xs sm:text-sm font-bold rounded-lg py-1 px-3 transition-colors ${sticky
@@ -244,17 +244,18 @@ const Header = () => {
                   Sign Up
                 </Link>
               */}
-              <Link
-                href="/masterclass-membership"
-                className={`flex justify-center items-center gap-1 text-sm sm:text-base font-bold rounded-full py-1.5 px-5 transition-colors
-                  ${sticky
-                    ? "bg-white text-secondary hover:bg-secondary hover:text-white dark:bg-white dark:text-secondary dark:hover:bg-secondary dark:hover:text-white"
-                    : "bg-yellow-500 text-black hover:bg-yellow-600"
-                  }
-                `}
-              >
-                Register Now 
-              </Link>
+            <Link
+  href="/masterclass-membership"
+  className={`hidden md:flex justify-center items-center gap-1 text-sm sm:text-base font-bold rounded-full py-1.5 px-5 transition-colors
+    ${
+      sticky
+        ? "bg-white text-secondary hover:bg-secondary hover:text-white dark:bg-white dark:text-secondary dark:hover:bg-secondary dark:hover:text-white"
+        : "bg-yellow-500 text-black hover:bg-yellow-600"
+    }
+  `}
+>
+  Register Now
+</Link>
               <Link
                 href="https://lmsathena.com/login"
                 className={`flex justify-center items-center gap-2 text-sm sm:text-base font-bold rounded-full py-1.5 px-6 transition-colors

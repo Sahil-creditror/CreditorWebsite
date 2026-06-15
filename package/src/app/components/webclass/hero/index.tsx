@@ -511,7 +511,7 @@ export default function WebclassSection() {
               </svg>
             </span>
           </button>
-          <p className="wc-cta-sub">100% free · <span className="wc-cta-limited">Limited spots available</span></p>
+          {/* <p className="wc-cta-sub">100% free · <span className="wc-cta-limited">Limited spots available</span></p> */}
         </div>
 
         {/* RIGHT PANEL - Speaker image */}
@@ -855,27 +855,28 @@ export default function WebclassSection() {
            HERO SECTION
         ===================== */
         .wc-hero {
-          display: flex;
-          min-height: 100vh;
-          font-family: Arial, sans-serif;
-        }
+  display: flex;
+  height: 100vh;
+  min-height: 650px;
+  max-height: 900px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
 
         /* LEFT PANEL */
         .wc-left {
-          flex: 0 0 50%;
-          background: #2040c8;
-          background: linear-gradient(160deg, #1a2fa8 0%, #2348d4 40%, #1e3ab8 100%);
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          padding: 48px 56px 48px 64px;
-          color: white;
-          position: relative;
-          z-index: 1;
-        }
-
+  flex: 0 0 50%;
+  background: linear-gradient(160deg, #1a2fa8 0%, #2348d4 40%, #1e3ab8 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px 45px 30px 55px;
+  color: white;
+  position: relative;
+  z-index: 1;
+}
         .wc-logo-wrap {
-          margin-bottom: 32px;
+          margin-bottom: 8px;
         }
 
         .wc-eyebrow {
@@ -884,14 +885,15 @@ export default function WebclassSection() {
           letter-spacing: 0.15em;
           text-transform: uppercase;
           color: rgba(255,255,255,0.75);
-          margin: 0 0 12px 0;
+          margin: 0 0 10px 0;
         }
 
         .wc-headline {
-          font-size: clamp(38px, 4.5vw, 58px);
-          font-weight: 900;
-          line-height: 1.08;
-          margin: 0 0 18px 0;
+          font-weight: 700;
+          font-size: clamp(30px, 3.5vw, 46px);
+  line-height: 1.05;
+  margin-bottom: 8px;
+
           color: white;
           letter-spacing: -0.01em;
         }
@@ -900,21 +902,22 @@ export default function WebclassSection() {
           color: #f5a623;
         }
 
-        .wc-subheadline {
-          font-size: 15px;
-          line-height: 1.6;
+       .wc-subheadline {
+          font-size: 14px;
+  line-height: 1.45;
+  margin-bottom: 16px;
+
           color: rgba(255,255,255,0.82);
-          margin: 0 0 24px 0;
           max-width: 440px;
         }
 
         .wc-benefits {
           list-style: none;
-          margin: 0 0 28px 0;
+          margin: 0 0 18px 0;
           padding: 0;
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 7px;
         }
 
         .wc-benefit-item {
@@ -972,12 +975,13 @@ export default function WebclassSection() {
           background: rgba(255,255,255,0.12);
           border: 1px solid rgba(255,255,255,0.18);
           border-radius: 8px;
-          padding: 10px 18px;
-          min-width: 68px;
+          padding: 8px 14px;
+  min-width: 60px;
+
         }
 
         .wc-countdown-num {
-          font-size: 32px;
+          font-size: 26px;
           font-weight: 900;
           color: white;
           line-height: 1;
@@ -1058,6 +1062,8 @@ export default function WebclassSection() {
         /* RIGHT PANEL */
         .wc-right {
           flex: 0 0 50%;
+            height:100%;
+
           position: relative;
           overflow: hidden;
           background: #0d1a5e;

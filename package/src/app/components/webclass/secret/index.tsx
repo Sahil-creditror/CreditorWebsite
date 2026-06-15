@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { openWebinarRegistration } from "@/app/lib/openWebinarRegistration";
 
 export default function LearningSection() {
   const learningPoints = [
@@ -126,11 +126,13 @@ export default function LearningSection() {
             Reserve your seat for the free live webclass today. Spaces are strictly monitored.
           </p>
 
-          <Link
-            href="/webinar"
-            className="mt-8 w-full sm:w-auto inline-flex justify-center items-center bg-yellow-400 hover:bg-yellow-300 active:scale-[0.98] text-slate-950 font-black text-base md:text-lg px-10 py-4 rounded-xl shadow-lg transition-all duration-200">
+          <button
+            type="button"
+            onClick={openWebinarRegistration}
+            className="mt-8 w-full sm:w-auto inline-flex justify-center items-center bg-yellow-400 hover:bg-yellow-300 active:scale-[0.98] text-slate-950 font-black text-base md:text-lg px-10 py-4 rounded-xl shadow-lg transition-all duration-200"
+          >
             Secure My Spot in the Live Webclass
-          </Link>
+          </button>
         </div>
 
       </div>

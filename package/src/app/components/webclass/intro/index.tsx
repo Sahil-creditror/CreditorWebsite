@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/dist/client/link";
 import Image from "next/image";
+import { openWebinarRegistration } from "@/app/lib/openWebinarRegistration";
 
 const InstructorSection = () => {
   return (
@@ -70,11 +70,13 @@ const InstructorSection = () => {
             </div>
 
             {/* CTA Button */}
-            <Link 
-            href="/webinar"
-            className="w-full sm:w-auto inline-flex justify-center items-center bg-yellow-400 hover:bg-yellow-300 active:scale-[0.98] text-slate-950 font-extrabold text-lg px-8 py-4 rounded-xl shadow-lg shadow-yellow-400/20 transition-all duration-200">
+            <button
+              type="button"
+              onClick={openWebinarRegistration}
+              className="w-full sm:w-auto inline-flex justify-center items-center bg-yellow-400 hover:bg-yellow-300 active:scale-[0.98] text-slate-950 font-extrabold text-lg px-8 py-4 rounded-xl shadow-lg shadow-yellow-400/20 transition-all duration-200"
+            >
               Secure My Spot in the Live Webclass
-            </Link>
+            </button>
 
           </div>
 

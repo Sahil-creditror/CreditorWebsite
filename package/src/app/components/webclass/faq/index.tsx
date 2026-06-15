@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { openWebinarRegistration } from "@/app/lib/openWebinarRegistration";
 
 export default function FAQSection() {
   const faqs = [
@@ -95,13 +95,14 @@ export default function FAQSection() {
             </p>
           </div>
           
-          <Link
-            href="/webinar"
+          <button
+            type="button"
+            onClick={openWebinarRegistration}
             className="group inline-flex items-center gap-2 whitespace-nowrap bg-white text-blue-600 hover:bg-blue-50 font-semibold text-sm px-6 py-3.5 rounded-xl transition duration-200 shadow-sm active:scale-[0.98]"
           >
             Reserve My Free Seat
             <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
-          </Link>
+          </button>
         </div>
 
       </div>

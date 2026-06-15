@@ -8,7 +8,7 @@ import {
   Users,
   ArrowRight,
 } from "lucide-react";
-import Link from "next/link";
+import { openWebinarRegistration } from "@/app/lib/openWebinarRegistration";
 
 export default function WhyAttendSection() {
   const benefits = [
@@ -101,15 +101,17 @@ export default function WhyAttendSection() {
             </div>
             
             <div className="mt-6">
-              <Link href="/webinar" className="group inline-flex items-center gap-2 bg-white text-blue-600 hover:bg-blue-50 font-semibold text-sm px-5 py-3 rounded-xl transition duration-200 shadow-sm active:scale-[0.98]">
+              <button
+                type="button"
+                onClick={openWebinarRegistration}
+                className="group inline-flex items-center gap-2 bg-white text-blue-600 hover:bg-blue-50 font-semibold text-sm px-5 py-3 rounded-xl transition duration-200 shadow-sm active:scale-[0.98]"
+              >
                 Secure My Spot
                 <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
-              </Link>
+              </button>
             </div>
           </div>
-
         </div>
-
       </div>
     </section>
   );

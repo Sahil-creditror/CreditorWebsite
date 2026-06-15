@@ -107,7 +107,7 @@ const Header = () => {
             <nav className="hidden lg:flex items-center gap-2 sm:gap-3">
               <Link
                 href="/services/website-service"
-                className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-4 transition-colors ${sticky
+                className={`flex justify-center items-center gap-2 text-xs sm:text-sm font-bold rounded-lg py-1.5 px-5 transition-colors ${sticky
                   ? "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
                   : "bg-white text-primary hover:bg-secondary hover:text-white dark:bg-white dark:text-primary dark:hover:bg-secondary dark:hover:text-white"
                   }`}
@@ -142,7 +142,7 @@ const Header = () => {
           </div>
 
           <div className="flex items-center gap-4 sm:gap-6">
-            <a
+            {/* <a
               href="tel:+14254009246"
               className={`hidden md:flex items-center gap-2 text-sm font-bold transition-colors 
                 ${sticky ? "text-white hover:text-secondary" : "text-white hover:text-blue-500"}
@@ -152,7 +152,7 @@ const Header = () => {
                 <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.11.37 2.31.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.4 21 3 13.6 3 4a1 1 0 0 1 1-1h3.49a1 1 0 0 1 1 1c0 1.27.19 2.47.57 3.58a1 1 0 0 1-.25 1.01l-2.19 2.2z" />
               </svg>
               <span>(425-400-9246)</span>
-            </a>
+            </a> */}
             <div className="flex items-center gap-2 sm:gap-3">
               <Link
                 href="https://lmsathena.com/signup"
@@ -181,11 +181,11 @@ const Header = () => {
             </div>
 
             {/* Mobile Phone Icon */}
-            <a href="tel:+14254009246" className="md:hidden p-2 text-white hover:text-primary transition-colors">
+            {/* <a href="tel:+14254009246" className="md:hidden p-2 text-white hover:text-primary transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.11.37 2.31.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.4 21 3 13.6 3 4a1 1 0 0 1 1-1h3.49a1 1 0 0 1 1 1c0 1.27.19 2.47.57 3.58a1 1 0 0 1-.25 1.01l-2.19 2.2z" />
               </svg>
-            </a>
+            </a> */}
 
             {/* Menu Toggle */}
             <div className="relative flex items-center">

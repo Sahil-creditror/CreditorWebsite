@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { openWebinarRegistration } from "@/app/lib/openWebinarRegistration";
 import { ArrowRight, Sparkles, Users } from "lucide-react";
 
 export default function CTASection() {
@@ -166,9 +166,9 @@ mb-6
               <Users size={30} />
             </div>
 
-            <Link
-            href="/webinar"
-            
+            <button
+              type="button"
+              onClick={openWebinarRegistration}
               className="
 text-2xl
 md:text-3xl
@@ -177,7 +177,7 @@ text-slate-900
 "
             >
               Reserve Your Free Seat Now
-            </Link>
+            </button>
 
             <p
               className="
@@ -188,8 +188,9 @@ text-slate-600
               Limited seats available for the upcoming live webclass.
             </p>
 
-              <Link
-              href="/webinar"
+              <button
+                type="button"
+                onClick={openWebinarRegistration}
                 className="
 mt-8
 group
@@ -219,7 +220,7 @@ group-hover:translate-x-1
 transition
 "
                 />
-              </Link>
+              </button>
           </div>
         </div>
 

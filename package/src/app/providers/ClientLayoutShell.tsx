@@ -58,6 +58,7 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
     "/operate-wonder",
     "/private-wonder",
     "/projects-wonder",
+    "/webinar",
   ];
   const hideHeader =
     excludedRoutes.includes(pathname) ||
@@ -87,9 +88,9 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
           manualTrigger={thanksgivingKey}
         /> */}
 
-        {/* CA7 June — Business Credit event (auto-opens after 5s; Special Offer button) */}
+        {/* CA7 June — Business Credit event (auto-opens after 15s; Special Offer button) */}
         <EventPopup
-          delayMs={5000}
+          delayMs={15000}
           disableAutoOpen={false}
           manualTrigger={thanksgivingKey}
         />

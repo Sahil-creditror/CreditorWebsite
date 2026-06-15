@@ -187,11 +187,6 @@
 
 
 
-
-
-
-
-
 "use client";
 
 import React, { useRef } from "react";
@@ -208,21 +203,21 @@ const MasterClassBanner = () => {
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
 
-    // Data mapping synchronized with the verified text assets from f.png
+    // Data mapping synchronized with the verified text assets from a.png
     const classData = {
-        imageSrc: "/images/todayclasstopic/f.png",
-        imageAlt: "Creditor Academy Master Class Poster - From Side Hustle to Enterprise: Scaling a Business to 7 Figures Today",
-        badge: "Live Master Class - 12th June 2026",
+        imageSrc: "/images/todayclasstopic/arr.png",
+        imageAlt: "Creditor Academy Master Class Poster - Buying Real Estate Using Creative Financing Strategies Today",
+        badge: "Master Class - 15th June 2026",
         heading: (
             <>
-                From Side Hustle To Enterprise: <span className="text-primary block mt-1">Scaling a Business to 7 Figures Today</span>
+                Buying Real Estate: <span className="text-primary block mt-1">Using Creative Financing Strategies Today</span>
             </>
         ),
-        description: "Join Creditor Academy (Private Montessori Association) for an exclusive, strategic master class designed to help you scale your operations, build true enterprise value, and break through to 7 figures.",
+        description: "Join Creditor Academy (Private Montessori Association) for an exclusive, high-level real estate master class. Learn how to strategically acquire properties, maximize leverage, and scale your portfolio using creative financing.",
         benefits: [
-            "Friday, 12th June 2026",
-            "7-Figure Business Blueprint",
-            "Enterprise Scaling Strategies",
+            "Creative Financing",
+            "Invest Smarter",
+            "Build Wealth Today",
             "Creditor Academy Private Association"
         ]
     };

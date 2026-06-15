@@ -7,10 +7,10 @@ import {
   WORKSHOP_REGISTER_URL,
 } from "@/lib/workshop";
 
-// Saturday, June 13, 2026 — 11:00 AM Pacific (matches flyer image)
-const TARGET_EVENT_MS = new Date("2026-06-13T11:00:00-07:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/am.png";
-const EVENT_DATE_LABEL = "Saturday, June 13";
+// Saturday, June 20, 2026 — 11:00 AM Pacific (matches bfb.png flyer asset)
+const TARGET_EVENT_MS = new Date("2026-06-20T11:00:00-07:00").getTime();
+const EVENT_IMAGE = "/images/todayclasstopic/bfb.png";
+const EVENT_DATE_LABEL = "Saturday, June 20";
 const EVENT_TIME_LABEL = "11:00 AM PST";
 
 interface EventPopupProps {
@@ -34,7 +34,7 @@ function getCountdown(targetMs: number) {
 }
 
 export default function EventPopup({
-  delayMs = 5000,
+  delayMs = 25000,
   disableAutoOpen = false,
   manualTrigger = 0,
 }: EventPopupProps) {
@@ -51,19 +51,15 @@ export default function EventPopup({
     if (manualTrigger > 0) setOpen(true);
   }, [manualTrigger]);
 
-  // Active interval loop that drives the countdown calculation forward every single second
+  // Active interval loop driving the countdown calculation forward every second
   useEffect(() => {
-    if (!open) return;
-    
-    // Update immediately upon opening
-    setCountdown(getCountdown(TARGET_EVENT_MS));
-    
-    const id = setInterval(() => {
-      setCountdown(getCountdown(TARGET_EVENT_MS));
-    }, 1000);
-    
+    const updateCountdown = () => setCountdown(getCountdown(TARGET_EVENT_MS));
+
+    updateCountdown();
+    const id = setInterval(updateCountdown, 1000);
+
     return () => clearInterval(id);
-  }, [open]);
+  }, []);
 
   if (!open) return null;
 
@@ -75,7 +71,7 @@ export default function EventPopup({
       onClick={(e) => {
         if (e.target === e.currentTarget) setOpen(false);
       }}
-      data-event-popup="ca7-business-builder-bootcamp-v2"
+      data-event-popup="ca7-business-funding-blueprint"
     >
       <div
         role="dialog"
@@ -99,23 +95,24 @@ export default function EventPopup({
             <div className="event-popup-badges">
               <span className="event-badge event-badge--live">
                 <span className="event-badge-dot" aria-hidden />
-                LIVE WORKSHOP
+                LIVE WEBINAR
               </span>
               <span className="event-badge event-badge--date">{EVENT_DATE_LABEL}</span>
             </div>
 
             <h2 id="event-popup-title" className="event-popup-title">
-              Business Builder <span className="event-popup-title-accent">Bootcamp</span>
+              Business Funding <span className="event-popup-title-accent">Blueprint</span>
             </h2>
 
             <p className="event-popup-desc">
-              Build, Structure & Scale Your Business the Right Way. Learn essential strategies 
-              for corporate compliance, operational frameworks, and institutional funding access.
+              Get approved for <strong>$100K+</strong>. Learn the strategic steps successful 
+              entrepreneurs use to establish pristine business credit, meet strict lender requirements, 
+              and accurately structure their companies for rapid funding readiness.
             </p>
 
             <div className="event-popup-tags">
-              <span>Structure & Scale</span>
-              <span>Funding Blueprint</span>
+              <span>Business Credit</span>
+              <span>Lender Requirements</span>
               <span>{EVENT_TIME_LABEL}</span>
             </div>
 
@@ -147,7 +144,7 @@ export default function EventPopup({
               rel="noopener noreferrer"
               className="event-popup-cta"
             >
-              Register For Bootcamp
+              Get Approved For $100K+
             </a>
           </div>
 
@@ -155,7 +152,7 @@ export default function EventPopup({
             <div className="event-popup-poster-card">
               <Image
                 src={EVENT_IMAGE}
-                alt={`Business Builder Bootcamp — ${EVENT_DATE_LABEL}, 2026, ${EVENT_TIME_LABEL}`}
+                alt={`Business Funding Blueprint Live Masterclass — ${EVENT_DATE_LABEL}, 2026, ${EVENT_TIME_LABEL}`}
                 width={480}
                 height={480}
                 className="event-popup-poster-img"

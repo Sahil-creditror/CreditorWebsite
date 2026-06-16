@@ -434,7 +434,7 @@ export default function WebclassSection() {
 
   return (
     <>
-      {/* Hero Section - Split two-column layout matching reference design */}
+      {/* Hero Section */}
       <section className="wc-hero">
         {/* LEFT PANEL */}
         <div className="wc-left">
@@ -449,37 +449,54 @@ export default function WebclassSection() {
             />
           </div>
 
-          {/* Eyebrow */}
-          <p className="wc-eyebrow">Secrets to Operating Private</p>
-
-          {/* Headline */}
+          {/* H1 Eyebrow */}
+<h1 className="wc-eyebrow">
+  <span className="bg-red-500 text-white px-2 py-1 rounded-md font-bold">
+    FREE
+  </span>{" "}
+  <span className="wc-eyebrow">LIVE WEBCLASS</span>
+</h1>
+          {/* H2 Headline */}
           <h1 className="wc-headline">
-            Become and <span className="wc-headline-accent">Operate</span><br />Private
+            Learn 3 core pillars of<br />
+            <span className="wc-headline-accent">Creditor Academy</span>
           </h1>
 
-          {/* Subheadline from Excel */}
-          <p className="wc-subheadline">
-            Discover the frameworks taught inside Creditor Academy for private operation, asset protection, business structuring, and financial freedom.
-          </p>
-
-          {/* Benefits from Excel */}
-          <ul className="wc-benefits">
+          {/* H3 Pillars */}
+          <div className="wc-pillars">
             {[
-              "Learn the Private Operating System",
-              "Understand Trust & Private Association Structures",
-              "Discover Business Credit Strategies",
-              "Live Q&A with Paul Michael Rowland",
-            ].map((b) => (
-              <li key={b} className="wc-benefit-item">
-                <span className="wc-check">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M2.5 7L5.5 10L11.5 4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              {
+                title: "Become Private",
+                icon: (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L2 7v5c0 5.25 4.25 10.15 10 11.35C17.75 22.15 22 17.25 22 12V7L12 2z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
-                </span>
-                {b}
-              </li>
+                ),
+              },
+              {
+                title: "Operate Private",
+                icon: (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="3" stroke="white" strokeWidth="2" />
+                    <path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                ),
+              },
+              {
+                title: "Financial Freedom",
+                icon: (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                ),
+              },
+            ].map((pillar) => (
+              <div key={pillar.title} className="wc-pillar-item">
+                <span className="wc-pillar-icon">{pillar.icon}</span>
+                <span className="wc-pillar-title">{pillar.title}</span>
+              </div>
             ))}
-          </ul>
+          </div>
 
           {/* Divider */}
           <div className="wc-divider" />
@@ -511,7 +528,11 @@ export default function WebclassSection() {
               </svg>
             </span>
           </button>
-          {/* <p className="wc-cta-sub">100% free · <span className="wc-cta-limited">Limited spots available</span></p> */}
+
+          {/* Live Q&A note */}
+          {/* <p className="wc-cta-sub">
+            Includes <span className="wc-cta-highlight">Live Q&amp;A</span> with Paul Michael Rowland
+          </p> */}
         </div>
 
         {/* RIGHT PANEL - Speaker image */}
@@ -530,7 +551,7 @@ export default function WebclassSection() {
               style={{ objectFit: "cover", objectPosition: "center top" }}
               priority
               quality={90}
-              sizes="50vw"
+              sizes="(max-width: 900px) 100vw, 50vw"
             />
             {/* Overlay gradient at bottom */}
             <div className="wc-right-overlay" />
@@ -855,45 +876,52 @@ export default function WebclassSection() {
            HERO SECTION
         ===================== */
         .wc-hero {
-  display: flex;
-  height: 100vh;
-  min-height: 650px;
-  max-height: 900px;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
-}
+          display: flex;
+          height: 100vh;
+          min-height: 650px;
+          max-height: 900px;
+          overflow: hidden;
+          font-family: Arial, sans-serif;
+        }
 
         /* LEFT PANEL */
         .wc-left {
-  flex: 0 0 50%;
-  background: linear-gradient(160deg, #1a2fa8 0%, #2348d4 40%, #1e3ab8 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 30px 45px 30px 55px;
-  color: white;
-  position: relative;
-  z-index: 1;
-}
-        .wc-logo-wrap {
-          margin-bottom: 8px;
+          flex: 0 0 50%;
+          background: linear-gradient(160deg, #1a2fa8 0%, #2348d4 40%, #1e3ab8 100%);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 30px 45px 30px 55px;
+          color: white;
+          position: relative;
+          z-index: 1;
         }
 
+        .wc-logo-wrap {
+          margin-bottom: 18px;
+        }
+
+        .free{
+          color: #f5a623;
+          }
+
+        /* H1 eyebrow */
         .wc-eyebrow {
-          font-size: 11px;
+          font-size: 28px;
           font-weight: 700;
-          letter-spacing: 0.15em;
+          letter-spacing: 0.18em;
           text-transform: uppercase;
           color: rgba(255,255,255,0.75);
           margin: 0 0 10px 0;
+          margin-bottom: 18px;
         }
 
+        /* H2 headline */
         .wc-headline {
           font-weight: 700;
-          font-size: clamp(30px, 3.5vw, 46px);
-  line-height: 1.05;
-  margin-bottom: 8px;
-
+          font-size: clamp(18px, 3.2vw, 32px);
+          line-height: 1.1;
+          margin-bottom: 14px;
           color: white;
           letter-spacing: -0.01em;
         }
@@ -902,48 +930,52 @@ export default function WebclassSection() {
           color: #f5a623;
         }
 
-       .wc-subheadline {
-          font-size: 14px;
-  line-height: 1.45;
-  margin-bottom: 16px;
-
-          color: rgba(255,255,255,0.82);
-          max-width: 440px;
-        }
-
-        .wc-benefits {
-          list-style: none;
-          margin: 0 0 18px 0;
-          padding: 0;
+        /* H3 Pillars */
+        .wc-pillars {
           display: flex;
           flex-direction: column;
-          gap: 7px;
+          gap: 10px;
+          margin-bottom: 6px;
         }
 
-        .wc-benefit-item {
+        .wc-pillar-item {
           display: flex;
           align-items: center;
-          gap: 10px;
-          font-size: 14px;
-          font-weight: 600;
-          color: white;
+          gap: 12px;
+          background: rgba(255,255,255,0.1);
+          border: 1px solid rgba(255,255,255,0.18);
+          border-radius: 10px;
+          padding: 12px 16px;
+          transition: background 0.2s;
         }
 
-        .wc-check {
-          width: 22px;
-          height: 22px;
+        .wc-pillar-item:hover {
+          background: rgba(255,255,255,0.16);
+        }
+
+        .wc-pillar-icon {
+          width: 32px;
+          height: 32px;
           border-radius: 50%;
-          background: rgba(255,255,255,0.2);
+          background: rgba(245,166,35,0.25);
+          border: 1px solid rgba(245,166,35,0.5);
           display: flex;
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
         }
 
+        .wc-pillar-title {
+          font-size: 15px;
+          font-weight: 700;
+          color: white;
+          letter-spacing: 0.01em;
+        }
+
         .wc-divider {
           height: 1px;
           background: rgba(255,255,255,0.2);
-          margin: 0 0 24px 0;
+          margin: 0 0 20px 0;
         }
 
         .wc-countdown-label {
@@ -952,14 +984,14 @@ export default function WebclassSection() {
           letter-spacing: 0.12em;
           text-transform: uppercase;
           color: rgba(255,255,255,0.65);
-          margin: 0 0 12px 0;
+          margin: 0 0 10px 0;
         }
 
         .wc-countdown-row {
           display: flex;
           align-items: center;
           gap: 4px;
-          margin-bottom: 32px;
+          margin-bottom: 24px;
         }
 
         .wc-countdown-block-wrap {
@@ -976,8 +1008,7 @@ export default function WebclassSection() {
           border: 1px solid rgba(255,255,255,0.18);
           border-radius: 8px;
           padding: 8px 14px;
-  min-width: 60px;
-
+          min-width: 60px;
         }
 
         .wc-countdown-num {
@@ -1054,24 +1085,29 @@ export default function WebclassSection() {
           color: rgba(255,255,255,0.65);
         }
 
-        .wc-cta-limited {
+        .wc-cta-highlight {
           color: #f5a623;
-          font-weight: 600;
+          font-weight: 700;
         }
 
         /* RIGHT PANEL */
         .wc-right {
           flex: 0 0 50%;
-            height:100%;
-
+          height: 100%;
           position: relative;
           overflow: hidden;
           background: #0d1a5e;
+          min-height: 350px;
         }
 
         .wc-right-image-wrap {
           position: absolute;
-          inset: 0;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          width: 100%;
+          height: 100%;
         }
 
         .wc-right-overlay {
@@ -1167,6 +1203,8 @@ export default function WebclassSection() {
           .wc-hero {
             flex-direction: column;
             min-height: auto;
+            height: auto;
+            max-height: none;
           }
           .wc-left {
             flex: none;
@@ -1174,7 +1212,17 @@ export default function WebclassSection() {
           }
           .wc-right {
             flex: none;
+            width: 100%;
             height: 420px;
+            min-height: 420px;
+            position: relative;
+          }
+          .wc-right-image-wrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
           }
         }
 
@@ -1183,7 +1231,7 @@ export default function WebclassSection() {
             padding: 28px 20px;
           }
           .wc-headline {
-            font-size: 34px;
+            font-size: 28px;
           }
           .wc-countdown-num {
             font-size: 26px;
@@ -1193,12 +1241,13 @@ export default function WebclassSection() {
             padding: 8px 12px;
           }
           .wc-right {
-            height: 380px;
+            height: 360px;
+            min-height: 360px;
           }
         }
 
         /* =====================
-           MODAL STYLES (unchanged)
+           MODAL STYLES
         ===================== */
         .modal-overlay {
           position: fixed;

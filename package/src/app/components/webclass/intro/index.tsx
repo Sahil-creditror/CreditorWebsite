@@ -43,9 +43,9 @@ const InstructorSection = () => {
           {/* RIGHT SIDE: CONTENT */}
           <div className="lg:col-span-7 order-1 lg:order-2">
             
-            <p className="text-sm uppercase tracking-[3px] text-blue-600 font-bold mb-4">
+            <h3 className="text-sm uppercase tracking-[3px] text-blue-600 font-bold mb-4">
               Meet Your Instructor
-            </p>
+            </h3>
 
             <h2 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight mb-6">
               Learn From{" "}

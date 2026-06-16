@@ -157,6 +157,11 @@ export default function FloatingButtons({ onSpecialOfferClick }: FloatingButtons
   const [isHeroContactClosed, setIsHeroContactClosed] = useState(false);
   const pathname = usePathname();
 
+  // Hide floating buttons on webinar page
+  if (pathname === "/webinar") {
+    return null;
+  }
+
   // Logic: Show Hero Form when on Home Page AND NOT scrolled down, AND not manually closed by user
   const isHeroSection = pathname === "/" && !isScrollVisible && !isHeroContactClosed;
 

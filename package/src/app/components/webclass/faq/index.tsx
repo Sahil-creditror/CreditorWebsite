@@ -8,34 +8,31 @@ export default function FAQSection() {
   const faqs = [
     {
       question: "Is this really free?",
-      answer: "Yes. The live webclass is completely free to attend.",
+      answer: "Yes.",
     },
     {
       question: "How long is the webinar?",
-      answer: "The webinar runs for approximately 60-90 minutes.",
+      answer: "45 minutes.",
     },
     {
       question: "Will there be a replay?",
-      answer: "Limited replay availability may be provided after the live session.",
+      answer: "Limited replay availability.",
     },
     {
       question: "Who is this for?",
-      answer: "This webclass is for business owners, entrepreneurs, families, and individuals interested in private operation.",
+      answer: "Business owners, entrepreneurs, families, and individuals interested in private operation.",
     },
   ];
 
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="py-20 bg-blue-50 text-slate-900">
+    <section className="py-18 bg-blue-50 text-slate-900">
       <div className="max-w-3xl mx-auto px-6">
         
         {/* HEADER */}
         <div className="text-center mb-16">
-          <p className="text-xs font-bold tracking-widest text-blue-600 uppercase">
-            FAQ
-          </p>
-          <h2 className="mt-3 text-3xl md:text-5xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900">
             Frequently Asked{" "}
             <span className="block md:inline text-blue-600">Questions</span>
           </h2>
@@ -85,7 +82,7 @@ export default function FAQSection() {
         </div>
 
         {/* CTA BANNER */}
-        <div className="mt-16 bg-blue-600 rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-md">
+        {/* <div className="mt-16 bg-blue-600 rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-md">
           <div className="max-w-md">
             <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">
               Still Have Questions?
@@ -103,7 +100,7 @@ export default function FAQSection() {
             Reserve My Free Seat
             <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
           </button>
-        </div>
+        </div> */}
 
       </div>
     </section>

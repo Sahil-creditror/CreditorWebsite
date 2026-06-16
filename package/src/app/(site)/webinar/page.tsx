@@ -17,12 +17,12 @@ export default function Page() {
         <main>
             <Webclass />
                <InstructorSection />
+            <PresentationSection />
+            <FAQSection />
+            <CTASection />
 
             <LearningSection />
-            <WhyAttendSection />
-            <FAQSection />
-            <PresentationSection />
-            <CTASection />
+            {/* <WhyAttendSection /> */}
         </main>
     );
 };

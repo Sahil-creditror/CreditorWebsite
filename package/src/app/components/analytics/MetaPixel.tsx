@@ -1,7 +1,7 @@
 import Script from "next/script";
 
 /** Meta (Facebook) Pixel ID — used site-wide via root layout */
-export const META_PIXEL_ID = "4496370470591348";
+export const META_PIXEL_ID = "1011523214969859";
 
 /**
  * Meta Pixel bootstrap script — place inside <head> (root layout).

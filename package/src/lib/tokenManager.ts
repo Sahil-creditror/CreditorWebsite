@@ -33,7 +33,8 @@ interface TokenData {
 export async function fetchNewToken(): Promise<string | null> {
   try {
     const backendUrl = getBackendBaseUrl();
-    const refreshTokenUrl = `${backendUrl}/zoom/refresh-token`;
+    const isClient = typeof window !== 'undefined';
+    const refreshTokenUrl = isClient ? '/api/zoom/refresh-token' : `${backendUrl}/zoom/refresh-token`;
 
     // // Safety check for placeholder URL to avoid CORS errors in browser
     // if (refreshTokenUrl.includes('your-backend-api.com')) {

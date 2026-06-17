@@ -3,7 +3,7 @@ export const WORKSHOP_PATH = "/workshop";
 export const WORKSHOP_REGISTER_URL =
   "https://api.wonderengine.ai/widget/form/mL2L8I8p4RI7AF61stUd";
 
-export const WORKSHOP_EVENT_IMAGE = "/images/event/CA7june.webp";
+export const WORKSHOP_EVENT_IMAGE = "/images/event/13.png";
 
 /** June 7, 2026 — 11:00 AM Pacific */
 export const WORKSHOP_EVENT_CLOSE_MS = new Date("2026-06-07T11:00:00-07:00").getTime();

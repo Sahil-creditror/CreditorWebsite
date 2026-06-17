@@ -15,37 +15,37 @@ const BootcampBanner = () => {
     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Completely mapped array to perfectly match all uploaded flyers chronologically
+    // Completely mapped array updating and sorting all your uploaded banner flyers chronologically
     const slidesData = [
-        
        
         {
-            imageSrc: "/images/todayclasstopic/adv.png",
-            imageAlt: "Advanced Business Credit Master Class",
+            imageSrc: "/images/todayclasstopic/structure.png",
+            imageAlt: "How to Structure Profitable Joint Ventures Flyer",
             badge: "Master Class • June 16, 2026",
-            heading: <> Advanced Business Credit: <span className="text-primary">Accessing Higher Funding Limits</span></>,
-            description: "Take your business setup to the next level. Discover how to apply advanced business credit tiering strategies to access much higher funding lines and maximize capital leverage.",
+            heading: <> How to Structure <span className="text-primary">Profitable Joint Ventures</span></>,
+            description: "Learn to build strategic partnerships that amplify reach, minimize risk, increase absolute growth, and optimize profitability via balanced win-win collaborations.",
             benefits: [
-                "Advanced Credit Strategies",
-                "Access Higher Funding Limits",
-                "Maximize Capital Leverage",
-                "Premium Tier Optimization"
+                "Build Strategic Partnerships",
+                "Increase Growth & Profitability",
+                "Structure Win-Win Collaborations",
+                "Minimize Collaborative Risk"
             ]
         },
         {
-            imageSrc: "/images/todayclasstopic/prt.png",
-            imageAlt: "Protecting Family Assets Private Class",
+            imageSrc: "/images/todayclasstopic/asset.png",
+            imageAlt: "Asset Protection Strategies for Entrepreneurs Flyer",
             badge: "Private Class • June 16, 2026",
-            heading: <> Protecting Family Assets <span className="text-primary">Through Proper Structuring</span></>,
-            description: "Secure your legacy and family wealth. Learn how to shelter, shield, and insulate personal assets against liabilities through correct corporate and estate structuring models.",
+            heading: <> Asset Protection <span className="text-primary">Strategies For Entrepreneurs</span></>,
+            description: "Learn how to legally protect your assets, your business setup, and your future. Minimize corporate risk and build a safer launchpad for long-term generation planning.",
             benefits: [
-                "Protect Your Family Assets",
-                "Shield Against Liabilities",
-                "Proper Legal Structuring",
-                "Private Legacy Planning"
+                "Protect What You've Built",
+                "Reduce Risk & Liability",
+                "Build a Stronger Financial Future",
+                "Legally Protect Business Assets"
             ]
         },
        
+        
     ];
 
     // Slide transition running at 4000ms (4 seconds)

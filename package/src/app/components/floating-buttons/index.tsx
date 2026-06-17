@@ -156,16 +156,16 @@ export default function FloatingButtons({ onSpecialOfferClick }: FloatingButtons
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isHeroContactClosed, setIsHeroContactClosed] = useState(false);
   const pathname = usePathname();
-
-  // Hide floating buttons on webinar page
-  if (pathname === "/webinar") {
-    return null;
-  }
+  const isWebinarPage = pathname === "/webinar";
 
   // Logic: Show Hero Form when on Home Page AND NOT scrolled down, AND not manually closed by user
   const isHeroSection = pathname === "/" && !isScrollVisible && !isHeroContactClosed;
 
   useEffect(() => {
+    if (isWebinarPage) {
+      return;
+    }
+
     const toggleVisibility = () => {
       // Reset the closed state if we scroll down and back up?
       // User decision to close usually means "get out of my way for this session".
@@ -182,7 +182,12 @@ export default function FloatingButtons({ onSpecialOfferClick }: FloatingButtons
     window.addEventListener("scroll", toggleVisibility);
     toggleVisibility(); // Check initial state
     return () => window.removeEventListener("scroll", toggleVisibility);
-  }, []);
+  }, [isWebinarPage]);
+
+  // Hide floating buttons on webinar page
+  if (isWebinarPage) {
+    return null;
+  }
 
   const scrollToTop = () => {
     window.scrollTo({

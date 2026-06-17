@@ -6,9 +6,9 @@ import BootcampBanner from "./components/home/bootcamp-banner";
 import MasterclassEbook from "./components/home/MasterclassEbook";
 
 // Dynamic imports for all below-the-fold components to improve initial load
-const Courses = dynamic(() => import("./components/home/courses"), {
-  loading: () => <div className="min-h-[400px]" />,
-});
+// const Courses = dynamic(() => import("./components/home/courses"), {
+//   loading: () => <div className="min-h-[400px]" />,
+// });
 
 const WebclassSection = dynamic(() => import("./components/home/webclass"), {
   loading: () => <div className="min-h-[400px]" />,
@@ -74,7 +74,7 @@ export default function Home() {
       </Suspense>
       {/* <PrivateTeaser /> */}
       {/* <MasterInfo /> */}
-      <Courses />
+      {/* <Courses /> */}
       {/* <ThanksgivingPopup /> */}
       <Suspense fallback={<div className="min-h-[400px]" />}>
         <Contact contactdataNumber="4" />

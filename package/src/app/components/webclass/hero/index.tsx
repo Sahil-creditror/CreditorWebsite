@@ -546,7 +546,7 @@ export default function WebclassSection() {
           <div className="wc-right-image-wrap">
             <Image
               src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883348/creditor-website-assets/images/avatar/paul2.webp"
-              alt="Paul Michael Rowland"
+              alt="PaulMichael Rowland"
               fill
               style={{ objectFit: "cover", objectPosition: "center top" }}
               priority
@@ -563,7 +563,7 @@ export default function WebclassSection() {
               <span className="wc-speaker-tag-dot" />
               FREE WEBCLASS
             </span>
-            <p className="wc-speaker-name">Paul Michael Rowland</p>
+            <p className="wc-speaker-name">PaulMichael Rowland</p>
             <p className="wc-speaker-title">Founder, Creditor Academy</p>
           </div>
         </div>

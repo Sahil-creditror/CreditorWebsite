@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 const EBOOK_POSTER = "/images/event/Masterebook.webp";
-const MEMBERSHIP_PATH = "/tncmasterclass";
+const MEMBERSHIP_PATH = "https://lmsathena.com/signup";
 
 /** Rolling 7-day offer window for countdown (client-only tick) */
 const OFFER_DURATION_MS = 7 * 24 * 60 * 60 * 1000;

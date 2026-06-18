@@ -15,37 +15,37 @@ const BootcampBanner = () => {
     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Completely mapped array updating and sorting all your uploaded banner flyers chronologically
+    // Mapped array containing all event flyers organized chronologically by date
     const slidesData = [
+
        
         {
-            imageSrc: "/images/todayclasstopic/structure.png",
-            imageAlt: "How to Structure Profitable Joint Ventures Flyer",
-            badge: "Master Class • June 16, 2026",
-            heading: <> How to Structure <span className="text-primary">Profitable Joint Ventures</span></>,
-            description: "Learn to build strategic partnerships that amplify reach, minimize risk, increase absolute growth, and optimize profitability via balanced win-win collaborations.",
+            imageSrc: "/images/todayclasstopic/today.png",
+            imageAlt: "The Financial Freedom Class",
+            badge: "Special Event • June 18, 2026",
+            heading: <> The Financial Freedom Class: <span className="text-primary">Creating Multiple Streams of Income</span></>,
+            description: "Supercharge your path to autonomy. Discover modern frameworks to generate reliable income streams, fast-track your asset accumulation, and scale your personal capital portfolio.",
             benefits: [
-                "Build Strategic Partnerships",
-                "Increase Growth & Profitability",
-                "Structure Win-Win Collaborations",
-                "Minimize Collaborative Risk"
+                "Diverse Income Sources",
+                "Accelerated Financial Growth",
+                "True Financial Freedom Tools",
+                "High-Yield Action Planning"
             ]
         },
         {
-            imageSrc: "/images/todayclasstopic/asset.png",
-            imageAlt: "Asset Protection Strategies for Entrepreneurs Flyer",
-            badge: "Private Class • June 16, 2026",
-            heading: <> Asset Protection <span className="text-primary">Strategies For Entrepreneurs</span></>,
-            description: "Learn how to legally protect your assets, your business setup, and your future. Minimize corporate risk and build a safer launchpad for long-term generation planning.",
+            imageSrc: "/images/todayclasstopic/exit.png",
+            imageAlt: "Exit Strategies Master Class",
+            badge: "Master Class • June 18, 2026",
+            heading: <> Exit Strategies: <span className="text-primary">Preparing Your Business for a Successful Sale</span></>,
+            description: "Build with the end in mind. Learn verified strategies to maximize company valuation, mitigate transition risks, and guarantee a seamless, highly profitable enterprise transfer.",
             benefits: [
-                "Protect What You've Built",
-                "Reduce Risk & Liability",
-                "Build a Stronger Financial Future",
-                "Legally Protect Business Assets"
+                "Maximize Business Value",
+                "Reduce Venture Transfer Risk",
+                "Expert Strategic Guidance",
+                "Corporate Transition Blueprints"
             ]
         },
        
-        
     ];
 
     // Slide transition running at 4000ms (4 seconds)
@@ -146,7 +146,7 @@ const BootcampBanner = () => {
                         <motion.div variants={itemVariants} className="flex flex-col gap-5 mt-4">
                             <div className="flex flex-wrap items-center gap-4">
                                 {/* Visual Slider Pagination Dots */}
-                                <div className="flex gap-2 ml-2">
+                                <div className="flex flex-wrap gap-2 ml-2">
                                     {slidesData.map((_, index) => (
                                         <button
                                             key={index}
@@ -185,8 +185,6 @@ const BootcampBanner = () => {
 };
 
 export default BootcampBanner;
-
-
 
 
 // "use client";

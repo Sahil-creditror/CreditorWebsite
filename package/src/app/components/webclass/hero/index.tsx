@@ -451,7 +451,7 @@ export default function WebclassSection() {
 
           {/* H1 Eyebrow */}
 <h1 className="wc-eyebrow">
-  <span className="bg-red-500 text-white px-2 py-1 rounded-md font-bold">
+  <span className="bg-red-500 text-white px-2 py-2 md:mb-4 rounded-md font-bold">
     FREE
   </span>{" "}
   <span className="wc-eyebrow">LIVE WEBCLASS</span>
@@ -912,8 +912,11 @@ export default function WebclassSection() {
           letter-spacing: 0.18em;
           text-transform: uppercase;
           color: rgba(255,255,255,0.75);
-          margin: 0 0 10px 0;
           margin-bottom: 18px;
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
         }
 
         /* H2 headline */
@@ -1211,11 +1214,7 @@ export default function WebclassSection() {
             padding: 36px 28px;
           }
           .wc-right {
-            flex: none;
-            width: 100%;
-            height: 420px;
-            min-height: 420px;
-            position: relative;
+            display: none;
           }
           .wc-right-image-wrap {
             position: absolute;

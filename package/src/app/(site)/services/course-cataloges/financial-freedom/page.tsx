@@ -24,7 +24,7 @@ export default function FinancialFreedomPage() {
         heading="Financial Freedom"
         desc="Your gateway to financial sovereignty."
         bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp,q_80,w_1920,c_limit/v1768883838/creditor-website-assets/images/projects/banner/financial.png"
-        buttonPath="/tncmasterclass"
+        buttonPath="https://lmsathena.com/signup"
       />
       <CourseDetail />
       <WebinarBootcamp

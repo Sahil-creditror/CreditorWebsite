@@ -9,22 +9,23 @@ export default function CTASection() {
       className="
         relative
         overflow-hidden
-        py-24
-        md:py-14
+        py-8
+        md:py-10
         bg-gradient-to-br
         from-sky-100
         via-blue-50
         to-white
       "
     >
+
       {/* Background Effects */}
       <div
         className="
           absolute
           top-0
           left-0
-          w-96
-          h-96
+          w-72
+          h-72
           bg-blue-300/30
           rounded-full
           blur-3xl
@@ -36,13 +37,14 @@ export default function CTASection() {
           absolute
           bottom-0
           right-0
-          w-[450px]
-          h-[450px]
+          w-80
+          h-80
           bg-cyan-300/30
           rounded-full
           blur-3xl
         "
       />
+
 
       <div
         className="
@@ -50,38 +52,18 @@ export default function CTASection() {
           z-10
           max-w-5xl
           mx-auto
-          px-6
+          px-5
           text-center
         "
       >
-        {/* Badge */}
-        {/* <div
-          className="
-            inline-flex
-            items-center
-            gap-2
-            px-5
-            py-2
-            rounded-full
-            bg-white
-            border
-            border-blue-200
-            text-blue-600
-            font-bold
-            text-sm
-            uppercase
-            tracking-widest
-            shadow-sm
-          "
-        >
-          6. Final CTA
-        </div> */}
+
 
         {/* Heading */}
         <h2
           className="
-            mt-8
-            text-4xl
+            mt-4
+            text-3xl
+            sm:text-4xl
             md:text-6xl
             font-black
             leading-tight
@@ -89,6 +71,7 @@ export default function CTASection() {
           "
         >
           Ready To Learn How To{" "}
+          
           <span
             className="
               block
@@ -102,39 +85,45 @@ export default function CTASection() {
           >
             Become & Operate Private?
           </span>
+
         </h2>
+
+
 
         {/* Description */}
         <p
           className="
-            mt-6
-            max-w-2xl
+            mt-4
+            max-w-xl
             mx-auto
-            text-lg
-            md:text-xl
+            text-base
+            sm:text-lg
             text-slate-600
-            leading-relaxed
           "
         >
           Join the next free training session.
         </p>
 
+
+
         {/* CTA CARD */}
         <div
           className="
-            mt-12
+            mt-8
             mx-auto
             max-w-3xl
             bg-white/80
             backdrop-blur-xl
-            rounded-[35px]
+            rounded-3xl
             border
             border-blue-100
-            shadow-2xl
-            p-8
+            shadow-xl
+            p-5
+            sm:p-8
             md:p-12
           "
         >
+
           <div
             className="
               flex
@@ -142,10 +131,14 @@ export default function CTASection() {
               items-center
             "
           >
+
+
             <div
               className="
-                w-16
-                h-16
+                w-12
+                h-12
+                sm:w-16
+                sm:h-16
                 rounded-full
                 bg-blue-600
                 text-white
@@ -153,14 +146,14 @@ export default function CTASection() {
                 items-center
                 justify-center
                 shadow-lg
-                mb-6
+                mb-4
               "
             >
-              <Users size={30} />
+              <Users size={24} />
             </div>
 
 
-          
+
             <button
               type="button"
               onClick={openWebinarRegistration}
@@ -168,7 +161,10 @@ export default function CTASection() {
                 group
                 flex
                 items-center
-                gap-3
+                justify-center
+                gap-2
+                w-full
+                sm:w-auto
                 bg-gradient-to-r
                 from-blue-600
                 to-cyan-500
@@ -176,48 +172,50 @@ export default function CTASection() {
                 hover:to-cyan-600
                 text-white
                 font-black
-                text-lg
-                px-10
-                py-5
+                text-base
+                sm:text-lg
+                px-6
+                sm:px-10
+                py-4
                 rounded-full
-                shadow-xl
-                shadow-blue-500/30
+                shadow-lg
                 transition
                 active:scale-[0.98]
-                mb-6
+                mb-4
               "
             >
               Reserve My Free Seat Now
+
               <ArrowRight
+                size={20}
                 className="
                   group-hover:translate-x-1
                   transition
                 "
               />
+
             </button>
-              <p
+
+
+
+            <p
               className="
+                text-xs
+                md:text-sm
                 text-slate-600
               "
             >
               Limited seats available for the upcoming live webclass.
             </p>
 
+
           </div>
+
         </div>
 
-        {/* Bottom Text */}
-        {/* <div
-          className="
-            mt-8
-            text-sm
-            text-slate-500
-          "
-        >
-          ✓ Free Training &nbsp; • &nbsp; ✓ Expert Guidance &nbsp; • &nbsp; ✓
-          Limited Availability
-        </div> */}
+
       </div>
+
     </section>
   );
 }

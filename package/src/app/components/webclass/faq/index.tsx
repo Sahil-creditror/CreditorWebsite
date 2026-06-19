@@ -27,7 +27,7 @@ export default function FAQSection() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="py-18 bg-blue-50 text-slate-900">
+    <section className="py-14 bg-blue-50 text-slate-900">
       <div className="max-w-3xl mx-auto px-6">
         
         {/* HEADER */}

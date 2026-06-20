@@ -1,108 +1,221 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowRight, Sparkles, TrendingUp } from "lucide-react";
+import { openWebinarRegistration } from "@/app/lib/openWebinarRegistration";
+import { ArrowRight, Users } from "lucide-react";
 
 export default function CTASection() {
   return (
-    <section className="relative overflow-hidden py-16 md:py-24 bg-gray-50 dark:bg-gray-900">
-      {/* Background art */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* soft left panel */}
-        <div className="hidden md:block absolute -left-40 top-10 w-[520px] h-[380px] rounded-3xl bg-blue-100/30 dark:bg-white/10 blur-[1px]" />
+    <section
+      className="
+        relative
+        overflow-hidden
+        py-8
+        md:py-10
+        bg-gradient-to-br
+        from-sky-100
+        via-blue-50
+        to-white
+      "
+    >
 
-        {/* soft right panel */}
-        <div className="hidden md:block absolute right-[-12%] top-24 w-[560px] h-[420px] rounded-[40px] bg-blue-100/30 dark:bg-white/10" />
+      {/* Background Effects */}
+      <div
+        className="
+          absolute
+          top-0
+          left-0
+          w-72
+          h-72
+          bg-blue-300/30
+          rounded-full
+          blur-3xl
+        "
+      />
 
-        {/* top-right glow / circle accent */}
-        <div className="absolute -top-24 right-24 w-40 h-40 rounded-full bg-blue-200/40 dark:bg-white/30 blur-3xl opacity-70" />
+      <div
+        className="
+          absolute
+          bottom-0
+          right-0
+          w-80
+          h-80
+          bg-cyan-300/30
+          rounded-full
+          blur-3xl
+        "
+      />
 
-        {/* dark-mode radial glow overlay */}
-        <div className="hidden dark:block w-full h-full opacity-[0.25] bg-[radial-gradient(circle_at_top,_rgba(2,111,226,0.6),_transparent_55%)]" />
-      </div>
 
-      <div className="relative container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Content (Left) */}
-          <div className="flex flex-col">
-            {/* Badge */}
-            <div className="flex items-center gap-2 mb-6">
-              <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-400/20 to-blue-500/20 border border-blue-400/30 backdrop-blur-sm">
-                <Sparkles className="w-4 h-4 text-blue-500 dark:text-blue-400" />
-                <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">
-                  Exclusive Masterclass
-                </span>
-              </div>
+      <div
+        className="
+          relative
+          z-10
+          max-w-5xl
+          mx-auto
+          px-5
+          text-center
+        "
+      >
+
+
+        {/* Heading */}
+        <h2
+          className="
+            mt-4
+            text-3xl
+            sm:text-4xl
+            md:text-6xl
+            font-black
+            leading-tight
+            text-slate-900
+          "
+        >
+          Ready To Learn How To{" "}
+          
+          <span
+            className="
+              block
+              bg-gradient-to-r
+              from-blue-700
+              via-blue-600
+              to-cyan-500
+              bg-clip-text
+              text-transparent
+            "
+          >
+            Become & Operate Private?
+          </span>
+
+        </h2>
+
+
+
+        {/* Description */}
+        <p
+          className="
+            mt-4
+            max-w-xl
+            mx-auto
+            text-base
+            sm:text-lg
+            text-slate-600
+          "
+        >
+          Join the next free training session.
+        </p>
+
+
+
+        {/* CTA CARD */}
+        <div
+          className="
+            mt-8
+            mx-auto
+            max-w-3xl
+            bg-white/80
+            backdrop-blur-xl
+            rounded-3xl
+            border
+            border-blue-100
+            shadow-xl
+            p-5
+            sm:p-8
+            md:p-12
+          "
+        >
+
+          <div
+            className="
+              flex
+              flex-col
+              items-center
+            "
+          >
+
+
+            <div
+              className="
+                w-12
+                h-12
+                sm:w-16
+                sm:h-16
+                rounded-full
+                bg-blue-600
+                text-white
+                flex
+                items-center
+                justify-center
+                shadow-lg
+                mb-4
+              "
+            >
+              <Users size={24} />
             </div>
 
-            {/* Main Heading */}
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              <span className="text-gray-900 dark:text-white">
-                Ready to Transform
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 bg-clip-text text-transparent">
-                Your Financial Future?
-              </span>
-            </h2>
 
-            {/* Description */}
-            <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-              Join our exclusive masterclass and learn how to set up your{" "}
-              <span className="text-blue-600 dark:text-blue-400 font-semibold">Trust</span>,{" "}
-              <span className="text-blue-600 dark:text-blue-400 font-semibold">Private Identity</span>, and{" "}
-              <span className="text-blue-600 dark:text-blue-400 font-semibold">Business Credit</span>{" "}
-              step-by-step from industry experts.
+
+            <button
+              type="button"
+              onClick={openWebinarRegistration}
+              className="
+                group
+                flex
+                items-center
+                justify-center
+                gap-2
+                w-full
+                sm:w-auto
+                bg-gradient-to-r
+                from-blue-600
+                to-cyan-500
+                hover:from-blue-700
+                hover:to-cyan-600
+                text-white
+                font-black
+                text-base
+                sm:text-lg
+                px-6
+                sm:px-10
+                py-4
+                rounded-full
+                shadow-lg
+                transition
+                active:scale-[0.98]
+                mb-4
+              "
+            >
+              Reserve My Free Seat Now
+
+              <ArrowRight
+                size={20}
+                className="
+                  group-hover:translate-x-1
+                  transition
+                "
+              />
+
+            </button>
+
+
+
+            <p
+              className="
+                text-xs
+                md:text-sm
+                text-slate-600
+              "
+            >
+              Limited seats available for the upcoming live webclass.
             </p>
 
-            {/* CTA Button Container */}
-            <div className="flex flex-col gap-6">
-              {/* Main CTA Button */}
-              <Link href="/membership">
-                <div className="relative group inline-block">
-                  {/* Glow effect */}
-                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-500 rounded-2xl blur-lg opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
 
-                  {/* Button */}
-                  <div className="relative flex items-center gap-3 px-10 py-5 md:px-12 md:py-6 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-500 rounded-2xl shadow-2xl hover:shadow-blue-500/50 transition-shadow duration-300">
-                    <span className="text-xl md:text-2xl font-bold text-white">
-                      Join Masterclass
-                    </span>
-                    <ArrowRight className="w-6 h-6 text-white" />
-                  </div>
-                </div>
-              </Link>
-
-              {/* Trust indicators */}
-              <div className="flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="w-4 h-4 text-green-500 dark:text-green-400" />
-                  <span>Step-by-Step Guidance</span>
-                </div>
-                <div className="w-1 h-1 rounded-full bg-gray-400 dark:bg-gray-600" />
-                <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-blue-500 dark:text-blue-400" />
-                  <span>Expert-Led Training</span>
-                </div>
-              </div>
-            </div>
           </div>
 
-          {/* Video (Right) */}
-          <div className="w-full">
-            <div className="w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden shadow-xl">
-              <iframe
-                className="w-full h-full"
-                src="https://drive.google.com/file/d/1ATSSVZJ9zTAXFhSgQfFN5AzJud_STVXo/preview?usp=sharing"
-                title="Intro Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-          </div>
         </div>
+
+
       </div>
+
     </section>
   );
 }
-

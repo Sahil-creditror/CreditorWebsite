@@ -16,7 +16,7 @@ Use this checklist when deploying to production.
 - [ ] `MONGODB_URI` - MongoDB Atlas connection string
 
 ### API Configuration (Required)
-- [ ] `NEXT_PUBLIC_API_BASE_URL` - Backend API URL (e.g., `https://creditor.onrender.com/api`)
+- [ ] `NEXT_PUBLIC_API_BASE_URL` - Backend API URL (e.g., `https://api.lmsathena.com/api`)
 
 ### Email Configuration (Required)
 - [ ] `SMTP_HOST` - `smtp.gmail.com`

@@ -2,6 +2,7 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import { ClientLayoutShell } from "./providers/ClientLayoutShell";
+import { MetaPixelHead, MetaPixelNoscript } from "./components/analytics/MetaPixel";
 import type { Metadata } from "next";
 // Root layout must be a Server Component. Client-only logic moved into ClientLayoutShell.
 
@@ -37,8 +38,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Resource hints for performance */}
-        <link rel="preconnect" href="https://creditor.onrender.com" />
-        <link rel="dns-prefetch" href="https://creditor.onrender.com" />
+        <link rel="preconnect" href="https://api.lmsathena.com" />
+        <link rel="dns-prefetch" href="https://api.lmsathena.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         {/* Preload critical hero resources for LCP optimization - poster image only, video loads lazily */}
@@ -46,6 +47,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="/video/hero-1.mp4" />
         {/* Google Site Verification */}
         <meta name="google-site-verification" content="pH5h_UHFyDB48WepO74L0KD0hE-6UE7vSYLxpv_9vK4" />
+        <meta name="google-site-verification" content="nDoDpJQvkKIVVuuxj-MbkiGSJaM6p9JhM7GFy8SSM8o" />
         {/* Google Tag Manager - Deferred to improve LCP */}
         <Script
           id="gtm-head"
@@ -65,8 +67,11 @@ export default function RootLayout({
           src="https://www.googletagmanager.com/gtag/js?id=AW-17542559364"
           strategy="lazyOnload"
         />
+        {/* Meta Pixel Code */}
+        <MetaPixelHead />
       </head>
       <body className={manrope.className}>
+        <MetaPixelNoscript />
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

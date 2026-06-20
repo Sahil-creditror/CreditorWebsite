@@ -11,7 +11,7 @@ Go to your deployment platform (Vercel, Netlify, etc.) and add these environment
 NEXTAUTH_SECRET=generate-with-openssl-rand-hex-32
 NEXTAUTH_URL=https://your-domain.com
 MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/dbname
-NEXT_PUBLIC_API_BASE_URL=https://creditor.onrender.com/api
+NEXT_PUBLIC_API_BASE_URL=https://api.lmsathena.com/api
 ```
 
 #### **For Authentication (Google OAuth)**

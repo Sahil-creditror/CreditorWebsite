@@ -211,7 +211,7 @@ function Button({
   );
 }
 
-const MovingBorder = ({
+function MovingBorder({
   children,
   duration = 3000,
   rx,
@@ -223,7 +223,7 @@ const MovingBorder = ({
   rx?: string;
   ry?: string;
   [key: string]: any;
-}) => {
+}) {
   const pathRef = useRef<SVGRectElement | null>(null);
 
   const progress = useMotionValue<number>(0);
@@ -236,14 +236,15 @@ const MovingBorder = ({
     }
   });
 
-  const x = useTransform(
-    progress,
-    (val) => pathRef.current?.getPointAtLength(val).x
-  );
-  const y = useTransform(
-    progress,
-    (val) => pathRef.current?.getPointAtLength(val).y
-  );
+  const x = useTransform(progress, (val) => {
+    const point = pathRef.current?.getPointAtLength(val);
+    return point?.x ?? 0;
+  });
+
+  const y = useTransform(progress, (val) => {
+    const point = pathRef.current?.getPointAtLength(val);
+    return point?.y ?? 0;
+  });
 
   const transform = useMotionTemplate`translateX(${x}px) translateY(${y}px) translateX(-50%) translateY(-50%)`;
 
@@ -279,7 +280,7 @@ const MovingBorder = ({
       </motion.div>
     </>
   );
-};
+}
 
 const AboutusDetail = () => {
   const [showAllDescriptions, setShowAllDescriptions] = useState(false);
@@ -619,7 +620,7 @@ const AboutusDetail = () => {
               >
                 <Button
                   as="a"
-                  href="/projects"
+                  href="/masterclass-membership"
                   borderRadius="3rem"
                   containerClassName="
     relative w-full sm:w-auto min-w-[200px] h-14 px-8 py-0

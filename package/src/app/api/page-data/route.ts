@@ -192,7 +192,7 @@ const pricingData = {
             planDescp: "Ideal for startups and small businesses taking their first steps online.",
             planIncludes: ["Custom design for up to 10 pages", "Responsive and mobile-friendly layout", "Fast page load and security optimizations", "On-page SEO optimization for key pages"],
             coverImage: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883797/creditor-website-assets/images/pricing/Cover-1.jpg", // Optional
-            link: "/services_page/website-service",
+            link: "/services/website-service",
 
         },
         // {
@@ -203,7 +203,7 @@ const pricingData = {
         //     planDescp: "Perfect for growing brands needing more customization and flexibility.",
         //     planIncludes: ["Join our interactive live classes every Tuesday & Thursday","Interactive Sessions","Hands-on learning","Session Replays"],
         //     coverImage: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883800/creditor-website-assets/images/pricing/Cover-2.jpg", // Optional
-        //     link: "/services_page/live-class",
+        //     link: "/services/live-class",
         // },
         // {
         //     tag: "Tradeline Exchange",
@@ -216,7 +216,7 @@ const pricingData = {
         //       "Dedicated support and guidance"
         //     ],
         //     coverImage: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883800/creditor-website-assets/images/pricing/Cover-2.jpg", // Optional
-        //     link: "/services_page/tradeline-exchange"
+        //     link: "/services/tradeline-exchange"
         //   },
         {
             tag: "Premium Education",
@@ -229,7 +229,7 @@ const pricingData = {
                 "Master Sovereign Wealth"
             ],
             coverImage: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883453/creditor-website-assets/images/courses/course-banner.webp",
-            link: "/courses"
+            link: "/services/course-cataloges"
         },
 
         {
@@ -239,7 +239,7 @@ const pricingData = {
             planDescp: "Best suited for established businesses wanting a fully tailored experience.",
             planIncludes: ["Tailored payment solutions", "Empower your business", "Customized experience", "Seamless Payment Solutions"],
             coverImage: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883811/creditor-website-assets/images/pricing/Cover-3.jpg",// Optional
-            link: "/services_page/private-merchant"
+            link: "/services/private-merchant"
         },
     ],
     partnerLogo: [

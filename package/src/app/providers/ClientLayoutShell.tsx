@@ -6,21 +6,22 @@ import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import Header from "../components/layout/header";
 import Footer from "../components/layout/footer";
-const ThanksgivingPopup = dynamic(() => import("../components/home/Thanksgiving"), {
-  ssr: false,
-});
+import FloatingButtons from "../components/floating-buttons";
+import { MetaPixelPageView } from "../components/analytics/MetaPixelPageView";
+import EventPopup from "../components/home/EventPopup";
+
+// const ThanksgivingPopup = dynamic(() => import("../components/home/Thanksgiving"), {
+//   ssr: false,
+// });
 
 const RegPopup = dynamic(() => import("../components/reg_popup"), {
   ssr: false,
 });
 
-const FloatingButtons = dynamic(() => import("../components/floating-buttons"), {
-  ssr: false,
-});
-
-const FloatingVideoChatbot = dynamic(() => import("../components/chatbot/FloatingMiniChatbot"), {
-  ssr: false,
-});
+const FloatingMiniChatbot = dynamic(
+  () => import("../components/chatbot/FloatingMiniChatbot"),
+  { ssr: false },
+);
 
 export function ClientLayoutShell({ children }: PropsWithChildren) {
   const pathname = usePathname();
@@ -62,42 +63,51 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
     "/operate-wonder",
     "/private-wonder",
     "/projects-wonder",
+    "/webinar",
   ];
   const hideHeader =
     excludedRoutes.includes(pathname) ||
-    pathname.startsWith("/services_page/tradeline-exchange") ||
+    pathname.startsWith("/services/tradeline-exchange") ||
     is404;
   const hideFooter =
     excludedRoutes.includes(pathname) ||
     pathname === "/signup" ||
-    pathname.startsWith("/services_page/tradeline-exchange") ||
+    pathname.startsWith("/services/tradeline-exchange") ||
     is404;
 
   return (
     <SessionProvider>
       <ThemeProvider attribute="class" enableSystem={false} defaultTheme="light">
+        <MetaPixelPageView />
         {!hideHeader && <Header />}
         {children}
         {!hideFooter && <Footer />}
 
-        {/* Floating Buttons: Special Offer, Contact Form, Scroll to Top */}
         <FloatingButtons onSpecialOfferClick={() => setThanksgivingKey(prev => prev + 1)} />
 
         {/* Landing page video chatbot */}
-        {pathname === "/" && <FloatingVideoChatbot />}
+        {pathname === "/" && <FloatingMiniChatbot />}
 
-        {/* Thanksgiving Modal - Auto-opens after 5 seconds */}
-        <ThanksgivingPopup
+        {/* Previous Thanksgiving / webinar popup — kept for reference */}
+        {/* <ThanksgivingPopup
           delayMs={5000}
+          disableAutoOpen={false}
+          manualTrigger={thanksgivingKey}
+        /> */}
+
+        {/* CA7 June — Business Credit event (auto-opens after 15s; Special Offer button) */}
+        <EventPopup
+          delayMs={15000}
           disableAutoOpen={false}
           manualTrigger={thanksgivingKey}
         />
 
         {/* Registration Notification Popup - Shows on all pages */}
-        <RegPopup />
+        {/* <RegPopup /> */}
       </ThemeProvider>
     </SessionProvider>
   );
 }
+
 
 

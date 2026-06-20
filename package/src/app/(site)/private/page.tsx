@@ -1,58 +1,6 @@
-import React from 'react';
-import { Herobanner } from "@/app/components/shared/hero-banner";
-import Cards from '@/app/components/private/cards';
-import CourseFeatures from '@/app/components/private/course-feature';
-import CourseDetail from '@/app/components/private/course-detail';
-import Contact from '@/app/components/shared/cta';
-import Pricing from '@/app/components/shared/plan';
-import Offer from '@/app/components/become/appointment';
-import Event from '@/app/components/home/event';
-import HowItWorks from '@/app/components/private/works';
-import FaqSection from '@/app/components/private/faq';
+import { redirect } from "next/navigation";
 
-import WebinarBootcamp from "@/app/components/shared/WebinarBootcamp";
-import { FaMoneyBillWave, FaChartLine, FaLandmark } from "react-icons/fa";
-
-import { getAllProjects } from "@/lib/markdown";
-import { Metadata } from "next";
-export const metadata: Metadata = {
-  title: "Financial Freedom | Creditor",
-};
-
-const PrivatePage = () => {
-  const become = getAllProjects();
-  return (
-    <div>
-      <Herobanner
-        heading="Financial Freedom"
-        desc="Your gateway to financial sovereignty."
-        bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883838/creditor-website-assets/images/projects/banner/financial.png"
-        buttonPath="/signup"
-      />
-      <CourseDetail />
-      <WebinarBootcamp
-        title="Financial Freedom"
-        imageSrc="/images/webinar/financial/financial.webp"
-        description="Unlock the secrets to true financial independence. This bootcamp reveals the strategies used by the wealthy to build, protect, and grow assets outside the traditional system."
-        features={[
-          { title: "Wealth Systems", description: "Automated frameworks for consistent growth.", iconName: "wealth" },
-          { title: "Private Investing", description: "Access high-yield opportunities hidden from the public.", iconName: "investing" },
-          { title: "Legacy Building", description: "Construct inter-generational wealth that lasts.", iconName: "legacy" }
-        ]}
-      />
-      <CourseFeatures />
-      <Cards />
-
-
-
-      {/* <Pricing /> */}
-      <HowItWorks />
-      <Offer />
-      <Event />
-      {/* <FaqSection /> */}
-      <Contact />
-    </div>
-  );
-};
-
-export default PrivatePage;
+/** Legacy URL — canonical page is /financial-freedom */
+export default function PrivateRedirectPage() {
+  redirect("/services/course-cataloges/financial-freedom");
+}

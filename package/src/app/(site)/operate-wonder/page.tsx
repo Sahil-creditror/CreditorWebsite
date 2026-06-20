@@ -7,7 +7,7 @@ import Contact from "@/app/components/shared/cta";
 import Pricing from "@/app/components/shared/plan";
 import Script from "next/script";
 import HowItWorks from "@/app/components/operate/works";
-import Event from "@/app/components/home/event";
+// import Event from "@/app/components/home/event";
 import FaqSection from "@/app/components/operate/faq";
 import Cards from "@/app/components/operate/cards";
 
@@ -44,7 +44,7 @@ export default function Page() {
                     bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883456/creditor-website-assets/images/courses/junior.jpg"
                     heading="Operate Private"
                     desc="Build Wealth & Privacy Through Private Business Structures"
-                    buttonPath="/signup"
+                    buttonPath="https://lmsathena.com/signup"
                 />
                 <Intro2 />
                 <BecomeIntro />
@@ -52,7 +52,7 @@ export default function Page() {
                 {/* <Pricing /> */}
                 <HowItWorks />
                 <Appointment />
-                <Event />
+                {/* <Event /> */}
                 {/* <FaqSection /> */}
                 <Contact />
             </main>

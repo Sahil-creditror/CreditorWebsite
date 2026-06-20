@@ -1,5 +1,5 @@
-"use client";
 // @ts-nocheck
+"use client";
 
 import React, { useEffect, useRef, useState } from "react";
 import defaultBotVideo from "./assets/default_bot.mp4";

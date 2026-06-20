@@ -32,7 +32,7 @@ const ProjectList = () => {
                                 <div key={index} className="flex flex-col gap-5">
                                     <div className="relative group">
                                         <img src={project.coverImage} alt={project.title} className="w-full" />
-                                        <Link href={`/projects/${project.slug}`} className="absolute top-0 left-0 backdrop-blur-xs bg-black/70 w-full h-full hidden group-hover:flex">
+                                        <Link href={`/masterclass-membership/${project.slug}`} className="absolute top-0 left-0 backdrop-blur-xs bg-black/70 w-full h-full hidden group-hover:flex">
                                             <span className="flex justify-center items-center p-5 w-full">
                                                 <svg width="65" height="64" viewBox="0 0 65 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <rect x="0.333374" width="64" height="64" rx="32" fill="#C1FF72" />

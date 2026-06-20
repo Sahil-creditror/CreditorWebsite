@@ -108,6 +108,90 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/about",
+        destination: "/about-us",
+        permanent: true,
+      },
+      {
+        source: "/services_page",
+        destination: "/services",
+        permanent: true,
+      },
+      {
+        source: "/services_page/:path*",
+        destination: "/services/:path*",
+        permanent: true,
+      },
+      {
+        source: "/become",
+        destination: "/services/course-cataloges/become-private",
+        permanent: true,
+      },
+      {
+        source: "/operate",
+        destination: "/services/course-cataloges/operate-private",
+        permanent: true,
+      },
+      {
+        source: "/private",
+        destination: "/services/course-cataloges/financial-freedom",
+        permanent: true,
+      },
+      {
+        source: "/projects",
+        destination: "/masterclass-membership",
+        permanent: true,
+      },
+      {
+        source: "/projects/BecomeSov",
+        destination: "/services/course-cataloges/become-private",
+        permanent: true,
+      },
+      {
+        source: "/projects/BusinessCredit",
+        destination: "/services/course-cataloges/financial-freedom",
+        permanent: true,
+      },
+      {
+        source: "/projects/OperatePrivate",
+        destination: "/services/course-cataloges/operate-private",
+        permanent: true,
+      },
+      {
+        source: "/masterclass-membership/BecomeSov",
+        destination: "/services/course-cataloges/become-private",
+        permanent: true,
+      },
+      {
+        source: "/masterclass-membership/BusinessCredit",
+        destination: "/services/course-cataloges/financial-freedom",
+        permanent: true,
+      },
+      {
+        source: "/masterclass-membership/OperatePrivate",
+        destination: "/services/course-cataloges/operate-private",
+        permanent: true,
+      },
+      {
+        source: "/projects-wonder/BecomeSov",
+        destination: "/services/course-cataloges/become-private",
+        permanent: true,
+      },
+      {
+        source: "/projects-wonder/BusinessCredit",
+        destination: "/services/course-cataloges/financial-freedom",
+        permanent: true,
+      },
+      {
+        source: "/projects-wonder/OperatePrivate",
+        destination: "/services/course-cataloges/operate-private",
+        permanent: true,
+      },
+    ];
+  },
   // Add headers for better caching and performance
   async headers() {
     return [
@@ -143,12 +227,12 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_API_BASE_URL:
       //process.env.NEXT_PUBLIC_API_BASE_URL ?? "https://testbackend-hcoy.onrender.com/api",
-      process.env.NEXT_PUBLIC_API_BASE_URL ?? "https://creditor.onrender.com/api",
-    NEXT_PUBLIC_WEBINAR_ID: process.env.NEXT_PUBLIC_WEBINAR_ID ?? "83714099773",
-    NEXT_PUBLIC_WEBINAR_ID_MIDNIGHT: process.env.NEXT_PUBLIC_WEBINAR_ID_MIDNIGHT ?? "81770671957",
-    NEXT_PUBLIC_WEBINAR_ID_MORNING: process.env.NEXT_PUBLIC_WEBINAR_ID_MORNING ?? "83714099773",
-    NEXT_PUBLIC_WEBINAR_ID_AFTERNOON: process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON ?? "82535773783",
-    NEXT_PUBLIC_WEBINAR_ID_EVENING: process.env.NEXT_PUBLIC_WEBINAR_ID_EVENING ?? "83058065233",
+      process.env.NEXT_PUBLIC_API_BASE_URL ?? "https://api.lmsathena.com/api",
+    NEXT_PUBLIC_WEBINAR_ID: process.env.NEXT_PUBLIC_WEBINAR_ID ?? "82601545984",
+    NEXT_PUBLIC_WEBINAR_ID_MIDNIGHT: process.env.NEXT_PUBLIC_WEBINAR_ID_MIDNIGHT ?? "85673138781",
+    NEXT_PUBLIC_WEBINAR_ID_MORNING: process.env.NEXT_PUBLIC_WEBINAR_ID_MORNING ?? "82601545984",
+    NEXT_PUBLIC_WEBINAR_ID_AFTERNOON: process.env.NEXT_PUBLIC_WEBINAR_ID_AFTERNOON ?? "89734509269",
+    NEXT_PUBLIC_WEBINAR_ID_EVENING: process.env.NEXT_PUBLIC_WEBINAR_ID_EVENING ?? "86776822313",
   },
 };
 

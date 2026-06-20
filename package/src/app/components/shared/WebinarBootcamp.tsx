@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import CourseVideoPlayer from '@/app/components/shared/CourseVideoPlayer';
 import {
     FaCheckCircle, FaArrowRight, FaClock, FaUsers,
     FaChartLine, FaShieldAlt, FaUserSecret, FaCrown,
@@ -15,6 +16,10 @@ interface WebinarBootcampProps {
     badgeText?: string;
     description: string;
     imageSrc?: string;
+    youtubeVideoId?: string;
+    driveVideoId?: string;
+    driveViewUrl?: string;
+    videoPosterSrc?: string;
     features: {
         title: string;
         description: string;
@@ -42,8 +47,13 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
     badgeText = "Live Bootcamp",
     description,
     imageSrc,
+    youtubeVideoId,
+    driveVideoId,
+    driveViewUrl,
+    videoPosterSrc,
     features,
 }) => {
+    const hasVideo = Boolean(youtubeVideoId?.trim() || driveVideoId?.trim());
     return (
         <section className="relative w-full py-10 px-4 md:px-8 overflow-hidden font-sans bg-gradient-to-br from-blue-50/80 via-white to-indigo-50/50">
             {/* Ambient Background Glows */}
@@ -146,7 +156,17 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
                         viewport={{ once: true }}
                         className="order-1 lg:order-2 relative"
                     >
-                        {imageSrc ? (
+                        {hasVideo ? (
+                            <div className="rounded-[2.5rem] overflow-hidden shadow-2xl shadow-blue-900/10 border-[6px] border-white bg-white p-2">
+                                <CourseVideoPlayer
+                                    title={`${title} overview`}
+                                    youtubeId={youtubeVideoId}
+                                    driveFileId={driveVideoId}
+                                    driveViewUrl={driveViewUrl}
+                                    posterSrc={videoPosterSrc}
+                                />
+                            </div>
+                        ) : imageSrc ? (
                             <div className="group relative rounded-[2.5rem] overflow-hidden shadow-2xl shadow-blue-900/10 border-[6px] border-white transform transition-transform duration-500 hover:scale-[1.01]">
                                 <Image
                                     src={imageSrc}
@@ -155,10 +175,7 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
                                     height={1000}
                                     className="object-cover w-full h-[500px] bg-slate-100"
                                 />
-                                {/* Glass Overlay Effect on Hover */}
                                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                                {/* Floating Badge on Image */}
                                 <div className="absolute bottom-6 right-6 bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl shadow-lg opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
                                     <div className="flex items-center gap-2 text-white font-bold">
                                         <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>

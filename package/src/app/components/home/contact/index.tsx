@@ -1,141 +1,139 @@
 "use client";
 
-import Image from "next/image";
 import Script from "next/script";
 import { useEffect, useState } from "react";
+import { PhoneCall, Calendar, ShieldCheck } from "lucide-react";
 
-type ContactProps = { contactdataNumber?: string };
+type ContactProps = {
+  contactdataNumber?: string;
+};
 
-export default function Contact(props: ContactProps) {
-  const { contactdataNumber } = props;
+export default function Contact({ contactdataNumber }: ContactProps) {
   const [isFormLoaded, setIsFormLoaded] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  // contactdataNumber is currently unused but preserved for future integration
   void contactdataNumber;
 
-  // Ensure iframe/script render only on client to avoid hydration mismatches
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   return (
-    <section id="contact" className="relative py-20 md:py-24 overflow-hidden">
-      <div className="container relative z-10">
-        <div className="mx-auto flex flex-col gap-8 md:gap-12">
-          {/* Two Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-            {/* Left Column - Title, Subtitle, and Message */}
-            <div className="flex flex-col gap-8">
-              {/* Title and Subtitle */}
-              <div>
-                <div className="relative inline-block">
-                  <span className="absolute inset-0 -inset-x-2 -inset-y-1 rounded-full bg-gradient-to-r from-sky-100 via-blue-50 to-blue-100 dark:from-blue-900/40 dark:via-blue-800/30 dark:to-sky-900/30 blur-sm" />
-                  <h2 className="relative px-3 py-1 bg-clip-text text-transparent bg-gradient-to-r from-sky-500 via-blue-500 to-blue-700 drop-shadow-sm">
-                    Get in Touch
-                  </h2>
+    <section
+      id="contact"
+      className="
+      relative 
+      overflow-hidden 
+      py-20 
+      md:py-20 
+      pb-1
+      bg-gradient-to-br 
+      from-sky-50 
+      via-indigo-50 
+      to-blue-100 
+      text-slate-800
+      "
+    >
+      {/* Background radial glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-300/20 blur-[150px] rounded-full pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+          
+          {/* LEFT CONTENT COLUMN */}
+          <div className="lg:col-span-5 flex flex-col gap-8">
+            <div>
+              <p className="text-xs font-bold tracking-[0.2em] uppercase text-blue-600">
+                Get In Touch
+              </p>
+
+              <h2 className="mt-4 text-4xl md:text-5xl font-black leading-tight text-slate-900">
+                Let's build your next step towards{" "}
+                <span className="text-blue-600">
+                  freedom
+                </span>
+              </h2>
+
+              <p className="mt-5 text-sm md:text-base text-slate-600 leading-relaxed">
+                Have questions or ready to begin? Connect with our team and discover the right path for your goals.
+              </p>
+            </div>
+
+            {/* STRATEGY CARD */}
+            <div className="rounded-3xl bg-white/70 border border-blue-100 p-7 shadow-xl shadow-blue-900/5 backdrop-blur-md">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-600/10">
+                  <PhoneCall size={20} />
                 </div>
-                <p className="mt-5 text-black dark:text-white/70">
-                  Let&apos;s collaborate and craft something extraordinary
-                  together. Share your vision—I&apos;m all ears and ready to
-                  help bring it to life.
-                </p>
+                <h3 className="font-bold text-lg text-slate-900">
+                  Ready to get started?
+                </h3>
               </div>
 
-              {/* Message Card */}
-              <div className="relative bg-gradient-to-br from-white/90 via-white/80 to-white/70 dark:from-gray-900/90 dark:via-gray-800/80 dark:to-gray-900/70 backdrop-blur-2xl rounded-3xl p-8 shadow-2xl border border-white/20 dark:border-white/10 overflow-hidden">
-                {/* Decorative elements */}
-                <div className="absolute -top-10 -right-10 w-28 h-28 bg-primary/10 rounded-full blur-xl"></div>
-                <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-blue-500/10 rounded-full blur-xl"></div>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                One conversation can clarify your next move. Our team helps guide you with strategy and direction.
+              </p>
 
-                {/* Heading with icon */}
-                <div className="flex items-center gap-3 mb-6 relative z-10">
-                  <div className="bg-gradient-to-r from-primary to-blue-600 p-2 rounded-xl shadow-md">
-                    <svg
-                      className="w-6 h-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                      />
-                    </svg>
-                  </div>
-                  <p className="text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-                    Ready to Step Into the Private?
+              <div className="mt-5 flex items-center gap-2 text-sm font-semibold text-blue-600">
+                <ShieldCheck size={16} />
+                Secure & confidential
+              </div>
+            </div>
+
+            {/* SCHEDULER BUTTON */}
+            <button
+              onClick={() => window.open("https://scheduler.zoom.us/d/yryit5gx/athena-lms-platform-demo", "_blank")}
+              className="group inline-flex items-center justify-center gap-3 w-full sm:w-fit px-7 py-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-lg shadow-blue-600/15 hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.98]"
+            >
+              <Calendar size={18} />
+              Schedule A Meeting
+            </button>
+          </div>
+
+          {/* RIGHT FORM COLUMN (Completely raw overlay) */}
+          <div className="lg:col-span-7 w-full">
+            {!isFormLoaded && (
+              <div className="flex items-center justify-center h-[400px]">
+                <div className="text-center">
+                  <div className="w-9 h-9 border-2 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4" />
+                  <p className="text-sm text-slate-500 font-medium">
+                    Loading secure form...
                   </p>
                 </div>
-
-                {/* Description */}
-                <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 relative z-10">
-                  One message can change your life. We&apos;ll guide you with
-                  clarity, strategy, and purpose.
-                </p>
               </div>
-            </div>
+            )}
 
-            {/* Right Column - Form */}
-            <div className="w-full">
-              {/* Form loading state */}
-              {!isFormLoaded && (
-                <div
-                  className="w-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-xl animate-pulse flex items-center justify-center"
-                  style={{ height: "400px" }}
-                >
-                  <div className="text-center">
-                    <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
-                    <p className="text-gray-500 dark:text-gray-400">
-                      Loading form...
-                    </p>
-                  </div>
-                </div>
-              )}
+            {isMounted && (
+              <iframe
+                src="https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls"
+                className="w-full"
+                style={{
+                  height: "400px",
+                  display: isFormLoaded ? "block" : "none",
+                  border: "0",
+                  background: "transparent"
+                }}
+                id="inline-o69tKOXv3NV8GnS4aGls"
+                data-layout="{'id':'INLINE'}"
+                data-trigger-type="alwaysShow"
+                data-form-name="Contact us form"
+                data-height="402"
+                data-form-id="o69tKOXv3NV8GnS4aGls"
+                title="Contact us form"
+                onLoad={() => setIsFormLoaded(true)}
+              />
+            )}
 
-              {/* WonderEngine Form (client-only) */}
-              {isMounted && (
-                <iframe
-                  src="https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls"
-                  style={{
-                    width: "100%",
-                    height: "400px",
-                    border: "none",
-                    borderRadius: "12px",
-                    display: isFormLoaded ? "block" : "none",
-                  }}
-                  id="inline-o69tKOXv3NV8GnS4aGls"
-                  data-layout="{'id':'INLINE'}"
-                  data-trigger-type="alwaysShow"
-                  data-trigger-value=""
-                  data-activation-type="alwaysActivated"
-                  data-activation-value=""
-                  data-deactivation-type="neverDeactivate"
-                  data-deactivation-value=""
-                  data-form-name="Contact us form"
-                  data-height="402"
-                  data-layout-iframe-id="inline-o69tKOXv3NV8GnS4aGls"
-                  data-form-id="o69tKOXv3NV8GnS4aGls"
-                  title="Contact us form"
-                  onLoad={() => setIsFormLoaded(true)}
-                />
-              )}
-
-              {/* WonderEngine Script (client-only) */}
-              {isMounted && (
-                <Script
-                  src="https://api.wonderengine.ai/js/form_embed.js"
-                  strategy="afterInteractive"
-                />
-              )}
-            </div>
+            {isMounted && (
+              <Script
+                src="https://api.wonderengine.ai/js/form_embed.js"
+                strategy="afterInteractive"
+              />
+            )}
           </div>
+
         </div>
       </div>
-
     </section>
   );
 }

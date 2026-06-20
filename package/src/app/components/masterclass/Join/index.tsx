@@ -267,7 +267,7 @@ export default function EnrollMasterclass({ container = "", sectionSpacing = "" 
                 No form here — click to go to the secure checkout / scheduled page.
               </motion.p>
               <motion.a
-                href="/signup"
+                href="https://lmsathena.com/signup"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#60A5FA] to-[#1E3A8A] text-white font-semibold"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}

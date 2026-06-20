@@ -7,7 +7,7 @@ import Contact from '@/app/components/shared/cta';
 import Pricing from '@/app/components/shared/plan';
 import Script from "next/script";
 import HowItWorks from '@/app/components/private/works';
-import Event from "@/app/components/home/event";
+// import Event from "@/app/components/home/event";
 import FaqSection from '@/app/components/private/faq';
 
 import { getAllProjects } from "@/lib/markdown";
@@ -42,14 +42,14 @@ const PrivatePage = () => {
           heading="Financial Freedom"
           desc="Your gateway to financial sovereignty."
           bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883846/creditor-website-assets/images/projects/banner/private.webp"
-          buttonPath="/signup"
+          buttonPath="https://lmsathena.com/signup"
         />
         <CourseDetail />
         <CourseFeatures />
         <Cards />
         {/* <Pricing /> */}
         <HowItWorks />
-        <Event />
+        {/* <Event /> */}
         {/* <FaqSection /> */}
         <Contact />
       </main>

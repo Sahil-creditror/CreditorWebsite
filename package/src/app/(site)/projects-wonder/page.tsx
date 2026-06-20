@@ -5,7 +5,7 @@ import Get from "@/app/components/masterclass/getwithmaster";
 import About from "@/app/components/masterclass/about";
 import Appoint from "@/app/components/masterclass/appointment";
 import CTA from "@/app/components/shared/cta";
-import Event from "@/app/components/home/event";
+// import Event from "@/app/components/home/event";
 import Join from "@/app/components/masterclass/Join";
 import Preview from "@/app/components/masterclass/preview";
 import Pricing from "@/app/components/shared/plan";
@@ -51,7 +51,7 @@ export default function Page() {
                     bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883842/creditor-website-assets/images/projects/banner/masterclass-banner.jpg"
                     heading="Masterclass Membership"
                     desc="Learn how to <span>set up your Trust</span>, your Private Identity, and Business Credit step-by-step."
-                    buttonPath="/signup"
+                    buttonPath="https://lmsathena.com/signup"
                 />
                 <Preview />
                 <Get />
@@ -62,7 +62,7 @@ export default function Page() {
                 {/* <Appoint /> */}
                 {/* <Join /> */}
                 {/* <About /> */}
-                <Event />
+                {/* <Event /> */}
                 <CTA />
             </main>
         </>

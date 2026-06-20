@@ -79,10 +79,10 @@ export default function BlogsPage() {
   const featured = useMemo(() => BLOG_POSTS.find((p) => p.featured) || BLOG_POSTS[0], []);
 
   return (
-    <main className={`${poppins.className} min-h-screen bg-[#FAFAFA] text-neutral-900 pb-32 overflow-x-hidden selection:bg-neutral-900 selection:text-white`}>
+    <main className={`${poppins.className} min-h-screen bg-[#FAFAFA] text-neutral-900 pb-18 overflow-x-hidden selection:bg-neutral-900 selection:text-white`}>
       {/* HEADER HERO */}
       <section
-  className="
+        className="
     relative
     overflow-hidden
     bg-gradient-to-br
@@ -94,20 +94,20 @@ export default function BlogsPage() {
     px-6
     md:px-20
   "
->
-  {/* Gradient Glow */}
-  <div className="absolute inset-0">
-    <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-yellow-400/10 blur-3xl" />
-    <div className="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-blue-400/10 blur-3xl" />
-  </div>
+      >
+        {/* Gradient Glow */}
+        <div className="absolute inset-0">
+          <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-yellow-400/10 blur-3xl" />
+          <div className="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-blue-400/10 blur-3xl" />
+        </div>
 
-  <div className="relative flex flex-col items-start max-w-4xl">
+        <div className="relative flex flex-col items-start max-w-4xl">
 
-    <motion.h1
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.1 }}
-      className="
+          <motion.h1
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="
         text-4xl
         sm:text-6xl
         font-semibold
@@ -115,19 +115,19 @@ export default function BlogsPage() {
         leading-tight
         text-white
       "
-    >
-      The Creditor{" "}
-      <span className="text-yellow-400 font-light">
-        Journal
-      </span>
-    </motion.h1>
+          >
+            The Creditor{" "}
+            <span className="text-yellow-400 font-light">
+              Journal
+            </span>
+          </motion.h1>
 
 
-    <motion.p
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
-      className="
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="
         mt-5
         text-slate-200
         text-base
@@ -135,18 +135,18 @@ export default function BlogsPage() {
         leading-relaxed
         max-w-2xl
       "
-    >
-      Strategic insights into enterprise growth, wealth protection,
-      asset architecture, and the evolving frameworks shaping modern
-      businesses.
-    </motion.p>
+          >
+            Strategic insights into enterprise growth, wealth protection,
+            asset architecture, and the evolving frameworks shaping modern
+            businesses.
+          </motion.p>
 
 
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.3 }}
-      className="
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="
         mt-8
         flex
         items-center
@@ -156,12 +156,12 @@ export default function BlogsPage() {
         uppercase
         tracking-[0.25em]
       "
-    >
-      Knowledge • Strategy • Protection
-    </motion.div>
+          >
+            Knowledge • Strategy • Protection
+          </motion.div>
 
-  </div>
-</section>
+        </div>
+      </section>
 
       {/* FILTER CONTROL BAR */}
       <section className="max-w-6xl mx-auto px-6 my-6">
@@ -172,11 +172,10 @@ export default function BlogsPage() {
               <button
                 key={item}
                 onClick={() => setCategory(item)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all duration-200 ${
-                  category === item
-                    ? "bg-neutral-900 text-white"
-                    : "text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100"
-                }`}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all duration-200 ${category === item
+                  ? "bg-neutral-900 text-white"
+                  : "text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100"
+                  }`}
               >
                 {item}
               </button>

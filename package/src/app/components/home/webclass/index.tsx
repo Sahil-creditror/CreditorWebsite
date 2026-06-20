@@ -254,7 +254,7 @@ export default function WebclassSection() {
         >
           <Image
             src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883348/creditor-website-assets/images/avatar/paul2.webp"
-            alt="Paul Michael Rowland"
+            alt="PaulMichael Rowland"
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 50vw"
@@ -305,10 +305,10 @@ export default function WebclassSection() {
           p-4
           ">
             <p className="text-base text-slate-900 font-bold leading-tight">
-              Paul Michael Rowland
+              PaulMichael Rowland
             </p>
             <p className="text-xs font-medium text-slate-500 mt-0.5">
-              Founder, Creditor Academy
+              Founder and CEO, Creditor Academy
             </p>
           </div>
         </motion.div>

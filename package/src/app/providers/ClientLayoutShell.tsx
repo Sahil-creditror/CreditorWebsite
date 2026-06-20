@@ -78,7 +78,6 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
         {children}
         {!hideFooter && <Footer />}
 
-        {/* Floating Buttons: Special Offer, Contact Form, Scroll to Top */}
         <FloatingButtons onSpecialOfferClick={() => setThanksgivingKey(prev => prev + 1)} />
 
         {/* Previous Thanksgiving / webinar popup — kept for reference */}

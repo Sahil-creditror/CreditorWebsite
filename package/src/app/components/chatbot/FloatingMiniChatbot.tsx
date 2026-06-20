@@ -141,6 +141,12 @@ const isFaqNotFoundResponse = (raw) => {
   return candidateText === FAQ_NOT_FOUND_TEXT;
 };
 
+const CHAT_QUICK_PROMPTS = [
+  "What is Creditor Academy?",
+  "How can you help me?",
+  "Tell me about your courses",
+];
+
 const FloatingMiniChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -179,6 +185,7 @@ const FloatingMiniChatbot = () => {
   const animationFrameRef = useRef(null);
   const currentAudioRef = useRef(null); // Track current audio element for interruption
   const streamingIntervalRef = useRef(null); // Track streaming interval
+  const videoStreamSyncRef = useRef(null); // Sync FAQ transcript to video playback
   const intentionalStopRef = useRef(false); // Track if mic stop was intentional
   const isSpeakingRef = useRef(false);
   const committedVoiceTranscriptRef = useRef("");
@@ -206,6 +213,7 @@ const FloatingMiniChatbot = () => {
         clearInterval(streamingIntervalRef.current);
         streamingIntervalRef.current = null;
       }
+      videoStreamSyncRef.current = null;
       setMessages((prev) =>
         prev.map((msg) => (msg.streaming ? { ...msg, streaming: false } : msg)),
       );
@@ -304,6 +312,7 @@ const FloatingMiniChatbot = () => {
       clearInterval(streamingIntervalRef.current);
       streamingIntervalRef.current = null;
     }
+    videoStreamSyncRef.current = null;
 
     // Reset UI/conversation
     setMessages([]);
@@ -342,6 +351,42 @@ const FloatingMiniChatbot = () => {
     setIsOpen(false);
   }, []);
 
+  const syncTranscriptToVideoTime = useCallback((videoEl) => {
+    const sync = videoStreamSyncRef.current;
+    if (!sync || sessionIdRef.current !== sync.sessionIdAtStart) return;
+    if (!videoEl?.duration || !Number.isFinite(videoEl.duration)) return;
+
+    const progress = Math.min(1, Math.max(0, videoEl.currentTime / videoEl.duration));
+    const wordIndex = Math.min(
+      sync.words.length,
+      Math.max(0, Math.floor(progress * sync.words.length)),
+    );
+    const displayedText = sync.words.slice(0, wordIndex).join(" ");
+    const isComplete = wordIndex >= sync.words.length;
+
+    setMessages((prev) =>
+      prev.map((msg) =>
+        msg.id === sync.msgId
+          ? { ...msg, content: displayedText, streaming: !isComplete }
+          : msg,
+      ),
+    );
+  }, []);
+
+  const finishVideoSyncedTranscript = useCallback(() => {
+    const sync = videoStreamSyncRef.current;
+    if (!sync) return;
+
+    setMessages((prev) =>
+      prev.map((msg) =>
+        msg.id === sync.msgId
+          ? { ...msg, content: sync.words.join(" "), streaming: false }
+          : msg,
+      ),
+    );
+    videoStreamSyncRef.current = null;
+  }, []);
+
   // Search FAQ content and return answer + video url
   const getBotResponseWithLipSync = useCallback(async (text) => {
     if (process.env.NODE_ENV === "development") {
@@ -368,7 +413,7 @@ const FloatingMiniChatbot = () => {
       }
 
       const response = await fetch(
-        `${API_BASE_URL}/api/chatbot/faq/search/pv`,
+        `${API_BASE_URL}/api/chatbot/faq/search`,
         {
           method: "POST",
           headers: {
@@ -458,7 +503,7 @@ const FloatingMiniChatbot = () => {
   const getBotResponse = useCallback(async (text) => {
     try {
       const response = await fetch(
-        `${API_BASE_URL}/api/chatbot/faq/search/pv`,
+        `${API_BASE_URL}/api/chatbot/faq/search`,
         {
           method: "POST",
           headers: {
@@ -538,41 +583,50 @@ const FloatingMiniChatbot = () => {
             ? payload.visemes[payload.visemes.length - 1].time * 1000
             : words.length * 200; // 200ms per word as fallback
 
-        const wordsPerMs = words.length / estimatedDuration;
         let currentWordIndex = 0;
 
         // Clear any existing streaming interval
         if (streamingIntervalRef.current) {
           clearInterval(streamingIntervalRef.current);
+          streamingIntervalRef.current = null;
         }
 
-        // Stream words progressively
-        streamingIntervalRef.current = setInterval(() => {
-          if (sessionIdRef.current !== sessionIdAtStart) {
-            clearInterval(streamingIntervalRef.current);
-            streamingIntervalRef.current = null;
-            return;
-          }
-          if (currentWordIndex < words.length) {
-            const displayedText = words
-              .slice(0, currentWordIndex + 1)
-              .join(" ");
-            setMessages((prev) =>
-              prev.map((msg) =>
-                msg.id === msgId ? { ...msg, content: displayedText } : msg,
-              ),
-            );
-            currentWordIndex++;
-          } else {
-            // Finished streaming
-            clearInterval(streamingIntervalRef.current);
-            setMessages((prev) =>
-              prev.map((msg) =>
-                msg.id === msgId ? { ...msg, streaming: false } : msg,
-              ),
-            );
-          }
-        }, estimatedDuration / words.length);
+        if (payload.videoUrl) {
+          // Reveal transcript in sync with FAQ video playback (not ahead of it)
+          videoStreamSyncRef.current = {
+            msgId,
+            words,
+            sessionIdAtStart,
+          };
+        } else {
+          // Stream words progressively for avatar/audio-only responses
+          streamingIntervalRef.current = setInterval(() => {
+            if (sessionIdRef.current !== sessionIdAtStart) {
+              clearInterval(streamingIntervalRef.current);
+              streamingIntervalRef.current = null;
+              return;
+            }
+            if (currentWordIndex < words.length) {
+              const displayedText = words
+                .slice(0, currentWordIndex + 1)
+                .join(" ");
+              setMessages((prev) =>
+                prev.map((msg) =>
+                  msg.id === msgId ? { ...msg, content: displayedText } : msg,
+                ),
+              );
+              currentWordIndex++;
+            } else {
+              clearInterval(streamingIntervalRef.current);
+              streamingIntervalRef.current = null;
+              setMessages((prev) =>
+                prev.map((msg) =>
+                  msg.id === msgId ? { ...msg, streaming: false } : msg,
+                ),
+              );
+            }
+          }, estimatedDuration / Math.max(words.length, 1));
+        }
 
         // Only warn in development about missing data
         if (process.env.NODE_ENV === "development") {
@@ -1807,11 +1861,22 @@ const FloatingMiniChatbot = () => {
                         autoPlay
                         playsInline
                         muted={!isSpeakerOn}
+                        onLoadedMetadata={(e) =>
+                          syncTranscriptToVideoTime(e.currentTarget)
+                        }
+                        onTimeUpdate={(e) =>
+                          syncTranscriptToVideoTime(e.currentTarget)
+                        }
+                        onPlaying={(e) =>
+                          syncTranscriptToVideoTime(e.currentTarget)
+                        }
                         onEnded={() => {
+                          finishVideoSyncedTranscript();
                           setFaqVideoUrl("");
                           setShouldPlayWelcomeVideo(false);
                         }}
                         onError={() => {
+                          finishVideoSyncedTranscript();
                           setFaqVideoUrl("");
                           setShouldPlayWelcomeVideo(false);
                         }}
@@ -2032,7 +2097,7 @@ const FloatingMiniChatbot = () => {
                   )}
                 </div>
 
-                {/* Chat panel - stop mousedown propagation so only avatar section can start drag */}
+                {/* Chat panel — dark glass UI (same on all allowed pages) */}
                 <AnimatePresence>
                   {isChatOpen && (
                     <motion.div
@@ -2040,82 +2105,143 @@ const FloatingMiniChatbot = () => {
                       initial={{ x: 40, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       exit={{ x: 40, opacity: 0 }}
-                      className="relative flex h-full w-[40%] flex-col bg-transparent text-slate-900 backdrop-blur-xl"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                      className="relative flex h-full w-[40%] min-w-0 flex-col overflow-hidden border-l border-white/12 bg-slate-950/78 text-slate-50 shadow-[-10px_0_36px_rgba(0,0,0,0.38)] backdrop-blur-2xl backdrop-saturate-150"
                       style={{ cursor: "default" }}
+                      onMouseDown={(e) => e.stopPropagation()}
                     >
-                      <div className="pointer-events-none absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-white/12 to-transparent" />
-                      <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-transparent px-4 py-4 font-semibold text-slate-900 backdrop-blur-md">
-                        <span className="drop-shadow-[0_1px_1px_rgba(255,255,255,0.55)]">
-                          Chat
-                        </span>
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.07] via-transparent to-black/25" />
+                      <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
+                      <div className="pointer-events-none absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-blue-400/25 to-transparent" />
+
+                      {/* Header */}
+                      <div className="relative z-10 flex shrink-0 items-center justify-between gap-3 border-b border-white/10 bg-black/20 px-4 py-3 backdrop-blur-xl">
+                        <div className="flex min-w-0 items-center gap-3">
+                          <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/8 shadow-sm backdrop-blur-md">
+                            <MessageSquare className="h-4 w-4 text-blue-300" />
+                            <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-slate-950 bg-emerald-400" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="truncate text-[14px] font-semibold tracking-tight text-white">
+                              Assistant Chat
+                            </p>
+                            {/* <p className="truncate text-[11px] font-medium text-slate-400">
+                              Online · Ready to help
+                            </p> */}
+                          </div>
+                        </div>
                         <motion.button
-                          onClick={handleClose}
+                          onClick={() => setIsChatOpen(false)}
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          className="flex h-9 w-9 items-center justify-center rounded-full bg-white/40 text-slate-800 shadow-sm ring-1 ring-white/45 backdrop-blur-md"
-                          aria-label="Close chat"
+                          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-slate-300 shadow-sm backdrop-blur-md transition-colors hover:border-white/25 hover:bg-white/18 hover:text-white"
+                          aria-label="Close chat panel"
                         >
-                          <X className="w-4 h-4" />
+                          <X className="h-3.5 w-3.5" />
                         </motion.button>
                       </div>
-                      <div
-                        ref={chatContainerRef}
-                        onScroll={handleScroll}
-                        className="flex-1 space-y-3 overflow-y-auto bg-transparent p-4 text-slate-900"
-                        style={{ scrollbarGutter: "stable" }}
-                      >
-                        {messages.map((message) => (
-                          <Bubble
-                            key={message.id}
-                            left={!message.isUser}
-                            right={message.isUser}
-                          >
-                            {message.content}
-                          </Bubble>
-                        ))}
-                        {isTyping && <TypingDots />}
 
-                        <div ref={messagesEndRef} />
-                      </div>
-                      <div className="flex gap-2 border-t border-white/10 bg-transparent px-4 pt-4 pb-2 backdrop-blur-md">
-                        <motion.input
-                          className="flex-1 rounded-full border border-white/55 bg-white/38 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-500 shadow-inner backdrop-blur-md"
-                          placeholder="Type a message..."
-                          value={inputValue}
-                          onChange={handleInputChange}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                              handleSendOrStop();
-                            }
-                          }}
-                          whileFocus={{
-                            boxShadow: "0 0 0 2px rgba(99, 102, 241, 0.45)",
-                          }}
-                        />
-                        <motion.button
-                          className={`h-11 w-11 rounded-full text-white shadow-lg flex items-center justify-center ring-1 ring-white/40 ${
-                            isBotResponding
-                              ? "bg-gradient-to-r from-red-500/90 to-red-600/90"
-                              : "bg-gradient-to-r from-blue-600/90 to-indigo-600/90"
-                          }`}
-                          onClick={handleSendOrStop}
-                          disabled={
-                            !isBotResponding && inputValue.trim() === ""
-                          }
-                          whileHover={{
-                            scale: 1.05,
-                            boxShadow: isBotResponding
-                              ? "0 0 18px rgba(239, 68, 68, 0.45)"
-                              : "0 0 18px rgba(79, 70, 229, 0.45)",
-                          }}
-                          whileTap={{ scale: 0.95 }}
+                      {/* Messages */}
+                      <div className="relative z-10 flex min-h-0 flex-1 flex-col">
+                        <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-5 bg-gradient-to-b from-slate-950/95 to-transparent" />
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-6 bg-gradient-to-t from-slate-950/95 to-transparent" />
+
+                        <div
+                          ref={chatContainerRef}
+                          onScroll={handleScroll}
+                          className="chatbot-messages-scroll flex min-h-0 flex-1 flex-col gap-3.5 overflow-y-auto px-4 py-4"
                         >
-                          {isBotResponding ? (
-                            <Square className="w-5 h-5 fill-current" />
-                          ) : (
-                            <Send className="w-5 h-5" />
+                          {messages.length === 0 && !isTyping && (
+                            <div className="flex flex-1 flex-col items-center justify-center px-1 py-2 text-center">
+                              <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/8 backdrop-blur-md">
+                                <MessageSquare className="h-5 w-5 text-blue-300/90" />
+                              </div>
+                              <p className="text-sm font-medium text-slate-100">
+                                Start a conversation
+                              </p>
+                              <p className="mt-1 max-w-[240px] text-xs leading-relaxed text-slate-400">
+                                Ask a question, I'm ready to help.
+                              </p>
+                              {/* <div className="mt-4 flex w-full flex-col gap-2">
+                                {CHAT_QUICK_PROMPTS.map((prompt) => (
+                                  <button
+                                    key={prompt}
+                                    type="button"
+                                    onClick={() => setInputValue(prompt)}
+                                    className="rounded-xl border border-white/10 bg-white/[0.06] px-3 py-2 text-left text-xs leading-snug text-slate-200 backdrop-blur-md transition-colors hover:border-blue-400/30 hover:bg-blue-500/15 hover:text-white"
+                                  >
+                                    {prompt}
+                                  </button>
+                                ))}
+                              </div> */}
+                            </div>
                           )}
-                        </motion.button>
+
+                          {messages.map((message) => (
+                            <Bubble
+                              key={message.id}
+                              left={!message.isUser}
+                              right={message.isUser}
+                            >
+                              {message.content}
+                            </Bubble>
+                          ))}
+                          {isTyping && <TypingDots />}
+
+                          <div ref={messagesEndRef} />
+                        </div>
+                      </div>
+
+                      {/* Input */}
+                      <div className="relative z-10 shrink-0 px-4 pb-4 pt-2">
+                        <div className="flex items-center gap-2.5">
+                          <motion.input
+                            className="min-w-0 flex-1 rounded-xl border border-white/12 bg-white/[0.06] px-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:border-blue-400/55 focus:outline-none focus:ring-2 focus:ring-blue-400/30"
+                            placeholder="Type a message..."
+                            value={inputValue}
+                            onChange={handleInputChange}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                handleSendOrStop();
+                              }
+                            }}
+                          />
+                          <motion.button
+                            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border text-white transition-all ${
+                              isBotResponding
+                                ? "border-red-400/35 bg-gradient-to-br from-red-500 to-red-600 hover:from-red-400 hover:to-red-500"
+                                : inputValue.trim()
+                                  ? "border-blue-400/40 bg-gradient-to-br from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500"
+                                  : "border-white/10 bg-white/8 text-slate-500"
+                            }`}
+                            onClick={handleSendOrStop}
+                            disabled={
+                              !isBotResponding && inputValue.trim() === ""
+                            }
+                            whileHover={
+                              isBotResponding || inputValue.trim()
+                                ? { scale: 1.04 }
+                                : {}
+                            }
+                            whileTap={
+                              isBotResponding || inputValue.trim()
+                                ? { scale: 0.96 }
+                                : {}
+                            }
+                            aria-label={
+                              isBotResponding ? "Stop response" : "Send message"
+                            }
+                          >
+                            {isBotResponding ? (
+                              <Square className="h-4 w-4 fill-current" />
+                            ) : (
+                              <Send className="h-4 w-4" />
+                            )}
+                          </motion.button>
+                        </div>
+                        {/* <p className="mt-2 text-center text-[10px] text-slate-500">
+                          Press Enter to send
+                        </p> */}
                       </div>
                     </motion.div>
                   )}
@@ -2147,26 +2273,43 @@ const IconBtn = ({ children, onClick, danger, active }) => (
 
 const Bubble = ({ children, left, right }) => (
   <motion.div
-    initial={{ opacity: 0, y: 10 }}
+    initial={{ opacity: 0, y: 8 }}
     animate={{ opacity: 1, y: 0 }}
-    className={`max-w-[80%] px-4 py-2 rounded-2xl text-sm shadow-lg backdrop-blur-md
-      ${left && "bg-white/75 text-gray-900 self-start mr-auto border border-white/50"}
-      ${right && "bg-gradient-to-r from-blue-600 to-indigo-600 text-white self-end ml-auto"}`}
+    transition={{ duration: 0.22 }}
+    className={`flex max-w-full flex-col gap-1 ${right ? "items-end" : "items-start"}`}
   >
-    <div>{children}</div>
+    <span
+      className={`px-1 text-[10px] font-semibold uppercase tracking-wider ${
+        right ? "text-blue-300/80" : "text-slate-400"
+      }`}
+    >
+      {right ? "You" : "Assistant"}
+    </span>
+    <div
+      className={`max-w-[92%] rounded-2xl px-4 py-2.5 text-[13px] leading-relaxed shadow-sm backdrop-blur-md
+        ${left && "border border-white/20 bg-white/[0.14] text-slate-50"}
+        ${right && "border border-blue-400/30 bg-gradient-to-br from-blue-600/95 to-indigo-600/90 text-white"}`}
+    >
+      <div className="whitespace-pre-wrap break-words">{children}</div>
+    </div>
   </motion.div>
 );
 
 const TypingDots = () => (
-  <div className="flex gap-1 px-2">
-    {[0, 1, 2].map((i) => (
-      <motion.span
-        key={i}
-        className="h-2 w-2 rounded-full bg-slate-500/80"
-        animate={{ opacity: [0.3, 1, 0.3] }}
-        transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.15 }}
-      />
-    ))}
+  <div className="flex flex-col items-start gap-1">
+    <span className="px-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+      Assistant
+    </span>
+    <div className="flex items-center gap-1.5 rounded-2xl border border-white/20 bg-white/[0.14] px-4 py-3 shadow-sm backdrop-blur-md">
+      {[0, 1, 2].map((i) => (
+        <motion.span
+          key={i}
+          className="h-2 w-2 rounded-full bg-blue-300/80"
+          animate={{ opacity: [0.35, 1, 0.35], y: [0, -2, 0] }}
+          transition={{ duration: 1.1, repeat: Infinity, delay: i * 0.15 }}
+        />
+      ))}
+    </div>
   </div>
 );
 

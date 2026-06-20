@@ -181,4 +181,15 @@ html {
 /* IE 10+ */
 html {
   -ms-overflow-style: none;
+}
+
+/* Chatbot message list: scrollable but no visible scrollbar */
+.chatbot-messages-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.chatbot-messages-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }

@@ -28,9 +28,9 @@ export default function Contact({ contactdataNumber }: ContactProps) {
       md:py-20 
       pb-1
       bg-gradient-to-br 
-      from-sky-50 
+      from-sky-200 
       via-indigo-50 
-      to-blue-100 
+      to-blue-200 
       text-slate-800
       "
     >
@@ -39,7 +39,7 @@ export default function Contact({ contactdataNumber }: ContactProps) {
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-          
+
           {/* LEFT CONTENT COLUMN */}
           <div className="lg:col-span-5 flex flex-col gap-8">
             <div>

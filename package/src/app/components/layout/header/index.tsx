@@ -23,6 +23,8 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuData, setMenuData] = useState<any[]>([]);
   const [user, setUser] = useState<any>(null);
+  const [showHeader, setShowHeader] = useState(true);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const scroll = () => {
@@ -30,6 +32,18 @@ const Header = () => {
     };
 
     window.addEventListener("scroll", scroll);
+
+    const handleDirection = () => {
+      const currentY = window.scrollY;
+      if (currentY < lastScrollY.current && lastScrollY.current > 120) {
+        setShowHeader(false);
+      } else {
+        setShowHeader(true);
+      }
+      lastScrollY.current = currentY;
+    };
+
+    window.addEventListener("scroll", handleDirection);
 
     const stored = localStorage.getItem("user");
     if (stored) {
@@ -42,7 +56,10 @@ const Header = () => {
         setMenuData(data?.MenuData || []);
       });
 
-    return () => window.removeEventListener("scroll", scroll);
+    return () => {
+      window.removeEventListener("scroll", scroll);
+      window.removeEventListener("scroll", handleDirection);
+    };
   }, []);
 
   useEffect(() => {
@@ -68,8 +85,7 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${sticky ? "pt-4 px-4 sm:px-6" : "pt-0 px-0"
-        }`}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 transform ${showHeader ? "translate-y-0" : "-translate-y-full"} ${sticky ? "pt-4 px-4 sm:px-6" : "pt-0 px-0"}`}
     >
       <div
         className={`mx-auto transition-all duration-500 ${sticky

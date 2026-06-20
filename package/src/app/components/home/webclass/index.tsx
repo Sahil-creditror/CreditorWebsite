@@ -76,9 +76,9 @@ export default function WebclassSection() {
       relative
       overflow-hidden
       bg-gradient-to-br
-      from-sky-50
-      via-indigo-50
-      to-blue-100
+      from-sky-200
+      via-indigo-100
+      to-blue-200
       text-slate-800
       font-sans
       selection:bg-blue-600
@@ -92,7 +92,7 @@ export default function WebclassSection() {
       </div>
 
       <div className="relative max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 min-h-[560px]">
-        
+
         {/* LEFT CONTENT */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -155,7 +155,7 @@ export default function WebclassSection() {
                     stroke="#2563EB"
                     strokeWidth="3.5"
                   >
-                    <polyline points="20 6 9 17 4 12"/>
+                    <polyline points="20 6 9 17 4 12" />
                   </svg>
                 </span>
 
@@ -175,11 +175,11 @@ export default function WebclassSection() {
               </p>
 
               <div className="flex items-center gap-1.5">
-                <CountUnit value={pad(h)} label="hrs"/>
+                <CountUnit value={pad(h)} label="hrs" />
                 <span className="text-xl font-bold text-slate-300 mb-3">:</span>
-                <CountUnit value={pad(m)} label="min"/>
+                <CountUnit value={pad(m)} label="min" />
                 <span className="text-xl font-bold text-slate-300 mb-3">:</span>
-                <CountUnit value={pad(s)} label="sec"/>
+                <CountUnit value={pad(s)} label="sec" />
               </div>
             </div>
 
@@ -280,7 +280,7 @@ export default function WebclassSection() {
           items-center
           gap-2
           ">
-            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"/>
+            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
             <span className="
             text-[10px]
             font-extrabold

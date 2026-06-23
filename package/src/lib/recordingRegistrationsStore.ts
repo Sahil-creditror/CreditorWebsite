@@ -1,5 +1,6 @@
 import { GetObjectCommand, ListObjectsV2Command, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { NodeHttpHandler } from "@smithy/node-http-handler";
+import { RECENT_REGISTRATION_LIMIT } from "@/lib/registrationUtils";
 
 const s3 = new S3Client({
   region: process.env.AWS_REGION,
@@ -37,10 +38,10 @@ export interface RecordingRegistration {
   type?: "recording";
 }
 
-async function listRecordingRegistrationKeys(): Promise<string[]> {
+async function listRecentRecordingRegistrationKeys(limit = RECENT_REGISTRATION_LIMIT): Promise<string[]> {
   if (!BUCKET) return [];
 
-  const keys: string[] = [];
+  const entries: { key: string; lastModified: number }[] = [];
   let continuationToken: string | undefined;
 
   do {
@@ -52,11 +53,21 @@ async function listRecordingRegistrationKeys(): Promise<string[]> {
       })
     );
 
-    keys.push(...(listResponse.Contents?.map((obj) => obj.Key || "").filter(Boolean) || []));
+    for (const obj of listResponse.Contents ?? []) {
+      if (!obj.Key) continue;
+      entries.push({
+        key: obj.Key,
+        lastModified: obj.LastModified?.getTime() ?? 0,
+      });
+    }
+
     continuationToken = listResponse.IsTruncated ? listResponse.NextContinuationToken : undefined;
   } while (continuationToken);
 
-  return keys;
+  return entries
+    .sort((a, b) => b.lastModified - a.lastModified)
+    .slice(0, limit)
+    .map((entry) => entry.key);
 }
 
 async function readRecordingRegistration(key: string): Promise<RecordingRegistration | null> {
@@ -80,7 +91,7 @@ async function readRecordingRegistration(key: string): Promise<RecordingRegistra
 }
 
 async function fetchRecordingRegistrationsInternal(): Promise<RecordingRegistration[]> {
-  const keys = await listRecordingRegistrationKeys();
+  const keys = await listRecentRecordingRegistrationKeys();
   const registrations: RecordingRegistration[] = [];
 
   for (let i = 0; i < keys.length; i += S3_FETCH_BATCH_SIZE) {

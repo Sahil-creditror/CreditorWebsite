@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { getRegistrationTimestamp, limitRecentRegistrations } from "@/lib/registrationUtils";
 
 const TOPIC_FILTER_OPTIONS = [
   { value: "all", label: "All topics", matches: [] as string[] },
@@ -278,19 +279,7 @@ export default function WebinarRegistrationPage() {
   const dateSummary = useMemo(() => buildAttendanceSummary(filteredAllRegs), [filteredAllRegs]);
 
   const sortedAllRegs = useMemo(() => {
-    const getTimestamp = (reg: Registrant): number => {
-      const regTimeSource = (reg as unknown as { registration_time?: string }).registration_time;
-      const ts =
-        regTimeSource && typeof regTimeSource === "string"
-          ? Date.parse(regTimeSource)
-          : reg.registered_at
-          ? Date.parse(reg.registered_at)
-          : reg.start_time
-          ? Date.parse(reg.start_time)
-          : 0;
-      return Number.isNaN(ts) ? 0 : ts;
-    };
-    return [...filteredAllRegs].sort((a, b) => getTimestamp(b) - getTimestamp(a));
+    return [...filteredAllRegs].sort((a, b) => getRegistrationTimestamp(b) - getRegistrationTimestamp(a));
   }, [filteredAllRegs]);
 
   const parseRegistrationResponse = async (
@@ -349,12 +338,13 @@ export default function WebinarRegistrationPage() {
         errors.push("Recording registrations could not be loaded.");
       }
 
-      setAllRegistrations(merged);
+      const limited = limitRecentRegistrations(merged);
+      setAllRegistrations(limited);
 
-      if (merged.length === 0 && errors.length > 0) {
+      if (limited.length === 0 && errors.length > 0) {
         setAllRegsError(errors.join(" "));
       } else if (errors.length > 0) {
-        setAllRegsError(`Loaded ${merged.length} registrations with warnings: ${errors.join(" ")}`);
+        setAllRegsError(`Loaded ${limited.length} registrations with warnings: ${errors.join(" ")}`);
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Failed to fetch registrations";
@@ -395,7 +385,7 @@ export default function WebinarRegistrationPage() {
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">All Registrations</h2>
             <div className="flex items-center justify-between mb-3 gap-3 flex-wrap">
               <div className="text-sm text-gray-600 dark:text-gray-300">
-                Showing latest registrations (sorted by most recent)
+                Showing latest 50 registrations (sorted by most recent)
               </div>
               <div className="flex items-center gap-3 flex-wrap">
                 <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-blue-100 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10 shadow-sm">

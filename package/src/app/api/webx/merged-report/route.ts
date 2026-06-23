@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { API_CONFIG } from "@/config/api";
+import { limitRecentRegistrations } from "@/lib/registrationUtils";
 
 export const dynamic = "force-dynamic";
 
@@ -103,10 +104,12 @@ export async function GET(request: Request) {
       ? zoomData.filter((record) => record.webinar_id === webinarId)
       : zoomData;
 
+    const recent = limitRecentRegistrations(filtered);
+
     return NextResponse.json({
       success: true,
-      count: filtered.length,
-      data: filtered,
+      count: recent.length,
+      data: recent,
     });
   } catch (error: unknown) {
     console.error("Merged report API error:", error);

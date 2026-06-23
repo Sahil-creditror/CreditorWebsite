@@ -55,7 +55,7 @@ const CREDITOR = [
 ] as const;
 
 export default function WorkshopPageContent() {
-  const [countdown, setCountdown] = useState(() => getCountdown(WORKSHOP_EVENT_CLOSE_MS));
+  const [countdown, setCountdown] = useState<null | ReturnType<typeof getCountdown>>(null);
 
   useEffect(() => {
     const tick = () => setCountdown(getCountdown(WORKSHOP_EVENT_CLOSE_MS));
@@ -64,7 +64,7 @@ export default function WorkshopPageContent() {
     return () => clearInterval(id);
   }, []);
 
-  const { days, hours, minutes, seconds } = countdown;
+  const { days = 0, hours = 0, minutes = 0, seconds = 0 } = countdown ?? {};
 
   return (
     <div className="workshop-athena-style min-h-screen bg-[#eef5fc] text-slate-800">
@@ -301,10 +301,14 @@ export default function WorkshopPageContent() {
                   Livestream Broadcast Begins In
                 </p>
                 <div className="mt-4 grid grid-cols-4 gap-2 sm:gap-3">
-                  <Timer value={pad(days)} label="Days" />
-                  <Timer value={pad(hours)} label="Hrs" />
-                  <Timer value={pad(minutes)} label="Min" />
-                  <Timer value={pad(seconds)} label="Sec" />
+                  {countdown && (
+                    <>
+                      <Timer value={pad(days)} label="Days" />
+                      <Timer value={pad(hours)} label="Hrs" />
+                      <Timer value={pad(minutes)} label="Min" />
+                      <Timer value={pad(seconds)} label="Sec" />
+                    </>
+                  )}
                 </div>
               </div>
             </div>

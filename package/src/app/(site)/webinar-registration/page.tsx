@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { getRegistrationTimestamp, limitRecentRegistrations } from "@/lib/registrationUtils";
 
 const TOPIC_FILTER_OPTIONS = [
   { value: "all", label: "All topics", matches: [] as string[] },
@@ -278,43 +279,75 @@ export default function WebinarRegistrationPage() {
   const dateSummary = useMemo(() => buildAttendanceSummary(filteredAllRegs), [filteredAllRegs]);
 
   const sortedAllRegs = useMemo(() => {
-    const getTimestamp = (reg: Registrant): number => {
-      const regTimeSource = (reg as unknown as { registration_time?: string }).registration_time;
-      const ts =
-        regTimeSource && typeof regTimeSource === "string"
-          ? Date.parse(regTimeSource)
-          : reg.registered_at
-          ? Date.parse(reg.registered_at)
-          : reg.start_time
-          ? Date.parse(reg.start_time)
-          : 0;
-      return Number.isNaN(ts) ? 0 : ts;
-    };
-    return [...filteredAllRegs].sort((a, b) => getTimestamp(b) - getTimestamp(a));
+    return [...filteredAllRegs].sort((a, b) => getRegistrationTimestamp(b) - getRegistrationTimestamp(a));
   }, [filteredAllRegs]);
+
+  const parseRegistrationResponse = async (
+    response: Response
+  ): Promise<{ data: Registrant[]; error?: string; warning?: string }> => {
+    const contentType = response.headers.get("content-type") || "";
+    if (!contentType.includes("application/json")) {
+      const body = await response.text();
+      return {
+        data: [],
+        error: response.ok
+          ? "Registration service returned an unexpected response."
+          : `Registration service failed (${response.status}). ${body.slice(0, 120)}`,
+      };
+    }
+
+    const result = (await response.json()) as {
+      success?: boolean;
+      error?: string;
+      warning?: string;
+      data?: Registrant[];
+    };
+    if (!response.ok || result.success === false) {
+      return { data: [], error: result.error || "Failed to fetch registrations" };
+    }
+
+    return {
+      data: Array.isArray(result.data) ? result.data : [],
+      warning: result.warning,
+    };
+  };
 
   const fetchAllRegistrations = async () => {
     setAllRegsLoading(true);
     setAllRegsError(null);
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
+
     try {
-      const response = await fetch(`/api/webx/merged-report`, {
+      const response = await fetch("/api/webx/merged-report", {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { Accept: "application/json" },
+        signal: controller.signal,
       });
-      const result = (await response.json()) as { success: boolean; error?: string; data?: Registrant[] };
-      if (!result.success) {
-        setAllRegsError(result.error || "Failed to fetch registrations");
-        setAllRegistrations([]);
-      } else {
-        setAllRegistrations(Array.isArray(result.data) ? result.data : []);
+
+      const parsed = await parseRegistrationResponse(response);
+      const limited = limitRecentRegistrations(parsed.data);
+      setAllRegistrations(limited);
+
+      if (limited.length === 0 && parsed.error) {
+        setAllRegsError(parsed.error);
+      } else if (parsed.error) {
+        setAllRegsError(parsed.error);
+      } else if (parsed.warning) {
+        setAllRegsError(parsed.warning);
       }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Failed to fetch registrations";
+      const message =
+        err instanceof Error && err.name === "AbortError"
+          ? "Registration lookup timed out. Please try again."
+          : err instanceof Error
+          ? err.message
+          : "Failed to fetch registrations";
       setAllRegsError(message);
       setAllRegistrations([]);
     } finally {
+      clearTimeout(timeoutId);
       setAllRegsLoading(false);
     }
   };
@@ -349,7 +382,7 @@ export default function WebinarRegistrationPage() {
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">All Registrations</h2>
             <div className="flex items-center justify-between mb-3 gap-3 flex-wrap">
               <div className="text-sm text-gray-600 dark:text-gray-300">
-                Showing latest registrations (sorted by most recent)
+                Showing latest 50 registrations (sorted by most recent)
               </div>
               <div className="flex items-center gap-3 flex-wrap">
                 <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-blue-100 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10 shadow-sm">

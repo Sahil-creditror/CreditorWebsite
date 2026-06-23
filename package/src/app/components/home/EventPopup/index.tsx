@@ -7,10 +7,10 @@ import {
   WORKSHOP_REGISTER_URL,
 } from "@/lib/workshop";
 
-// Saturday, June 20, 2026 — 11:00 AM Pacific (matches bfb.png flyer asset)
-const TARGET_EVENT_MS = new Date("2026-06-20T11:00:00-07:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/bfb.png";
-const EVENT_DATE_LABEL = "Saturday, June 20";
+// Target Date: Saturday, June 27, 2026 — 11:00 AM PST (UTC-8) -> -08:00
+const TARGET_EVENT_MS = new Date("2026-06-27T11:00:00-08:00").getTime();
+const EVENT_IMAGE = "/images/todayclasstopic/sdw.png";
+const EVENT_DATE_LABEL = "Saturday, June 27";
 const EVENT_TIME_LABEL = "11:00 AM PST";
 
 interface EventPopupProps {
@@ -51,13 +51,10 @@ export default function EventPopup({
     if (manualTrigger > 0) setOpen(true);
   }, [manualTrigger]);
 
-  // Active interval loop driving the countdown calculation forward every second
   useEffect(() => {
     const updateCountdown = () => setCountdown(getCountdown(TARGET_EVENT_MS));
-
     updateCountdown();
     const id = setInterval(updateCountdown, 1000);
-
     return () => clearInterval(id);
   }, []);
 
@@ -71,7 +68,7 @@ export default function EventPopup({
       onClick={(e) => {
         if (e.target === e.currentTarget) setOpen(false);
       }}
-      data-event-popup="ca7-business-funding-blueprint"
+      data-event-popup="ca7-side-hustle-to-full-time"
     >
       <div
         role="dialog"
@@ -95,32 +92,31 @@ export default function EventPopup({
             <div className="event-popup-badges">
               <span className="event-badge event-badge--live">
                 <span className="event-badge-dot" aria-hidden />
-                LIVE WEBINAR
+                LIVE TRAINING
               </span>
               <span className="event-badge event-badge--date">{EVENT_DATE_LABEL}</span>
             </div>
 
             <h2 id="event-popup-title" className="event-popup-title">
-              Business Funding <span className="event-popup-title-accent">Blueprint</span>
+              From Side Hustle <span className="event-popup-title-accent">To Full-Time</span>
             </h2>
+            <p className="event-popup-subtitle-tag">The 90-Day Business Launch Plan</p>
 
             <p className="event-popup-desc">
-              Get approved for <strong>$100K+</strong>. Learn the strategic steps successful 
-              entrepreneurs use to establish pristine business credit, meet strict lender requirements, 
-              and accurately structure their companies for rapid funding readiness.
+              Turn your idea into a <strong>real business</strong> in just <strong>90 days</strong>. Join our live masterclass and learn to:
             </p>
 
-            <div className="event-popup-tags">
-              <span>Business Credit</span>
-              <span>Lender Requirements</span>
-              <span>{EVENT_TIME_LABEL}</span>
-            </div>
+            <ul className="event-popup-bullets">
+              <li>Validate your business idea & build a profitable offer</li>
+              <li>Find your first customers & create consistent revenue</li>
+              <li>Transition smoothly into a full-time entrepreneur</li>
+            </ul>
 
             <div className="event-popup-countdown-wrap">
               {Date.now() >= TARGET_EVENT_MS ? (
-                <div style={{textAlign: 'center'}}>
+                <div style={{ textAlign: 'center' }}>
                   <p className="event-popup-countdown-label">LIVE NOW</p>
-                  <p style={{color: '#2ec0ff', fontWeight: 800, fontSize: 18}}>Joining live — streaming now</p>
+                  <p style={{ color: '#2ec0ff', fontWeight: 800, fontSize: 18 }}>Streaming live right now</p>
                 </div>
               ) : (
                 <>
@@ -144,7 +140,7 @@ export default function EventPopup({
               rel="noopener noreferrer"
               className="event-popup-cta"
             >
-              Get Approved For $100K+
+              Reserve Your Seat Today!
             </a>
           </div>
 
@@ -152,7 +148,7 @@ export default function EventPopup({
             <div className="event-popup-poster-card">
               <Image
                 src={EVENT_IMAGE}
-                alt={`Business Funding Blueprint Live Masterclass — ${EVENT_DATE_LABEL}, 2026, ${EVENT_TIME_LABEL}`}
+                alt={`From Side Hustle to Full-Time Masterclass — ${EVENT_DATE_LABEL}, ${EVENT_TIME_LABEL}`}
                 width={480}
                 height={480}
                 className="event-popup-poster-img"
@@ -178,9 +174,9 @@ export default function EventPopup({
         .event-popup-dialog {
           position: relative;
           width: 100%;
-          max-width: 800px;
+          max-width: 820px;
           max-height: 92vh;
-          overflow: hidden;
+          overflow-y: auto;
           border-radius: 20px;
           border: 1px solid rgba(59, 130, 246, 0.32);
           background: linear-gradient(152deg, #0c1628 0%, #0a192f 48%, #070e1c 100%);
@@ -206,7 +202,6 @@ export default function EventPopup({
           font-size: 22px;
           line-height: 1;
           cursor: pointer;
-          transition: background 0.2s;
         }
         .event-popup-close:hover {
           background: rgba(0, 0, 0, 0.72);
@@ -217,14 +212,14 @@ export default function EventPopup({
         }
         @media (min-width: 900px) {
           .event-popup-grid {
-            grid-template-columns: 0.9fr 1.1fr;
+            grid-template-columns: 1.15fr 0.85fr;
           }
         }
         .event-popup-left {
           display: flex;
           flex-direction: column;
-          gap: 13px;
-          padding: 24px 22px 28px;
+          gap: 12px;
+          padding: 24px 22px;
           background: radial-gradient(
             ellipse 90% 55% at 15% 8%,
             rgba(0, 180, 255, 0.08) 0%,
@@ -233,21 +228,19 @@ export default function EventPopup({
         }
         @media (min-width: 900px) {
           .event-popup-left {
-            padding: 26px 24px 28px 28px;
-            gap: 14px;
+            padding: 28px;
+            gap: 12px;
           }
         }
         .event-popup-brand {
           margin: 0;
           font-size: 10px;
-          font-weight: 600;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
+          font-weight: 700;
+          letter-spacing: 0.1em;
           color: #6eb8e8;
         }
         .event-popup-badges {
           display: flex;
-          flex-wrap: wrap;
           align-items: center;
           gap: 8px;
         }
@@ -260,72 +253,73 @@ export default function EventPopup({
         }
         .event-badge--live {
           gap: 6px;
-          padding: 6px 12px;
-          font-size: 10px;
+          padding: 5px 10px;
+          font-size: 9px;
           letter-spacing: 0.04em;
           color: #0a2d4a;
           background: linear-gradient(90deg, #b8e8fc 0%, #9dd4f5 100%);
         }
         .event-badge-dot {
-          width: 7px;
-          height: 7px;
+          width: 6px;
+          height: 6px;
           border-radius: 50%;
           background: #e53935;
-          flex-shrink: 0;
         }
         .event-badge--date {
-          padding: 6px 14px;
-          font-size: 11px;
-          font-weight: 600;
-          text-transform: none;
+          padding: 5px 12px;
+          font-size: 10px;
           color: rgba(255, 255, 255, 0.92);
           background: #141f33;
           border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .event-popup-title {
           margin: 0;
-          font-size: clamp(24px, 3.5vw, 30px);
+          font-size: clamp(24px, 3.5vw, 32px);
           font-weight: 800;
-          line-height: 1.12;
-          letter-spacing: -0.02em;
+          line-height: 1.1;
           color: #fff;
         }
         .event-popup-title-accent {
           color: #2ec0ff;
         }
+        .event-popup-subtitle-tag {
+          margin: -4px 0 2px 0;
+          font-size: 13px;
+          font-weight: 600;
+          color: #b8e8fc;
+        }
         .event-popup-desc {
           margin: 0;
-          max-width: 400px;
           font-size: 13px;
-          line-height: 1.65;
-          color: rgba(255, 255, 255, 0.7);
+          line-height: 1.5;
+          color: rgba(255, 255, 255, 0.8);
         }
-        .event-popup-tags {
+        .event-popup-bullets {
+          margin: 0;
+          padding-left: 18px;
+          font-size: 13px;
+          line-height: 1.5;
+          color: rgba(255, 255, 255, 0.75);
           display: flex;
-          flex-wrap: wrap;
-          gap: 8px;
+          flex-direction: column;
+          gap: 4px;
         }
-        .event-popup-tags span {
-          padding: 5px 10px;
-          border-radius: 6px;
-          font-size: 11px;
-          font-weight: 500;
-          color: #8ec8f5;
-          background: #0b1526;
-          border: 1px solid #2a5078;
+        .event-popup-bullets li {
+          list-style-type: disc;
         }
         .event-popup-countdown-wrap {
-          padding: 12px 10px;
-          border-radius: 14px;
+          padding: 10px;
+          border-radius: 12px;
           background: #050c18;
           border: 1px solid rgba(255, 255, 255, 0.05);
+          margin-top: 4px;
         }
         .event-popup-countdown-label {
-          margin: 0 0 12px;
+          margin: 0 0 8px;
           text-align: center;
           font-size: 9px;
           font-weight: 700;
-          letter-spacing: 0.28em;
+          letter-spacing: 0.2em;
           color: #5eb3e8;
         }
         .event-popup-countdown-row {
@@ -333,29 +327,27 @@ export default function EventPopup({
           align-items: center;
           justify-content: center;
           gap: 6px;
-          font-variant-numeric: tabular-nums;
         }
         .event-popup-colon {
-          padding-bottom: 18px;
-          font-size: 20px;
+          padding-bottom: 16px;
+          font-size: 18px;
           font-weight: 300;
           color: rgba(255, 255, 255, 0.32);
-          user-select: none;
         }
         .event-popup-cta {
           display: flex;
           align-items: center;
           justify-content: center;
           width: 100%;
-          padding: 13px 18px;
+          padding: 13px;
           border-radius: 12px;
           font-size: 14px;
           font-weight: 700;
           color: #fff;
           text-decoration: none;
           background: linear-gradient(90deg, #0a7cff 0%, #1aa3ff 55%, #2ec0ff 100%);
-          box-shadow: 0 8px 26px rgba(10, 124, 255, 0.42);
-          transition: filter 0.2s, transform 0.2s;
+          box-shadow: 0 6px 20px rgba(10, 124, 255, 0.35);
+          text-transform: uppercase;
         }
         .event-popup-cta:hover {
           filter: brightness(1.06);
@@ -366,66 +358,55 @@ export default function EventPopup({
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 16px 16px 20px;
+          padding: 16px;
           background: #0a192f;
         }
         @media (min-width: 900px) {
           .event-popup-right {
-            padding: 18px 22px 22px 10px;
+            padding: 24px 24px 24px 12px;
           }
         }
         .event-popup-poster-card {
           width: 100%;
-          max-width: min(460px, 100%);
+          max-width: min(400px, 100%);
           border-radius: 14px;
           overflow: hidden;
           background: #fff;
           box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
         }
-        @media (min-width: 900px) {
-          .event-popup-poster-card {
-            max-width: 100%;
-          }
-        }
         .event-popup-poster-card :global(.event-popup-poster-img) {
           display: block;
           width: 100%;
           height: auto;
-          min-height: 280px;
+          min-height: 260px;
           object-fit: contain;
         }
         @media (min-width: 900px) {
           .event-popup-poster-card :global(.event-popup-poster-img) {
-            min-height: 360px;
+            min-height: 340px;
           }
         }
         :global(.event-countdown-box) {
           display: flex;
-          min-width: 50px;
+          min-width: 46px;
           flex-direction: column;
           align-items: center;
-          padding: 8px 6px;
-          border-radius: 10px;
+          padding: 6px 4px;
+          border-radius: 8px;
           background: #0d1b2e;
           border: 1px solid #1e4068;
         }
         :global(.event-countdown-num) {
-          font-size: 22px;
+          font-size: 20px;
           font-weight: 700;
           line-height: 1;
-          font-variant-numeric: tabular-nums;
           color: #fff;
-        }
-        @media (min-width: 640px) {
-          :global(.event-countdown-num) {
-            font-size: 24px;
-          }
+          font-variant-numeric: tabular-nums;
         }
         :global(.event-countdown-unit) {
-          margin-top: 6px;
+          margin-top: 4px;
           font-size: 8px;
           font-weight: 600;
-          letter-spacing: 0.12em;
           color: #5eb3e8;
         }
       `}</style>

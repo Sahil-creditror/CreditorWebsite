@@ -284,7 +284,7 @@ export default function WebinarRegistrationPage() {
 
   const parseRegistrationResponse = async (
     response: Response
-  ): Promise<{ data: Registrant[]; error?: string }> => {
+  ): Promise<{ data: Registrant[]; error?: string; warning?: string }> => {
     const contentType = response.headers.get("content-type") || "";
     if (!contentType.includes("application/json")) {
       const body = await response.text();
@@ -296,61 +296,58 @@ export default function WebinarRegistrationPage() {
       };
     }
 
-    const result = (await response.json()) as { success?: boolean; error?: string; data?: Registrant[] };
+    const result = (await response.json()) as {
+      success?: boolean;
+      error?: string;
+      warning?: string;
+      data?: Registrant[];
+    };
     if (!response.ok || result.success === false) {
       return { data: [], error: result.error || "Failed to fetch registrations" };
     }
 
-    return { data: Array.isArray(result.data) ? result.data : [] };
+    return {
+      data: Array.isArray(result.data) ? result.data : [],
+      warning: result.warning,
+    };
   };
 
   const fetchAllRegistrations = async () => {
     setAllRegsLoading(true);
     setAllRegsError(null);
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
+
     try {
-      const [zoomResult, recordingResult] = await Promise.allSettled([
-        fetch("/api/webx/merged-report", {
-          method: "GET",
-          headers: { Accept: "application/json" },
-        }),
-        fetch("/api/webx/recording-registrations", {
-          method: "GET",
-          headers: { Accept: "application/json" },
-        }),
-      ]);
+      const response = await fetch("/api/webx/merged-report", {
+        method: "GET",
+        headers: { Accept: "application/json" },
+        signal: controller.signal,
+      });
 
-      const errors: string[] = [];
-      let merged: Registrant[] = [];
-
-      if (zoomResult.status === "fulfilled") {
-        const parsed = await parseRegistrationResponse(zoomResult.value);
-        merged = merged.concat(parsed.data);
-        if (parsed.error) errors.push(parsed.error);
-      } else {
-        errors.push("Live webinar registrations could not be loaded.");
-      }
-
-      if (recordingResult.status === "fulfilled") {
-        const parsed = await parseRegistrationResponse(recordingResult.value);
-        merged = merged.concat(parsed.data);
-        if (parsed.error) errors.push(parsed.error);
-      } else {
-        errors.push("Recording registrations could not be loaded.");
-      }
-
-      const limited = limitRecentRegistrations(merged);
+      const parsed = await parseRegistrationResponse(response);
+      const limited = limitRecentRegistrations(parsed.data);
       setAllRegistrations(limited);
 
-      if (limited.length === 0 && errors.length > 0) {
-        setAllRegsError(errors.join(" "));
-      } else if (errors.length > 0) {
-        setAllRegsError(`Loaded ${limited.length} registrations with warnings: ${errors.join(" ")}`);
+      if (limited.length === 0 && parsed.error) {
+        setAllRegsError(parsed.error);
+      } else if (parsed.error) {
+        setAllRegsError(parsed.error);
+      } else if (parsed.warning) {
+        setAllRegsError(parsed.warning);
       }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Failed to fetch registrations";
+      const message =
+        err instanceof Error && err.name === "AbortError"
+          ? "Registration lookup timed out. Please try again."
+          : err instanceof Error
+          ? err.message
+          : "Failed to fetch registrations";
       setAllRegsError(message);
       setAllRegistrations([]);
     } finally {
+      clearTimeout(timeoutId);
       setAllRegsLoading(false);
     }
   };

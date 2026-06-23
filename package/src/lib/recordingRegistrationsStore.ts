@@ -20,7 +20,7 @@ const s3 = new S3Client({
 const BUCKET = process.env.AWS_S3_BUCKET as string | undefined;
 const RECORDING_REGISTRATIONS_PREFIX = "recording-registrations/";
 const S3_FETCH_BATCH_SIZE = 20;
-const S3_FETCH_TIMEOUT_MS = 25000;
+const S3_FETCH_TIMEOUT_MS = 5000;
 
 export interface RecordingRegistration {
   registrant_id: string;

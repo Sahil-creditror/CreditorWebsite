@@ -14,31 +14,31 @@ const HerobannerWithTag = dynamic(
 function Courses() {
   return (
     <>
-      <HerobannerWithTag
+      {/* <HerobannerWithTag
         bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883453/creditor-website-assets/images/courses/course-banner.webp"
         heading="Explore Our Premium Catalogs"
         desc="Learn Differently. Grow Distinctively. Become Private with Our Premium Catalogs."
-      />
+      /> */}
 
-      <section className="relative py-20 md:py-20 overflow-hidden">
+      <section>
         {/* Static gradient background - Light mode (Blue gradient) */}
-        <div 
+        {/* <div
           className="pointer-events-none absolute inset-0 -z-10 block dark:hidden"
           style={{
             background: "linear-gradient(to bottom, #1e40af, #60a5fa)",
           }}
-        />
-        
+        /> */}
+
         {/* Static gradient background - Dark mode (Dark slate gradient) */}
-        <div 
+        {/* <div
           className="pointer-events-none absolute inset-0 -z-10 hidden dark:block"
           style={{
             background: "linear-gradient(to bottom, #0f172a, #334155)",
           }}
-        />
+        /> */}
 
         <div className="relative flex flex-col gap-24">
-          <div className="px-3.5">
+          <div>
             <Premium />
           </div>
         </div>

@@ -115,7 +115,7 @@ const HeroSection = () => {
 
           {/* Trust line */}
           <p className="mt-8 text-xs text-white/40 tracking-widest uppercase">
-            Trusted by 10,000+ students nationwide
+            Trusted by 1000+ students nationwide
           </p>
         </motion.div>
       </div>

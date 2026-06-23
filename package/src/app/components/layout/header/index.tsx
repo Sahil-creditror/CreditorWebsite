@@ -89,7 +89,7 @@ const Header = () => {
     >
       <div
         className={`mx-auto transition-all duration-500 ${sticky
-          ? "max-w-5xl bg-white/60 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] rounded-2xl  px-6"
+          ? "max-w-6xl bg-white/60 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] rounded-2xl  px-6"
           : "max-w-7xl px-4 sm:px-6 bg-transparent"
           }`}
       >
@@ -99,10 +99,14 @@ const Header = () => {
 
           {/* DESKTOP MENU */}
           {/* DESKTOP MENU */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-0.1">
             {[
 
-              ["About", "/about-us"],
+              ["Masterclass", "/masterclass-membership"],
+              ["Free Webinar", "/webinar"],
+              ["eBooks", "https://ebook.lmsathena.com/"],
+              ["Workshop", "/Workshop"],
+
             ].map(([name, url]) => (
               <Link
                 key={name}
@@ -150,11 +154,43 @@ const Header = () => {
             </div>
 
 
+
+            <div className="relative group">
+              <Link
+                href={COURSES_PAGE_PATH}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${sticky
+                  ? "text-slate-700 hover:text-slate-950 hover:bg-slate-900/5"
+                  : "text-white hover:bg-white/10"
+                  }`}
+              >
+                Resources
+                <ChevronDown
+                  size={14}
+                  className="opacity-70 transition-transform duration-200 group-hover:rotate-180"
+                />
+              </Link>
+
+              <div className="absolute top-full left-0 mt-2 w-36 bg-white border border-slate-100 rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-2">
+                {[
+                  ["About Us", "/about-us"],
+
+                  ["Blogs", "/Blogs"],
+                  // ["Private Merchant", "/services/private-merchant"],
+                ].map(([title, url]) => (
+                  <Link
+                    key={title}
+                    href={url}
+                    className="block px-4 py-3 rounded-xl text-slate-700 text-sm hover:bg-slate-50 hover:text-indigo-600"
+                  >
+                    {title}
+                  </Link>
+                ))}
+              </div>
+            </div>
             {[
-              ["Workshop", WORKSHOP_PATH],
-              ["Webinar", "/webinar"],
+
               ["Contact", "/contact"],
-              ["Blogs", "/Blogs"],
+
             ].map(([name, url]) => (
               <Link
                 key={name}
@@ -168,6 +204,7 @@ const Header = () => {
               </Link>
             ))}
           </div>
+
 
           {/* RIGHT */}
           <div className="flex items-center gap-3">

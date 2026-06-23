@@ -4,11 +4,12 @@ import dynamic from "next/dynamic";
 import HeroSection from "./components/home/hero";
 import BootcampBanner from "./components/home/bootcamp-banner";
 import MasterclassEbook from "./components/home/MasterclassEbook";
+import Intro from "./components/home/intro/page"
 
 // Dynamic imports for all below-the-fold components to improve initial load
-// const Courses = dynamic(() => import("./components/home/courses"), {
-//   loading: () => <div className="min-h-[400px]" />,
-// });
+const Courses = dynamic(() => import("./components/home/courses"), {
+  loading: () => <div className="min-h-[400px]" />,
+});
 
 const WebclassSection = dynamic(() => import("./components/home/webclass"), {
   loading: () => <div className="min-h-[400px]" />,
@@ -62,6 +63,8 @@ export default function Home() {
     <>
       <HeroSection />
       <BootcampBanner />
+      <Intro />
+
       {/* <StatsFacts /> */}
       {/* <Masterclass /> */}
       {/* <Aboutus /> */}
@@ -74,7 +77,7 @@ export default function Home() {
       </Suspense>
       {/* <PrivateTeaser /> */}
       {/* <MasterInfo /> */}
-      {/* <Courses /> */}
+      <Courses />
       {/* <ThanksgivingPopup /> */}
       <Suspense fallback={<div className="min-h-[400px]" />}>
         <Contact contactdataNumber="4" />

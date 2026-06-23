@@ -186,8 +186,8 @@ export default BootcampBanner;
 
 // "use client";
 
-// import React, { useRef } from "react";
-// import { motion, useInView, Variants } from "framer-motion";
+// import React, { useRef, useState, useEffect } from "react";
+// import { motion, useInView, Variants, AnimatePresence } from "framer-motion";
 // import { Poppins } from "next/font/google";
 
 // const poppins = Poppins({
@@ -196,9 +196,10 @@ export default BootcampBanner;
 //     display: "swap",
 // });
 
-// const MasterClassBanner = () => {
+// const BootcampBanner = () => {
 //     const containerRef = useRef(null);
 //     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
+//     const [currentIndex, setCurrentIndex] = useState(0);
 
 //     // Data mapping synchronized with the verified text assets from recession.png
 //     const classData = {
@@ -224,20 +225,26 @@ export default BootcampBanner;
 //         visible: {
 //             opacity: 1,
 //             transition: {
-//                 staggerChildren: 0.08,
+//                 staggerChildren: 0.05,
 //                 delayChildren: 0.05,
 //             },
 //         },
 //     };
 
 //     const itemVariants: Variants = {
-//         hidden: { y: 20, opacity: 0 },
+//         hidden: { y: 15, opacity: 0 },
 //         visible: {
 //             y: 0,
 //             opacity: 1,
-//             transition: { duration: 0.5, ease: [0.215, 0.610, 0.355, 1.000] },
+//             transition: { duration: 0.4, ease: [0.215, 0.61, 0.355, 1.0] },
 //         },
 //     };
+
+//     const contentFadeVariants = {
+//         initial: { opacity: 0, x: -15 },
+//         animate: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" } },
+//         exit: { opacity: 0, x: 15, transition: { duration: 0.3, ease: "easeIn" } }
+//     } as const;
 
 //     return (
 //         <section
@@ -282,26 +289,43 @@ export default BootcampBanner;
 //                                 {classData.badge}
 //                             </div>
 
-//                             <h2 className="text-3xl md:text-4xl lg:text-5xl text-secondary font-extrabold leading-[1.1] tracking-tight uppercase">
-//                                 {classData.heading}
-//                             </h2>
+//                                 <h2 className="text-3xl md:text-4xl lg:text-5xl text-secondary font-black leading-[1.1] tracking-tight">
+//                                     {slidesData[currentIndex].heading}
+//                                 </h2>
 
-//                             <p className="text-base md:text-lg text-secondary/80 font-medium leading-relaxed max-w-xl">
-//                                 {classData.description}
-//                             </p>
+//                                 <p className="text-base md:text-lg text-secondary/80 font-medium leading-relaxed max-w-xl">
+//                                     {slidesData[currentIndex].description}
+//                                 </p>
 
-//                             {/* Core Class Takeaways */}
-//                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 my-2">
-//                                 {classData.benefits.map((benefit, idx) => (
-//                                     <div key={idx} className="flex items-center gap-3">
-//                                         <div className="flex-shrink-0 w-6 h-6 rounded-sm bg-primary/10 text-primary flex items-center justify-center font-bold">
-//                                             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-//                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-//                                             </svg>
+//                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 my-2">
+//                                     {slidesData[currentIndex].benefits.map((benefit, idx) => (
+//                                         <div key={idx} className="flex items-center gap-3">
+//                                             <div className="flex-shrink-0 w-6 h-6 rounded-sm bg-primary/10 text-primary flex items-center justify-center font-bold">
+//                                                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+//                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+//                                                 </svg>
+//                                             </div>
+//                                             <span className="text-secondary font-semibold text-[14px] leading-tight">{benefit}</span>
 //                                         </div>
-//                                         <span className="text-secondary font-semibold text-[14px] leading-tight">{benefit}</span>
-//                                     </div>
-//                                 ))}
+//                                     ))}
+//                                 </div>
+//                             </motion.div>
+//                         </AnimatePresence>
+
+//                         {/* Static Bottom Controls */}
+//                         <motion.div variants={itemVariants} className="flex flex-col gap-5 mt-4">
+//                             <div className="flex flex-wrap items-center gap-4">
+//                                 {/* Visual Slider Pagination Dots */}
+//                                 <div className="flex flex-wrap gap-2 ml-2">
+//                                     {slidesData.map((_, index) => (
+//                                         <button
+//                                             key={index}
+//                                             onClick={() => setCurrentIndex(index)}
+//                                             className={`h-2 rounded-full transition-all duration-300 ${index === currentIndex ? "w-6 bg-primary" : "w-2 bg-gray-300"}`}
+//                                             aria-label={`Go to slide ${index + 1}`}
+//                                         />
+//                                     ))}
+//                                 </div>
 //                             </div>
 //                         </motion.div>
 //                     </div>
@@ -311,4 +335,4 @@ export default BootcampBanner;
 //     );
 // };
 
-// export default MasterClassBanner;
+// export default BootcampBanner;

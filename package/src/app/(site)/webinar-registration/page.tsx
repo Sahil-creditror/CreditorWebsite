@@ -293,22 +293,68 @@ export default function WebinarRegistrationPage() {
     return [...filteredAllRegs].sort((a, b) => getTimestamp(b) - getTimestamp(a));
   }, [filteredAllRegs]);
 
+  const parseRegistrationResponse = async (
+    response: Response
+  ): Promise<{ data: Registrant[]; error?: string }> => {
+    const contentType = response.headers.get("content-type") || "";
+    if (!contentType.includes("application/json")) {
+      const body = await response.text();
+      return {
+        data: [],
+        error: response.ok
+          ? "Registration service returned an unexpected response."
+          : `Registration service failed (${response.status}). ${body.slice(0, 120)}`,
+      };
+    }
+
+    const result = (await response.json()) as { success?: boolean; error?: string; data?: Registrant[] };
+    if (!response.ok || result.success === false) {
+      return { data: [], error: result.error || "Failed to fetch registrations" };
+    }
+
+    return { data: Array.isArray(result.data) ? result.data : [] };
+  };
+
   const fetchAllRegistrations = async () => {
     setAllRegsLoading(true);
     setAllRegsError(null);
     try {
-      const response = await fetch(`/api/webx/merged-report`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const result = (await response.json()) as { success: boolean; error?: string; data?: Registrant[] };
-      if (!result.success) {
-        setAllRegsError(result.error || "Failed to fetch registrations");
-        setAllRegistrations([]);
+      const [zoomResult, recordingResult] = await Promise.allSettled([
+        fetch("/api/webx/merged-report", {
+          method: "GET",
+          headers: { Accept: "application/json" },
+        }),
+        fetch("/api/webx/recording-registrations", {
+          method: "GET",
+          headers: { Accept: "application/json" },
+        }),
+      ]);
+
+      const errors: string[] = [];
+      let merged: Registrant[] = [];
+
+      if (zoomResult.status === "fulfilled") {
+        const parsed = await parseRegistrationResponse(zoomResult.value);
+        merged = merged.concat(parsed.data);
+        if (parsed.error) errors.push(parsed.error);
       } else {
-        setAllRegistrations(Array.isArray(result.data) ? result.data : []);
+        errors.push("Live webinar registrations could not be loaded.");
+      }
+
+      if (recordingResult.status === "fulfilled") {
+        const parsed = await parseRegistrationResponse(recordingResult.value);
+        merged = merged.concat(parsed.data);
+        if (parsed.error) errors.push(parsed.error);
+      } else {
+        errors.push("Recording registrations could not be loaded.");
+      }
+
+      setAllRegistrations(merged);
+
+      if (merged.length === 0 && errors.length > 0) {
+        setAllRegsError(errors.join(" "));
+      } else if (errors.length > 0) {
+        setAllRegsError(`Loaded ${merged.length} registrations with warnings: ${errors.join(" ")}`);
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Failed to fetch registrations";

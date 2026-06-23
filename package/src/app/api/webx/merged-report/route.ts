@@ -1,9 +1,17 @@
 import { NextResponse } from "next/server";
 import { API_CONFIG } from "@/config/api";
 
+export const dynamic = "force-dynamic";
+
 const WEBX_ROUTES = {
   MERGED_REPORT: "/zoom/webinar/merged-report",
 };
+
+const BACKEND_TIMEOUT_MS = 10000;
+
+const STATIC_ZOOM_ACCESS_TOKEN =
+  process.env.ZOOM_ACCESS_TOKEN ||
+  "eyJzdiI6IjAwMDAwMiIsImFsZyI6IkhTNTEyIiwidiI6IjIuMCIsImtpZCI6IjNhYjFhNWI0LTdjZGItNDc3NS1hZDRlLTQ5YjVjYmEyMWYwNiJ9.eyJhdWQiOiJodHRwczovL29hdXRoLnpvb20udXMiLCJ1aWQiOiJwX2ZpS1NxSFNtU3N1Si0wYVhSZ3VnIiwidmVyIjoxMCwiYXVpZCI6ImY0NjlmZDAyNDVjMjBmODQ0Mzg2OTIzMmQwYjRmMjg1NzMzOTBkM2RlYmI2YmZhMWU3MzVhYTkyYWNlNGE2NzciLCJuYmYiOjE3NjQ5NTA3MzAsImNvZGUiOiIyT3dDR1lyN0c3RlhkMlctYi03UjZtQU0yMGtFR0xSZWciLCJpc3MiOiJ6bTpjaWQ6enJQd1RZSzJUZ0tEMlBrcldGOUt2QSIsImdubyI6MCwiZXhwIjoxNzY0OTU0MzMwLCJ0eXBlIjowLCJpYXQiOjE3NjQ5NTA3MzAsImFpZCI6IjlUaWJWRWlMVEwtMDVDQU1KcHo3cmcifQ.T4dyf3PtoZ08mB3BGgzmlaZHDUcICNnfk4X37Zgk185PSR_ZchJV_SRs8inGOrCdPod1k6ZIqzUDJqPnKILLcg";
 
 const withBaseUrl = (path: string) => {
   const normalizedBase = API_CONFIG.BASE_URL?.replace(/\/$/, "") || "";
@@ -28,92 +36,72 @@ type MergedReportRecord = {
   duration?: number | null;
 };
 
+const fetchWithTimeout = async (url: string, init: RequestInit, timeoutMs: number): Promise<Response> => {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    return await fetch(url, { ...init, signal: controller.signal });
+  } finally {
+    clearTimeout(timeoutId);
+  }
+};
+
+const parseJsonResponse = async <T>(response: Response): Promise<T | null> => {
+  const text = await response.text();
+  if (!text) return null;
+
+  try {
+    return JSON.parse(text) as T;
+  } catch {
+    console.warn("[WEBX] Non-JSON merged report response:", text.substring(0, 200));
+    return null;
+  }
+};
+
 export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
     const webinarId = url.searchParams.get("webinarId");
-
-    // Fetch Zoom registrations
     const reportUrl = withBaseUrl(WEBX_ROUTES.MERGED_REPORT);
+
+    const authHeader = request.headers.get("authorization");
+    const accessToken = authHeader?.replace("Bearer ", "") || STATIC_ZOOM_ACCESS_TOKEN;
+
     let zoomData: MergedReportRecord[] = [];
 
     try {
-      const response = await fetch(reportUrl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetchWithTimeout(
+        reportUrl,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          cache: "no-store",
         },
-        cache: "no-store",
-      });
+        BACKEND_TIMEOUT_MS
+      );
 
       if (response.ok) {
-        const payload = (await response.json()) as {
+        const payload = await parseJsonResponse<{
           success?: boolean;
           data?: MergedReportRecord[];
           [key: string]: unknown;
-        };
+        }>(response);
+
         zoomData = Array.isArray(payload?.data) ? payload.data : [];
       } else {
-        console.warn("Failed to fetch Zoom merged report, continuing with recording registrations only");
+        console.warn("Failed to fetch Zoom merged report:", response.status);
       }
     } catch (error) {
       console.warn("Error fetching Zoom merged report:", error);
     }
 
-    // Fetch recording registrations directly
-    let recordingData: MergedReportRecord[] = [];
-    try {
-      // Import the recording registrations handler directly
-      const { S3Client, ListObjectsV2Command, GetObjectCommand } = await import("@aws-sdk/client-s3");
-      
-      const s3 = new S3Client({
-        region: process.env.AWS_REGION,
-        credentials: process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY ? {
-          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        } : undefined,
-      });
-
-      const BUCKET = process.env.AWS_S3_BUCKET as string | undefined;
-      const RECORDING_REGISTRATIONS_PREFIX = "recording-registrations/";
-
-      if (BUCKET) {
-        const listCommand = new ListObjectsV2Command({
-          Bucket: BUCKET,
-          Prefix: RECORDING_REGISTRATIONS_PREFIX,
-        });
-
-        const listResponse = await s3.send(listCommand);
-        const keys = listResponse.Contents?.map(obj => obj.Key || "").filter(Boolean) || [];
-
-        for (const key of keys) {
-          try {
-            const getCommand = new GetObjectCommand({
-              Bucket: BUCKET,
-              Key: key,
-            });
-            const objectResponse = await s3.send(getCommand);
-            const bodyString = await objectResponse.Body?.transformToString();
-            if (bodyString) {
-              const registration = JSON.parse(bodyString) as MergedReportRecord;
-              recordingData.push(registration);
-            }
-          } catch (err) {
-            console.error(`Error reading recording registration file ${key}:`, err);
-          }
-        }
-      }
-    } catch (error) {
-      console.warn("Error fetching recording registrations:", error);
-    }
-
-    // Merge both datasets
-    const mergedData = [...zoomData, ...recordingData];
-
-    // Filter by webinarId if provided
-    const filtered = webinarId 
-      ? mergedData.filter((record) => record.webinar_id === webinarId) 
-      : mergedData;
+    const filtered = webinarId
+      ? zoomData.filter((record) => record.webinar_id === webinarId)
+      : zoomData;
 
     return NextResponse.json({
       success: true,
@@ -126,5 +114,3 @@ export async function GET(request: Request) {
     return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 }
-
-

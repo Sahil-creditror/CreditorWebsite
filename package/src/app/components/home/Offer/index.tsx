@@ -4,15 +4,12 @@ import React from "react";
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Check } from "lucide-react";
 
 export default function MasterclassBenefits() {
-
   const { ref, inView } = useInView({
-    threshold: 0.05,
+    threshold: 0.1,
     triggerOnce: true,
   });
-
 
   type BgCard = {
     type: "bg";
@@ -20,7 +17,6 @@ export default function MasterclassBenefits() {
     description: string;
     bg: string;
   };
-
   type BlockCard = {
     type: "block";
     title: string;
@@ -29,242 +25,211 @@ export default function MasterclassBenefits() {
     color: string;
   };
 
-
   const benefits: Array<BgCard | BlockCard> = [
     {
       type: "bg",
       title: "Become a Member",
       description:
-        "Join Creditor Academy and unlock private education, exclusive resources, and a structured path toward financial freedom.",
+        "Join the movement. Step inside Creditor Academy and unlock access to a world of private education and financial freedom.",
       bg: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883732/creditor-website-assets/images/offers/enrollnew.png",
     },
     {
       type: "block",
       title: "Charge Your Card",
-      description:
-        "Activate your Creditor Card and enter a private economy built around access, opportunity, and member advantages.",
       img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883727/creditor-website-assets/images/offers/card.webp",
-      color: "from-slate-100 via-white to-slate-200",
+      description:
+        "Charge your \"Creditor Card\" and step into the private economy. Each swipe unlocks access, wealth, and opportunity reserved for members only.",
+      color: "from-slate-800 to-slate-900 dark:from-slate-900 dark:to-black",
     },
     {
       type: "block",
       title: "Unlock Courses & Connect",
-      description:
-        "Access premium courses, live masterclasses, and a private network designed for growth and collaboration.",
       img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883729/creditor-website-assets/images/offers/courses.webp",
-      color: "from-blue-50 via-white to-indigo-100",
+      description:
+        "Instantly access premium courses, join daily live masterclasses, and a private network of like-minded achievers. Learn, grow, and collaborate.",
+      color: "from-[#0a1e3f] to-[#1a2e5f] dark:from-[#0a1e3f] dark:to-[#101b36]",
     },
     {
       type: "bg",
       title: "Become Private",
       description:
-        "Apply what you learn to operate privately, protect your assets, and build wealth on your own terms.",
+        "Take control of your sovereignty. Apply what you learn to live free, operate privately, and build wealth on your own terms.",
       bg: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883751/creditor-website-assets/images/offers/sovnew.png",
     },
   ];
 
-
   return (
+    <section className="relative overflow-hidden py-10 md:py-20 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800" />
+      {/* <div
+        className="absolute inset-0 bg-[url('https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883586/creditor-website-assets/images/home/aboutusIndex/about_christmas4.webp')] bg-cover bg-center dark:opacity-0 transition-opacity duration-300"
+        aria-hidden="true"
+      /> */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/30 to-white/60 dark:hidden pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/20 to-slate-900/60 hidden dark:block pointer-events-none" />
+      <div className="container mx-auto px-4 relative z-10">
 
-    <section className="relative overflow-hidden py-20 md:py-24 bg-gradient-to-b from-white via-slate-50 to-white text-slate-900">
+        {/* --- Section Heading --- */}
+        <div ref={ref} className="mt-0 md:mt-5">
+          {/* Top Row - Left Aligned */}
+          {/* <motion.div
+            className="flex items-center gap-4 md:gap-8 mb-6"
+            initial={{ opacity: 0 }}
+            animate={
+              inView
+                ? {
+                    opacity: 1,
+                    transition: { delay: 0.2 }
+                  }
+                : {}
+            }
+          >
+            <motion.span
+              className="bg-primary py-1.5 px-2.5 text-base font-medium rounded-full dark:text-secondary"
+              initial={{ scale: 0 }}
+              animate={
+                inView
+                  ? {
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 15
+                      }
+                    }
+                  : {}
+              }
+            >
+              02
+            </motion.span>
+            <motion.div
+              className="h-px w-16 bg-secondary/12 dark:bg-white/12"
+              initial={{ scaleX: 0 }}
+              animate={
+                inView
+                  ? {
+                      scaleX: 1,
+                      transition: { delay: 0.3 }
+                    }
+                  : {}
+              }
+            />
+            <motion.p
+              className="text-base font-medium text-white bg-secondary dark:bg-white/10 py-1.5 px-4 rounded-full"
+              initial={{ y: 20, opacity: 0 }}
+              animate={
+                inView
+                  ? {
+                      y: 0,
+                      opacity: 1,
+                      transition: { delay: 0.4 }
+                    }
+                  : {}
+              }
+            >
+              We Offer You
+            </motion.p>
+          </motion.div> */}
 
-
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-500/10 blur-[150px] rounded-full" />
-
-
-
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
-
-
-        <div className="text-center max-w-3xl mx-auto mb-20">
-
-          <span className="inline-flex px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-bold uppercase tracking-widest">
-            Strategic Growth Path
-          </span>
-
-
-          <h2 className="mt-6 text-4xl md:text-6xl font-black tracking-tight">
-
-            The{" "}
-
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-              Freedom
-            </span>{" "}
-
-            Formula
-
-          </h2>
-
-
-          <p className="mt-5 text-slate-500 leading-relaxed">
-            A step-by-step framework designed to help you access knowledge, resources, and opportunities inside Creditor Academy.
-          </p>
-
-
+          {/* Section Title - Center Aligned */}
+          <div className="text-center">
+            <h3 className="text-3xl md:text-5xl font-extrabold text-slate-800 dark:text-white leading-tight">
+              The{' '}
+              <span className="bg-clip-text text-blue-600 dark:text-blue-400 bg-gradient-to-r from-blue-500 to-blue-400">
+                Freedom
+              </span>{' '}
+              Formula
+            </h3>
+          </div>
         </div>
 
+        {/* --- Cards Grid --- */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10 md:mt-16">
+          {benefits.map((item, idx) => (
+            <div key={idx} className="relative">
 
-
-
-
-        <div ref={ref} className="relative space-y-16 md:space-y-24 before:absolute before:left-5 md:before:left-1/2 before:top-0 before:bottom-0 before:w-[2px] before:bg-gradient-to-b before:from-blue-500 before:via-blue-200 before:to-transparent">
-
-
-          {benefits.map((item, index) => {
-
-            const even = index % 2 === 0;
-
-
-            return (
-
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 40 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: .6, delay: index * .15 }}
-                className={`relative flex flex-col md:flex-row gap-8 md:gap-14 ${even ? "md:flex-row" : "md:flex-row-reverse"}`}
+              {/* --- Card Container --- */}
+              <div
+                className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 h-full group border border-slate-200/50 dark:border-slate-700/50"
               >
+                {/* --- Large Number Overlay --- */}
+                <span
+                  className={`absolute top-2 right-4 text-[70px] md:text-[100px] lg:text-[120px] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-blue-400/30 to-amber-400/30 select-none pointer-events-none leading-none z-30 opacity-60 group-hover:scale-110 transition-transform duration-500 ease-out`}
+                >
+                  {idx + 1}
+                </span>
 
+                {/* Shared overlays */}
+                <div className="absolute inset-0 pointer-events-none z-10">
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20 dark:to-black/60 opacity-60 mix-blend-overlay" />
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
+                </div>
 
+                {/* --- BG type cards (1 & 4) --- */}
+                {item.type === "bg" && (
+                  <div
+                    className="relative h-full min-h-[22rem] md:min-h-[25rem] flex flex-col justify-between overflow-hidden"
+                    style={{
+                      backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(2,6,23,0.7) 100%), url(${item.bg})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  >
+                    <div className="p-6 md:p-8 relative z-30">
+                      <h3 className="text-xl md:text-2xl font-bold text-white drop-shadow-md">
+                        {item.title}
+                      </h3>
+                    </div>
 
-                <div className="absolute left-5 md:left-1/2 -top-1 -translate-x-1/2 w-5 h-5 rounded-full bg-white border-[3px] border-blue-600 shadow-lg z-20" />
+                    <div className="p-6 md:p-8 relative z-30 mt-auto">
+                      <p className="text-sm md:text-base text-white/95 leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                )}
 
-
-
-                <div className="w-full md:w-1/2 pl-12 md:pl-0 flex items-center">
-
-                  <div className="max-w-md">
-
-
-                    <p className="text-xs font-black uppercase tracking-widest text-blue-600 mb-3">
-                      Stage 0{index + 1}
-                    </p>
-
-
-                    <h3 className="text-2xl font-black text-slate-900">
+                {/* --- Block type cards (2 & 3) --- */}
+                {item.type === "block" && (
+                  <div
+                    className={`relative flex flex-col justify-between rounded-2xl p-6 md:p-8 h-full bg-gradient-to-b ${item.color} overflow-hidden`}
+                  >
+                    <h3 className="text-xl md:text-2xl font-bold text-white drop-shadow-md relative z-20">
                       {item.title}
                     </h3>
 
+                    <div className="relative z-20 my-6 flex justify-center">
+                      <Image
+                        src={(item as BlockCard).img}
+                        alt={`Benefit: ${item.title}`}
+                        width={300}
+                        height={200}
+                        className="object-contain h-32 md:h-40"
+                        sizes="(max-width: 640px) 200px, 300px"
+                        loading="lazy"
+                      />
+                    </div>
 
-                    <p className="mt-4 text-sm leading-relaxed text-slate-500">
+                    <p className="text-sm md:text-base text-white/95 leading-relaxed relative z-20">
                       {item.description}
                     </p>
-
-
-                    <div className="mt-5 flex items-center gap-2 text-sm font-bold text-slate-700">
-
-                      <Check size={16} className="text-blue-600" />
-
-                      Premium Member Access
-
-                    </div>
-
-
                   </div>
-
-                </div>
-
-
-
-
-
-                <div className="w-full md:w-1/2 pl-12 md:pl-0">
-
-                  <div className="relative h-[240px] md:h-[300px] rounded-3xl overflow-hidden  bg-white  group">
-
-
-                    {item.type === "bg" && (
-
-                      <Image
-                        src={item.bg}
-                        alt={item.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition duration-700"
-                      />
-
-                    )}
-
-
-
-                    {item.type === "block" && (
-
-                      <>
-
-                        <div className={`absolute inset-0 bg-gradient-to-br ${item.color}`} />
-
-
-                        <Image
-                          src={item.img}
-                          alt={item.title}
-                          width={400}
-                          height={300}
-                          className="relative z-10 w-full h-full object-contain p-8 group-hover:scale-105 transition duration-500"
-                        />
-
-                      </>
-
-                    )}
-
-
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-
-
-
-                    <div className="absolute top-5 right-5 bg-white/90 rounded-full w-10 h-10 flex items-center justify-center font-bold text-slate-700 ">
-
-                      0{index + 1}
-
-                    </div>
-
-
-                  </div>
-
-                </div>
-
-
-
-
-              </motion.div>
-
-            )
-
-          })}
-
-
+                )}
+              </div>
+            </div>
+          ))}
         </div>
 
-
-
-
-
-        <div className="mt-24 flex justify-center">
-
+        {/* CTA Button */}
+        <div className="mt-12 flex flex-col items-center gap-4">
           <a
+            className="relative w-full max-w-md inline-flex items-center justify-center px-10 py-3.5 md:px-10 md:py-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-semibold text-lg md:text-xl shadow-lg ring-1 ring-white/10 dark:ring-black/10 transition-transform duration-200"
             href="/masterclass-membership"
-            className="group inline-flex items-center gap-3 px-9 py-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold shadow-xl hover:-translate-y-1 transition"
           >
-
-            Initialize Membership
-
-
-            <span className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:rotate-45 transition">
-
-              <ArrowUpRight size={18} />
-
-            </span>
-
-
+            Become a Member
           </a>
-
-
         </div>
-
-
       </div>
-
-
     </section>
-
   );
 }

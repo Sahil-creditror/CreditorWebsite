@@ -21,6 +21,14 @@ const nextConfig: NextConfig = {
   },
   // Webpack optimizations for better code splitting
   webpack: (config: any, { isServer }: any) => {
+    config.module.rules.push({
+      test: /\.(mp4|webm|ogg)$/i,
+      type: "asset/resource",
+      generator: {
+        filename: "static/media/[name].[contenthash][ext]",
+      },
+    });
+
     if (!isServer) {
       // Optimize chunk splitting to reduce initial bundle size
       config.optimization = {

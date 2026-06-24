@@ -18,6 +18,29 @@ const RegPopup = dynamic(() => import("../components/reg_popup"), {
   ssr: false,
 });
 
+import FloatingMiniChatbot from "../components/chatbot/FloatingMiniChatbot";
+
+const CHATBOT_ALLOWED_EXACT = ["/", "/about-us", "/services", "/masterclass-membership"];
+
+/** Chatbot only on homepage, about us, services hub, course catalog, and website service. */
+function isChatbotVisible(pathname: string) {
+  const path = pathname.toLowerCase().replace(/\/$/, "") || "/";
+
+  if (CHATBOT_ALLOWED_EXACT.includes(path)) {
+    return true;
+  }
+
+  if (path.startsWith("/services/course-cataloges")) {
+    return true;
+  }
+
+  if (path === "/services/website-service") {
+    return true;
+  }
+
+  return false;
+}
+
 export function ClientLayoutShell({ children }: PropsWithChildren) {
   const pathname = usePathname();
   const [is404, setIs404] = useState(false);
@@ -79,6 +102,9 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
         {!hideFooter && <Footer />}
 
         <FloatingButtons onSpecialOfferClick={() => setThanksgivingKey(prev => prev + 1)} />
+
+        {/* Video chatbot — allowed pages only */}
+        {isChatbotVisible(pathname) && <FloatingMiniChatbot />}
 
         {/* Previous Thanksgiving / webinar popup — kept for reference */}
         {/* <ThanksgivingPopup

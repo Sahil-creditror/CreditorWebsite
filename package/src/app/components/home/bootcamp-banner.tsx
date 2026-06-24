@@ -18,29 +18,29 @@ const BootcampBanner = () => {
     // Mapped array containing event flyers organized chronologically by date
     const slidesData = [
         {
-            imageSrc: "/images/todayclasstopic/credit.png",
-            imageAlt: "Advanced Business Credit Master Class",
-            badge: "The Master Class • June 23, 2026",
-            heading: <> Advanced Business Credit: <span className="text-primary">Accessing Higher Funding Limits</span></>,
-            description: "Supercharge your business potential by mastering corporate finance systems. Discover modern frameworks to separate your personal liability, unlock major funding channels, and scale your organizational operations with higher capital bounds.",
+            imageSrc: "/images/todayclasstopic/opm.png",
+            imageAlt: "Leveraging OPM for Business Growth Master Class",
+            badge: "Master Class • June 24, 2026",
+            heading: <> Leveraging OPM: <span className="text-primary">(Other People's Money) For Business Growth</span></>,
+            description: "Discover the ultimate acceleration tool for expanding your enterprise portfolio. Learn modern corporate finance methods to secure major alternative financial backing channels, minimize out-of-pocket exposure, and deploy tactical capital options efficiently.",
             benefits: [
-                "Higher Funding Limits",
-                "Build Strong Corporate Credit",
-                "Unlock Bigger Opportunities",
-                "Creditor Academy Guidance"
+                "Access More Capital",
+                "Scale Your Business",
+                "Build Stronger Partnerships",
+                "Creditor Academy Frameworks"
             ]
         },
         {
-            imageSrc: "/images/todayclasstopic/proper.png",
-            imageAlt: "Protecting Family Assets Through Proper Structuring",
-            badge: "The Become Private Class • June 23, 2026",
-            heading: <> Protecting Family Assets <span className="text-primary">Through Proper Structuring</span></>,
-            description: "Secure your legacy and build multi-generational financial safety nets. Learn verified legal and organizational asset arrangements to insulate your estate, protect your wealth, and approach the future with absolute structural confidence.",
+            imageSrc: "/images/todayclasstopic/strng.png",
+            imageAlt: "Creating Strong Business Foundations Master Class",
+            badge: "Today Operate Private Class • June 24, 2026",
+            heading: <> Creating Strong Business Foundations <span className="text-primary">Through Proper Documentation</span></>,
+            description: "Impart structural integrity to your operational entity from the ground up. Learn how accurate organizational record-keeping, strict corporate filings, and strategic documentation build comprehensive compliance, ultimate clarity, and confidence.",
             benefits: [
-                "Protect Your Legacy",
-                "Secure Your Family's Future",
-                "Structure With Confidence",
-                "Private Association Frameworks"
+                "Build Complete Compliance",
+                "Establish Perfect Clarity",
+                "Gain Confidence In Your Business",
+                "Operate Private Structure"
             ]
         }
     ];

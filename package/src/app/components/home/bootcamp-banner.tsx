@@ -15,32 +15,32 @@ const BootcampBanner = () => {
     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Mapped array containing event flyers organized chronologically by date
+    // Mapped array containing event flyers organized chronologically from your uploaded flyers
     const slidesData = [
         {
-            imageSrc: "/images/todayclasstopic/opm.png",
-            imageAlt: "Leveraging OPM for Business Growth Master Class",
-            badge: "Master Class • June 24, 2026",
-            heading: <> Leveraging OPM: <span className="text-primary">(Other People's Money) For Business Growth</span></>,
-            description: "Discover the ultimate acceleration tool for expanding your enterprise portfolio. Learn modern corporate finance methods to secure major alternative financial backing channels, minimize out-of-pocket exposure, and deploy tactical capital options efficiently.",
+            imageSrc: "/images/todayclasstopic/inc.png",
+            imageAlt: "Passive Income Strategies Every Entrepreneur Should Know",
+            badge: "Financial Freedom Class • June 25, 2026",
+            heading: <> Passive Income Strategies <span className="text-primary">Every Entrepreneur Should Know</span></>,
+            description: "Discover the ultimate tactics to optimize your business operations and establish recurring revenue channels. Learn to construct assets that produce predictable returns, build sustainable financial momentum, and unlock true lifestyle autonomy.",
             benefits: [
-                "Access More Capital",
-                "Scale Your Business",
-                "Build Stronger Partnerships",
+                "Build Wealth Consistently",
+                "Create Income That Works For You",
+                "Gain Time And Financial Freedom",
                 "Creditor Academy Frameworks"
             ]
         },
         {
-            imageSrc: "/images/todayclasstopic/strng.png",
-            imageAlt: "Creating Strong Business Foundations Master Class",
-            badge: "Today Operate Private Class • June 24, 2026",
-            heading: <> Creating Strong Business Foundations <span className="text-primary">Through Proper Documentation</span></>,
-            description: "Impart structural integrity to your operational entity from the ground up. Learn how accurate organizational record-keeping, strict corporate filings, and strategic documentation build comprehensive compliance, ultimate clarity, and confidence.",
+            imageSrc: "/images/todayclasstopic/acq.png",
+            imageAlt: "How to Acquire Existing Businesses with Creative Deal Structures",
+            badge: "Master Class • June 25, 2026",
+            heading: <> How To Acquire Existing Businesses <span className="text-primary">With Creative Deal Structures</span></>,
+            description: "Accelerate your portfolio growth by bypassing the startup phase entirely. Learn actionable corporate acquisition frameworks, structure strategic win-win partnerships, deploy seller financing options, and utilize real-world creative deal blueprints.",
             benefits: [
-                "Build Complete Compliance",
-                "Establish Perfect Clarity",
-                "Gain Confidence In Your Business",
-                "Operate Private Structure"
+                "Creative Ways to Finance Acquisitions",
+                "Seller Financing & Earnouts",
+                "Structuring Win-Win Deals",
+                "Real-World Strategies That Work"
             ]
         }
     ];

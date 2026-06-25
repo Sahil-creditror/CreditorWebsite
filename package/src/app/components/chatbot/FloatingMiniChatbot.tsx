@@ -254,21 +254,9 @@ const FloatingMiniChatbot = () => {
   const [dragging, setDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [isTeaserDragging, setIsTeaserDragging] = useState(false);
-  const [teaserPosition, setTeaserPosition] = useState(() => {
-    if (typeof window !== "undefined") {
-      return {
-        x: Math.max(
-          EDGE_MARGIN,
-          window.innerWidth - TEASER_WIDTH - EDGE_MARGIN,
-        ),
-        y: Math.max(
-          TEASER_BOTTOM_GAP,
-          window.innerHeight - TEASER_HEIGHT - TEASER_BOTTOM_GAP,
-        ),
-      };
-    }
-    return { x: 0, y: 0 };
-  });
+  // Always start at {x:0,y:0} so server and client render identical HTML.
+  // The real window-based position is set in the useEffect below after mount.
+  const [teaserPosition, setTeaserPosition] = useState({ x: 0, y: 0 });
   const [teaserDragOffset, setTeaserDragOffset] = useState({ x: 0, y: 0 });
   const [teaserPromptIndex, setTeaserPromptIndex] = useState(0);
   const chatContainerRef = useRef(null);

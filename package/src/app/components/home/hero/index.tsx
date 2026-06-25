@@ -206,7 +206,7 @@ const HeroSection = () => {
           >
             <span className="absolute inset-0 rounded-full border border-cyan-400/0 group-hover:border-cyan-400/50 transition-colors pointer-events-none" />
             Join Masterclass Membership
-            <span className="w-9 h-9 rounded-full bg-[#030712] text-cyan-400 flex items-center justify-center transition-all group-hover:rotate-45 group-hover:text-white group-hover:bg-cyan-500">
+            <span className="w-9 h-9 rounded-full bg-[#030712] text-white flex items-center justify-center transition-all group-hover:rotate-45 group-hover:text-white group-hover:bg-blue-500">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                 <line x1="7" y1="17" x2="17" y2="7" />
                 <polyline points="7 7 17 7 17 17" />
@@ -216,7 +216,7 @@ const HeroSection = () => {
 
           <Link
             href="/webinar"
-            className="inline-flex items-center gap-2 px-7 py-4 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md text-slate-200 font-semibold text-xs uppercase tracking-widest hover:bg-white/[0.08] hover:border-cyan-500/40 hover:text-white transition-all shadow-lg group"
+            className="inline-flex items-center gap-2 px-7 py-4 rounded-full border border-white/10 bg-white/[0.15] backdrop-blur-md text-slate-200 font-semibold text-xs uppercase tracking-widest hover:bg-white/[0.20] hover:border-cyan-500/40 hover:text-white transition-all shadow-lg group"
           >
             Watch Free Webinar
             <span className="w-2 h-2 rounded-full bg-cyan-400 group-hover:animate-ping ml-1" />

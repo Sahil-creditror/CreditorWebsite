@@ -1,235 +1,238 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
 
 export default function MasterclassBenefits() {
   const { ref, inView } = useInView({
-    threshold: 0.1,
+    threshold: 0.05,
     triggerOnce: true,
   });
 
-  type BgCard = {
-    type: "bg";
-    title: string;
-    description: string;
-    bg: string;
-  };
-  type BlockCard = {
-    type: "block";
-    title: string;
-    description: string;
-    img: string;
-    color: string;
-  };
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  const benefits: Array<BgCard | BlockCard> = [
+  const benefits = [
     {
-      type: "bg",
+      step: "STAGE 01",
       title: "Become a Member",
       description:
-        "Join the movement. Step inside Creditor Academy and unlock access to a world of private education and financial freedom.",
-      bg: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883732/creditor-website-assets/images/offers/enrollnew.png",
+        "Join Creditor Academy and unlock private education, exclusive resources, and a structured path toward financial freedom.",
+      image:
+        "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883732/creditor-website-assets/images/offers/enrollnew.png",
+      accent: "from-blue-600 to-sky-400",
+      accentHex: "#2563eb",
     },
     {
-      type: "block",
+      step: "STAGE 02",
       title: "Charge Your Card",
-      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883727/creditor-website-assets/images/offers/card.webp",
       description:
-        "Charge your \"Creditor Card\" and step into the private economy. Each swipe unlocks access, wealth, and opportunity reserved for members only.",
-      color: "from-slate-800 to-slate-900 dark:from-slate-900 dark:to-black",
+        "Activate your Creditor Card and enter a private economy built around access, opportunity, and member advantages.",
+      image:
+        "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883727/creditor-website-assets/images/offers/card.webp",
+      accent: "from-sky-500 to-cyan-400",
+      accentHex: "#0ea5e9",
     },
     {
-      type: "block",
+      step: "STAGE 03",
       title: "Unlock Courses & Connect",
-      img: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883729/creditor-website-assets/images/offers/courses.webp",
       description:
-        "Instantly access premium courses, join daily live masterclasses, and a private network of like-minded achievers. Learn, grow, and collaborate.",
-      color: "from-[#0a1e3f] to-[#1a2e5f] dark:from-[#0a1e3f] dark:to-[#101b36]",
+        "Access premium courses, live masterclasses, and a private network designed for growth and collaboration.",
+      image:
+        "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883729/creditor-website-assets/images/offers/courses.webp",
+      accent: "from-indigo-600 to-blue-500",
+      accentHex: "#4f46e5",
     },
     {
-      type: "bg",
+      step: "STAGE 04",
       title: "Become Private",
       description:
-        "Take control of your sovereignty. Apply what you learn to live free, operate privately, and build wealth on your own terms.",
-      bg: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883751/creditor-website-assets/images/offers/sovnew.png",
+        "Apply what you learn to operate privately, protect your assets, and build wealth on your own terms.",
+      image:
+        "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883751/creditor-website-assets/images/offers/sovnew.png",
+      accent: "from-violet-600 to-indigo-400",
+      accentHex: "#7c3aed",
     },
   ];
 
   return (
-    <section className="relative overflow-hidden py-10 md:py-20 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800" />
-      {/* <div
-        className="absolute inset-0 bg-[url('https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883586/creditor-website-assets/images/home/aboutusIndex/about_christmas4.webp')] bg-cover bg-center dark:opacity-0 transition-opacity duration-300"
-        aria-hidden="true"
-      /> */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/30 to-white/60 dark:hidden pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/20 to-slate-900/60 hidden dark:block pointer-events-none" />
-      <div className="container mx-auto px-4 relative z-10">
+    <section className="relative overflow-hidden bg-gradient-to-tr from-[#f3f8fe] via-[#eff6ff] to-[#e0f2fe] pt-20 pb-32 md:pt-18 md:pb-24 text-slate-800 selection:bg-blue-500/20">
 
-        {/* --- Section Heading --- */}
-        <div ref={ref} className="mt-0 md:mt-5">
-          {/* Top Row - Left Aligned */}
-          {/* <motion.div
-            className="flex items-center gap-4 md:gap-8 mb-6"
-            initial={{ opacity: 0 }}
-            animate={
-              inView
-                ? {
-                    opacity: 1,
-                    transition: { delay: 0.2 }
-                  }
-                : {}
-            }
-          >
-            <motion.span
-              className="bg-primary py-1.5 px-2.5 text-base font-medium rounded-full dark:text-secondary"
-              initial={{ scale: 0 }}
-              animate={
-                inView
-                  ? {
-                      scale: 1,
-                      transition: {
-                        type: "spring",
-                        stiffness: 500,
-                        damping: 15
-                      }
-                    }
-                  : {}
-              }
-            >
-              02
-            </motion.span>
-            <motion.div
-              className="h-px w-16 bg-secondary/12 dark:bg-white/12"
-              initial={{ scaleX: 0 }}
-              animate={
-                inView
-                  ? {
-                      scaleX: 1,
-                      transition: { delay: 0.3 }
-                    }
-                  : {}
-              }
-            />
-            <motion.p
-              className="text-base font-medium text-white bg-secondary dark:bg-white/10 py-1.5 px-4 rounded-full"
-              initial={{ y: 20, opacity: 0 }}
-              animate={
-                inView
-                  ? {
-                      y: 0,
-                      opacity: 1,
-                      transition: { delay: 0.4 }
-                    }
-                  : {}
-              }
-            >
-              We Offer You
-            </motion.p>
-          </motion.div> */}
+      {/* Light Tech Overlay Grid */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(59,130,246,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(59,130,246,0.03)_1px,transparent_1px)] bg-[size:5rem_5rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
+      </div>
 
-          {/* Section Title - Center Aligned */}
-          <div className="text-center">
-            <h3 className="text-3xl md:text-5xl font-extrabold text-slate-800 dark:text-white leading-tight">
-              The{' '}
-              <span className="bg-clip-text text-blue-600 dark:text-blue-400 bg-gradient-to-r from-blue-500 to-blue-400">
-                Freedom
-              </span>{' '}
-              Formula
-            </h3>
-          </div>
-        </div>
+      <div className="container mx-auto px-6 relative z-10">
 
-        {/* --- Cards Grid --- */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10 md:mt-16">
-          {benefits.map((item, idx) => (
-            <div key={idx} className="relative">
+        {/* --- Heading Area --- */}
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 25 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-24 md:mb-32 flex flex-col items-center"
+        >
+          <h2 className="mt-6 text-4xl md:text-6xl font-black tracking-tight text-slate-900 uppercase">
+            The{" "}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600">
+              Freedom
+            </span>{" "}
+            Formula
+          </h2>
 
-              {/* --- Card Container --- */}
-              <div
-                className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 h-full group border border-slate-200/50 dark:border-slate-700/50"
-              >
-                {/* --- Large Number Overlay --- */}
-                <span
-                  className={`absolute top-2 right-4 text-[70px] md:text-[100px] lg:text-[120px] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-blue-400/30 to-amber-400/30 select-none pointer-events-none leading-none z-30 opacity-60 group-hover:scale-110 transition-transform duration-500 ease-out`}
+          <p className="mt-4 text-sm md:text-base text-slate-500 max-w-xl mx-auto leading-relaxed font-medium">
+            A precise, sequential pipeline framework engineered to optimize capital scaling, private membership access, and asset protection.
+          </p>
+        </motion.div>
+
+        {/* --- Timeline Grid Pathway --- */}
+        <div className="relative max-w-5xl mx-auto">
+
+          {/* Tech Laser Spine */}
+          <div className="hidden md:block absolute left-1/2 top-4 bottom-4 w-[1px] bg-blue-200/60 -translate-x-1/2" />
+
+          {/* Fluid Travel Glow Anchor */}
+          <motion.div
+            className="hidden md:block absolute left-1/2 w-[2px] bg-gradient-to-b from-blue-600 to-sky-400 -translate-x-1/2 transition-all duration-500 z-10 shadow-[0_0_8px_#2563eb]"
+            style={{
+              top: hoveredIndex !== null ? `${hoveredIndex * 25}%` : "0%",
+              height: hoveredIndex !== null ? "25%" : "0%",
+              opacity: hoveredIndex !== null ? 1 : 0,
+            }}
+          />
+
+          <div className="space-y-24 md:space-y-36">
+            {benefits.map((item, index) => {
+              const isEven = index % 2 === 0;
+              const isHovered = hoveredIndex === index;
+
+              return (
+                <div
+                  key={index}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  className={`relative grid md:grid-cols-2 gap-12 md:gap-24 items-center w-full transition-all duration-500 ${hoveredIndex !== null && !isHovered ? "opacity-40 blur-[0.5px]" : "opacity-100"
+                    }`}
                 >
-                  {idx + 1}
-                </span>
 
-                {/* Shared overlays */}
-                <div className="absolute inset-0 pointer-events-none z-10">
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20 dark:to-black/60 opacity-60 mix-blend-overlay" />
-                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
-                </div>
-
-                {/* --- BG type cards (1 & 4) --- */}
-                {item.type === "bg" && (
-                  <div
-                    className="relative h-full min-h-[22rem] md:min-h-[25rem] flex flex-col justify-between overflow-hidden"
-                    style={{
-                      backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(2,6,23,0.7) 100%), url(${item.bg})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  >
-                    <div className="p-6 md:p-8 relative z-30">
-                      <h3 className="text-xl md:text-2xl font-bold text-white drop-shadow-md">
-                        {item.title}
-                      </h3>
-                    </div>
-
-                    <div className="p-6 md:p-8 relative z-30 mt-auto">
-                      <p className="text-sm md:text-base text-white/95 leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
+                  {/* Central Timeline Point */}
+                  <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center justify-center z-20">
+                    <motion.div
+                      animate={{
+                        scale: isHovered ? 1.3 : 1,
+                        borderColor: isHovered ? item.accentHex : "#bfdbfe",
+                        backgroundColor: isHovered ? "#ffffff" : "#eff6ff"
+                      }}
+                      className="w-3.5 h-3.5 rounded-full border-2 bg-white transition-colors duration-300 relative shadow-sm"
+                    >
+                      {isHovered && (
+                        <span
+                          className="absolute inset-0 rounded-full animate-ping opacity-25"
+                          style={{ backgroundColor: item.accentHex }}
+                        />
+                      )}
+                    </motion.div>
                   </div>
-                )}
 
-                {/* --- Block type cards (2 & 3) --- */}
-                {item.type === "block" && (
-                  <div
-                    className={`relative flex flex-col justify-between rounded-2xl p-6 md:p-8 h-full bg-gradient-to-b ${item.color} overflow-hidden`}
-                  >
-                    <h3 className="text-xl md:text-2xl font-bold text-white drop-shadow-md relative z-20">
+                  {/* Image Column - Full and Frameless */}
+                  <div className={`${isEven ? "md:pr-4" : "md:order-2 md:pl-4"}`}>
+                    <motion.div
+                      whileHover={{ y: -8, scale: 1.02 }}
+                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                      className="relative w-full aspect-[16/10] flex items-center justify-center select-none group"
+                    >
+                      {/* Ambient Image Underglow */}
+                      <div className={`absolute w-4/5 h-4/5 bg-gradient-to-r ${item.accent} opacity-0 group-hover:opacity-10 rounded-full filter blur-[60px] transition-opacity duration-700 pointer-events-none`} />
+
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className="object-contain object-center filter drop-shadow-[0_15px_30px_rgba(37,99,235,0.08)]"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        priority={index === 0}
+                      />
+                    </motion.div>
+                  </div>
+
+                  {/* Content Column */}
+                  <div className={`${isEven ? "md:pl-4" : "md:pr-4"} flex flex-col justify-center`}>
+                    <div className="flex items-center gap-3">
+                      <span
+                        className="text-[10px] tracking-[0.2em] font-extrabold transition-colors duration-300"
+                        style={{ color: isHovered ? item.accentHex : "#94a3b8" }}
+                      >
+                        {item.step}
+                      </span>
+                      <div className="h-[1px] w-8 bg-blue-200/60" />
+                    </div>
+
+                    <h3 className="mt-3 text-2xl md:text-3xl font-black text-slate-900 tracking-tight uppercase">
                       {item.title}
                     </h3>
 
-                    <div className="relative z-20 my-6 flex justify-center">
-                      <Image
-                        src={(item as BlockCard).img}
-                        alt={`Benefit: ${item.title}`}
-                        width={300}
-                        height={200}
-                        className="object-contain h-32 md:h-40"
-                        sizes="(max-width: 640px) 200px, 300px"
-                        loading="lazy"
-                      />
-                    </div>
-
-                    <p className="text-sm md:text-base text-white/95 leading-relaxed relative z-20">
+                    <p className="mt-3 text-sm leading-relaxed text-slate-500 font-medium max-w-md">
                       {item.description}
                     </p>
                   </div>
-                )}
-              </div>
-            </div>
-          ))}
+
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* CTA Button */}
-        <div className="mt-12 flex flex-col items-center gap-4">
+        {/* --- Action Pill Module --- */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex justify-center mt-28 relative z-20"
+        >
           <a
-            className="relative w-full max-w-md inline-flex items-center justify-center px-10 py-3.5 md:px-10 md:py-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-semibold text-lg md:text-xl shadow-lg ring-1 ring-white/10 dark:ring-black/10 transition-transform duration-200"
             href="/masterclass-membership"
+            className="group relative inline-flex items-center gap-6 pl-8 pr-3 py-3 overflow-hidden rounded-full bg-primary text-white text-xs tracking-widest uppercase font-black transition-all duration-300 shadow-lg shadow-blue-900/10 hover:shadow-xl hover:shadow-blue-600/20 hover:scale-[1.02] active:scale-[0.98]"
           >
-            Become a Member
+            <span className="relative z-10">Initialize Membership</span>
+            <div className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white/10 text-white transition-transform duration-300 group-hover:translate-x-1">
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </div>
           </a>
-        </div>
+        </motion.div>
+
       </div>
+
+      {/* --- Smooth Futuristic Curved Bottom Wave Layer --- */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden line-height-0 transform translate-y-[1px] pointer-events-none z-10">
+        <svg
+          viewBox="0 0 1440 120"
+          className="relative block w-full h-[60px] md:h-[120px]"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <linearGradient id="curve-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#b9d8edff" stopOpacity="1" />
+              <stop offset="50%" stopColor="#eff6ff" stopOpacity="1" />
+              <stop offset="100%" stopColor="#3e7cc8ff" stopOpacity="1" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M0,32L120,42.7C240,53,480,75,720,74.7C960,75,1200,53,1320,42.7L1440,32L1440,120L1320,120C1200,120,960,120,720,120C480,120,240,120,120,120L0,120Z"
+            fill="url(#curve-gradient)"
+          />
+        </svg>
+      </div>
+
     </section>
   );
 }

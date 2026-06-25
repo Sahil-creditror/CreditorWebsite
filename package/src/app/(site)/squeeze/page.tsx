@@ -261,8 +261,8 @@ export default function Page() {
                       <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center z-10">
                         <div
                           className={`h-9 w-9 rounded-full border-2 flex items-center justify-center text-xs font-serif font-bold transition-all duration-300 ${hoveredStep === index
-                              ? "bg-[#C9A153] border-[#C9A153] text-[#0E1B2B] scale-110 shadow-lg"
-                              : "bg-[#FAF8F4] dark:bg-[#0E1B2B] border-[#C9A153]/60 text-[#C9A153]"
+                            ? "bg-[#C9A153] border-[#C9A153] text-[#0E1B2B] scale-110 shadow-lg"
+                            : "bg-[#FAF8F4] dark:bg-[#0E1B2B] border-[#C9A153]/60 text-[#C9A153]"
                             }`}
                         >
                           {index + 1}
@@ -273,8 +273,8 @@ export default function Page() {
                       <div className={`w-full md:w-[45%] pl-14 md:pl-0 ${isEven ? "md:text-right" : "md:text-left"}`}>
                         <div
                           className={`p-6 rounded-xl border transition-all duration-300 ${hoveredStep === index
-                              ? "border-[#C9A153]/40 bg-[#C9A153]/[0.04] translate-y-[-2px] shadow-sm"
-                              : "border-[#0E1B2B]/10 dark:border-[#F6F1E7]/10 bg-transparent"
+                            ? "border-[#C9A153]/40 bg-[#C9A153]/[0.04] translate-y-[-2px] shadow-sm"
+                            : "border-[#0E1B2B]/10 dark:border-[#F6F1E7]/10 bg-transparent"
                             }`}
                         >
                           <h4 className="font-serif text-lg font-medium">{step.title}</h4>

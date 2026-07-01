@@ -62,8 +62,8 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <BootcampBanner />
       <Intro />
+      <BootcampBanner />
 
       {/* <StatsFacts /> */}
       {/* <Masterclass /> */}

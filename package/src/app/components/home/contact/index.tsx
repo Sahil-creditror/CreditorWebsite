@@ -28,9 +28,9 @@ export default function Contact({ contactdataNumber }: ContactProps) {
       md:py-20 
       pb-1
       bg-gradient-to-br 
-      from-sky-200 
-      via-indigo-50 
-      to-blue-200 
+      from-blue-100 
+      via-indigo-100 
+      to-blue-900 
       text-slate-800
       "
     >

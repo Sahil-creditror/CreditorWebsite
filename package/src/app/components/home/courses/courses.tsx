@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import {
   BECOME_PRIVATE_PATH,
   FINANCIAL_FREEDOM_PATH,
@@ -10,6 +11,7 @@ const CourseRoadmap: React.FC = () => {
   const courses = [
     {
       title: "Become Private",
+      // Pointed to your local public assets directory structure
       image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883850/creditor-website-assets/images/projects/projectlist/become.webp",
       subtitle: "Reclaim Your Lawful Identity",
       description: "Step out of public systems and transition your legal parameters into the private domain.",
@@ -48,22 +50,31 @@ const CourseRoadmap: React.FC = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden py-20 px-5 sm:px-8 bg-gradient-to-br from-blue-100/50 via-slate-50 to-violet-50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/40 transition-colors duration-500">
+    // Replaced abstract gradients with your custom bgfreedom.jpg background layout
+    <section className="relative overflow-hidden py-24 px-5 sm:px-8 bg-slate-950 min-h-screen flex items-center justify-center">
 
-      {/* Background Ambient Blur Rings */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-400/10 dark:bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-violet-400/15 dark:bg-violet-500/5 rounded-full blur-[120px] pointer-events-none" />
+      {/* Background Image Layer */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-100"
+        style={{ backgroundImage: `url('/images/bg/bgfreedom.jpg')` }}
+      />
 
-      <div className="max-w-7xl mx-auto relative">
+      {/* Dark tint overlay to keep premium contrast high and text highly readable */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/70 to-slate-950/90 mix-blend-multiply pointer-events-none" />
+
+      {/* Ambient glass glow points matching your structural themes */}
+      <div className="absolute top-12 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-12 right-1/4 w-[600px] h-[600px] bg-violet-500/10 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto relative z-10 w-full">
 
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-
-          <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
+          <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-white drop-shadow-sm">
             Explore Our Premium Catalogs
           </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-violet-500 mx-auto mt-4 rounded-full" />
-          <p className="mt-5 text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+          <div className="w-20 h-1.5 bg-gradient-to-r from-blue-500 to-violet-500 mx-auto mt-5 rounded-full shadow-sm" />
+          <p className="mt-6 text-base sm:text-lg text-slate-300 font-medium leading-relaxed max-w-2xl mx-auto drop-shadow">
             Structured masterclasses designed to help you build, protect, and expand your private foundation.
           </p>
         </div>
@@ -78,13 +89,13 @@ const CourseRoadmap: React.FC = () => {
             >
               {/* Highlight Background Glow */}
               {course.highlight && (
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-violet-200/20 dark:from-blue-500/10 dark:to-violet-500/10 blur-2xl rounded-[32px] pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-violet-500/20 blur-3xl rounded-[32px] pointer-events-none" />
               )}
 
-              {/* Card Container Frame */}
-              <div className={`relative flex flex-col h-full bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border rounded-[32px] overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ${course.highlight
-                ? "border-blue-400/40 dark:border-violet-500/40 ring-1 ring-blue-400/20"
-                : "border-slate-200/60 dark:border-slate-800/60"
+              {/* Card Container Frame - Tuned for premium glassmorphism dark mode visibility against the image */}
+              <div className={`relative flex flex-col h-full bg-slate-900/75 backdrop-blur-2xl border rounded-[32px] overflow-hidden shadow-2xl hover:shadow-blue-950/40 hover:-translate-y-2 transition-all duration-500 ${course.highlight
+                ? "border-blue-500/40 ring-1 ring-blue-500/30"
+                : "border-slate-800/80"
                 }`}>
 
                 {/* Image Element */}
@@ -94,10 +105,10 @@ const CourseRoadmap: React.FC = () => {
                     alt={course.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
 
                   {course.highlight && (
-                    <span className="absolute top-4 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 text-white text-[10px] font-black tracking-wider uppercase shadow-sm">
+                    <span className="absolute top-4 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-blue-500 to-violet-600 text-white text-[10px] font-black tracking-wider uppercase shadow-md">
                       RECOMMENDED
                     </span>
                   )}
@@ -106,21 +117,21 @@ const CourseRoadmap: React.FC = () => {
                 {/* Card Context Body */}
                 <div className="p-7 flex flex-col flex-grow justify-between">
                   <div>
-                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+                    <h3 className="text-2xl font-bold text-white tracking-tight">
                       {course.title}
                     </h3>
-                    <p className="mt-1 text-sm font-bold bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400 bg-clip-text text-transparent">
+                    <p className="mt-1 text-sm font-bold bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent">
                       {course.subtitle}
                     </p>
-                    <p className="mt-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed min-h-[40px]">
+                    <p className="mt-3 text-sm text-slate-300 leading-relaxed min-h-[40px]">
                       {course.description}
                     </p>
 
                     {/* Streamlined Core Bullet Layout */}
                     <div className="mt-5 space-y-2.5">
                       {course.learnings.map((item) => (
-                        <div key={item} className="flex items-center gap-3 text-xs font-medium text-slate-700 dark:text-slate-300">
-                          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-blue-500 to-violet-500" />
+                        <div key={item} className="flex items-center gap-3 text-xs font-semibold text-slate-200">
+                          <span className="h-2 w-2 shrink-0 rounded-full bg-gradient-to-r from-blue-400 to-violet-400 shadow-sm" />
                           {item}
                         </div>
                       ))}
@@ -131,9 +142,9 @@ const CourseRoadmap: React.FC = () => {
                   <div className="mt-8">
                     <a
                       href={course.href}
-                      className={`inline-flex items-center justify-center w-full py-3 px-4 rounded-xl font-bold text-sm transition duration-300 ${course.highlight
-                        ? "bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white shadow-lg shadow-blue-500/10"
-                        : "bg-slate-900 hover:bg-blue-600 text-white dark:bg-slate-800 dark:hover:bg-violet-600"
+                      className={`inline-flex items-center justify-center w-full py-3.5 px-4 rounded-xl font-bold text-sm transition-all duration-300 ${course.highlight
+                        ? "bg-gradient-to-r from-blue-500 to-violet-600 hover:from-blue-600 hover:to-violet-700 text-white shadow-lg shadow-blue-500/20 hover:shadow-xl"
+                        : "bg-slate-800 hover:bg-blue-600 text-white"
                         }`}
                     >
                       Explore Syllabus

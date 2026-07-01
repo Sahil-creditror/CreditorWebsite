@@ -105,7 +105,7 @@ const Header = () => {
               ["Masterclass", "/masterclass-membership"],
               ["Free Webinar", "/webinar"],
               ["eBooks", "https://ebook.lmsathena.com/"],
-              ["Workshop", "/Workshop"],
+              ["Workshop", "/workshop"],
 
             ].map(([name, url]) => (
               <Link

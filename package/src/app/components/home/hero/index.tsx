@@ -121,9 +121,9 @@ const HeroSection = () => {
   };
 
   const heroContent = {
-    title: "Become Private.",
-    titleAccent: "Operate Private.",
-    subTitle: "Achieve Financial Freedom.",
+    title: "Become Private",
+    titleAccent: "Operate Private",
+    subTitle: "Achieve Financial Freedom",
     description:
       "Learn business trusts, asset protection, business credit, and financial sovereignty through the Creditor Academy Masterclass.",
     bgImage: "/images/hero/Bannerhero.webp",
@@ -187,7 +187,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.45 }}
-          className="mt-8 mb-8 max-w-3xl text-sm sm:text-base lg:text-lg text-slate-400 leading-relaxed font-light tracking-wide"
+          className="mt-8 mb-8 max-w-3xl text-sm sm:text-base lg:text-lg text-slate-400 text-bold  leading-relaxed  tracking-wide"
         >
           {heroContent.description}
         </motion.p>

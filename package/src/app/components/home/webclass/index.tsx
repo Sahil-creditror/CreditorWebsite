@@ -75,7 +75,7 @@ export default function WebclassSection() {
       className="
       relative
       overflow-hidden
-      bg-gradient-to-br from-blue-50 via-white to-blue-700/20
+      bg-gradient-to-br from-blue-100 via-white to-blue-900
       text-slate-800
       font-sans
       py-20
@@ -172,10 +172,10 @@ export default function WebclassSection() {
 
           <div className="flex flex-col justify-center gap-6 py-2">
             <div>
-              {/* Event Header Pill */}
+              {/* Event Header Pill - Changed to highlight Webinar training */}
               <div className="inline-flex items-center gap-2 bg-blue-600 text-white font-black text-[11px] uppercase tracking-wider px-3 py-1 rounded-md mb-5 shadow-md shadow-blue-600/10">
                 <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                Master Class • Live Session
+                Free Live Webinar Training
               </div>
 
               {/* Bold Headline Transformation */}
@@ -187,10 +187,9 @@ export default function WebclassSection() {
               </h1>
             </div>
 
+            {/* Changed content to focus on the live masterclass webinar broadcast */}
             <p className="text-[15px] sm:text-[16px] text-slate-500 leading-[1.7] max-w-2xl font-medium">
-              Learn how private individuals step outside the public system to gain
-              control, limit liability, and achieve financial sovereignty with
-              Creditor Academy's core principles.
+              Secure your spot for this exclusive webinar event. Learn the exact framework private individuals use to step completely outside the public system, eliminate standard liabilities, and unlock true financial sovereignty with Creditor Academy.
             </p>
 
             {/* Checklist Matrix Alignment */}
@@ -220,11 +219,11 @@ export default function WebclassSection() {
 
             <div className="w-full h-px bg-blue-200/40 my-3" />
 
-            {/* Action Frame & Live Countdown integration */}
+            {/* Action Frame & Live Countdown integration - Retuned for webinar terminology */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 bg-white/60 backdrop-blur-md border border-blue-100 p-5 rounded-2xl shadow-md shadow-blue-900/5 max-w-xl">
               <div>
                 <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-2">
-                  Next session starts in
+                  Next Live Broadcast In
                 </p>
                 <div className="flex items-center gap-1">
                   <CountUnit value={pad(h)} label="hrs" />
@@ -237,9 +236,9 @@ export default function WebclassSection() {
 
               <Link
                 href="/webinar"
-                className="group inline-flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm uppercase tracking-wide rounded-xl px-6 py-3.5 shadow-md shadow-blue-600/10 transition-all duration-200 text-center sm:w-auto"
+                className="group inline-flex items-center justify-center gap-3 bg-[#FFC107] hover:bg-[#FFB300] text-black font-bold text-sm uppercase tracking-wide rounded-xl px-6 py-3.5 shadow-md shadow-yellow-500/20 transition-all duration-200 text-center sm:w-auto"
               >
-                Secure your free seat
+                Claim Free Webinar Seat
                 <svg
                   className="transition-transform duration-200 group-hover:translate-x-1"
                   width="16"
@@ -267,7 +266,7 @@ export default function WebclassSection() {
           transition={{ duration: 0.6 }}
           className="lg:col-span-5 w-full max-w-md mx-auto lg:max-w-none"
         >
-          <div className="relative overflow-hidden rounded-2xl group aspect-[4/5] shadow-xl shadow-blue-900/10 border border-blue-100">
+          <div className="relative overflow-hidden rounded-xl group aspect-[4/5] shadow-xl shadow-blue-900/10 border border-blue-100">
             {/* Core Presenter Photograph Container */}
             <div className="relative w-full h-full overflow-hidden bg-gradient-to-b from-blue-900 via-slate-900 to-slate-950">
               <Image
@@ -282,11 +281,11 @@ export default function WebclassSection() {
               {/* Dynamic Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90" />
 
-              {/* Live Streaming Meta Tag Overlay */}
-              <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm border border-slate-200/50 shadow-md rounded-full px-3 py-1 flex items-center gap-1.5 z-20">
-                <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                <span className="text-[9px] font-black text-slate-900 uppercase tracking-wider">
-                  Live Stream
+              {/* Webinar Status Overlay Badge */}
+              <div className="absolute top-4 right-4 bg-red-600 border border-red-500 shadow-md rounded-full px-3 py-1 flex items-center gap-1.5 z-20">
+                <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                <span className="text-[9px] font-black text-white uppercase tracking-wider">
+                  Live Webinar Room
                 </span>
               </div>
 
@@ -296,7 +295,7 @@ export default function WebclassSection() {
                   PaulMichael Rowland
                 </p>
                 <p className="text-[11px] font-bold text-blue-400 uppercase tracking-wider mt-1.5">
-                  Founder & CEO, Creditor Academy
+                  Founder & Host, Creditor Academy
                 </p>
               </div>
             </div>

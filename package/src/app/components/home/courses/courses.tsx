@@ -11,7 +11,6 @@ const CourseRoadmap: React.FC = () => {
   const courses = [
     {
       title: "Become Private",
-      // Pointed to your local public assets directory structure
       image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883850/creditor-website-assets/images/projects/projectlist/become.webp",
       subtitle: "Reclaim Your Lawful Identity",
       description: "Step out of public systems and transition your legal parameters into the private domain.",
@@ -50,31 +49,33 @@ const CourseRoadmap: React.FC = () => {
   ];
 
   return (
-    // Replaced abstract gradients with your custom bgfreedom.jpg background layout
-    <section className="relative overflow-hidden py-24 px-5 sm:px-8 bg-slate-950 min-h-screen flex items-center justify-center">
-
+    <section className="relative overflow-hidden py-20 px-5 sm:px-8 bg-slate-100 min-h-screen flex items-center justify-center">
+      
       {/* Background Image Layer */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-100"
-        style={{ backgroundImage: `url('/images/bg/bgfreedom.jpg')` }}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url('/images/bg/bgc.jpg')` }}
       />
 
-      {/* Dark tint overlay to keep premium contrast high and text highly readable */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/70 to-slate-950/90 mix-blend-multiply pointer-events-none" />
+      {/* Light tint premium overlay: 
+        Mix-blend-overlay keeps the structural depth of your custom image 
+        while brightening it to ensure dark typography pops flawlessly.
+      */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-sky-100/60 via-indigo-50/65 to-blue-100/60 mix-blend-overlay pointer-events-none" />
 
-      {/* Ambient glass glow points matching your structural themes */}
-      <div className="absolute top-12 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-12 right-1/4 w-[600px] h-[600px] bg-violet-500/10 rounded-full blur-[140px] pointer-events-none" />
+      {/* Dynamic light accent blurs for extra polish */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-200/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-sky-200/20 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10 w-full">
 
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-white drop-shadow-sm">
+          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 drop-shadow-sm">
             Explore Our Premium Catalogs
           </h2>
-          <div className="w-20 h-1.5 bg-gradient-to-r from-blue-500 to-violet-500 mx-auto mt-5 rounded-full shadow-sm" />
-          <p className="mt-6 text-base sm:text-lg text-slate-300 font-medium leading-relaxed max-w-2xl mx-auto drop-shadow">
+          <div className="w-20 h-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mt-5 rounded-full shadow-sm" />
+          <p className="mt-6 text-base sm:text-lg text-slate-800 font-semibold leading-relaxed max-w-2xl mx-auto drop-shadow-sm">
             Structured masterclasses designed to help you build, protect, and expand your private foundation.
           </p>
         </div>
@@ -84,19 +85,21 @@ const CourseRoadmap: React.FC = () => {
           {courses.map((course) => (
             <div
               key={course.title}
-              className={`group relative w-full max-w-md flex flex-col rounded-[32px] transition-all duration-500 ${course.highlight ? "lg:-translate-y-4" : ""
-                }`}
+              className={`group relative w-full max-w-md flex flex-col rounded-[32px] transition-all duration-500 ${
+                course.highlight ? "lg:-translate-y-4" : ""
+              }`}
             >
-              {/* Highlight Background Glow */}
+              {/* Subtle Highlight Shadow Glow */}
               {course.highlight && (
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-violet-500/20 blur-3xl rounded-[32px] pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 to-indigo-600/15 blur-2xl rounded-[32px] pointer-events-none" />
               )}
 
-              {/* Card Container Frame - Tuned for premium glassmorphism dark mode visibility against the image */}
-              <div className={`relative flex flex-col h-full bg-slate-900/75 backdrop-blur-2xl border rounded-[32px] overflow-hidden shadow-2xl hover:shadow-blue-950/40 hover:-translate-y-2 transition-all duration-500 ${course.highlight
-                ? "border-blue-500/40 ring-1 ring-blue-500/30"
-                : "border-slate-800/80"
-                }`}>
+              {/* Card Container */}
+              <div className={`relative flex flex-col h-full bg-white/90 backdrop-blur-xl border rounded-[32px] overflow-hidden transition-all duration-500 ${
+                course.highlight
+                  ? "border-blue-500 shadow-xl shadow-blue-900/15 ring-1 ring-blue-500/20"
+                  : "border-slate-200/90 shadow-lg shadow-slate-300/40 hover:shadow-xl hover:shadow-slate-400/40 hover:-translate-y-1"
+              }`}>
 
                 {/* Image Element */}
                 <div className="relative h-56 overflow-hidden">
@@ -105,33 +108,33 @@ const CourseRoadmap: React.FC = () => {
                     alt={course.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-40" />
 
                   {course.highlight && (
-                    <span className="absolute top-4 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-blue-500 to-violet-600 text-white text-[10px] font-black tracking-wider uppercase shadow-md">
+                    <span className="absolute top-4 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-black tracking-wider uppercase shadow-md">
                       RECOMMENDED
                     </span>
                   )}
                 </div>
 
                 {/* Card Context Body */}
-                <div className="p-7 flex flex-col flex-grow justify-between">
+                <div className="p-7 flex flex-col flex-grow justify-between bg-white/30">
                   <div>
-                    <h3 className="text-2xl font-bold text-white tracking-tight">
+                    <h3 className="text-2xl font-bold text-slate-900 tracking-tight">
                       {course.title}
                     </h3>
-                    <p className="mt-1 text-sm font-bold bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent">
+                    <p className="mt-1 text-sm font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                       {course.subtitle}
                     </p>
-                    <p className="mt-3 text-sm text-slate-300 leading-relaxed min-h-[40px]">
+                    <p className="mt-3 text-sm text-slate-700 font-medium leading-relaxed min-h-[40px]">
                       {course.description}
                     </p>
 
                     {/* Streamlined Core Bullet Layout */}
                     <div className="mt-5 space-y-2.5">
                       {course.learnings.map((item) => (
-                        <div key={item} className="flex items-center gap-3 text-xs font-semibold text-slate-200">
-                          <span className="h-2 w-2 shrink-0 rounded-full bg-gradient-to-r from-blue-400 to-violet-400 shadow-sm" />
+                        <div key={item} className="flex items-center gap-3 text-xs font-bold text-slate-800">
+                          <span className="h-2 w-2 shrink-0 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 shadow-sm" />
                           {item}
                         </div>
                       ))}
@@ -142,10 +145,11 @@ const CourseRoadmap: React.FC = () => {
                   <div className="mt-8">
                     <a
                       href={course.href}
-                      className={`inline-flex items-center justify-center w-full py-3.5 px-4 rounded-xl font-bold text-sm transition-all duration-300 ${course.highlight
-                        ? "bg-gradient-to-r from-blue-500 to-violet-600 hover:from-blue-600 hover:to-violet-700 text-white shadow-lg shadow-blue-500/20 hover:shadow-xl"
-                        : "bg-slate-800 hover:bg-blue-600 text-white"
-                        }`}
+                      className={`inline-flex items-center justify-center w-full py-3.5 px-4 rounded-xl font-bold text-sm transition-all duration-300 ${
+                        course.highlight
+                          ? "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-md shadow-blue-500/20 hover:shadow-lg"
+                          : "bg-slate-100 hover:bg-blue-600 text-slate-800 hover:text-white border border-slate-200/80 hover:border-blue-600"
+                      }`}
                     >
                       Explore Syllabus
                     </a>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
@@ -75,31 +75,31 @@ export default function MasterclassBenefits() {
     },
   ];
 
-  // Interactive Parallax Hook for the showcased graphic
-  const imageX = useTransform(mouseX, [0, 600], [-15, 15]);
-  const imageY = useTransform(mouseY, [0, 400], [-15, 15]);
-
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-slate-950 pt-20 pb-20 text-slate-100 selection:bg-blue-500/20"
+      className="relative overflow-hidden pt-18 pb-20 text-slate-100 selection:bg-blue-500/20"
     >
-      {/* Background Graphic Framework */}
+       {/* Background Image Layer */}
       <div
-        className="
-                absolute 
-                inset-0 
-                z-0
-                bg-cover
-                bg-center
-                bg-no-repeat
-                "
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/images/bg/bgf.jpg')",
+          backgroundImage: "url('/images/bg/bggg.jpg')",
+        }}
+      />
+      {/* Background Graphic Framework with Dark Blue Gradient Fusion Layers */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-slate-600/50 via-blue-950/80 to-slate-600/60 " />
+      
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-40 mix-blend-screen"
+        style={{
+          backgroundImage: "url('/images/bg/bgfree.jpg')",
         }}
       >
-        <div className="absolute inset-0 bg-slate-950/80" />
+        {/* Soft tone equalizer over the image frame to lock in the deep contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-transparent to-slate-950/20" />
       </div>
+
       {/* Grid Pattern Mesh */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(59,130,246,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(59,130,246,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
@@ -114,7 +114,6 @@ export default function MasterclassBenefits() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-16 md:mb-24 flex flex-col items-center"
         >
-
           <h2 className="mt-6 text-4xl md:text-6xl font-black tracking-tight text-white uppercase">
             The{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-sky-400 to-indigo-400">
@@ -134,7 +133,7 @@ export default function MasterclassBenefits() {
           <div className="lg:col-span-5 relative flex flex-col justify-between h-full space-y-4">
 
             {/* Master Tracking Vertical Line Connection */}
-            <div className="absolute left-[23px] top-6 bottom-6 w-[2px] bg-slate-800" />
+            <div className="absolute left-[23px] top-6 bottom-6 w-[2px] bg-slate-800/80" />
 
             {/* Laser Active Fill Core */}
             <div
@@ -161,7 +160,7 @@ export default function MasterclassBenefits() {
                       className={`w-12 h-12 rounded-xl flex items-center justify-center border transition-all duration-500 font-mono text-sm font-bold
                         ${isSelected
                           ? "bg-slate-900 border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.3)] text-white"
-                          : "bg-slate-950 border-slate-800 text-slate-500 group-hover:border-slate-700"
+                          : "bg-slate-950/40 border-slate-800/60 text-slate-500 group-hover:border-slate-700 group-hover:bg-slate-900/40"
                         }
                       `}
                     >
@@ -189,7 +188,7 @@ export default function MasterclassBenefits() {
 
           {/* Right Column: Central Kinetic Focus Window */}
           <div
-            className="lg:col-span-7 relative bg-slate-900/40 border border-slate-800/80 p-8 md:p-12 rounded-3xl h-full flex flex-col justify-between overflow-hidden group"
+            className="lg:col-span-7 relative bg-slate-900/40 backdrop-blur-md border border-slate-800/80 p-8 md:p-12 rounded-3xl h-full flex flex-col justify-between overflow-hidden group shadow-2xl shadow-black/40"
             onMouseMove={handleMouseMove}
           >
             {/* Modern Interactive Spotlight Overlay Tracking Mouse */}
@@ -218,10 +217,7 @@ export default function MasterclassBenefits() {
                   <div className={`absolute w-4/5 h-4/5 bg-gradient-to-r ${benefits[activeIndex].accent} opacity-20 rounded-full filter blur-[50px] animate-pulse`} />
 
                   {/* Mouse Tracked Interactive Image Wrapper */}
-                  <motion.div
-                    className="relative w-full h-full select-none pointer-events-none"
-
-                  >
+                  <motion.div className="relative w-full h-full select-none pointer-events-none">
                     <Image
                       src={benefits[activeIndex].image}
                       alt={benefits[activeIndex].title}
@@ -277,21 +273,6 @@ export default function MasterclassBenefits() {
           </a>
         </motion.div>
 
-      </div>
-
-      {/* --- Smooth Curved Bottom Wave Layer --- */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden transform translate-y-[1px] pointer-events-none z-10">
-        <svg
-          viewBox="0 0 1440 120"
-          className="relative block w-full h-[40px] md:h-[80px]"
-          preserveAspectRatio="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0,32L120,42.7C240,53,480,75,720,74.7C960,75,1200,53,1320,42.7L1440,32L1440,120L1320,120C1200,120,960,120,720,120C480,120,240,120,120,120L0,120Z"
-            fill="#020617"
-          />
-        </svg>
       </div>
     </section>
   );

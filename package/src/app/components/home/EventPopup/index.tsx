@@ -7,10 +7,10 @@ import {
   WORKSHOP_REGISTER_URL,
 } from "@/lib/workshop";
 
-// Target Date: Saturday, June 27, 2026 — 11:00 AM PST (UTC-8) -> -08:00
-const TARGET_EVENT_MS = new Date("2026-06-27T11:00:00-08:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/sdw.png";
-const EVENT_DATE_LABEL = "Saturday, June 27";
+// Updated as per image content: Saturday, July 4, 2026 — 11:00 AM PST
+const TARGET_EVENT_MS = new Date("2026-07-04T11:00:00-08:00").getTime();
+const EVENT_IMAGE = "/images/todayclasstopic/ait.png"; 
+const EVENT_DATE_LABEL = "Saturday, July 4";
 const EVENT_TIME_LABEL = "11:00 AM PST";
 
 interface EventPopupProps {
@@ -68,7 +68,7 @@ export default function EventPopup({
       onClick={(e) => {
         if (e.target === e.currentTarget) setOpen(false);
       }}
-      data-event-popup="ca7-side-hustle-to-full-time"
+      data-event-popup="ca7-ai-tools-small-business"
     >
       <div
         role="dialog"
@@ -87,29 +87,29 @@ export default function EventPopup({
 
         <div className="event-popup-grid">
           <div className="event-popup-left">
-            <p className="event-popup-brand">CREDITOR ACADEMY</p>
+            <p className="event-popup-brand">CREDITOR ACADEMY • PRIVATE MONTESSORI ASSOCIATION</p>
 
             <div className="event-popup-badges">
               <span className="event-badge event-badge--live">
                 <span className="event-badge-dot" aria-hidden />
-                LIVE TRAINING
+                LIVE ONLINE TRAINING
               </span>
               <span className="event-badge event-badge--date">{EVENT_DATE_LABEL}</span>
             </div>
 
             <h2 id="event-popup-title" className="event-popup-title">
-              From Side Hustle <span className="event-popup-title-accent">To Full-Time</span>
+              AI Tools <span className="event-popup-title-accent">Every Small Business</span> Owner Should Use
             </h2>
-            <p className="event-popup-subtitle-tag">The 90-Day Business Launch Plan</p>
+            <p className="event-popup-subtitle-tag">Work Smarter. Save Time. Grow Faster.</p>
 
             <p className="event-popup-desc">
-              Turn your idea into a <strong>real business</strong> in just <strong>90 days</strong>. Join our live masterclass and learn to:
+              Discover the top AI tools that can help you <strong>automate, create, and scale</strong> your business. Join our masterclass to:
             </p>
 
             <ul className="event-popup-bullets">
-              <li>Validate your business idea & build a profitable offer</li>
-              <li>Find your first customers & create consistent revenue</li>
-              <li>Transition smoothly into a full-time entrepreneur</li>
+              <li>Save time with smart automation systems</li>
+              <li>Create better content much faster</li>
+              
             </ul>
 
             <div className="event-popup-countdown-wrap">
@@ -140,7 +140,7 @@ export default function EventPopup({
               rel="noopener noreferrer"
               className="event-popup-cta"
             >
-              Reserve Your Seat Today!
+              Register Now — Free Registration
             </a>
           </div>
 
@@ -148,7 +148,7 @@ export default function EventPopup({
             <div className="event-popup-poster-card">
               <Image
                 src={EVENT_IMAGE}
-                alt={`From Side Hustle to Full-Time Masterclass — ${EVENT_DATE_LABEL}, ${EVENT_TIME_LABEL}`}
+                alt={`AI Tools Every Small Business Owner Should Use Masterclass — ${EVENT_DATE_LABEL}, ${EVENT_TIME_LABEL}`}
                 width={480}
                 height={480}
                 className="event-popup-poster-img"
@@ -386,7 +386,9 @@ export default function EventPopup({
             min-height: 340px;
           }
         }
-        :global(.event-countdown-box) {
+
+        /* CHANGED: Added :global() target wrapper constraints to target the isolated component layout context cleanly */
+        .event-popup-countdown-row :global(.event-countdown-box) {
           display: flex;
           min-width: 46px;
           flex-direction: column;
@@ -396,14 +398,14 @@ export default function EventPopup({
           background: #0d1b2e;
           border: 1px solid #1e4068;
         }
-        :global(.event-countdown-num) {
+        .event-popup-countdown-row :global(.event-countdown-num) {
           font-size: 20px;
           font-weight: 700;
           line-height: 1;
-          color: #fff;
+          color: #ffffff !important; /* Forces pure white override */
           font-variant-numeric: tabular-nums;
         }
-        :global(.event-countdown-unit) {
+        .event-popup-countdown-row :global(.event-countdown-unit) {
           margin-top: 4px;
           font-size: 8px;
           font-weight: 600;

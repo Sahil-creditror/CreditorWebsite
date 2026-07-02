@@ -5,18 +5,18 @@ import Link from "next/link";
 import { Check, Clock, Sparkles, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 
-// ── Event Constants Extracted Directly From sdw.png ───────────────────────
-const WORKSHOP_EVENT_CALENDAR_DAY = "27";
-const WORKSHOP_EVENT_CALENDAR_MONTH = "JUNE";
-const WORKSHOP_EVENT_DATE_LABEL = "Saturday, June 27, 2026";
+// ── Event Constants Extracted Directly From ait.png ───────────────────────
+const WORKSHOP_EVENT_CALENDAR_DAY = "04";
+const WORKSHOP_EVENT_CALENDAR_MONTH = "JULY";
+const WORKSHOP_EVENT_DATE_LABEL = "Saturday, July 4, 2026";
 const WORKSHOP_EVENT_TIME_DISPLAY = "11:00 AM";
 const WORKSHOP_EVENT_TIME_PST = "11:00 AM PST";
 const WORKSHOP_EVENT_TIMEZONE_LABEL = "PST";
 
-// Target Countdown Date: Saturday, June 27, 2026, 11:00 AM PST (UTC-7 due to Daylight Savings)
-const WORKSHOP_EVENT_CLOSE_MS = new Date("2026-06-27T11:00:00-07:00").getTime();
-const WORKSHOP_EVENT_IMAGE = "/images/todayclasstopic/sdw.png";
-const PAYMENT_LINK_URL = "https://rzp.io/rzp/4ofk48g";
+// Target Countdown Date: Saturday, July 4, 2026, 11:00 AM PST (UTC-8 context offset from string standard)
+const WORKSHOP_EVENT_CLOSE_MS = new Date("2026-07-04T11:00:00-08:00").getTime();
+const WORKSHOP_EVENT_IMAGE = "/images/todayclasstopic/ait.png";
+const PAYMENT_LINK_URL = "https://api.wonderengine.ai/widget/form/mL2L8I8p4RI7AF61stUd"; // Retained setup link structure
 // ─────────────────────────────────────────────────────────────────────────────
 
 function pad(n: number) {
@@ -33,25 +33,25 @@ function getCountdown(targetMs: number) {
   };
 }
 
-// Exactly mirroring the 5 masterclass modules from the sdw.png checklist
+// Exactly mirroring the 5 masterclass modules from the ait.png checklist
 const INCLUDED = [
-  "Validate your business idea",
-  "Build a profitable offer",
-  "Find your first customers",
-  "Create consistent revenue",
-  "Transition from side hustle to full-time entrepreneur",
+  "Save time with smart automation",
+  "Create better content, faster",
+  "Improve marketing & sales",
+  "Manage finances with ease",
+  "Make data-driven decisions with confidence",
 ] as const;
 
 const TRADITIONAL = [
-  { title: "Months of trial and error", body: "Piecing together advice from scattered sources with no clear order or market validation." },
-  { title: "Unstructured offers", body: "Launching business services without building a backend setup that guarantees high conversion metrics." },
-  { title: "No direct guidance", body: "Falling into common administrative or operational traps that slow your full-time progression permanently." },
+  { title: "Manual time-consuming operations", body: "Spending hours writing basic content, manual data entry, and losing efficiency without systemic automations." },
+  { title: "Unstructured marketing pipelines", body: "Launching small business campaigns blindly without deploying AI tools that maximize targeted audience conversion metrics." },
+  { title: "Guesswork in financial insights", body: "Falling into cashflow pitfalls or missing key metrics that stall administrative optimization and scaling limits." },
 ] as const;
 
 const CREDITOR = [
-  { title: "One comprehensive blueprint", body: "A single step-by-step roadmap engineered around executing a fast, 90-day launch system." },
-  { title: "Market-compliant framework", body: "Direct mapping of validation concepts against structured customer-acquisition strategies." },
-  { title: "Live interactive insights", body: "Real-time masterclass training designed to safely clean up infrastructure and clear scaling bottlenecks instantly." },
+  { title: "Proven Step-by-Step System", body: "A complete operational masterclass roadmap engineered explicitly to work smarter, save time, and grow faster." },
+  { title: "Launch Your Business in 90 Days", body: "Direct mapping of foundational business structures against advanced customer-acquisition automation concepts." },
+  { title: "Build Freedom. Impact. Future.", body: "Real-time masterclass insights configured to secure continuous structural freedom and clear growth bottlenecks instantly." },
 ] as const;
 
 export default function WorkshopPageContent() {
@@ -88,21 +88,24 @@ export default function WorkshopPageContent() {
                 Creditor Academy · Private Montessori Association
               </p>
               <h1 className="mt-4 text-4xl font-extrabold leading-none tracking-tight text-white sm:text-5xl lg:text-[3.5rem] uppercase">
-                From Side Hustle{" "}
+                AI Tools{" "}
                 <span className="block bg-gradient-to-r from-blue-400 via-sky-300 to-white bg-clip-text text-transparent font-black mt-1">
-                  TO FULL-TIME
+                  EVERY SMALL BUSINESS
+                </span>
+                <span className="block text-2xl sm:text-3xl text-slate-200 font-bold tracking-tight normal-case mt-2">
+                  Owner Should Use
                 </span>
               </h1>
 
               <div className="mt-5 inline-block rounded-xl bg-black/30 border border-white/10 px-4 py-2.5 text-left">
                 <p className="text-sm font-bold text-amber-300 sm:text-base flex items-center gap-2">
                   <span className="bg-amber-400 text-slate-950 px-2 py-0.5 rounded text-xs font-black">STRATEGY</span>
-                  THE 90-DAY BUSINESS LAUNCH PLAN
+                  WORK SMARTER. SAVE TIME. GROW FASTER.
                 </p>
               </div>
 
               <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-blue-100/85 lg:mx-0">
-                Turn your idea into a <strong>real business</strong> in just <strong>90 days</strong>. Learn the foundational operational frameworks to secure consistent cash flow and safely fire your boss.
+                Discover the top AI tools that can help you <strong>automate, create, and scale</strong> your business. Learn the foundational frameworks to confidently drive data-driven decision engines.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -112,7 +115,7 @@ export default function WorkshopPageContent() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 px-10 py-4 text-base font-extrabold text-slate-950 shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5 hover:brightness-110"
                 >
-                  Register Now ($20)
+                  Free Registration
                 </Link>
                 <span className="text-xs font-semibold text-blue-200/70 tracking-wide">
                   Secure instant seat confirmation
@@ -124,7 +127,7 @@ export default function WorkshopPageContent() {
               <div className="overflow-hidden rounded-2xl border border-white/20 bg-white p-2 shadow-2xl shadow-black/30 ring-1 ring-[#026fe2]/30">
                 <Image
                   src={WORKSHOP_EVENT_IMAGE}
-                  alt="From Side Hustle to Full-Time Live Masterclass Flyer — Saturday, June 27, 2026"
+                  alt="AI Tools Every Small Business Owner Should Use Masterclass Flyer — Saturday, July 4, 2026"
                   width={440}
                   height={440}
                   className="w-full rounded-xl object-contain bg-slate-950"
@@ -154,11 +157,11 @@ export default function WorkshopPageContent() {
                   ONLINE TRAINING
                 </span>
                 <h2 className="mt-4 text-2xl font-black tracking-tight text-slate-900 md:text-3xl uppercase">
-                  June 27 Masterclass
+                  July 4 Masterclass
                 </h2>
                 <p className="mt-2 flex items-center justify-center gap-2 text-slate-600 lg:justify-start text-sm">
                   <Video className="h-4 w-4 shrink-0 text-[#026fe2]" aria-hidden />
-                  Practical Business Education
+                  Live Online Training Session
                 </p>
               </div>
 
@@ -215,7 +218,7 @@ export default function WorkshopPageContent() {
             A Tested, Scalable Strategy
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-center text-slate-600">
-            See how navigating a guided launch blueprint saves months of product delays and business plan errors.
+            See how navigating a guided automation framework saves months of operational delays and technical setup errors.
           </p>
 
           <div className="mx-auto mt-12 grid max-w-5xl gap-8 lg:grid-cols-2">
@@ -223,7 +226,7 @@ export default function WorkshopPageContent() {
               <span className="inline-block rounded-full bg-[#d0e8f8] px-3 py-1 text-xs font-bold uppercase text-slate-600">
                 Traditional guesswork
               </span>
-              <p className="mt-4 text-sm font-bold text-slate-400 tracking-wide">SLOW & UNVERIFIED</p>
+              <p className="mt-4 text-sm font-bold text-slate-400 tracking-wide">SLOW & MANUAL</p>
               <ul className="mt-6 space-y-6">
                 {TRADITIONAL.map((item) => (
                   <li key={item.title}>
@@ -237,9 +240,9 @@ export default function WorkshopPageContent() {
 
             <div className="rounded-2xl border-2 border-[#026fe2] bg-gradient-to-br from-[#dbeafe] to-[#eff6ff] p-8 shadow-lg shadow-blue-500/15">
               <span className="inline-block rounded-full bg-[#026fe2] px-3 py-1 text-xs font-bold uppercase text-white">
-                The 90-Day Launch Plan
+                The AI Automation Framework
               </span>
-              <p className="mt-4 text-sm font-bold text-[#026fe2] tracking-wide">VALIDATED & PROFITABLE</p>
+              <p className="mt-4 text-sm font-bold text-[#026fe2] tracking-wide">AUTOMATED & SCALABLE</p>
               <ul className="mt-6 space-y-6">
                 {CREDITOR.map((item) => (
                   <li key={item.title}>
@@ -266,13 +269,13 @@ export default function WorkshopPageContent() {
                   LIMITED ENTRY ACADEMY STREAM · {WORKSHOP_EVENT_DATE_LABEL}
                 </span>
                 <h2 className="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
-                  Secure Your Full{" "}
+                  Secure Your Advanced{" "}
                   <span className="bg-gradient-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent">
-                    90-Day Roadmap
+                    AI Roadmap
                   </span>
                 </h2>
                 <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-blue-100/90 lg:mx-0">
-                  Walk away with a precise blueprint constructed to scale sustainable revenue metrics that match strict corporate transition limits.
+                  Walk away with a precise strategy engineered around executing smart automation frameworks, scaling asset production, and improving backend workflows.
                 </p>
               </div>
 
@@ -288,7 +291,7 @@ export default function WorkshopPageContent() {
                       className="flex items-start gap-3 rounded-xl border border-white/5 bg-white/[0.04] p-3.5 text-left"
                     >
                       <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-300">
-                        <Check className="h-3.5 w-3.5" strokeWidth={3} aria-hidden />
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                       </span>
                       <span className="text-sm font-semibold leading-snug text-white/95">{item}</span>
                     </li>
@@ -320,7 +323,7 @@ export default function WorkshopPageContent() {
                   ONLINE LIVE TRAINING
                 </p>
                 <p className="mt-3 text-2xl font-black tracking-tight uppercase">
-                  SIDE HUSTLE TO FULL-TIME
+                  AI TOOLS MASTERCLASS
                 </p>
                 <div className="mt-4 inline-flex flex-col gap-1 rounded-xl bg-black/15 px-5 py-3 text-sm font-bold">
                   <span>{WORKSHOP_EVENT_DATE_LABEL}</span>
@@ -330,26 +333,26 @@ export default function WorkshopPageContent() {
 
               <div className="mt-6 border-b border-slate-100 pb-5 text-center">
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">Registration Fee</span>
-                <span className="text-4xl font-black text-slate-900 mt-1 block">$20</span>
+                <span className="text-4xl font-black text-emerald-600 mt-1 block">FREE</span>
                 <p className="mt-2 text-xs font-medium text-slate-500">
-                  Includes full access to the live session &amp; Q&amp;A segment.
+                  Includes full stream access to the live session, platform breakdown &amp; Q&amp;A segment.
                 </p>
               </div>
 
               <p className="mt-4 text-center text-sm leading-relaxed text-slate-600">
-                Join live on June 27th. Secure your slot through our prioritized gateway below before processing lines lock.
+                Join live on July 4th. Secure your operational slot through the verification gateway link below.
               </p>
 
               <Link
                 href={PAYMENT_LINK_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 flex w-full items-center justify-center rounded-full bg-[#026fe2] py-4 text-base font-extrabold text-white shadow-xl shadow-blue-600/30 transition transform hover:-translate-y-0.5 hover:bg-[#0259bd]"
+                className="mt-6 flex w-full items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-sky-500 py-4 text-base font-extrabold text-white shadow-xl shadow-blue-600/30 transition transform hover:-translate-y-0.5 hover:brightness-105"
               >
-                Complete Registration ($20)
+                Register Now
               </Link>
               <p className="mt-4 text-center text-xs text-slate-400 font-medium">
-                Instant delivery of access credentials via purchase email verification.
+                Your future business starts with one decision. Make it today!
               </p>
             </div>
           </div>
@@ -360,7 +363,7 @@ export default function WorkshopPageContent() {
       <section className="bg-slate-900 text-white py-6 border-y border-white/10">
         <div className="container flex flex-col items-center justify-center gap-4 text-center text-sm md:flex-row md:gap-8">
           <p className="font-bold tracking-wider text-xs sm:text-sm">
-            WE ARE <span className="text-sky-400 font-black">LIVE</span> ON:
+            WE ARE LIVE ON SOCIAL MEDIA TOO!
           </p>
           <div className="flex flex-wrap items-center justify-center gap-6 font-bold text-slate-300 text-xs sm:text-sm">
             <span className="flex items-center gap-1.5">
@@ -376,7 +379,7 @@ export default function WorkshopPageContent() {
             </span>
           </div>
           <p className="text-xs text-slate-400 font-medium md:ml-4">
-            YOU CAN ALSO JOIN US LIVE AT SOCIAL MEDIA!
+            Don't miss out — join us live on your favorite platform!
           </p>
         </div>
       </section>
@@ -385,10 +388,10 @@ export default function WorkshopPageContent() {
       <section className="border-t border-[#c5dff5] bg-gradient-to-b from-[#dceefb] to-[#e8f4fc] py-16 md:py-20">
         <div className="container text-center">
           <h2 className="text-2xl font-extrabold text-slate-900 md:text-3xl uppercase tracking-tight">
-            Ready to transition into your launch plan?
+            Ready to transition into your automation plan?
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-slate-600 font-medium text-sm sm:text-base">
-            Claim entry now to align your business idea with high-revenue parameters this Saturday.
+            Claim verification entry now to align your system workflows with high-revenue parameters this Saturday.
           </p>
           <Link
             href={PAYMENT_LINK_URL}

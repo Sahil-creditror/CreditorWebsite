@@ -2,12 +2,12 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image"; // <--- Add this missing import back in!
+import Image from "next/image";
 import Link from "next/link";
 import HeroContactOverlay from "./ContactOverlay";
 
-// --- AI Particle Grid Background Component ---
-const FuturisticParticles = () => {
+// --- Luxury Ambient Blue Particle Field ---
+const LuxuryParticles = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -20,61 +20,40 @@ const FuturisticParticles = () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    const particles: Array<{ x: number; y: number; vx: number; vy: number; radius: number }> = [];
-    const particleCount = 60;
+    const colors = ["rgba(56, 189, 248, ", "rgba(14, 165, 233, ", "rgba(255, 255, 255, "];
+    const particles: Array<{ x: number; y: number; vx: number; vy: number; radius: number; opacity: number; color: string }> = [];
+    const particleCount = 45;
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        radius: Math.random() * 1.5 + 1,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: -Math.random() * 0.25 - 0.05,
+        radius: Math.random() * 1.5 + 0.3,
+        opacity: Math.random() * 0.25 + 0.05,
+        color: colors[Math.floor(Math.random() * colors.length)],
       });
     }
 
-    let mouse = { x: -1000, y: -1000 };
-    const handleMouseMove = (e: MouseEvent) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = "rgba(6, 182, 212, 0.4)";
-      ctx.strokeStyle = "rgba(18, 58, 158, 0.15)";
 
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
 
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
+        if (p.y < -10) {
+          p.y = height + 10;
+          p.x = Math.random() * width;
+        }
+        if (p.x < -10) p.x = width + 10;
+        if (p.x > width + 10) p.x = -10;
 
         ctx.beginPath();
+        ctx.fillStyle = `${p.color}${p.opacity})`;
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
-
-        particles.forEach((p2) => {
-          const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-          if (dist < 120) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-          }
-        });
-
-        const mouseDist = Math.hypot(p.x - mouse.x, p.y - mouse.y);
-        if (mouseDist < 180) {
-          ctx.strokeStyle = `rgba(34, 211, 238, ${1 - mouseDist / 180})`;
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(mouse.x, mouse.y);
-          ctx.stroke();
-        }
       });
 
       animationFrameId = requestAnimationFrame(draw);
@@ -91,141 +70,161 @@ const FuturisticParticles = () => {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-10" />;
+  return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-10 opacity-70 mix-blend-screen" />;
 };
 
 // --- Main Hero Component ---
 const HeroSection = () => {
   const [showContactForm, setShowContactForm] = useState<boolean>(false);
-  const [aiPrompt, setAiPrompt] = useState("");
-  const [aiStatus, setAiStatus] = useState("AI Sovereign Node: Ready");
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-
-  const handleAiSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!aiPrompt.trim()) return;
-
-    setIsAnalyzing(true);
-    setAiStatus("Quantum decrypting wealth objectives...");
-
-    setTimeout(() => {
-      setIsAnalyzing(false);
-      setAiStatus("Optimal Vector Mapped: Masterclass Membership recommended.");
-      setAiPrompt("");
-    }, 2200);
-  };
 
   const heroContent = {
+    eyebrow: "Creditor Academy Masterclass",
     title: "Become Private",
     titleAccent: "Operate Private",
-    subTitle: "Achieve Financial Freedom",
+    subTitle: "Build Generational Wealth",
     description:
-      "Learn business trusts, asset protection, business credit, and financial sovereignty through the Creditor Academy Masterclass.",
-    bgImage: "/images/hero/Bannerhero.webp",
+      "Learn business trusts, asset protection, business credit, and financial sovereignty through the Creditor Academy Masterclass — the strategies the privileged use to build, protect, and pass on wealth.",
+    bgImage: "/images/lifestylebg.png",
   };
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#030712] text-white font-sans selection:bg-cyan-500/30">
+    <div className="relative min-h-screen w-full flex items-center lg:items-end overflow-hidden bg-[#020617] text-white font-sans selection:bg-sky-500/30">
 
       {/* BACKGROUND GRAPHICS & TEXTURES */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src={heroContent.bgImage}
-          alt="Hero background structural overlay"
-          fill
-          priority
-          quality={90}
-          sizes="100vw"
-          className=" object-cover object-center opacity-35 mix-blend-luminosity scale-105 animate-[pulse_8s_ease-in-out_infinite]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#030712]/90 via-[#060b19]/70 to-[#030712]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#030712_80%)]" />
+        {/* Main Hero Media Asset */}
+        <div className="absolute right-0 top-0 w-full lg:w-8/12 h-full opacity-60 lg:opacity-80">
+          <Image
+            src={heroContent.bgImage}
+            alt="Private skyline overlooking the city — the world of financial sovereignty"
+            fill
+            priority
+            quality={100}
+            sizes="100vw"
+            className="object-cover object-center transition-transform duration-[4000ms] ease-out scale-105 hover:scale-100"
+          />
+          {/* High-tech Grid Matrix Overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.02)_1px,transparent_1px)] bg-[size:5rem_5rem]" />
+        </div>
+
+        {/* Cinematic Vignettes & Dynamic Environmental Gradients */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#020617] via-[#020617]/70 to-transparent hidden lg:block" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/90 via-transparent to-[#020617] lg:hidden block" />
+
+        {/* Soft Organic Ambient Light Glares */}
+        <div className="absolute top-1/3 left-[-10%] w-[600px] h-[600px] bg-sky-500/10 blur-[180px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-indigo-500/5 blur-[150px] rounded-full pointer-events-none" />
       </div>
 
-      <FuturisticParticles />
+      {/* Structural Architectural Frame */}
+      <div className="pointer-events-none absolute inset-4 sm:inset-8 border border-slate-800/40 rounded-[2.5rem] z-30" />
 
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-cyan-500/10 blur-[200px] rounded-full pointer-events-none animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-blue-600/10 blur-[250px] rounded-full pointer-events-none" />
+      {/* Luxury Interactive Particles */}
+      <LuxuryParticles />
 
-      <div className="relative z-20 w-full max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 py-20 flex flex-col items-center text-center">
+      {/* TYPOGRAPHY & CTA LAYOUT CONTAINER */}
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 pb-20 pt-40 lg:pb-24 flex justify-start">
+        <div className="max-w-2xl text-left flex flex-col items-start backdrop-blur-[2px] lg:backdrop-blur-none p-4 lg:p-0 rounded-2xl">
 
-
-
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-none uppercase mt-18">
-          <motion.span
-            initial={{ opacity: 0, y: 30 }}
+          {/* Premium Eyebrow Flag */}
+          <motion.div
+            initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="block text-white tracking-tighter"
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="inline-flex items-center gap-3 text-[10px] sm:text-[11px] uppercase tracking-[0.4em] text-sky-400 font-bold mb-6"
           >
-            {heroContent.title}
-          </motion.span>
-          <motion.span
-            initial={{ opacity: 0, y: 30 }}
+            <span className="w-6 h-[1px] bg-gradient-to-r from-sky-400 to-transparent" />
+            <span className="bg-gradient-to-r from-sky-400 via-sky-200 to-white bg-clip-text text-transparent">{heroContent.eyebrow}</span>
+          </motion.div>
+
+          {/* Heading Architectural Complex */}
+          <h1 className="font-serif tracking-tight leading-[1.08] text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white">
+            <motion.span
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="block tracking-tight drop-shadow-md text-slate-50"
+            >
+              {heroContent.title}
+            </motion.span>
+
+            <motion.span
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              className="block text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-100 to-slate-200 font-light italic pb-2 mt-1"
+            >
+              {heroContent.titleAccent}
+            </motion.span>
+
+            {/* Micro Separation Rule */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="h-[1px] w-1/3 bg-gradient-to-r from-sky-500/50 to-transparent my-4 origin-left"
+            />
+
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="block text-sm sm:text-lg lg:text-xl font-sans font-medium tracking-[0.12em] text-sky-300/90 uppercase"
+            >
+              {heroContent.subTitle}
+            </motion.span>
+          </h1>
+
+          {/* Context Body Copy */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.6 }}
+            className="mt-6 mb-9 text-xs sm:text-sm text-slate-400 leading-relaxed tracking-wide font-light max-w-lg"
+          >
+            {heroContent.description}
+          </motion.p>
+
+          {/* High-Fidelity Call To Action Interfaces */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="block text-transparent bg-clip-text bg-gradient-to-r from-slate-400 via-white to-slate-500 tracking-normal text-3xl sm:text-5xl lg:text-6xl mt-2"
+            transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-4 w-full sm:w-auto"
           >
-            {heroContent.titleAccent}
-          </motion.span>
-          <motion.span
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="block mt-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent text-2xl sm:text-4xl font-bold tracking-wide normal-case font-mono"
-          >
-            {heroContent.subTitle}
-          </motion.span>
-        </h1>
+            {/* Primary Action Button */}
+            <Link
+              href="/masterclass-membership"
+              className="group relative inline-flex items-center justify-between gap-6 bg-white text-[#020617] font-bold text-[11px] uppercase tracking-[0.2em] rounded-full pl-7 pr-2.5 py-2.5 shadow-[0_10px_30px_rgba(2,6,23,0.3)] hover:shadow-[0_0_35px_rgba(56,189,248,0.4)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
+            >
+              <span>Join Membership</span>
+              <span className="w-9 h-9 rounded-full bg-[#020617] text-white flex items-center justify-center transition-all duration-300 group-hover:rotate-45 group-hover:bg-sky-500">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="7" y1="17" x2="17" y2="7" />
+                  <polyline points="7 7 17 7 17 17" />
+                </svg>
+              </span>
+            </Link>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.45 }}
-          className="mt-8 mb-8 max-w-3xl text-sm sm:text-base lg:text-lg text-slate-400 text-bold  leading-relaxed  tracking-wide"
-        >
-          {heroContent.description}
-        </motion.p>
+            {/* Secondary Action Button */}
+            <Link
+              href="/webinar"
+              className="inline-flex items-center justify-center gap-3 px-7 py-4 rounded-full border border-slate-700/60 bg-slate-900/40 text-slate-200 font-semibold text-[11px] uppercase tracking-[0.2em] backdrop-blur-md hover:bg-sky-500/10 hover:text-white hover:border-sky-400/40 transition-all duration-300 group"
+            >
+              <span>Watch Free Webinar</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-sky-400 group-hover:scale-150 transition-transform duration-300" />
+            </Link>
+          </motion.div>
 
-
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.75 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full"
-        >
-          <Link
-            href="/masterclass-membership"
-            className="group relative inline-flex items-center gap-4 bg-gradient-to-r from-white to-slate-100 text-[#030712] font-black text-xs uppercase tracking-widest rounded-full pl-8 pr-3 py-3 shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_35px_rgba(6,182,212,0.4)] transition-all duration-300 transform hover:-translate-y-1"
-          >
-            <span className="absolute inset-0 rounded-full border border-cyan-400/0 group-hover:border-cyan-400/50 transition-colors pointer-events-none" />
-            Join Masterclass Membership
-            <span className="w-9 h-9 rounded-full bg-[#030712] text-white flex items-center justify-center transition-all group-hover:rotate-45 group-hover:text-white group-hover:bg-blue-500">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                <line x1="7" y1="17" x2="17" y2="7" />
-                <polyline points="7 7 17 7 17 17" />
-              </svg>
-            </span>
-          </Link>
-
-          <Link
-            href="/webinar"
-            className="inline-flex items-center gap-2 px-7 py-4 rounded-full border border-white/10 bg-white/[0.15] backdrop-blur-md text-slate-200 font-semibold text-xs uppercase tracking-widest hover:bg-white/[0.20] hover:border-cyan-500/40 hover:text-white transition-all shadow-lg group"
-          >
-            Watch Free Webinar
-            <span className="w-2 h-2 rounded-full bg-cyan-400 group-hover:animate-ping ml-1" />
-          </Link>
-        </motion.div>
-
-
+        </div>
       </div>
 
+      {/* Overlay Modal Portal */}
       <AnimatePresence>
         {showContactForm && (
           <HeroContactOverlay onClose={() => setShowContactForm(false)} />

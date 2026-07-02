@@ -20,8 +20,20 @@ const LuxuryParticles = () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    const colors = ["rgba(56, 189, 248, ", "rgba(14, 165, 233, ", "rgba(255, 255, 255, "];
-    const particles: Array<{ x: number; y: number; vx: number; vy: number; radius: number; opacity: number; color: string }> = [];
+    const colors = [
+      "rgba(56, 189, 248, ",
+      "rgba(14, 165, 233, ",
+      "rgba(255, 255, 255, ",
+    ];
+    const particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radius: number;
+      opacity: number;
+      color: string;
+    }> = [];
     const particleCount = 45;
 
     for (let i = 0; i < particleCount; i++) {
@@ -74,7 +86,12 @@ const LuxuryParticles = () => {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-10 opacity-70 mix-blend-screen" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 pointer-events-none z-10 opacity-70 mix-blend-screen"
+    />
+  );
 };
 
 // --- Main Hero Component ---
@@ -93,11 +110,10 @@ const HeroSection = () => {
 
   return (
     <div className="relative min-h-screen w-full flex items-center lg:items-end overflow-hidden bg-[#020617] text-white font-sans selection:bg-sky-500/30">
-
       {/* BACKGROUND GRAPHICS & TEXTURES */}
       <div className="absolute inset-0 z-0">
         {/* Main Hero Media Asset */}
-        <div className="absolute right-0 top-0 w-full lg:w-8/12 h-full opacity-60 lg:opacity-80">
+        <div className="absolute inset-0 opacity-60 lg:w-full lg:opacity-100">
           <Image
             src={heroContent.bgImage}
             alt="Private skyline overlooking the city — the world of financial sovereignty"
@@ -105,15 +121,16 @@ const HeroSection = () => {
             priority
             quality={100}
             sizes="100vw"
-            className="object-cover object-center transition-transform duration-[4000ms] ease-out scale-105 hover:scale-100"
+            className="object-cover object-center transition-transform duration-[4000ms] ease-out hover:scale-105"
           />
+
           {/* High-tech Grid Matrix Overlay */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.02)_1px,transparent_1px)] bg-[size:5rem_5rem]" />
         </div>
 
         {/* Cinematic Vignettes & Dynamic Environmental Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#020617] via-[#020617]/70 to-transparent hidden lg:block" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#020617]/85 via-[#020617]/40 to-transparent hidden lg:block" />
+        {/* <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/50 to-transparent" /> */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/90 via-transparent to-[#020617] lg:hidden block" />
 
         {/* Soft Organic Ambient Light Glares */}
@@ -122,24 +139,25 @@ const HeroSection = () => {
       </div>
 
       {/* Structural Architectural Frame */}
-      <div className="pointer-events-none absolute inset-4 sm:inset-8 border border-slate-800/40 rounded-[2.5rem] z-30" />
+      {/* <div className="pointer-events-none absolute inset-4 sm:inset-8 border border-slate-800/40 rounded-[2.5rem] z-30" /> */}
 
       {/* Luxury Interactive Particles */}
-      <LuxuryParticles />
+      {/* <LuxuryParticles /> */}
 
       {/* TYPOGRAPHY & CTA LAYOUT CONTAINER */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 pb-20 pt-40 lg:pb-24 flex justify-start">
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 pb-20 pt-30 lg:pb-24 flex justify-start">
         <div className="max-w-2xl text-left flex flex-col items-start backdrop-blur-[2px] lg:backdrop-blur-none p-4 lg:p-0 rounded-2xl">
-
           {/* Premium Eyebrow Flag */}
           <motion.div
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center gap-3 text-[10px] sm:text-[11px] uppercase tracking-[0.4em] text-sky-400 font-bold mb-6"
+            className="inline-flex items-center gap-3 text-[8px] sm:text-[10px] uppercase tracking-[0.4em] text-sky-400 font-bold mb-6"
           >
             <span className="w-6 h-[1px] bg-gradient-to-r from-sky-400 to-transparent" />
-            <span className="bg-gradient-to-r from-sky-400 via-sky-200 to-white bg-clip-text text-transparent">{heroContent.eyebrow}</span>
+            <span className="bg-gradient-to-r from-sky-400 via-sky-200 to-white bg-clip-text text-transparent">
+              {heroContent.eyebrow}
+            </span>
           </motion.div>
 
           {/* Heading Architectural Complex */}
@@ -147,7 +165,11 @@ const HeroSection = () => {
             <motion.span
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: 0.8,
+                delay: 0.1,
+                ease: [0.16, 1, 0.3, 1],
+              }}
               className="block tracking-tight drop-shadow-md text-slate-50"
             >
               {heroContent.title}
@@ -156,7 +178,11 @@ const HeroSection = () => {
             <motion.span
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: 0.8,
+                delay: 0.22,
+                ease: [0.16, 1, 0.3, 1],
+              }}
               className="block text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-100 to-slate-200 font-light italic pb-2 mt-1"
             >
               {heroContent.titleAccent}
@@ -173,7 +199,11 @@ const HeroSection = () => {
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: 0.8,
+                delay: 0.45,
+                ease: [0.16, 1, 0.3, 1],
+              }}
               className="block text-sm sm:text-lg lg:text-xl font-sans font-medium tracking-[0.12em] text-sky-300/90 uppercase"
             >
               {heroContent.subTitle}
@@ -185,7 +215,7 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.6 }}
-            className="mt-6 mb-9 text-xs sm:text-sm text-slate-400 leading-relaxed tracking-wide font-light max-w-lg"
+            className="mt-6 mb-9 text-xs sm:text-sm text-slate-300 leading-relaxed tracking-wide font-light max-w-lg"
           >
             {heroContent.description}
           </motion.p>
@@ -204,7 +234,14 @@ const HeroSection = () => {
             >
               <span>Join Membership</span>
               <span className="w-9 h-9 rounded-full bg-[#020617] text-white flex items-center justify-center transition-all duration-300 group-hover:rotate-45 group-hover:bg-sky-500">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                >
                   <line x1="7" y1="17" x2="17" y2="7" />
                   <polyline points="7 7 17 7 17 17" />
                 </svg>
@@ -220,7 +257,6 @@ const HeroSection = () => {
               <span className="w-1.5 h-1.5 rounded-full bg-sky-400 group-hover:scale-150 transition-transform duration-300" />
             </Link>
           </motion.div>
-
         </div>
       </div>
 

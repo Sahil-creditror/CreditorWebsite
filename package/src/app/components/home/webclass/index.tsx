@@ -75,7 +75,7 @@ export default function WebclassSection() {
       className="
       relative
       overflow-hidden
-      bg-gradient-to-br from-blue-100 via-white to-blue-900
+      bg-gradient-to-br from-blue-100 via-white to-blue-900/40
       text-slate-800
       font-sans
       py-20

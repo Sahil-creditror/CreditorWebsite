@@ -15,13 +15,12 @@ const BootcampBanner = () => {
     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Mapped array containing all event flyers organized chronologically by date
     const slidesData = [
         {
             imageSrc: "/images/todayclasstopic/today.png",
             imageAlt: "The Financial Freedom Class",
             badge: "Special Event • June 18, 2026",
-            heading: <> The Financial Freedom Class: <span className="text-cyan-400">Creating Multiple Streams of Income</span></>,
+            heading: <> The Financial Freedom Class: <span className="text-cyan-600">Creating Multiple Streams of Income</span></>,
             description: "Supercharge your path to autonomy. Discover modern frameworks to generate reliable income streams, fast-track your asset accumulation, and scale your personal capital portfolio.",
             benefits: [
                 "Diverse Income Sources",
@@ -34,7 +33,7 @@ const BootcampBanner = () => {
             imageSrc: "/images/todayclasstopic/exit.png",
             imageAlt: "Exit Strategies Master Class",
             badge: "Master Class • June 18, 2026",
-            heading: <> Exit Strategies: <span className="text-cyan-400">Preparing Your Business for a Successful Sale</span></>,
+            heading: <> Exit Strategies: <span className="text-cyan-600">Preparing Your Business for a Successful Sale</span></>,
             description: "Build with the end in mind. Learn verified strategies to maximize company valuation, mitigate transition risks, and guarantee a seamless, highly profitable enterprise transfer.",
             benefits: [
                 "Maximize Business Value",
@@ -45,7 +44,6 @@ const BootcampBanner = () => {
         },
     ];
 
-    // Slide transition running at 4000ms (4 seconds)
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % slidesData.length);
@@ -83,41 +81,31 @@ const BootcampBanner = () => {
     return (
         <section
             ref={containerRef}
-            className={`${poppins.className} relative py-20 lg:py-20 overflow-hidden bg-slate-950`}
+            className={`${poppins.className} relative py-20 lg:py-20 overflow-hidden bg-white`}
         >
-            {/* Optimized localized background image system mapping to public files */}
-            <div
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-100"
-                style={{ backgroundImage: `url('/images/bg/bgclas.jpg')` }}
-            />
-
-            {/* Layered atmospheric tint mesh over asset */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-950/95 via-slate-900/85 to-blue-950/60 mix-blend-multiply pointer-events-none" />
-
-            {/* --- Dynamic Three-Wave Ambient Overlay Paths --- */}
-            <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-40">
-                <div className="absolute top-10 left-1/3 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[130px]" />
-                <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-violet-500/10 rounded-full blur-[110px]" />
-
+            {/* --- Ambient Light Background Graphics --- */}
+            <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                {/* Subtle high-tech grid texture */}
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(14,165,233,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,165,233,0.015)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+                
+                {/* Soft Light Blue Glow on the right side */}
+                <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-400/10 rounded-full blur-[140px] opacity-80" />
+                <div className="absolute right-1/4 bottom-10 w-[400px] h-[400px] bg-cyan-300/5 rounded-full blur-[110px]" />
+                
+                {/* Light Minimalist Wave Vector paths */}
                 <svg
-                    className="absolute w-full h-full min-w-[1440px]"
+                    className="absolute w-full h-full min-w-[1440px] opacity-40"
                     viewBox="0 0 1440 800"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                     preserveAspectRatio="none"
                 >
                     <defs>
-                        <linearGradient id="wave-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.30" />
-                            <stop offset="50%" stopColor="#0ea5e9" stopOpacity="0.03" />
-                            <stop offset="100%" stopColor="#2563eb" stopOpacity="0.05" />
-                        </linearGradient>
-                        <linearGradient id="wave-grad-2" x1="0%" y1="100%" x2="100%" y2="0%">
-                            <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.10" />
-                            <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.06" />
+                        <linearGradient id="light-wave-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.15" />
+                            <stop offset="100%" stopColor="#6366f1" stopOpacity="0.02" />
                         </linearGradient>
                     </defs>
-
                     <motion.path
                         animate={{
                             d: [
@@ -126,108 +114,114 @@ const BootcampBanner = () => {
                                 "M -100 250 C 300 400, 500 100, 900 300 C 1200 450, 1300 200, 1600 350"
                             ]
                         }}
-                        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-                        stroke="url(#wave-grad-1)"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                    />
-
-                    <motion.path
-                        animate={{
-                            d: [
-                                "M -100 450 C 200 300, 600 500, 1000 350 C 1250 250, 1400 400, 1600 450",
-                                "M -100 410 C 250 360, 550 420, 950 380 C 1200 340, 1450 360, 1600 410",
-                                "M -100 450 C 200 300, 600 500, 1000 350 C 1250 250, 1400 400, 1600 450"
-                            ]
-                        }}
-                        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-                        stroke="url(#wave-grad-2)"
+                        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+                        stroke="url(#light-wave-1)"
                         strokeWidth="2"
-                        strokeDasharray="8 8"
+                        strokeLinecap="round"
                     />
                 </svg>
             </div>
 
-            <div className="container mx-auto px-4 relative z-10">
+            <div className="container mx-auto px-6 relative z-10">
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     animate={isInView ? "visible" : "hidden"}
-                    className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center"
+                    className="flex flex-col gap-14"
                 >
-                    {/* Left Image Slider Column - Enhanced to complementary dark backdrops */}
-                    <div className="lg:col-span-5 relative w-full max-w-md lg:max-w-none mx-auto">
-                        <div className="absolute -inset-4 bg-cyan-500/15 blur-[60px] rounded-full opacity-30" />
-                        <div className="relative aspect-[1/1] w-full rounded-md overflow-hidden shadow-2xl bg-slate-900 border border-slate-800/80">
-                            <AnimatePresence mode="wait">
-                                <motion.img
-                                    key={currentIndex}
-                                    src={slidesData[currentIndex].imageSrc}
-                                    alt={slidesData[currentIndex].imageAlt}
-                                    initial={{ opacity: 0, scale: 1.02 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.98 }}
-                                    transition={{ duration: 0.45, ease: "easeInOut" }}
-                                    className="absolute inset-0 w-full h-full object-cover bg-slate-900"
-                                />
-                            </AnimatePresence>
+                    {/* --- Top Global Header Area --- */}
+                    <motion.div variants={itemVariants} className="text-center space-y-3 max-w-2xl mx-auto">
+                       
+                        <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+                            Today's Featured <span className="bg-gradient-to-r from-cyan-600 to-sky-500 bg-clip-text text-transparent">Masterclasses</span>
+                        </h2>
+                        <p className="text-slate-500 font-medium text-sm sm:text-base">
+                            Dive straight into intensive interactive modules engineered to transform structural financial workflows in real time.
+                        </p>
+                    </motion.div>
+
+                    {/* --- Lower Layout Grid Section --- */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                        {/* Left Column: Image Slider */}
+                        <div className="lg:col-span-5 relative w-full max-w-md lg:max-w-none mx-auto">
+                            {/* Shadow Backing Frame */}
+                            <div className="absolute -inset-4 bg-sky-200/40 blur-[50px] rounded-full opacity-40" />
+                            
+                            <div className="relative aspect-square w-full rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(148,163,184,0.15)] bg-slate-50 border border-slate-100">
+                                <AnimatePresence mode="wait">
+                                    <motion.img
+                                        key={currentIndex}
+                                        src={slidesData[currentIndex].imageSrc}
+                                        alt={slidesData[currentIndex].imageAlt}
+                                        initial={{ opacity: 0, scale: 1.02 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.98 }}
+                                        transition={{ duration: 0.45, ease: "easeInOut" }}
+                                        className="absolute inset-0 w-full h-full object-cover"
+                                    />
+                                </AnimatePresence>
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Right Content Column - Dark mode design upgrade */}
-                    <div className="lg:col-span-7 flex flex-col gap-6 border-l-4 border-cyan-500 pl-6 py-2 min-h-[480px] justify-center">
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={currentIndex}
-                                initial="initial"
-                                animate="animate"
-                                exit="exit"
-                                variants={contentFadeVariants}
-                                className="flex flex-col gap-5"
-                            >
-                                <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-md bg-gradient-to-r from-cyan-600 to-violet-600 text-white w-fit shadow-xl shadow-cyan-900/40 font-bold uppercase tracking-wider text-[11px]">
-                                    <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse" />
-                                    {slidesData[currentIndex].badge}
-                                </div>
+                        {/* Right Column: Content */}
+                        <div className="lg:col-span-7 flex flex-col gap-6 border-l-4 border-cyan-500 pl-6 lg:pl-8 py-2 min-h-[460px] justify-center">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={currentIndex}
+                                    initial="initial"
+                                    animate="animate"
+                                    exit="exit"
+                                    variants={contentFadeVariants}
+                                    className="flex flex-col gap-5"
+                                >
+                                    {/* Premium Event Badge */}
+                                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500 to-sky-600 text-white w-fit shadow-md shadow-cyan-500/10 font-bold uppercase tracking-wider text-[10px] sm:text-[11px]">
+                                        <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                                        {slidesData[currentIndex].badge}
+                                    </div>
 
-                                <h2 className="text-3xl md:text-4xl lg:text-5xl text-white font-black leading-[1.15] tracking-tight">
-                                    {slidesData[currentIndex].heading}
-                                </h2>
+                                    {/* Header text */}
+                                    <h3 className="text-3xl md:text-4xl lg:text-5xl text-slate-900 font-black leading-[1.15] tracking-tight font-sans">
+                                        {slidesData[currentIndex].heading}
+                                    </h3>
 
-                                <p className="text-base md:text-lg text-slate-200 font-medium leading-relaxed max-w-xl">
-                                    {slidesData[currentIndex].description}
-                                </p>
+                                    {/* Descriptive paragraph */}
+                                    <p className="text-base md:text-md text-slate-600 font-normal leading-relaxed max-w-xl">
+                                        {slidesData[currentIndex].description}
+                                    </p>
 
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-2.5">
-                                    {slidesData[currentIndex].benefits.map((benefit, idx) => (
-                                        <div key={idx} className="flex items-center gap-3">
-                                            <div className="flex-shrink-0 w-7 h-7 rounded-md bg-cyan-950 border border-cyan-900/80 text-cyan-400 flex items-center justify-center font-bold">
-                                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3.5} d="M5 13l4 4L19 7" />
-                                                </svg>
+                                    {/* Benefits Checkmarks */}
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-2">
+                                        {slidesData[currentIndex].benefits.map((benefit, idx) => (
+                                            <div key={idx} className="flex items-center gap-3">
+                                                <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-cyan-50 text-cyan-600 border border-cyan-100 flex items-center justify-center font-bold shadow-sm">
+                                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                                    </svg>
+                                                </div>
+                                                <span className="text-slate-700 font-medium text-[14px] sm:text-[15px] leading-tight">{benefit}</span>
                                             </div>
-                                            <span className="text-slate-100 font-semibold text-[15px] leading-tight">{benefit}</span>
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
+                                </motion.div>
+                            </AnimatePresence>
+
+                            {/* Pagination Interface */}
+                            <motion.div variants={itemVariants} className="flex flex-col gap-5 mt-2">
+                                <div className="flex flex-wrap items-center gap-4">
+                                    <div className="flex flex-wrap gap-2 p-1.5 rounded-full bg-slate-100/80 backdrop-blur-md border border-slate-200/60">
+                                        {slidesData.map((_, index) => (
+                                            <button
+                                                key={index}
+                                                onClick={() => setCurrentIndex(index)}
+                                                className={`h-2.5 rounded-full transition-all duration-300 ${index === currentIndex ? "w-8 bg-cyan-500" : "w-2.5 bg-slate-300 hover:bg-slate-400"}`}
+                                                aria-label={`Go to slide ${index + 1}`}
+                                            />
+                                        ))}
+                                    </div>
                                 </div>
                             </motion.div>
-                        </AnimatePresence>
-
-                        {/* Static Bottom Controls - Dark glassmorphismpagination */}
-                        <motion.div variants={itemVariants} className="flex flex-col gap-5 mt-4">
-                            <div className="flex flex-wrap items-center gap-4">
-                                <div className="flex flex-wrap gap-2.5 ml-1 p-2 rounded-full bg-slate-900/60 backdrop-blur-sm border border-slate-800/80">
-                                    {slidesData.map((_, index) => (
-                                        <button
-                                            key={index}
-                                            onClick={() => setCurrentIndex(index)}
-                                            className={`h-2.5 rounded-full transition-all duration-300 ${index === currentIndex ? "w-7 bg-cyan-400" : "w-2.5 bg-slate-700 hover:bg-slate-500"}`}
-                                            aria-label={`Go to slide ${index + 1}`}
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                        </motion.div>
+                        </div>
                     </div>
                 </motion.div>
             </div>

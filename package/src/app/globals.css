@@ -130,13 +130,30 @@ body {
 
 /* Signup Page Specific Styles */
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-  20%, 40%, 60%, 80% { transform: translateX(5px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
 }
 
 @utility animate-shake {
-  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+  animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
 }
 
 @utility signup-input {
@@ -144,6 +161,7 @@ body {
     color: rgba(31, 42, 46, 0.3);
     transition: all 0.3s ease;
   }
+
   &:focus::placeholder {
     opacity: 0.5;
     transform: translateX(10px);
@@ -169,15 +187,18 @@ select.appearance-none {
 html {
   overflow-y: scroll;
 }
+
 /* Chrome, Safari, Edge */
 html::-webkit-scrollbar {
   width: 0px;
   background: transparent;
 }
+
 /* Firefox */
 html {
   scrollbar-width: none;
 }
+
 /* IE 10+ */
 html {
   -ms-overflow-style: none;
@@ -188,8 +209,9 @@ html {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .chatbot-messages-scroll::-webkit-scrollbar {
   display: none;
   width: 0;
   height: 0;
-}
+}

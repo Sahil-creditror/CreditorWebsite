@@ -1879,7 +1879,7 @@ const FloatingMiniChatbot = () => {
                             "perspective(1100px) rotateY(-4deg) rotateX(2deg) scale(1.025)",
                           transformOrigin: "center",
                         }}
-                        // Removed animations that cause WebGL context instability
+                      // Removed animations that cause WebGL context instability
                       >
                         <AvatarLipSync
                           key="stable-avatar" // Stable key prevents unnecessary remounts
@@ -2015,11 +2015,10 @@ const FloatingMiniChatbot = () => {
 
                             <button
                               onClick={() => setIsChatOpen((v) => !v)}
-                              className={`h-11 w-11 rounded-full border border-white/10 shadow-lg flex items-center justify-center ${
-                                isChatOpen
+                              className={`h-11 w-11 rounded-full border border-white/10 shadow-lg flex items-center justify-center ${isChatOpen
                                   ? "bg-[#2b2b2d] text-white"
                                   : "bg-[#2b2b2d]/90 text-white"
-                              }`}
+                                }`}
                               aria-label="Toggle chat"
                             >
                               <MessageSquare className="w-5 h-5" />
@@ -2195,13 +2194,12 @@ const FloatingMiniChatbot = () => {
                             }}
                           />
                           <motion.button
-                            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border text-white transition-all ${
-                              isBotResponding
+                            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border text-white transition-all ${isBotResponding
                                 ? "border-red-400/35 bg-gradient-to-br from-red-500 to-red-600 hover:from-red-400 hover:to-red-500"
                                 : inputValue.trim()
                                   ? "border-blue-400/40 bg-gradient-to-br from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500"
                                   : "border-white/10 bg-white/8 text-slate-500"
-                            }`}
+                              }`}
                             onClick={handleSendOrStop}
                             disabled={
                               !isBotResponding && inputValue.trim() === ""
@@ -2267,9 +2265,8 @@ const Bubble = ({ children, left, right }) => (
     className={`flex max-w-full flex-col gap-1 ${right ? "items-end" : "items-start"}`}
   >
     <span
-      className={`px-1 text-[10px] font-semibold uppercase tracking-wider ${
-        right ? "text-blue-300/80" : "text-slate-400"
-      }`}
+      className={`px-1 text-[10px] font-semibold uppercase tracking-wider ${right ? "text-blue-300/80" : "text-slate-400"
+        }`}
     >
       {right ? "You" : "Assistant"}
     </span>

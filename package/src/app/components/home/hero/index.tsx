@@ -122,20 +122,21 @@ const HeroSection = () => {
             priority
             quality={100}
             sizes="100vw"
-            className="object-cover object-center transition-transform duration-[4000ms] ease-out hover:scale-105"
+            className="object-cover object-center transition-transform duration-4000 ease-out hover:scale-105"
           />
 
           {/* High-tech Grid Matrix Overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.02)_1px,transparent_1px)] bg-[size:5rem_5rem]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.02)_1px,transparent_1px)] bg-size-[5rem_5rem]" />
         </div>
 
         {/* Cinematic Vignettes & Dynamic Environmental Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#020617]/85 via-[#020617]/40 to-transparent hidden lg:block" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/90 via-transparent to-[#020617] lg:hidden block" />
+        <div className="absolute inset-0 bg-linear-to-r from-[#020617]/85 via-[#020617]/40 to-transparent hidden lg:block" />
+        <div className="absolute inset-0 bg-linear-to-b from-[#020617]/90 via-transparent to-[#020617] lg:hidden block" />
 
         {/* Soft Organic Ambient Light Glares */}
         <div className="absolute top-1/3 left-[-10%] w-[600px] h-[600px] bg-sky-500/10 blur-[180px] rounded-full pointer-events-none" />
         <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-indigo-500/5 blur-[150px] rounded-full pointer-events-none" />
+        <LuxuryParticles />
       </div>
 
       {/* TYPOGRAPHY & CTA LAYOUT CONTAINER */}
@@ -148,8 +149,8 @@ const HeroSection = () => {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="inline-flex items-center gap-3 text-[8px] sm:text-[10px] uppercase tracking-[0.4em] text-sky-400 font-bold mb-4"
           >
-            <span className="w-6 h-[1px] bg-gradient-to-r from-sky-400 to-transparent" />
-            <span className="bg-gradient-to-r from-sky-400 via-sky-200 to-white bg-clip-text text-transparent">
+            <span className="w-6 h-px bg-linear-to-r from-sky-400 to-transparent" />
+            <span className="bg-linear-to-r from-sky-400 via-sky-200 to-white bg-clip-text text-transparent">
               {heroContent.eyebrow}
             </span>
           </motion.div>
@@ -179,7 +180,7 @@ const HeroSection = () => {
                 delay: 0.22,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="block text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-100 to-slate-200 font-light italic mt-1"
+              className="block text-transparent bg-clip-text bg-linear-to-r from-sky-400 via-sky-100 to-slate-200 font-light italic mt-1"
             >
               {heroContent.titleAccent}
             </motion.span>
@@ -193,7 +194,7 @@ const HeroSection = () => {
                 delay: 0.34,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-sky-300 font-light pb-2 mt-1 tracking-tight text-xl sm:text-2xl lg:text-5xl italic"
+              className="block text-transparent bg-clip-text bg-linear-to-r from-white via-slate-200 to-sky-300 font-light pb-2 mt-1 tracking-tight text-xl sm:text-2xl lg:text-5xl italic"
             >
               {heroContent.titleFreedom}
             </motion.span>
@@ -203,7 +204,7 @@ const HeroSection = () => {
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 1, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="h-[1px] w-1/3 bg-gradient-to-r from-sky-500/50 to-transparent my-4 origin-left"
+              className="h-px w-1/3 bg-linear-to-r from-sky-500/50 to-transparent my-4 origin-left"
             />
 
             {/* Sub-Headline Label */}

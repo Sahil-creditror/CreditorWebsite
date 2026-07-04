@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 "use client";
 
@@ -197,12 +198,6 @@ const isFaqNotFoundResponse = (raw) => {
   return candidateText === FAQ_NOT_FOUND_TEXT;
 };
 
-const CHAT_QUICK_PROMPTS = [
-  "What is Creditor Academy?",
-  "How can you help me?",
-  "Tell me about your courses",
-];
-
 const FloatingMiniChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -235,13 +230,12 @@ const FloatingMiniChatbot = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [voiceActivity, setVoiceActivity] = useState(0); // 0-1 for voice level
   const [showInterruptHint, setShowInterruptHint] = useState(false);
-  const [avatarReady, setAvatarReady] = useState(false);
+  const [, setAvatarReady] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
   const audioContextRef = useRef(null);
   const analyserRef = useRef(null);
   const microphoneRef = useRef(null);
   const animationFrameRef = useRef(null);
-  const currentAudioRef = useRef(null); // Track current audio element for interruption
   const streamingIntervalRef = useRef(null); // Track streaming interval
   const videoStreamSyncRef = useRef(null); // Sync FAQ transcript to video playback
   const intentionalStopRef = useRef(false); // Track if mic stop was intentional
@@ -487,7 +481,7 @@ const FloatingMiniChatbot = () => {
         let errorText = "";
         try {
           errorText = await response.text();
-        } catch (e) {
+        } catch {
           errorText = "Could not read error response";
         }
         console.error(
@@ -541,38 +535,6 @@ const FloatingMiniChatbot = () => {
     } catch (error) {
       console.error("❌ getBotResponseWithLipSync failed:", error);
       throw error;
-    }
-  }, []);
-
-  // Text-only fallback if FAQ search payload parsing fails
-  const getBotResponse = useCallback(async (text) => {
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/chatbot/faq/search`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include", // Include cookies for authentication
-          body: JSON.stringify({
-            query: text,
-            question: text,
-          }),
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("📥 Fallback response:", data);
-      const payload = normalizeFaqSearchPayload(data);
-      return payload.text || "I'm not sure, please try again.";
-    } catch (err) {
-      console.error("❌ getBotResponse failed:", err);
-      return "I'm sorry, I'm having trouble responding right now. Could you try again?";
     }
   }, []);
 
@@ -998,7 +960,7 @@ const FloatingMiniChatbot = () => {
     setIsTeaserDragging(false);
   };
 
-  const handleTeaserClick = (e) => {
+  const handleTeaserClick = () => {
     if (isTeaserDraggedRef.current) {
       return;
     }
@@ -1377,7 +1339,7 @@ const FloatingMiniChatbot = () => {
               if (!intentionalStopRef.current && recognitionRef.current) {
                 try {
                   recognitionRef.current.start();
-                } catch (retryErr) {
+                } catch {
                   // worst case, verify state
                   if (isRecording) {
                     setIsRecording(false);
@@ -1408,7 +1370,7 @@ const FloatingMiniChatbot = () => {
         try {
           recognitionRef.current.abort(); // Ensure clean state
           await new Promise((resolve) => setTimeout(resolve, 100));
-        } catch (e) {
+        } catch {
           // Ignore abort errors
         }
       }
@@ -1529,37 +1491,6 @@ const FloatingMiniChatbot = () => {
       startSpeechRecognition();
     }
   }, [isRecording, micStatus, requestMicPermission, startSpeechRecognition]);
-
-  // Formal greeting text shown and spoken when the widget opens
-  const FORMAL_GREETING =
-    "Hi, I am Paul, your helping assistant. How can I help you?";
-
-  // Play greeting TTS only (no new message) so avatar speaks the formal greeting
-  const playGreetingTTS = useCallback(async () => {
-    const sessionIdAtStart = sessionIdRef.current;
-    setIsConnecting(true);
-    try {
-      const payload = await getBotResponseWithLipSync(
-        `Reply with only this exact sentence, nothing else: ${FORMAL_GREETING}`,
-      );
-      if (sessionIdRef.current !== sessionIdAtStart) return;
-      startTransition(() => {
-        if (sessionIdRef.current !== sessionIdAtStart) return;
-        setIsSpeakerOn(true);
-        setAvatarVisemes(payload.visemes || []);
-        setAvatarAudioUrl(payload.audioUrl || "");
-        setShowInterruptHint(true);
-        lastBotSpeechStartRef.current = Date.now();
-      });
-    } catch (err) {
-      if (process.env.NODE_ENV === "development") {
-        console.warn("⚠️ Greeting TTS failed, text already shown:", err);
-      }
-    } finally {
-      if (sessionIdRef.current !== sessionIdAtStart) return;
-      setIsConnecting(false);
-    }
-  }, [getBotResponseWithLipSync]);
 
   // Mark that greeting has started playing (so we know when it ends)
   useEffect(() => {
@@ -1777,7 +1708,7 @@ const FloatingMiniChatbot = () => {
       {!isOpen && !isMinimizedToBorder && (
         <motion.div
           ref={teaserRef}
-          className={`fixed z-[9999] w-[140px] h-[108px] sm:w-[168px] sm:h-[128px] group ${
+          className={`fixed z-9999 w-[140px] h-[108px] sm:w-[168px] sm:h-[128px] group ${
             teaserAnchored ? "right-3 bottom-3 sm:right-4 sm:bottom-2" : ""
           }`}
           style={{
@@ -1815,7 +1746,7 @@ const FloatingMiniChatbot = () => {
               e.stopPropagation();
               setIsMinimizedToBorder(true);
             }}
-            className="absolute right-0.5 top-[38px] sm:top-[44px] z-[10000] flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-full bg-red-500 text-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 border border-white"
+            className="absolute right-0.5 top-[38px] sm:top-[44px] z-10000 flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-full bg-red-500 text-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 border border-white"
             style={{ cursor: "pointer" }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -1857,7 +1788,7 @@ const FloatingMiniChatbot = () => {
             setHasDraggedModal(false);
             setShouldPlayWelcomeVideo(true);
           }}
-          className="fixed right-3 bottom-3 sm:right-4 sm:bottom-4 z-[9999] flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.18)]"
+          className="fixed right-3 bottom-3 sm:right-4 sm:bottom-4 z-9999 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.18)]"
           style={{ cursor: "pointer" }}
           whileHover={{
             scale: 1.08,
@@ -1887,7 +1818,7 @@ const FloatingMiniChatbot = () => {
         {isOpen && (
           <motion.div
             {...modalAnim}
-            className={`fixed inset-0 z-50 pointer-events-none ${isMobile ? "z-[9998]" : ""}`}
+            className={`fixed inset-0 z-50 pointer-events-none ${isMobile ? "z-9998" : ""}`}
             onDragStart={(e) => e.preventDefault()}
           >
             <motion.div
@@ -2018,7 +1949,7 @@ const FloatingMiniChatbot = () => {
                         />
                       </motion.div>
                     )}
-                    <div className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/28 via-black/10 to-transparent pointer-events-none ${isMobile ? "h-14" : "h-24"}`} />
+                    <div className={`absolute inset-x-0 bottom-0 bg-linear-to-t from-black/28 via-black/10 to-transparent pointer-events-none ${isMobile ? "h-14" : "h-24"}`} />
                   </div>
 
                   {showMicBlockedDialog && (
@@ -2043,7 +1974,7 @@ const FloatingMiniChatbot = () => {
                           </h3>
                           <ol className="mx-auto mt-8 inline-block space-y-4 text-left text-[16px] leading-8 text-slate-950 sm:text-[17px]">
                             <li>
-                              1. Click the page info icon in your browser's
+                              1. Click the page info icon in your browser&apos;s
                               address bar
                             </li>
                             <li>2. Turn on microphone access</li>
@@ -2222,9 +2153,9 @@ const FloatingMiniChatbot = () => {
                       style={{ cursor: "default" }}
                       onMouseDown={(e) => e.stopPropagation()}
                     >
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.07] via-transparent to-black/25" />
+                      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-white/[0.07] via-transparent to-black/25" />
                       <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
-                      <div className="pointer-events-none absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-blue-400/25 to-transparent" />
+                      <div className="pointer-events-none absolute inset-y-0 left-0 w-px bg-linear-to-b from-transparent via-blue-400/25 to-transparent" />
 
                       {/* Header */}
                       <div className="relative z-10 flex shrink-0 items-center justify-between gap-3 border-b border-white/10 bg-black/20 px-4 py-3 backdrop-blur-xl">
@@ -2255,8 +2186,8 @@ const FloatingMiniChatbot = () => {
 
                       {/* Messages */}
                       <div className="relative z-10 flex min-h-0 flex-1 flex-col">
-                        <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-5 bg-gradient-to-b from-slate-950/95 to-transparent" />
-                        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-6 bg-gradient-to-t from-slate-950/95 to-transparent" />
+                        <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-5 bg-linear-to-b from-slate-950/95 to-transparent" />
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-6 bg-linear-to-t from-slate-950/95 to-transparent" />
 
                         <div
                           ref={chatContainerRef}
@@ -2272,7 +2203,7 @@ const FloatingMiniChatbot = () => {
                                 Start a conversation
                               </p>
                               <p className="mt-1 max-w-[240px] text-xs leading-relaxed text-slate-400">
-                                Ask a question, I'm ready to help.
+                                Ask a question, I&apos;m ready to help.
                               </p>
                               {/* <div className="mt-4 flex w-full flex-col gap-2">
                                 {CHAT_QUICK_PROMPTS.map((prompt) => (
@@ -2280,7 +2211,7 @@ const FloatingMiniChatbot = () => {
                                     key={prompt}
                                     type="button"
                                     onClick={() => setInputValue(prompt)}
-                                    className="rounded-xl border border-white/10 bg-white/[0.06] px-3 py-2 text-left text-xs leading-snug text-slate-200 backdrop-blur-md transition-colors hover:border-blue-400/30 hover:bg-blue-500/15 hover:text-white"
+                                    className="rounded-xl border border-white/10 bg-white/6 px-3 py-2 text-left text-xs leading-snug text-slate-200 backdrop-blur-md transition-colors hover:border-blue-400/30 hover:bg-blue-500/15 hover:text-white"
                                   >
                                     {prompt}
                                   </button>
@@ -2308,7 +2239,7 @@ const FloatingMiniChatbot = () => {
                       <div className="relative z-10 shrink-0 px-4 pb-4 pt-2">
                         <div className="flex items-center gap-2.5">
                           <motion.input
-                            className="min-w-0 flex-1 rounded-xl border border-white/12 bg-white/[0.06] px-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:border-blue-400/55 focus:outline-none focus:ring-2 focus:ring-blue-400/30"
+                            className="min-w-0 flex-1 rounded-xl border border-white/12 bg-white/6 px-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:border-blue-400/55 focus:outline-none focus:ring-2 focus:ring-blue-400/30"
                             placeholder="Type a message..."
                             value={inputValue}
                             onChange={handleInputChange}
@@ -2320,9 +2251,9 @@ const FloatingMiniChatbot = () => {
                           />
                           <motion.button
                             className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border text-white transition-all ${isBotResponding
-                                ? "border-red-400/35 bg-gradient-to-br from-red-500 to-red-600 hover:from-red-400 hover:to-red-500"
+                                ? "border-red-400/35 bg-linear-to-br from-red-500 to-red-600 hover:from-red-400 hover:to-red-500"
                                 : inputValue.trim()
-                                  ? "border-blue-400/40 bg-gradient-to-br from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500"
+                                  ? "border-blue-400/40 bg-linear-to-br from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500"
                                   : "border-white/10 bg-white/8 text-slate-500"
                               }`}
                             onClick={handleSendOrStop}
@@ -2373,7 +2304,7 @@ const IconBtn = ({ children, onClick, danger, active, compact }) => (
     onClick={onClick}
     className={`rounded-full backdrop-blur-md shadow-lg transition
       ${compact ? "p-1.5" : "p-2"}
-      ${danger ? "bg-red-500 text-white" : active ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white" : "bg-gradient-to-r from-gray-700 to-gray-800 text-white"}
+      ${danger ? "bg-red-500 text-white" : active ? "bg-linear-to-r from-emerald-500 to-teal-500 text-white" : "bg-linear-to-r from-gray-700 to-gray-800 text-white"}
       hover:scale-110 active:scale-95`}
     whileHover={{ scale: 1.1, boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)" }}
     whileTap={{ scale: 0.95 }}
@@ -2399,9 +2330,9 @@ const Bubble = ({ children, left, right }) => (
     <div
       className={`max-w-[92%] rounded-2xl px-4 py-2.5 text-[13px] leading-relaxed shadow-sm backdrop-blur-md
         ${left && "border border-white/20 bg-white/[0.14] text-slate-50"}
-        ${right && "border border-blue-400/30 bg-gradient-to-br from-blue-600/95 to-indigo-600/90 text-white"}`}
+        ${right && "border border-blue-400/30 bg-linear-to-br from-blue-600/95 to-indigo-600/90 text-white"}`}
     >
-      <div className="whitespace-pre-wrap break-words">{children}</div>
+      <div className="whitespace-pre-wrap wrap-break-word">{children}</div>
     </div>
   </motion.div>
 );

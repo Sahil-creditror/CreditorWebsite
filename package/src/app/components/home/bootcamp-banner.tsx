@@ -82,12 +82,12 @@
 //     return (
 //         <section
 //             ref={containerRef}
-//             className={`${poppins.className} relative py-20 lg:py-20 overflow-hidden bg-gradient-to-br from-slate-600 via-blue-950 to-slate-600 text-slate-100`}
+//             className={`${poppins.className} relative py-20 lg:py-20 overflow-hidden bg-linear-to-br from-slate-600 via-blue-950 to-slate-600 text-slate-100`}
 //         >
 //             {/* --- Ambient Light Background Graphics --- */}
 //             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
 //                 {/* Subtle high-tech grid texture */}
-//                 <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(14,165,233,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,165,233,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+//                 <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(14,165,233,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,165,233,0.02)_1px,transparent_1px)] bg-size-[4rem_4rem]" />
                 
 //                 {/* Soft Light Blue Glow on the right side */}
 //                 <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-500/10 rounded-full blur-[140px] opacity-60" />
@@ -133,7 +133,7 @@
 //                     {/* --- Top Global Header Area --- */}
 //                     <motion.div variants={itemVariants} className="text-center space-y-3 max-w-2xl mx-auto">
 //                         <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-//                             Today's Featured <span className="bg-gradient-to-r from-blue-300  to-blue-400 bg-clip-text text-transparent">Masterclasses</span>
+//                             Today's Featured <span className="bg-linear-to-r from-blue-300  to-blue-400 bg-clip-text text-transparent">Masterclasses</span>
 //                         </h2>
 //                         <p className="text-slate-400 font-medium text-sm sm:text-base">
 //                             Dive straight into intensive interactive modules engineered to transform structural financial workflows in real time.
@@ -183,7 +183,7 @@
 //                                     className="flex flex-col gap-5"
 //                                 >
 //                                     {/* Premium Event Badge */}
-//                                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-300 to-blue-400 text-white w-fit shadow-md shadow-blue-950/50 font-bold uppercase tracking-wider text-[10px] sm:text-[11px]">
+//                                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-blue-300 to-blue-400 text-white w-fit shadow-md shadow-blue-950/50 font-bold uppercase tracking-wider text-[10px] sm:text-[11px]">
 //                                         <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
 //                                         {slidesData[currentIndex].badge}
 //                                     </div>
@@ -202,7 +202,7 @@
 //                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-2">
 //                                         {slidesData[currentIndex].benefits.map((benefit, idx) => (
 //                                             <div key={idx} className="flex items-center gap-3">
-//                                                 <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-cyan-950/60 text-blue-400 border border-cyan-900/60 flex items-center justify-center font-bold shadow-sm">
+//                                                 <div className="shrink-0 w-7 h-7 rounded-lg bg-cyan-950/60 text-blue-400 border border-cyan-900/60 flex items-center justify-center font-bold shadow-sm">
 //                                                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 //                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
 //                                                     </svg>
@@ -270,7 +270,7 @@ const BootcampBanner = () => {
         heading: (
             <>
                 Preparing Your Business for{" "}
-                <span className="bg-gradient-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
                     High-Limit Funding
                 </span>{" "}
                 And Investment Opportunities
@@ -309,11 +309,11 @@ const BootcampBanner = () => {
     return (
         <section
             ref={containerRef}
-            className={`${poppins.className} relative py-20 lg:py-20 overflow-hidden bg-gradient-to-br from-slate-600 via-blue-950 to-slate-600 text-slate-100`}
+            className={`${poppins.className} relative py-20 lg:py-20 overflow-hidden bg-linear-to-br from-slate-600 via-blue-950 to-slate-600 text-slate-100`}
         >
             {/* --- Ambient Light Background Graphics --- */}
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(14,165,233,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,165,233,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(14,165,233,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,165,233,0.02)_1px,transparent_1px)] bg-size-[4rem_4rem]" />
                 <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-500/10 rounded-full blur-[140px] opacity-60" />
                 <div className="absolute right-1/4 bottom-10 w-[400px] h-[400px] bg-blue-400/5 rounded-full blur-[110px]" />
                 
@@ -356,7 +356,7 @@ const BootcampBanner = () => {
                     {/* --- Top Global Header Area --- */}
                     <motion.div variants={itemVariants} className="text-center space-y-3 max-w-2xl mx-auto">
                         <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-                            Today's Featured <span className="bg-gradient-to-r from-blue-300  to-blue-400 bg-clip-text text-transparent">Masterclasses</span>
+                            Today&apos;s Featured <span className="bg-linear-to-r from-blue-300  to-blue-400 bg-clip-text text-transparent">Masterclasses</span>
                         </h2>
                         <p className="text-slate-400 font-medium text-sm sm:text-base">
                             Dive straight into intensive interactive modules engineered to transform structural financial workflows in real time.
@@ -386,7 +386,7 @@ const BootcampBanner = () => {
                         <div className="lg:col-span-7 flex flex-col gap-6 border-l-4 border-blue-500/80 pl-6 lg:pl-8 py-2 justify-center">
                             <motion.div variants={itemVariants} className="flex flex-col gap-5">
                                 {/* Premium Event Badge */}
-                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 text-white w-fit shadow-md shadow-blue-950/50 font-bold uppercase tracking-wider text-[10px] sm:text-[11px]">
+                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-blue-500 to-blue-600 text-white w-fit shadow-md shadow-blue-950/50 font-bold uppercase tracking-wider text-[10px] sm:text-[11px]">
                                     <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
                                     {classData.badge}
                                 </div>
@@ -405,7 +405,7 @@ const BootcampBanner = () => {
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-2">
                                     {classData.benefits.map((benefit, idx) => (
                                         <div key={idx} className="flex items-center gap-3">
-                                            <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-cyan-950/60 text-blue-400 border border-cyan-900/60 flex items-center justify-center font-bold shadow-sm">
+                                            <div className="shrink-0 w-7 h-7 rounded-lg bg-cyan-950/60 text-blue-400 border border-cyan-900/60 flex items-center justify-center font-bold shadow-sm">
                                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                                 </svg>

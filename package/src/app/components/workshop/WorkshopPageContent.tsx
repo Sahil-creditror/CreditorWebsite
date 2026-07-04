@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Check, Clock, Sparkles, Video } from "lucide-react";
+import { Clock, Sparkles, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 
 // ── Event Constants Extracted Directly From aitt.png ─────────────────────────
@@ -70,7 +70,7 @@ export default function WorkshopPageContent() {
   return (
     <div className="workshop-athena-style min-h-screen bg-[#eef5fc] text-slate-800">
       {/* Hero Section */}
-      <section className="relative overflow-hidden border-b border-[#1a4d7a] bg-gradient-to-br from-[#061525] via-[#0a2d52] to-[#0f3d6b] px-4 pb-16 pt-20 md:pb-24 md:pt-24">
+      <section className="relative overflow-hidden border-b border-[#1a4d7a] bg-linear-to-br from-[#061525] via-[#0a2d52] to-[#0f3d6b] px-4 pb-16 pt-20 md:pb-24 md:pt-24">
         <div
           className="pointer-events-none absolute inset-0 opacity-30"
           style={{
@@ -90,7 +90,7 @@ export default function WorkshopPageContent() {
               </p>
               <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-[3rem] uppercase">
                 AI Tools Every{" "}
-                <span className="block bg-gradient-to-r from-blue-400 via-sky-300 to-white bg-clip-text text-transparent font-black mt-1">
+                <span className="block bg-linear-to-r from-blue-400 via-sky-300 to-white bg-clip-text text-transparent font-black mt-1">
                   SMALL BUSINESS OWNER
                 </span>
                 <span className="text-3xl sm:text-4xl block mt-1 text-slate-200 lowercase font-medium italic">should use</span>
@@ -112,7 +112,7 @@ export default function WorkshopPageContent() {
                   href={REGISTRATION_LINK_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 px-8 py-4 text-base font-extrabold text-slate-950 shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5 hover:brightness-110"
+                  className="inline-flex items-center justify-center rounded-full bg-linear-to-r from-amber-400 to-yellow-500 px-8 py-4 text-base font-extrabold text-slate-950 shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5 hover:brightness-110"
                 >
                   Register Free Now
                 </Link>
@@ -123,7 +123,7 @@ export default function WorkshopPageContent() {
             </div>
 
             <div className="mx-auto w-full max-w-sm lg:max-w-md">
-              <div className="overflow-hidden rounded-2xl border border-white/20 bg-white p-2 shadow-2xl shadow-black/30 ring-1 ring-[#026fe2]/30">
+              <div className="overflow-hidden rounded-2xl border border-white/20 bg-white p-2 shadow-2xl shadow-black/30 ring-1 ring-primary/30">
                 <Image
                   src={WORKSHOP_EVENT_IMAGE}
                   alt="AI Tools Every Small Business Owner Should Use Live Online Training Flyer — Saturday, July 11, 2026"
@@ -140,15 +140,15 @@ export default function WorkshopPageContent() {
       </section>
 
       {/* Event Timeline Banner */}
-      <section className="border-b border-[#c5dff5] bg-gradient-to-b from-[#e3f0fa] to-[#eef5fc] py-12 md:py-14">
+      <section className="border-b border-[#c5dff5] bg-linear-to-b from-[#e3f0fa] to-[#eef5fc] py-12 md:py-14">
         <div className="container">
-          <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-[#b8d9f5]/80 bg-white shadow-lg shadow-blue-900/[0.06] ring-1 ring-[#026fe2]/5">
-            <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#026fe2]/10 blur-3xl" aria-hidden />
+          <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-[#b8d9f5]/80 bg-white shadow-lg shadow-blue-900/6 ring-1 ring-primary/5">
+            <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl" aria-hidden />
             <div className="pointer-events-none absolute -bottom-12 -left-12 h-40 w-40 rounded-full bg-sky-200/40 blur-3xl" aria-hidden />
 
             <div className="relative flex flex-col gap-8 p-6 md:p-8 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
               <div className="text-center lg:max-w-sm lg:text-left">
-                <span className="inline-flex items-center gap-2 rounded-full border border-[#026fe2]/20 bg-[#026fe2]/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-[#026fe2]">
+                <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-primary">
                   <span className="relative flex h-2 w-2">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
@@ -159,16 +159,16 @@ export default function WorkshopPageContent() {
                   July 11 Masterclass
                 </h2>
                 <p className="mt-2 flex items-center justify-center gap-2 text-slate-600 lg:justify-start text-sm">
-                  <Video className="h-4 w-4 shrink-0 text-[#026fe2]" aria-hidden />
+                  <Video className="h-4 w-4 shrink-0 text-primary" aria-hidden />
                   Practical Business Scaling Automation
                 </p>
               </div>
 
               <div className="grid w-full gap-4 sm:grid-cols-2 lg:max-w-xl lg:shrink-0">
                 {/* Date card */}
-                <div className="flex items-center gap-4 rounded-2xl border border-[#c5dff5] bg-gradient-to-br from-[#f8fbff] to-white p-4 shadow-sm">
+                <div className="flex items-center gap-4 rounded-2xl border border-[#c5dff5] bg-linear-to-br from-[#f8fbff] to-white p-4 shadow-sm">
                   <div
-                    className="flex h-[4.25rem] w-[4.25rem] shrink-0 flex-col overflow-hidden rounded-xl bg-gradient-to-b from-[#026fe2] to-[#0259bd] text-center text-white shadow-md shadow-blue-600/25"
+                    className="flex h-17 w-17 shrink-0 flex-col overflow-hidden rounded-xl bg-linear-to-b from-primary to-[#0259bd] text-center text-white shadow-md shadow-blue-600/25"
                     aria-hidden
                   >
                     <span className="bg-black/15 py-1 text-[10px] font-bold uppercase tracking-widest">
@@ -187,8 +187,8 @@ export default function WorkshopPageContent() {
                 </div>
 
                 {/* Time card */}
-                <div className="flex items-center gap-4 rounded-2xl border border-[#c5dff5] bg-gradient-to-br from-[#f8fbff] to-white p-4 shadow-sm">
-                  <div className="flex h-[4.25rem] w-[4.25rem] shrink-0 items-center justify-center rounded-xl border border-[#026fe2]/15 bg-[#eef5fc] text-[#026fe2] shadow-inner">
+                <div className="flex items-center gap-4 rounded-2xl border border-[#c5dff5] bg-linear-to-br from-[#f8fbff] to-white p-4 shadow-sm">
+                  <div className="flex h-17 w-17 shrink-0 items-center justify-center rounded-xl border border-primary/15 bg-[#eef5fc] text-primary shadow-inner">
                     <Clock className="h-8 w-8" strokeWidth={2.25} aria-hidden />
                   </div>
                   <div className="min-w-0 text-left">
@@ -196,7 +196,7 @@ export default function WorkshopPageContent() {
                     <p className="mt-0.5 text-xl font-black tabular-nums text-slate-900">
                       {WORKSHOP_EVENT_TIME_DISPLAY}
                     </p>
-                    <p className="text-xs font-bold text-[#026fe2] uppercase tracking-wider">
+                    <p className="text-xs font-bold text-primary uppercase tracking-wider">
                       {WORKSHOP_EVENT_TIMEZONE_LABEL}
                     </p>
                   </div>
@@ -210,7 +210,7 @@ export default function WorkshopPageContent() {
       {/* Comparison Blocks */}
       <section className="bg-[#f0f7fd] py-16 md:py-24">
         <div className="container">
-          <p className="text-center text-sm font-bold uppercase tracking-widest text-[#026fe2]">
+          <p className="text-center text-sm font-bold uppercase tracking-widest text-primary">
             Operational Efficiency
           </p>
           <h2 className="mx-auto mt-3 max-w-2xl text-center text-3xl font-bold text-slate-900 md:text-4xl">
@@ -236,11 +236,11 @@ export default function WorkshopPageContent() {
               </ul>
             </div>
 
-            <div className="rounded-2xl border-2 border-[#026fe2] bg-gradient-to-br from-[#dbeafe] to-[#eff6ff] p-8 shadow-lg shadow-blue-500/15">
-              <span className="inline-block rounded-full bg-[#026fe2] px-3 py-1 text-xs font-bold uppercase text-white">
+            <div className="rounded-2xl border-2 border-primary bg-linear-to-br from-[#dbeafe] to-[#eff6ff] p-8 shadow-lg shadow-blue-500/15">
+              <span className="inline-block rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase text-white">
                 AI Business Ecosystem Stack
               </span>
-              <p className="mt-4 text-sm font-bold text-[#026fe2] tracking-wide">AUTOMATED & FAST</p>
+              <p className="mt-4 text-sm font-bold text-primary tracking-wide">AUTOMATED & FAST</p>
               <ul className="mt-6 space-y-6">
                 {CREDITOR.map((item) => (
                   <li key={item.title}>
@@ -255,7 +255,7 @@ export default function WorkshopPageContent() {
       </section>
 
       {/* Checklist Overview & Core Value Matrix */}
-      <section className="bg-gradient-to-br from-[#061525] via-[#0a2d52] to-[#0f3d6b] py-16 md:py-24" id="register">
+      <section className="bg-linear-to-br from-[#061525] via-[#0a2d52] to-[#0f3d6b] py-16 md:py-24" id="register">
         <div className="container">
           <div className="mx-auto grid max-w-6xl items-stretch gap-10 lg:grid-cols-2 lg:gap-12">
             {/* Left Column */}
@@ -267,7 +267,7 @@ export default function WorkshopPageContent() {
                 </span>
                 <h2 className="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
                   Unlock Your Free{" "}
-                  <span className="bg-gradient-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent">
+                  <span className="bg-linear-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent">
                     AI Execution Plan
                   </span>
                 </h2>
@@ -285,7 +285,7 @@ export default function WorkshopPageContent() {
                   {INCLUDED.map((item) => (
                     <li
                       key={item}
-                      className="flex items-start gap-3 rounded-xl border border-white/5 bg-white/[0.04] p-3.5 text-left"
+                      className="flex items-start gap-3 rounded-xl border border-white/5 bg-white/4 p-3.5 text-left"
                     >
                       <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-300">
                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -296,7 +296,7 @@ export default function WorkshopPageContent() {
                 </ul>
               </div>
 
-              <div className="rounded-2xl border border-[#026fe2]/30 bg-[#026fe2]/10 p-6" aria-live="polite">
+              <div className="rounded-2xl border border-primary/30 bg-primary/10 p-6" aria-live="polite">
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#7eb8ff]">
                   Live Stream Broadcast Begins In
                 </p>
@@ -315,7 +315,7 @@ export default function WorkshopPageContent() {
 
             {/* Right: Registration Card */}
             <div className="flex flex-col justify-center rounded-3xl bg-white p-6 shadow-2xl shadow-black/25 md:p-8">
-              <div className="rounded-2xl bg-gradient-to-br from-[#026fe2] to-[#0259bd] px-6 py-6 text-center text-white">
+              <div className="rounded-2xl bg-linear-to-br from-primary to-[#0259bd] px-6 py-6 text-center text-white">
                 <p className="text-xs font-bold uppercase tracking-widest text-blue-100/90">
                   ONLINE LIVE TRAINING
                 </p>
@@ -376,13 +376,13 @@ export default function WorkshopPageContent() {
             </span>
           </div>
           <p className="text-xs text-slate-400 font-medium md:ml-4">
-            Don't miss out — join us live on your favorite platform!
+            Don&apos;t miss out — join us live on your favorite platform!
           </p>
         </div>
       </section>
 
       {/* Final Action Segment */}
-      <section className="border-t border-[#c5dff5] bg-gradient-to-b from-[#dceefb] to-[#e8f4fc] py-16 md:py-20">
+      <section className="border-t border-[#c5dff5] bg-linear-to-b from-[#dceefb] to-[#e8f4fc] py-16 md:py-20">
         <div className="container text-center">
           <h2 className="text-2xl font-extrabold text-slate-900 md:text-3xl uppercase tracking-tight">
             Ready to scale using modern workflows?
@@ -394,13 +394,13 @@ export default function WorkshopPageContent() {
             href={REGISTRATION_LINK_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center justify-center rounded-full bg-[#026fe2] px-12 py-4 text-base font-extrabold text-white shadow-lg shadow-blue-500/20 transition transform hover:-translate-y-0.5 hover:bg-[#0259bd]"
+            className="mt-8 inline-flex items-center justify-center rounded-full bg-primary px-12 py-4 text-base font-extrabold text-white shadow-lg shadow-blue-500/20 transition transform hover:-translate-y-0.5 hover:bg-[#0259bd]"
           >
             Access Free Live Stream
           </Link>
           <p className="mt-6 text-xs font-bold text-slate-400 uppercase tracking-widest">
             Direct Support Line:{" "}
-            <a href="tel:+14254009246" className="text-[#026fe2] hover:underline font-extrabold ml-1">
+            <a href="tel:+14254009246" className="text-primary hover:underline font-extrabold ml-1">
               425-400-9246
             </a>
           </p>

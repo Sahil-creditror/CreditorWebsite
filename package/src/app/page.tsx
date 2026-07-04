@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import HeroSection from "./components/home/hero";
 import BootcampBanner from "./components/home/bootcamp-banner";
 import MasterclassEbook from "./components/home/MasterclassEbook";
+import Intro from "./components/home/intro/page"
 
 // Dynamic imports for all below-the-fold components to improve initial load
 const Courses = dynamic(() => import("./components/home/courses"), {
@@ -61,7 +62,9 @@ export default function Home() {
   return (
     <>
       <HeroSection />
+      <Intro />
       <BootcampBanner />
+
       {/* <StatsFacts /> */}
       {/* <Masterclass /> */}
       {/* <Aboutus /> */}

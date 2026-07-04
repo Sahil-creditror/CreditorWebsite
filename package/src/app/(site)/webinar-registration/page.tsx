@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { getRegistrationTimestamp, limitRecentRegistrations } from "@/lib/registrationUtils";
 
 const TOPIC_FILTER_OPTIONS = [
   { value: "all", label: "All topics", matches: [] as string[] },
@@ -84,7 +83,6 @@ const formatToPST = (value?: string | number | Date | null) => {
  * Convert registrations data to CSV format
  */
 const convertToCSV = (registrations: Registrant[]): string => {
-  // CSV headers
   const headers = [
     "Name",
     "Email",
@@ -99,7 +97,6 @@ const convertToCSV = (registrations: Registrant[]): string => {
     "Webinar ID",
   ];
 
-  // Convert each registration to CSV row
   const rows = registrations.map((reg) => {
     const name =
       (reg.first_name && reg.last_name ? `${reg.first_name} ${reg.last_name}` : reg.first_name || reg.last_name) || "N/A";
@@ -127,7 +124,6 @@ const convertToCSV = (registrations: Registrant[]): string => {
     const registrantId = reg.registrant_id || "N/A";
     const webinarId = reg.webinar_id || "N/A";
 
-    // Escape CSV values (handle commas, quotes, newlines)
     const escapeCSV = (value: string): string => {
       if (value.includes(",") || value.includes('"') || value.includes("\n")) {
         return `"${value.replace(/"/g, '""')}"`;
@@ -150,7 +146,6 @@ const convertToCSV = (registrations: Registrant[]): string => {
     ].join(",");
   });
 
-  // Combine headers and rows
   return [headers.join(","), ...rows].join("\n");
 };
 
@@ -279,38 +274,20 @@ export default function WebinarRegistrationPage() {
   const dateSummary = useMemo(() => buildAttendanceSummary(filteredAllRegs), [filteredAllRegs]);
 
   const sortedAllRegs = useMemo(() => {
-    return [...filteredAllRegs].sort((a, b) => getRegistrationTimestamp(b) - getRegistrationTimestamp(a));
+    const getTimestamp = (reg: Registrant): number => {
+      const regTimeSource = (reg as unknown as { registration_time?: string }).registration_time;
+      const ts =
+        regTimeSource && typeof regTimeSource === "string"
+          ? Date.parse(regTimeSource)
+          : reg.registered_at
+          ? Date.parse(reg.registered_at)
+          : reg.start_time
+          ? Date.parse(reg.start_time)
+          : 0;
+      return Number.isNaN(ts) ? 0 : ts;
+    };
+    return [...filteredAllRegs].sort((a, b) => getTimestamp(b) - getTimestamp(a));
   }, [filteredAllRegs]);
-
-  const parseRegistrationResponse = async (
-    response: Response
-  ): Promise<{ data: Registrant[]; error?: string; warning?: string }> => {
-    const contentType = response.headers.get("content-type") || "";
-    if (!contentType.includes("application/json")) {
-      const body = await response.text();
-      return {
-        data: [],
-        error: response.ok
-          ? "Registration service returned an unexpected response."
-          : `Registration service failed (${response.status}). ${body.slice(0, 120)}`,
-      };
-    }
-
-    const result = (await response.json()) as {
-      success?: boolean;
-      error?: string;
-      warning?: string;
-      data?: Registrant[];
-    };
-    if (!response.ok || result.success === false) {
-      return { data: [], error: result.error || "Failed to fetch registrations" };
-    }
-
-    return {
-      data: Array.isArray(result.data) ? result.data : [],
-      warning: result.warning,
-    };
-  };
 
   const fetchAllRegistrations = async () => {
     setAllRegsLoading(true);
@@ -320,31 +297,26 @@ export default function WebinarRegistrationPage() {
     const timeoutId = setTimeout(() => controller.abort(), 12000);
 
     try {
-      const response = await fetch("/api/webx/merged-report", {
+      const response = await fetch(`/api/webx/merged-report`, {
         method: "GET",
-        headers: { Accept: "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         signal: controller.signal,
       });
-
-      const parsed = await parseRegistrationResponse(response);
-      const limited = limitRecentRegistrations(parsed.data);
-      setAllRegistrations(limited);
-
-      if (limited.length === 0 && parsed.error) {
-        setAllRegsError(parsed.error);
-      } else if (parsed.error) {
-        setAllRegsError(parsed.error);
-      } else if (parsed.warning) {
-        setAllRegsError(parsed.warning);
+      const result = (await response.json()) as { success: boolean; error?: string; data?: Registrant[] };
+      if (!result.success) {
+        setAllRegsError(result.error || "Failed to fetch registrations");
+        setAllRegistrations([]);
+      } else {
+        setAllRegistrations(Array.isArray(result.data) ? result.data : []);
       }
     } catch (err: unknown) {
-      const message =
-        err instanceof Error && err.name === "AbortError"
-          ? "Registration lookup timed out. Please try again."
-          : err instanceof Error
-          ? err.message
-          : "Failed to fetch registrations";
-      setAllRegsError(message);
+      if (err instanceof Error && err.name === 'AbortError') {
+        setAllRegsError("Request timed out. Please try again.");
+      } else {
+        setAllRegsError("An unexpected error occurred while fetching registrations.");
+      }
       setAllRegistrations([]);
     } finally {
       clearTimeout(timeoutId);
@@ -353,13 +325,12 @@ export default function WebinarRegistrationPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-sky-50 dark:from-[#001428] dark:via-[#002b5c] dark:to-[#026fe2] py-12 px-4 sm:px-6 lg:px-8">
+    <main className="p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-[#026fe2] dark:text-white mb-4 pt-20">
-          Webinar Registration Details
-        </h1>
+            Webinar Registration Details
+          </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300">
             View participant details for each webinar session
           </p>
@@ -382,7 +353,7 @@ export default function WebinarRegistrationPage() {
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">All Registrations</h2>
             <div className="flex items-center justify-between mb-3 gap-3 flex-wrap">
               <div className="text-sm text-gray-600 dark:text-gray-300">
-                Showing latest 50 registrations (sorted by most recent)
+                Showing latest registrations (sorted by most recent)
               </div>
               <div className="flex items-center gap-3 flex-wrap">
                 <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-blue-100 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10 shadow-sm">
@@ -565,7 +536,6 @@ export default function WebinarRegistrationPage() {
                     <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">Reg Time</th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">Start</th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">Status</th>
-             
                     <th className="px-4 py-3 text-left text-xs font-semibold text-[#026fe2] dark:text-blue-400 uppercase tracking-wider">Duration</th>
                   </tr>
                 </thead>
@@ -573,48 +543,46 @@ export default function WebinarRegistrationPage() {
                   {sortedAllRegs
                     .slice(allRegsPage * 10, allRegsPage * 10 + 10)
                     .map((reg, idx) => {
-                    const name =
-                      (reg.first_name && reg.last_name ? `${reg.first_name} ${reg.last_name}` : reg.first_name || reg.last_name) || "N/A";
-                    const email = reg.email || "N/A";
-                    const phone = reg.phone_number || "N/A";
-                    const regTimeSource = (reg as unknown as { registration_time?: string }).registration_time;
-                    const regTime =
-                      regTimeSource && typeof regTimeSource === "string"
-                        ? formatToPST(regTimeSource)
-                        : reg.registered_at
-                        ? formatToPST(reg.registered_at)
-                        : reg.start_time
-                        ? formatToPST(reg.start_time)
-                        : "N/A";
-                    const start = reg.start_time ? new Date(reg.start_time).toLocaleString() : "N/A";
-                    const status = reg.status || "N/A";
-                    const duration =
-                      typeof reg.duration === "number" && reg.duration > 0
-                        ? `${Math.floor(reg.duration / 60)}m ${reg.duration % 60}s`
-                        : "0s";
-                    const globalIndex = allRegsPage * 10 + idx;
-                    return (
-                      <tr key={reg.registrant_id ? `${reg.registrant_id}-${globalIndex}` : `${reg.email}-${globalIndex}`} className="hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
-                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{allRegsPage * 10 + idx + 1}</td>
-                        <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{name}</td>
-                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{email}</td>
-                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{phone}</td>
-                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{reg.topic || "N/A"}</td>
-                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{regTime}</td>
-                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{start}</td>
-                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{status}</td>
-                       
-                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{duration}</td>
-                      </tr>
-                    );
-                  })}
+                      const name =
+                        (reg.first_name && reg.last_name ? `${reg.first_name} ${reg.last_name}` : reg.first_name || reg.last_name) || "N/A";
+                      const email = reg.email || "N/A";
+                      const phone = reg.phone_number || "N/A";
+                      const regTimeSource = (reg as unknown as { registration_time?: string }).registration_time;
+                      const regTime =
+                        regTimeSource && typeof regTimeSource === "string"
+                          ? formatToPST(regTimeSource)
+                          : reg.registered_at
+                          ? formatToPST(reg.registered_at)
+                          : reg.start_time
+                          ? formatToPST(reg.start_time)
+                          : "N/A";
+                      const start = reg.start_time ? new Date(reg.start_time).toLocaleString() : "N/A";
+                      const status = reg.status || "N/A";
+                      const duration =
+                        typeof reg.duration === "number" && reg.duration > 0
+                          ? `${Math.floor(reg.duration / 60)}m ${reg.duration % 60}s`
+                          : "0s";
+                      const globalIndex = allRegsPage * 10 + idx;
+                      return (
+                        <tr key={reg.registrant_id ? `${reg.registrant_id}-${globalIndex}` : `${reg.email}-${globalIndex}`} className="hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
+                          <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{allRegsPage * 10 + idx + 1}</td>
+                          <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{name}</td>
+                          <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{email}</td>
+                          <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{phone}</td>
+                          <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{reg.topic || "N/A"}</td>
+                          <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{regTime}</td>
+                          <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{start}</td>
+                          <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{status}</td>
+                          <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{duration}</td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
           </section>
         )}
 
-        {/* Date-wise snapshot */}
         {dateSummary.length > 0 && (
           <section className="mb-10 bg-white dark:bg-[#1F2A2E] rounded-2xl shadow-lg border border-blue-100 dark:border-blue-800/50 p-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
@@ -649,4 +617,3 @@ export default function WebinarRegistrationPage() {
     </main>
   );
 }
-

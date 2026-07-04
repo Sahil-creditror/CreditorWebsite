@@ -8,10 +8,10 @@ export const metadata: Metadata = {
 export default function Page() {
     return (
         <main>
-            <Herobanner
+            {/* <Herobanner
                 bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883453/creditor-website-assets/images/courses/course-banner.webp"
                 heading="Explore Our Premium Catalogs"
-                desc="Learn Differently. Grow Distinctively. Become Private with Our Premium Catalogs." />
+                desc="Learn Differently. Grow Distinctively. Become Private with Our Premium Catalogs." /> */}
             <Courses />
         </main>
     );

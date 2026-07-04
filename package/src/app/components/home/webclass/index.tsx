@@ -1,336 +1,308 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
-/**
- * Fixed daily webinar times in PST (24h format).
- * These are used for the countdown logic and upcoming-session dropdown.
- * Updated for hourly sessions from 12:00 AM (midnight) to 11:00 PM (all 24 hours).
- */
-const WEBINAR_SESSION_HOURS_PST: number[] = [];
-const WEBINAR_SESSION_MINUTES_PST: number[] = [];
-
-// Generate hourly time slots for all 24 hours (0:00 to 23:00)
-// 12:00 AM, 1:00 AM, 2:00 AM, 3:00 AM, ..., 11:00 PM
-for (let hour = 0; hour < 24; hour++) {
-  WEBINAR_SESSION_HOURS_PST.push(hour);
-  WEBINAR_SESSION_MINUTES_PST.push(0); // Only hourly slots (minute = 0)
-}
-
-/**
- * Hard stop for this webinar series (final occurrence).
- * Used so that "upcoming" logic never goes past the last scheduled date.
- *
- * NOTE: Feb 1, 2026 11:59 PM PST (adjust if the series end date changes).
- */
-const WEBINAR_SERIES_END = new Date("2026-02-01T23:59:59-08:00");
-
-/**
- * Countdown hook: next scheduled webinar (hourly, all 24 hours PST) from current time.
- * Shows countdown to the nearest upcoming session start time.
- * When a session time passes, automatically moves to the next session.
- */
 function useCountdown() {
-  const getNextSessionTarget = () => {
-    const now = new Date();
-
-    // Build all possible sessions for today and tomorrow
-    const allSessions: Date[] = [];
-
-    // Today's sessions
-    for (let i = 0; i < WEBINAR_SESSION_HOURS_PST.length; i++) {
-      const d = new Date(now);
-      d.setHours(WEBINAR_SESSION_HOURS_PST[i], WEBINAR_SESSION_MINUTES_PST[i], 0, 0);
-      if (d.getTime() > now.getTime()) {
-        allSessions.push(d);
-      }
-    }
-
-    // Tomorrow's sessions (if needed)
-    if (allSessions.length === 0) {
-      const tomorrow = new Date(now);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      for (let i = 0; i < WEBINAR_SESSION_HOURS_PST.length; i++) {
-        const d = new Date(tomorrow);
-        d.setHours(WEBINAR_SESSION_HOURS_PST[i], WEBINAR_SESSION_MINUTES_PST[i], 0, 0);
-        allSessions.push(d);
-      }
-    }
-
-    // Sort by time and get the nearest upcoming session
-    allSessions.sort((a, b) => a.getTime() - b.getTime());
-    return allSessions[0] || new Date(now.getTime() + 60 * 60 * 1000); // Fallback: 1 hour from now
+  const getNext = () => {
+    const next = new Date();
+    next.setMinutes(0, 0, 0);
+    next.setHours(next.getHours() + 1);
+    return next;
   };
 
-  const [targetTime, setTargetTime] = useState<Date>(getNextSessionTarget);
-  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
+  const [target, setTarget] = useState<Date>(getNext);
+  const [t, setT] = useState({ h: 0, m: 0, s: 0 });
 
   useEffect(() => {
-    const update = () => {
-      const now = new Date().getTime();
-      const diff = targetTime.getTime() - now;
+    const tick = () => {
+      const diff = target.getTime() - Date.now();
 
       if (diff <= 0) {
-        // Move to the next session and recompute
-        const newTarget = getNextSessionTarget();
-        setTargetTime(newTarget);
+        setTarget(getNext());
         return;
       }
 
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      setTimeLeft({ hours, minutes, seconds });
+      setT({
+        h: Math.floor(diff / 3_600_000),
+        m: Math.floor((diff % 3_600_000) / 60_000),
+        s: Math.floor((diff % 60_000) / 1_000),
+      });
     };
 
-    update();
-    const interval = setInterval(update, 1000);
-    return () => clearInterval(interval);
-  }, [targetTime]);
+    tick();
 
-  return timeLeft;
+    const id = setInterval(tick, 1000);
+
+    return () => clearInterval(id);
+  }, [target]);
+
+  return t;
 }
 
-export default function WebclassSection() {
-  const { hours, minutes, seconds } = useCountdown();
+const pad = (n: number) => String(n).padStart(2, "0");
 
-  const format = (value: number) => value.toString().padStart(2, "0");
+const BENEFITS = [
+  "Step outside the public system entirely",
+  "Limit liability and protect your assets",
+  "Achieve true financial sovereignty",
+];
+
+const CountUnit = ({
+  value,
+  label,
+}: {
+  value: string;
+  label: string;
+}) => (
+  <div className="flex flex-col items-center justify-center bg-white border border-blue-100 rounded-xl px-3.5 py-2 min-w-[64px] shadow-sm">
+    <span className="text-2xl font-black tabular-nums text-slate-900 leading-none">
+      {value}
+    </span>
+    <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest mt-1">
+      {label}
+    </span>
+  </div>
+);
+
+export default function WebclassSection() {
+  const { h, m, s } = useCountdown();
 
   return (
-    <>
-      {/* Webclass hero section - matching exact design from image */}
-      <section className="relative overflow-hidden py-5 md:py-10 text-white dark:text-white">
-        {/* Base gradient background using website blue shades */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: "linear-gradient(to bottom, #001428 0%, #002b5c 30%, #026fe2 60%, #45beff 85%, #bfdbfe 100%)",
-          }}
-        />
+    <section
+      className="
+      relative
+      overflow-hidden
+      bg-gradient-to-br from-blue-100 via-white to-blue-900/40
+      text-slate-800
+      font-sans
+      py-20
+      lg:py-24
+      selection:bg-blue-600
+      selection:text-white
+      "
+    >
+      {/* --- Dynamic Three-Wave Ambient Background System --- */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
 
-        {/* Split design with diagonal lines on right side - light mode */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden dark:hidden hidden md:block">
-          {/* Left side - gradient dark blue */}
-          <div
-            className="absolute inset-0 left-0 right-[40%]"
-            style={{
-              background: "linear-gradient(to bottom right, #001428 0%, #002b5c 50%, #026fe2 100%)",
+        {/* Soft underlying glows */}
+        <div className="absolute top-10 left-1/3 w-[500px] h-[500px] bg-blue-300/10 rounded-full blur-[130px]" />
+        <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-sky-200/20 rounded-full blur-[110px]" />
+
+        <svg
+          className="absolute w-full h-full min-w-[1440px] opacity-70"
+          viewBox="0 0 1440 800"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="wave-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.40" />
+              <stop offset="50%" stopColor="#0ea5e9" stopOpacity="0.03" />
+              <stop offset="100%" stopColor="#2563eb" stopOpacity="0.06" />
+            </linearGradient>
+            <linearGradient id="wave-grad-2" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#6366f1" stopOpacity="0.10" />
+              <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.08" />
+            </linearGradient>
+          </defs>
+
+          {/* Wave Line 1: Primary Structural Flow */}
+          <motion.path
+            animate={{
+              d: [
+                "M -100 250 C 300 400, 500 100, 900 300 C 1200 450, 1300 200, 1600 350",
+                "M -100 280 C 250 350, 550 150, 850 250 C 1150 350, 1350 250, 1600 380",
+                "M -100 250 C 300 400, 500 100, 900 300 C 1200 450, 1300 200, 1600 350"
+              ]
             }}
+            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+            stroke="url(#wave-grad-1)"
+            strokeWidth="3"
+            strokeLinecap="round"
           />
 
-          {/* Right side - lighter blue gradient with diagonal streaks */}
-          <div
-            className="absolute inset-0 left-[40%] right-0"
-            style={{
-              background: "linear-gradient(to bottom right, #026fe2 0%, #45beff 40%, #93c5fd 70%, #bfdbfe 100%)",
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='diagonal-lines' width='120' height='120' patternUnits='userSpaceOnUse'%3E%3Cg opacity='0.12'%3E%3Cpath d='M 0 0 L 120 120' fill='none' stroke='%23ffffff' stroke-width='1.5'/%3E%3Cpath d='M 0 30 L 120 150' fill='none' stroke='%23ffffff' stroke-width='1.5'/%3E%3Cpath d='M 0 60 L 120 180' fill='none' stroke='%23ffffff' stroke-width='1.5'/%3E%3Cpath d='M 0 90 L 120 210' fill='none' stroke='%23ffffff' stroke-width='1.5'/%3E%3Cpath d='M -30 0 L 90 120' fill='none' stroke='%23ffffff' stroke-width='1.5'/%3E%3Cpath d='M -30 30 L 90 150' fill='none' stroke='%23ffffff' stroke-width='1.5'/%3E%3Cpath d='M -30 60 L 90 180' fill='none' stroke='%23ffffff' stroke-width='1.5'/%3E%3Cpath d='M -30 90 L 90 210' fill='none' stroke='%23ffffff' stroke-width='1.5'/%3E%3C/g%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23diagonal-lines)'/%3E%3C/svg%3E")`,
-              backgroundSize: "120px 120px",
-              backgroundRepeat: "repeat",
+          {/* Wave Line 2: Subtle Echo Flow */}
+          <motion.path
+            animate={{
+              d: [
+                "M -100 450 C 200 300, 600 500, 1000 350 C 1250 250, 1400 400, 1600 450",
+                "M -100 410 C 250 360, 550 420, 950 380 C 1200 340, 1450 360, 1600 410",
+                "M -100 450 C 200 300, 600 500, 1000 350 C 1250 250, 1400 400, 1600 450"
+              ]
             }}
-          />
-        </div>
-
-        {/* Split design for dark mode */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden hidden dark:md:block">
-          {/* Left side - dark gradient */}
-          <div
-            className="absolute inset-0 left-0 right-[40%]"
-            style={{
-              background: "linear-gradient(to bottom right, #000000 0%, #001428 50%, #002b5c 100%)",
-            }}
+            transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+            stroke="url(#wave-grad-2)"
+            strokeWidth="2"
+            strokeDasharray="8 8"
           />
 
-          {/* Right side - darker gradient with subtle diagonal lines */}
-          <div
-            className="absolute inset-0 left-[40%] right-0"
-            style={{
-              background: "linear-gradient(to bottom right, #001428 0%, #002b5c 40%, #026fe2 70%, #0a0a0a 100%)",
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='diagonal-lines-dark' width='120' height='120' patternUnits='userSpaceOnUse'%3E%3Cg opacity='0.08'%3E%3Cpath d='M 0 0 L 120 120' fill='none' stroke='%2345beff' stroke-width='1.5'/%3E%3Cpath d='M 0 30 L 120 150' fill='none' stroke='%2345beff' stroke-width='1.5'/%3E%3Cpath d='M 0 60 L 120 180' fill='none' stroke='%2345beff' stroke-width='1.5'/%3E%3Cpath d='M 0 90 L 120 210' fill='none' stroke='%2345beff' stroke-width='1.5'/%3E%3Cpath d='M -30 0 L 90 120' fill='none' stroke='%2345beff' stroke-width='1.5'/%3E%3Cpath d='M -30 30 L 90 150' fill='none' stroke='%2345beff' stroke-width='1.5'/%3E%3Cpath d='M -30 60 L 90 180' fill='none' stroke='%2345beff' stroke-width='1.5'/%3E%3Cpath d='M -30 90 L 90 210' fill='none' stroke='%2345beff' stroke-width='1.5'/%3E%3C/g%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23diagonal-lines-dark)'/%3E%3C/svg%3E")`,
-              backgroundSize: "120px 120px",
-              backgroundRepeat: "repeat",
+          {/* Wave Line 3: High Amplitude Ridge */}
+          <motion.path
+            animate={{
+              d: [
+                "M -100 150 C 400 50, 450 350, 800 200 C 1100 80, 1200 300, 1600 120",
+                "M -100 120 C 350 90, 500 280, 850 240 C 1050 120, 1250 260, 1600 150",
+                "M -100 150 C 400 50, 450 350, 800 200 C 1100 80, 1200 300, 1600 120"
+              ]
             }}
+            transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
+            stroke="url(#wave-grad-1)"
+            strokeWidth="1.5"
+            strokeOpacity="0.6"
           />
-        </div>
+        </svg>
+      </div>
 
-        {/* Top header with logo */}
-        <div className="relative z-10 bg-transparent py-2">
-          <div className="container mx-auto px-8 md:px-16 lg:px-24 xl:px-32">
-            <div className="text-center">
-              {/* Logo */}
-              <div className="flex items-center justify-center">
-                <Image
-                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png"
-                  alt="Creditor Academy Logo"
-                  width={250}
-                  height={60}
-                  className="dark:hidden"
-                  priority
-                />
-                <Image
-                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png"
-                  alt="Creditor Academy Logo"
-                  width={250}
-                  height={60}
-                  className="hidden dark:block"
-                  priority
-                />
+      <div className="relative max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 items-center gap-12 px-4 sm:px-6 lg:px-8 z-10">
+
+        {/* LEFT CONTENT COLUMN */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="lg:col-span-7 flex gap-6 md:gap-8 items-stretch"
+        >
+          {/* Brand Stylized Vertical Separator Bar */}
+          <div className="w-[4px] sm:w-[6px] bg-gradient-to-b from-blue-600 via-sky-500 to-transparent rounded-full flex-shrink-0" />
+
+          <div className="flex flex-col justify-center gap-6 py-2">
+            <div>
+              {/* Event Header Pill - Changed to highlight Webinar training */}
+              <div className="inline-flex items-center gap-2 bg-blue-600 text-white font-black text-[11px] uppercase tracking-wider px-3 py-1 rounded-md mb-5 shadow-md shadow-blue-600/10">
+                <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                Free Live Webinar Training
               </div>
-            </div>
-          </div>
-        </div>
 
-        {/* Top banner */}
-        <div className="relative z-10 bg-transparent py-3">
-          <div className="container mx-auto px-8 md:px-16 lg:px-24 xl:px-32">
-            <p className="text-center text-white text-sm md:text-base" style={{ fontFamily: "Arial, sans-serif" }}>
-              This <strong>FREE Webclass</strong> Is For Business Owners, Individuals, &amp; Anyone Ready for Change…
-            </p>
-          </div>
-        </div>
-
-        {/* Alert Banner - Webinar Closing Soon */}
-        <div className="relative z-10 bg-gradient-to-r from-red-600 to-orange-600 dark:from-red-700 dark:to-orange-700 py-3 my-3 shadow-lg">
-          <div className="container mx-auto px-8 md:px-16 lg:px-24 xl:px-32">
-            <div className="flex items-center justify-center gap-2 md:gap-3">
-              <svg className="w-5 h-5 md:w-6 md:h-6 text-white animate-pulse" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-              </svg>
-              <p className="text-center text-white font-bold text-sm md:text-base lg:text-lg" style={{ fontFamily: "Arial, sans-serif" }}>
-                <strong>URGENT:</strong> This FREE Webinar Is Closing Soon - Limited Spots Available!
-              </p>
-              <svg className="w-5 h-5 md:w-6 md:h-6 text-white animate-pulse" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        {/* Description line below alert */}
-        <div className="relative z-10 py-2">
-          <div className="container mx-auto px-8 md:px-16 lg:px-24 xl:px-32">
-            <p className="text-center text-white text-sm md:text-base" style={{ fontFamily: "Arial, sans-serif" }}>
-              Learn how people step out of the public system and operate in private to gain control, limit liability, and achieve financial freedom.
-            </p>
-          </div>
-        </div>
-
-        {/* Main content */}
-        <div className="container mx-auto px-8 md:px-16 lg:px-24 xl:px-32 relative z-10 pt-8">
-          <div className="flex flex-col lg:flex-row items-stretch gap-6 lg:gap-8">
-            {/* Left image with gold border */}
-            <div className="lg:w-5/12 flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-[500px]">
-                <div
-                  className="relative w-full h-[400px] md:h-[550px] lg:h-[700px] border-2 overflow-hidden shadow-2xl"
-                  style={{
-                    borderColor: "#d4af37",
-                    backgroundColor: "#f3f4f6"
-                  }}
-                >
-                  <Image
-                    src={"https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883348/creditor-website-assets/images/avatar/paul2.webp"}
-                    alt="Paul Michael Rowland - Founder of Creditor Academy"
-                    fill
-                    style={{ objectFit: "cover" }}
-                    priority
-                    sizes="(max-width: 768px) 100vw, 500px"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Right content */}
-            <div className="flex-1 flex flex-col justify-center lg:pr-8 xl:pr-12">
-              {/* Small uppercase text */}
-              <p className="text-xs md:text-sm tracking-wider uppercase mb-1 text-white dark:text-gray-400 font-medium" style={{ fontFamily: "Arial, sans-serif" }}>
-                Secrets To Easily Starting Your Own
-              </p>
-
-              {/* Main headline - very large, bold */}
-              <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] mb-2 text-white dark:text-white" style={{ fontFamily: "Arial, sans-serif", fontWeight: 900 }}>
-                <span className="block" style={{ color: "#ffc107" }}>Become and</span>
-                <span className="block">Operate Private</span>
+              {/* Bold Headline Transformation */}
+              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black tracking-tight text-slate-900 uppercase leading-[1.05]">
+                Become & <br />
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-500">
+                  Operate Private
+                </span>
               </h1>
+            </div>
 
-              {/* Description paragraphs */}
-              <div className="mb-4 space-y-2">
-                <p className="text-base md:text-lg text-white dark:text-gray-300 leading-relaxed" style={{ fontFamily: "Arial, sans-serif" }}>
-                  This FREE webclass introduces Creditor Academy's principles on how private individuals and businesses operate differently in structure, credit, income, and responsibility—focused on positioning, private operation, and reducing dependency.
+            {/* Changed content to focus on the live masterclass webinar broadcast */}
+            <p className="text-[15px] sm:text-[16px] text-slate-500 leading-[1.7] max-w-2xl font-medium">
+              Secure your spot for this exclusive webinar event. Learn the exact framework private individuals use to step completely outside the public system, eliminate standard liabilities, and unlock true financial sovereignty with Creditor Academy.
+            </p>
+
+            {/* Checklist Matrix Alignment */}
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+              {BENEFITS.map((b) => (
+                <li key={b} className="flex items-start gap-3">
+                  <div className="w-5 h-5 rounded-md bg-blue-50 border border-blue-200 flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#2563EB"
+                      strokeWidth="3.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </div>
+                  <span className="text-[13.5px] font-bold text-slate-700 leading-snug">
+                    {b}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="w-full h-px bg-blue-200/40 my-3" />
+
+            {/* Action Frame & Live Countdown integration - Retuned for webinar terminology */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 bg-white/60 backdrop-blur-md border border-blue-100 p-5 rounded-2xl shadow-md shadow-blue-900/5 max-w-xl">
+              <div>
+                <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-2">
+                  Next Live Broadcast In
                 </p>
-              </div>
-
-              {/* Highlight text - bold with gold highlights */}
-              <p className="text-base md:text-lg font-bold mb-4 text-white dark:text-white" style={{ fontFamily: "Arial, sans-serif" }}>
-                <span style={{ color: "#ffc107" }}>100% FREE</span> - Next Class Is Starting <span style={{ color: "#ffc107" }}>TODAY!</span>
-              </p>
-
-              {/* Alert Message - Closing Soon */}
-              <div className="mb-4 w-fit p-3 rounded-lg bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/30 dark:to-orange-900/30 border-2 border-red-300 dark:border-red-700">
-                <div className="flex items-center gap-2">
-                  <svg className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                  </svg>
-                  <p className="text-sm md:text-base font-semibold text-red-800 dark:text-red-200 whitespace-nowrap" style={{ fontFamily: "Arial, sans-serif" }}>
-                    <strong>Closing Soon!</strong> Register now before spots fill up.
-                  </p>
+                <div className="flex items-center gap-1">
+                  <CountUnit value={pad(h)} label="hrs" />
+                  <span className="text-lg font-bold text-blue-200 px-0.5">:</span>
+                  <CountUnit value={pad(m)} label="min" />
+                  <span className="text-lg font-bold text-blue-200 px-0.5">:</span>
+                  <CountUnit value={pad(s)} label="sec" />
                 </div>
               </div>
 
-              {/* CTA Button - Link to /webinar */}
-              <div className="mb-4">
-                <a
-                  href="/webinar"
-                  className="inline-flex items-center justify-center font-bold text-base md:text-lg px-8 py-4 rounded-lg shadow-lg transition-colors bg-[#FFC107] hover:bg-[#FFD700] text-gray-900"
-                  style={{
-                    fontFamily: "Arial, sans-serif",
-                    boxShadow: "0 8px 20px rgba(255, 193, 7, 0.4)"
-                  }}
+              <Link
+                href="/webinar"
+                className="group inline-flex items-center justify-center gap-3 bg-[#FFC107] hover:bg-[#FFB300] text-black font-bold text-sm uppercase tracking-wide rounded-xl px-6 py-3.5 shadow-md shadow-yellow-500/20 transition-all duration-200 text-center sm:w-auto"
+              >
+                Claim Free Webinar Seat
+                <svg
+                  className="transition-transform duration-200 group-hover:translate-x-1"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
-                  Go to Registration Page
-                </a>
-                <p className="mt-2 text-xs md:text-sm text-white dark:text-gray-400" style={{ fontFamily: "Arial, sans-serif" }}>
-                  Learn More About The Private Operation Webclass
-                </p>
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <path d="M12 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* RIGHT IMAGE COLUMN */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="lg:col-span-5 w-full max-w-md mx-auto lg:max-w-none"
+        >
+          <div className="relative overflow-hidden rounded-xl group aspect-[4/5] shadow-xl shadow-blue-900/10 border border-blue-100">
+            {/* Core Presenter Photograph Container */}
+            <div className="relative w-full h-full overflow-hidden bg-gradient-to-b from-blue-900 via-slate-900 to-slate-950">
+              <Image
+                src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883348/creditor-website-assets/images/avatar/paul2.webp"
+                alt="PaulMichael Rowland"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 35vw"
+                className="object-cover object-top transition-transform duration-700 group-hover:scale-103"
+              />
+
+              {/* Dynamic Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90" />
+
+              {/* Webinar Status Overlay Badge */}
+              <div className="absolute top-4 right-4 bg-red-600 border border-red-500 shadow-md rounded-full px-3 py-1 flex items-center gap-1.5 z-20">
+                <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                <span className="text-[9px] font-black text-white uppercase tracking-wider">
+                  Live Webinar Room
+                </span>
               </div>
 
-              {/* Countdown */}
-              <div className="mt-3">
-                <p className="text-base md:text-lg font-semibold mb-3 text-white dark:text-white" style={{ fontFamily: "Arial, sans-serif" }}>
-                  Next Webclass Begins In:
+              {/* Presenter Description Nameplate Overlay */}
+              <div className="absolute bottom-5 left-5 right-5 bg-slate-900/90 backdrop-blur-md border border-white/10 shadow-xl rounded-xl p-4 z-20">
+                <p className="text-base text-white font-black tracking-tight leading-none uppercase">
+                  PaulMichael Rowland
                 </p>
-
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 md:gap-6">
-                  {[
-                    { label: "HOUR", value: format(hours) },
-                    { label: "MINUTES", value: format(minutes) },
-                    { label: "SECONDS", value: format(seconds) },
-                  ].map((item) => (
-                    <div key={item.label} className="flex flex-col items-center">
-                      <div
-                        className="rounded-full flex flex-col items-center justify-center border-[3px] bg-white dark:bg-[#0a0e14] shadow-inner"
-                        style={{
-                          width: "min(30vw, 100px)",
-                          height: "min(30vw, 100px)",
-                          borderColor: "#d1d5db"
-                        }}
-                      >
-                        <span className="text-xl md:text-2xl font-extrabold text-gray-900 dark:text-white" style={{ fontFamily: "Arial, sans-serif" }}>
-                          {item.value}
-                        </span>
-                        <span className="text-[8px] md:text-[10px] font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-tighter" style={{ fontFamily: "Arial, sans-serif" }}>
-                          {item.label}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <p className="text-[11px] font-bold text-blue-400 uppercase tracking-wider mt-1.5">
+                  Founder & Host, Creditor Academy
+                </p>
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

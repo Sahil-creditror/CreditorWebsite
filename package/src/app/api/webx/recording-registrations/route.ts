@@ -1,10 +1,34 @@
 import { NextRequest, NextResponse } from "next/server";
+import { S3Client, PutObjectCommand, ListObjectsV2Command, GetObjectCommand } from "@aws-sdk/client-s3";
 import { sendTeamNotificationEmail } from "@/lib/emailService";
-import {
-  fetchRecordingRegistrations,
-  saveRecordingRegistration,
-  type RecordingRegistration,
-} from "@/lib/recordingRegistrationsStore";
+
+// Reuse the same AWS setup pattern as other routes
+const s3 = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY ? {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  } : undefined,
+});
+
+const BUCKET = process.env.AWS_S3_BUCKET as string | undefined;
+const RECORDING_REGISTRATIONS_PREFIX = "recording-registrations/";
+
+interface RecordingRegistration {
+  registrant_id: string;
+  webinar_id: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  phone_number?: string | null;
+  join_url?: string;
+  topic?: string;
+  start_time?: string | null;
+  registered_at: string;
+  joined?: boolean;
+  status?: string;
+  type: "recording";
+}
 
 // POST: Save a recording registration
 export async function POST(req: NextRequest) {
@@ -40,7 +64,20 @@ export async function POST(req: NextRequest) {
       type: "recording",
     };
 
-    await saveRecordingRegistration(registration);
+    // If S3 is configured, persist the registration
+    if (BUCKET) {
+      const key = `${RECORDING_REGISTRATIONS_PREFIX}${registrant_id}.json`;
+      await s3.send(new PutObjectCommand({
+        Bucket: BUCKET,
+        Key: key,
+        Body: Buffer.from(JSON.stringify(registration, null, 2)),
+        ContentType: "application/json",
+        ServerSideEncryption: "AES256",
+      }));
+    } else {
+      // Fallback: log so we don't lose the registration during local/dev
+      console.log("[recording-registrations] registration received (no S3 configured)", registration);
+    }
 
     // Send team notification email for pre-recorded session (non-blocking - don't fail registration if email fails)
     console.log("[recording-registrations] Attempting to send team notification email for pre-recorded session...");
@@ -91,7 +128,39 @@ export async function POST(req: NextRequest) {
 // GET: Fetch all recording registrations
 export async function GET(req: NextRequest) {
   try {
-    const registrations = await fetchRecordingRegistrations();
+    const registrations: RecordingRegistration[] = [];
+
+    if (BUCKET) {
+      try {
+        const listCommand = new ListObjectsV2Command({
+          Bucket: BUCKET,
+          Prefix: RECORDING_REGISTRATIONS_PREFIX,
+        });
+
+        const listResponse = await s3.send(listCommand);
+        const keys = listResponse.Contents?.map(obj => obj.Key || "").filter(Boolean) || [];
+
+        // Fetch each registration file
+        for (const key of keys) {
+          try {
+            const getCommand = new GetObjectCommand({
+              Bucket: BUCKET,
+              Key: key,
+            });
+            const objectResponse = await s3.send(getCommand);
+            const bodyString = await objectResponse.Body?.transformToString();
+            if (bodyString) {
+              const registration = JSON.parse(bodyString) as RecordingRegistration;
+              registrations.push(registration);
+            }
+          } catch (err) {
+            console.error(`Error reading registration file ${key}:`, err);
+          }
+        }
+      } catch (err) {
+        console.error("Error listing recording registrations:", err);
+      }
+    }
 
     return NextResponse.json({
       success: true,

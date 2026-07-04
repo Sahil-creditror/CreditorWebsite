@@ -3,14 +3,12 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import {
-  WORKSHOP_REGISTER_URL,
-} from "@/lib/workshop";
+import { WORKSHOP_REGISTER_URL } from "@/lib/workshop";
 
-// Updated as per image content: Saturday, July 4, 2026 — 11:00 AM PST
-const TARGET_EVENT_MS = new Date("2026-07-04T11:00:00-08:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/ait.png"; 
-const EVENT_DATE_LABEL = "Saturday, July 4";
+// Target Event Timestamp updated to Saturday, July 11, 2026 at 11:00 AM PST
+const TARGET_EVENT_MS = new Date("2026-07-11T11:00:00-07:00").getTime();
+const EVENT_IMAGE = "/images/todayclasstopic/aitt.png";
+const EVENT_DATE_LABEL = "Saturday, July 11, 2026";
 const EVENT_TIME_LABEL = "11:00 AM PST";
 
 interface EventPopupProps {
@@ -19,7 +17,7 @@ interface EventPopupProps {
   manualTrigger?: number;
 }
 
-function pad(n: number) {
+function pad(n: number | string) {
   return String(n).padStart(2, "0");
 }
 
@@ -61,6 +59,7 @@ export default function EventPopup({
   if (!open) return null;
 
   const { days, hours, minutes, seconds } = countdown;
+  const isLive = Date.now() >= TARGET_EVENT_MS;
 
   return (
     <div
@@ -82,53 +81,56 @@ export default function EventPopup({
           onClick={() => setOpen(false)}
           className="event-popup-close"
         >
-          ×
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 1L1 13M1 1L13 13" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </button>
 
         <div className="event-popup-grid">
+          {/* Main Content Area */}
           <div className="event-popup-left">
-            <p className="event-popup-brand">CREDITOR ACADEMY • PRIVATE MONTESSORI ASSOCIATION</p>
-
-            <div className="event-popup-badges">
-              <span className="event-badge event-badge--live">
-                <span className="event-badge-dot" aria-hidden />
-                LIVE ONLINE TRAINING
-              </span>
-              <span className="event-badge event-badge--date">{EVENT_DATE_LABEL}</span>
-            </div>
+            <header className="event-popup-header">
+              <p className="event-popup-brand">CREDITOR ACADEMY</p>
+              <div className="event-popup-badges">
+                <span className="event-badge event-badge--live">
+                  <span className="event-badge-dot" aria-hidden />
+                  LIVE ONLINE TRAINING
+                </span>
+                <span className="event-badge event-badge--date">{EVENT_DATE_LABEL}</span>
+              </div>
+            </header>
 
             <h2 id="event-popup-title" className="event-popup-title">
-              AI Tools <span className="event-popup-title-accent">Every Small Business</span> Owner Should Use
+              AI Tools Every <span className="event-popup-title-accent">Small Business Owner</span> Should Use
             </h2>
-            <p className="event-popup-subtitle-tag">Work Smarter. Save Time. Grow Faster.</p>
 
             <p className="event-popup-desc">
-              Discover the top AI tools that can help you <strong>automate, create, and scale</strong> your business. Join our masterclass to:
+              <strong>Work Smarter. Save Time. Grow Faster.</strong> Discover the best AI tools to simplify your tasks, boost productivity, and grow your business. Save time on daily tasks, automate marketing, create content in minutes, and stay ahead of the competition.
             </p>
 
-            <ul className="event-popup-bullets">
-              <li>Save time with smart automation systems</li>
-              <li>Create better content much faster</li>
-              
-            </ul>
+            <div className="event-popup-tags">
+              <span>Automate Marketing</span>
+              <span>Manage Finances Smarter</span>
+              <span>{EVENT_TIME_LABEL}</span>
+            </div>
 
             <div className="event-popup-countdown-wrap">
-              {Date.now() >= TARGET_EVENT_MS ? (
-                <div style={{ textAlign: 'center' }}>
+              {isLive ? (
+                <div className="event-live-status">
                   <p className="event-popup-countdown-label">LIVE NOW</p>
-                  <p style={{ color: '#2ec0ff', fontWeight: 800, fontSize: 18 }}>Streaming live right now</p>
+                  <p className="event-live-text">Joining live — streaming now</p>
                 </div>
               ) : (
                 <>
                   <p className="event-popup-countdown-label">STARTS IN</p>
                   <div className="event-popup-countdown-row">
-                    <CountdownBox value={days} label="DAYS" />
+                    <CountdownBox value={days} label="Days" />
                     <span className="event-popup-colon">:</span>
-                    <CountdownBox value={pad(hours)} label="HRS" />
+                    <CountdownBox value={pad(hours)} label="Hrs" />
                     <span className="event-popup-colon">:</span>
-                    <CountdownBox value={pad(minutes)} label="MIN" />
+                    <CountdownBox value={pad(minutes)} label="Min" />
                     <span className="event-popup-colon">:</span>
-                    <CountdownBox value={pad(seconds)} label="SEC" />
+                    <CountdownBox value={pad(seconds)} label="Sec" />
                   </div>
                 </>
               )}
@@ -140,15 +142,16 @@ export default function EventPopup({
               rel="noopener noreferrer"
               className="event-popup-cta"
             >
-              Register Now — Free Registration
+              REGISTER NOW FOR FREE
             </a>
           </div>
 
+          {/* Graphical Display Panel */}
           <div className="event-popup-right">
             <div className="event-popup-poster-card">
               <Image
                 src={EVENT_IMAGE}
-                alt={`AI Tools Every Small Business Owner Should Use Masterclass — ${EVENT_DATE_LABEL}, ${EVENT_TIME_LABEL}`}
+                alt={`AI Tools Every Small Business Owner Should Use Live Masterclass — ${EVENT_DATE_LABEL}, ${EVENT_TIME_LABEL}`}
                 width={480}
                 height={480}
                 className="event-popup-poster-img"
@@ -168,248 +171,283 @@ export default function EventPopup({
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 12px 16px;
-          background: rgba(0, 0, 0, 0.84);
+          padding: 16px;
+          background: rgba(15, 23, 42, 0.4);
+          backdrop-filter: blur(8px);
         }
+        
         .event-popup-dialog {
           position: relative;
           width: 100%;
-          max-width: 820px;
-          max-height: 92vh;
+          max-width: 440px;
+          max-height: 90vh;
           overflow-y: auto;
-          border-radius: 20px;
-          border: 1px solid rgba(59, 130, 246, 0.32);
-          background: linear-gradient(152deg, #0c1628 0%, #0a192f 48%, #070e1c 100%);
-          box-shadow:
-            0 0 0 1px rgba(0, 180, 255, 0.06),
-            0 28px 72px rgba(0, 0, 0, 0.72),
-            0 0 48px rgba(0, 100, 255, 0.1);
+          scrollbar-width: none;
+          border-radius: 24px;
+          border: 1px solid #ffffff;
+          background: #ffffff;
+          box-shadow: 
+            0 1px 3px rgba(0, 0, 0, 0.05),
+            0 25px 50px -12px rgba(15, 23, 42, 0.15),
+            0 0 40px rgba(14, 165, 233, 0.04);
         }
+        .event-popup-dialog::-webkit-scrollbar {
+          display: none;
+        }
+
         .event-popup-close {
           position: absolute;
-          top: 12px;
-          right: 12px;
-          z-index: 20;
+          top: 16px;
+          right: 16px;
+          z-index: 30;
           width: 32px;
           height: 32px;
           display: flex;
           align-items: center;
           justify-content: center;
-          border: none;
+          border: 1px solid #fca5a5;
           border-radius: 50%;
-          background: rgba(0, 0, 0, 0.5);
-          color: #fff;
-          font-size: 22px;
-          line-height: 1;
+          background: #fff1f2;
+          color: #dc2626;
           cursor: pointer;
+          transition: all 0.2s ease;
         }
         .event-popup-close:hover {
-          background: rgba(0, 0, 0, 0.72);
+          background: #fee2e2;
+          color: #b91c1c;
+          border-color: #ef4444;
         }
+
         .event-popup-grid {
-          display: grid;
-          grid-template-columns: 1fr;
+          display: flex;
+          flex-direction: column-reverse;
         }
-        @media (min-width: 900px) {
-          .event-popup-grid {
-            grid-template-columns: 1.15fr 0.85fr;
-          }
-        }
+
         .event-popup-left {
           display: flex;
           flex-direction: column;
+          gap: 20px;
+          padding: 24px;
+        }
+
+        .event-popup-header {
+          display: flex;
+          flex-direction: column;
           gap: 12px;
-          padding: 24px 22px;
-          background: radial-gradient(
-            ellipse 90% 55% at 15% 8%,
-            rgba(0, 180, 255, 0.08) 0%,
-            transparent 58%
-          );
         }
-        @media (min-width: 900px) {
-          .event-popup-left {
-            padding: 28px;
-            gap: 12px;
-          }
-        }
+
         .event-popup-brand {
           margin: 0;
           font-size: 10px;
-          font-weight: 700;
-          letter-spacing: 0.1em;
-          color: #6eb8e8;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          color: #0f172a;
         }
+
         .event-popup-badges {
           display: flex;
+          flex-wrap: wrap;
           align-items: center;
           gap: 8px;
         }
+
         .event-badge {
           display: inline-flex;
           align-items: center;
-          border-radius: 999px;
+          border-radius: 6px;
           font-weight: 700;
-          text-transform: uppercase;
+          font-size: 10px;
+          padding: 5px 10px;
         }
         .event-badge--live {
           gap: 6px;
-          padding: 5px 10px;
-          font-size: 9px;
-          letter-spacing: 0.04em;
-          color: #0a2d4a;
-          background: linear-gradient(90deg, #b8e8fc 0%, #9dd4f5 100%);
+          color: #ea580c;
+          background: #fff7ed;
+          border: 1px solid #ffedd5;
         }
         .event-badge-dot {
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background: #e53935;
+          background: #f97316;
+          box-shadow: 0 0 6px #f97316;
+          flex-shrink: 0;
         }
         .event-badge--date {
-          padding: 5px 12px;
-          font-size: 10px;
-          color: rgba(255, 255, 255, 0.92);
-          background: #141f33;
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          font-weight: 600;
+          color: #0284c7;
+          background: #f0f9ff;
+          border: 1px solid #e0f2fe;
         }
+
         .event-popup-title {
           margin: 0;
-          font-size: clamp(24px, 3.5vw, 32px);
+          font-size: 26px;
           font-weight: 800;
-          line-height: 1.1;
-          color: #fff;
+          line-height: 1.2;
+          letter-spacing: -0.02em;
+          color: #0f172a;
         }
         .event-popup-title-accent {
-          color: #2ec0ff;
+          color: #0284c7;
+          background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
-        .event-popup-subtitle-tag {
-          margin: -4px 0 2px 0;
-          font-size: 13px;
-          font-weight: 600;
-          color: #b8e8fc;
-        }
+
         .event-popup-desc {
           margin: 0;
-          font-size: 13px;
-          line-height: 1.5;
-          color: rgba(255, 255, 255, 0.8);
+          font-size: 14px;
+          line-height: 1.6;
+          color: #475569;
         }
-        .event-popup-bullets {
-          margin: 0;
-          padding-left: 18px;
-          font-size: 13px;
-          line-height: 1.5;
-          color: rgba(255, 255, 255, 0.75);
+        .event-popup-desc strong {
+          color: #0f172a;
+          font-weight: 700;
+        }
+
+        .event-popup-tags {
           display: flex;
-          flex-direction: column;
-          gap: 4px;
+          flex-wrap: wrap;
+          gap: 8px;
         }
-        .event-popup-bullets li {
-          list-style-type: disc;
+        .event-popup-tags span {
+          padding: 5px 10px;
+          border-radius: 6px;
+          font-size: 12px;
+          font-weight: 500;
+          color: #475569;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
         }
+
         .event-popup-countdown-wrap {
-          padding: 10px;
-          border-radius: 12px;
-          background: #050c18;
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          margin-top: 4px;
+          padding: 16px;
+          border-radius: 16px;
+          background: #f0f9ff;
+          border: 1px solid #e0f2fe;
         }
         .event-popup-countdown-label {
-          margin: 0 0 8px;
+          margin: 0 0 12px;
           text-align: center;
-          font-size: 9px;
+          font-size: 10px;
           font-weight: 700;
-          letter-spacing: 0.2em;
-          color: #5eb3e8;
+          letter-spacing: 0.15em;
+          color: #0369a1;
         }
         .event-popup-countdown-row {
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 6px;
+          font-variant-numeric: tabular-nums;
         }
         .event-popup-colon {
-          padding-bottom: 16px;
+          padding-bottom: 14px;
           font-size: 18px;
-          font-weight: 300;
-          color: rgba(255, 255, 255, 0.32);
+          font-weight: 600;
+          color: #bae6fd;
+          user-select: none;
         }
+        
+        .event-live-status {
+          text-align: center;
+        }
+        .event-live-text {
+          margin: 0;
+          color: #0284c7;
+          font-weight: 700;
+          font-size: 15px;
+        }
+
         .event-popup-cta {
           display: flex;
           align-items: center;
           justify-content: center;
           width: 100%;
-          padding: 13px;
+          padding: 14px 24px;
           border-radius: 12px;
-          font-size: 14px;
+          font-size: 15px;
           font-weight: 700;
-          color: #fff;
+          color: #ffffff;
           text-decoration: none;
-          background: linear-gradient(90deg, #0a7cff 0%, #1aa3ff 55%, #2ec0ff 100%);
-          box-shadow: 0 6px 20px rgba(10, 124, 255, 0.35);
-          text-transform: uppercase;
+          background: #0284c7;
+          background: linear-gradient(90deg, #38bdf8 0%, #0284c7 100%);
+          box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+          transition: all 0.2s ease;
         }
         .event-popup-cta:hover {
-          filter: brightness(1.06);
           transform: translateY(-1px);
-          color: #fff;
+          box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+          filter: brightness(1.03);
         }
+
         .event-popup-right {
+          padding: 16px 16px 0 16px;
+          display: flex;
+          justify-content: center;
+          background: #f8fafc;
+        }
+
+        .event-popup-poster-card {
+          width: 100%;
+          border-radius: 16px;
+          overflow: hidden;
+          aspect-ratio: 1 / 1;
+          position: relative;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 16px;
-          background: #0a192f;
+          background: #ffffff;
+          box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+          border: 4px solid #ffffff;
         }
-        @media (min-width: 900px) {
-          .event-popup-right {
-            padding: 24px 24px 24px 12px;
-          }
-        }
-        .event-popup-poster-card {
-          width: 100%;
-          max-width: min(400px, 100%);
-          border-radius: 14px;
-          overflow: hidden;
-          background: #fff;
-          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
-        }
+        
         .event-popup-poster-card :global(.event-popup-poster-img) {
-          display: block;
-          width: 100%;
-          height: auto;
-          min-height: 260px;
+          width: 100% !important;
+          height: 100% !important;
           object-fit: contain;
-        }
-        @media (min-width: 900px) {
-          .event-popup-poster-card :global(.event-popup-poster-img) {
-            min-height: 340px;
-          }
+          object-position: center;
+          border-radius: 12px;
         }
 
-        /* CHANGED: Added :global() target wrapper constraints to target the isolated component layout context cleanly */
-        .event-popup-countdown-row :global(.event-countdown-box) {
-          display: flex;
-          min-width: 46px;
-          flex-direction: column;
-          align-items: center;
-          padding: 6px 4px;
-          border-radius: 8px;
-          background: #0d1b2e;
-          border: 1px solid #1e4068;
-        }
-        .event-popup-countdown-row :global(.event-countdown-num) {
-          font-size: 20px;
-          font-weight: 700;
-          line-height: 1;
-          color: #ffffff !important; /* Forces pure white override */
-          font-variant-numeric: tabular-nums;
-        }
-        .event-popup-countdown-row :global(.event-countdown-unit) {
-          margin-top: 4px;
-          font-size: 8px;
-          font-weight: 600;
-          color: #5eb3e8;
+        /* Desktop Breakpoint Modifications */
+        @media (min-width: 840px) {
+          .event-popup-dialog {
+            max-width: 920px;
+            overflow: hidden;
+          }
+          .event-popup-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            min-height: 560px;
+          }
+          .event-popup-left {
+            padding: 40px;
+            gap: 24px;
+          }
+          .event-popup-right {
+            padding: 0;
+            align-items: stretch;
+            justify-content: stretch;
+            border-left: 1px solid #f1f5f9;
+          }
+          .event-popup-poster-card {
+            height: 100%;
+            min-height: 560px;
+            aspect-ratio: auto;
+            border-radius: 0;
+            border: 0;
+            box-shadow: none;
+          }
+          .event-popup-title {
+            font-size: 32px;
+          }
+          .event-popup-header {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+          }
         }
       `}</style>
     </div>
@@ -421,6 +459,32 @@ function CountdownBox({ value, label }: { value: number | string; label: string 
     <div className="event-countdown-box">
       <span className="event-countdown-num">{value}</span>
       <span className="event-countdown-unit">{label}</span>
+      <style jsx>{`
+        .event-countdown-box {
+          display: flex;
+          min-width: 52px;
+          flex-direction: column;
+          align-items: center;
+          padding: 8px 4px;
+          border-radius: 10px;
+          background: #ffffff;
+          border: 1px solid #e0f2fe;
+          box-shadow: 0 2px 4px rgba(3, 105, 161, 0.04);
+        }
+        .event-countdown-num {
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 1;
+          color: #0369a1;
+          font-variant-numeric: tabular-nums;
+        }
+        .event-countdown-unit {
+          margin-top: 4px;
+          font-size: 9px;
+          font-weight: 600;
+          color: #64748b;
+        }
+      `}</style>
     </div>
   );
 }

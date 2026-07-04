@@ -1,344 +1,283 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
-import { useSwipeable } from "react-swipeable";
-import { Parallax, ParallaxProvider } from "react-scroll-parallax";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import HeroContactOverlay from "./ContactOverlay"; // Import the overlay
+import HeroContactOverlay from "./ContactOverlay";
 
-interface VideoSlide {
-  src: string;
-  poster: string;
-  title: string;
-  description: string;
-  type?: "video" | "image";
-}
+// --- Luxury Ambient Blue Particle Field ---
+const LuxuryParticles = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-type Direction = "left" | "right";
-
-const HeroSection = () => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [direction, setDirection] = useState<Direction>("right");
-  const [isHovered, setIsHovered] = useState<boolean>(false);
-  const [isInView, setIsInView] = useState<boolean>(false); // start false, will flip when intersecting
-  const [showContactForm, setShowContactForm] = useState<boolean>(false);
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-
-  // intervalRef holds the interval id so we can clear it immediately when needed
-  const intervalRef = useRef<number | null>(null);
-
-  const videos: VideoSlide[] = [
-    {
-      src: "",
-      poster: "/images/hero/herobann.webp",
-      title: "Become a Member",
-      description: "Protect What You Build. Pass On What Matters",
-      type: "image",
-    },
-  ];
-
-  // animation variants (unchanged)
-  const slideVariants: Variants = {
-    enter: (direction: Direction) => ({
-      x: direction === "right" ? "100%" : "-100%",
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-    },
-    exit: (direction: Direction) => ({
-      x: direction === "right" ? "-100%" : "100%",
-      opacity: 0,
-      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-    }),
-  };
-
-  const contentVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.7, delay: 0.5, ease: "easeOut" },
-    },
-  };
-
-  // stable navigation functions
-  const goToPrevious = useCallback((): void => {
-    setDirection("left");
-    setCurrentIndex((prev) => (prev === 0 ? videos.length - 1 : prev - 1));
-  }, [videos.length]);
-
-  const goToNext = useCallback((): void => {
-    setDirection("right");
-    setCurrentIndex((prev) => (prev === videos.length - 1 ? 0 : prev + 1));
-  }, [videos.length]);
-
-  const goToSlide = (slideIndex: number): void => {
-    setDirection(slideIndex > currentIndex ? "right" : "left");
-    setCurrentIndex(slideIndex);
-  };
-
-  // Intersection Observer: sets isInView and resets to first slide when entering
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setCurrentIndex(0);
-          setDirection("right");
-          setIsInView(true);
-        } else {
-          setIsInView(false);
-        }
-      },
-      { threshold: 0.5 }
-    );
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    if (sectionRef.current) observer.observe(sectionRef.current);
+    let animationFrameId: number;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const colors = [
+      "rgba(56, 189, 248, ",
+      "rgba(14, 165, 233, ",
+      "rgba(255, 255, 255, ",
+    ];
+    const particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radius: number;
+      opacity: number;
+      color: string;
+    }> = [];
+    const particleCount = 45;
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: -Math.random() * 0.25 - 0.05,
+        radius: Math.random() * 1.5 + 0.3,
+        opacity: Math.random() * 0.25 + 0.05,
+        color: colors[Math.floor(Math.random() * colors.length)],
+      });
+    }
+
+    const draw = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.y < -10) {
+          p.y = height + 10;
+          p.x = Math.random() * width;
+        }
+        if (p.x < -10) p.x = width + 10;
+        if (p.x > width + 10) p.x = -10;
+
+        ctx.beginPath();
+        ctx.fillStyle = `${p.color}${p.opacity})`;
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      animationFrameId = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      if (sectionRef.current) observer.unobserve(sectionRef.current);
-      observer.disconnect();
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-  // Autoplay interval: runs only when in view and not hovered
-  useEffect(() => {
-    if (intervalRef.current) {
-      window.clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 pointer-events-none z-10 opacity-70 mix-blend-screen"
+    />
+  );
+};
 
-    if (isInView && !isHovered) {
-      intervalRef.current = window.setInterval(() => {
-        goToNext();
-      }, 4000) as unknown as number;
-    }
+// --- Main Hero Component ---
+const HeroSection = () => {
+  const [showContactForm, setShowContactForm] = useState<boolean>(false);
 
-    return () => {
-      if (intervalRef.current) {
-        window.clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-    };
-  }, [isInView, isHovered, goToNext]);
-
-  // swipe handlers (unchanged)
-  const { ref: _swipeRef, ...swipeHandlers } = useSwipeable({
-    onSwipedLeft: () => goToNext(),
-    onSwipedRight: () => goToPrevious(),
-    preventScrollOnSwipe: true,
-    trackMouse: true,
-  });
+  const heroContent = {
+    eyebrow: "Creditor Academy Masterclass",
+    title: "Become Private",
+    titleAccent: "Operate Private",
+    titleFreedom: "Achieve Financial Freedom",
+    subTitle: "Build Generational Wealth",
+    description:
+      "Learn business trusts, asset protection, business credit, and financial sovereignty through the Creditor Academy Masterclass — the strategies the privileged use to build, protect, and pass on wealth.",
+    bgImage: "/images/lifestylebg.png",
+  };
 
   return (
-    <ParallaxProvider>
-      <div
-        ref={sectionRef}
-        className="relative flex items-end text-white bg-black min-h-screen overflow-hidden"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        {...swipeHandlers}
-      >
-        {/* 🚀 LCP OPTIMIZATION: Static Background Layer */}
-        <div className="absolute inset-0 w-full h-full z-0">
-          <img
-            src="/images/hero/Bannerhero.webp"
-            alt="Hero Banner"
-            width={1920}
-            height={1080}
-            className="w-full h-full object-cover"
-            fetchPriority="high"
-            loading="eager"
-            decoding="async"
+    <div className="relative min-h-screen w-full flex items-center lg:items-end overflow-hidden bg-[#020617] text-white font-sans selection:bg-sky-500/30">
+      {/* BACKGROUND GRAPHICS & TEXTURES */}
+      <div className="absolute inset-0 z-0">
+        {/* Main Hero Media Asset */}
+        <div className="absolute inset-0 opacity-60 lg:w-full lg:opacity-100">
+          <Image
+            src={heroContent.bgImage}
+            alt="Private skyline overlooking the city — the world of financial sovereignty"
+            fill
+            priority
+            quality={100}
+            sizes="100vw"
+            className="object-cover object-center transition-transform duration-[4000ms] ease-out hover:scale-105"
           />
-          <div className="absolute inset-0 bg-black/40"></div>
+
+          {/* High-tech Grid Matrix Overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.02)_1px,transparent_1px)] bg-[size:5rem_5rem]" />
         </div>
 
-        {/* 🎥 Video/Image Carousel */}
-        <div className="hidden md:block absolute inset-0 w-full h-full z-1">
-          <AnimatePresence custom={direction} initial={false}>
-            <motion.div
-              key={currentIndex}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              className="absolute inset-0 w-full h-full"
-            >
-              <Parallax speed={-20} style={{ height: "100%" }}>
-                <div className="absolute inset-0 w-full h-full">
-                  {videos[currentIndex].type === "image" ? (
-                    <img
-                      src={videos[currentIndex].poster}
-                      alt={videos[currentIndex].title}
-                      className="absolute inset-0 w-full h-full object-cover"
-                      loading={currentIndex === 0 ? "eager" : "lazy"}
-                    />
-                  ) : (
-                    <>
-                      <div className="absolute inset-0 w-full h-full">
-                        <img
-                          src={videos[currentIndex].poster}
-                          alt={videos[currentIndex].title}
-                          className="absolute inset-0 w-full h-full object-cover"
-                          loading="lazy"
-                        />
-                      </div>
-                      <video
-                        className="absolute inset-0 w-full h-full object-cover"
-                        loop
-                        autoPlay
-                        muted
-                        playsInline
-                        preload="metadata"
-                        poster={videos[currentIndex].poster}
-                        key={videos[currentIndex].src}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          zIndex: 2,
-                          opacity: 0,
-                          transition: "opacity 0.5s ease-in-out",
-                        }}
-                        onCanPlay={(e) => {
-                          const video = e.currentTarget;
-                          video.style.opacity = "1";
-                        }}
-                      >
-                        <source src={videos[currentIndex].src} type="video/mp4" />
-                      </video>
-                    </>
-                  )}
-                </div>
-              </Parallax>
-              <div className="absolute inset-0 bg-black/40"></div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+        {/* Cinematic Vignettes & Dynamic Environmental Gradients */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#020617]/85 via-[#020617]/40 to-transparent hidden lg:block" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/90 via-transparent to-[#020617] lg:hidden block" />
 
-        {/* 🔘 Get In Touch Button - Positioned top right below hamburger */}
-        <div className="absolute top-28 right-4 sm:right-6 md:right-8 z-20">
-          <button
-            onClick={() => setShowContactForm(true)}
-            className="group flex items-center gap-4 bg-neutral-900/80 hover:bg-neutral-800 border-2 border-white/10 hover:border-white/30 rounded-full pl-6 pr-3 py-2 text-white transition-all duration-300 shadow-[0_0_30px_rgba(0,0,0,0.5)] backdrop-blur-xl"
-          >
-            <span className="text-sm font-black uppercase tracking-widest whitespace-nowrap">
-              Get In Touch
-            </span>
-            <div className="w-10 h-10 bg-white flex items-center justify-center rounded-full group-hover:rotate-12 transition-transform duration-300 shadow-inner">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F2A2E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-              </svg>
-            </div>
-          </button>
-        </div>
+        {/* Soft Organic Ambient Light Glares */}
+        <div className="absolute top-1/3 left-[-10%] w-[600px] h-[600px] bg-sky-500/10 blur-[180px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-indigo-500/5 blur-[150px] rounded-full pointer-events-none" />
+      </div>
 
-        {/* Content */}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 text-left pb-0 sm:pb-20">
+      {/* TYPOGRAPHY & CTA LAYOUT CONTAINER */}
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 pb-20 pt-30 lg:pb-24 flex justify-start">
+        <div className="max-w-2xl text-left flex flex-col items-start backdrop-blur-[2px] lg:backdrop-blur-none p-4 lg:p-0 rounded-2xl">
+          {/* Premium Eyebrow Flag */}
           <motion.div
-            className="flex flex-col gap-1 sm:gap-2"
-            initial="hidden"
-            animate="visible"
-            variants={contentVariants}
+            initial={{ opacity: 0, y: -15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="inline-flex items-center gap-3 text-[8px] sm:text-[10px] uppercase tracking-[0.4em] text-sky-400 font-bold mb-4"
           >
-            {/* Logo */}
-            <div className="relative z-10 flex justify-center sm:justify-start ml-0 sm:ml-14 md:ml-16 lg:ml-20 mt-4 sm:mt-6">
-              <Image
-                src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883696/creditor-website-assets/images/logo/credi_logoo.webp"
-                alt="Creditor Academy Logo"
-                width={450}
-                height={110}
-                priority
-                quality={85}
-                className="object-contain w-52 sm:w-60 md:w-80 lg:w-[420px]"
-              />
-            </div>
-
-            {/* Title */}
-            <h1 className="text-3xl sm:text-3xl md:text-6xl xl:text-7xl font-extrabold tracking-tight leading-tight">
-              {videos[currentIndex].title}
-            </h1>
-
-            {/* Start Now Button */}
-            <div className="mt-2">
-              <Link
-                href="/masterclass-membership"
-                className="group flex gap-4 items-center w-fit bg-primary border border-primary hover:border-white/30 hover:bg-secondary rounded-full transition-all duration-200 ease-in-out"
-              >
-                <span className="pl-6 text-lg font-bold text-secondary group-hover:text-white group-hover:translate-x-12 transform transition-transform duration-200 ease-in-out">
-                  Start Now
-                </span>
-                <svg
-                  className="py-1 group-hover:-translate-x-37 group-hover:rotate-45 transition-all duration-300 ease-in-out"
-                  width="58"
-                  height="58"
-                  viewBox="0 0 58 58"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect x="3" y="2" width="52" height="52" rx="26" fill="white" />
-                  <path
-                    d="M24 23H34M34 23V33M34 23L24 33"
-                    stroke="#1F2A2E"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </Link>
-            </div>
-
-            {/* Description */}
-            <p className="text-base sm:text-xl text-white/80 max-w-xl sm:max-w-2xl leading-relaxed pb-8">
-              {videos[currentIndex].description}
-            </p>
+            <span className="w-6 h-[1px] bg-gradient-to-r from-sky-400 to-transparent" />
+            <span className="bg-gradient-to-r from-sky-400 via-sky-200 to-white bg-clip-text text-transparent">
+              {heroContent.eyebrow}
+            </span>
           </motion.div>
-        </div>
 
-        {/* ◀ Navigation Arrows ▶ */}
-        <button
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 p-2 rounded-full bg-black/30 hover:bg-black/50 transition-colors duration-200 hidden sm:block"
-          onClick={goToPrevious}
-          aria-label="Previous slide"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M15 18L9 12L15 6" />
-          </svg>
-        </button>
-        <button
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 p-2 rounded-full bg-black/30 hover:bg-black/50 transition-colors duration-200 hidden sm:block"
-          onClick={goToNext}
-          aria-label="Next slide"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 18L15 12L9 6" />
-          </svg>
-        </button>
+          {/* Heading Architectural Complex */}
+          <h1 className="font-serif tracking-tight leading-[1.08] text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white w-full">
+            {/* Heading 1: Become Private */}
+            <motion.span
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.1,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="block tracking-tight drop-shadow-md text-slate-50"
+            >
+              {heroContent.title}
+            </motion.span>
 
-        {/* 🔘 Indicators */}
-        <div className="absolute left-0 right-0 bottom-4 hidden md:flex justify-center gap-2 z-20">
-          {videos.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => goToSlide(idx)}
-              className={`w-3 h-3 rounded-full ${idx === currentIndex ? "bg-primary" : "bg-white/40"}`}
-              aria-label={`Go to slide ${idx + 1}`}
+            {/* Heading 2: Operate Private */}
+            <motion.span
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.22,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="block text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-100 to-slate-200 font-light italic mt-1"
+            >
+              {heroContent.titleAccent}
+            </motion.span>
+
+            {/* Heading 3: Financial Freedom */}
+            <motion.span
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.34,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-sky-300 font-light pb-2 mt-1 tracking-tight text-xl sm:text-2xl lg:text-5xl italic"
+            >
+              {heroContent.titleFreedom}
+            </motion.span>
+
+            {/* Micro Separation Rule */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 1, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="h-[1px] w-1/3 bg-gradient-to-r from-sky-500/50 to-transparent my-4 origin-left"
             />
-          ))}
+
+            {/* Sub-Headline Label */}
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.55,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="block text-sm sm:text-lg lg:text-xl font-sans font-medium tracking-[0.12em] text-sky-300/90 uppercase"
+            >
+              {heroContent.subTitle}
+            </motion.span>
+          </h1>
+
+          {/* Context Body Copy */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.7 }}
+            className="mt-6 mb-9 text-xs sm:text-sm text-slate-300 leading-relaxed tracking-wide font-light max-w-lg"
+          >
+            {heroContent.description}
+          </motion.p>
+
+          {/* High-Fidelity Call To Action Interfaces */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-4 w-full sm:w-auto"
+          >
+            {/* Primary Action Button */}
+            <Link
+              href="/masterclass-membership"
+              className="group relative inline-flex items-center justify-between gap-6 bg-white text-[#020617] font-bold text-[11px] uppercase tracking-[0.2em] rounded-full pl-7 pr-2.5 py-2.5 shadow-[0_10px_30px_rgba(2,6,23,0.3)] hover:shadow-[0_0_35px_rgba(56,189,248,0.4)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
+            >
+              <span>Join Membership</span>
+              <span className="w-9 h-9 rounded-full bg-[#020617] text-white flex items-center justify-center transition-all duration-300 group-hover:rotate-45 group-hover:bg-sky-500">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                >
+                  <line x1="7" y1="17" x2="17" y2="7" />
+                  <polyline points="7 7 17 7 17 17" />
+                </svg>
+              </span>
+            </Link>
+
+            {/* Secondary Action Button */}
+            <Link
+              href="/webinar"
+              className="inline-flex items-center justify-center gap-3 px-7 py-4 rounded-full border border-slate-700/60 bg-slate-900/40 text-slate-200 font-semibold text-[11px] uppercase tracking-[0.2em] backdrop-blur-md hover:bg-sky-500/10 hover:text-white hover:border-sky-400/40 transition-all duration-300 group"
+            >
+              <span>Watch Free Webinar</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-sky-400 group-hover:scale-150 transition-transform duration-300" />
+            </Link>
+          </motion.div>
         </div>
       </div>
 
+      {/* Overlay Modal Portal */}
       <AnimatePresence>
         {showContactForm && (
           <HeroContactOverlay onClose={() => setShowContactForm(false)} />
         )}
       </AnimatePresence>
-    </ParallaxProvider>
+    </div>
   );
 };
 

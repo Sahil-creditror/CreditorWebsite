@@ -1,6 +1,7 @@
 // "use client";
 
 // import React, { useRef, useState, useEffect } from "react";
+// import Image from "next/image";
 // import { motion, useInView, Variants, AnimatePresence } from "framer-motion";
 // import { Poppins } from "next/font/google";
 
@@ -15,14 +16,13 @@
 //     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
 //     const [currentIndex, setCurrentIndex] = useState(0);
 
-//     // Mapped array containing event flyers organized chronologically from your uploaded flyers
 //     const slidesData = [
 //         {
-//             imageSrc: "/images/todayclasstopic/inc.png",
-//             imageAlt: "Passive Income Strategies Every Entrepreneur Should Know",
-//             badge: "Financial Freedom Class • June 25, 2026",
-//             heading: <> Passive Income Strategies <span className="text-primary">Every Entrepreneur Should Know</span></>,
-//             description: "Discover the ultimate tactics to optimize your business operations and establish recurring revenue channels. Learn to construct assets that produce predictable returns, build sustainable financial momentum, and unlock true lifestyle autonomy.",
+//             imageSrc: "/images/todayclasstopic/today.png",
+//             imageAlt: "The Financial Freedom Class",
+//             badge: "Special Event • June 18, 2026",
+//             heading: <> The Financial Freedom Class: <span className="text-blue-400">Creating Multiple Streams of Income</span></>,
+//             description: "Supercharge your path to autonomy. Discover modern frameworks to generate reliable income streams, fast-track your asset accumulation, and scale your personal capital portfolio.",
 //             benefits: [
 //                 "Build Wealth Consistently",
 //                 "Create Income That Works For You",
@@ -31,21 +31,20 @@
 //             ]
 //         },
 //         {
-//             imageSrc: "/images/todayclasstopic/acq.png",
-//             imageAlt: "How to Acquire Existing Businesses with Creative Deal Structures",
-//             badge: "Master Class • June 25, 2026",
-//             heading: <> How To Acquire Existing Businesses <span className="text-primary">With Creative Deal Structures</span></>,
-//             description: "Accelerate your portfolio growth by bypassing the startup phase entirely. Learn actionable corporate acquisition frameworks, structure strategic win-win partnerships, deploy seller financing options, and utilize real-world creative deal blueprints.",
+//             imageSrc: "/images/todayclasstopic/exit.png",
+//             imageAlt: "Exit Strategies Master Class",
+//             badge: "Master Class • June 18, 2026",
+//             heading: <> Exit Strategies: <span className="text-blue-400">Preparing Your Business for a Successful Sale</span></>,
+//             description: "Build with the end in mind. Learn verified strategies to maximize company valuation, mitigate transition risks, and guarantee a seamless, highly profitable enterprise transfer.",
 //             benefits: [
 //                 "Creative Ways to Finance Acquisitions",
 //                 "Seller Financing & Earnouts",
 //                 "Structuring Win-Win Deals",
 //                 "Real-World Strategies That Work"
 //             ]
-//         }
+//         },
 //     ];
 
-//     // Slide transition running at 4000ms (4 seconds)
 //     useEffect(() => {
 //         const timer = setInterval(() => {
 //             setCurrentIndex((prevIndex) => (prevIndex + 1) % slidesData.length);
@@ -83,96 +82,153 @@
 //     return (
 //         <section
 //             ref={containerRef}
-//             className={`${poppins.className} relative py-20 overflow-hidden bg-gradient-to-br from-lightgray via-white to-lightgray`}
+//             className={`${poppins.className} relative py-20 lg:py-20 overflow-hidden bg-gradient-to-br from-slate-600 via-blue-950 to-slate-600 text-slate-100`}
 //         >
-//             {/* Background Decorative Accents */}
-//             <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-//                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-//                 <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-//                 <div className="absolute top-[-10%] left-[-5%] w-[45%] h-[45%] bg-primary/5 rounded-full blur-[130px]" />
-//                 <div className="absolute bottom-[-10%] right-[-5%] w-[45%] h-[45%] bg-primary/5 rounded-full blur-[130px]" />
+//             {/* --- Ambient Light Background Graphics --- */}
+//             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+//                 {/* Subtle high-tech grid texture */}
+//                 <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(14,165,233,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,165,233,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+                
+//                 {/* Soft Light Blue Glow on the right side */}
+//                 <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-500/10 rounded-full blur-[140px] opacity-60" />
+//                 <div className="absolute right-1/4 bottom-10 w-[400px] h-[400px] bg-blue-400/5 rounded-full blur-[110px]" />
+                
+//                 {/* Light Minimalist Wave Vector paths */}
+//                 <svg
+//                     className="absolute w-full h-full min-w-[1440px] opacity-20"
+//                     viewBox="0 0 1440 800"
+//                     fill="none"
+//                     xmlns="http://www.w3.org/2000/svg"
+//                     preserveAspectRatio="none"
+//                 >
+//                     <defs>
+//                         <linearGradient id="light-wave-1" x1="0%" y1="0%" x2="100%" y2="100%">
+//                             <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.2" />
+//                             <stop offset="100%" stopColor="#6366f1" stopOpacity="0.01" />
+//                         </linearGradient>
+//                     </defs>
+//                     <motion.path
+//                         animate={{
+//                             d: [
+//                                 "M -100 250 C 300 400, 500 100, 900 300 C 1200 450, 1300 200, 1600 350",
+//                                 "M -100 280 C 250 350, 550 150, 850 250 C 1150 350, 1350 250, 1600 380",
+//                                 "M -100 250 C 300 400, 500 100, 900 300 C 1200 450, 1300 200, 1600 350"
+//                             ]
+//                         }}
+//                         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+//                         stroke="url(#light-wave-1)"
+//                         strokeWidth="2"
+//                         strokeLinecap="round"
+//                     />
+//                 </svg>
 //             </div>
 
-//             <div className="container mx-auto px-4 relative z-10">
+//             <div className="container mx-auto px-6 relative z-10">
 //                 <motion.div
 //                     variants={containerVariants}
 //                     initial="hidden"
 //                     animate={isInView ? "visible" : "hidden"}
-//                     className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center"
+//                     className="flex flex-col gap-14"
 //                 >
-//                     {/* Left Content Column */}
-//                     <div className="lg:col-span-7 flex flex-col gap-6 border-l-4 border-primary pl-6 py-2 min-h-[480px] justify-center">
-//                         <AnimatePresence mode="wait">
-//                             <motion.div
-//                                 key={currentIndex}
-//                                 initial="initial"
-//                                 animate="animate"
-//                                 exit="exit"
-//                                 variants={contentFadeVariants}
-//                                 className="flex flex-col gap-5"
-//                             >
-//                                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-sm bg-primary text-white w-fit shadow-md shadow-primary/10 font-bold uppercase tracking-wider text-[11px]">
-//                                     <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-//                                     {slidesData[currentIndex].badge}
-//                                 </div>
+//                     {/* --- Top Global Header Area --- */}
+//                     <motion.div variants={itemVariants} className="text-center space-y-3 max-w-2xl mx-auto">
+//                         <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+//                             Today's Featured <span className="bg-gradient-to-r from-blue-300  to-blue-400 bg-clip-text text-transparent">Masterclasses</span>
+//                         </h2>
+//                         <p className="text-slate-400 font-medium text-sm sm:text-base">
+//                             Dive straight into intensive interactive modules engineered to transform structural financial workflows in real time.
+//                         </p>
+//                     </motion.div>
 
-//                                 <h2 className="text-3xl md:text-4xl lg:text-5xl text-secondary font-black leading-[1.1] tracking-tight">
-//                                     {slidesData[currentIndex].heading}
-//                                 </h2>
+//                     {/* --- Lower Layout Grid Section --- */}
+//                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                        
+//                         {/* Left Column: Image Slider */}
+//                         <div className="lg:col-span-5 relative w-full max-w-md lg:max-w-none mx-auto">
+//                             {/* Shadow Backing Frame */}
+//                             <div className="absolute -inset-4 bg-blue-500/10 blur-[50px] rounded-full opacity-40" />
+                            
+//                             <div className="relative aspect-square w-full rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-slate-900/40 border border-slate-800/80">
+//                                 <AnimatePresence mode="wait">
+//                                     <motion.div
+//                                         key={currentIndex}
+//                                         initial={{ opacity: 0, scale: 1.02 }}
+//                                         animate={{ opacity: 1, scale: 1 }}
+//                                         exit={{ opacity: 0, scale: 0.98 }}
+//                                         transition={{ duration: 0.45, ease: "easeInOut" }}
+//                                         className="absolute inset-0 w-full h-full"
+//                                     >
+//                                         <Image
+//                                             src={slidesData[currentIndex].imageSrc}
+//                                             alt={slidesData[currentIndex].imageAlt}
+//                                             fill
+//                                             className="object-cover"
+//                                             sizes="(max-width: 1024px) 100vw, 40vw"
+//                                             priority
+//                                         />
+//                                     </motion.div>
+//                                 </AnimatePresence>
+//                             </div>
+//                         </div>
 
-//                                 <p className="text-base md:text-lg text-secondary/80 font-medium leading-relaxed max-w-xl">
-//                                     {slidesData[currentIndex].description}
-//                                 </p>
+//                         {/* Right Column: Content */}
+//                         <div className="lg:col-span-7 flex flex-col gap-6 border-l-4 border-blue-500/80 pl-6 lg:pl-8 py-2 min-h-[460px] justify-center">
+//                             <AnimatePresence mode="wait">
+//                                 <motion.div
+//                                     key={currentIndex}
+//                                     initial="initial"
+//                                     animate="animate"
+//                                     exit="exit"
+//                                     variants={contentFadeVariants}
+//                                     className="flex flex-col gap-5"
+//                                 >
+//                                     {/* Premium Event Badge */}
+//                                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-300 to-blue-400 text-white w-fit shadow-md shadow-blue-950/50 font-bold uppercase tracking-wider text-[10px] sm:text-[11px]">
+//                                         <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+//                                         {slidesData[currentIndex].badge}
+//                                     </div>
 
-//                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 my-2">
-//                                     {slidesData[currentIndex].benefits.map((benefit, idx) => (
-//                                         <div key={idx} className="flex items-center gap-3">
-//                                             <div className="flex-shrink-0 w-6 h-6 rounded-sm bg-primary/10 text-primary flex items-center justify-center font-bold">
-//                                                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-//                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-//                                                 </svg>
+//                                     {/* Header text */}
+//                                     <h3 className="text-3xl md:text-4xl lg:text-5xl text-white font-black leading-[1.15] tracking-tight font-sans">
+//                                         {slidesData[currentIndex].heading}
+//                                     </h3>
+
+//                                     {/* Descriptive paragraph */}
+//                                     <p className="text-base md:text-md text-slate-400 font-normal leading-relaxed max-w-xl">
+//                                         {slidesData[currentIndex].description}
+//                                     </p>
+
+//                                     {/* Benefits Checkmarks */}
+//                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-2">
+//                                         {slidesData[currentIndex].benefits.map((benefit, idx) => (
+//                                             <div key={idx} className="flex items-center gap-3">
+//                                                 <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-cyan-950/60 text-blue-400 border border-cyan-900/60 flex items-center justify-center font-bold shadow-sm">
+//                                                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+//                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+//                                                     </svg>
+//                                                 </div>
+//                                                 <span className="text-slate-300 font-medium text-[14px] sm:text-[15px] leading-tight">{benefit}</span>
 //                                             </div>
-//                                             <span className="text-secondary font-semibold text-[14px] leading-tight">{benefit}</span>
-//                                         </div>
-//                                     ))}
+//                                         ))}
+//                                     </div>
+//                                 </motion.div>
+//                             </AnimatePresence>
+
+//                             {/* Pagination Interface */}
+//                             <motion.div variants={itemVariants} className="flex flex-col gap-5 mt-2">
+//                                 <div className="flex flex-wrap items-center gap-4">
+//                                     <div className="flex flex-wrap gap-2 p-1.5 rounded-full bg-slate-900/60 backdrop-blur-md border border-slate-800/80">
+//                                         {slidesData.map((_, index) => (
+//                                             <button
+//                                                 key={index}
+//                                                 onClick={() => setCurrentIndex(index)}
+//                                                 className={`h-2.5 rounded-full transition-all duration-300 ${index === currentIndex ? "w-8 bg-blue-500" : "w-2.5 bg-slate-700 hover:bg-slate-600"}`}
+//                                                 aria-label={`Go to slide ${index + 1}`}
+//                                             />
+//                                         ))}
+//                                     </div>
 //                                 </div>
 //                             </motion.div>
-//                         </AnimatePresence>
-
-//                         {/* Static Bottom Controls */}
-//                         <motion.div variants={itemVariants} className="flex flex-col gap-5 mt-4">
-//                             <div className="flex flex-wrap items-center gap-4">
-//                                 {/* Visual Slider Pagination Dots */}
-//                                 <div className="flex flex-wrap gap-2 ml-2">
-//                                     {slidesData.map((_, index) => (
-//                                         <button
-//                                             key={index}
-//                                             onClick={() => setCurrentIndex(index)}
-//                                             className={`h-2 rounded-full transition-all duration-300 ${index === currentIndex ? "w-6 bg-primary" : "w-2 bg-gray-300"}`}
-//                                             aria-label={`Go to slide ${index + 1}`}
-//                                         />
-//                                     ))}
-//                                 </div>
-//                             </div>
-//                         </motion.div>
-//                     </div>
-
-//                     {/* Right Image Slider Column */}
-//                     <div className="lg:col-span-5 relative w-full max-w-md lg:max-w-none mx-auto">
-//                         <div className="absolute -inset-4 bg-primary/10 blur-[60px] rounded-full opacity-30" />
-//                         <div className="relative aspect-[1/1] w-full rounded-sm overflow-hidden shadow-[0_25px_55px_-12px_rgba(0,0,0,0.12)] bg-white border border-gray-100">
-//                             <AnimatePresence mode="wait">
-//                                 <motion.img
-//                                     key={currentIndex}
-//                                     src={slidesData[currentIndex].imageSrc}
-//                                     alt={slidesData[currentIndex].imageAlt}
-//                                     initial={{ opacity: 0, scale: 1.02 }}
-//                                     animate={{ opacity: 1, scale: 1 }}
-//                                     exit={{ opacity: 0, scale: 0.98 }}
-//                                     transition={{ duration: 0.45, ease: "easeInOut" }}
-//                                     className="absolute inset-0 w-full h-full object-cover bg-white"
-//                                 />
-//                             </AnimatePresence>
 //                         </div>
 //                     </div>
 //                 </motion.div>
@@ -184,9 +240,15 @@
 // export default BootcampBanner;
 
 
+
+
+
+
+
 "use client";
 
 import React, { useRef } from "react";
+import Image from "next/image";
 import { motion, useInView, Variants } from "framer-motion";
 import { Poppins } from "next/font/google";
 
@@ -196,27 +258,32 @@ const poppins = Poppins({
     display: "swap",
 });
 
-const MasterClassBanner = () => {
+const BootcampBanner = () => {
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
 
-    // Data mapping synchronized with the verified text assets from pyb.png
+    // Single source of truth from your flyer image
     const classData = {
-        imageSrc: "/images/todayclasstopic/pyb.png",
-        imageAlt: "Creditor Academy Master Class Poster - Preparing Your Business For High-Limit Funding And Investment Opportunities",
-        badge: "Today - 03rd July 2026",
+        imageSrc: "/images/todayclasstopic/pyb.png", // Update this with your actual image path
+        imageAlt: "Preparing Your Business for High-Limit Funding",
+        badge: "Master Class • July 03, 2026",
         heading: (
             <>
-                Preparing Your <span className="text-primary block mt-1">Business For High-Limit Funding</span>
+                Preparing Your Business for{" "}
+                <span className="bg-gradient-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
+                    High-Limit Funding
+                </span>{" "}
+                And Investment Opportunities
             </>
         ),
-        description: "Join Creditor Academy (Private Montessori Association) for an exclusive master class detailing strategies to secure high-limit business funding and access premier investment opportunities.",
+        description:
+            "Unlock strategic financial growth. Discover verified frameworks to structure your corporate profile, position your enterprise for heavy capital injections, and navigate high-limit lending ecosystems.",
         benefits: [
-            "High-Limit Business Funding",
-            "Investment Opportunities",
-            "Creditor Academy Association",
-            "Join The Master Class Today"
-        ]
+            "Corporate Credit Optimization",
+            "High-Limit Capital Structuring",
+            "Investment Readiness Training",
+            "Strategic Lender Navigation",
+        ],
     };
 
     const containerVariants: Variants = {
@@ -224,86 +291,133 @@ const MasterClassBanner = () => {
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.08,
+                staggerChildren: 0.05,
                 delayChildren: 0.05,
             },
         },
     };
 
     const itemVariants: Variants = {
-        hidden: { y: 20, opacity: 0 },
+        hidden: { y: 15, opacity: 0 },
         visible: {
             y: 0,
             opacity: 1,
-            transition: { duration: 0.5, ease: [0.215, 0.610, 0.355, 1.000] },
+            transition: { duration: 0.4, ease: [0.215, 0.61, 0.355, 1.0] },
         },
     };
 
     return (
         <section
             ref={containerRef}
-            className={`${poppins.className} relative py-20 overflow-hidden bg-gradient-to-br from-lightgray via-white to-lightgray`}
+            className={`${poppins.className} relative py-20 lg:py-20 overflow-hidden bg-gradient-to-br from-slate-600 via-blue-950 to-slate-600 text-slate-100`}
         >
-            {/* Background Decorative Accents */}
-            <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-                <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-                <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-                <div className="absolute top-[-10%] left-[-5%] w-[45%] h-[45%] bg-primary/5 rounded-full blur-[130px]" />
-                <div className="absolute bottom-[-10%] right-[-5%] w-[45%] h-[45%] bg-primary/5 rounded-full blur-[130px]" />
+            {/* --- Ambient Light Background Graphics --- */}
+            <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(14,165,233,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,165,233,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+                <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-500/10 rounded-full blur-[140px] opacity-60" />
+                <div className="absolute right-1/4 bottom-10 w-[400px] h-[400px] bg-blue-400/5 rounded-full blur-[110px]" />
+                
+                <svg
+                    className="absolute w-full h-full min-w-[1440px] opacity-20"
+                    viewBox="0 0 1440 800"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="none"
+                >
+                    <defs>
+                        <linearGradient id="light-wave-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.2" />
+                            <stop offset="100%" stopColor="#6366f1" stopOpacity="0.01" />
+                        </linearGradient>
+                    </defs>
+                    <motion.path
+                        animate={{
+                            d: [
+                                "M -100 250 C 300 400, 500 100, 900 300 C 1200 450, 1300 200, 1600 350",
+                                "M -100 280 C 250 350, 550 150, 850 250 C 1150 350, 1350 250, 1600 380",
+                                "M -100 250 C 300 400, 500 100, 900 300 C 1200 450, 1300 200, 1600 350"
+                            ]
+                        }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+                        stroke="url(#light-wave-1)"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                    />
+                </svg>
             </div>
 
-            <div className="container mx-auto px-4 relative z-10">
+            <div className="container mx-auto px-6 relative z-10">
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     animate={isInView ? "visible" : "hidden"}
-                    className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center"
+                    className="flex flex-col gap-14"
                 >
-                    {/* Left Content Column */}
-                    <div className="lg:col-span-7 flex flex-col gap-6 border-l-4 border-primary pl-6 py-2 min-h-[440px] justify-center">
-                        <motion.div variants={itemVariants} className="flex flex-col gap-5">
-                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-sm bg-primary text-white w-fit shadow-md shadow-primary/10 font-bold uppercase tracking-wider text-[11px]">
-                                <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                                {classData.badge}
+                    {/* --- Top Global Header Area --- */}
+                    <motion.div variants={itemVariants} className="text-center space-y-3 max-w-2xl mx-auto">
+                        <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+                            Today's Featured <span className="bg-gradient-to-r from-blue-300  to-blue-400 bg-clip-text text-transparent">Masterclasses</span>
+                        </h2>
+                        <p className="text-slate-400 font-medium text-sm sm:text-base">
+                            Dive straight into intensive interactive modules engineered to transform structural financial workflows in real time.
+                        </p>
+                    </motion.div>
+
+                    {/* --- Lower Layout Grid Section --- */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                        
+                        {/* Left Column: Static Image Display */}
+                        <motion.div variants={itemVariants} className="lg:col-span-5 relative w-full max-w-md lg:max-w-none mx-auto">
+                            <div className="absolute -inset-4 bg-blue-500/10 blur-[50px] rounded-full opacity-40" />
+                            
+                            <div className="relative aspect-square w-full rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-slate-900/40 border border-slate-800/80">
+                                <Image
+                                    src={classData.imageSrc}
+                                    alt={classData.imageAlt}
+                                    fill
+                                    className="object-cover"
+                                    sizes="(max-width: 1024px) 100vw, 40vw"
+                                    priority
+                                />
                             </div>
+                        </motion.div>
 
-                            <h2 className="text-3xl md:text-4xl lg:text-5xl text-secondary font-extrabold leading-[1.1] tracking-tight uppercase">
-                                {classData.heading}
-                            </h2>
+                        {/* Right Column: Content Content */}
+                        <div className="lg:col-span-7 flex flex-col gap-6 border-l-4 border-blue-500/80 pl-6 lg:pl-8 py-2 justify-center">
+                            <motion.div variants={itemVariants} className="flex flex-col gap-5">
+                                {/* Premium Event Badge */}
+                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 text-white w-fit shadow-md shadow-blue-950/50 font-bold uppercase tracking-wider text-[10px] sm:text-[11px]">
+                                    <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                                    {classData.badge}
+                                </div>
 
-                            <p className="text-base md:text-lg text-secondary/80 font-medium leading-relaxed max-w-xl">
-                                {classData.description}
-                            </p>
+                                {/* Header text */}
+                                <h3 className="text-3xl md:text-4xl lg:text-5xl text-white font-black leading-[1.15] tracking-tight font-sans">
+                                    {classData.heading}
+                                </h3>
 
-                            {/* Core Class Takeaways */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 my-2">
-                                {classData.benefits.map((benefit, idx) => (
-                                    <div key={idx} className="flex items-center gap-3">
-                                        <div className="flex-shrink-0 w-6 h-6 rounded-sm bg-primary/10 text-primary flex items-center justify-center font-bold">
-                                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                                            </svg>
+                                {/* Descriptive paragraph */}
+                                <p className="text-base md:text-md text-slate-400 font-normal leading-relaxed max-w-xl">
+                                    {classData.description}
+                                </p>
+
+                                {/* Benefits Checkmarks */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-2">
+                                    {classData.benefits.map((benefit, idx) => (
+                                        <div key={idx} className="flex items-center gap-3">
+                                            <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-cyan-950/60 text-blue-400 border border-cyan-900/60 flex items-center justify-center font-bold shadow-sm">
+                                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                                </svg>
+                                            </div>
+                                            <span className="text-slate-300 font-medium text-[14px] sm:text-[15px] leading-tight">
+                                                {benefit}
+                                            </span>
                                         </div>
-                                        <span className="text-secondary font-semibold text-[14px] leading-tight">{benefit}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </motion.div>
-                    </div>
-
-                    {/* Right Static Image Column */}
-                    <div className="lg:col-span-5 relative w-full max-w-md lg:max-w-none mx-auto">
-                        <div className="absolute -inset-4 bg-primary/10 blur-[60px] rounded-full opacity-30" />
-                        <motion.div
-                            variants={itemVariants}
-                            className="relative aspect-[1/1] w-full rounded-sm overflow-hidden shadow-[0_25px_55px_-12px_rgba(0,0,0,0.12)] bg-white border border-gray-100"
-                        >
-                            <img
-                                src={classData.imageSrc}
-                                alt={classData.imageAlt}
-                                className="absolute inset-0 w-full h-full object-cover bg-white"
-                            />
-                        </motion.div>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        </div>
                     </div>
                 </motion.div>
             </div>
@@ -311,4 +425,4 @@ const MasterClassBanner = () => {
     );
 };
 
-export default MasterClassBanner;
+export default BootcampBanner;

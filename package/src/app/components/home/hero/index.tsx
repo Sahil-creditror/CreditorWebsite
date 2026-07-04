@@ -139,7 +139,7 @@ const HeroSection = () => {
       </div>
 
       {/* TYPOGRAPHY & CTA LAYOUT CONTAINER */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 pb-20 pt-30 lg:pb-24 flex justify-start">
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 pb-20 pt-24 lg:pb-24 flex justify-start">
         <div className="max-w-2xl text-left flex flex-col items-start backdrop-blur-[2px] lg:backdrop-blur-none p-4 lg:p-0 rounded-2xl">
           {/* Premium Eyebrow Flag */}
           <motion.div

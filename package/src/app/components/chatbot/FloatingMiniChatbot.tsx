@@ -3,6 +3,7 @@
 
 import React, {
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   useCallback,
@@ -27,12 +28,67 @@ import fallbackVideo from "./assets/Fallback.mp4";
 const API_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:9000").replace(/\/api\/?$/, "");
 /** Timeout for FAQ search API */
 const CHATBOT_REQUEST_TIMEOUT_MS = 90000;
-const EDGE_MARGIN = 24;
+const EDGE_MARGIN = 16;
+const MOBILE_EDGE_MARGIN = 12;
 const BOT_INTERRUPT_GRACE_MS = 900;
-const TEASER_BOTTOM_GAP = 2;
+const TEASER_BOTTOM_GAP = 8;
+const MOBILE_TEASER_BOTTOM_GAP = 12;
 const MODAL_BOTTOM_GAP = 10;
-const TEASER_WIDTH = 210;
-const TEASER_HEIGHT = 160;
+const TEASER_WIDTH = 168;
+const TEASER_HEIGHT = 128;
+const MOBILE_TEASER_WIDTH = 140;
+const MOBILE_TEASER_HEIGHT = 108;
+const MOBILE_BREAKPOINT = 640;
+
+const isMobileViewport = () =>
+  typeof window !== "undefined" && window.innerWidth < MOBILE_BREAKPOINT;
+
+const getTeaserBounds = () => {
+  if (typeof window === "undefined") {
+    return {
+      width: TEASER_WIDTH,
+      height: TEASER_HEIGHT,
+      edgeMargin: EDGE_MARGIN,
+      bottomGap: TEASER_BOTTOM_GAP,
+    };
+  }
+
+  const isMobile = isMobileViewport();
+  return {
+    width: isMobile ? MOBILE_TEASER_WIDTH : TEASER_WIDTH,
+    height: isMobile ? MOBILE_TEASER_HEIGHT : TEASER_HEIGHT,
+    edgeMargin: isMobile ? MOBILE_EDGE_MARGIN : EDGE_MARGIN,
+    bottomGap: isMobile ? MOBILE_TEASER_BOTTOM_GAP : TEASER_BOTTOM_GAP,
+  };
+};
+
+const getModalDimensions = (chatOpen) => {
+  if (typeof window === "undefined") {
+    return { width: 600, height: 340, widthPx: "600px", heightPx: "340px" };
+  }
+
+  if (!isMobileViewport()) {
+    return {
+      width: chatOpen ? 800 : 600,
+      height: 340,
+      widthPx: chatOpen ? "800px" : "600px",
+      heightPx: "340px",
+    };
+  }
+
+  const margin = MOBILE_EDGE_MARGIN;
+  const availableWidth = window.innerWidth - margin * 2;
+
+  if (chatOpen) {
+    const width = Math.min(availableWidth, 328);
+    const height = Math.min(Math.round(window.innerHeight * 0.52), 400);
+    return { width, height, widthPx: `${width}px`, heightPx: `${height}px` };
+  }
+
+  const width = Math.min(availableWidth, 276);
+  const height = Math.round(width * 0.61);
+  return { width, height, widthPx: `${width}px`, heightPx: `${height}px` };
+};
 const FAQ_NOT_FOUND_TEXT = "sorry, i don't have that knowledge.";
 const CHATBOT_SUPPORT_FALLBACK_MESSAGE = `That's a great question! For the best and most accurate answer,
 I'd recommend connecting directly with our support team -
@@ -156,6 +212,8 @@ const FloatingMiniChatbot = () => {
   const [isMinimizedToBorder, setIsMinimizedToBorder] = useState(false);
   const [hasDraggedTeaser, setHasDraggedTeaser] = useState(false);
   const [hasDraggedModal, setHasDraggedModal] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [modalAnchored, setModalAnchored] = useState(true);
 
   // Start with an empty conversation so only user/bot messages show
   const [messages, setMessages] = useState([]);
@@ -221,8 +279,8 @@ const FloatingMiniChatbot = () => {
   });
 
   useEffect(() => {
-    // Set initial positions to bottom-right while leaving room from edges
-    if (typeof window !== "undefined") {
+    // Set initial desktop modal position (mobile uses bottom-right anchoring)
+    if (typeof window !== "undefined" && !isMobileViewport()) {
       const defaultWidth = 600;
       const defaultHeight = 340;
       setPosition({
@@ -235,28 +293,25 @@ const FloatingMiniChatbot = () => {
           window.innerHeight - defaultHeight - MODAL_BOTTOM_GAP,
         ),
       });
-
-      setTeaserPosition({
-        x: Math.max(
-          EDGE_MARGIN,
-          window.innerWidth - TEASER_WIDTH - EDGE_MARGIN,
-        ),
-        y: Math.max(
-          TEASER_BOTTOM_GAP,
-          window.innerHeight - TEASER_HEIGHT - TEASER_BOTTOM_GAP,
-        ),
-      });
     }
 
     // No browser speech synthesis initialization needed
   }, []);
 
+  useLayoutEffect(() => {
+    const syncMobile = () => setIsMobile(isMobileViewport());
+    syncMobile();
+    window.addEventListener("resize", syncMobile);
+    return () => window.removeEventListener("resize", syncMobile);
+  }, []);
+
   const [dragging, setDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [isTeaserDragging, setIsTeaserDragging] = useState(false);
-  // Always start at {x:0,y:0} so server and client render identical HTML.
-  // The real window-based position is set in the useEffect below after mount.
+  const [teaserAnchored, setTeaserAnchored] = useState(true);
   const [teaserPosition, setTeaserPosition] = useState({ x: 0, y: 0 });
+  const teaserRef = useRef(null);
+  const modalRef = useRef(null);
   const [teaserDragOffset, setTeaserDragOffset] = useState({ x: 0, y: 0 });
   const [teaserPromptIndex, setTeaserPromptIndex] = useState(0);
   const chatContainerRef = useRef(null);
@@ -332,6 +387,8 @@ const FloatingMiniChatbot = () => {
     // Set minimized state to false so we display the default teaser in the bottom-right
     setIsMinimizedToBorder(false);
     setHasDraggedTeaser(false);
+    setTeaserAnchored(true);
+    setModalAnchored(true);
     setHasDraggedModal(false);
 
     // Close UI
@@ -827,9 +884,21 @@ const FloatingMiniChatbot = () => {
     }
 
     setDragging(true);
+
+    let currentX = position.x;
+    let currentY = position.y;
+
+    if (isMobile && modalAnchored && modalRef.current) {
+      const rect = modalRef.current.getBoundingClientRect();
+      currentX = rect.left;
+      currentY = rect.top;
+      setPosition({ x: rect.left, y: rect.top });
+      setModalAnchored(false);
+    }
+
     setDragOffset({
-      x: e.clientX - position.x,
-      y: e.clientY - position.y,
+      x: e.clientX - currentX,
+      y: e.clientY - currentY,
     });
   };
 
@@ -846,8 +915,8 @@ const FloatingMiniChatbot = () => {
 
     // Get current dimensions based on size and chat panel state
     const currentDimensions = getSizeDimensions();
-    const elementWidth = parseFloat(currentDimensions.width);
-    const elementHeight = parseFloat(currentDimensions.height);
+    const elementWidth = currentDimensions.widthNum;
+    const elementHeight = currentDimensions.heightNum;
 
     newX = Math.max(0, Math.min(screenWidth - elementWidth, newX));
     newY = Math.max(0, Math.min(screenHeight - elementHeight, newY));
@@ -879,9 +948,19 @@ const FloatingMiniChatbot = () => {
     teaserDragStartRef.current = { x: e.clientX, y: e.clientY };
     isTeaserDraggedRef.current = false;
     setIsTeaserDragging(true);
+
+    const rect = teaserRef.current?.getBoundingClientRect();
+    const currentX = teaserAnchored && rect ? rect.left : teaserPosition.x;
+    const currentY = teaserAnchored && rect ? rect.top : teaserPosition.y;
+
+    if (teaserAnchored && rect) {
+      setTeaserPosition({ x: rect.left, y: rect.top });
+      setTeaserAnchored(false);
+    }
+
     setTeaserDragOffset({
-      x: e.clientX - teaserPosition.x,
-      y: e.clientY - teaserPosition.y,
+      x: e.clientX - currentX,
+      y: e.clientY - currentY,
     });
   };
 
@@ -895,9 +974,14 @@ const FloatingMiniChatbot = () => {
     // Keep within screen boundaries
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
+    const teaserBounds = getTeaserBounds();
+    const teaserWidth =
+      teaserRef.current?.offsetWidth ?? teaserBounds.width;
+    const teaserHeight =
+      teaserRef.current?.offsetHeight ?? teaserBounds.height;
 
-    newX = Math.max(0, Math.min(screenWidth - TEASER_WIDTH, newX));
-    newY = Math.max(0, Math.min(screenHeight - TEASER_HEIGHT, newY));
+    newX = Math.max(0, Math.min(screenWidth - teaserWidth, newX));
+    newY = Math.max(0, Math.min(screenHeight - teaserHeight, newY));
 
     // If moved more than 5px, mark as dragged
     const startX = teaserDragStartRef.current.x;
@@ -919,6 +1003,8 @@ const FloatingMiniChatbot = () => {
       return;
     }
     setIsOpen(true);
+    setModalAnchored(true);
+    setHasDraggedModal(false);
     setShouldPlayWelcomeVideo(true);
   };
 
@@ -937,31 +1023,34 @@ const FloatingMiniChatbot = () => {
 
   // Get dimensions based on size
   const getSizeDimensions = useCallback(() => {
+    const dims = getModalDimensions(isChatOpen);
     return {
-      width: isChatOpen ? "800px" : "600px",
-      height: "340px",
+      width: dims.widthPx,
+      height: dims.heightPx,
+      widthNum: dims.width,
+      heightNum: dims.height,
     };
-  }, [isChatOpen]);
+  }, [isChatOpen, isMobile]);
 
   // Keep avatar ready while using static poster/video mode.
 
   // Keep the widget within the viewport when sizes change
   const clampPositionToViewport = useCallback(() => {
     if (typeof window === "undefined") return;
+    if (isMobile && modalAnchored) return;
 
     const dimensions = getSizeDimensions();
-    const width = parseFloat(dimensions.width);
-    const height = parseFloat(dimensions.height);
-    const maxX = Math.max(EDGE_MARGIN, window.innerWidth - width - EDGE_MARGIN);
-    const maxY = Math.max(
-      MODAL_BOTTOM_GAP,
-      window.innerHeight - height - MODAL_BOTTOM_GAP,
-    );
+    const width = dimensions.widthNum;
+    const height = dimensions.heightNum;
+    const edgeMargin = isMobile ? MOBILE_EDGE_MARGIN : EDGE_MARGIN;
+    const bottomGap = isMobile ? MOBILE_TEASER_BOTTOM_GAP : MODAL_BOTTOM_GAP;
+    const maxX = Math.max(edgeMargin, window.innerWidth - width - edgeMargin);
+    const maxY = Math.max(bottomGap, window.innerHeight - height - bottomGap);
 
     if (hasDraggedModal) {
       setPosition((prev) => ({
-        x: Math.min(Math.max(EDGE_MARGIN, prev.x), maxX),
-        y: Math.min(Math.max(MODAL_BOTTOM_GAP, prev.y), maxY),
+        x: Math.min(Math.max(edgeMargin, prev.x), maxX),
+        y: Math.min(Math.max(bottomGap, prev.y), maxY),
       }));
     } else {
       setPosition({
@@ -969,7 +1058,7 @@ const FloatingMiniChatbot = () => {
         y: maxY,
       });
     }
-  }, [getSizeDimensions, hasDraggedModal]);
+  }, [getSizeDimensions, hasDraggedModal, isMobile, modalAnchored]);
 
   useEffect(() => {
     clampPositionToViewport();
@@ -979,57 +1068,57 @@ const FloatingMiniChatbot = () => {
   const handleResize = useCallback(() => {
     if (typeof window === "undefined") return;
 
-    // Clamp teaser position
-    if (hasDraggedTeaser) {
+    // Clamp teaser position (anchored teasers stay bottom-right via CSS)
+    if (teaserAnchored) {
+      // no-op: CSS bottom/right handles responsive placement
+    } else if (hasDraggedTeaser) {
+      const teaserBounds = getTeaserBounds();
       setTeaserPosition((prev) => {
         const maxX = Math.max(
-          EDGE_MARGIN,
-          window.innerWidth - TEASER_WIDTH - EDGE_MARGIN,
+          teaserBounds.edgeMargin,
+          window.innerWidth - teaserBounds.width - teaserBounds.edgeMargin,
         );
         const maxY = Math.max(
-          TEASER_BOTTOM_GAP,
-          window.innerHeight - TEASER_HEIGHT - TEASER_BOTTOM_GAP,
+          teaserBounds.bottomGap,
+          window.innerHeight - teaserBounds.height - teaserBounds.bottomGap,
         );
         return {
-          x: Math.min(Math.max(EDGE_MARGIN, prev.x), maxX),
-          y: Math.min(Math.max(TEASER_BOTTOM_GAP, prev.y), maxY),
+          x: Math.min(Math.max(teaserBounds.edgeMargin, prev.x), maxX),
+          y: Math.min(Math.max(teaserBounds.bottomGap, prev.y), maxY),
         };
       });
     } else {
-      setTeaserPosition({
-        x: Math.max(
-          EDGE_MARGIN,
-          window.innerWidth - TEASER_WIDTH - EDGE_MARGIN,
-        ),
-        y: Math.max(
-          TEASER_BOTTOM_GAP,
-          window.innerHeight - TEASER_HEIGHT - TEASER_BOTTOM_GAP,
-        ),
-      });
+      setTeaserAnchored(true);
     }
 
     // Clamp open chatbot position
-    const dimensions = getSizeDimensions();
-    const w = parseFloat(dimensions.width);
-    const h = parseFloat(dimensions.height);
-    const maxX = Math.max(EDGE_MARGIN, window.innerWidth - w - EDGE_MARGIN);
-    const maxY = Math.max(
-      MODAL_BOTTOM_GAP,
-      window.innerHeight - h - MODAL_BOTTOM_GAP,
-    );
-
-    if (hasDraggedModal) {
-      setPosition((prev) => ({
-        x: Math.min(Math.max(EDGE_MARGIN, prev.x), maxX),
-        y: Math.min(Math.max(MODAL_BOTTOM_GAP, prev.y), maxY),
-      }));
+    const mobile = isMobileViewport();
+    if (mobile && modalAnchored && !hasDraggedModal) {
+      // bottom-right anchoring via CSS on mobile
     } else {
-      setPosition({
-        x: maxX,
-        y: maxY,
-      });
+      const dimensions = getSizeDimensions();
+      const w = dimensions.widthNum;
+      const h = dimensions.heightNum;
+      const edgeMargin = mobile ? MOBILE_EDGE_MARGIN : EDGE_MARGIN;
+      const bottomGap = mobile ? MOBILE_TEASER_BOTTOM_GAP : MODAL_BOTTOM_GAP;
+      const maxX = Math.max(edgeMargin, window.innerWidth - w - edgeMargin);
+      const maxY = Math.max(bottomGap, window.innerHeight - h - bottomGap);
+
+      if (hasDraggedModal) {
+        setPosition((prev) => ({
+          x: Math.min(Math.max(edgeMargin, prev.x), maxX),
+          y: Math.min(Math.max(bottomGap, prev.y), maxY),
+        }));
+      } else if (!mobile) {
+        setPosition({
+          x: maxX,
+          y: maxY,
+        });
+      } else {
+        setModalAnchored(true);
+      }
     }
-  }, [getSizeDimensions, hasDraggedTeaser, hasDraggedModal]);
+  }, [getSizeDimensions, hasDraggedTeaser, hasDraggedModal, teaserAnchored, modalAnchored]);
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -1679,18 +1768,28 @@ const FloatingMiniChatbot = () => {
     };
   }, []);
 
+  const modalDims = getSizeDimensions();
+  const useMobileModalAnchor = isMobile && modalAnchored && !hasDraggedModal;
+
   return (
     <>
       {/* Floating teaser */}
       {!isOpen && !isMinimizedToBorder && (
         <motion.div
-          className="fixed z-[9999] w-[210px] h-[160px] group"
+          ref={teaserRef}
+          className={`fixed z-[9999] w-[140px] h-[108px] sm:w-[168px] sm:h-[128px] group ${
+            teaserAnchored ? "right-3 bottom-3 sm:right-4 sm:bottom-2" : ""
+          }`}
           style={{
             position: "fixed",
-            top: `${teaserPosition.y}px`,
-            left: `${teaserPosition.x}px`,
-            bottom: "auto",
-            right: "auto",
+            ...(teaserAnchored
+              ? { top: "auto", left: "auto" }
+              : {
+                  top: `${teaserPosition.y}px`,
+                  left: `${teaserPosition.x}px`,
+                  bottom: "auto",
+                  right: "auto",
+                }),
             cursor: isTeaserDragging ? "grabbing" : "grab",
           }}
           onMouseDown={handleTeaserMouseDown}
@@ -1703,10 +1802,10 @@ const FloatingMiniChatbot = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.98 }}
               transition={{ duration: 0.22 }}
-              className="absolute right-2 top-0 w-max rounded-2xl border border-slate-200/80 bg-white px-4 py-2.5 text-[13px] font-semibold leading-5 text-slate-800 shadow-[0_10px_30px_rgba(15,23,42,0.12)]"
+              className="absolute right-1 top-0 w-max max-w-[130px] sm:max-w-[155px] rounded-xl sm:rounded-2xl border border-slate-200/80 bg-white px-3 py-2 sm:px-3.5 sm:py-2 text-[11px] sm:text-[12px] font-semibold leading-4 sm:leading-5 text-slate-800 shadow-[0_10px_30px_rgba(15,23,42,0.12)]"
             >
               {TEASER_PROMPTS[teaserPromptIndex]}
-              <span className="absolute bottom-[-6px] right-10 h-3 w-3 rotate-45 border-r border-b border-slate-200/80 bg-white" />
+              <span className="absolute bottom-[-5px] right-8 sm:right-9 h-2.5 w-2.5 sm:h-3 sm:w-3 rotate-45 border-r border-b border-slate-200/80 bg-white" />
             </motion.div>
           </AnimatePresence>
 
@@ -1716,17 +1815,17 @@ const FloatingMiniChatbot = () => {
               e.stopPropagation();
               setIsMinimizedToBorder(true);
             }}
-            className="absolute right-1 top-[52px] z-[10000] flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 border border-white"
+            className="absolute right-0.5 top-[38px] sm:top-[44px] z-[10000] flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-full bg-red-500 text-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 border border-white"
             style={{ cursor: "pointer" }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <X className="w-3.5 h-3.5" />
+            <X className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
           </motion.button>
 
           <motion.button
             onClick={handleTeaserClick}
-            className="absolute bottom-0 right-0 flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border border-white/70 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.20)]"
+            className="absolute bottom-0 right-0 flex h-[68px] w-[68px] sm:h-[80px] sm:w-[80px] items-center justify-center overflow-hidden rounded-full border border-white/70 bg-white shadow-[0_12px_32px_rgba(15,23,42,0.18)]"
             style={{ cursor: "inherit" }}
             whileHover={{
               scale: 1.04,
@@ -1754,9 +1853,11 @@ const FloatingMiniChatbot = () => {
         <motion.button
           onClick={() => {
             setIsOpen(true);
+            setModalAnchored(true);
+            setHasDraggedModal(false);
             setShouldPlayWelcomeVideo(true);
           }}
-          className="fixed right-2 top-1/2 -translate-y-1/2 z-[9999] flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.18)]"
+          className="fixed right-3 bottom-3 sm:right-4 sm:bottom-4 z-[9999] flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.18)]"
           style={{ cursor: "pointer" }}
           whileHover={{
             scale: 1.08,
@@ -1786,18 +1887,33 @@ const FloatingMiniChatbot = () => {
         {isOpen && (
           <motion.div
             {...modalAnim}
-            className="fixed inset-0 z-50 pointer-events-none"
+            className={`fixed inset-0 z-50 pointer-events-none ${isMobile ? "z-[9998]" : ""}`}
             onDragStart={(e) => e.preventDefault()}
           >
             <motion.div
-              className="relative overflow-hidden rounded-3xl bg-transparent shadow-[0_28px_90px_rgba(0,0,0,0.45)] ring-1 ring-white/12"
+              ref={modalRef}
+              data-chatbot-modal
+              className={`relative overflow-hidden bg-transparent shadow-[0_28px_90px_rgba(0,0,0,0.45)] ring-1 ring-white/12 max-sm:max-w-[calc(100vw-24px)] ${
+                isMobile ? "rounded-2xl" : "rounded-3xl"
+              }`}
               style={{
                 position: "absolute",
-                top: `${position.y}px`,
-                left: `${position.x}px`,
+                ...(useMobileModalAnchor
+                  ? {
+                      bottom: MOBILE_TEASER_BOTTOM_GAP,
+                      right: MOBILE_EDGE_MARGIN,
+                      top: "auto",
+                      left: "auto",
+                    }
+                  : {
+                      top: `${position.y}px`,
+                      left: `${position.x}px`,
+                      bottom: "auto",
+                      right: "auto",
+                    }),
                 transform: "none",
-                width: getSizeDimensions().width,
-                height: getSizeDimensions().height,
+                width: modalDims.width,
+                height: modalDims.height,
                 cursor: "default",
                 pointerEvents: "auto",
               }}
@@ -1807,22 +1923,28 @@ const FloatingMiniChatbot = () => {
               onDragStart={(e) => e.preventDefault()}
             >
               {/* Fully transparent container */}
-              <div className="absolute inset-0 rounded-3xl pointer-events-none" />
+              <div className={`absolute inset-0 pointer-events-none ${isMobile ? "rounded-2xl" : "rounded-3xl"}`} />
 
               {/* Connecting overlay – theme-neutral glass (no blue) */}
               {isOpen && isConnecting && (
-                <div className="absolute inset-0 z-40 flex items-center justify-center rounded-3xl bg-black/45 backdrop-blur-md border border-white/10">
+                <div className={`absolute inset-0 z-40 flex items-center justify-center bg-black/45 backdrop-blur-md border border-white/10 ${isMobile ? "rounded-2xl" : "rounded-3xl"}`}>
                   <div className="flex flex-col items-center gap-4 text-white">
-                    <div className="h-12 w-12 rounded-full border-2 border-white/30 border-t-white animate-spin" />
-                    <p className="text-lg font-medium">Connecting...</p>
+                    <div className={`rounded-full border-2 border-white/30 border-t-white animate-spin ${isMobile ? "h-9 w-9" : "h-12 w-12"}`} />
+                    <p className={`font-medium ${isMobile ? "text-sm" : "text-lg"}`}>Connecting...</p>
                   </div>
                 </div>
               )}
 
-              <div className="relative flex h-full w-full bg-transparent">
+              <div className={`relative flex h-full w-full bg-transparent ${isMobile && isChatOpen ? "flex-col" : ""}`}>
                 {/* Avatar side - only this area shows grab cursor for dragging */}
                 <div
-                  className={`${isChatOpen ? "w-[60%]" : "w-full"} relative h-full min-w-0 bg-black`}
+                  className={`${
+                    isChatOpen
+                      ? isMobile
+                        ? "h-[42%] w-full shrink-0"
+                        : "w-[60%] h-full"
+                      : "w-full h-full"
+                  } relative min-w-0 bg-black`}
                   style={{
                     cursor: isDraggable
                       ? dragging
@@ -1896,7 +2018,7 @@ const FloatingMiniChatbot = () => {
                         />
                       </motion.div>
                     )}
-                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/28 via-black/10 to-transparent pointer-events-none" />
+                    <div className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/28 via-black/10 to-transparent pointer-events-none ${isMobile ? "h-14" : "h-24"}`} />
                   </div>
 
                   {showMicBlockedDialog && (
@@ -1954,19 +2076,19 @@ const FloatingMiniChatbot = () => {
 
                   {/* Top controls */}
                   {!showMicBlockedDialog && (
-                    <div className="absolute top-4 right-4 flex gap-2">
-                      <IconBtn onClick={toggleSpeaker} active={isSpeakerOn}>
-                        {isSpeakerOn ? <Volume2 /> : <VolumeX />}
+                    <div className={`absolute flex gap-1.5 sm:gap-2 ${isMobile ? "top-2 right-2" : "top-4 right-4"}`}>
+                      <IconBtn onClick={toggleSpeaker} active={isSpeakerOn} compact={isMobile}>
+                        {isSpeakerOn ? <Volume2 className={isMobile ? "h-4 w-4" : ""} /> : <VolumeX className={isMobile ? "h-4 w-4" : ""} />}
                       </IconBtn>
-                      <IconBtn danger onClick={handleClose}>
-                        <X />
+                      <IconBtn danger onClick={handleClose} compact={isMobile}>
+                        <X className={isMobile ? "h-4 w-4" : ""} />
                       </IconBtn>
                     </div>
                   )}
 
                   {/* Bottom bar */}
                   {!showMicBlockedDialog && (
-                    <div className="absolute bottom-0 inset-x-0 px-4 pt-4 pb-2 pointer-events-none">
+                    <div className={`absolute bottom-0 inset-x-0 pointer-events-none ${isMobile ? "px-2.5 pt-2 pb-1.5" : "px-4 pt-4 pb-2"}`}>
                       <div className="flex items-center justify-between gap-3">
                         {!showVoiceBar && (
                           // <div className="px-3 py-2 rounded-full bg-black/55 backdrop-blur-lg text-white text-sm font-semibold shadow-lg pointer-events-auto">
@@ -1979,18 +2101,18 @@ const FloatingMiniChatbot = () => {
                           <div className="flex-1 flex items-center justify-center gap-4 pointer-events-auto">
                             <button
                               onClick={toggleMic}
-                              className="h-11 w-11 rounded-full bg-[#2b2b2d] text-white border border-white/10 shadow-lg flex items-center justify-center"
+                              className={`rounded-full bg-[#2b2b2d] text-white border border-white/10 shadow-lg flex items-center justify-center ${isMobile ? "h-9 w-9" : "h-11 w-11"}`}
                               aria-label="Toggle microphone"
                             >
                               {micMuted ? (
-                                <MicOff className="w-5 h-5" />
+                                <MicOff className={isMobile ? "w-4 h-4" : "w-5 h-5"} />
                               ) : (
-                                <Mic className="w-5 h-5" />
+                                <Mic className={isMobile ? "w-4 h-4" : "w-5 h-5"} />
                               )}
                             </button>
 
                             <div className="flex-1 flex justify-center">
-                              <div className="min-w-[190px] px-5 py-2 rounded-full bg-[#1f1f20]/90 backdrop-blur-md border border-white/10 shadow-lg flex items-center justify-center gap-1.5">
+                              <div className={`rounded-full bg-[#1f1f20]/90 backdrop-blur-md border border-white/10 shadow-lg flex items-center justify-center gap-1.5 ${isMobile ? "min-w-[140px] px-3 py-1.5" : "min-w-[190px] px-5 py-2"}`}>
                                 {[...Array(16)].map((_, i) => (
                                   <motion.div
                                     key={i}
@@ -2015,13 +2137,10 @@ const FloatingMiniChatbot = () => {
 
                             <button
                               onClick={() => setIsChatOpen((v) => !v)}
-                              className={`h-11 w-11 rounded-full border border-white/10 shadow-lg flex items-center justify-center ${isChatOpen
-                                  ? "bg-[#2b2b2d] text-white"
-                                  : "bg-[#2b2b2d]/90 text-white"
-                                }`}
+                              className={`rounded-full border border-white/10 shadow-lg flex items-center justify-center bg-[#2b2b2d] text-white ${isMobile ? "h-9 w-9" : "h-11 w-11"}`}
                               aria-label="Toggle chat"
                             >
-                              <MessageSquare className="w-5 h-5" />
+                              <MessageSquare className={isMobile ? "w-4 h-4" : "w-5 h-5"} />
                             </button>
                           </div>
                         ) : (
@@ -2030,12 +2149,13 @@ const FloatingMiniChatbot = () => {
                               <IconBtn
                                 active={micStatus === "allowed" && !micMuted}
                                 onClick={toggleMic}
+                                compact={isMobile}
                                 danger={
                                   micStatus === "denied" ||
                                   micStatus === "error"
                                 }
                               >
-                                {micMuted ? <MicOff /> : <Mic />}
+                                {micMuted ? <MicOff className={isMobile ? "h-4 w-4" : ""} /> : <Mic className={isMobile ? "h-4 w-4" : ""} />}
                               </IconBtn>
                               {(micStatus === "prompt" || isRecording) && (
                                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full"></div>
@@ -2051,8 +2171,9 @@ const FloatingMiniChatbot = () => {
                             <IconBtn
                               onClick={() => setIsChatOpen((v) => !v)}
                               active={isChatOpen}
+                              compact={isMobile}
                             >
-                              <MessageSquare />
+                              <MessageSquare className={isMobile ? "h-4 w-4" : ""} />
                             </IconBtn>
                           </div>
                         )}
@@ -2074,7 +2195,7 @@ const FloatingMiniChatbot = () => {
                           settings.
                         </div>
                       )}
-                      {showVoiceBar && (
+                      {showVoiceBar && !isMobile && (
                         <div className="text-[11px] text-white/80 mt-1 pointer-events-auto">
                           Tip: Using headphones reduces echo and accidental
                           interruptions.
@@ -2089,11 +2210,15 @@ const FloatingMiniChatbot = () => {
                   {isChatOpen && (
                     <motion.div
                       data-chat-panel
-                      initial={{ x: 40, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      exit={{ x: 40, opacity: 0 }}
+                      initial={{ x: isMobile ? 0 : 40, y: isMobile ? 24 : 0, opacity: 0 }}
+                      animate={{ x: 0, y: 0, opacity: 1 }}
+                      exit={{ x: isMobile ? 0 : 40, y: isMobile ? 24 : 0, opacity: 0 }}
                       transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                      className="relative flex h-full w-[40%] min-w-0 flex-col overflow-hidden border-l border-white/12 bg-slate-950/78 text-slate-50 shadow-[-10px_0_36px_rgba(0,0,0,0.38)] backdrop-blur-2xl backdrop-saturate-150"
+                      className={`relative flex min-w-0 flex-col overflow-hidden bg-slate-950/78 text-slate-50 backdrop-blur-2xl backdrop-saturate-150 ${
+                        isMobile
+                          ? "h-[58%] w-full shrink-0 border-t border-white/12 shadow-[0_-8px_28px_rgba(0,0,0,0.32)]"
+                          : "h-full w-[40%] border-l border-white/12 shadow-[-10px_0_36px_rgba(0,0,0,0.38)]"
+                      }`}
                       style={{ cursor: "default" }}
                       onMouseDown={(e) => e.stopPropagation()}
                     >
@@ -2243,10 +2368,11 @@ const FloatingMiniChatbot = () => {
 
 /* ---------- Reusable UI ---------- */
 
-const IconBtn = ({ children, onClick, danger, active }) => (
+const IconBtn = ({ children, onClick, danger, active, compact }) => (
   <motion.button
     onClick={onClick}
-    className={`p-2 rounded-full backdrop-blur-md shadow-lg transition
+    className={`rounded-full backdrop-blur-md shadow-lg transition
+      ${compact ? "p-1.5" : "p-2"}
       ${danger ? "bg-red-500 text-white" : active ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white" : "bg-gradient-to-r from-gray-700 to-gray-800 text-white"}
       hover:scale-110 active:scale-95`}
     whileHover={{ scale: 1.1, boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)" }}

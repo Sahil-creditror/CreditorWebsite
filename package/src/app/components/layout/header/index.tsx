@@ -95,7 +95,7 @@ const Header = () => {
       >
         <nav className={`${sticky ? "h-16" : "h-20"} flex items-center justify-between`}>
           {/* LOGO */}
-          <Logo />
+          <Logo sticky={sticky} />
 
           {/* DESKTOP MENU */}
           {/* DESKTOP MENU */}

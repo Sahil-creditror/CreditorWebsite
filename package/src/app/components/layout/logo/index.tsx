@@ -12,7 +12,7 @@ const Logo = (props: { sticky: boolean }) => {
             <Image
                 src={
                     sticky
-                        ? "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883695/creditor-website-assets/images/logo/creditorlogowhite.png"
+                        ? "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"
                         : "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883691/creditor-website-assets/images/logo/creditorlogo.png"
                 }
                 alt="logo"

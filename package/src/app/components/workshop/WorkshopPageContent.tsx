@@ -5,18 +5,18 @@ import Link from "next/link";
 import { Check, Clock, Sparkles, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 
-// ── Event Constants Extracted Directly From bfb_2.png ───────────────────────
-const WORKSHOP_EVENT_CALENDAR_DAY    = "20";
-const WORKSHOP_EVENT_CALENDAR_MONTH  = "JUNE";
-const WORKSHOP_EVENT_DATE_LABEL      = "Saturday, June 20, 2026";
+// ── Event Constants Extracted Directly From aitt.png ─────────────────────────
+const WORKSHOP_EVENT_CALENDAR_DAY    = "11";
+const WORKSHOP_EVENT_CALENDAR_MONTH  = "JULY";
+const WORKSHOP_EVENT_DATE_LABEL      = "Saturday, July 11, 2026";
 const WORKSHOP_EVENT_TIME_DISPLAY    = "11:00 AM";
 const WORKSHOP_EVENT_TIME_PST        = "11:00 AM PST";
 const WORKSHOP_EVENT_TIMEZONE_LABEL  = "PST";
 
-// Target Countdown Date: Saturday, June 20, 2026, 11:00 AM PST (UTC-7 due to Daylight Savings)
-const WORKSHOP_EVENT_CLOSE_MS        = new Date("2026-06-20T11:00:00-07:00").getTime();
-const WORKSHOP_EVENT_IMAGE           = "/images/todayclasstopic/bfb.png"; // Referencing requested image asset configuration
-const PAYMENT_LINK_URL               = "https://rzp.io/rzp/4ofk48g";
+// Target Countdown Date: Saturday, July 11, 2026, 11:00 AM PST
+const WORKSHOP_EVENT_CLOSE_MS        = new Date("2026-07-11T11:00:00-07:00").getTime();
+const WORKSHOP_EVENT_IMAGE           = "/images/todayclasstopic/aitt.png"; 
+const REGISTRATION_LINK_URL          = "https://api.wonderengine.ai/widget/form/mL2L8I8p4RI7AF61stUd"; // Keep your conversion endpoint setup
 // ─────────────────────────────────────────────────────────────────────────────
 
 function pad(n: number) {
@@ -33,26 +33,26 @@ function getCountdown(targetMs: number) {
   };
 }
 
-// Exactly mirroring the 6 structural checkmarks from the bfb_2.png flyer asset checklist
+// Exactly mirroring the 6 operational checkpoints from the aitt.png flyer checklist
 const INCLUDED = [
-  "Build a Fundable Business Foundation",
-  "Establish Business Credit the Right Way",
-  "Understand Lender Requirements",
-  "Avoid Common Funding Mistakes",
-  "Prepare for Business Growth & Expansion",
-  "Funding Readiness Strategies for Entrepreneurs",
+  "Save time on daily tasks",
+  "Automate your marketing",
+  "Create content in minutes",
+  "Manage finances smarter",
+  "Make data-driven decisions",
+  "Stay ahead of the competition",
 ] as const;
 
 const TRADITIONAL = [
-  { title: "Months of trial and error", body: "Piecing together advice from scattered sources with no clear order or verification." },
-  { title: "Unstructured applications", body: "Applying blindly to financial products without meeting strict backend underwriting metrics." },
-  { title: "No direct guidance", body: "Falling into common dynamic funding traps that freeze entity credit progression permanently." },
+  { title: "Manual Repetitive Labor", body: "Spending critical operational hours running structural data entry, manual content drafts, and standard scheduling manually." },
+  { title: "High Marketing Overhead", body: "Outsourcing expensive baseline copy and creative assets to slow third-party agencies with extensive turnaround timelines." },
+  { title: "Lagging Analytics Decisions", body: "Relying on old historical bookkeeping reports rather than immediate predictive predictive automation tools." },
 ] as const;
 
 const CREDITOR = [
-  { title: "One comprehensive blueprint", body: "A single blueprint engineered around building an optimized, highly fundable structure." },
-  { title: "Lender-compliant framework", body: "Direct mapping of foundational business profiles against core verification models." },
-  { title: "Live interactive insights", body: "Real-time masterclass training designed to clear hurdles instantly with experienced clarity." },
+  { title: "Integrated AI Frameworks", body: "Leveraging prompt models and automated system layers to claim back productive hours instantly." },
+  { title: "Instant Content Generation", body: "Spinning up target marketing initiatives, messaging copy, and campaign elements in minutes using native automation." },
+  { title: "Real-time Financial Clarity", body: "Deploying systematic modern tracking solutions to control business scaling decisions efficiently." },
 ] as const;
 
 export default function WorkshopPageContent() {
@@ -70,7 +70,7 @@ export default function WorkshopPageContent() {
   return (
     <div className="workshop-athena-style min-h-screen bg-[#eef5fc] text-slate-800">
       {/* Hero Section */}
-      <section className="relative overflow-hidden border-b border-[#1a4d7a] bg-gradient-to-br from-[#061525] via-[#0a2d52] to-[#0f3d6b] px-4 pb-16 pt-28 md:pb-24 md:pt-32">
+      <section className="relative overflow-hidden border-b border-[#1a4d7a] bg-gradient-to-br from-[#061525] via-[#0a2d52] to-[#0f3d6b] px-4 pb-16 pt-20 md:pb-24 md:pt-24">
         <div
           className="pointer-events-none absolute inset-0 opacity-30"
           style={{
@@ -83,40 +83,41 @@ export default function WorkshopPageContent() {
           aria-hidden
         />
         <div className="container relative z-10">
-          <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-2 lg:gap-16">
             <div className="text-center lg:text-left">
               <p className="text-sm font-bold uppercase tracking-widest text-[#7eb8ff]">
                 Creditor Academy · Private Montessori Association
               </p>
-              <h1 className="mt-4 text-4xl font-extrabold leading-none tracking-tight text-white sm:text-5xl lg:text-[3.5rem] uppercase">
-                Business Funding{" "}
+              <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-[3rem] uppercase">
+                AI Tools Every{" "}
                 <span className="block bg-gradient-to-r from-blue-400 via-sky-300 to-white bg-clip-text text-transparent font-black mt-1">
-                  BLUEPRINT
+                  SMALL BUSINESS OWNER
                 </span>
+                <span className="text-3xl sm:text-4xl block mt-1 text-slate-200 lowercase font-medium italic">should use</span>
               </h1>
 
               <div className="mt-5 inline-block rounded-xl bg-black/30 border border-white/10 px-4 py-2.5 text-left">
                 <p className="text-sm font-bold text-amber-300 sm:text-base flex items-center gap-2">
-                  <span className="bg-amber-400 text-slate-950 px-2 py-0.5 rounded text-xs font-black">OFFER</span>
-                  GET APPROVED FOR $100K+
+                  <span className="bg-amber-400 text-slate-950 px-2 py-0.5 rounded text-xs font-black animate-pulse">🔥 LIVE MASTERCLASS</span>
+                  WORK SMARTER. SAVE TIME. GROW FASTER.
                 </p>
               </div>
 
               <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-blue-100/85 lg:mx-0">
-                Learn the strategies successful entrepreneurs use to build a fundable business and position themselves for greater access to capital.
+                Discover the best AI tools to simplify your tasks, boost productivity, and systematically grow your business without operational overhead.
               </p>
               
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
                 <Link
-                  href={PAYMENT_LINK_URL}
+                  href={REGISTRATION_LINK_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 px-10 py-4 text-base font-extrabold text-slate-950 shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5 hover:brightness-110"
+                  className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 px-8 py-4 text-base font-extrabold text-slate-950 shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5 hover:brightness-110"
                 >
-                  Register Now ($20)
+                  Register Free Now
                 </Link>
                 <span className="text-xs font-semibold text-blue-200/70 tracking-wide">
-                  Secure instant seat confirmation
+                  100% Free Registration • Instant Access Credentials
                 </span>
               </div>
             </div>
@@ -125,7 +126,7 @@ export default function WorkshopPageContent() {
               <div className="overflow-hidden rounded-2xl border border-white/20 bg-white p-2 shadow-2xl shadow-black/30 ring-1 ring-[#026fe2]/30">
                 <Image
                   src={WORKSHOP_EVENT_IMAGE}
-                  alt="Business Funding Blueprint Live Masterclass Flyer — Saturday, June 20, 2026"
+                  alt="AI Tools Every Small Business Owner Should Use Live Online Training Flyer — Saturday, July 11, 2026"
                   width={440}
                   height={440}
                   className="w-full rounded-xl object-contain bg-slate-950"
@@ -152,14 +153,14 @@ export default function WorkshopPageContent() {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                   </span>
-                  ONLINE WEBINAR
+                  LIVE ONLINE TRAINING
                 </span>
                 <h2 className="mt-4 text-2xl font-black tracking-tight text-slate-900 md:text-3xl uppercase">
-                  June 20 Masterclass
+                  July 11 Masterclass
                 </h2>
                 <p className="mt-2 flex items-center justify-center gap-2 text-slate-600 lg:justify-start text-sm">
                   <Video className="h-4 w-4 shrink-0 text-[#026fe2]" aria-hidden />
-                  Practical Business Education
+                  Practical Business Scaling Automation
                 </p>
               </div>
 
@@ -210,21 +211,21 @@ export default function WorkshopPageContent() {
       <section className="bg-[#f0f7fd] py-16 md:py-24">
         <div className="container">
           <p className="text-center text-sm font-bold uppercase tracking-widest text-[#026fe2]">
-            Strategic Advantage
+            Operational Efficiency
           </p>
           <h2 className="mx-auto mt-3 max-w-2xl text-center text-3xl font-bold text-slate-900 md:text-4xl">
-            A Tested, Scalable Strategy
+            Legacy Guesswork vs. AI Systems
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-center text-slate-600">
-            See how navigating a guided compliance path saves months of funding delays and flat rejections.
+            See how incorporating immediate automation stacks can easily eliminate traditional growth barriers.
           </p>
 
           <div className="mx-auto mt-12 grid max-w-5xl gap-8 lg:grid-cols-2">
             <div className="rounded-2xl border-2 border-[#c5dff5] bg-white/60 p-8 backdrop-blur-sm">
               <span className="inline-block rounded-full bg-[#d0e8f8] px-3 py-1 text-xs font-bold uppercase text-slate-600">
-                Traditional guesswork
+                Traditional Business Methods
               </span>
-              <p className="mt-4 text-sm font-bold text-slate-400 tracking-wide">SLOW & UNVERIFIED</p>
+              <p className="mt-4 text-sm font-bold text-slate-400 tracking-wide">SLOW & TIME-CONSUMING</p>
               <ul className="mt-6 space-y-6">
                 {TRADITIONAL.map((item) => (
                   <li key={item.title}>
@@ -233,14 +234,13 @@ export default function WorkshopPageContent() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-8 text-center text-2xl font-extrabold text-slate-400">~MINIMUM MONTHS</p>
             </div>
 
             <div className="rounded-2xl border-2 border-[#026fe2] bg-gradient-to-br from-[#dbeafe] to-[#eff6ff] p-8 shadow-lg shadow-blue-500/15">
               <span className="inline-block rounded-full bg-[#026fe2] px-3 py-1 text-xs font-bold uppercase text-white">
-                Business Funding Blueprint
+                AI Business Ecosystem Stack
               </span>
-              <p className="mt-4 text-sm font-bold text-[#026fe2] tracking-wide">COMPLIANT & TARGETED</p>
+              <p className="mt-4 text-sm font-bold text-[#026fe2] tracking-wide">AUTOMATED & FAST</p>
               <ul className="mt-6 space-y-6">
                 {CREDITOR.map((item) => (
                   <li key={item.title}>
@@ -249,7 +249,6 @@ export default function WorkshopPageContent() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-8 text-center text-2xl font-extrabold text-[#026fe2]">~1 LIVE STREAM</p>
             </div>
           </div>
         </div>
@@ -264,23 +263,23 @@ export default function WorkshopPageContent() {
               <div>
                 <span className="inline-flex items-center gap-2 rounded-full border border-amber-400/35 bg-amber-400/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-amber-200">
                   <span className="h-1.5 w-1.5 rounded-full bg-amber-400" aria-hidden />
-                  LIMITED ENTRY ACADEMY STREAM · {WORKSHOP_EVENT_DATE_LABEL}
+                  COMPLIMENTARY ACADEMY ACCESS · {WORKSHOP_EVENT_DATE_LABEL}
                 </span>
                 <h2 className="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
-                  Secure Your Full{" "}
+                  Unlock Your Free{" "}
                   <span className="bg-gradient-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent">
-                    Blueprint Access
+                    AI Execution Plan
                   </span>
                 </h2>
                 <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-blue-100/90 lg:mx-0">
-                  Walk away with a precise strategy formulated to construct corporate profiles that align seamlessly with rigorous tier-1 lender thresholds.
+                  Secure access to live visual walkthroughs detailing top applications engineered to optimize standard corporate operations.
                 </p>
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-white/[0.07] p-6 backdrop-blur-sm lg:p-7">
                 <div className="flex items-center justify-center gap-2 lg:justify-start">
                   <Sparkles className="h-5 w-5 text-amber-300" aria-hidden />
-                  <h3 className="text-base font-bold text-white tracking-wide">Flyer Checklist Objectives</h3>
+                  <h3 className="text-base font-bold text-white tracking-wide">Flyer Core Objectives</h3>
                 </div>
                 <ul className="mt-5 grid gap-3 sm:grid-cols-1 sm:gap-3">
                   {INCLUDED.map((item) => (
@@ -299,7 +298,7 @@ export default function WorkshopPageContent() {
 
               <div className="rounded-2xl border border-[#026fe2]/30 bg-[#026fe2]/10 p-6" aria-live="polite">
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#7eb8ff]">
-                  Livestream Broadcast Begins In
+                  Live Stream Broadcast Begins In
                 </p>
                 <div className="mt-4 grid grid-cols-4 gap-2 sm:gap-3">
                   <Timer value={pad(days)} label="Days" />
@@ -310,14 +309,14 @@ export default function WorkshopPageContent() {
               </div>
             </div>
 
-            {/* Right: Registration/Payment Card */}
+            {/* Right: Registration Card */}
             <div className="flex flex-col justify-center rounded-3xl bg-white p-6 shadow-2xl shadow-black/25 md:p-8">
               <div className="rounded-2xl bg-gradient-to-br from-[#026fe2] to-[#0259bd] px-6 py-6 text-center text-white">
                 <p className="text-xs font-bold uppercase tracking-widest text-blue-100/90">
                   ONLINE LIVE MASTERCLASS
                 </p>
                 <p className="mt-3 text-2xl font-black tracking-tight uppercase">
-                  BUSINESS FUNDING BLUEPRINT
+                  AI TOOLS FOR SMALL BUSINESS
                 </p>
                 <div className="mt-4 inline-flex flex-col gap-1 rounded-xl bg-black/15 px-5 py-3 text-sm font-bold">
                   <span>{WORKSHOP_EVENT_DATE_LABEL}</span>
@@ -327,26 +326,26 @@ export default function WorkshopPageContent() {
 
               <div className="mt-6 border-b border-slate-100 pb-5 text-center">
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">Registration Fee</span>
-                <span className="text-4xl font-black text-slate-900 mt-1 block">$20</span>
+                <span className="text-4xl font-black text-emerald-600 mt-1 block">FREE</span>
                 <p className="mt-2 text-xs font-medium text-slate-500">
-                  Includes full access to the live session &amp; Q&amp;A segment.
+                  Includes full stream entry credentials and open Q&amp;A chat pool access.
                 </p>
               </div>
 
               <p className="mt-4 text-center text-sm leading-relaxed text-slate-600">
-                Join live on June 20th. Secure your slot through our prioritized gateway below before processing lines lock.
+                Join live this July. Complete registration below to lock in your live streaming seat hookup.
               </p>
 
               <Link
-                href={PAYMENT_LINK_URL}
+                href={REGISTRATION_LINK_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 flex w-full items-center justify-center rounded-full bg-[#026fe2] py-4 text-base font-extrabold text-white shadow-xl shadow-blue-600/30 transition transform hover:-translate-y-0.5 hover:bg-[#0259bd]"
+                className="mt-6 flex w-full items-center justify-center rounded-full bg-emerald-600 py-4 text-base font-extrabold text-white shadow-xl shadow-emerald-600/30 transition transform hover:-translate-y-0.5 hover:bg-emerald-700"
               >
-                Complete Registration ($20)
+                Register For Free Now
               </Link>
               <p className="mt-4 text-center text-xs text-slate-400 font-medium">
-                Instant delivery of access credentials via purchase email verification.
+                Your future business starts with one decision. Make it today!
               </p>
             </div>
           </div>
@@ -357,23 +356,23 @@ export default function WorkshopPageContent() {
       <section className="bg-slate-900 text-white py-6 border-y border-white/10">
         <div className="container flex flex-col items-center justify-center gap-4 text-center text-sm md:flex-row md:gap-8">
           <p className="font-bold tracking-wider text-xs sm:text-sm">
-            WE ARE <span className="text-sky-400 font-black">LIVE</span> ON:
+            WE ARE LIVE ON SOCIAL MEDIA TOO:
           </p>
           <div className="flex flex-wrap items-center justify-center gap-6 font-bold text-slate-300 text-xs sm:text-sm">
             <span className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" /> Rumble
+              <span className="h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse" /> Rumble
             </span>
             <span className="text-slate-700">|</span>
             <span className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-red-500 animate-pulse" /> YouTube
+              <span className="h-2.5 w-2.5 rounded-full bg-red-600 animate-pulse" /> YouTube
             </span>
             <span className="text-slate-700">|</span>
             <span className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-blue-600 animate-pulse" /> Facebook
+              <span className="h-2.5 w-2.5 rounded-full bg-blue-600 animate-pulse" /> Facebook
             </span>
           </div>
           <p className="text-xs text-slate-400 font-medium md:ml-4">
-            Join the synchronized broadcast stream on any of our direct social channels!
+            Don't miss out — join us live on your favorite platform!
           </p>
         </div>
       </section>
@@ -382,18 +381,18 @@ export default function WorkshopPageContent() {
       <section className="border-t border-[#c5dff5] bg-gradient-to-b from-[#dceefb] to-[#e8f4fc] py-16 md:py-20">
         <div className="container text-center">
           <h2 className="text-2xl font-extrabold text-slate-900 md:text-3xl uppercase tracking-tight">
-            Ready to establish pristine fundability?
+            Ready to scale using modern workflows?
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-slate-600 font-medium text-sm sm:text-base">
-            Claim entry now to align your company configuration with top-tier asset parameters this Saturday.
+            Claim your complimentary ticket today to bypass operational headaches.
           </p>
           <Link
-            href={PAYMENT_LINK_URL}
+            href={REGISTRATION_LINK_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 inline-flex items-center justify-center rounded-full bg-[#026fe2] px-12 py-4 text-base font-extrabold text-white shadow-lg shadow-blue-500/20 transition transform hover:-translate-y-0.5 hover:bg-[#0259bd]"
           >
-            Access Blueprint Stream Now
+            Access Free Live Stream
           </Link>
           <p className="mt-6 text-xs font-bold text-slate-400 uppercase tracking-widest">
             Direct Support Line:{" "}

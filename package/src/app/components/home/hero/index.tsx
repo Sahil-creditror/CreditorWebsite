@@ -102,6 +102,7 @@ const HeroSection = () => {
     eyebrow: "Creditor Academy Masterclass",
     title: "Become Private",
     titleAccent: "Operate Private",
+    titleFreedom: "Achieve Financial Freedom",
     subTitle: "Build Generational Wealth",
     description:
       "Learn business trusts, asset protection, business credit, and financial sovereignty through the Creditor Academy Masterclass — the strategies the privileged use to build, protect, and pass on wealth.",
@@ -130,19 +131,12 @@ const HeroSection = () => {
 
         {/* Cinematic Vignettes & Dynamic Environmental Gradients */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#020617]/85 via-[#020617]/40 to-transparent hidden lg:block" />
-        {/* <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/50 to-transparent" /> */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/90 via-transparent to-[#020617] lg:hidden block" />
 
         {/* Soft Organic Ambient Light Glares */}
         <div className="absolute top-1/3 left-[-10%] w-[600px] h-[600px] bg-sky-500/10 blur-[180px] rounded-full pointer-events-none" />
         <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-indigo-500/5 blur-[150px] rounded-full pointer-events-none" />
       </div>
-
-      {/* Structural Architectural Frame */}
-      {/* <div className="pointer-events-none absolute inset-4 sm:inset-8 border border-slate-800/40 rounded-[2.5rem] z-30" /> */}
-
-      {/* Luxury Interactive Particles */}
-      {/* <LuxuryParticles /> */}
 
       {/* TYPOGRAPHY & CTA LAYOUT CONTAINER */}
       <div className="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 pb-20 pt-30 lg:pb-24 flex justify-start">
@@ -152,7 +146,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center gap-3 text-[8px] sm:text-[10px] uppercase tracking-[0.4em] text-sky-400 font-bold mb-6"
+            className="inline-flex items-center gap-3 text-[8px] sm:text-[10px] uppercase tracking-[0.4em] text-sky-400 font-bold mb-4"
           >
             <span className="w-6 h-[1px] bg-gradient-to-r from-sky-400 to-transparent" />
             <span className="bg-gradient-to-r from-sky-400 via-sky-200 to-white bg-clip-text text-transparent">
@@ -161,7 +155,8 @@ const HeroSection = () => {
           </motion.div>
 
           {/* Heading Architectural Complex */}
-          <h1 className="font-serif tracking-tight leading-[1.08] text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white">
+          <h1 className="font-serif tracking-tight leading-[1.08] text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white w-full">
+            {/* Heading 1: Become Private */}
             <motion.span
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -175,6 +170,7 @@ const HeroSection = () => {
               {heroContent.title}
             </motion.span>
 
+            {/* Heading 2: Operate Private */}
             <motion.span
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -183,25 +179,40 @@ const HeroSection = () => {
                 delay: 0.22,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="block text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-100 to-slate-200 font-light italic pb-2 mt-1"
+              className="block text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-100 to-slate-200 font-light italic mt-1"
             >
               {heroContent.titleAccent}
+            </motion.span>
+
+            {/* Heading 3: Financial Freedom */}
+            <motion.span
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.34,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-sky-300 font-light pb-2 mt-1 tracking-tight text-xl sm:text-2xl lg:text-5xl italic"
+            >
+              {heroContent.titleFreedom}
             </motion.span>
 
             {/* Micro Separation Rule */}
             <motion.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
-              transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
               className="h-[1px] w-1/3 bg-gradient-to-r from-sky-500/50 to-transparent my-4 origin-left"
             />
 
+            {/* Sub-Headline Label */}
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
                 duration: 0.8,
-                delay: 0.45,
+                delay: 0.55,
                 ease: [0.16, 1, 0.3, 1],
               }}
               className="block text-sm sm:text-lg lg:text-xl font-sans font-medium tracking-[0.12em] text-sky-300/90 uppercase"
@@ -214,7 +225,7 @@ const HeroSection = () => {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.6 }}
+            transition={{ duration: 1, delay: 0.7 }}
             className="mt-6 mb-9 text-xs sm:text-sm text-slate-300 leading-relaxed tracking-wide font-light max-w-lg"
           >
             {heroContent.description}
@@ -224,7 +235,7 @@ const HeroSection = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-4 w-full sm:w-auto"
           >
             {/* Primary Action Button */}

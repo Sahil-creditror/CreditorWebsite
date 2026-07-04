@@ -106,7 +106,7 @@ export default function MasterclassBenefits() {
       <div className="relative z-10">
 
         {/* --- Header Area (Scrolls Normally) --- */}
-        <section className="relative w-full min-h-screen flex flex-col items-center justify-center text-slate-100 selection:bg-blue-500/20 px-6 py-24">
+        <section className="relative w-full min-h-[72vh] md:min-h-screen flex flex-col items-center justify-center text-slate-100 selection:bg-blue-500/20 px-4 sm:px-6 py-16 md:py-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -114,14 +114,14 @@ export default function MasterclassBenefits() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="text-center flex flex-col items-center max-w-3xl"
           >
-            <h2 className="text-5xl md:text-6xl lg:text-5xl font-black tracking-tight text-white uppercase leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-5xl font-black tracking-tight text-white uppercase leading-tight">
               The{" "}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-sky-400 to-indigo-400">
                 Freedom
               </span>{" "}
               Formula
             </h2>
-            <p className="mt-8 text-sm md:text-base lg:text-lg text-slate-300 mx-auto leading-relaxed font-medium">
+            <p className="mt-5 md:mt-8 text-sm md:text-base lg:text-lg text-slate-300 mx-auto leading-relaxed font-medium max-w-2xl">
               A precise, sequential pipeline framework engineered to optimize capital scaling, private membership access, and asset protection.
             </p>
           </motion.div>
@@ -129,8 +129,63 @@ export default function MasterclassBenefits() {
 
         </section>
 
-        {/* --- The outer container gives the section scroll-depth (4 stages = 400vh) --- */}
-        <div ref={containerRef} className="relative h-[400vh]">
+        {/* --- Mobile: stacked cards --- */}
+        <section className="lg:hidden px-4 sm:px-6 pb-14">
+          <div className="max-w-xl mx-auto space-y-4">
+            {benefits.map((item, index) => (
+              <div
+                key={item.step}
+                className="relative rounded-2xl border border-slate-800/80 bg-slate-900/50 backdrop-blur-md p-4 sm:p-5 overflow-hidden"
+              >
+                <div className={`absolute -top-8 -right-8 w-32 h-32 rounded-full bg-gradient-to-r ${item.accent} opacity-20 blur-2xl`} />
+                <div className="relative z-10 flex items-start gap-3">
+                  <div className="w-10 h-10 shrink-0 rounded-lg border border-blue-500/60 bg-slate-900 text-white font-mono text-xs font-bold flex items-center justify-center">
+                    0{index + 1}
+                  </div>
+                  <div>
+                    <span className="text-[10px] tracking-[0.18em] font-black uppercase text-blue-400">
+                      {item.step}
+                    </span>
+                    <h3 className="mt-1 text-base sm:text-lg font-bold uppercase tracking-tight text-white leading-tight">
+                      {item.title}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="relative mt-3 h-36 sm:h-40 w-full">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-contain object-center"
+                    sizes="100vw"
+                  />
+                </div>
+
+                <p className="mt-3 text-sm leading-relaxed text-slate-300 font-medium">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+
+            <div className="flex justify-center pt-3">
+              <a
+                href="/masterclass-membership"
+                className="group relative inline-flex items-center gap-3 pl-5 pr-2 py-2 overflow-hidden rounded-full bg-blue-600 text-white text-[10px] tracking-widest uppercase font-black transition-all duration-300 shadow-lg"
+              >
+                <span>Initialize Membership</span>
+                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-white/10 text-white transition-transform duration-300 group-hover:translate-x-0.5">
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* --- Desktop sticky interaction --- */}
+        <div ref={containerRef} className="relative hidden lg:block h-[400vh]">
           {/* Sticky content container stays locked to screen while right column processes updates */}
           <section className="sticky top-24 h-[calc(100vh-6rem)] w-full text-slate-100 selection:bg-blue-500/20 flex items-center">
 

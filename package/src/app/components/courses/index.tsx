@@ -5,7 +5,7 @@ import Premium from "./courses";
 
 function Courses() {
   return (
-    <section className="relative py-20 md:py-20 overflow-hidden">
+    <section className="relative pt-20 overflow-hidden">
       {/* Static gradient background - Light mode (Blue gradient) */}
       <div 
         className="pointer-events-none absolute inset-0 -z-10 block dark:hidden"
@@ -48,7 +48,7 @@ function Courses() {
         </div> */}
 
         {/* Swiper Section */}
-        <div className="px-3.5">
+        <div >
           <Premium />
         </div>
       </div>

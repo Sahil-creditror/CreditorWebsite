@@ -14,13 +14,13 @@ import {
 
 export default function AboutCreditorAcademy() {
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-sky-100/30 via-blue-50/60 to-indigo-50/30 text-slate-900 font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden">
+    <div className="relative min-h-screen bg-gradient-to-tr from-sky-100/30 via-blue-50/60 to-indigo-50/30 text-slate-900 font-sans selection:bg-blue-600 selection:text-white overflow-x-clip">
       {/* Background Decorative Gradients - Enhanced for depth over the blue background */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-tr from-blue-300/30 via-sky-200/40 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
       <div className="absolute top-[40vh] right-[-10vw] w-[500px] h-[500px] bg-indigo-200/40 rounded-full blur-3xl pointer-events-none -z-10" />
 
       {/* --- HERO / WELCOME SECTION --- */}
-      <section className="relative pt-24 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-visible">
+      <section className="relative pt-24 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-x-clip">
         {/* Ambient Backlight Glow underneath the hero layout */}
         <div className="absolute top-12 left-1/4 w-[400px] h-[400px] bg-gradient-to-tr from-blue-400/20 to-sky-300/10 rounded-full blur-[120px] pointer-events-none -z-10" />
         <div className="absolute top-24 right-10 w-[300px] h-[300px] bg-gradient-to-br from-indigo-400/20 to-purple-300/10 rounded-full blur-[100px] pointer-events-none -z-10" />

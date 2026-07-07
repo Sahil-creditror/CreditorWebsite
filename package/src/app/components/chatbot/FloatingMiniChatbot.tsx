@@ -8,6 +8,7 @@ import React, {
   useRef,
   useState,
   useCallback,
+  useMemo,
   startTransition,
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -26,78 +27,176 @@ import AvatarLipSync from "./AvatarLipSync";
 import defaultBotVideo from "./assets/default_bot.mp4";
 import fallbackVideo from "./assets/Fallback.mp4";
 
-const API_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:9000").replace(/\/api\/?$/, "");
+const API_BASE_URL = (
+  process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.lmsathena.com"
+).replace(/\/api\/?$/, "");
 /** Timeout for FAQ search API */
 const CHATBOT_REQUEST_TIMEOUT_MS = 90000;
-const EDGE_MARGIN = 16;
-const MOBILE_EDGE_MARGIN = 12;
-const BOT_INTERRUPT_GRACE_MS = 900;
-const TEASER_BOTTOM_GAP = 8;
-const MOBILE_TEASER_BOTTOM_GAP = 12;
+const EDGE_MARGIN = 24;
+const BOT_INTERRUPT_GRACE_MS = 1200;
+const TEASER_BOTTOM_GAP = 2;
 const MODAL_BOTTOM_GAP = 10;
-const TEASER_WIDTH = 168;
-const TEASER_HEIGHT = 128;
-const MOBILE_TEASER_WIDTH = 140;
-const MOBILE_TEASER_HEIGHT = 108;
-const MOBILE_BREAKPOINT = 640;
+const MODAL_WIDTH = 540;
+const MODAL_WIDTH_CHAT = 730;
+const MODAL_HEIGHT = 310;
+const CHAT_INPUT_MAX_HEIGHT = 112;
+const CHAT_INPUT_MAX_LENGTH = 200;
 
-const isMobileViewport = () =>
-  typeof window !== "undefined" && window.innerWidth < MOBILE_BREAKPOINT;
+const clampChatInput = (value) => (value || "").slice(0, CHAT_INPUT_MAX_LENGTH);
 
-const getTeaserBounds = () => {
-  if (typeof window === "undefined") {
+const LINK_TOKEN_REGEX =
+  /(https?:\/\/[^\s<]+[^\s<.,:;"')\]\s]*|www\.[^\s<]+[^\s<.,:;"')\]\s]*|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|(?<![@\w/])((?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,})(?::\d{1,5})?(?:\/[^\s<.,;:!?)"]*)?)/gi;
+
+const isEmailToken = (token) =>
+  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(token);
+
+const isWebLinkToken = (token) =>
+  /^(?:https?:\/\/|www\.)/i.test(token) ||
+  /^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}(?::\d{1,5})?(?:\/[^\s]*)?$/i.test(
+    token,
+  );
+
+const getLinkHref = (token) => {
+  if (isEmailToken(token)) return `mailto:${token}`;
+  if (/^https?:\/\//i.test(token)) return token;
+  return `https://${token}`;
+};
+
+const trimLinkTrailingPunctuation = (token) =>
+  token.replace(/[.,;:!?)]+$/g, "");
+const TEASER_WIDTH = 210;
+const TEASER_HEIGHT = 160;
+const MOBILE_MAX_WIDTH = 639;
+const TABLET_MAX_WIDTH = 1023;
+
+const getResponsiveMetrics = (viewportWidth, viewportHeight, isChatOpen) => {
+  if (viewportWidth <= MOBILE_MAX_WIDTH) {
+    const edgeMargin = 10;
+    const bottomGap = 20;
+    const width = Math.max(280, viewportWidth - edgeMargin * 2);
+    const heightClosed = Math.min(
+      Math.max(Math.round(viewportHeight * 0.38), 220),
+      300,
+    );
+    const heightOpen = Math.min(
+      Math.max(Math.round(viewportHeight * 0.74), 400),
+      viewportHeight - bottomGap - 48,
+    );
+
     return {
-      width: TEASER_WIDTH,
-      height: TEASER_HEIGHT,
-      edgeMargin: EDGE_MARGIN,
-      bottomGap: TEASER_BOTTOM_GAP,
+      width,
+      height: isChatOpen ? heightOpen : heightClosed,
+      edgeMargin,
+      bottomGap,
+      teaserWidth: 156,
+      teaserHeight: 124,
+      avatarSize: 76,
+      isStacked: isChatOpen,
+      isMobile: true,
+      isTablet: false,
+      disableDrag: true,
+      centerModal: true,
+      videoHeightPercent: 42,
+      chatInputMaxHeight: 72,
     };
   }
 
-  const isMobile = isMobileViewport();
+  if (viewportWidth <= TABLET_MAX_WIDTH) {
+    const edgeMargin = 16;
+    const widthClosed = Math.min(500, viewportWidth - edgeMargin * 2);
+    const widthOpen = Math.min(680, viewportWidth - edgeMargin * 2);
+    const height = Math.min(
+      Math.max(Math.round(viewportHeight * 0.36), 260),
+      320,
+    );
+
+    return {
+      width: isChatOpen ? widthOpen : widthClosed,
+      height,
+      edgeMargin,
+      bottomGap: MODAL_BOTTOM_GAP,
+      teaserWidth: 188,
+      teaserHeight: 146,
+      avatarSize: 92,
+      isStacked: false,
+      isMobile: false,
+      isTablet: true,
+      disableDrag: viewportWidth < 768,
+      centerModal: viewportWidth < 768,
+      videoHeightPercent: null,
+      chatInputMaxHeight: CHAT_INPUT_MAX_HEIGHT,
+    };
+  }
+
   return {
-    width: isMobile ? MOBILE_TEASER_WIDTH : TEASER_WIDTH,
-    height: isMobile ? MOBILE_TEASER_HEIGHT : TEASER_HEIGHT,
-    edgeMargin: isMobile ? MOBILE_EDGE_MARGIN : EDGE_MARGIN,
-    bottomGap: isMobile ? MOBILE_TEASER_BOTTOM_GAP : TEASER_BOTTOM_GAP,
+    width: isChatOpen ? MODAL_WIDTH_CHAT : MODAL_WIDTH,
+    height: MODAL_HEIGHT,
+    edgeMargin: EDGE_MARGIN,
+    bottomGap: MODAL_BOTTOM_GAP,
+    teaserWidth: TEASER_WIDTH,
+    teaserHeight: TEASER_HEIGHT,
+    avatarSize: 104,
+    isStacked: false,
+    isMobile: false,
+    isTablet: false,
+    disableDrag: false,
+    centerModal: false,
+    videoHeightPercent: null,
+    chatInputMaxHeight: CHAT_INPUT_MAX_HEIGHT,
   };
 };
 
-const getModalDimensions = (chatOpen) => {
+const getDefaultModalPosition = (metrics, hasDraggedModal, prevPosition) => {
   if (typeof window === "undefined") {
-    return { width: 600, height: 340, widthPx: "600px", heightPx: "340px" };
+    return { x: 0, y: 0 };
   }
 
-  if (!isMobileViewport()) {
+  const maxX = Math.max(
+    metrics.edgeMargin,
+    window.innerWidth - metrics.width - metrics.edgeMargin,
+  );
+  const maxY = Math.max(
+    metrics.bottomGap,
+    window.innerHeight - metrics.height - metrics.bottomGap,
+  );
+
+  if (hasDraggedModal && prevPosition) {
     return {
-      width: chatOpen ? 800 : 600,
-      height: 340,
-      widthPx: chatOpen ? "800px" : "600px",
-      heightPx: "340px",
+      x: Math.min(Math.max(metrics.edgeMargin, prevPosition.x), maxX),
+      y: Math.min(Math.max(metrics.bottomGap, prevPosition.y), maxY),
     };
   }
 
-  const margin = MOBILE_EDGE_MARGIN;
-  const availableWidth = window.innerWidth - margin * 2;
+  const x = metrics.centerModal
+    ? Math.max(metrics.edgeMargin, (window.innerWidth - metrics.width) / 2)
+    : maxX;
 
-  if (chatOpen) {
-    const width = Math.min(availableWidth, 328);
-    const height = Math.min(Math.round(window.innerHeight * 0.52), 400);
-    return { width, height, widthPx: `${width}px`, heightPx: `${height}px` };
+  return { x, y: maxY };
+};
+
+const getDefaultTeaserPosition = (metrics) => {
+  if (typeof window === "undefined") {
+    return { x: 0, y: 0 };
   }
 
-  const width = Math.min(availableWidth, 276);
-  const height = Math.round(width * 0.61);
-  return { width, height, widthPx: `${width}px`, heightPx: `${height}px` };
+  return {
+    x: Math.max(
+      metrics.edgeMargin,
+      window.innerWidth - metrics.teaserWidth - metrics.edgeMargin,
+    ),
+    y: Math.max(
+      TEASER_BOTTOM_GAP,
+      window.innerHeight - metrics.teaserHeight - metrics.bottomGap,
+    ),
+  };
 };
 const FAQ_NOT_FOUND_TEXT = "sorry, i don't have that knowledge.";
-const CHATBOT_SUPPORT_FALLBACK_MESSAGE = `That's a great question! For the best and most accurate answer,
-I'd recommend connecting directly with our support team -
-they'll be happy to help you right away.
+const CHATBOT_SUPPORT_EMAIL = "support@creditoracademy.com";
+const FEEDBACK_YES_MESSAGE = "Thank you and keep asking your queries.";
+const CHATBOT_SUPPORT_FALLBACK_MESSAGE = `That's a great question! For the most accurate answer,
+Please cotact our support team at ${CHATBOT_SUPPORT_EMAIL}
+Thank you!`;
 
-You can reach them at support@lmsathena.com
-
-Looking forward to seeing you learn and grow with us!`;
 const TEASER_PROMPTS = [
   "Hey there!👋",
   "Ask anything!!",
@@ -105,6 +204,59 @@ const TEASER_PROMPTS = [
   "Chat with me",
   "Need help?",
 ];
+const CHATBOT_HISTORY_STORAGE_KEY = "paul-chatbot-history";
+
+const loadChatHistory = () => {
+  if (typeof window === "undefined") return [];
+  try {
+    const stored = sessionStorage.getItem(CHATBOT_HISTORY_STORAGE_KEY);
+    if (!stored) return [];
+    const parsed = JSON.parse(stored);
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .map((m) => ({
+        id: m.id,
+        content: m.content || "",
+        isUser: !!m.isUser,
+        streaming: false,
+      }))
+      .filter((m) => m.content);
+  } catch {
+    return [];
+  }
+};
+
+const persistChatHistory = (messages) => {
+  if (typeof window === "undefined") return;
+  try {
+    const toStore = messages
+      .filter((m) => !m.streaming && (m.content || m.fullText))
+      .map((m) => ({
+        id: m.id,
+        content: m.content || m.fullText || "",
+        isUser: !!m.isUser,
+      }));
+    if (toStore.length === 0) {
+      sessionStorage.removeItem(CHATBOT_HISTORY_STORAGE_KEY);
+    } else {
+      sessionStorage.setItem(
+        CHATBOT_HISTORY_STORAGE_KEY,
+        JSON.stringify(toStore),
+      );
+    }
+  } catch {
+    // sessionStorage may be full or unavailable — fail silently
+  }
+};
+
+const clearChatHistoryStorage = () => {
+  if (typeof window === "undefined") return;
+  try {
+    sessionStorage.removeItem(CHATBOT_HISTORY_STORAGE_KEY);
+  } catch {
+    // fail silently
+  }
+};
 
 const normalizeFaqSearchPayload = (raw) => {
   const envelope = raw || {};
@@ -170,6 +322,60 @@ const normalizeFaqSearchPayload = (raw) => {
   return { text, videoUrl };
 };
 
+const normalizeSpeechText = (text) =>
+  (text || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const isSameOrRelatedTranscript = (a, b) => {
+  const left = normalizeSpeechText(a);
+  const right = normalizeSpeechText(b);
+  if (!left || !right) return false;
+  return left === right || left.startsWith(right) || right.startsWith(left);
+};
+
+/** True when STT likely picked up the bot's own voice instead of the user. */
+const isLikelySelfTranscript = (transcript, ...botSources) => {
+  const t = normalizeSpeechText(transcript);
+  if (!t) return false;
+
+  const transcriptWords = t.split(" ").filter(Boolean);
+  if (transcriptWords.length === 0) return false;
+
+  for (const source of botSources) {
+    const b = normalizeSpeechText(source);
+    if (!b) continue;
+
+    if (b.includes(t)) return true;
+
+    if (transcriptWords.length >= 2) {
+      const phrase = transcriptWords
+        .slice(0, Math.min(4, transcriptWords.length))
+        .join(" ");
+      if (phrase.length >= 4 && b.includes(phrase)) return true;
+    }
+
+    const botWords = b.split(" ").filter(Boolean);
+    const botWordSet = new Set(botWords);
+    let overlap = 0;
+
+    for (const word of transcriptWords) {
+      if (botWordSet.has(word)) overlap++;
+    }
+
+    const overlapRatio = overlap / transcriptWords.length;
+    if (overlapRatio >= 0.55) return true;
+
+    if (transcriptWords.length <= 2 && overlap === transcriptWords.length) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
 const isFaqNotFoundResponse = (raw) => {
   const envelope = raw || {};
   const payload = envelope?.data || envelope || {};
@@ -198,20 +404,41 @@ const isFaqNotFoundResponse = (raw) => {
   return candidateText === FAQ_NOT_FOUND_TEXT;
 };
 
+/** Hint the browser to fetch FAQ video bytes before the <video> element mounts. */
+const preloadFaqVideoAsset = (url) => {
+  if (!url || typeof document === "undefined") return;
+
+  const selector = `link[data-faq-video-preload="${CSS.escape(url)}"]`;
+  if (document.querySelector(selector)) return;
+
+  const link = document.createElement("link");
+  link.rel = "preload";
+  link.as = "video";
+  link.href = url;
+  link.setAttribute("data-faq-video-preload", url);
+  document.head.appendChild(link);
+
+  const removeLink = () => link.remove();
+  link.addEventListener("load", removeLink, { once: true });
+  link.addEventListener("error", removeLink, { once: true });
+};
+
 const FloatingMiniChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [viewport, setViewport] = useState(() => ({
+    width: typeof window !== "undefined" ? window.innerWidth : 1280,
+    height: typeof window !== "undefined" ? window.innerHeight : 800,
+  }));
   const [micStatus, setMicStatus] = useState("idle");
   const [micMuted, setMicMuted] = useState(true); // mic starts muted
   const [showMicBlockedDialog, setShowMicBlockedDialog] = useState(false);
   const [isMinimizedToBorder, setIsMinimizedToBorder] = useState(false);
   const [hasDraggedTeaser, setHasDraggedTeaser] = useState(false);
   const [hasDraggedModal, setHasDraggedModal] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [modalAnchored, setModalAnchored] = useState(true);
 
-  // Start with an empty conversation so only user/bot messages show
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(loadChatHistory);
+  const [messageFeedback, setMessageFeedback] = useState({});
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
@@ -222,6 +449,9 @@ const FloatingMiniChatbot = () => {
   const [avatarVisemes, setAvatarVisemes] = useState([]);
   const [avatarAudioUrl, setAvatarAudioUrl] = useState("");
   const [faqVideoUrl, setFaqVideoUrl] = useState("");
+  const [faqVideoReady, setFaqVideoReady] = useState(false);
+  const faqVideoRef = useRef(null);
+  const faqVideoStartedRef = useRef(false);
   const [shouldPlayWelcomeVideo, setShouldPlayWelcomeVideo] = useState(false);
   const hasPlayedGreetingRef = useRef(false);
   const hasStartedMicAfterGreetingRef = useRef(false);
@@ -236,28 +466,81 @@ const FloatingMiniChatbot = () => {
   const analyserRef = useRef(null);
   const microphoneRef = useRef(null);
   const animationFrameRef = useRef(null);
+  const currentAudioRef = useRef(null); // Track current audio element for interruption
   const streamingIntervalRef = useRef(null); // Track streaming interval
-  const videoStreamSyncRef = useRef(null); // Sync FAQ transcript to video playback
   const intentionalStopRef = useRef(false); // Track if mic stop was intentional
   const isSpeakingRef = useRef(false);
   const committedVoiceTranscriptRef = useRef("");
+  const lastSentVoiceTranscriptRef = useRef("");
   const interruptBotRef = useRef(null);
   const sendTranscribedTextRef = useRef(null);
   const currentBotUtteranceRef = useRef("");
+  const displayedBotTextRef = useRef("");
   const lastBotSpeechStartRef = useRef(0);
   const sessionIdRef = useRef(0); // Increment to invalidate in-flight async work
   const stopSpeechRecognitionRef = useRef(null);
+  const isBotRespondingRef = useRef(false);
 
   useEffect(() => {
     isSpeakingRef.current = isSpeaking;
   }, [isSpeaking]);
 
   useEffect(() => {
+    persistChatHistory(messages);
+  }, [messages]);
+
+  useEffect(() => {
+    const handleLogout = () => {
+      clearChatHistoryStorage();
+      setMessages([]);
+      setMessageFeedback({});
+    };
+    window.addEventListener("userLoggedOut", handleLogout);
+    return () => window.removeEventListener("userLoggedOut", handleLogout);
+  }, []);
+
+  const clearFaqVideoPlayback = useCallback(() => {
+    setFaqVideoUrl("");
+    setFaqVideoReady(false);
+    faqVideoStartedRef.current = false;
+    setShouldPlayWelcomeVideo(false);
+    setIsSpeaking(false);
+    const video = faqVideoRef.current;
+    if (video) {
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
+    }
+  }, []);
+
+  useEffect(() => {
+    setFaqVideoReady(false);
+    faqVideoStartedRef.current = false;
+  }, [faqVideoUrl]);
+
+  const handleFaqVideoReady = useCallback(() => {
+    if (faqVideoStartedRef.current) return;
+    faqVideoStartedRef.current = true;
+    setFaqVideoReady(true);
+    setIsSpeaking(true);
+    lastBotSpeechStartRef.current = Date.now();
+    const video = faqVideoRef.current;
+    if (!video) return;
+    video.muted = !isSpeakerOn;
+    video.play().catch(() => {});
+  }, [isSpeakerOn]);
+
+  useEffect(() => {
+    const video = faqVideoRef.current;
+    if (!video || !faqVideoReady) return;
+    video.muted = !isSpeakerOn;
+  }, [isSpeakerOn, faqVideoReady]);
+
+  useEffect(() => {
     interruptBotRef.current = () => {
       setAvatarAudioUrl("");
       setAvatarVisemes([]);
-      setFaqVideoUrl("");
-      setShouldPlayWelcomeVideo(false);
+      clearFaqVideoPlayback();
       setIsSpeaking(false);
       setIsTyping(false);
       setShowInterruptHint(false);
@@ -265,50 +548,49 @@ const FloatingMiniChatbot = () => {
         clearInterval(streamingIntervalRef.current);
         streamingIntervalRef.current = null;
       }
-      videoStreamSyncRef.current = null;
       setMessages((prev) =>
         prev.map((msg) => (msg.streaming ? { ...msg, streaming: false } : msg)),
       );
     };
   });
 
-  useEffect(() => {
-    // Set initial desktop modal position (mobile uses bottom-right anchoring)
-    if (typeof window !== "undefined" && !isMobileViewport()) {
-      const defaultWidth = 600;
-      const defaultHeight = 340;
-      setPosition({
-        x: Math.max(
-          EDGE_MARGIN,
-          window.innerWidth - defaultWidth - EDGE_MARGIN,
-        ),
-        y: Math.max(
-          MODAL_BOTTOM_GAP,
-          window.innerHeight - defaultHeight - MODAL_BOTTOM_GAP,
-        ),
-      });
-    }
-
-    // No browser speech synthesis initialization needed
-  }, []);
-
-  useLayoutEffect(() => {
-    const syncMobile = () => setIsMobile(isMobileViewport());
-    syncMobile();
-    window.addEventListener("resize", syncMobile);
-    return () => window.removeEventListener("resize", syncMobile);
-  }, []);
-
   const [dragging, setDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [isTeaserDragging, setIsTeaserDragging] = useState(false);
-  const [teaserAnchored, setTeaserAnchored] = useState(true);
-  const [teaserPosition, setTeaserPosition] = useState({ x: 0, y: 0 });
-  const teaserRef = useRef(null);
-  const modalRef = useRef(null);
+  const [teaserPosition, setTeaserPosition] = useState(() => {
+    if (typeof window !== "undefined") {
+      return getDefaultTeaserPosition(
+        getResponsiveMetrics(window.innerWidth, window.innerHeight, false),
+      );
+    }
+    return { x: 0, y: 0 };
+  });
   const [teaserDragOffset, setTeaserDragOffset] = useState({ x: 0, y: 0 });
   const [teaserPromptIndex, setTeaserPromptIndex] = useState(0);
+  const [isTeaserHovered, setIsTeaserHovered] = useState(false);
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
+  const teaserOuterRef = useRef(null);
+  const teaserHoverTimeoutRef = useRef(null);
+
+  // Sync viewport + modal position before paint (teaser uses CSS bottom/right until dragged)
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const nextViewport = {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
+    setViewport(nextViewport);
+
+    const metrics = getResponsiveMetrics(
+      nextViewport.width,
+      nextViewport.height,
+      false,
+    );
+    setPosition(getDefaultModalPosition(metrics, false));
+  }, []);
   const chatContainerRef = useRef(null);
+  const chatInputRef = useRef(null);
   const isAtBottomRef = useRef(true);
   const wasChatOpenRef = useRef(false);
   const isProgrammaticScrollRef = useRef(false);
@@ -328,8 +610,46 @@ const FloatingMiniChatbot = () => {
 
     return () => window.clearTimeout(timer);
   }, [isOpen, teaserPromptIndex]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const mediaQuery = window.matchMedia("(hover: none), (pointer: coarse)");
+    const updatePointerMode = () => setIsCoarsePointer(mediaQuery.matches);
+    updatePointerMode();
+    mediaQuery.addEventListener("change", updatePointerMode);
+    return () => mediaQuery.removeEventListener("change", updatePointerMode);
+  }, []);
+
+  const handleTeaserHoverEnter = useCallback(() => {
+    if (teaserHoverTimeoutRef.current) {
+      clearTimeout(teaserHoverTimeoutRef.current);
+      teaserHoverTimeoutRef.current = null;
+    }
+    setIsTeaserHovered(true);
+  }, []);
+
+  const handleTeaserHoverLeave = useCallback(() => {
+    if (teaserHoverTimeoutRef.current) {
+      clearTimeout(teaserHoverTimeoutRef.current);
+    }
+    teaserHoverTimeoutRef.current = setTimeout(() => {
+      setIsTeaserHovered(false);
+      teaserHoverTimeoutRef.current = null;
+    }, 140);
+  }, []);
+
+  useEffect(
+    () => () => {
+      if (teaserHoverTimeoutRef.current) {
+        clearTimeout(teaserHoverTimeoutRef.current);
+      }
+    },
+    [],
+  );
+
   const handleClose = useCallback(() => {
-    // Fresh session on next open: stop everything and wipe state
+    // Stop active media/mic; chat history persists until logout
     sessionIdRef.current += 1;
 
     // Stop bot output immediately
@@ -349,18 +669,15 @@ const FloatingMiniChatbot = () => {
       clearInterval(streamingIntervalRef.current);
       streamingIntervalRef.current = null;
     }
-    videoStreamSyncRef.current = null;
 
-    // Reset UI/conversation
-    setMessages([]);
+    // Reset transient UI state (messages persist for the session)
     setInputValue("");
     setIsTyping(false);
     setIsSpeakerOn(true);
     setIsSpeaking(false);
     setAvatarAudioUrl("");
     setAvatarVisemes([]);
-    setFaqVideoUrl("");
-    setShouldPlayWelcomeVideo(false);
+    clearFaqVideoPlayback();
     setShowInterruptHint(false);
     setIsConnecting(false);
     setAvatarReady(false);
@@ -374,57 +691,21 @@ const FloatingMiniChatbot = () => {
 
     // Reset interrupt helpers
     currentBotUtteranceRef.current = "";
+    displayedBotTextRef.current = "";
     lastBotSpeechStartRef.current = 0;
     sendingRef.current = false;
     committedVoiceTranscriptRef.current = "";
+    lastSentVoiceTranscriptRef.current = "";
 
     // Set minimized state to false so we display the default teaser in the bottom-right
     setIsMinimizedToBorder(false);
     setHasDraggedTeaser(false);
-    setTeaserAnchored(true);
-    setModalAnchored(true);
     setHasDraggedModal(false);
 
     // Close UI
     setIsChatOpen(false);
     setIsOpen(false);
-  }, []);
-
-  const syncTranscriptToVideoTime = useCallback((videoEl) => {
-    const sync = videoStreamSyncRef.current;
-    if (!sync || sessionIdRef.current !== sync.sessionIdAtStart) return;
-    if (!videoEl?.duration || !Number.isFinite(videoEl.duration)) return;
-
-    const progress = Math.min(1, Math.max(0, videoEl.currentTime / videoEl.duration));
-    const wordIndex = Math.min(
-      sync.words.length,
-      Math.max(0, Math.floor(progress * sync.words.length)),
-    );
-    const displayedText = sync.words.slice(0, wordIndex).join(" ");
-    const isComplete = wordIndex >= sync.words.length;
-
-    setMessages((prev) =>
-      prev.map((msg) =>
-        msg.id === sync.msgId
-          ? { ...msg, content: displayedText, streaming: !isComplete }
-          : msg,
-      ),
-    );
-  }, []);
-
-  const finishVideoSyncedTranscript = useCallback(() => {
-    const sync = videoStreamSyncRef.current;
-    if (!sync) return;
-
-    setMessages((prev) =>
-      prev.map((msg) =>
-        msg.id === sync.msgId
-          ? { ...msg, content: sync.words.join(" "), streaming: false }
-          : msg,
-      ),
-    );
-    videoStreamSyncRef.current = null;
-  }, []);
+  }, [clearFaqVideoPlayback]);
 
   // Search FAQ content and return answer + video url
   const getBotResponseWithLipSync = useCallback(async (text) => {
@@ -452,7 +733,7 @@ const FloatingMiniChatbot = () => {
       }
 
       const response = await fetch(
-        `${API_BASE_URL}/api/chatbot/faq/search`,
+        `${API_BASE_URL}/api/chatbot/faq/search/pv`,
         {
           method: "POST",
           headers: {
@@ -551,10 +832,24 @@ const FloatingMiniChatbot = () => {
         const msgId = Date.now() + Math.random();
         const fullText = payload.text;
         const words = fullText.split(" ");
-        setFaqVideoUrl(payload.videoUrl || "");
+        const nextVideoUrl = payload.videoUrl || "";
+        if (nextVideoUrl) {
+          preloadFaqVideoAsset(nextVideoUrl);
+        }
+        setFaqVideoUrl(nextVideoUrl);
         setShouldPlayWelcomeVideo(false);
 
         currentBotUtteranceRef.current = fullText || "";
+        displayedBotTextRef.current = "";
+        lastBotSpeechStartRef.current = Date.now();
+
+        if (autoSendTimerRef.current) {
+          clearTimeout(autoSendTimerRef.current);
+          autoSendTimerRef.current = null;
+        }
+        setInputValue((prev) =>
+          isLikelySelfTranscript(prev, fullText) ? "" : prev,
+        );
 
         // Add message with empty content initially
         setMessages((prev) => [
@@ -595,45 +890,37 @@ const FloatingMiniChatbot = () => {
         // Clear any existing streaming interval
         if (streamingIntervalRef.current) {
           clearInterval(streamingIntervalRef.current);
-          streamingIntervalRef.current = null;
         }
 
-        if (payload.videoUrl) {
-          // Reveal transcript in sync with FAQ video playback (not ahead of it)
-          videoStreamSyncRef.current = {
-            msgId,
-            words,
-            sessionIdAtStart,
-          };
-        } else {
-          // Stream words progressively for avatar/audio-only responses
-          streamingIntervalRef.current = setInterval(() => {
-            if (sessionIdRef.current !== sessionIdAtStart) {
-              clearInterval(streamingIntervalRef.current);
-              streamingIntervalRef.current = null;
-              return;
-            }
-            if (currentWordIndex < words.length) {
-              const displayedText = words
-                .slice(0, currentWordIndex + 1)
-                .join(" ");
-              setMessages((prev) =>
-                prev.map((msg) =>
-                  msg.id === msgId ? { ...msg, content: displayedText } : msg,
-                ),
-              );
-              currentWordIndex++;
-            } else {
-              clearInterval(streamingIntervalRef.current);
-              streamingIntervalRef.current = null;
-              setMessages((prev) =>
-                prev.map((msg) =>
-                  msg.id === msgId ? { ...msg, streaming: false } : msg,
-                ),
-              );
-            }
-          }, estimatedDuration / Math.max(words.length, 1));
-        }
+        // Stream words progressively
+        streamingIntervalRef.current = setInterval(() => {
+          if (sessionIdRef.current !== sessionIdAtStart) {
+            clearInterval(streamingIntervalRef.current);
+            streamingIntervalRef.current = null;
+            return;
+          }
+          if (currentWordIndex < words.length) {
+            const displayedText = words
+              .slice(0, currentWordIndex + 1)
+              .join(" ");
+            displayedBotTextRef.current = displayedText;
+            setMessages((prev) =>
+              prev.map((msg) =>
+                msg.id === msgId ? { ...msg, content: displayedText } : msg,
+              ),
+            );
+            currentWordIndex++;
+          } else {
+            // Finished streaming
+            clearInterval(streamingIntervalRef.current);
+            displayedBotTextRef.current = fullText;
+            setMessages((prev) =>
+              prev.map((msg) =>
+                msg.id === msgId ? { ...msg, streaming: false } : msg,
+              ),
+            );
+          }
+        }, estimatedDuration / words.length);
 
         // Only warn in development about missing data
         if (process.env.NODE_ENV === "development") {
@@ -678,12 +965,12 @@ const FloatingMiniChatbot = () => {
   // Stop speech recognition helper (used by multiple callbacks)
   const stopSpeechRecognition = useCallback(() => {
     console.log("🛑 Stopping speech recognition...");
-    intentionalStopRef.current = true; // Mark as intentional
+    intentionalStopRef.current = true;
 
     if (recognitionRef.current) {
       try {
         recognitionRef.current.stop();
-        recognitionRef.current.abort(); // Force abort to ensure clean state
+        recognitionRef.current.abort();
       } catch (err) {
         console.warn("⚠️ Error stopping recognition:", err);
       }
@@ -692,7 +979,6 @@ const FloatingMiniChatbot = () => {
     setIsRecording(false);
     setMicMuted(true);
 
-    // Stop voice activity detection if available
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
       animationFrameRef.current = null;
@@ -713,22 +999,53 @@ const FloatingMiniChatbot = () => {
     stopSpeechRecognitionRef.current = stopSpeechRecognition;
   }, [stopSpeechRecognition]);
 
+  const restartSpeechRecognitionBuffer = useCallback(() => {
+    const recognition = recognitionRef.current;
+    if (!recognition) return;
+
+    if (autoSendTimerRef.current) {
+      clearTimeout(autoSendTimerRef.current);
+      autoSendTimerRef.current = null;
+    }
+
+    try {
+      intentionalStopRef.current = false;
+      recognition.stop();
+    } catch (err) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn("Failed to restart speech recognition buffer:", err);
+      }
+    }
+  }, []);
+
   const interruptBotPlayback = useCallback(() => {
     // Invalidate in-flight bot responses so interrupted media does not resume.
     sessionIdRef.current += 1;
     const stopBot = interruptBotRef.current;
     if (stopBot) stopBot();
     currentBotUtteranceRef.current = "";
+    displayedBotTextRef.current = "";
     lastBotSpeechStartRef.current = 0;
   }, []);
 
   // Separate function for sending transcribed text automatically
   const sendTranscribedText = useCallback(
     async (transcribedText) => {
+      const trimmedText = clampChatInput(transcribedText).trim();
       if (sendingRef.current) return;
-      if (transcribedText.trim() === "") return;
+      if (trimmedText === "") return;
+
+      if (autoSendTimerRef.current) {
+        clearTimeout(autoSendTimerRef.current);
+        autoSendTimerRef.current = null;
+      }
+
       sendingRef.current = true;
-      committedVoiceTranscriptRef.current = transcribedText;
+      const normalizedTranscript = normalizeSpeechText(trimmedText);
+      committedVoiceTranscriptRef.current = trimmedText;
+      lastSentVoiceTranscriptRef.current = normalizedTranscript;
+      setInputValue("");
+      restartSpeechRecognitionBuffer();
 
       // Voice interruption: stop current bot media before processing new user speech.
       interruptBotPlayback();
@@ -736,7 +1053,7 @@ const FloatingMiniChatbot = () => {
       // Add user message
       const userMessage = {
         id: Date.now(),
-        content: transcribedText,
+        content: trimmedText,
         isUser: true,
       };
 
@@ -746,21 +1063,16 @@ const FloatingMiniChatbot = () => {
       setIsTyping(true);
 
       try {
-        await startBotResponse(transcribedText);
+        await startBotResponse(trimmedText);
       } catch (error) {
         console.error("Error getting bot response:", error);
       } finally {
         setIsTyping(false);
-
-        // Clear input
         setInputValue("");
-
-        // Do NOT turn off mic here - keep it open for continuous conversation
-        // The bot's speech will be ignored by the self-interrupt debounce logic
         sendingRef.current = false;
       }
     },
-    [interruptBotPlayback, startBotResponse, stopSpeechRecognition],
+    [interruptBotPlayback, restartSpeechRecognitionBuffer, startBotResponse],
   );
 
   useEffect(() => {
@@ -821,7 +1133,76 @@ const FloatingMiniChatbot = () => {
     }
   }, [messages, isTyping, isChatOpen]);
 
-  const isDraggable = true;
+  const layoutMetrics = useMemo(
+    () => getResponsiveMetrics(viewport.width, viewport.height, isChatOpen),
+    [viewport.width, viewport.height, isChatOpen],
+  );
+
+  const getSizeDimensions = useCallback(
+    () => ({
+      width: `${layoutMetrics.width}px`,
+      height: `${layoutMetrics.height}px`,
+    }),
+    [layoutMetrics],
+  );
+
+  const clampPositionToViewport = useCallback(() => {
+    if (typeof window === "undefined") return;
+
+    setPosition((prev) =>
+      getDefaultModalPosition(layoutMetrics, hasDraggedModal, prev),
+    );
+  }, [layoutMetrics, hasDraggedModal]);
+
+  useEffect(() => {
+    clampPositionToViewport();
+  }, [isChatOpen, clampPositionToViewport]);
+
+  const handleResize = useCallback(() => {
+    if (typeof window === "undefined") return;
+
+    const nextViewport = {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
+    setViewport(nextViewport);
+
+    const metrics = getResponsiveMetrics(
+      nextViewport.width,
+      nextViewport.height,
+      isChatOpen,
+    );
+
+    if (hasDraggedTeaser) {
+      setTeaserPosition((prev) => {
+        const maxX = Math.max(
+          metrics.edgeMargin,
+          nextViewport.width - metrics.teaserWidth - metrics.edgeMargin,
+        );
+        const maxY = Math.max(
+          TEASER_BOTTOM_GAP,
+          nextViewport.height - metrics.teaserHeight - metrics.bottomGap,
+        );
+        return {
+          x: Math.min(Math.max(metrics.edgeMargin, prev.x), maxX),
+          y: Math.min(Math.max(TEASER_BOTTOM_GAP, prev.y), maxY),
+        };
+      });
+    } else {
+      setTeaserPosition(getDefaultTeaserPosition(metrics));
+    }
+
+    setPosition((prev) =>
+      getDefaultModalPosition(metrics, hasDraggedModal, prev),
+    );
+  }, [hasDraggedTeaser, hasDraggedModal, isChatOpen]);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [handleResize]);
+
+  const isDraggable = !layoutMetrics.disableDrag;
 
   // Dragging functionality: allow dragging everywhere EXCEPT interactive components or message list
   const handleMouseDown = (e) => {
@@ -846,21 +1227,9 @@ const FloatingMiniChatbot = () => {
     }
 
     setDragging(true);
-
-    let currentX = position.x;
-    let currentY = position.y;
-
-    if (isMobile && modalAnchored && modalRef.current) {
-      const rect = modalRef.current.getBoundingClientRect();
-      currentX = rect.left;
-      currentY = rect.top;
-      setPosition({ x: rect.left, y: rect.top });
-      setModalAnchored(false);
-    }
-
     setDragOffset({
-      x: e.clientX - currentX,
-      y: e.clientY - currentY,
+      x: e.clientX - position.x,
+      y: e.clientY - position.y,
     });
   };
 
@@ -877,11 +1246,17 @@ const FloatingMiniChatbot = () => {
 
     // Get current dimensions based on size and chat panel state
     const currentDimensions = getSizeDimensions();
-    const elementWidth = currentDimensions.widthNum;
-    const elementHeight = currentDimensions.heightNum;
+    const elementWidth = parseFloat(currentDimensions.width);
+    const elementHeight = parseFloat(currentDimensions.height);
 
-    newX = Math.max(0, Math.min(screenWidth - elementWidth, newX));
-    newY = Math.max(0, Math.min(screenHeight - elementHeight, newY));
+    newX = Math.max(
+      layoutMetrics.edgeMargin,
+      Math.min(screenWidth - elementWidth - layoutMetrics.edgeMargin, newX),
+    );
+    newY = Math.max(
+      layoutMetrics.bottomGap,
+      Math.min(screenHeight - elementHeight - layoutMetrics.bottomGap, newY),
+    );
 
     setPosition({ x: newX, y: newY });
     setHasDraggedModal(true);
@@ -907,17 +1282,20 @@ const FloatingMiniChatbot = () => {
 
   // Teaser drag functionality
   const handleTeaserMouseDown = (e) => {
+    if (layoutMetrics.disableDrag) return;
+
     teaserDragStartRef.current = { x: e.clientX, y: e.clientY };
     isTeaserDraggedRef.current = false;
     setIsTeaserDragging(true);
 
-    const rect = teaserRef.current?.getBoundingClientRect();
-    const currentX = teaserAnchored && rect ? rect.left : teaserPosition.x;
-    const currentY = teaserAnchored && rect ? rect.top : teaserPosition.y;
+    const rect = teaserOuterRef.current?.getBoundingClientRect();
+    let currentX = teaserPosition.x;
+    let currentY = teaserPosition.y;
 
-    if (teaserAnchored && rect) {
+    if (!hasDraggedTeaser && rect) {
+      currentX = rect.left;
+      currentY = rect.top;
       setTeaserPosition({ x: rect.left, y: rect.top });
-      setTeaserAnchored(false);
     }
 
     setTeaserDragOffset({
@@ -936,14 +1314,21 @@ const FloatingMiniChatbot = () => {
     // Keep within screen boundaries
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
-    const teaserBounds = getTeaserBounds();
-    const teaserWidth =
-      teaserRef.current?.offsetWidth ?? teaserBounds.width;
-    const teaserHeight =
-      teaserRef.current?.offsetHeight ?? teaserBounds.height;
 
-    newX = Math.max(0, Math.min(screenWidth - teaserWidth, newX));
-    newY = Math.max(0, Math.min(screenHeight - teaserHeight, newY));
+    newX = Math.max(
+      layoutMetrics.edgeMargin,
+      Math.min(
+        screenWidth - layoutMetrics.teaserWidth - layoutMetrics.edgeMargin,
+        newX,
+      ),
+    );
+    newY = Math.max(
+      TEASER_BOTTOM_GAP,
+      Math.min(
+        screenHeight - layoutMetrics.teaserHeight - layoutMetrics.bottomGap,
+        newY,
+      ),
+    );
 
     // If moved more than 5px, mark as dragged
     const startX = teaserDragStartRef.current.x;
@@ -965,8 +1350,6 @@ const FloatingMiniChatbot = () => {
       return;
     }
     setIsOpen(true);
-    setModalAnchored(true);
-    setHasDraggedModal(false);
     setShouldPlayWelcomeVideo(true);
   };
 
@@ -982,110 +1365,6 @@ const FloatingMiniChatbot = () => {
       };
     }
   }, [isTeaserDragging]);
-
-  // Get dimensions based on size
-  const getSizeDimensions = useCallback(() => {
-    const dims = getModalDimensions(isChatOpen);
-    return {
-      width: dims.widthPx,
-      height: dims.heightPx,
-      widthNum: dims.width,
-      heightNum: dims.height,
-    };
-  }, [isChatOpen, isMobile]);
-
-  // Keep avatar ready while using static poster/video mode.
-
-  // Keep the widget within the viewport when sizes change
-  const clampPositionToViewport = useCallback(() => {
-    if (typeof window === "undefined") return;
-    if (isMobile && modalAnchored) return;
-
-    const dimensions = getSizeDimensions();
-    const width = dimensions.widthNum;
-    const height = dimensions.heightNum;
-    const edgeMargin = isMobile ? MOBILE_EDGE_MARGIN : EDGE_MARGIN;
-    const bottomGap = isMobile ? MOBILE_TEASER_BOTTOM_GAP : MODAL_BOTTOM_GAP;
-    const maxX = Math.max(edgeMargin, window.innerWidth - width - edgeMargin);
-    const maxY = Math.max(bottomGap, window.innerHeight - height - bottomGap);
-
-    if (hasDraggedModal) {
-      setPosition((prev) => ({
-        x: Math.min(Math.max(edgeMargin, prev.x), maxX),
-        y: Math.min(Math.max(bottomGap, prev.y), maxY),
-      }));
-    } else {
-      setPosition({
-        x: maxX,
-        y: maxY,
-      });
-    }
-  }, [getSizeDimensions, hasDraggedModal, isMobile, modalAnchored]);
-
-  useEffect(() => {
-    clampPositionToViewport();
-  }, [isChatOpen, clampPositionToViewport]);
-
-  // Handle window resize by clamping positions to viewport to avoid off-screen elements
-  const handleResize = useCallback(() => {
-    if (typeof window === "undefined") return;
-
-    // Clamp teaser position (anchored teasers stay bottom-right via CSS)
-    if (teaserAnchored) {
-      // no-op: CSS bottom/right handles responsive placement
-    } else if (hasDraggedTeaser) {
-      const teaserBounds = getTeaserBounds();
-      setTeaserPosition((prev) => {
-        const maxX = Math.max(
-          teaserBounds.edgeMargin,
-          window.innerWidth - teaserBounds.width - teaserBounds.edgeMargin,
-        );
-        const maxY = Math.max(
-          teaserBounds.bottomGap,
-          window.innerHeight - teaserBounds.height - teaserBounds.bottomGap,
-        );
-        return {
-          x: Math.min(Math.max(teaserBounds.edgeMargin, prev.x), maxX),
-          y: Math.min(Math.max(teaserBounds.bottomGap, prev.y), maxY),
-        };
-      });
-    } else {
-      setTeaserAnchored(true);
-    }
-
-    // Clamp open chatbot position
-    const mobile = isMobileViewport();
-    if (mobile && modalAnchored && !hasDraggedModal) {
-      // bottom-right anchoring via CSS on mobile
-    } else {
-      const dimensions = getSizeDimensions();
-      const w = dimensions.widthNum;
-      const h = dimensions.heightNum;
-      const edgeMargin = mobile ? MOBILE_EDGE_MARGIN : EDGE_MARGIN;
-      const bottomGap = mobile ? MOBILE_TEASER_BOTTOM_GAP : MODAL_BOTTOM_GAP;
-      const maxX = Math.max(edgeMargin, window.innerWidth - w - edgeMargin);
-      const maxY = Math.max(bottomGap, window.innerHeight - h - bottomGap);
-
-      if (hasDraggedModal) {
-        setPosition((prev) => ({
-          x: Math.min(Math.max(edgeMargin, prev.x), maxX),
-          y: Math.min(Math.max(bottomGap, prev.y), maxY),
-        }));
-      } else if (!mobile) {
-        setPosition({
-          x: maxX,
-          y: maxY,
-        });
-      } else {
-        setModalAnchored(true);
-      }
-    }
-  }, [getSizeDimensions, hasDraggedTeaser, hasDraggedModal, teaserAnchored, modalAnchored]);
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [handleResize]);
 
   // Speaker functionality
   const toggleSpeaker = useCallback(async () => {
@@ -1151,32 +1430,6 @@ const FloatingMiniChatbot = () => {
     }
   };
 
-  const normalizeText = (text) =>
-    (text || "")
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
-
-  const isLikelySelfTranscript = (transcript, botUtterance) => {
-    const t = normalizeText(transcript);
-    const b = normalizeText(botUtterance);
-
-    if (!t || !b) return false;
-    if (b.includes(t)) return true;
-
-    const transcriptWords = t.split(" ");
-    const botWordsSet = new Set(b.split(" "));
-    let overlap = 0;
-
-    for (const w of transcriptWords) {
-      if (botWordsSet.has(w)) overlap++;
-    }
-
-    const ratio = overlap / transcriptWords.length;
-    return ratio >= 0.7;
-  };
-
   const startSpeechRecognition = useCallback(async () => {
     // Prevent starting if already recording
     if (isRecording) {
@@ -1214,81 +1467,129 @@ const FloatingMiniChatbot = () => {
           }
         }
 
-        const combinedTranscript = (
-          finalTranscript || interimTranscript
-        ).trim();
-        const isBotSpeaking = isSpeakingRef.current;
+        const combinedTranscript = (finalTranscript + interimTranscript).trim();
         const committedTranscript = committedVoiceTranscriptRef.current.trim();
-        const normalizedCombinedTranscript = normalizeText(combinedTranscript);
+        const normalizedCombinedTranscript =
+          normalizeSpeechText(combinedTranscript);
         const normalizedCommittedTranscript =
-          normalizeText(committedTranscript);
+          normalizeSpeechText(committedTranscript);
+        const botText = currentBotUtteranceRef.current || "";
+        const displayedBotText = displayedBotTextRef.current || "";
+        const isBotActive = isBotRespondingRef.current || isSpeakingRef.current;
+
+        if (sendingRef.current) {
+          return;
+        }
 
         if (
-          normalizedCommittedTranscript &&
-          normalizedCombinedTranscript === normalizedCommittedTranscript
+          lastSentVoiceTranscriptRef.current &&
+          isSameOrRelatedTranscript(
+            lastSentVoiceTranscriptRef.current,
+            combinedTranscript,
+          )
         ) {
+          setInputValue("");
           return;
         }
 
         if (
           normalizedCommittedTranscript &&
-          normalizedCombinedTranscript &&
-          normalizedCombinedTranscript !== normalizedCommittedTranscript
+          (normalizedCombinedTranscript === normalizedCommittedTranscript ||
+            isSameOrRelatedTranscript(committedTranscript, combinedTranscript))
+        ) {
+          setInputValue("");
+          return;
+        }
+
+        if (
+          normalizedCommittedTranscript &&
+          normalizedCombinedTranscript !== normalizedCommittedTranscript &&
+          !isSameOrRelatedTranscript(committedTranscript, combinedTranscript)
         ) {
           committedVoiceTranscriptRef.current = "";
         }
 
-        // Update the input field with the recognized text only while it is still being composed.
-        setInputValue(finalTranscript + interimTranscript);
-
-        // If nothing meaningful yet, do nothing
         if (!combinedTranscript) {
           return;
         }
 
-        // If bot is speaking, optionally interrupt based on STT, with grace window and self-speech filtering
-        if (isBotSpeaking) {
-          const now = Date.now();
-          const withinGraceWindow =
-            lastBotSpeechStartRef.current &&
-            now - lastBotSpeechStartRef.current < BOT_INTERRUPT_GRACE_MS;
+        const now = Date.now();
+        const withinGraceWindow =
+          isBotActive &&
+          lastBotSpeechStartRef.current &&
+          now - lastBotSpeechStartRef.current < BOT_INTERRUPT_GRACE_MS;
 
-          if (withinGraceWindow) {
-            // Ignore very early transcripts right after bot starts speaking
+        if (withinGraceWindow) {
+          return;
+        }
+
+        if (
+          isBotActive &&
+          isLikelySelfTranscript(combinedTranscript, botText, displayedBotText)
+        ) {
+          return;
+        }
+
+        if (isBotActive) {
+          const trimmedFinal = finalTranscript.trim();
+          const spokenWordCount = (finalTranscript + interimTranscript)
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean).length;
+
+          if (!trimmedFinal && spokenWordCount < 2) {
             return;
           }
 
-          const currentBotText = currentBotUtteranceRef.current || "";
-          if (isLikelySelfTranscript(combinedTranscript, currentBotText)) {
-            // Likely transcription of the bot's own speech – ignore
-            return;
-          }
-
-          // Real user barge-in while bot is speaking – stop bot immediately.
-          // We'll let the normal non-speaking path handle sending once a final transcript is ready.
           if (autoSendTimerRef.current) {
             clearTimeout(autoSendTimerRef.current);
             autoSendTimerRef.current = null;
           }
+
           interruptBotPlayback();
+          if (
+            lastSentVoiceTranscriptRef.current &&
+            !isSameOrRelatedTranscript(
+              lastSentVoiceTranscriptRef.current,
+              finalTranscript + interimTranscript,
+            )
+          ) {
+            lastSentVoiceTranscriptRef.current = "";
+          }
+          setInputValue(clampChatInput(finalTranscript + interimTranscript));
+
+          if (trimmedFinal) {
+            autoSendTimerRef.current = setTimeout(() => {
+              sendTranscribedText(trimmedFinal);
+            }, 800);
+          }
           return;
         }
 
-        // From here, bot is not speaking – use final transcript with debounce to send
+        if (
+          lastSentVoiceTranscriptRef.current &&
+          !isSameOrRelatedTranscript(
+            lastSentVoiceTranscriptRef.current,
+            finalTranscript + interimTranscript,
+          )
+        ) {
+          lastSentVoiceTranscriptRef.current = "";
+        }
+
+        setInputValue(clampChatInput(finalTranscript + interimTranscript));
+
         const trimmedFinal = finalTranscript.trim();
         if (!trimmedFinal) {
           return;
         }
 
-        // When bot is not speaking, use debounce to auto-send after user stops talking
         if (autoSendTimerRef.current) {
           clearTimeout(autoSendTimerRef.current);
         }
 
         autoSendTimerRef.current = setTimeout(() => {
-          setInputValue(trimmedFinal);
-          sendTranscribedText(trimmedFinal); // Send the transcribed message automatically
-        }, 1500); // 1.5 seconds delay after user stops speaking
+          sendTranscribedText(trimmedFinal);
+        }, 1500);
       };
 
       recognitionRef.current.onerror = (event) => {
@@ -1340,7 +1641,6 @@ const FloatingMiniChatbot = () => {
                 try {
                   recognitionRef.current.start();
                 } catch {
-                  // worst case, verify state
                   if (isRecording) {
                     setIsRecording(false);
                     setMicMuted(true);
@@ -1429,42 +1729,12 @@ const FloatingMiniChatbot = () => {
     stopSpeechRecognition,
   ]);
 
-  // Keep mic open when bot is speaking
-  useEffect(() => {
-    if (isSpeaking && micStatus === "allowed" && !isRecording && !micMuted) {
-      // Start mic when bot starts speaking if not already recording and not muted
-      const timer = setTimeout(() => {
-        if (!isRecording && micStatus === "allowed") {
-          startSpeechRecognition();
-        }
-      }, 300); // Small delay to prevent conflicts
-
-      return () => clearTimeout(timer);
-    }
-  }, [isSpeaking, micStatus, isRecording, micMuted, startSpeechRecognition]);
-
   // Hide interrupt hint when bot stops speaking
   useEffect(() => {
     if (!isSpeaking) {
       setShowInterruptHint(false);
     }
   }, [isSpeaking]);
-
-  // Auto-enable mic when bot starts speaking (skip during initial greeting so we don't capture bot's own voice)
-  useEffect(() => {
-    if (
-      isSpeaking &&
-      micStatus === "allowed" &&
-      hasStartedMicAfterGreetingRef.current
-    ) {
-      setTimeout(() => {
-        if (!isRecording) {
-          setMicMuted(false);
-          startSpeechRecognition();
-        }
-      }, 800); // Delay to let bot audio start first
-    }
-  }, [isSpeaking, micStatus, isRecording, startSpeechRecognition]);
 
   const startMicAfterGreeting = useCallback(async () => {
     if (hasStartedMicAfterGreetingRef.current) return;
@@ -1491,6 +1761,38 @@ const FloatingMiniChatbot = () => {
       startSpeechRecognition();
     }
   }, [isRecording, micStatus, requestMicPermission, startSpeechRecognition]);
+
+  // Formal greeting text shown and spoken when the widget opens
+  const FORMAL_GREETING =
+    "Hi, I am Paul, your helping assistant. How can I help you?";
+
+  // Play greeting TTS only (no new message) so avatar speaks the formal greeting
+  const playGreetingTTS = useCallback(async () => {
+    const sessionIdAtStart = sessionIdRef.current;
+    setIsConnecting(true);
+    try {
+      const payload = await getBotResponseWithLipSync(
+        `Reply with only this exact sentence, nothing else: ${FORMAL_GREETING}`,
+      );
+      if (sessionIdRef.current !== sessionIdAtStart) return;
+      startTransition(() => {
+        if (sessionIdRef.current !== sessionIdAtStart) return;
+        setIsSpeakerOn(true);
+        setAvatarVisemes(payload.visemes || []);
+        setAvatarAudioUrl(payload.audioUrl || "");
+        setShowInterruptHint(true);
+        lastBotSpeechStartRef.current = Date.now();
+      });
+    } catch (err) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn("⚠️ Greeting TTS failed, text already shown:", err);
+      }
+    } finally {
+      if (sessionIdRef.current !== sessionIdAtStart) return;
+      setIsConnecting(false);
+    }
+  }, [getBotResponseWithLipSync]);
+  void playGreetingTTS;
 
   // Mark that greeting has started playing (so we know when it ends)
   useEffect(() => {
@@ -1522,60 +1824,64 @@ const FloatingMiniChatbot = () => {
   }, [isOpen]);
 
   // Typed send handler (placed after startSpeechRecognition to avoid TDZ)
-  const handleSendMessage = useCallback(
-    async (autoSend = false) => {
-      if (sendingRef.current) return;
-      if (inputValue.trim() === "") return;
-      sendingRef.current = true;
+  const handleSendMessage = useCallback(async () => {
+    if (sendingRef.current) return;
+    const messageText = clampChatInput(inputValue).trim();
+    if (messageText === "") return;
+    sendingRef.current = true;
 
-      // Typed interruption: stop current bot media immediately.
-      interruptBotPlayback();
+    // Typed interruption: stop current bot media immediately.
+    interruptBotPlayback();
 
-      // Add user message
-      const userMessage = {
-        id: Date.now(),
-        content: inputValue,
-        isUser: true,
-      };
+    // Add user message
+    const userMessage = {
+      id: Date.now(),
+      content: messageText,
+      isUser: true,
+    };
 
-      setMessages((prev) => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
 
-      // Store the current mic state before clearing input
-      const wasRecording = isRecording;
-      setInputValue("");
+    setInputValue("");
 
-      // Get bot response and update UI
-      setIsTyping(true);
+    // Get bot response and update UI
+    setIsTyping(true);
 
-      try {
-        await startBotResponse(inputValue);
-      } catch (error) {
-        console.error("Error getting bot response:", error);
-      } finally {
-        setIsTyping(false);
-
-        // If mic was active before sending and not auto-sending, restart speech recognition
-        if (!autoSend && wasRecording && micStatus === "allowed") {
-          setTimeout(() => {
-            startSpeechRecognition();
-          }, 500); // Small delay to allow UI to update
-        }
-        sendingRef.current = false;
-      }
-    },
-    [
-      inputValue,
-      interruptBotPlayback,
-      isRecording,
-      micStatus,
-      startSpeechRecognition,
-      startBotResponse,
-    ],
-  );
+    try {
+      await startBotResponse(messageText);
+    } catch (error) {
+      console.error("Error getting bot response:", error);
+    } finally {
+      setIsTyping(false);
+      sendingRef.current = false;
+    }
+  }, [inputValue, interruptBotPlayback, startBotResponse]);
 
   const handleInputChange = useCallback((e) => {
-    setInputValue(e.target.value);
+    const nextValue = clampChatInput(e.target.value);
+    setInputValue(nextValue);
+    if (
+      lastSentVoiceTranscriptRef.current &&
+      nextValue.trim() &&
+      !isSameOrRelatedTranscript(lastSentVoiceTranscriptRef.current, nextValue)
+    ) {
+      lastSentVoiceTranscriptRef.current = "";
+    }
   }, []);
+
+  const resizeChatInput = useCallback(() => {
+    const el = chatInputRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    const maxHeight = layoutMetrics.chatInputMaxHeight;
+    const nextHeight = Math.min(el.scrollHeight, maxHeight);
+    el.style.height = `${Math.max(nextHeight, 40)}px`;
+    el.style.overflowY = el.scrollHeight > maxHeight ? "auto" : "hidden";
+  }, [layoutMetrics.chatInputMaxHeight]);
+
+  useEffect(() => {
+    resizeChatInput();
+  }, [inputValue, resizeChatInput]);
 
   const toggleMic = useCallback(async () => {
     if (
@@ -1599,10 +1905,8 @@ const FloatingMiniChatbot = () => {
       await requestMicPermission();
     } else if (micStatus === "allowed") {
       if (isRecording) {
-        // Stop speech recognition
         stopSpeechRecognition();
       } else {
-        // Start speech recognition
         startSpeechRecognition();
       }
     } else if (micStatus === "prompt") {
@@ -1617,6 +1921,14 @@ const FloatingMiniChatbot = () => {
     stopSpeechRecognition,
   ]);
 
+  const teaserDragCursor = layoutMetrics.disableDrag
+    ? "pointer"
+    : isTeaserDragging
+      ? "grabbing"
+      : "grab";
+
+  const showTeaserCloseButton = isTeaserHovered || isCoarsePointer;
+
   const modalAnim = {
     initial: { opacity: 0, scale: 0.9, y: 40 },
     animate: { opacity: 1, scale: 1, y: 0 },
@@ -1626,13 +1938,41 @@ const FloatingMiniChatbot = () => {
 
   const showVoiceBar = micStatus === "allowed" && !micMuted;
 
+  const isBotStreaming = messages.some((message) => message.streaming);
+
+  const latestBotMessageId = useMemo(() => {
+    for (let i = messages.length - 1; i >= 0; i -= 1) {
+      const message = messages[i];
+      if (!message.isUser && !message.streaming && message.content) {
+        return message.id;
+      }
+    }
+    return null;
+  }, [messages]);
+
+  const isAwaitingBotReply = useMemo(() => {
+    if (isTyping) return true;
+    return messages.some(
+      (message) => message.streaming && !message.content?.trim(),
+    );
+  }, [isTyping, messages]);
+
+  const handleMessageFeedback = useCallback((messageId, value) => {
+    setMessageFeedback((prev) => ({ ...prev, [messageId]: value }));
+  }, []);
+
   // Derived state: check if bot is currently responding
   const isBotResponding =
     isSpeaking ||
     isTyping ||
     !!avatarAudioUrl ||
     !!faqVideoUrl ||
-    !!shouldPlayWelcomeVideo;
+    !!shouldPlayWelcomeVideo ||
+    isBotStreaming;
+
+  useEffect(() => {
+    isBotRespondingRef.current = isBotResponding;
+  }, [isBotResponding]);
 
   // Handler for stop button - interrupts current bot response
   const handleStopBotResponse = useCallback(() => {
@@ -1640,11 +1980,10 @@ const FloatingMiniChatbot = () => {
     setIsTyping(false);
     setAvatarAudioUrl("");
     setAvatarVisemes([]);
-    setFaqVideoUrl("");
-    setShouldPlayWelcomeVideo(false);
+    clearFaqVideoPlayback();
     setIsSpeaking(false);
     setShowInterruptHint(false);
-  }, [interruptBotPlayback]);
+  }, [interruptBotPlayback, clearFaqVideoPlayback]);
 
   // Handler for send/stop button
   const handleSendOrStop = useCallback(() => {
@@ -1698,32 +2037,33 @@ const FloatingMiniChatbot = () => {
       }
     };
   }, []);
-
-  const modalDims = getSizeDimensions();
-  const useMobileModalAnchor = isMobile && modalAnchored && !hasDraggedModal;
+  void currentAudioRef;
 
   return (
     <>
       {/* Floating teaser */}
       {!isOpen && !isMinimizedToBorder && (
         <motion.div
-          ref={teaserRef}
-          className={`fixed z-9999 w-[140px] h-[108px] sm:w-[168px] sm:h-[128px] group ${
-            teaserAnchored ? "right-3 bottom-3 sm:right-4 sm:bottom-2" : ""
-          }`}
+          ref={teaserOuterRef}
+          className="fixed z-[9999] pointer-events-none"
           style={{
             position: "fixed",
-            ...(teaserAnchored
-              ? { top: "auto", left: "auto" }
-              : {
+            width: `${layoutMetrics.teaserWidth}px`,
+            height: `${layoutMetrics.teaserHeight}px`,
+            ...(hasDraggedTeaser
+              ? {
                   top: `${teaserPosition.y}px`,
                   left: `${teaserPosition.x}px`,
                   bottom: "auto",
                   right: "auto",
+                }
+              : {
+                  top: "auto",
+                  left: "auto",
+                  right: `${layoutMetrics.edgeMargin}px`,
+                  bottom: `${layoutMetrics.bottomGap}px`,
                 }),
-            cursor: isTeaserDragging ? "grabbing" : "grab",
           }}
-          onMouseDown={handleTeaserMouseDown}
           onDragStart={(e) => e.preventDefault()}
         >
           <AnimatePresence mode="wait">
@@ -1733,49 +2073,77 @@ const FloatingMiniChatbot = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.98 }}
               transition={{ duration: 0.22 }}
-              className="absolute right-1 top-0 w-max max-w-[130px] sm:max-w-[155px] rounded-xl sm:rounded-2xl border border-slate-200/80 bg-white px-3 py-2 sm:px-3.5 sm:py-2 text-[11px] sm:text-[12px] font-semibold leading-4 sm:leading-5 text-slate-800 shadow-[0_10px_30px_rgba(15,23,42,0.12)]"
+              className={`pointer-events-auto absolute right-2 top-0 w-max rounded-2xl border border-slate-200/80 bg-white px-3 py-2 font-semibold leading-5 text-slate-800 shadow-[0_10px_30px_rgba(15,23,42,0.12)] ${
+                layoutMetrics.isMobile
+                  ? "max-w-[140px] text-[12px]"
+                  : "px-4 py-2.5 text-[13px]"
+              }`}
+              style={{ cursor: teaserDragCursor }}
+              onMouseDown={handleTeaserMouseDown}
+              onDragStart={(e) => e.preventDefault()}
             >
               {TEASER_PROMPTS[teaserPromptIndex]}
-              <span className="absolute bottom-[-5px] right-8 sm:right-9 h-2.5 w-2.5 sm:h-3 sm:w-3 rotate-45 border-r border-b border-slate-200/80 bg-white" />
+              <span className="absolute bottom-[-6px] right-10 h-3 w-3 rotate-45 border-r border-b border-slate-200/80 bg-white" />
             </motion.div>
           </AnimatePresence>
 
-          {/* Hover Close Button to minimize to border */}
-          <motion.button
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsMinimizedToBorder(true);
+          <div
+            className="pointer-events-auto absolute bottom-0 right-0"
+            style={{
+              width: `${layoutMetrics.avatarSize}px`,
+              height: `${layoutMetrics.avatarSize}px`,
             }}
-            className="absolute right-0.5 top-[38px] sm:top-[44px] z-10000 flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-full bg-red-500 text-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 border border-white"
-            style={{ cursor: "pointer" }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            onMouseEnter={handleTeaserHoverEnter}
+            onMouseLeave={handleTeaserHoverLeave}
           >
-            <X className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-          </motion.button>
+            <motion.button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsMinimizedToBorder(true);
+              }}
+              onMouseDown={(e) => e.stopPropagation()}
+              className={`absolute z-[10001] flex items-center justify-center rounded-full border border-white bg-red-500 text-white shadow-md transition-opacity duration-200 ${
+                layoutMetrics.isMobile
+                  ? "-top-0.5 right-0 h-5 w-5"
+                  : "-top-1 right-0 h-6 w-6"
+              } ${showTeaserCloseButton ? "opacity-100" : "opacity-0"}`}
+              style={{ cursor: "pointer" }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              aria-label="Minimize chatbot"
+            >
+              <X
+                className={layoutMetrics.isMobile ? "w-3 h-3" : "w-3.5 h-3.5"}
+              />
+            </motion.button>
 
-          <motion.button
-            onClick={handleTeaserClick}
-            className="absolute bottom-0 right-0 flex h-[68px] w-[68px] sm:h-[80px] sm:w-[80px] items-center justify-center overflow-hidden rounded-full border border-white/70 bg-white shadow-[0_12px_32px_rgba(15,23,42,0.18)]"
-            style={{ cursor: "inherit" }}
-            whileHover={{
-              scale: 1.04,
-              boxShadow: "0 0 30px rgba(59, 130, 246, 0.22)",
-            }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <video
-              className="h-full w-full object-cover"
-              style={{ objectPosition: "center 2%", transform: "scale(1.001)" }}
-              src={defaultBotVideo}
-              playsInline
-              autoPlay
-              loop
-              muted
-              preload="auto"
-            />
-            <div className="absolute inset-0 rounded-full ring-4 ring-white/75" />
-          </motion.button>
+            <motion.button
+              onClick={handleTeaserClick}
+              onMouseDown={handleTeaserMouseDown}
+              className="flex h-full w-full items-center justify-center overflow-hidden rounded-full border border-white/70 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.20)]"
+              style={{ cursor: teaserDragCursor }}
+              whileHover={{
+                scale: 1.04,
+                boxShadow: "0 0 30px rgba(59, 130, 246, 0.22)",
+              }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <video
+                className="h-full w-full object-cover"
+                style={{
+                  objectPosition: "center 2%",
+                  transform: "scale(1.001)",
+                }}
+                src={defaultBotVideo}
+                playsInline
+                autoPlay
+                loop
+                muted
+                preload="auto"
+              />
+              <div className="absolute inset-0 rounded-full ring-4 ring-white/75" />
+            </motion.button>
+          </div>
         </motion.div>
       )}
 
@@ -1784,11 +2152,9 @@ const FloatingMiniChatbot = () => {
         <motion.button
           onClick={() => {
             setIsOpen(true);
-            setModalAnchored(true);
-            setHasDraggedModal(false);
             setShouldPlayWelcomeVideo(true);
           }}
-          className="fixed right-3 bottom-3 sm:right-4 sm:bottom-4 z-9999 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.18)]"
+          className="fixed z-[9999] flex items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.18)] bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(0.5rem,env(safe-area-inset-right))] h-12 w-12 sm:right-2 sm:top-1/2 sm:bottom-auto sm:-translate-y-1/2 sm:h-14 sm:w-14"
           style={{ cursor: "pointer" }}
           whileHover={{
             scale: 1.08,
@@ -1818,35 +2184,27 @@ const FloatingMiniChatbot = () => {
         {isOpen && (
           <motion.div
             {...modalAnim}
-            className={`fixed inset-0 z-50 pointer-events-none ${isMobile ? "z-9998" : ""}`}
+            className="fixed inset-0 z-[9999] pointer-events-none"
             onDragStart={(e) => e.preventDefault()}
           >
             <motion.div
-              ref={modalRef}
               data-chatbot-modal
-              className={`relative overflow-hidden bg-transparent shadow-[0_28px_90px_rgba(0,0,0,0.45)] ring-1 ring-white/12 max-sm:max-w-[calc(100vw-24px)] ${
-                isMobile ? "rounded-2xl" : "rounded-3xl"
+              className={`relative overflow-hidden bg-transparent shadow-[0_28px_90px_rgba(0,0,0,0.45)] ring-1 ring-white/12 ${
+                layoutMetrics.isMobile ? "rounded-2xl" : "rounded-3xl"
               }`}
+              animate={{
+                width: layoutMetrics.width,
+                height: layoutMetrics.height,
+              }}
+              transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
               style={{
                 position: "absolute",
-                ...(useMobileModalAnchor
-                  ? {
-                      bottom: MOBILE_TEASER_BOTTOM_GAP,
-                      right: MOBILE_EDGE_MARGIN,
-                      top: "auto",
-                      left: "auto",
-                    }
-                  : {
-                      top: `${position.y}px`,
-                      left: `${position.x}px`,
-                      bottom: "auto",
-                      right: "auto",
-                    }),
+                top: `${position.y}px`,
+                left: `${position.x}px`,
                 transform: "none",
-                width: modalDims.width,
-                height: modalDims.height,
                 cursor: "default",
                 pointerEvents: "auto",
+                maxWidth: "calc(100vw - 20px)",
               }}
               draggable={false}
               onMouseDown={isDraggable ? handleMouseDown : undefined}
@@ -1854,28 +2212,41 @@ const FloatingMiniChatbot = () => {
               onDragStart={(e) => e.preventDefault()}
             >
               {/* Fully transparent container */}
-              <div className={`absolute inset-0 pointer-events-none ${isMobile ? "rounded-2xl" : "rounded-3xl"}`} />
+              <div className="absolute inset-0 rounded-3xl pointer-events-none" />
 
               {/* Connecting overlay – theme-neutral glass (no blue) */}
               {isOpen && isConnecting && (
-                <div className={`absolute inset-0 z-40 flex items-center justify-center bg-black/45 backdrop-blur-md border border-white/10 ${isMobile ? "rounded-2xl" : "rounded-3xl"}`}>
+                <div className="absolute inset-0 z-40 flex items-center justify-center rounded-3xl bg-black/45 backdrop-blur-md border border-white/10">
                   <div className="flex flex-col items-center gap-4 text-white">
-                    <div className={`rounded-full border-2 border-white/30 border-t-white animate-spin ${isMobile ? "h-9 w-9" : "h-12 w-12"}`} />
-                    <p className={`font-medium ${isMobile ? "text-sm" : "text-lg"}`}>Connecting...</p>
+                    <div className="h-12 w-12 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                    <p className="text-lg font-medium">Connecting...</p>
                   </div>
                 </div>
               )}
 
-              <div className={`relative flex h-full w-full bg-transparent ${isMobile && isChatOpen ? "flex-col" : ""}`}>
+              <div
+                className={`relative h-full w-full overflow-hidden bg-transparent ${
+                  layoutMetrics.isStacked ? "flex flex-col" : ""
+                }`}
+              >
                 {/* Avatar side - only this area shows grab cursor for dragging */}
-                <div
-                  className={`${
-                    isChatOpen
-                      ? isMobile
-                        ? "h-[42%] w-full shrink-0"
-                        : "w-[60%] h-full"
-                      : "w-full h-full"
-                  } relative min-w-0 bg-black`}
+                <motion.div
+                  className={`relative min-w-0 bg-black ${
+                    layoutMetrics.isStacked ? "shrink-0" : "h-full"
+                  }`}
+                  animate={{
+                    width: layoutMetrics.isStacked
+                      ? "100%"
+                      : isChatOpen
+                        ? layoutMetrics.isTablet
+                          ? "55%"
+                          : "60%"
+                        : "100%",
+                    height: layoutMetrics.isStacked
+                      ? `${layoutMetrics.videoHeightPercent}%`
+                      : "100%",
+                  }}
+                  transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
                   style={{
                     cursor: isDraggable
                       ? dragging
@@ -1895,47 +2266,17 @@ const FloatingMiniChatbot = () => {
                     />
                   )}
                   <div className="relative h-full w-full flex items-center justify-center">
-                    {faqVideoUrl ? (
-                      <video
-                        key={faqVideoUrl}
-                        src={faqVideoUrl}
-                        autoPlay
-                        playsInline
-                        muted={!isSpeakerOn}
-                        onLoadedMetadata={(e) =>
-                          syncTranscriptToVideoTime(e.currentTarget)
-                        }
-                        onTimeUpdate={(e) =>
-                          syncTranscriptToVideoTime(e.currentTarget)
-                        }
-                        onPlaying={(e) =>
-                          syncTranscriptToVideoTime(e.currentTarget)
-                        }
-                        onEnded={() => {
-                          finishVideoSyncedTranscript();
-                          setFaqVideoUrl("");
-                          setShouldPlayWelcomeVideo(false);
-                        }}
-                        onError={() => {
-                          finishVideoSyncedTranscript();
-                          setFaqVideoUrl("");
-                          setShouldPlayWelcomeVideo(false);
-                        }}
-                        className="h-full w-full object-cover pointer-events-none"
-                        tabIndex={-1}
-                      />
-                    ) : (
+                    {(!faqVideoUrl || !faqVideoReady) && (
                       <motion.div
-                        className="flex h-full w-full items-center justify-center overflow-hidden"
+                        className="absolute inset-0 flex h-full w-full items-center justify-center overflow-hidden"
                         style={{
                           transform:
                             "perspective(1100px) rotateY(-4deg) rotateX(2deg) scale(1.025)",
                           transformOrigin: "center",
                         }}
-                      // Removed animations that cause WebGL context instability
                       >
                         <AvatarLipSync
-                          key="stable-avatar" // Stable key prevents unnecessary remounts
+                          key="stable-avatar"
                           audioUrl={avatarAudioUrl}
                           visemes={avatarVisemes}
                           isMuted={!isSpeakerOn}
@@ -1949,7 +2290,24 @@ const FloatingMiniChatbot = () => {
                         />
                       </motion.div>
                     )}
-                    <div className={`absolute inset-x-0 bottom-0 bg-linear-to-t from-black/28 via-black/10 to-transparent pointer-events-none ${isMobile ? "h-14" : "h-24"}`} />
+                    {faqVideoUrl && (
+                      <video
+                        ref={faqVideoRef}
+                        src={faqVideoUrl}
+                        preload="auto"
+                        playsInline
+                        muted={!isSpeakerOn}
+                        onLoadedData={handleFaqVideoReady}
+                        onCanPlay={handleFaqVideoReady}
+                        onEnded={clearFaqVideoPlayback}
+                        onError={clearFaqVideoPlayback}
+                        className={`absolute inset-0 h-full w-full object-cover pointer-events-none transition-opacity duration-200 ${
+                          faqVideoReady ? "opacity-100" : "opacity-0"
+                        }`}
+                        tabIndex={-1}
+                      />
+                    )}
+                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/28 via-black/10 to-transparent pointer-events-none" />
                   </div>
 
                   {showMicBlockedDialog && (
@@ -2007,43 +2365,52 @@ const FloatingMiniChatbot = () => {
 
                   {/* Top controls */}
                   {!showMicBlockedDialog && (
-                    <div className={`absolute flex gap-1.5 sm:gap-2 ${isMobile ? "top-2 right-2" : "top-4 right-4"}`}>
-                      <IconBtn onClick={toggleSpeaker} active={isSpeakerOn} compact={isMobile}>
-                        {isSpeakerOn ? <Volume2 className={isMobile ? "h-4 w-4" : ""} /> : <VolumeX className={isMobile ? "h-4 w-4" : ""} />}
+                    <div className="absolute top-3 right-3 flex gap-1.5">
+                      <IconBtn onClick={toggleSpeaker} active={isSpeakerOn}>
+                        {isSpeakerOn ? <Volume2 /> : <VolumeX />}
                       </IconBtn>
-                      <IconBtn danger onClick={handleClose} compact={isMobile}>
-                        <X className={isMobile ? "h-4 w-4" : ""} />
-                      </IconBtn>
+                      {!isChatOpen && (
+                        <IconBtn danger onClick={handleClose}>
+                          <X />
+                        </IconBtn>
+                      )}
                     </div>
                   )}
 
                   {/* Bottom bar */}
                   {!showMicBlockedDialog && (
-                    <div className={`absolute bottom-0 inset-x-0 pointer-events-none ${isMobile ? "px-2.5 pt-2 pb-1.5" : "px-4 pt-4 pb-2"}`}>
+                    <div
+                      className={`absolute bottom-0 inset-x-0 pointer-events-none ${
+                        layoutMetrics.isMobile
+                          ? "px-2 pt-2 pb-1"
+                          : "px-3 pt-3 pb-2"
+                      }`}
+                    >
                       <div className="flex items-center justify-between gap-3">
-                        {!showVoiceBar && (
-                          // <div className="px-3 py-2 rounded-full bg-black/55 backdrop-blur-lg text-white text-sm font-semibold shadow-lg pointer-events-auto">
-                          //   Ambassador Paul
-                          // </div>
-                          <div></div>
-                        )}
+                        {!showVoiceBar && <div></div>}
 
                         {showVoiceBar ? (
                           <div className="flex-1 flex items-center justify-center gap-4 pointer-events-auto">
                             <button
                               onClick={toggleMic}
-                              className={`rounded-full bg-[#2b2b2d] text-white border border-white/10 shadow-lg flex items-center justify-center ${isMobile ? "h-9 w-9" : "h-11 w-11"}`}
+                              className="h-9 w-9 rounded-full bg-[#2b2b2d] text-white border border-white/10 shadow-lg flex items-center justify-center"
                               aria-label="Toggle microphone"
                             >
                               {micMuted ? (
-                                <MicOff className={isMobile ? "w-4 h-4" : "w-5 h-5"} />
+                                <MicOff className="w-5 h-5" />
                               ) : (
-                                <Mic className={isMobile ? "w-4 h-4" : "w-5 h-5"} />
+                                <Mic className="w-5 h-5" />
                               )}
                             </button>
 
-                            <div className="flex-1 flex justify-center">
-                              <div className={`rounded-full bg-[#1f1f20]/90 backdrop-blur-md border border-white/10 shadow-lg flex items-center justify-center gap-1.5 ${isMobile ? "min-w-[140px] px-3 py-1.5" : "min-w-[190px] px-5 py-2"}`}>
+                            <div className="flex-1 flex justify-center min-w-0">
+                              <div
+                                className={`px-4 py-2 rounded-full bg-[#1f1f20]/90 backdrop-blur-md border border-white/10 shadow-lg flex items-center justify-center gap-1.5 ${
+                                  layoutMetrics.isMobile
+                                    ? "w-full max-w-[160px]"
+                                    : "min-w-[190px]"
+                                }`}
+                              >
                                 {[...Array(16)].map((_, i) => (
                                   <motion.div
                                     key={i}
@@ -2068,10 +2435,14 @@ const FloatingMiniChatbot = () => {
 
                             <button
                               onClick={() => setIsChatOpen((v) => !v)}
-                              className={`rounded-full border border-white/10 shadow-lg flex items-center justify-center bg-[#2b2b2d] text-white ${isMobile ? "h-9 w-9" : "h-11 w-11"}`}
+                              className={`h-9 w-9 rounded-full border border-white/10 shadow-lg flex items-center justify-center ${
+                                isChatOpen
+                                  ? "bg-[#2b2b2d] text-white"
+                                  : "bg-[#2b2b2d]/90 text-white"
+                              }`}
                               aria-label="Toggle chat"
                             >
-                              <MessageSquare className={isMobile ? "w-4 h-4" : "w-5 h-5"} />
+                              <MessageSquare className="w-5 h-5" />
                             </button>
                           </div>
                         ) : (
@@ -2080,13 +2451,12 @@ const FloatingMiniChatbot = () => {
                               <IconBtn
                                 active={micStatus === "allowed" && !micMuted}
                                 onClick={toggleMic}
-                                compact={isMobile}
                                 danger={
                                   micStatus === "denied" ||
                                   micStatus === "error"
                                 }
                               >
-                                {micMuted ? <MicOff className={isMobile ? "h-4 w-4" : ""} /> : <Mic className={isMobile ? "h-4 w-4" : ""} />}
+                                {micMuted ? <MicOff /> : <Mic />}
                               </IconBtn>
                               {(micStatus === "prompt" || isRecording) && (
                                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full"></div>
@@ -2102,9 +2472,8 @@ const FloatingMiniChatbot = () => {
                             <IconBtn
                               onClick={() => setIsChatOpen((v) => !v)}
                               active={isChatOpen}
-                              compact={isMobile}
                             >
-                              <MessageSquare className={isMobile ? "h-4 w-4" : ""} />
+                              <MessageSquare />
                             </IconBtn>
                           </div>
                         )}
@@ -2126,7 +2495,7 @@ const FloatingMiniChatbot = () => {
                           settings.
                         </div>
                       )}
-                      {showVoiceBar && !isMobile && (
+                      {showVoiceBar && !layoutMetrics.isMobile && (
                         <div className="text-[11px] text-white/80 mt-1 pointer-events-auto">
                           Tip: Using headphones reduces echo and accidental
                           interruptions.
@@ -2134,43 +2503,65 @@ const FloatingMiniChatbot = () => {
                       )}
                     </div>
                   )}
-                </div>
+                </motion.div>
 
-                {/* Chat panel — dark glass UI (same on all allowed pages) */}
+                {/* Chat panel — dark glass UI, absolutely positioned so exit animation doesn't leave a flex ghost */}
                 <AnimatePresence>
                   {isChatOpen && (
                     <motion.div
                       data-chat-panel
-                      initial={{ x: isMobile ? 0 : 40, y: isMobile ? 24 : 0, opacity: 0 }}
-                      animate={{ x: 0, y: 0, opacity: 1 }}
-                      exit={{ x: isMobile ? 0 : 40, y: isMobile ? 24 : 0, opacity: 0 }}
-                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                      className={`relative flex min-w-0 flex-col overflow-hidden bg-slate-950/78 text-slate-50 backdrop-blur-2xl backdrop-saturate-150 ${
-                        isMobile
-                          ? "h-[58%] w-full shrink-0 border-t border-white/12 shadow-[0_-8px_28px_rgba(0,0,0,0.32)]"
-                          : "h-full w-[40%] border-l border-white/12 shadow-[-10px_0_36px_rgba(0,0,0,0.38)]"
-                      }`}
+                      initial={
+                        layoutMetrics.isStacked
+                          ? { y: "100%", opacity: 0 }
+                          : { x: "100%", opacity: 0 }
+                      }
+                      animate={
+                        layoutMetrics.isStacked
+                          ? { y: 0, opacity: 1 }
+                          : { x: 0, opacity: 1 }
+                      }
+                      exit={
+                        layoutMetrics.isStacked
+                          ? { y: "100%", opacity: 0 }
+                          : { x: "100%", opacity: 0 }
+                      }
+                      transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+                      className={
+                        layoutMetrics.isStacked
+                          ? "relative z-10 flex min-h-0 flex-1 flex-col overflow-hidden border-t border-white/12 bg-slate-950/78 text-slate-50 shadow-[0_-8px_28px_rgba(0,0,0,0.32)] backdrop-blur-2xl backdrop-saturate-150"
+                          : `absolute inset-y-0 right-0 z-10 flex flex-col overflow-hidden border-l border-white/12 bg-slate-950/78 text-slate-50 shadow-[-10px_0_36px_rgba(0,0,0,0.38)] backdrop-blur-2xl backdrop-saturate-150 ${
+                              layoutMetrics.isTablet ? "w-[45%]" : "w-[40%]"
+                            }`
+                      }
                       style={{ cursor: "default" }}
-                      onMouseDown={(e) => e.stopPropagation()}
                     >
                       <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-white/[0.07] via-transparent to-black/25" />
                       <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
-                      <div className="pointer-events-none absolute inset-y-0 left-0 w-px bg-linear-to-b from-transparent via-blue-400/25 to-transparent" />
+                      {!layoutMetrics.isStacked && (
+                        <div className="pointer-events-none absolute inset-y-0 left-0 w-px bg-linear-to-b from-transparent via-blue-400/25 to-transparent" />
+                      )}
 
                       {/* Header */}
-                      <div className="relative z-10 flex shrink-0 items-center justify-between gap-3 border-b border-white/10 bg-black/20 px-4 py-3 backdrop-blur-xl">
+                      <div
+                        className={`relative z-10 flex shrink-0 items-center justify-between gap-3 border-b border-white/10 bg-black/20 backdrop-blur-xl ${
+                          layoutMetrics.isMobile ? "px-3 py-2" : "px-4 py-3"
+                        }`}
+                      >
                         <div className="flex min-w-0 items-center gap-3">
                           <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/8 shadow-sm backdrop-blur-md">
                             <MessageSquare className="h-4 w-4 text-blue-300" />
                             <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-slate-950 bg-emerald-400" />
                           </div>
                           <div className="min-w-0">
-                            <p className="truncate text-[14px] font-semibold tracking-tight text-white">
+                            <p
+                              className={`truncate font-semibold tracking-tight text-white ${
+                                layoutMetrics.isMobile
+                                  ? "text-[13px]"
+                                  : "text-[14px]"
+                              }`}
+                            >
                               Assistant Chat
                             </p>
-                            {/* <p className="truncate text-[11px] font-medium text-slate-400">
-                              Online · Ready to help
-                            </p> */}
                           </div>
                         </div>
                         <motion.button
@@ -2192,7 +2583,10 @@ const FloatingMiniChatbot = () => {
                         <div
                           ref={chatContainerRef}
                           onScroll={handleScroll}
-                          className="chatbot-messages-scroll flex min-h-0 flex-1 flex-col gap-3.5 overflow-y-auto px-4 py-4"
+                          className={`chatbot-messages-scroll flex min-h-0 flex-1 flex-col gap-3.5 overflow-y-auto ${
+                            layoutMetrics.isMobile ? "px-2.5 py-3" : "px-4 py-4"
+                          }`}
+                          style={{ scrollbarGutter: "stable" }}
                         >
                           {messages.length === 0 && !isTyping && (
                             <div className="flex flex-1 flex-col items-center justify-center px-1 py-2 text-center">
@@ -2205,57 +2599,99 @@ const FloatingMiniChatbot = () => {
                               <p className="mt-1 max-w-[240px] text-xs leading-relaxed text-slate-400">
                                 Ask a question, I&apos;m ready to help.
                               </p>
-                              {/* <div className="mt-4 flex w-full flex-col gap-2">
-                                {CHAT_QUICK_PROMPTS.map((prompt) => (
-                                  <button
-                                    key={prompt}
-                                    type="button"
-                                    onClick={() => setInputValue(prompt)}
-                                    className="rounded-xl border border-white/10 bg-white/6 px-3 py-2 text-left text-xs leading-snug text-slate-200 backdrop-blur-md transition-colors hover:border-blue-400/30 hover:bg-blue-500/15 hover:text-white"
-                                  >
-                                    {prompt}
-                                  </button>
-                                ))}
-                              </div> */}
                             </div>
                           )}
 
                           {messages.map((message) => (
-                            <Bubble
+                            <div
                               key={message.id}
-                              left={!message.isUser}
-                              right={message.isUser}
+                              className={`flex flex-col gap-1 ${
+                                message.isUser ? "items-end" : "items-start"
+                              }`}
                             >
-                              {message.content}
-                            </Bubble>
+                              <Bubble
+                                left={!message.isUser}
+                                right={message.isUser}
+                                compact={layoutMetrics.isMobile}
+                              >
+                                {message.content}
+                              </Bubble>
+                              {!message.isUser &&
+                                !message.streaming &&
+                                message.content && (
+                                  <ResponseFeedback
+                                    feedback={messageFeedback[message.id]}
+                                    showPrompt={
+                                      message.id === latestBotMessageId
+                                    }
+                                    onYes={() =>
+                                      handleMessageFeedback(message.id, "yes")
+                                    }
+                                    onNo={() =>
+                                      handleMessageFeedback(message.id, "no")
+                                    }
+                                  />
+                                )}
+                            </div>
                           ))}
-                          {isTyping && <TypingDots />}
+                          {isAwaitingBotReply && <ThinkingStatus />}
 
                           <div ref={messagesEndRef} />
                         </div>
                       </div>
 
                       {/* Input */}
-                      <div className="relative z-10 shrink-0 px-4 pb-4 pt-2">
-                        <div className="flex items-center gap-2.5">
-                          <motion.input
-                            className="min-w-0 flex-1 rounded-xl border border-white/12 bg-white/6 px-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:border-blue-400/55 focus:outline-none focus:ring-2 focus:ring-blue-400/30"
-                            placeholder="Type a message..."
-                            value={inputValue}
-                            onChange={handleInputChange}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                handleSendOrStop();
-                              }
-                            }}
-                          />
+                      <div
+                        className={`relative z-10 flex shrink-0 items-end gap-2 border-t border-white/10 bg-black/20 backdrop-blur-xl ${
+                          layoutMetrics.isMobile ? "px-2.5 py-2" : "px-3 py-2.5"
+                        }`}
+                        style={{
+                          paddingBottom: layoutMetrics.isMobile
+                            ? "max(0.5rem, env(safe-area-inset-bottom))"
+                            : undefined,
+                        }}
+                      >
+                        <motion.textarea
+                          ref={chatInputRef}
+                          rows={1}
+                          maxLength={CHAT_INPUT_MAX_LENGTH}
+                          className="min-w-0 flex-1 resize-none rounded-xl border border-white/12 bg-white/6 px-4 py-2.5 text-sm leading-snug text-white placeholder:text-slate-500 shadow-sm focus:border-blue-400/55 focus:outline-none focus:ring-2 focus:ring-blue-400/30 min-h-[40px]"
+                          style={{
+                            maxHeight: `${layoutMetrics.chatInputMaxHeight}px`,
+                          }}
+                          placeholder="Type a message..."
+                          value={inputValue}
+                          onChange={handleInputChange}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" && !e.shiftKey) {
+                              e.preventDefault();
+                              handleSendOrStop();
+                            }
+                          }}
+                        />
+                        <div className="flex shrink-0 flex-col items-center gap-1">
+                          <span
+                            className={`text-[9px] font-semibold tabular-nums leading-none ${
+                              inputValue.length >= CHAT_INPUT_MAX_LENGTH
+                                ? "text-red-400"
+                                : inputValue.length >=
+                                    CHAT_INPUT_MAX_LENGTH * 0.9
+                                  ? "text-amber-400"
+                                  : "text-slate-500"
+                            }`}
+                            aria-live="polite"
+                            aria-label={`${inputValue.length} of ${CHAT_INPUT_MAX_LENGTH} characters used`}
+                          >
+                            {inputValue.length}/{CHAT_INPUT_MAX_LENGTH}
+                          </span>
                           <motion.button
-                            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border text-white transition-all ${isBotResponding
+                            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border text-white transition-all ${
+                              isBotResponding
                                 ? "border-red-400/35 bg-linear-to-br from-red-500 to-red-600 hover:from-red-400 hover:to-red-500"
                                 : inputValue.trim()
                                   ? "border-blue-400/40 bg-linear-to-br from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500"
                                   : "border-white/10 bg-white/8 text-slate-500"
-                              }`}
+                            }`}
                             onClick={handleSendOrStop}
                             disabled={
                               !isBotResponding && inputValue.trim() === ""
@@ -2281,9 +2717,6 @@ const FloatingMiniChatbot = () => {
                             )}
                           </motion.button>
                         </div>
-                        {/* <p className="mt-2 text-center text-[10px] text-slate-500">
-                          Press Enter to send
-                        </p> */}
                       </div>
                     </motion.div>
                   )}
@@ -2299,11 +2732,10 @@ const FloatingMiniChatbot = () => {
 
 /* ---------- Reusable UI ---------- */
 
-const IconBtn = ({ children, onClick, danger, active, compact }) => (
+const IconBtn = ({ children, onClick, danger, active }) => (
   <motion.button
     onClick={onClick}
-    className={`rounded-full backdrop-blur-md shadow-lg transition
-      ${compact ? "p-1.5" : "p-2"}
+    className={`p-1.5 rounded-full backdrop-blur-md shadow-lg transition
       ${danger ? "bg-red-500 text-white" : active ? "bg-linear-to-r from-emerald-500 to-teal-500 text-white" : "bg-linear-to-r from-gray-700 to-gray-800 text-white"}
       hover:scale-110 active:scale-95`}
     whileHover={{ scale: 1.1, boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)" }}
@@ -2314,7 +2746,7 @@ const IconBtn = ({ children, onClick, danger, active, compact }) => (
   </motion.button>
 );
 
-const Bubble = ({ children, left, right }) => (
+const Bubble = ({ children, left, right, compact = false }) => (
   <motion.div
     initial={{ opacity: 0, y: 8 }}
     animate={{ opacity: 1, y: 0 }}
@@ -2322,37 +2754,194 @@ const Bubble = ({ children, left, right }) => (
     className={`flex max-w-full flex-col gap-1 ${right ? "items-end" : "items-start"}`}
   >
     <span
-      className={`px-1 text-[10px] font-semibold uppercase tracking-wider ${right ? "text-blue-300/80" : "text-slate-400"
-        }`}
+      className={`px-1 text-[10px] font-semibold uppercase tracking-wider ${
+        right ? "text-blue-300/80" : "text-slate-400"
+      }`}
     >
       {right ? "You" : "Assistant"}
     </span>
     <div
-      className={`max-w-[92%] rounded-2xl px-4 py-2.5 text-[13px] leading-relaxed shadow-sm backdrop-blur-md
-        ${left && "border border-white/20 bg-white/[0.14] text-slate-50"}
-        ${right && "border border-blue-400/30 bg-linear-to-br from-blue-600/95 to-indigo-600/90 text-white"}`}
+      className={`max-w-[92%] rounded-2xl px-4 py-2.5 leading-relaxed shadow-sm backdrop-blur-md break-words
+        ${compact ? "text-[12px]" : "text-[13px]"}
+        ${left ? "border border-white/20 bg-white/[0.14] text-slate-50" : ""}
+        ${right ? "border border-blue-400/30 bg-linear-to-br from-blue-600/95 to-indigo-600/90 text-white" : ""}`}
     >
-      <div className="whitespace-pre-wrap wrap-break-word">{children}</div>
+      <div className="whitespace-pre-wrap wrap-break-word">
+        <LinkifiedText
+          text={
+            typeof children === "string" ? children : String(children ?? "")
+          }
+          inverted={!!right}
+        />
+      </div>
     </div>
   </motion.div>
 );
 
-const TypingDots = () => (
-  <div className="flex flex-col items-start gap-1">
-    <span className="px-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
-      Assistant
-    </span>
-    <div className="flex items-center gap-1.5 rounded-2xl border border-white/20 bg-white/[0.14] px-4 py-3 shadow-sm backdrop-blur-md">
-      {[0, 1, 2].map((i) => (
-        <motion.span
-          key={i}
-          className="h-2 w-2 rounded-full bg-blue-300/80"
-          animate={{ opacity: [0.35, 1, 0.35], y: [0, -2, 0] }}
-          transition={{ duration: 1.1, repeat: Infinity, delay: i * 0.15 }}
+const LinkifiedText = ({ text, inverted = false }) => {
+  if (!text) return null;
+
+  const linkClass = inverted
+    ? "font-semibold text-white underline decoration-white/70 underline-offset-2 hover:text-white/90"
+    : "font-medium text-blue-300 underline decoration-blue-300/70 underline-offset-2 hover:text-blue-200";
+
+  const parts = [];
+  let lastIndex = 0;
+  const regex = new RegExp(LINK_TOKEN_REGEX.source, LINK_TOKEN_REGEX.flags);
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+
+    const rawToken = match[0];
+    const token = trimLinkTrailingPunctuation(rawToken);
+    const trailing = rawToken.slice(token.length);
+
+    if (isEmailToken(token)) {
+      parts.push(
+        <a
+          key={`${match.index}-email-${token}`}
+          href={getLinkHref(token)}
+          className={linkClass}
+          onClick={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+        >
+          {token}
+        </a>,
+      );
+    } else if (isWebLinkToken(token)) {
+      parts.push(
+        <a
+          key={`${match.index}-url-${token}`}
+          href={getLinkHref(token)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={linkClass}
+          onClick={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+        >
+          {token}
+        </a>,
+      );
+    } else {
+      parts.push(token);
+    }
+
+    if (trailing) {
+      parts.push(trailing);
+    }
+
+    lastIndex = match.index + rawToken.length;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return <>{parts.length > 0 ? parts : text}</>;
+};
+
+const ResponseFeedback = ({ feedback, showPrompt, onYes, onNo }) => {
+  if (feedback === "yes") {
+    return (
+      <motion.p
+        initial={{ opacity: 0, y: 4 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="max-w-[92%] rounded-xl border border-emerald-400/40 bg-emerald-500/15 px-3 py-2 text-[11px] font-medium leading-snug text-emerald-200 shadow-sm backdrop-blur-md"
+      >
+        {FEEDBACK_YES_MESSAGE}
+      </motion.p>
+    );
+  }
+
+  if (feedback === "no") {
+    return (
+      <motion.p
+        initial={{ opacity: 0, y: 4 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="max-w-[92%] rounded-xl border border-amber-300/40 bg-amber-400/10 px-3 py-2 text-[11px] leading-snug text-slate-200 shadow-sm backdrop-blur-md"
+      >
+        <LinkifiedText
+          text={`Please post your suggestion on this mail id, ${CHATBOT_SUPPORT_EMAIL} thank you!!`}
         />
-      ))}
+      </motion.p>
+    );
+  }
+
+  if (!showPrompt) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 4 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="max-w-[92%] rounded-xl border border-white/15 bg-white/8 px-3 py-2.5 shadow-sm backdrop-blur-md"
+    >
+      <p className="text-[11px] font-semibold leading-snug text-slate-200">
+        Are you happy with response?
+      </p>
+      <div className="mt-2 flex items-center gap-2">
+        <button
+          type="button"
+          onClick={onYes}
+          className="rounded-full border border-emerald-500 bg-emerald-500 px-3.5 py-1 text-[11px] font-bold text-white shadow-sm transition hover:bg-emerald-600"
+        >
+          Yes
+        </button>
+        <button
+          type="button"
+          onClick={onNo}
+          className="rounded-full border border-white/20 bg-white/10 px-3.5 py-1 text-[11px] font-bold text-slate-100 shadow-sm transition hover:bg-white/20"
+        >
+          No
+        </button>
+      </div>
+    </motion.div>
+  );
+};
+
+const THINKING_STATUS_MESSAGES = [
+  "Thinking...",
+  "Almost there...",
+  "Just a moment...",
+];
+
+const ThinkingStatus = () => {
+  const [messageIndex, setMessageIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setMessageIndex((prev) => (prev + 1) % THINKING_STATUS_MESSAGES.length);
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="flex flex-col items-start gap-1">
+      <span className="px-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+        Assistant
+      </span>
+      <motion.div
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="inline-flex items-center rounded-2xl border border-white/20 bg-white/[0.14] px-4 py-2.5 shadow-sm backdrop-blur-md"
+      >
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={THINKING_STATUS_MESSAGES[messageIndex]}
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.2 }}
+            className="text-[12px] font-medium italic text-slate-300"
+          >
+            {THINKING_STATUS_MESSAGES[messageIndex]}
+          </motion.span>
+        </AnimatePresence>
+      </motion.div>
     </div>
-  </div>
-);
+  );
+};
 
 export default FloatingMiniChatbot;

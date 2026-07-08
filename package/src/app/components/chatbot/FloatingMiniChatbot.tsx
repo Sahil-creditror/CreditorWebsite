@@ -733,7 +733,7 @@ const FloatingMiniChatbot = () => {
       }
 
       const response = await fetch(
-        `${API_BASE_URL}/api/chatbot/faq/search/pv`,
+        `${API_BASE_URL}/api/chatbot/faq/search`,
         {
           method: "POST",
           headers: {

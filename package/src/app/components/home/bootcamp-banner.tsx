@@ -181,6 +181,10 @@
 // export default BootcampBanner;
 
 
+
+
+
+
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -199,55 +203,56 @@ export default function BootcampBanner() {
     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Array of masterclasses extracted directly from bcm.png and ube.png flyers
+    // Array of masterclasses extracted directly from flyers
     const classes = [
+       
         {
-            imageSrc: "/images/todayclasstopic/bcm.png",
-            imageAlt: "Business Credit Monitoring and Score Improvement Master Class",
-            badge: "The Master Class • July 7th, 2026",
+            imageSrc: "/images/todayclasstopic/oa.png",
+            imageAlt: "Operating Agreements Explained Private Class",
+            badge: "The Operate Private Class • July 8th, 2026",
             heading: (
                 <>
-                    Business Credit{" "}
+                    Operating{" "}
                     <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        Monitoring & Score
+                        Agreements
                     </span>{" "}
-                    Improvement
+                    Explained
                 </>
             ),
             description:
-                "Learn how to monitor your business credit, understand your score, and take proven steps to improve it for better funding and stronger opportunities.",
+                "Understand how to properly structure and protect your business entity. Master the core legal frameworks of private operating agreements to safeguard your corporate architecture.",
             benefits: [
-                "Monitor Business Credit",
-                "Understand Your Score",
-                "Proven Score Improvement Steps",
-                "Unlock Better Funding & Opportunities",
+                "Understand Entity Frameworks",
+                "Structure Corporate Agreements",
+                "Protect Your Business Assets",
+                "Safeguard Private Operations",
             ],
         },
         {
-            imageSrc: "/images/todayclasstopic/ube.png",
-            imageAlt: "Understanding  Business Entity Structures Become Private Class",
-            badge: "The Become Private Class • July 7th, 2026",
+            imageSrc: "/images/todayclasstopic/sv.png",
+            imageAlt: "Securing Vendor Credit That Reports Master Class",
+            badge: "The Master Class • July 8th, 2026",
             heading: (
                 <>
-                    Understanding{" "}
+                    Securing{" "}
                     <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        Business Entity
+                        Vendor Credit
                     </span>{" "}
-                    Structures
+                    That Reports
                 </>
             ),
             description:
-                "Build the right foundation. Choose the right structure. Protect your future by mastering how entities safeguard your wealth and scale efficiency.",
+                "Establish robust corporate trade lines. Learn how to secure accounts and vendor lines of credit that actively report to major bureaus to rapidly scale fundability.",
             benefits: [
-                "Build the Right Foundation",
-                "Choose the Right Structure",
-                "Protect Your Asset Future",
-                "Optimize Wealth Architecture",
+                "Secure Tier-1 Vendor Credit",
+                "Build Corporate Trade Lines",
+                "Verify Reporting Accounts",
+                "Accelerate Enterprise Fundability",
             ],
         },
     ];
 
-    // Automatic slide logic switching every 3 seconds
+    // Automatic slide logic switching every 4 seconds
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % classes.length);

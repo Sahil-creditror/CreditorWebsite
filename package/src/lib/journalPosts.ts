@@ -30,9 +30,9 @@ export const JOURNAL_POSTS: JournalPost[] = [
 
     id: 1,
 
-    slug: "what-does-become-private-mean-complete-guide",
+    slug: "what-does-become-private-mean",
 
-    title: 'What Does "Become Private" Mean? A Complete Guide',
+    title: 'What Does "Become Private" Mean?',
 
     description:
 
@@ -130,7 +130,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
 
       "A properly drafted trust, set up by an attorney, is a legitimate way to manage how assets are held, who can see that ownership, and how they pass to beneficiaries. It changes visibility and structure — not whether tax law, contract law, or court jurisdiction applies to you.",
 
-      "This article is for general informational purposes and isn't legal or financial advice. For guidance specific to your situation, consult a licensed attorney or financial professional.",
+      "*This article is for general informational purposes and isn't legal or financial advice. For guidance specific to your situation, consult a licensed attorney or financial professional.*",
 
     ],
 

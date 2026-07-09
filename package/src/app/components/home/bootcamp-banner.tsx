@@ -183,8 +183,6 @@
 
 
 
-
-
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -205,49 +203,47 @@ export default function BootcampBanner() {
 
     // Array of masterclasses extracted directly from flyers
     const classes = [
-       
         {
-            imageSrc: "/images/todayclasstopic/oa.png",
-            imageAlt: "Operating Agreements Explained Private Class",
-            badge: "The Operate Private Class • July 8th, 2026",
+            imageSrc: "/images/todayclasstopic/cab.jpg",
+            imageAlt: "Building Wealth Through Cash Flow Master Class",
+            badge: "Master Class • July 9, 2026",
             heading: (
                 <>
-                    Operating{" "}
+                    Building{" "}
                     <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        Agreements
+                        Wealth
                     </span>{" "}
-                    Explained
+                    Through Cash Flow
                 </>
             ),
             description:
-                "Understand how to properly structure and protect your business entity. Master the core legal frameworks of private operating agreements to safeguard your corporate architecture.",
+                "Create Income That Lasts. Learn how to build cash-flowing assets, grow wealth, and achieve financial freedom.",
             benefits: [
-                "Understand Entity Frameworks",
-                "Structure Corporate Agreements",
-                "Protect Your Business Assets",
-                "Safeguard Private Operations",
+                "Build Multiple Income Streams",
+                "Increase Monthly Cash Flow",
+                "Create Long-Term Wealth",
             ],
         },
         {
-            imageSrc: "/images/todayclasstopic/sv.png",
-            imageAlt: "Securing Vendor Credit That Reports Master Class",
-            badge: "The Master Class • July 8th, 2026",
+            imageSrc: "/images/todayclasstopic/cap.jpg",
+            imageAlt: "Preparing Financial Statements for Funding Master Class",
+            badge: "Master Class • July 9, 2026",
             heading: (
                 <>
-                    Securing{" "}
+                    Preparing{" "}
                     <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        Vendor Credit
+                        Financial Statements
                     </span>{" "}
-                    That Reports
+                    for Funding
                 </>
             ),
             description:
-                "Establish robust corporate trade lines. Learn how to secure accounts and vendor lines of credit that actively report to major bureaus to rapidly scale fundability.",
+                "Learn how to master financial basics, structure clean business records, prepare your entity for external funding, and accelerate business growth.",
             benefits: [
-                "Secure Tier-1 Vendor Credit",
-                "Build Corporate Trade Lines",
-                "Verify Reporting Accounts",
-                "Accelerate Enterprise Fundability",
+                "Financial Basics",
+                "Clean Records",
+                "Funding Prep",
+                "Business Growth",
             ],
         },
     ];

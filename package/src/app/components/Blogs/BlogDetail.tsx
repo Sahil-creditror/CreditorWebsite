@@ -52,10 +52,6 @@ export default function BlogDetail({ post }: BlogDetailProps) {
               {post.title}
             </h1>
 
-            <p className="mt-4 text-slate-200 text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl">
-              {post.description}
-            </p>
-
             <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs sm:text-sm text-slate-300">
               <span className="flex items-center gap-1.5">
                 <Calendar size={14} className="text-yellow-300" />
@@ -99,6 +95,10 @@ export default function BlogDetail({ post }: BlogDetailProps) {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="bg-white rounded-xl sm:rounded-2xl border border-neutral-200/70 p-5 sm:p-8 md:p-12 shadow-[0_2px_8px_rgba(0,0,0,0.01)]"
         >
+          <p className="text-neutral-600 text-sm sm:text-base md:text-lg leading-relaxed mb-6 sm:mb-8">
+            {post.description}
+          </p>
+
           <div className="space-y-4 sm:space-y-6">
             {post.content.map((block, index) => {
               if (block.startsWith("## ")) {
@@ -187,6 +187,17 @@ export default function BlogDetail({ post }: BlogDetailProps) {
                       </tbody>
                     </table>
                   </div>
+                );
+              }
+
+              if (block.startsWith("*") && block.endsWith("*") && block.length > 2) {
+                return (
+                  <p
+                    key={index}
+                    className="text-neutral-600 text-sm sm:text-base leading-relaxed italic"
+                  >
+                    {block.slice(1, -1)}
+                  </p>
                 );
               }
 

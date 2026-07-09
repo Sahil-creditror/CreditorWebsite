@@ -16,7 +16,7 @@ export default function Page() {
     return (
         <main>
             <Webclass />
-               <InstructorSection />
+            <InstructorSection />
             <PresentationSection />
             <FAQSection />
             <CTASection />

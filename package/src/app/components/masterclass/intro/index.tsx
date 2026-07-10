@@ -2,12 +2,13 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { FaLock, FaMoneyCheckAlt, FaRocket, FaShieldAlt, FaChartLine, FaUserLock } from "react-icons/fa";
-import { useRouter } from "next/navigation";
-
-gsap.registerPlugin(ScrollTrigger);
+import {
+  FaArrowRight,
+  FaBrain,
+  FaChalkboardTeacher,
+  FaChartPie,
+  FaGraduationCap,
+} from "react-icons/fa";
 
 type Particle = {
   id: number;
@@ -23,15 +24,15 @@ type Particle = {
   y: number;
 };
 
-export default function MasterClassLaunchpad() {
+export default function AthenaLMSLaunchpad() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const marqueeRef = useRef<HTMLDivElement | null>(null);
   const bgRef = useRef<HTMLDivElement | null>(null);
   const particlesRef = useRef<HTMLDivElement | null>(null);
-  const router = useRouter();
 
-  // small-screen detection (client-only)
   const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth <= 640);
     onResize();
@@ -39,490 +40,196 @@ export default function MasterClassLaunchpad() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  // Only render particle markup after mounting to prevent SSR/CSR mismatch
-  const [mounted, setMounted] = useState(false);
-  const [particles, setParticles] = useState<Particle[]>([]);
-
   useEffect(() => {
     setMounted(true);
-
-    // generate particles on the client only (avoids different server-side random values)
-    if (typeof window === "undefined") return;
-
-    const width = window.innerWidth;
-    const count = width <= 640 ? 8 : 15; // fewer particles on mobile
-    const arr: Particle[] = Array.from({ length: count }).map((_, i) => {
-      const w = Math.round(Math.random() * (width <= 640 ? 8 : 12) + (width <= 640 ? 3 : 4));
-      const h = Math.round(Math.random() * (width <= 640 ? 8 : 12) + (width <= 640 ? 3 : 4));
-      const top = (Math.random() * 84 + 8).toFixed(2) + "%";
-      const left = (Math.random() * 84 + 8).toFixed(2) + "%";
-      const background =
-        i % 3 === 0
-          ? "linear-gradient(45deg, #6b70ffff, #6bc1ffff)"
-          : i % 3 === 1
-          ? "linear-gradient(45deg, #4bc0c8, #c779d0)"
-          : "linear-gradient(45deg, #fe8c00, #f83600)";
-      const opacity = +(Math.random() * (width <= 640 ? 0.35 : 0.45) + 0.08).toFixed(2);
-      const duration = +(1.6 + Math.random() * (width <= 640 ? 1.6 : 2)).toFixed(2);
-      const rotation = i % 2 ? -5 : 5;
-      const x = i % 3 ? -10 : 10;
-      const y = i % 2 ? -14 : 14;
-      return { id: i, width: `${w}px`, height: `${h}px`, top, left, background, opacity, duration, rotation, x, y };
-    });
-
-    setParticles(arr);
   }, []);
 
-  useEffect(() => {
-    // run animations & marquee only when mounted and DOM refs are available
-    if (!sectionRef.current) return;
-
-    const ctx = gsap.context(() => {
-      // Background animation for both light and dark modes
-      const lightBg = bgRef.current;
-      const darkBg = sectionRef.current?.querySelector('.dark-bg') as HTMLElement;
-      
-      if (lightBg) {
-        gsap.to(lightBg, {
-          duration: 30,
-          backgroundPosition: "0% 100%",
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-        });
-      }
-      
-      if (darkBg) {
-        gsap.to(darkBg, {
-          duration: 30,
-          backgroundPosition: "0% 100%",
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-        });
-      }
-
-      // Particles animation wired into GSAP with the generated particles array
-      if (particlesRef.current && particles.length > 0) {
-        const els = particlesRef.current.children;
-        Array.from(els).forEach((el, i) => {
-          const p = particles[i];
-          if (!p) return;
-          gsap.to(el as Element, {
-            y: p.y,
-            x: p.x,
-            rotation: p.rotation,
-            duration: p.duration,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-            delay: (i % 5) * 0.12,
-          });
-        });
-      }
-
-      // Reveal animations using ScrollTrigger
-      gsap.utils.toArray<HTMLElement>(".gs-reveal").forEach((el, i) => {
-        gsap.from(el, {
-          y: 40,
-          opacity: 0,
-          scale: 0.95,
-          duration: 1,
-          delay: i * 0.12,
-          ease: "back.out(1.7)",
-          overwrite: "auto",
-          immediateRender: false,
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-            once: true,
-          },
-        });
-      });
-    }, sectionRef.current);
-
-    // --- Marquee: controller for pointer/touch/responsive ---
-    let marqueeCleanup = () => {};
-
-    if (marqueeRef.current) {
-      const marqueeEl = marqueeRef.current;
-
-      let baseDuration = window.innerWidth <= 640 ? 28 : 20;
-      marqueeEl.style.setProperty("--marquee-duration", `${baseDuration}s`);
-      marqueeEl.style.setProperty("--marquee-play-state", "running");
-
-      const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-      if (media.matches) {
-        // Respect reduced motion by slowing, not pausing
-        const slower = Math.round(baseDuration * 1.8);
-        marqueeEl.style.setProperty("--marquee-play-state", "running");
-        marqueeEl.style.setProperty("--marquee-duration", `${slower}s`);
-      }
-
-      const slowDuration = Math.max(8, baseDuration / 0.3);
-
-      let rafId: number | null = null;
-      const tweenCssVar = (from: number, to: number, durationMs = 350) => {
-        const start = performance.now();
-        const step = (now: number) => {
-          const t = Math.min(1, (now - start) / durationMs);
-          const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-          const val = from + (to - from) * eased;
-          marqueeEl.style.setProperty("--marquee-duration", `${val}s`);
-          if (t < 1) rafId = requestAnimationFrame(step);
-        };
-        if (rafId) cancelAnimationFrame(rafId);
-        rafId = requestAnimationFrame(step);
-      };
-
-      const handlePointerEnter = () => {
-        const current = parseFloat(getComputedStyle(marqueeEl).getPropertyValue("--marquee-duration") || `${baseDuration}`);
-        tweenCssVar(current, slowDuration, 350);
-      };
-
-      const handlePointerLeave = () => {
-        const current = parseFloat(getComputedStyle(marqueeEl).getPropertyValue("--marquee-duration") || `${slowDuration}`);
-        tweenCssVar(current, baseDuration, 350);
-      };
-
-      const handleTouchStart = () => handlePointerEnter();
-      const handleTouchEnd = () => handlePointerLeave();
-
-      const onResize = () => {
-        baseDuration = window.innerWidth <= 640 ? 28 : 20;
-        const current = parseFloat(getComputedStyle(marqueeEl).getPropertyValue("--marquee-duration") || `${baseDuration}`);
-        if (current <= baseDuration + 1) {
-          marqueeEl.style.setProperty("--marquee-duration", `${baseDuration}s`);
-        }
-      };
-
-      marqueeEl.addEventListener("pointerenter", handlePointerEnter);
-      marqueeEl.addEventListener("pointerleave", handlePointerLeave);
-      marqueeEl.addEventListener("touchstart", handleTouchStart, { passive: true });
-      marqueeEl.addEventListener("touchend", handleTouchEnd);
-      window.addEventListener("resize", onResize);
-
-      marqueeCleanup = () => {
-        marqueeEl.removeEventListener("pointerenter", handlePointerEnter);
-        marqueeEl.removeEventListener("pointerleave", handlePointerLeave);
-        marqueeEl.removeEventListener("touchstart", handleTouchStart);
-        marqueeEl.removeEventListener("touchend", handleTouchEnd);
-        window.removeEventListener("resize", onResize);
-        if (rafId) cancelAnimationFrame(rafId);
-      };
-    }
-
-    return () => {
-      marqueeCleanup();
-      ctx.revert();
-    };
-  }, [particles, mounted]);
-
-  function createRipple(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    const btn = e.currentTarget;
-    const circle = document.createElement("span");
-    const diameter = Math.max(btn.clientWidth, btn.clientHeight);
-    const radius = diameter / 2;
-    circle.style.width = circle.style.height = `${diameter}px`;
-    // offsetX/Y may be 0 in some cases (e.g., keyboard activation) — fallback to center
-    const offsetX = (e.nativeEvent as any).offsetX ?? btn.clientWidth / 2;
-    const offsetY = (e.nativeEvent as any).offsetY ?? btn.clientHeight / 2;
-    circle.style.left = `${offsetX - radius}px`;
-    circle.style.top = `${offsetY - radius}px`;
-    circle.classList.add("ripple");
-    const ripple = btn.getElementsByClassName("ripple")[0];
-    if (ripple) ripple.remove();
-    btn.appendChild(circle);
-  }
-
-  const items = [
-    "Trusts",
-    "Tier 1 Credit",
-    "Private Processing",
-    "Asset Protection",
-    "Merchant Onboarding",
-    "Business Funding",
-    "90-Day Launch",
+  const marqueeItems = [
+    "AI-Powered Insights",
+    "SCORM Compliant",
+    "Whitelabel Dashboard",
+    "Gamified Learning Paths",
+    "Automated Grading",
+    "Multi-Tenant Architecture",
   ];
 
   return (
     <section
       ref={sectionRef}
-      aria-label="Creditor Academy Master Class Launchpad"
-      className="relative overflow-hidden py-12 md:py-20 lg:py-28"
+      aria-label="Introduction to Athena LMS"
+      className="relative overflow-hidden py-16 md:py-24 lg:py-20"
     >
-      {/* Animated gradient background */}
+      <div
+        className="pointer-events-none absolute inset-0 -z-20 bg-center bg-cover bg-no-repeat"
+        style={{ backgroundImage: "url('/images/bg/bgmm.jpg')" }}
+        aria-hidden
+      />
+
       <div
         ref={bgRef}
-        className="pointer-events-none absolute inset-0 -z-10 opacity-95 dark:hidden"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-95"
         style={{
-          background: "linear-gradient(125deg, #f8fafc 0%, #e0f2fe 33%, #bae6fd 66%, #f1f5f9 100%)",
-          backgroundSize: "400% 400%",
+          background:
+            "linear-gradient(180deg, rgba(239,246,255,0.8) 0%, rgba(219,234,254,0.72) 38%, rgba(191,219,254,0.58) 100%)",
+          backgroundSize: "200% 200%",
         }}
-      />
-      {/* Dark mode background */}
-      <div
-        className="dark-bg pointer-events-none absolute inset-0 -z-10 opacity-95 dark:block hidden"
-        style={{
-          background: "linear-gradient(125deg, #0f1320 0%, #1c2a53 33%, #2b5fc8 66%, #071021 100%)",
-          backgroundSize: "400% 400%",
-        }}
+        aria-hidden
       />
 
-      {/* Animated particles (render from stable particle array).
-          Render them only after mount to avoid SSR/CSR mismatch */}
-      {mounted && particles.length > 0 && (
-        <div ref={particlesRef} className="absolute inset-0 -z-10 overflow-hidden particles-container" aria-hidden>
-          {particles.map((p) => (
+      <div className="container mx-auto px-6 sm:px-8 lg:px-16">
+        <div className="mx-auto max-w-6xl">
+          <div className="mx-auto max-w-3xl text-center">
             <motion.div
-              key={p.id}
-              className="absolute rounded-full pointer-events-none"
-              style={{
-                width: p.width,
-                height: p.height,
-                top: p.top,
-                left: p.left,
-                background: p.background,
-                opacity: p.opacity,
-              }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: p.opacity }}
-              transition={{
-                duration: p.duration,
-                delay: p.id * 0.12,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-            />
-          ))}
-        </div>
-      )}
-
-      <div className="container mx-auto px-5 sm:px-6 lg:px-12">
-        <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-10">
-          {/* left column - headline + CTA */}
-          <div className="w-full lg:w-6/12 text-center lg:text-left">
-            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }} className="inline-block mb-5">
-              <div className="inline-flex items-center rounded-full border px-3.5 py-1.5 text-sm font-semibold tracking-wide text-blue-700 bg-blue-50 border-blue-200 dark:text-amber-300 dark:bg-white/10 dark:border-white/20">
-                Master Class • 90-Day Private Launchpad
-              </div>
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mb-6 inline-block"
+            >
+              <span className="inline-flex items-center rounded-full border border-blue-200/80 bg-white/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-blue-700 backdrop-blur-md">
+                Meet Athena LMS
+              </span>
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, delay: 0.2 }}
-              className="font-display mb-4 text-slate-800 dark:text-white leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-sky-600 to-blue-800 dark:from-blue-300 dark:via-sky-400 dark:to-cyan-400"
-              style={{ fontWeight: 800, WebkitFontSmoothing: "antialiased" }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="mb-5 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
+              style={{ WebkitFontSmoothing: "antialiased" }}
             >
-              Structure Lawfully. Fund Privately. Operate Autonomously.
+              Smarter Learning.
             </motion.h1>
 
-            <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.35 }} className="text-slate-600 dark:text-slate-200 max-w-xl mx-auto lg:mx-0 text-sm sm:text-base md:text-lg mb-6 leading-relaxed">
-              The Creditor Academy Master Class is more than a course — it's a private
-              business launch system. In 90 days you'll set up trust structures, build
-              Tier 1 business credit, and activate private merchant processing so you can
-              collect payments without banks and protect assets from day one.
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-slate-700 sm:text-lg"
+            >
+              Athena LMS brings course creation, learner engagement, and performance insights into one modern platform for enterprise training.
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.55 }}
-              className="flex flex-col sm:flex-row sm:items-center sm:gap-4 justify-center lg:justify-start"
+              transition={{ duration: 0.6, delay: 0.28 }}
+              className="mb-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
             >
-              {/* <button
-                onClick={() => router.push("/signup")}
-                className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-lg font-bold text-white bg-gradient-to-r from-blue-600 via-sky-600 to-blue-800 hover:from-blue-700 hover:via-sky-700 hover:to-blue-900 shadow-lg hover:shadow-xl transition-colors duration-200"
-                aria-label="Sign up for Master Class"
+              <a
+                href="https://lmsathena.com/"
+                className="group inline-flex w-full items-center justify-center rounded-2xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-slate-800 sm:w-auto"
               >
-                ✨ Join the Masterclass
-              </button> */}
-
-              {/* small spacer for mobile */}
-              <div className="mt-3 sm:mt-0" />
+                Explore Athena
+                <FaArrowRight className="ml-2 transition-transform group-hover:translate-x-0.5" />
+              </a>
+              <a
+                href="#"
+                className="inline-flex w-full items-center justify-center rounded-2xl border border-white/70 bg-white/60 px-6 py-3 text-sm font-semibold text-slate-800 backdrop-blur-md transition-all hover:bg-white/80 sm:w-auto"
+              >
+                View Features
+              </a>
             </motion.div>
 
-            {/* marquee (CSS-driven) */}
             <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.95 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
               ref={marqueeRef}
-              className="mt-10 overflow-hidden rounded-2xl border border-slate-200/50 dark:border-white/8 bg-gradient-to-r from-blue-50/80 to-indigo-50/80 dark:from-purple-900/25 dark:to-pink-900/20 p-3 backdrop-blur-md marquee-container"
-              aria-hidden={false}
-              aria-label="Program highlights"
+              className="marquee-container mx-auto max-w-2xl overflow-hidden rounded-2xl border border-white/70 bg-white/55 p-3 backdrop-blur-md"
             >
-              <div className="flex marquee-track" style={{ gap: isMobile ? "1.25rem" : "2.5rem", alignItems: "center" }} role="list">
-                {items.map((item, i) => (
-                  <span key={i} role="listitem" className="flex items-center text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-200 font-semibold">
-                    <span className="text-blue-500 dark:text-amber-400 mr-2">✦</span> {item}
-                  </span>
-                ))}
-                {/* Duplicate set for smooth looping; mark duplicate as aria-hidden to avoid repeated screen reader output */}
-                {items.map((item, i) => (
-                  <span key={i + 100} aria-hidden="true" role="presentation" className="flex items-center text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-200 font-semibold">
-                    <span className="text-blue-500 dark:text-amber-400 mr-2">✦</span> {item}
+              <div className="flex flex-wrap items-center justify-center" style={{ gap: isMobile ? "0.75rem" : "1rem" }}>
+                {marqueeItems.map((item) => (
+                  <span
+                    key={item}
+                    className="flex items-center whitespace-nowrap text-xs font-medium text-slate-700 sm:text-sm"
+                  >
+                    <span className="mr-2 text-cyan-500">✦</span>
+                    {item}
                   </span>
                 ))}
               </div>
             </motion.div>
           </div>
 
-          {/* right column - feature panel */}
-          <div className="w-full lg:w-6/12">
-            <motion.div initial={{ opacity: 0, scale: 0.98, y: 12 }} whileInView={{ opacity: 1, scale: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.65 }} className="rounded-3xl bg-gradient-to-br from-white/80 via-blue-50/60 to-indigo-50/70 dark:from-purple-900/40 dark:via-blue-900/24 dark:to-pink-900/30 backdrop-blur-xl border border-slate-200/50 dark:border-white/10 p-6 sm:p-8 shadow-2xl">
-              <motion.div className="flex items-start gap-4 mb-6" whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 400, damping: 10 }}>
-                <motion.div className="flex-shrink-0 bg-gradient-to-br from-amber-400 via-pink-500 to-purple-600 p-3 rounded-xl shadow-lg" animate={{ rotate: [0, -5, 0, 5, 0], scale: [1, 1.03, 1] }} transition={{ duration: 5, repeat: Infinity }}>
-                  <FaRocket className="w-6 h-6 text-white" />
-                </motion.div>
-                <div>
-                  <h3 className="text-slate-800 dark:text-white text-lg font-bold mb-1">Launch in 90 Days</h3>
-                  <p className="text-slate-600 dark:text-slate-300 text-sm">A step-by-step pipeline to a functioning private business.</p>
-                </div>
-              </motion.div>
+          <motion.div
+            className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.32 }}
+          >
+            <FeatureCard
+              Icon={FaChalkboardTeacher}
+              title="Build Faster"
+              desc="Create polished lessons, quizzes, and pathways with less effort."
+              color="from-blue-500 to-sky-500"
+            />
+            <FeatureCard
+              Icon={FaBrain}
+              title="Learn Smarter"
+              desc="Use AI-powered suggestions to guide progress and improve outcomes."
+              color="from-violet-500 to-fuchsia-500"
+            />
+            <FeatureCard
+              Icon={FaChartPie}
+              title="Track Better"
+              desc="Measure completion, engagement, and performance in one place."
+              color="from-emerald-500 to-teal-500"
+            />
+          </motion.div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <FeatureCard Icon={FaLock} title="Structure Lawfully" desc="Trust formation, entity separation, and fundamental compliance." color="from-emerald-500 to-cyan-500" />
-                <FeatureCard Icon={FaMoneyCheckAlt} title="Fund Privately" desc="Build fundable credit profiles and access non-bank funding." color="from-amber-500 to-orange-500" />
-                <FeatureCard Icon={FaShieldAlt} title="Asset Protection" desc="Shield your business assets from lawful threats." color="from-violet-500 to-purple-500" />
-                <FeatureCard Icon={FaChartLine} title="Grow Exponentially" desc="Scale your business with advanced financial strategies." color="from-pink-500 to-rose-500" />
+          <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-[1.6fr_1fr]">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.38 }}
+              className="rounded-3xl border border-white/70 bg-white/55 p-5 backdrop-blur-md shadow-lg shadow-blue-100/40 sm:p-6"
+            >
+              <div className="mb-4 flex items-start gap-4 pt-12">
+                <div className="shrink-0 rounded-2xl bg-linear-to-br from-blue-600 to-indigo-700 p-3 text-white shadow-md pt-">
+                  <FaGraduationCap className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">A cleaner, modern learning flow</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-slate-600">
+                    Athena combines authoring, delivery, analytics, and governance in a layout designed to feel simple, premium, and easy to scan.
+                  </p>
+                </div>
               </div>
 
-              <motion.div className="mt-6 pt-5 border-t border-slate-200/30 dark:border-white/10" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.3 }} viewport={{ once: true }}>
-                <h4 className="text-slate-700 dark:text-slate-200 text-sm font-bold mb-3 flex items-center gap-2">
-                  <FaUserLock className="text-blue-500 dark:text-amber-400" /> Who it's for
-                </h4>
-                <div className="flex gap-2 flex-wrap">
-                  {["Entrepreneurs", "Freelancers", "Consultants", "Investors", "Creators", "Business Owners"].map((t) => (
-                    <motion.span key={t} className="text-xs px-3 py-1.5 rounded-full bg-slate-100/80 dark:bg-white/5 text-slate-700 dark:text-slate-200 border border-slate-200/50 dark:border-white/8" whileHover={{ scale: 1.05 }}>
-                      {t}
-                    </motion.span>
-                  ))}
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <div className="rounded-2xl border border-slate-200/70 bg-white/70 px-4 py-3 text-sm font-medium text-slate-700">
+                  Interactive course paths
                 </div>
-              </motion.div>
+                <div className="rounded-2xl border border-slate-200/70 bg-white/70 px-4 py-3 text-sm font-medium text-slate-700">
+                  AI-driven learner insights
+                </div>
+                <div className="rounded-2xl border border-slate-200/70 bg-white/70 px-4 py-3 text-sm font-medium text-slate-700">
+                  Enterprise team control
+                </div>
+              </div>
             </motion.div>
 
-            {/* three-step strip */}
-            <motion.div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
-              <StripCard step="1" title="Set Up Trust" desc="Foundational lawful structure." color="bg-gradient-to-br from-cyan-500 to-blue-600" />
-              <StripCard step="2" title="Build Credit" desc="Tier 1 business credit profile." color="bg-gradient-to-br from-violet-500 to-purple-600" />
-              <StripCard step="3" title="Activate Processing" desc="Private merchant payments & onboarding." color="bg-gradient-to-br from-pink-500 to-rose-600" />
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.44 }}
+              className="rounded-3xl border border-white/20 bg-slate-900/90 p-5 text-white shadow-xl"
+            >
+              <div className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-blue-200">Flow</div>
+              <div className="space-y-3">
+                <StripCard step="01" title="Create" desc="Build structured content." color="bg-blue-500" />
+                <StripCard step="02" title="Launch" desc="Deliver at scale." color="bg-purple-500" />
+                <StripCard step="03" title="Measure" desc="Track growth clearly." color="bg-emerald-500" />
+              </div>
             </motion.div>
           </div>
         </div>
       </div>
 
-      {/* decorative SVG at bottom (purely decorative) */}
-      <svg className="pointer-events-none absolute left-0 right-0 bottom-0 -z-20" width="100%" height="120" viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-        <path d="M0 80c120 40 240 40 360 0s240-40 360 0 240 40 360 0 240-40 360 0v40H0z" fill="url(#gradient)" />
-        <defs>
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#4b8ec8ff" stopOpacity="0.08" />
-            <stop offset="50%" stopColor="#277ad9ff" stopOpacity="0.08" />
-            <stop offset="100%" stopColor="#002afeff" stopOpacity="0.08" />
-          </linearGradient>
-        </defs>
-      </svg>
-
       <style jsx>{`
-        .font-display {
-          font-family: ui-sans-serif, system-ui, -apple-system, 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-        }
-
-        /* CTA ripple */
-        .signup-btn {
-          position: relative;
-          overflow: hidden;
-          -webkit-tap-highlight-color: transparent;
-        }
-        .signup-btn .ripple {
-          position: absolute;
-          border-radius: 50%;
-          transform: scale(0);
-          animation: ripple 900ms linear;
-          background: rgba(255, 255, 255, 0.4);
-          pointer-events: none;
-        }
-        @keyframes ripple {
-          to {
-            transform: scale(4);
-            opacity: 0;
-          }
-        }
-
-        /* Marquee (CSS-driven) */
-        .marquee-container {
-          --marquee-duration: 20s; /* JS may overwrite this */
-          --marquee-play-state: running;
-        }
-
-        .marquee-track {
-          display: inline-flex;
-          gap: 2.5rem;
-          white-space: nowrap;
-          align-items: center;
-          animation: marqueeX var(--marquee-duration) linear infinite;
-          animation-play-state: var(--marquee-play-state);
-        }
-
-        @keyframes marqueeX {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-
-        .gs-reveal {
-          will-change: transform, opacity;
-        }
-
-        .particles-container {
-          pointer-events: none;
-        }
-
-        /* Responsive adjustments */
         @media (max-width: 640px) {
-          .signup-btn {
-            width: 100%;
-            padding: 12px 18px !important;
-            font-size: 16px !important;
-            box-shadow: 0 6px 18px -8px rgba(0,0,0,0.35) !important;
-          }
-
-          .marquee-track {
-            gap: 1.25rem;
-          }
-
-          /* Hide particle layer on small screens for performance */
           .particles-container {
             display: none;
-          }
-
-          /* Reduce decorative shadow intensity */
-          .shadow-2xl {
-            box-shadow: 0 8px 24px -12px rgba(0,0,0,0.45) !important;
-          }
-        }
-
-        /* Respect prefers-reduced-motion for motion-heavy elements */
-        @media (prefers-reduced-motion: reduce) {
-          .marquee-track {
-            animation-play-state: paused !important;
-          }
-
-          .signup-btn, .shadow-2xl, .rounded-3xl, .particles-container > * {
-            transition: none !important;
-            animation: none !important;
-          }
-        }
-
-        /* Force marquee to honor JS-controlled var even in reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-          .marquee-container .marquee-track {
-            animation-play-state: var(--marquee-play-state) !important;
           }
         }
       `}</style>
@@ -530,28 +237,40 @@ export default function MasterClassLaunchpad() {
   );
 }
 
-function FeatureCard({ Icon, title, desc, color }: { Icon: any; title: string; desc: string; color: string; }) {
+function FeatureCard({
+  Icon,
+  title,
+  desc,
+  color,
+}: {
+  Icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  desc: string;
+  color: string;
+}) {
   return (
-    <motion.div className="flex gap-3 items-start p-3 sm:p-4 rounded-xl bg-gradient-to-br from-slate-50/80 to-white/60 dark:from-white/5 dark:to-white/10 border border-slate-200/50 dark:border-white/8 backdrop-blur-sm" whileHover={{ y: -4, boxShadow: "0 8px 22px -8px rgba(0, 0, 0, 0.18)", transition: { duration: 0.28 } }}>
-      <motion.div className={`p-2.5 rounded-lg bg-gradient-to-r ${color} shadow-md`} whileHover={{ rotate: 6 }} transition={{ type: "spring", stiffness: 300, damping: 12 }}>
-        <Icon className="w-5 h-5 text-white" />
-      </motion.div>
-      <div>
-        <div className="text-slate-800 dark:text-white text-sm font-semibold mb-1">{title}</div>
-        <div className="text-slate-600 dark:text-slate-300 text-xs">{desc}</div>
+    <div className="group rounded-3xl border border-white/70 bg-white/55 p-5 backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-100/50">
+      <div className={`mb-4 inline-flex rounded-2xl bg-linear-to-r ${color} p-3 text-white shadow-sm transition-transform duration-300 group-hover:rotate-3`}>
+        <Icon className="h-4 w-4" />
       </div>
-    </motion.div>
+      <div>
+        <h4 className="mb-1 text-base font-semibold text-slate-900">{title}</h4>
+        <p className="text-sm leading-relaxed text-slate-600">{desc}</p>
+      </div>
+    </div>
   );
 }
 
-function StripCard({ step, title, desc, color }: { step: string; title: string; desc: string; color: string; }) {
+function StripCard({ step, title, desc, color }: { step: string; title: string; desc: string; color: string }) {
   return (
-    <motion.div className="p-3 rounded-xl bg-gradient-to-br from-slate-50/80 to-white/60 dark:from-white/5 dark:to-white/10 border border-slate-200/50 dark:border-white/8 flex items-start gap-3 backdrop-blur-sm" whileHover={{ y: -3 }} transition={{ duration: 0.18 }}>
-      <div className={`${color} h-10 w-10 rounded-full flex items-center justify-center text-white font-bold shadow-md`}>{step}</div>
-      <div>
-        <div className="text-slate-800 dark:text-white text-sm font-semibold">{title}</div>
-        <div className="text-slate-600 dark:text-slate-300 text-xs mt-1">{desc}</div>
+    <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+      <div className={`${color} flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-xs font-bold text-white shadow-sm`}>
+        {step}
       </div>
-    </motion.div>
+      <div>
+        <h4 className="text-xs font-bold text-white">{title}</h4>
+        <p className="mt-0.5 text-[11px] leading-snug text-slate-300">{desc}</p>
+      </div>
+    </div>
   );
 }

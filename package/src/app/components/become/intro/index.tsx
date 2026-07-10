@@ -44,7 +44,6 @@ export default function CourseOverviewSection() {
       gsap.to(blobs, {
         y: "+=24",
         x: "+=16",
-        rotation: "+=5",
         duration: 8,
         yoyo: true,
         repeat: -1,
@@ -183,29 +182,17 @@ export default function CourseOverviewSection() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="relative w-full overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 px-4 md:px-6 py-12 md:py-16"
+      className="relative w-full overflow-hidden px-4 md:px-6 py-12 md:py-16"
     >
-
-      {/* Enhanced Ripple background */}
-      <div ref={rippleRef} aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="ripple absolute left-1/4 top-1/4 w-80 h-80 rounded-full" style={{ background: 'radial-gradient(circle at 30% 30%, rgba(99,102,241,0.25), rgba(79,70,229,0.08) 40%, transparent 65%)' }} />
-        <div className="ripple absolute right-1/4 top-1/4 w-96 h-96 rounded-full" style={{ background: 'radial-gradient(circle at 60% 40%, rgba(79,70,229,0.22), rgba(99,102,241,0.06) 40%, transparent 70%)' }} />
-        <div className="ripple absolute left-1/3 bottom-1/3 w-88 h-88 rounded-full" style={{ background: 'radial-gradient(circle at 40% 60%, rgba(99,102,241,0.18), rgba(79,70,229,0.04) 40%, transparent 72%)' }} />
-      </div>
-
-      {/* Floating particles */}
-      <div aria-hidden className="absolute inset-0 pointer-events-none">
-        {particlePositions.map((pos, i) => (
-          <div
-            key={i}
-            className="particle absolute w-2 h-2 rounded-full bg-indigo-400/30 dark:bg-indigo-500/40"
-            style={{
-              left: `${pos.left}%`,
-              top: `${pos.top}%`,
-            }}
-          />
-        ))}
-      </div>
+      <div
+        className="pointer-events-none absolute inset-0 bg-center bg-cover bg-no-repeat"
+        style={{ backgroundImage: "url('/images/bg/bgmm.jpg')" }}
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-white/20 dark:bg-slate-900/50"
+        aria-hidden
+      />
 
       {/* Enhanced decorative blobs */}
       <div aria-hidden className="absolute -top-32 -right-32 w-96 h-96 rounded-full blob bg-gradient-to-br from-blue-400/20 to-indigo-400/15 dark:from-indigo-700/25 dark:to-blue-600/20 mix-blend-screen blur-3xl transform-gpu" />

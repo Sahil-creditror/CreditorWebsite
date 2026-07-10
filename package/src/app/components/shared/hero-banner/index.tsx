@@ -3,13 +3,10 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import { Icon } from "@iconify/react";
-
 import { usePathname } from "next/navigation";
 
 interface HeroBannerProps {
-  bannerimage: string;
   heading: string;
   desc: string;
   headingClass?: string;
@@ -18,160 +15,78 @@ interface HeroBannerProps {
 }
 
 export const Herobanner: React.FC<HeroBannerProps> = ({
-  bannerimage,
   heading,
   desc,
-  headingClass = "large-heading",
+  headingClass = "text-4xl sm:text-5xl md:text-6xl",
   buttonPath,
   buttonText = "Start Now",
 }) => {
   const pathname = usePathname();
-  const splitDesc = desc.split(/<\/?span>/);
-
-  // Scroll state to hide back button
   const [sticky, setSticky] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setSticky(window.scrollY >= 350);
+      setSticky(window.scrollY >= 200);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // For button animation
-  const { ref: btnRef, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.25,
-  });
+  // Parses <span> tags in description to apply the aesthetic yellow color accent
+  const renderDescription = (text: string) => {
+    const parts = text.split(/(<span>.*?<\/span>)/g);
+    return parts.map((part, index) => {
+      if (part.startsWith("<span>") && part.endsWith("</span>")) {
+        const cleanText = part.replace(/<\/?span>/g, "");
+        return (
+          <span key={index} className="text-yellow-400 font-semibold">
+            {cleanText}
+          </span>
+        );
+      }
+      return part;
+    });
+  };
 
   return (
-    <section className="relative flex items-end text-white bg-black h-[70vh] bg-fixed sm:h-[80vh] max-h-[450px]">
-      {/* Background image */}
-      <Image
-        className="absolute inset-0 w-full h-full object-cover"
-        alt="Hero background"
-        src={bannerimage}
-        height={694}
-        width={1800}
-        priority
-        quality={85}
-        sizes="100vw"
-        placeholder="blur"
-        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-      />
+    <section className="relative flex items-center text-white bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-900 min-h-[40vh] sm:min-h-[50vh] py-16 overflow-hidden pt-28">
+      
+      {/* Decorative subtle background glow element */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/50" />
+      
 
-      {/* Back Button */}
-      <AnimatePresence>
-        {pathname !== "/" && !sticky && (
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="fixed top-5 left-5 sm:top-8 sm:left-10 z-[70]"
-          >
-            <Link
-              href="/"
-              className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white hover:text-primary transition-all duration-300 group"
-            >
-              <Icon
-                icon="solar:alt-arrow-left-linear"
-                width="20"
-                height="20"
-                className="group-hover:-translate-x-1 transition-transform"
-              />
-              <span className="text-sm font-bold uppercase tracking-wider">Back</span>
-            </Link>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Content Container */}
+      <div className="relative z-10 container mx-auto px-6 sm:px-12 lg:px-20 layout-container">
+        <div className="max-w-4xl flex flex-col gap-6">
+          
+         
 
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-left">
-        <div className="flex flex-col gap-2 sm:gap-3 pb-10 sm:pb-14 xl:pb-16">
+          {/* Main Heading */}
+          <h1 className={`${headingClass} font-bold tracking-tight leading-tight text-white`}>
+            {heading}
+          </h1>
 
-          {/* Logo (replaces previous description area) */}
-          {/* Logo */}
-          <div className="flex justify-start ml-10 sm:ml-12 md:ml-14 lg:ml-16 mt-6 sm:mt-8 mb-2">
-            {pathname !== "/" ? (
-              <Link href="/" className="hover:opacity-80 transition-opacity">
-                <Image
-                  src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883696/creditor-website-assets/images/logo/credi_logoo.webp"
-                  alt="Creditor Logo"
-                  width={320}
-                  height={80}
-                  priority
-                  quality={85}
-                  sizes="(max-width: 640px) 176px, (max-width: 768px) 208px, (max-width: 1024px) 256px, 300px"
-                  className="object-contain w-44 sm:w-52 md:w-64 lg:w-[300px]"
-                />
-              </Link>
-            ) : (
-              <Image
-                src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp/v1768883696/creditor-website-assets/images/logo/credi_logoo.webp"
-                alt="Creditor Logo"
-                width={320}
-                height={80}
-                priority
-                quality={85}
-                sizes="(max-width: 640px) 176px, (max-width: 768px) 208px, (max-width: 1024px) 256px, 300px"
-                className="object-contain w-44 sm:w-52 md:w-64 lg:w-[300px]"
-              />
-            )}
-          </div>
+          {/* Clean Description */}
+          <p className="text-lg sm:text-xl text-slate-300 max-w-2xl font-light leading-relaxed tracking-wide">
+            {renderDescription(desc)}
+          </p>
 
-
-          {/* Heading + Button Row */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <h1
-              className={`${headingClass} text-2xl sm:text-4xl md:text-5xl font-bold`}
-            >
-              {heading}
-            </h1>
-
-            {buttonPath && (
-              <motion.div
-                ref={btnRef}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+          {/* Action Button */}
+          {buttonPath && (
+            <div className="mt-4">
+              <Link
+                href={buttonPath}
+                aria-label={`Maps to ${heading}`}
+                className="inline-flex items-center gap-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-3 rounded-md transition-all duration-200 shadow-lg shadow-amber-500/10 hover:shadow-amber-500/20 tracking-wide text-sm uppercase"
               >
-                <Link
-                  href={buttonPath}
-                  aria-label={`Navigate to ${heading}`}
-                  className="group flex items-center w-fit bg-primary border border-primary hover:border-white/30 hover:bg-secondary rounded-full transition-all duration-300 ease-in-out overflow-hidden"
-                >
-                  <span className="pl-6 pr-2 py-3 text-lg font-bold text-secondary group-hover:text-white whitespace-nowrap transition-all duration-300 ease-in-out group-hover:translate-x-2">
-                    {buttonText}
-                  </span>
-                  <div className="w-12 h-12 flex items-center justify-center bg-white rounded-full m-1 transition-all duration-300 ease-in-out group-hover:rotate-45">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M7 17L17 7M17 7H7M17 7V17"
-                        stroke="#1F2A2E"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                </Link>
-              </motion.div>
-            )}
-          </div>
+                {buttonText}
+                <Icon icon="solar:arrow-right-up-linear" width="18" height="18" className="stroke-[2.5]" />
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </section>
   );
 };
-
-

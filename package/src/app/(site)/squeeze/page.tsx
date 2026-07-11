@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Clock, BookOpen, Shield, DollarSign, ArrowRight, Play, Pause, Lock, Compass, CheckCircle2 } from "lucide-react";
+import { BookOpen, Shield, DollarSign, ArrowRight, Play, Pause, Lock, Compass, CheckCircle2 } from "lucide-react";
 import SqueezeEmbed from "@/app/components/squeeze/Embed";
 import Script from "next/script";
 import { useState, useRef } from "react";
@@ -135,14 +135,14 @@ export default function Page() {
                   Saturday, 10:00 AM — live walkthrough, open Q&amp;A, and exclusive member templates.
                 </p>
 
-                <div className="mt-8 rounded-xl border border-[#F6F1E7]/10 bg-[#F6F1E7]/[0.03] p-5 shadow-inner backdrop-blur-md">
+                <div className="mt-8 rounded-xl border border-[#F6F1E7]/10 bg-[#F6F1E7]/3 p-5 shadow-inner backdrop-blur-md">
                   <SqueezeEmbed />
                 </div>
               </div>
 
               <div className="mt-8 pt-6 border-t border-[#F6F1E7]/10">
                 <div className="flex items-center gap-2.5 text-[11px] text-[#F6F1E7]/60">
-                  <Shield className="h-3.5 w-3.5 text-[#C9A153] flex-shrink-0" />
+                  <Shield className="h-3.5 w-3.5 text-[#C9A153] shrink-0" />
                   <span>Secure &amp; privacy-first — we never distribute data.</span>
                 </div>
 
@@ -223,14 +223,14 @@ export default function Page() {
             </div>
 
             {/* Core Modules Quick Strip */}
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-xl border border-[#0E1B2B]/5 dark:border-[#F6F1E7]/5 bg-[#0E1B2B]/[0.02] dark:bg-[#F6F1E7]/[0.01]">
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-xl border border-[#0E1B2B]/5 dark:border-[#F6F1E7]/5 bg-[#0E1B2B]/2 dark:bg-[#F6F1E7]/1">
               {[
                 "Jurisdiction Boundaries & Status Change",
                 "Private Asset & Document Frameworks",
                 "Unincorporated Trust Credit Mechanics",
               ].map((text, idx) => (
                 <div key={idx} className="flex items-center gap-3">
-                  <CheckCircle2 className="h-4 w-4 text-[#C9A153] flex-shrink-0" />
+                  <CheckCircle2 className="h-4 w-4 text-[#C9A153] shrink-0" />
                   <span className="text-xs font-medium text-[#0E1B2B]/80 dark:text-[#F6F1E7]/80">{text}</span>
                 </div>
               ))}
@@ -244,7 +244,7 @@ export default function Page() {
               </div>
 
               {/* Pathway Line Design */}
-              <div className="relative left-4 md:left-1/2 md:-translate-x-1/2 w-[2px] bg-gradient-to-b from-[#C9A153]/80 via-[#C9A153]/30 to-transparent absolute top-6 bottom-6 hidden md:block" />
+              <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-6 bottom-6 hidden md:block w-[2px] bg-linear-to-b from-[#C9A153]/80 via-[#C9A153]/30 to-transparent" />
 
               <div className="space-y-12 relative">
                 {formula.map((step, index) => {
@@ -273,7 +273,7 @@ export default function Page() {
                       <div className={`w-full md:w-[45%] pl-14 md:pl-0 ${isEven ? "md:text-right" : "md:text-left"}`}>
                         <div
                           className={`p-6 rounded-xl border transition-all duration-300 ${hoveredStep === index
-                            ? "border-[#C9A153]/40 bg-[#C9A153]/[0.04] translate-y-[-2px] shadow-sm"
+                            ? "border-[#C9A153]/40 bg-[#C9A153]/4 translate-y-[-2px] shadow-sm"
                             : "border-[#0E1B2B]/10 dark:border-[#F6F1E7]/10 bg-transparent"
                             }`}
                         >
@@ -306,7 +306,7 @@ export default function Page() {
                     <Link
                       key={item.num}
                       href={item.href}
-                      className="group block p-6 rounded-xl border border-[#0E1B2B]/10 dark:border-[#F6F1E7]/10 bg-[#0E1B2B]/[0.01] dark:bg-[#F6F1E7]/[0.01] transition-all duration-300 hover:border-[#C9A153]/50 hover:bg-[#C9A153]/[0.02] no-underline"
+                      className="group block p-6 rounded-xl border border-[#0E1B2B]/10 dark:border-[#F6F1E7]/10 bg-[#0E1B2B]/1 dark:bg-[#F6F1E7]/1 transition-all duration-300 hover:border-[#C9A153]/50 hover:bg-[#C9A153]/2 no-underline"
                     >
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div className="flex items-center gap-4">

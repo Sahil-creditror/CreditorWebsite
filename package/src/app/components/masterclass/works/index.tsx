@@ -229,7 +229,7 @@ export default function PricingRedesign() {
               transition={{ duration: 0.25 }}
               className="flex items-start gap-3.5"
             >
-              <div className="mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-blue-600/10 text-blue-600">
+              <div className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-600/10 text-blue-600">
                 <FiCheckCircle className="h-4 w-4" />
               </div>
               <p className="text-sm leading-relaxed text-slate-700">
@@ -248,7 +248,7 @@ export default function PricingRedesign() {
           transition={{ duration: 0.6, delay: 0.1 }}
         >
           {/* Accent top gradient bar */}
-          <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-blue-500 via-cyan-400 to-indigo-500" />
+          <div className="absolute inset-x-0 top-0 h-1.5 bg-linear-to-r from-blue-500 via-cyan-400 to-indigo-500" />
           
           <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
             
@@ -269,14 +269,14 @@ export default function PricingRedesign() {
               <hr className="my-6 border-slate-200/60" />
 
               <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
-                What's included in your active profile:
+                What&apos;s included in your active profile:
               </h4>
               <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
                 {plan.features.map((feature, idx) => {
                   const Icon = feature.icon;
                   return (
                     <div key={idx} className="flex items-center gap-3">
-                      <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600">
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600">
                         <Icon className="h-3.5 w-3.5" />
                       </div>
                       <span className="text-xs font-medium text-slate-700">{feature.text}</span>
@@ -305,7 +305,7 @@ export default function PricingRedesign() {
                 <motion.a
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 p-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/10 transition-all"
+                  className="group flex w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-blue-600 to-cyan-500 p-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/10 transition-all"
                   href="https://lmsathena.com/signup"
                 >
                   Get Started Instantly
@@ -326,7 +326,7 @@ export default function PricingRedesign() {
         {/* Warning Notification Block positioned nicely at baseline */}
         <div className="mt-8 rounded-2xl border border-amber-400/20 bg-amber-50/50 p-4 text-xs leading-relaxed text-slate-600 backdrop-blur-sm">
           <div className="flex items-start gap-2.5">
-            <FiAlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-500" />
+            <FiAlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
             <span>
               <strong className="uppercase tracking-wide text-amber-700 font-bold mr-1">
                 Notice:

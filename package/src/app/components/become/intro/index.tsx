@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { motion, Variants, Transition } from "framer-motion";
 import { gsap } from "gsap";
 import {
@@ -11,12 +11,7 @@ import {
 
 export default function CourseOverviewSection() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const rippleRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLDivElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [particlePositions, setParticlePositions] = useState<Array<{ left: number; top: number }>>([]);
 
-  // --- GSAP ripple + blob animation ---
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -26,20 +21,6 @@ export default function CourseOverviewSection() {
     const mm = gsap.matchMedia();
 
     mm.add("(prefers-reduced-motion: no-preference)", () => {
-      // Enhanced ripple effect
-      const ripples = rippleRef.current?.querySelectorAll(".ripple") ?? [];
-      gsap.set(ripples, { scale: 0, opacity: 0.6, transformOrigin: "50% 50%" });
-
-      const rippleTl = gsap.timeline({ repeat: -1 });
-      rippleTl.to(ripples, {
-        scale: 2.8,
-        opacity: 0,
-        duration: 3.6,
-        ease: "power1.out",
-        stagger: 0.9
-      });
-
-      // Enhanced blob animation
       const blobs = containerRef.current?.querySelectorAll(".blob") ?? [];
       gsap.to(blobs, {
         y: "+=24",
@@ -51,21 +32,6 @@ export default function CourseOverviewSection() {
         stagger: 1.5
       });
 
-      // Particle animation
-      const particles = containerRef.current?.querySelectorAll(".particle") ?? [];
-      if (particles.length > 0) {
-        gsap.to(particles, {
-          y: -40,
-          opacity: 0,
-          duration: 6,
-          stagger: 0.2,
-          repeat: -1,
-          ease: "power1.out",
-          delay: 1
-        });
-      }
-
-      // Section entrance animation
       gsap.fromTo(containerRef.current,
         { opacity: 0, y: 30 },
         {
@@ -77,65 +43,11 @@ export default function CourseOverviewSection() {
         }
       );
 
-      return () => rippleTl.kill();
+      return () => {};
     });
 
     return () => mm.revert();
   }, []);
-
-  // Generate particle positions on client only to avoid SSR/CSR mismatch
-  useEffect(() => {
-    setParticlePositions(
-      Array.from({ length: 15 }, () => ({ left: Math.random() * 100, top: Math.random() * 100 }))
-    );
-  }, []);
-
-  // Start particle animation once particles are present
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (particlePositions.length === 0) return;
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) return;
-
-    const particles = containerRef.current?.querySelectorAll(".particle") ?? [];
-    if (particles.length === 0) return;
-
-    const tween = gsap.to(particles, {
-      y: -40,
-      opacity: 0,
-      duration: 6,
-      stagger: 0.2,
-      repeat: -1,
-      ease: "power1.out",
-      delay: 1
-    });
-
-    return () => { tween.kill(); };
-  }, [particlePositions.length]);
-
-  // Play button animation
-  const handlePlay = () => {
-    setIsPlaying(true);
-    if (videoRef.current) {
-      gsap.to(videoRef.current, {
-        scale: 1.02,
-        boxShadow: "0 25px 50px -12px rgba(79, 70, 229, 0.4)",
-        duration: 0.5
-      });
-
-      // Simulate video playing (in a real app, this would trigger actual video playback)
-      setTimeout(() => {
-        setIsPlaying(false);
-        if (videoRef.current) {
-          gsap.to(videoRef.current, {
-            scale: 1,
-            boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-            duration: 0.5
-          });
-        }
-      }, 3000);
-    }
-  };
 
   // --- Framer Motion Variants ---
   const containerVariants: Variants = {
@@ -195,13 +107,13 @@ export default function CourseOverviewSection() {
       />
 
       {/* Enhanced decorative blobs */}
-      <div aria-hidden className="absolute -top-32 -right-32 w-96 h-96 rounded-full blob bg-gradient-to-br from-blue-400/20 to-indigo-400/15 dark:from-indigo-700/25 dark:to-blue-600/20 mix-blend-screen blur-3xl transform-gpu" />
-      <div aria-hidden className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full blob bg-gradient-to-br from-indigo-300/20 to-purple-300/12 dark:from-indigo-800/20 dark:to-purple-800/15 mix-blend-screen blur-3xl transform-gpu" />
-      <div aria-hidden className="absolute top-1/4 -left-20 w-64 h-64 rounded-full blob bg-gradient-to-br from-blue-300/15 to-cyan-300/10 dark:from-blue-700/15 dark:to-cyan-600/10 mix-blend-screen blur-2xl transform-gpu" />
+      <div aria-hidden className="absolute -top-32 -right-32 w-96 h-96 rounded-full blob bg-linear-to-br from-blue-400/20 to-indigo-400/15 dark:from-indigo-700/25 dark:to-blue-600/20 mix-blend-screen blur-3xl transform-gpu" />
+      <div aria-hidden className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full blob bg-linear-to-br from-indigo-300/20 to-purple-300/12 dark:from-indigo-800/20 dark:to-purple-800/15 mix-blend-screen blur-3xl transform-gpu" />
+      <div aria-hidden className="absolute top-1/4 -left-20 w-64 h-64 rounded-full blob bg-linear-to-br from-blue-300/15 to-cyan-300/10 dark:from-blue-700/15 dark:to-cyan-600/10 mix-blend-screen blur-2xl transform-gpu" />
 
       <div className="mx-auto max-w-7xl flex flex-wrap gap-10 items-center relative z-10 p-0 md:p-0">
         {/* Embedded Drive Video */}
-        <div className="flex-1 min-w-[18rem] max-w-3xl relative rounded-2xl overflow-hidden shadow-2xl">
+        <div className="flex-1 min-w-72 max-w-3xl relative rounded-2xl overflow-hidden shadow-2xl">
           <div className="w-full aspect-video rounded-2xl relative overflow-hidden">
             <iframe
               className="absolute inset-0 w-full h-full"
@@ -215,7 +127,7 @@ export default function CourseOverviewSection() {
         </div>
 
         {/* Enhanced Course Description */}
-        <div className="flex-1 min-w-[18rem] p-5 relative z-10">
+        <div className="flex-1 min-w-72 p-5 relative z-10">
           <motion.h2
             variants={fadeUp}
             custom={1}
@@ -224,12 +136,12 @@ export default function CourseOverviewSection() {
             transition={transition}
             className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight relative inline-block"
           >
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-blue-600 dark:from-indigo-300 dark:to-blue-400">Bootcamp Overview</span>
+            <span className="bg-clip-text text-transparent bg-linear-to-r from-indigo-700 to-blue-600 dark:from-indigo-300 dark:to-blue-400">Bootcamp Overview</span>
             <motion.span
               initial={{ width: 0 }}
               animate={{ width: "5rem" }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="absolute -bottom-3 left-0 h-1 bg-gradient-to-r from-indigo-600 to-blue-500 dark:from-indigo-400 dark:to-blue-400 rounded"
+              className="absolute -bottom-3 left-0 h-1 bg-linear-to-r from-indigo-600 to-blue-500 dark:from-indigo-400 dark:to-blue-400 rounded"
             />
           </motion.h2>
 
@@ -277,7 +189,7 @@ export default function CourseOverviewSection() {
             {/* <motion.button 
               whileHover={{ scale: 1.03, boxShadow: "0 10px 25px -5px rgba(79, 70, 229, 0.4)" }}
               whileTap={{ scale: 0.97 }}
-              className="w-full py-3 px-6 bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-700 hover:to-blue-600 text-white font-medium rounded-lg shadow-md transition-all duration-300"
+              className="w-full py-3 px-6 bg-linear-to-r from-indigo-600 to-blue-500 hover:from-indigo-700 hover:to-blue-600 text-white font-medium rounded-lg shadow-md transition-all duration-300"
             >
               Enroll Now
             </motion.button> */}

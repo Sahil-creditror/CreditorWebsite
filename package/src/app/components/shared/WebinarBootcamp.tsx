@@ -1,12 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   motion,
   AnimatePresence,
-  useMotionValue,
-  useSpring,
-  useTransform,
   useInView,
   Variants,
 } from "framer-motion";
@@ -26,8 +23,6 @@ import {
   FaBrain,
   FaMoneyBillWave,
   FaLandmark,
-  FaVideo,
-  FaCalendarAlt,
 } from "react-icons/fa";
 
 interface WebinarBootcampProps {
@@ -62,12 +57,6 @@ const getIcon = (name: string): React.ReactNode => {
   return ICON_MAP[name] || <FaCheckCircle />;
 };
 
-const SESSION_STATS = [
-  { icon: FaVideo, label: "Live Session", value: "Interactive" },
-  { icon: FaClock, label: "Duration", value: "~2 Hours" },
-  { icon: FaCalendarAlt, label: "Format", value: "Bootcamp" },
-];
-
 const REGISTERED_TARGET = 127;
 const SEATS_TOTAL = 150;
 
@@ -97,7 +86,6 @@ function useCountUp(target: number, active: boolean, duration = 1400) {
 
 const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
   title,
-  badgeText = "Live Bootcamp",
   description,
   imageSrc,
   youtubeVideoId,
@@ -114,27 +102,6 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
   const statsRef = useRef<HTMLDivElement>(null);
   const statsInView = useInView(statsRef, { once: true, margin: "-80px" });
   const registeredCount = useCountUp(REGISTERED_TARGET, statsInView);
-
-  const visualRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springConfig = { stiffness: 180, damping: 22 };
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [6, -6]), springConfig);
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-6, 6]), springConfig);
-
-  const handleVisualMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      const rect = e.currentTarget.getBoundingClientRect();
-      mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
-      mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
-    },
-    [mouseX, mouseY]
-  );
-
-  const resetTilt = useCallback(() => {
-    mouseX.set(0);
-    mouseY.set(0);
-  }, [mouseX, mouseY]);
 
   useEffect(() => {
     if (isPaused || features.length <= 1) return;
@@ -177,8 +144,8 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
         aria-hidden
       /> */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden select-none">
-        <div className="absolute -top-[10%] -right-[5%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-blue-500/10 to-indigo-500/5 dark:from-blue-500/10 dark:to-transparent blur-3xl opacity-70" />
-        <div className="absolute -bottom-[10%] -left-[5%] w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-indigo-500/10 to-purple-500/5 dark:from-indigo-500/10 dark:to-transparent blur-3xl opacity-70" />
+        <div className="absolute -top-[10%] -right-[5%] w-[600px] h-[600px] rounded-full bg-linear-to-br from-blue-500/10 to-indigo-500/5 dark:from-blue-500/10 dark:to-transparent blur-3xl opacity-70" />
+        <div className="absolute -bottom-[10%] -left-[5%] w-[600px] h-[600px] rounded-full bg-linear-to-tr from-indigo-500/10 to-purple-500/5 dark:from-indigo-500/10 dark:to-transparent blur-3xl opacity-70" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl">
@@ -197,9 +164,6 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
             style={{ perspective: 1200 }}
           >
             <motion.div
-              ref={visualRef}
-              onMouseMove={handleVisualMouseMove}
-             
               className="relative w-full"
             >
               {hasVideo ? (
@@ -222,7 +186,7 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
                     className="h-[360px] sm:h-[440px] lg:h-[500px] w-full object-cover bg-slate-100 dark:bg-slate-900"
                     priority
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-linear-to-t from-slate-950/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                   {/* Floating Action Glass Chips */}
                   <motion.div
@@ -260,7 +224,7 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
                   </AnimatePresence>
                 </div>
               ) : (
-                <div className="relative flex min-h-[380px] lg:min-h-[460px] items-center justify-center overflow-hidden rounded-2xl border border-slate-200/60 bg-gradient-to-br from-white to-slate-50 p-8 text-center shadow-xl shadow-slate-200/50 dark:border-slate-800/80 dark:from-slate-900 dark:to-slate-900/40 dark:shadow-none group">
+                <div className="relative flex min-h-[380px] lg:min-h-[460px] items-center justify-center overflow-hidden rounded-2xl border border-slate-200/60 bg-linear-to-br from-white to-slate-50 p-8 text-center shadow-xl shadow-slate-200/50 dark:border-slate-800/80 dark:from-slate-900 dark:to-slate-900/40 dark:shadow-none group">
                   <div className="pointer-events-none absolute inset-0 opacity-30 flex items-center justify-center">
                     <div className="absolute h-64 w-64 rounded-full border border-indigo-100 dark:border-indigo-950 animate-[spin_30s_linear_infinite]" />
                     <div className="absolute h-48 w-48 rounded-full border border-blue-100 dark:border-blue-950 animate-[spin_20s_linear_infinite_reverse]" />
@@ -306,7 +270,7 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
               className="mb-4 text-3xl font-black leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl dark:text-white"
             >
               Join the{" "}
-              <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-700 bg-clip-text text-transparent dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400">
+              <span className="bg-linear-to-r from-blue-600 via-indigo-600 to-violet-700 bg-clip-text text-transparent dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400">
                 {title} Bootcamp
               </span>
             </motion.h2>
@@ -369,7 +333,7 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
                   className="rounded-xl border border-slate-200/60 bg-white/80 p-4 shadow-sm backdrop-blur-md dark:border-slate-800/60 dark:bg-slate-900/40"
                 >
                   <div className="mb-2 flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-sm text-white shadow-sm">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-linear-to-br from-blue-500 to-indigo-600 text-sm text-white shadow-sm">
                       {getIcon(activeFeature.iconName)}
                     </div>
                     <h3 className="text-base font-bold text-slate-900 dark:text-white">
@@ -421,7 +385,7 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
               className="flex flex-col gap-4 sm:flex-row sm:items-center border-t border-slate-200/60 dark:border-slate-800/60 pt-6"
             >
               <Link href="/webinar" className="group relative inline-flex w-full sm:w-auto">
-                <span className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 opacity-30 blur transition duration-300 group-hover:opacity-50" />
+                <span className="absolute -inset-0.5 rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 opacity-30 blur transition duration-300 group-hover:opacity-50" />
                 <span className="relative flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-7 py-3 text-sm font-bold text-white shadow-md transition-colors group-hover:bg-slate-800 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-200">
                   Register Now
                   <FaArrowRight className="text-xs transition-transform group-hover:translate-x-1 duration-200" />
@@ -450,7 +414,7 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
                     initial={{ width: 0 }}
                     animate={statsInView ? { width: `${fillPercent}%` } : { width: 0 }}
                     transition={{ duration: 1.4, ease: "easeOut", delay: 0.2 }}
-                    className="h-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-600"
+                    className="h-full rounded-full bg-linear-to-r from-blue-500 to-indigo-600"
                   />
                 </div>
                 <p className="mt-1.5 text-[10px] font-medium text-slate-400 dark:text-slate-500 tracking-wide">

@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Poppins } from "next/font/google";
 import { Calendar, Clock, ArrowLeft, Layers } from "lucide-react";
@@ -23,7 +24,7 @@ export default function BlogDetail({ post }: BlogDetailProps) {
       className={`${poppins.className} min-h-screen bg-[#FAFAFA] text-neutral-900 pb-12 sm:pb-18 overflow-x-hidden selection:bg-neutral-900 selection:text-white`}
     >
       {/* HERO BANNER SECTION */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#456ad1] via-[#29479b] to-[#273a86] pt-28 pb-14 sm:pt-34 sm:pb-16 px-4 sm:px-6 md:px-20">
+      <section className="relative overflow-hidden bg-linear-to-br from-[#456ad1] via-[#29479b] to-[#273a86] pt-28 pb-14 sm:pt-34 sm:pb-16 px-4 sm:px-6 md:px-20">
         <div className="absolute inset-0">
           <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-yellow-400/10 blur-3xl" />
           <div className="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-blue-400/10 blur-3xl" />
@@ -76,11 +77,13 @@ export default function BlogDetail({ post }: BlogDetailProps) {
         >
           <div className="overflow-hidden rounded-2xl border border-neutral-200/70 bg-neutral-100 shadow-[0_12px_24px_-4px_rgba(0,0,0,0.06),0_4px_12px_-2px_rgba(0,0,0,0.03)]">
             <div className="relative w-full aspect-video">
-              <img
+              <Image
                 src={post.image}
                 alt={post.title}
-                className="absolute inset-0 w-full h-full object-contain"
-                loading="eager"
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, 1024px"
+                priority
               />
             </div>
           </div>
@@ -155,7 +158,7 @@ export default function BlogDetail({ post }: BlogDetailProps) {
                     key={index}
                     className="overflow-x-auto rounded-lg border border-neutral-200"
                   >
-                    <table className="w-full min-w-[28rem] text-left text-sm sm:text-base">
+                    <table className="w-full min-w-md text-left text-sm sm:text-base">
                       <thead>
                         <tr className="bg-neutral-50 border-b border-neutral-200">
                           {rows[0]?.map((cell, cellIndex) => (

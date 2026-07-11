@@ -5,6 +5,57 @@ import { motion, Variants } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
 
+type Benefit = {
+  title: string;
+  description: string;
+  image: string;
+};
+
+const cardVariants: Variants = {
+  hidden: (i: number) => ({ opacity: 0, y: 30, scale: 0.99 }),
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { delay: i * 0.12, type: "spring", stiffness: 110, damping: 18 },
+  }),
+};
+
+function BenefitCard({ item, index }: { item: Benefit; index: number }) {
+  const { ref: cardRef, inView: isInView } = useInView({
+    triggerOnce: true,
+    rootMargin: "-80px",
+  });
+
+  return (
+    <motion.article
+      ref={cardRef}
+      className="relative bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl overflow-hidden shadow-md transition-shadow duration-300 flex flex-col"
+      variants={cardVariants}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      custom={index}
+      layout
+    >
+      <div className="relative w-full h-44 sm:h-52 lg:h-44">
+        <Image src={item.image} alt={item.title} fill className="object-cover" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
+      </div>
+
+      <div className="p-5 sm:p-6 flex-1 flex flex-col">
+        <h3 className="text-lg md:text-xl font-semibold text-slate-900 dark:text-white mb-2">
+          {item.title}
+        </h3>
+        <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed flex-1">
+          {item.description}
+        </p>
+      </div>
+
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-linear-to-r from-blue-500 to-blue-600 opacity-80" />
+    </motion.article>
+  );
+}
+
 export default function MasterclassBenefits() {
   const benefits = [
     {
@@ -45,28 +96,17 @@ export default function MasterclassBenefits() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.45 } },
   };
 
-  // Card variants accept custom index for stagger timing
-  const cardVariants: Variants = {
-    hidden: (i: number) => ({ opacity: 0, y: 30, scale: 0.99 }),
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { delay: i * 0.12, type: "spring", stiffness: 110, damping: 18 },
-    }),
-  };
-
   const title = "What You Get";
   const words = title.split(" ");
   const subtitle = "Everything you need to level up fast: community, live coaching, and preview access.";
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 py-24 md:py-20">
+    <section className="relative overflow-hidden bg-linear-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 py-24 md:py-20">
       {/* Animated wave background */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         {/* Far back light waves */}
         <motion.svg
-          className="absolute bottom-0 left-0 w-[200%] h-[20rem] text-blue-200 opacity-20"
+          className="absolute bottom-0 left-0 w-[200%] h-80 text-blue-200 opacity-20"
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
           initial={{ x: 0 }}
@@ -81,7 +121,7 @@ export default function MasterclassBenefits() {
         </motion.svg>
 
         <motion.svg
-          className="absolute bottom-0 left-0 w-[210%] h-[22rem] text-blue-300 opacity-25"
+          className="absolute bottom-0 left-0 w-[210%] h-88 text-blue-300 opacity-25"
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
           initial={{ x: 0 }}
@@ -97,7 +137,7 @@ export default function MasterclassBenefits() {
 
         {/* Back wave */}
         <motion.svg
-          className="absolute bottom-0 left-0 w-[220%] h-[24rem] text-blue-400 opacity-30"
+          className="absolute bottom-0 left-0 w-[220%] h-96 text-blue-400 opacity-30"
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
           initial={{ x: 0 }}
@@ -113,7 +153,7 @@ export default function MasterclassBenefits() {
 
         {/* Mid wave */}
         <motion.svg
-          className="absolute bottom-0 left-0 w-[220%] h-[28rem] text-blue-500 opacity-50"
+          className="absolute bottom-0 left-0 w-[220%] h-112 text-blue-500 opacity-50"
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
           initial={{ x: 0 }}
@@ -144,8 +184,8 @@ export default function MasterclassBenefits() {
         </motion.svg>
       </div>
       {/* Decorative blurred shapes */}
-      <div className="pointer-events-none absolute -left-24 -top-24 w-96 h-[28rem] rounded-full bg-gradient-to-tr from-blue-400 to-indigo-600 opacity-12 blur-3xl" />
-      <div className="pointer-events-none absolute right-8 -bottom-28 w-80 h-[24rem] rounded-full bg-gradient-to-br from-cyan-300 to-blue-400 opacity-10 blur-3xl" />
+      <div className="pointer-events-none absolute -left-24 -top-24 w-96 h-112 rounded-full bg-linear-to-tr from-blue-400 to-indigo-600 opacity-12 blur-3xl" />
+      <div className="pointer-events-none absolute right-8 -bottom-28 w-80 h-96 rounded-full bg-linear-to-br from-cyan-300 to-blue-400 opacity-10 blur-3xl" />
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.header
@@ -182,52 +222,9 @@ export default function MasterclassBenefits() {
 
         {/* Benefits Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {benefits.map((item, index) => {
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            const { ref: cardRef, inView: isInView } = useInView({
-              triggerOnce: true,
-              rootMargin: "-80px",
-            });
-
-            return (
-              <motion.article
-                key={index}
-                ref={cardRef}
-                className="relative bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl overflow-hidden shadow-md transition-shadow duration-300 flex flex-col"
-                variants={cardVariants}
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-                custom={index}
-                layout
-              >
-                {/* Image / media */}
-                <div className="relative w-full h-44 sm:h-52 lg:h-44">
-                  <Image src={item.image} alt={item.title} fill className="object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-
-                  {/* Floating label
-                  <div className="absolute left-4 top-4 px-3 py-1 rounded-full text-xs font-semibold bg-white/90 dark:bg-slate-900/80 text-slate-900 dark:text-white">
-                    {index === 0 ? "New" : index === 3 ? "Live" : "Feature"}
-                  </div> */}
-                </div>
-
-                {/* Content */}
-                <div className="p-5 sm:p-6 flex-1 flex flex-col">
-                  <h3 className="text-lg md:text-xl font-semibold text-slate-900 dark:text-white mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed flex-1">
-                    {item.description}
-                  </p>
-
-                  
-                </div>
-
-                {/* Decorative bottom accent */}
-                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-blue-600 opacity-80" />
-              </motion.article>
-            );
-          })}
+          {benefits.map((item, index) => (
+            <BenefitCard key={item.title} item={item} index={index} />
+          ))}
         </div>
 
         {/* Sub-footer / note */}
@@ -237,7 +234,7 @@ export default function MasterclassBenefits() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <p className="!text-white dark:!text-white">
+          <p className="text-slate-700 dark:text-white">
             Join today to get exclusive previews, live coaching, and entry to member-only community groups — cancel anytime.
           </p>
         </motion.div>

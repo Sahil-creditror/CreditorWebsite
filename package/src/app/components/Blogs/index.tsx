@@ -162,11 +162,11 @@ export default function BlogsPage() {
               transition={{ duration: 0.6 }}
               className="group grid lg:grid-cols-12 rounded-2xl overflow-hidden bg-white border border-neutral-200/70 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] cursor-pointer"
             >
-              <div className="relative lg:col-span-7 w-full aspect-video lg:aspect-auto lg:min-h-[400px] bg-neutral-50 overflow-hidden">
+              <div className="relative lg:col-span-7 w-full aspect-video bg-neutral-50 overflow-hidden">
                 <img
                   src={featured.image}
                   alt={featured.title}
-                  className="absolute inset-0 w-full h-full object-contain lg:object-cover group-hover:scale-[1.02] transition-transform duration-700 ease-out grayscale-15"
+                  className="absolute inset-0 w-full h-full object-contain group-hover:scale-[1.02] transition-transform duration-700 ease-out grayscale-15"
                 />
               </div>
 
@@ -227,11 +227,11 @@ export default function BlogsPage() {
                 >
                   <Link href={`/Blogs/${post.slug}`} className="flex flex-col flex-1">
                     <div>
-                      <div className="h-48 overflow-hidden bg-neutral-100 relative">
+                      <div className="aspect-video overflow-hidden bg-neutral-100 relative">
                         <img
                           src={post.image}
                           alt={post.title}
-                          className="w-full h-full object-cover grayscale-10 group-hover:scale-[1.03] transition-transform duration-500"
+                          className="w-full h-full object-contain grayscale-10 group-hover:scale-[1.02] transition-transform duration-500"
                         />
                       </div>
 

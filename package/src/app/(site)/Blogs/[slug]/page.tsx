@@ -22,10 +22,31 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `${post.title} | Creditor Journal`,
-    description: post.description,
+    title: post.metaTitle,
+    description: post.metaDescription,
+    keywords: post.keywords.split(",").map((keyword) => keyword.trim()),
     alternates: {
       canonical: `${siteUrl}/Blogs/${post.slug}`,
+    },
+    openGraph: {
+      title: post.metaTitle,
+      description: post.metaDescription,
+      url: `${siteUrl}/Blogs/${post.slug}`,
+      type: "article",
+      images: [
+        {
+          url: post.image.startsWith("http") ? post.image : `${siteUrl}${post.image}`,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.metaTitle,
+      description: post.metaDescription,
+      images: [
+        post.image.startsWith("http") ? post.image : `${siteUrl}${post.image}`,
+      ],
     },
   };
 }

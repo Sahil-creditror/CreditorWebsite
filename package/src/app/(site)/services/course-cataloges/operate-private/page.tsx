@@ -21,9 +21,8 @@ export default function Page() {
   return (
     <main>
       <HeroBanner
-        bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883456/creditor-website-assets/images/courses/junior.jpg"
         heading="Operate Private"
-        desc="Build Wealth & Privacy Through Private Business Structures"
+        desc="Build <span>Wealth & Privacy</span> Through Private Business Structures"
         buttonPath="https://lmsathena.com/signup"
       />
       <Intro2 />

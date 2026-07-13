@@ -85,7 +85,7 @@ function InteractiveBackground({
       <div
         className="absolute inset-0 scale-110 bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-out will-change-transform"
         style={{
-          backgroundImage: "url('/images/bg/bgm.jpg')",
+          backgroundImage: "url('/images/bg/bgmm.jpg')",
           transform: `translate(${parallaxX}px, ${parallaxY}px) scale(1.08)`,
         }}
       />

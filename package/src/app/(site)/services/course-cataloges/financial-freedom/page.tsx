@@ -22,8 +22,7 @@ export default function FinancialFreedomPage() {
     <main>
       <Herobanner
         heading="Financial Freedom"
-        desc="Your gateway to financial sovereignty."
-        bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/f_webp,q_80,w_1920,c_limit/v1768883838/creditor-website-assets/images/projects/banner/financial.png"
+        desc="Your Gateway to <span>Financial Sovereignty</span>."
         buttonPath="https://lmsathena.com/signup"
       />
       <CourseDetail />

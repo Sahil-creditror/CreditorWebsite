@@ -181,7 +181,6 @@
 
 
 
-
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -203,45 +202,44 @@ export default function BootcampBanner() {
     // Array of masterclasses extracted directly from the flyers
     const classes = [
         {
-            imageSrc: "/images/todayclasstopic/cmi.jpg",
-            imageAlt: "Create Multiple Income Streams with Digital Businesses Workshop",
-            badge: "Workshop • July 13, 2026",
+            imageSrc: "/images/todayclasstopic/efs.jpg",
+            imageAlt: "Master Class on Equipment Financing Strategies",
+            badge: "Master Class • July 14, 2026",
             heading: (
                 <>
-                    Create Multiple{" "}
+                    Equipment Financing{" "}
                     <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        Income Streams
-                    </span>{" "}
-                    with Digital Businesses
+                        Strategies
+                    </span>
                 </>
             ),
             description:
-                "Join today's exclusive workshop from Creditor Academy to discover powerful assets, establish highly scalable modern systems, and maximize your digital footprint.",
+                "Finance the equipment your business needs—without hurting cash flow.",
             benefits: [
-                "Digital Products",
-                "Online Services",
-                "Scalable Business Systems",
+                "Choose the right financing option",
+                "Improve approval chances",
+                "Fund equipment for business growth",
             ],
         },
         {
-            imageSrc: "/images/todayclasstopic/mob.jpg",
-            imageAlt: "Master Class on Leveraging Business Credit for Expansion",
-            badge: "Master Class • July 13, 2026",
+            imageSrc: "/images/todayclasstopic/tae.jpg",
+            imageAlt: "Trust Administration Basics Workshop",
+            badge: "Workshop • July 14, 2026",
             heading: (
                 <>
-                    Leveraging{" "}
+                    Trust{" "}
                     <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        Business Credit
+                        Administration
                     </span>{" "}
-                    for Expansion
+                    Basics
                 </>
             ),
             description:
-                "Unlock financial strategies to scale your corporate entities, secure high-limit structural funding, and fuel safe organizational expansion with absolute confidence.",
+                "Learn the fundamentals of effective trust administration.",
             benefits: [
-                "Build Business Credit",
-                "Expand with Confidence",
-                "Increase Funding Opportunities",
+                "Trustee Roles",
+                "Administration Process",
+                "Avoid Common Mistakes",
             ],
         },
     ];

@@ -202,7 +202,7 @@ export default function BootcampBanner() {
     // Array of masterclasses extracted directly from the flyers
     const classes = [
         {
-            imageSrc: "/images/todayclasstopic/efs.jpg",
+            imageSrc: "/images/todayclasstopic/eff.jpg",
             imageAlt: "Master Class on Equipment Financing Strategies",
             badge: "Master Class • July 14, 2026",
             heading: (
@@ -222,7 +222,7 @@ export default function BootcampBanner() {
             ],
         },
         {
-            imageSrc: "/images/todayclasstopic/tae.jpg",
+            imageSrc: "/images/todayclasstopic/tab.jpg",
             imageAlt: "Trust Administration Basics Workshop",
             badge: "Workshop • July 14, 2026",
             heading: (

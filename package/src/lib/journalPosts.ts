@@ -34,6 +34,136 @@ export const JOURNAL_POSTS: JournalPost[] = [
 
   {
 
+    id: 4,
+
+    slug: "public-vs-private-whats-the-difference",
+
+    title: "Public vs Private: What's the Difference?",
+
+    description:
+
+      "Public vs private means different things in business, records, and data — and something else entirely in credit coaching. Know the difference.",
+
+    metaTitle: "Public vs Private: What's the Difference? | Creditor Academy",
+
+    metaDescription:
+
+      "Public vs private means different things in business, records, and data — and something else entirely in credit coaching. Know the difference.",
+
+    keywords:
+
+      "public vs private, public vs private company, public vs private records, public vs private data, private membership association, PMA meaning, going private, public company vs private company, privacy law, UCC-1 filing, creditor academy",
+
+    category: "Become Private",
+
+    date: "July 14, 2026",
+
+    readTime: "12 min",
+
+    image: "/images/blogs/publicvsprivate.jpg",
+
+    featured: true,
+
+    content: [
+
+      '"Public" and "private" are words that show up everywhere: public companies, private companies, public records, private data, public vs. private schools, and, increasingly, in credit and financial coaching content that frames "going private" as a way to change your legal or financial standing.',
+
+      'The problem is that "public" and "private" mean genuinely different things depending on the context, and conflating them is where a lot of confusion and in some cases, costly mistakes happens. This guide breaks down the real differences across the contexts where the terms matter most.',
+
+      "### The Quick Answer",
+
+      'In almost every legitimate context, "public" means open, disclosed, or accessible to the general population or government oversight, while "private" means restricted, controlled, or limited to specific individuals or members. What changes between contexts is what is being made public or private, and what legal effect that actually has.',
+
+      "[TABLE]\nContext|Public means|Private means\nBusiness|Traded on a stock exchange, subject to SEC disclosure|Not publicly traded, fewer disclosure requirements\nRecords|Accessible to the general public (court records, property records)|Restricted to specific parties\nData|Shared, sold, or visible to others|Restricted, limited, or protected under privacy law\nEducation|Government-funded and operated|Independently funded and operated\nMembership|Open to anyone|Restricted to members\nLegal/financial claims (coaching space)|N/A, this is where the term gets stretched|Claimed to be exempt from regulation, not legally supported\n[/TABLE]",
+
+      "Let's go through each in more detail.",
+
+      "## 1. Public vs. Private Companies",
+
+      "This is probably the clearest, most well-defined use of the terms.",
+
+      "A public company has shares that trade on a public stock exchange (like the NYSE or Nasdaq). Because it raises money from the general public, it's required to:",
+
+      "- File regular financial disclosures with the SEC\n- Undergo audits\n- Report material events that could affect its stock price\n- Meet governance requirements, like having a board of directors and holding shareholder votes",
+
+      "A private company doesn't sell shares on a public exchange. It can be owned by a founder, a small group of investors, or a family, and it has far fewer disclosure obligations. Most small and mid-sized businesses, LLCs, S-corps, sole proprietorships are private by default.",
+
+      '"Going private" is a specific, well-documented corporate process where a publicly traded company buys back its outstanding shares and delists from the stock exchange, removing itself from public trading requirements. This is a real, heavily regulated transaction, not something that happens by declaration.',
+
+      "## 2. Public vs. Private Records",
+
+      "Public records are documents that government agencies are required to make accessible to the public, such as property deeds, court filings, business registrations, marriage and birth certificates in many jurisdictions, and voter registration in some states.",
+
+      "Private records are restricted medical records (protected under HIPAA in the U.S.), personal financial records, and most personnel files fall into this category, accessible only to the individual and specific authorized parties.",
+
+      "The key point: whether something is public or private in this sense is determined by law, not by a label you apply to it. You can't make a public record private by declaring it so, and you generally can't be compelled to make private records public without a legal process (subpoena, court order, etc.).",
+
+      "## 3. Public vs. Private Data",
+
+      'This is the most common way people encounter "public vs. private" day to day.',
+
+      "Public data is information that's freely accessible, such as a public social media profile, information in a public business directory, or data that's been shared or sold to third parties.",
+
+      "Private data is restricted from general access on a private social media account, personal information is protected under privacy laws like the California Consumer Privacy Act (CCPA) or Europe's GDPR, or data you've explicitly limited sharing on.",
+
+      'Making data "private" in this context is genuinely effective, and legally meaningful privacy laws give you real, enforceable rights to limit how companies collect, use, and sell your personal information.',
+
+      "## 4. Public vs. Private Education, Clubs, and Associations",
+
+      "Public institutions (schools, universities, libraries) are government-funded and generally open to anyone meeting basic eligibility requirements (like residency for a public school).",
+
+      "Private institutions and associations are independently funded and can restrict membership or enrollment. Private schools, private clubs, and Private Membership Associations (PMAs) all fall into this category.",
+
+      "A PMA is a real legal structure that lets a group organize as private and restrict participation to members. This is legitimate for its intended purpose, a private club, hobby group, or membership service. What it does not do is exempt the group from laws that apply to the actual activity it's conducting. A PMA offering lending, credit-repair, healthcare, or insurance-like services still generally needs to meet the licensing requirements that apply to that activity; the \"private\" label doesn't override that. Regulators have taken enforcement action against organizations that tried to use PMA or \"private membership\" structuring specifically to avoid licensing requirements for financial services.",
+
+      '## 5. "Public vs. Private" in Credit and Financial Coaching (Where the Line Gets Blurry)',
+
+      'This is the version of the public/private distinction that shows up in credit-repair and "financial freedom" coaching, and it\'s worth addressing directly because it borrows language from the legitimate categories above but applies it differently.',
+
+      'In this space, the claim is often that an individual can shift from being a "public" person subject to consumer law, lending regulations, and court jurisdiction to a "private" one, exempt from those things, through specific paperwork or declarations (UCC-1 filings, "strawman" language, or similar).',
+
+      "This is not the same as any of the legitimate uses above. A business going private, a record being sealed, or data being restricted under privacy law are all real, legally defined processes with actual legal effect. Declaring yourself a \"private\" person to exit consumer or lending law is a different kind of claim, one that courts have consistently and directly rejected, regardless of the specific wording or filing used.",
+
+      'The practical risk: people who\'ve relied on this version of "public vs. private" in real transactions have had loans denied, faced fraud allegations tied to self-created financial instruments, and lost money on courses and paperwork that provided no real legal protection.',
+
+      "## How to Tell Which Version Applies",
+
+      "A simple test: ask what specifically is being made public or private, and who has legal authority over that.",
+
+      "- If it's a company's shares, ownership, or disclosures, that's business law, well-established.\n- If it's a document or record that's determined by public records law, not a personal declaration.\n- If it's your personal data that's protected (in real, enforceable ways) by privacy law.\n- If it's a claim that you personally can exit debts, contracts, or regulation by declaring \"private\" status, that's the version to treat with real skepticism, and to verify with a licensed attorney before acting on.",
+
+      "### Conclusion",
+
+      '"Public" and "private" have precise, well-established meanings in business law, records law, and privacy law, and in each of those contexts, the distinction is real and legally enforceable. Where the terms get stretched into personal legal-status claims, the idea that declaring yourself "private" removes you from debt, taxes, or regulation that\'s a different, unsupported use of the language, and one worth verifying independently with a licensed attorney before you act on it or pay for a course built around it.',
+
+      "To know more, visit our website [Creditor Academy](https://creditoracademy.com/).",
+
+      "## Frequently Asked Questions",
+
+      "### What's the main difference between a public and private company?",
+
+      "A public company's shares trade on a stock exchange and it must meet SEC disclosure requirements; a private company doesn't trade publicly and has far fewer disclosure obligations. Most small businesses are private by default.",
+
+      "### Can I make a public record private?",
+
+      "No, whether a record is public or private is determined by law, not personal declaration. Some records can be sealed or restricted through a specific legal process (like court-ordered sealing), but that requires legal action, not a filing you create yourself.",
+
+      '### Does declaring myself "private" exempt me from debt or contracts?',
+
+      'No, Courts have consistently rejected claims that an individual can exit consumer, lending, or contract law by declaring private status or filing documents like a UCC-1. These filings have a real but narrow legal function unrelated to personal legal status.',
+
+      "### What's the difference between a public and private membership association?",
+
+      "A public organization is open to anyone; a private membership association (PMA) can restrict participation to members. A PMA is a legitimate structure for its intended purpose, but it doesn't exempt regulated activities (like financial services) from the licensing laws that would otherwise apply.",
+
+      "*This article is for general informational purposes and isn't legal or financial advice. For guidance specific to your situation, consult a licensed attorney or financial professional.*",
+
+    ],
+
+  },
+
+  {
+
     id: 1,
 
     slug: "what-does-become-private-mean",
@@ -63,8 +193,6 @@ export const JOURNAL_POSTS: JournalPost[] = [
     image:
 
       "/images/blogs/becomepblog.png",
-
-    featured: true,
 
     content: [
 
@@ -127,6 +255,8 @@ export const JOURNAL_POSTS: JournalPost[] = [
       "### Conclusion",
 
       '"Become private" isn\'t one concept it\'s a phrase borrowed across privacy settings, business law, estate planning, and financial coaching, and it means something different (and carries very different legal weight) in each. The entities involved, LLCs, trusts, and PMAs, are real and can be genuinely useful when set up correctly and for their actual legal purpose. Where the term gets stretched into claims about exemption from debt, taxes, or regulation, that\'s the part worth verifying independently, ideally with a licensed attorney or accountant before you rely on it.',
+
+      "To know more, visit our website [Creditor Academy](https://creditoracademy.com/).",
 
       "## Frequently Asked Questions",
 
@@ -292,6 +422,8 @@ export const JOURNAL_POSTS: JournalPost[] = [
 
       "Financial freedom isn't a mythical number or a lifestyle reserved for the wealthy; it's the point where your money supports the life you want instead of controlling it. It's built through clarity, consistent habits, and time, not shortcuts. Wherever you're starting from, the path forward is the same basic sequence: know your numbers, reduce what you owe, build a cushion, invest consistently, and protect what you've built. The timeline will look different for everyone, but the direction is the same for all of us.",
 
+      "To know more, visit our website [Creditor Academy](https://creditoracademy.com/).",
+
       "## Frequently Asked Questions",
 
       "### What is the fastest way to achieve financial freedom?",
@@ -407,6 +539,8 @@ export const JOURNAL_POSTS: JournalPost[] = [
       "### Conclusion",
 
       '"Operate private" means different things depending on where you hear it. As standard business language, it\'s ordinary and well-understood. As a PMA structure, it\'s a real tool with a specific, limited function. As a claim that you can exit consumer, lending, or tax law by declaring "private" status, it\'s a theory that courts have consistently rejected and one worth verifying independently, with a licensed professional, before you spend money or make financial decisions based on it.',
+
+      "To know more, visit our website [Creditor Academy](https://creditoracademy.com/).",
 
       "## Frequently Asked Questions",
 

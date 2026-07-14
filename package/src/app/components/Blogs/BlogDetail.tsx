@@ -18,6 +18,28 @@ type BlogDetailProps = {
   post: JournalPost;
 };
 
+function renderInlineText(text: string): React.ReactNode {
+  const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
+
+  return parts.map((part, index) => {
+    const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (match) {
+      return (
+        <a
+          key={index}
+          href={match[2]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:text-blue-700 underline underline-offset-2 font-medium"
+        >
+          {match[1]}
+        </a>
+      );
+    }
+    return part;
+  });
+}
+
 export default function BlogDetail({ post }: BlogDetailProps) {
   return (
     <main
@@ -137,7 +159,7 @@ export default function BlogDetail({ post }: BlogDetailProps) {
                           key={lineIndex}
                           className="text-neutral-600 text-sm sm:text-base leading-relaxed"
                         >
-                          {line.slice(2)}
+                          {renderInlineText(line.slice(2))}
                         </li>
                       ))}
                   </ul>
@@ -182,7 +204,7 @@ export default function BlogDetail({ post }: BlogDetailProps) {
                                 key={cellIndex}
                                 className="px-4 py-3 text-neutral-600 leading-relaxed align-top"
                               >
-                                {cell}
+                                {renderInlineText(cell)}
                               </td>
                             ))}
                           </tr>
@@ -199,7 +221,7 @@ export default function BlogDetail({ post }: BlogDetailProps) {
                     key={index}
                     className="text-neutral-600 text-sm sm:text-base leading-relaxed italic"
                   >
-                    {block.slice(1, -1)}
+                    {renderInlineText(block.slice(1, -1))}
                   </p>
                 );
               }
@@ -209,7 +231,7 @@ export default function BlogDetail({ post }: BlogDetailProps) {
                   key={index}
                   className="text-neutral-600 text-sm sm:text-base leading-relaxed"
                 >
-                  {block}
+                  {renderInlineText(block)}
                 </p>
               );
             })}

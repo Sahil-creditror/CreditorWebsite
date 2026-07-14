@@ -5,17 +5,17 @@ import Link from "next/link";
 import { Clock, Sparkles, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 
-// ── Event Constants Extracted Directly From aitt.png ─────────────────────────
-const WORKSHOP_EVENT_CALENDAR_DAY    = "11";
+// ── Event Constants Extracted Directly From cmi.jpg / cmi.png ────────────────
+const WORKSHOP_EVENT_CALENDAR_DAY    = "18";
 const WORKSHOP_EVENT_CALENDAR_MONTH  = "JULY";
-const WORKSHOP_EVENT_DATE_LABEL      = "Saturday, July 11, 2026";
+const WORKSHOP_EVENT_DATE_LABEL      = "Saturday, July 18, 2026";
 const WORKSHOP_EVENT_TIME_DISPLAY    = "11:00 AM";
 const WORKSHOP_EVENT_TIME_PST        = "11:00 AM PST";
 const WORKSHOP_EVENT_TIMEZONE_LABEL  = "PST";
 
-// Target Countdown Date: Saturday, July 11, 2026, 11:00 AM PST
-const WORKSHOP_EVENT_CLOSE_MS        = new Date("2026-07-11T11:00:00-07:00").getTime();
-const WORKSHOP_EVENT_IMAGE           = "/images/todayclasstopic/aitt.png"; 
+// Target Countdown Date: Saturday, July 18, 2026, 11:00 AM PST
+const WORKSHOP_EVENT_CLOSE_MS        = new Date("2026-07-18T11:00:00-07:00").getTime();
+const WORKSHOP_EVENT_IMAGE           = "/images/todayclasstopic/cmi.jpg"; 
 const REGISTRATION_LINK_URL          = "https://api.wonderengine.ai/widget/form/mL2L8I8p4RI7AF61stUd"; // Keep your conversion endpoint setup
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -33,26 +33,26 @@ function getCountdown(targetMs: number) {
   };
 }
 
-// Exactly mirroring the 6 operational checkpoints from the aitt.png flyer checklist
+// Mirroring the focal points from the Create Multiple Income Streams flyer
 const INCLUDED = [
-  "Save time on daily tasks",
-  "Automate your marketing",
-  "Create content in minutes",
-  "Manage finances smarter",
-  "Make data-driven decisions",
-  "Stay ahead of the competition",
+  "Build and launch online courses",
+  "Design profitable digital products",
+  "Create recurring membership models",
+  "Set up automated scaling systems",
+  "Generate predictable recurring revenue",
+  "Unlock locations-independent digital growth",
 ] as const;
 
 const TRADITIONAL = [
-  { title: "Manual Repetitive Labor", body: "Spending critical operational hours running structural data entry, manual content drafts, and standard scheduling manually." },
-  { title: "High Marketing Overhead", body: "Outsourcing expensive baseline copy and creative assets to slow third-party agencies with extensive turnaround timelines." },
-  { title: "Lagging Analytics Decisions", body: "Relying on old historical bookkeeping reports rather than immediate predictive predictive automation tools." },
+  { title: "Single Source Vulnerability", body: "Relying entirely on one active job or physical business, capping your earning potential and leaving you exposed to market shifts." },
+  { title: "High Overhead & Inventory", body: "Managing high storage, physical shipping logistics, lease agreements, and employee overhead costs with low net margins." },
+  { title: "Trading Active Time for Money", body: "Being structurally locked into working manual operational hours, restricting your ability to scale beyond your physical limits." },
 ] as const;
 
 const CREDITOR = [
-  { title: "Integrated AI Frameworks", body: "Leveraging prompt models and automated system layers to claim back productive hours instantly." },
-  { title: "Instant Content Generation", body: "Spinning up target marketing initiatives, messaging copy, and campaign elements in minutes using native automation." },
-  { title: "Real-time Financial Clarity", body: "Deploying systematic modern tracking solutions to control business scaling decisions efficiently." },
+  { title: "Multiple Income Portfolios", body: "Constructing a diversified ecosystem of courses, digital downloads, assets, and monthly recurring memberships." },
+  { title: "Zero-Inventory Margins", body: "Delivering digital products instantly to a global market with near-zero logistics, production, or fulfillment costs." },
+  { title: "Leveraged Digital Systems", body: "Implementing systematic web sales funnels to control cash flow, generate customer lifetime value, and earn while you sleep." },
 ] as const;
 
 export default function WorkshopPageContent() {
@@ -88,23 +88,25 @@ export default function WorkshopPageContent() {
               <p className="text-sm font-bold uppercase tracking-widest text-[#7eb8ff]">
                 Creditor Academy · Private Montessori Association
               </p>
-              <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-[3rem] uppercase">
-                AI Tools Every{" "}
+              <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-[2.85rem] uppercase">
+                CREATE MULTIPLE{" "}
                 <span className="block bg-linear-to-r from-blue-400 via-sky-300 to-white bg-clip-text text-transparent font-black mt-1">
-                  SMALL BUSINESS OWNER
+                  INCOME STREAMS
                 </span>
-                <span className="text-3xl sm:text-4xl block mt-1 text-slate-200 lowercase font-medium italic">should use</span>
+                <span className="text-2xl sm:text-3xl block mt-1 text-slate-200 lowercase font-medium italic">
+                  with digital businesses
+                </span>
               </h1>
 
               <div className="mt-5 inline-block rounded-xl bg-black/30 border border-white/10 px-4 py-2.5 text-left">
                 <p className="text-sm font-bold text-amber-300 sm:text-base flex items-center gap-2">
-                  <span className="bg-amber-400 text-slate-950 px-2 py-0.5 rounded text-xs font-black animate-pulse">🔥 LIVE MASTERCLASS</span>
-                  WORK SMARTER. SAVE TIME. GROW FASTER.
+                  <span className="bg-amber-400 text-slate-950 px-2 py-0.5 rounded text-xs font-black animate-pulse">🔥 LIVE WORKSHOP</span>
+                  START BUILDING RECURRING INCOME.
                 </p>
               </div>
 
               <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-blue-100/85 lg:mx-0">
-                Discover the best AI tools to simplify your tasks, boost productivity, and systematically grow your business without operational overhead.
+                Learn how to build and grow multiple digital income streams through profitable online courses, high-margin digital products, memberships, and automated funnels.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -126,7 +128,7 @@ export default function WorkshopPageContent() {
               <div className="overflow-hidden rounded-2xl border border-white/20 bg-white p-2 shadow-2xl shadow-black/30 ring-1 ring-primary/30">
                 <Image
                   src={WORKSHOP_EVENT_IMAGE}
-                  alt="AI Tools Every Small Business Owner Should Use Live Online Training Flyer — Saturday, July 11, 2026"
+                  alt="Create Multiple Income Streams With Digital Businesses Workshop Flyer — Saturday, July 18, 2026"
                   width={440}
                   height={440}
                   className="w-full rounded-xl object-contain bg-slate-950"
@@ -153,14 +155,14 @@ export default function WorkshopPageContent() {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                   </span>
-                  LIVE ONLINE TRAINING
+                  LIVE ONLINE MASTERCLASS
                 </span>
                 <h2 className="mt-4 text-2xl font-black tracking-tight text-slate-900 md:text-3xl uppercase">
-                  July 11 Masterclass
+                  July 18 Workshop
                 </h2>
                 <p className="mt-2 flex items-center justify-center gap-2 text-slate-600 lg:justify-start text-sm">
                   <Video className="h-4 w-4 shrink-0 text-primary" aria-hidden />
-                  Practical Business Scaling Automation
+                  Structuring Sustainable Recurring Cashflow
                 </p>
               </div>
 
@@ -211,21 +213,21 @@ export default function WorkshopPageContent() {
       <section className="bg-[#f0f7fd] py-16 md:py-24">
         <div className="container">
           <p className="text-center text-sm font-bold uppercase tracking-widest text-primary">
-            Operational Efficiency
+            Financial Freedom
           </p>
           <h2 className="mx-auto mt-3 max-w-2xl text-center text-3xl font-bold text-slate-900 md:text-4xl">
-            Legacy Guesswork vs. AI Systems
+            Legacy Employment vs. Digital Business Models
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-center text-slate-600">
-            See how incorporating immediate automation stacks can easily eliminate traditional growth barriers.
+            See how incorporating systematic asset streams easily eliminates the boundaries of traditional business bottlenecks.
           </p>
 
           <div className="mx-auto mt-12 grid max-w-5xl gap-8 lg:grid-cols-2">
             <div className="rounded-2xl border-2 border-[#c5dff5] bg-white/60 p-8 backdrop-blur-sm">
               <span className="inline-block rounded-full bg-[#d0e8f8] px-3 py-1 text-xs font-bold uppercase text-slate-600">
-                Traditional Business Methods
+                Traditional Income Methods
               </span>
-              <p className="mt-4 text-sm font-bold text-slate-400 tracking-wide">SLOW & TIME-CONSUMING</p>
+              <p className="mt-4 text-sm font-bold text-slate-400 tracking-wide">LIMITED & HIGH FRICTION</p>
               <ul className="mt-6 space-y-6">
                 {TRADITIONAL.map((item) => (
                   <li key={item.title}>
@@ -238,9 +240,9 @@ export default function WorkshopPageContent() {
 
             <div className="rounded-2xl border-2 border-primary bg-linear-to-br from-[#dbeafe] to-[#eff6ff] p-8 shadow-lg shadow-blue-500/15">
               <span className="inline-block rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase text-white">
-                AI Business Ecosystem Stack
+                Digital Portfolio Ecosystem
               </span>
-              <p className="mt-4 text-sm font-bold text-primary tracking-wide">AUTOMATED & FAST</p>
+              <p className="mt-4 text-sm font-bold text-primary tracking-wide">SCALABLE & AUTOMATED</p>
               <ul className="mt-6 space-y-6">
                 {CREDITOR.map((item) => (
                   <li key={item.title}>
@@ -268,11 +270,11 @@ export default function WorkshopPageContent() {
                 <h2 className="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
                   Unlock Your Free{" "}
                   <span className="bg-linear-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent">
-                    AI Execution Plan
+                    Digital Income Blueprint
                   </span>
                 </h2>
                 <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-blue-100/90 lg:mx-0">
-                  Secure access to live visual walkthroughs detailing top applications engineered to optimize standard corporate operations.
+                  Secure access to live visual walkthroughs detailing top systems and software frameworks engineered to optimize automated cash flows.
                 </p>
               </div>
 
@@ -320,7 +322,7 @@ export default function WorkshopPageContent() {
                   ONLINE LIVE TRAINING
                 </p>
                 <p className="mt-3 text-2xl font-black tracking-tight uppercase">
-                  AI TOOLS FOR SMALL BUSINESS
+                  CREATE MULTIPLE INCOME STREAMS
                 </p>
                 <div className="mt-4 inline-flex flex-col gap-1 rounded-xl bg-black/15 px-5 py-3 text-sm font-bold">
                   <span>{WORKSHOP_EVENT_DATE_LABEL}</span>
@@ -330,7 +332,7 @@ export default function WorkshopPageContent() {
 
               <div className="mt-6 border-b border-slate-100 pb-5 text-center">
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">Registration Fee</span>
-                <span className="text-4xl font-black text-emerald-600 mt-1 block">FREE</span>
+                <span className="text-4xl font-black text-primary mt-1 block">FREE</span>
                 <p className="mt-2 text-xs font-medium text-slate-500">
                   Includes full stream entry credentials and open Q&amp;A chat pool access.
                 </p>
@@ -344,7 +346,7 @@ export default function WorkshopPageContent() {
                 href={REGISTRATION_LINK_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 flex w-full items-center justify-center rounded-full bg-emerald-600 py-4 text-base font-extrabold text-white shadow-xl shadow-emerald-600/30 transition transform hover:-translate-y-0.5 hover:bg-emerald-700"
+                className="mt-6 flex w-full items-center justify-center rounded-full bg-blue-600 py-4 text-base font-extrabold text-white shadow-xl shadow-blue-600/30 transition transform hover:-translate-y-0.5 hover:bg-blue-700"
               >
                 Register For Free Now
               </Link>
@@ -359,7 +361,7 @@ export default function WorkshopPageContent() {
       {/* Syndicated Platforms Live Bar */}
       <section className="bg-slate-900 text-white py-6 border-y border-white/10">
         <div className="container flex flex-col items-center justify-center gap-4 text-center text-sm md:flex-row md:gap-8">
-          <p className="font-bold tracking-wider text-xs sm:text-sm">
+          <p className="font-bold text-slate-300 tracking-wider text-xs sm:text-sm">
             WE ARE LIVE ON SOCIAL MEDIA TOO:
           </p>
           <div className="flex flex-wrap items-center justify-center gap-6 font-bold text-slate-300 text-xs sm:text-sm">
@@ -388,7 +390,7 @@ export default function WorkshopPageContent() {
             Ready to scale using modern workflows?
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-slate-600 font-medium text-sm sm:text-base">
-            Claim your complimentary ticket today to bypass operational headaches.
+            Claim your complimentary ticket today to bypass traditional bottlenecks.
           </p>
           <Link
             href={REGISTRATION_LINK_URL}

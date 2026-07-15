@@ -5,11 +5,10 @@ import { useEffect, useState } from "react";
 
 import { WORKSHOP_REGISTER_URL } from "@/lib/workshop";
 
-// Target Event Timestamp updated to Saturday, July 11, 2026 at 11:00 AM PST
-const TARGET_EVENT_MS = new Date("2026-07-11T11:00:00-07:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/aitt.png";
-const EVENT_DATE_LABEL = "Saturday, July 11, 2026";
-const EVENT_TIME_LABEL = "11:00 AM PST";
+// Target Event Timestamp updated to Saturday, July 18, 2026
+const TARGET_EVENT_MS = new Date("2026-07-18T11:00:00-07:00").getTime();
+const EVENT_IMAGE = "/images/todayclasstopic/cmi.jpg"; 
+const EVENT_DATE_LABEL = "Saturday, July 18, 2026";
 
 interface EventPopupProps {
   delayMs?: number;
@@ -67,7 +66,7 @@ export default function EventPopup({
       onClick={(e) => {
         if (e.target === e.currentTarget) setOpen(false);
       }}
-      data-event-popup="ca7-ai-tools-small-business"
+      data-event-popup="ca7-multiple-income-streams"
     >
       <div
         role="dialog"
@@ -90,35 +89,38 @@ export default function EventPopup({
           {/* Main Content Area */}
           <div className="event-popup-left">
             <header className="event-popup-header">
-              <p className="event-popup-brand">CREDITOR ACADEMY</p>
+              <div className="event-popup-brand-wrapper">
+                <p className="event-popup-brand">CREDITOR ACADEMY</p>
+                <p className="event-popup-subbrand">PRIVATE MONTESSORI ASSOCIATION</p>
+              </div>
               <div className="event-popup-badges">
                 <span className="event-badge event-badge--live">
                   <span className="event-badge-dot" aria-hidden />
-                  LIVE ONLINE TRAINING
+                  WORKSHOP
                 </span>
-                <span className="event-badge event-badge--date">{EVENT_DATE_LABEL}</span>
+                <span className="event-badge event-badge--date">Saturday, July 18, 2026</span>
               </div>
             </header>
 
             <h2 id="event-popup-title" className="event-popup-title">
-              AI Tools Every <span className="event-popup-title-accent">Small Business Owner</span> Should Use
+              Create Multiple <span className="event-popup-title-accent">Income Streams</span> With Digital Businesses
             </h2>
 
             <p className="event-popup-desc">
-              <strong>Work Smarter. Save Time. Grow Faster.</strong> Discover the best AI tools to simplify your tasks, boost productivity, and grow your business. Save time on daily tasks, automate marketing, create content in minutes, and stay ahead of the competition.
+              <strong>Learn how to build and grow multiple digital income streams.</strong> Start building recurring income with online courses, digital products, memberships, and more.
             </p>
 
             <div className="event-popup-tags">
-              <span>Automate Marketing</span>
-              <span>Manage Finances Smarter</span>
-              <span>{EVENT_TIME_LABEL}</span>
+              <span>Online Courses</span>
+              <span>Digital Products</span>
+              <span>Memberships & More</span>
             </div>
 
             <div className="event-popup-countdown-wrap">
               {isLive ? (
                 <div className="event-live-status">
                   <p className="event-popup-countdown-label">LIVE NOW</p>
-                  <p className="event-live-text">Joining live — streaming now</p>
+                  <p className="event-live-text">Workshop is live — stream now</p>
                 </div>
               ) : (
                 <>
@@ -142,7 +144,7 @@ export default function EventPopup({
               rel="noopener noreferrer"
               className="event-popup-cta"
             >
-              REGISTER NOW FOR FREE
+              REGISTER TODAY!
             </a>
           </div>
 
@@ -151,7 +153,7 @@ export default function EventPopup({
             <div className="event-popup-poster-card">
               <Image
                 src={EVENT_IMAGE}
-                alt={`AI Tools Every Small Business Owner Should Use Live Masterclass — ${EVENT_DATE_LABEL}, ${EVENT_TIME_LABEL}`}
+                alt={`Create Multiple Income Streams With Digital Businesses Workshop — ${EVENT_DATE_LABEL}`}
                 width={480}
                 height={480}
                 className="event-popup-poster-img"
@@ -171,7 +173,7 @@ export default function EventPopup({
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 16px;
+          padding: 6px;
           background: rgba(15, 23, 42, 0.4);
           backdrop-filter: blur(8px);
         }
@@ -179,7 +181,7 @@ export default function EventPopup({
         .event-popup-dialog {
           position: relative;
           width: 100%;
-          max-width: 440px;
+          max-width: 480px;
           max-height: 90vh;
           overflow-y: auto;
           scrollbar-width: none;
@@ -205,17 +207,17 @@ export default function EventPopup({
           display: flex;
           align-items: center;
           justify-content: center;
-          border: 1px solid #fca5a5;
+          border: 1px solid #e2e8f0;
           border-radius: 50%;
-          background: #fff1f2;
-          color: #dc2626;
+          background: #f8fafc;
+          color: #64748b;
           cursor: pointer;
           transition: all 0.2s ease;
         }
         .event-popup-close:hover {
-          background: #fee2e2;
-          color: #b91c1c;
-          border-color: #ef4444;
+          background: #f1f5f9;
+          color: #0f172a;
+          border-color: #cbd5e1;
         }
 
         .event-popup-grid {
@@ -236,12 +238,26 @@ export default function EventPopup({
           gap: 12px;
         }
 
+        .event-popup-brand-wrapper {
+          display: flex;
+          flex-direction: column;
+        }
+
         .event-popup-brand {
           margin: 0;
-          font-size: 10px;
+          font-size: 15px;
           font-weight: 800;
-          letter-spacing: 0.08em;
+          letter-spacing: 0.03em;
           color: #0f172a;
+          line-height: 1.2;
+        }
+
+        .event-popup-subbrand {
+          margin: 3px 0 0 0;
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+          color: #64748b;
         }
 
         .event-popup-badges {
@@ -282,9 +298,9 @@ export default function EventPopup({
 
         .event-popup-title {
           margin: 0;
-          font-size: 26px;
+          font-size: 20px;
           font-weight: 800;
-          line-height: 1.2;
+          line-height: 1.11;
           letter-spacing: -0.02em;
           color: #0f172a;
         }
@@ -298,7 +314,7 @@ export default function EventPopup({
         .event-popup-desc {
           margin: 0;
           font-size: 14px;
-          line-height: 1.6;
+          line-height: 1.32;
           color: #475569;
         }
         .event-popup-desc strong {
@@ -312,12 +328,12 @@ export default function EventPopup({
           gap: 8px;
         }
         .event-popup-tags span {
-          padding: 5px 10px;
-          border-radius: 6px;
+          padding: 6px 12px;
+          border-radius: 8px;
           font-size: 12px;
-          font-weight: 500;
+          font-weight: 600;
           color: #475569;
-          background: #f8fafc;
+          background: #f1f5f9;
           border: 1px solid #e2e8f0;
         }
 
@@ -371,7 +387,7 @@ export default function EventPopup({
           font-weight: 700;
           color: #ffffff;
           text-decoration: none;
-          background: #0284c7;
+          background: #0284c7; /* Brand Blue Background Color */
           background: linear-gradient(90deg, #38bdf8 0%, #0284c7 100%);
           box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
           transition: all 0.2s ease;
@@ -379,11 +395,11 @@ export default function EventPopup({
         .event-popup-cta:hover {
           transform: translateY(-1px);
           box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
-          filter: brightness(1.03);
+          filter: brightness(1.05);
         }
 
         .event-popup-right {
-          padding: 16px 16px 0 16px;
+          padding: 24px 24px 0 24px;
           display: flex;
           justify-content: center;
           background: #f8fafc;
@@ -414,13 +430,13 @@ export default function EventPopup({
         /* Desktop Breakpoint Modifications */
         @media (min-width: 840px) {
           .event-popup-dialog {
-            max-width: 920px;
+            max-width: 960px;
             overflow: hidden;
           }
           .event-popup-grid {
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            min-height: 560px;
+            grid-template-columns: 1.15fr 0.85fr;
+            min-height: 580px;
           }
           .event-popup-left {
             padding: 40px;
@@ -434,7 +450,7 @@ export default function EventPopup({
           }
           .event-popup-poster-card {
             height: 100%;
-            min-height: 560px;
+            min-height: 580px;
             aspect-ratio: auto;
             border-radius: 0;
             border: 0;

@@ -92,15 +92,15 @@ export default function AboutCreditorAcademy() {
       </section>
 
       {/* --- DIVIDER WITH EXPLORE CTA --- */}
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
         <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
         <div className="relative flex justify-center">
           <Link
             href="/learning-journey"
-            className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white border border-blue-200 text-blue-700 text-sm font-bold shadow-md shadow-blue-900/5 hover:bg-blue-600 hover:text-white hover:border-blue-600 hover:shadow-lg hover:shadow-blue-600/20 transition-all duration-300"
+            className="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#2563EB] text-white text-sm sm:text-base font-bold shadow-xl shadow-blue-600/35 ring-4 ring-blue-100 hover:bg-blue-700 hover:shadow-2xl hover:shadow-blue-600/40 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300"
           >
             Explore Learning Journey
-            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
         </div>
       </div>

@@ -13,6 +13,7 @@ import {
 import PhoneInput from "react-phone-number-input";
 import { isValidPhoneNumber } from "libphonenumber-js";
 import "react-phone-number-input/style.css";
+import { WEBINARS, getWebinarForHour, getCourseHours } from "@/config/webinars";
 
 /**
  * Fixed daily webinar times in PST (24h format).
@@ -79,7 +80,7 @@ function useCountdown() {
     return () => clearInterval(interval);
   }, [targetTime]);
 
-  return timeLeft;
+  return { ...timeLeft, targetTime };
 }
 
 type FormState = Omit<ZoomWebinarRegistrationPayload, "webinarId">;
@@ -139,20 +140,23 @@ const webinarTemplates: WebinarTemplate[] = WEBINAR_SESSION_HOURS_PST.map((hour,
   const ampm = hour < 12 ? "AM" : "PM";
   const minuteStr = minute.toString().padStart(2, "0");
 
+  const activeWebinar = getWebinarForHour(hour);
+  const courseName = activeWebinar ? activeWebinar.name : "Orientation";
+
   let label: string;
   if (hour === 9 && minute === 0) {
-    label = "Orientation Webinar 9 AM";
+    label = `${courseName} Webinar 9 AM`;
   } else if (hour === 14 && minute === 0) {
-    label = "Orientation Webinar 2 PM";
+    label = `${courseName} Webinar 2 PM`;
   } else if (hour === 19 && minute === 0) {
-    label = "Orientation Webinar 7 PM";
+    label = `${courseName} Webinar 7 PM`;
   } else if (hour === 0 && minute === 0) {
-    label = "Orientation Webinar 12 AM";
+    label = `${courseName} Webinar 12 AM`;
   } else {
     if (minute === 0) {
-      label = `Orientation at ${hour12} ${ampm}`;
+      label = `${courseName} at ${hour12} ${ampm}`;
     } else {
-      label = `Orientation at ${hour12}:${minuteStr} ${ampm}`;
+      label = `${courseName} at ${hour12}:${minuteStr} ${ampm}`;
     }
   }
 
@@ -162,19 +166,24 @@ const webinarTemplates: WebinarTemplate[] = WEBINAR_SESSION_HOURS_PST.map((hour,
     label,
     hour,
     minute,
-    description: `Join us at ${hour12}:${minuteStr} ${ampm} for this orientation session.`,
+    description: `Join us at ${hour12}:${minuteStr} ${ampm} for this ${courseName} session.`,
   };
 });
 
-const buildUpcomingSessions = (count: number): WebinarSession[] => {
+const buildUpcomingSessions = (count: number, courseId?: string): WebinarSession[] => {
   const now = new Date();
   const allSessions: WebinarSession[] = [];
 
   const cursor = new Date(now);
   const maxDays = 7;
 
+  const courseHours = courseId ? getCourseHours(courseId) : [];
+  const filteredTemplates = courseId 
+    ? webinarTemplates.filter((t) => courseHours.includes(t.hour))
+    : webinarTemplates.filter((t) => getWebinarForHour(t.hour) !== null);
+
   for (let day = 0; day < maxDays; day++) {
-    for (const template of webinarTemplates) {
+    for (const template of filteredTemplates) {
       const occurrence = new Date(cursor);
       occurrence.setHours(template.hour, template.minute, 0, 0);
 
@@ -216,16 +225,17 @@ const buildUpcomingSessions = (count: number): WebinarSession[] => {
 
 export default function WebclassSection() {
   const router = useRouter();
-  const { hours, minutes, seconds } = useCountdown();
+  const { hours, minutes, seconds, targetTime } = useCountdown();
   const modalCloseRef = useRef<HTMLButtonElement | null>(null);
 
   const format = (value: number) => value.toString().padStart(2, "0");
 
   const [widgetOpen, setWidgetOpen] = useState(false);
-  const [formStep, setFormStep] = useState<1 | 2>(1);
+  const [selectedCourseId, setSelectedCourseId] = useState<string>("");
+  const [formStep, setFormStep] = useState<1 | 2 | 3>(1);
   const [formData, setFormData] = useState<FormState>({ ...initialFormState });
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>(undefined);
-  const [sessions, setSessions] = useState<WebinarSession[]>(() => buildUpcomingSessions(20));
+  const [sessions, setSessions] = useState<WebinarSession[]>([]);
   const [selectedSessionKey, setSelectedSessionKey] = useState<string>("");
   const [watchRecording, setWatchRecording] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -238,34 +248,71 @@ export default function WebclassSection() {
     phone_number: false,
   });
 
+  const getPSTHour = (date: Date): number => {
+    const pstString = date.toLocaleString("en-US", {
+      timeZone: "America/Los_Angeles",
+      hour: "numeric",
+      hour12: false
+    });
+    return parseInt(pstString, 10);
+  };
+
+  const nextHourPST = targetTime ? getPSTHour(targetTime) : 9;
+  const nextWebinar = getWebinarForHour(nextHourPST);
+  const upcomingWebinarName = nextWebinar ? nextWebinar.name : "Webclass";
+
   const selectedSession =
     sessions.find((session) => session.key === selectedSessionKey) ?? sessions[0];
   const sessionTimezoneLabel = "PST";
 
   const resetFormState = useCallback(() => {
+    setSelectedCourseId("");
     setFormData({ ...initialFormState });
     setPhoneNumber(undefined);
     setWatchRecording(false);
     setFormStep(1);
     setTouched({ email: false, first_name: false, last_name: false, session: false, phone_number: false });
-    const refreshedSessions = buildUpcomingSessions(20);
-    setSessions(refreshedSessions);
-    setSelectedSessionKey(refreshedSessions[0]?.key || "");
+    setSessions([]);
+    setSelectedSessionKey("");
     setError(null);
   }, []);
 
-  const handleNextStep = () => {
-    if (!watchRecording && !selectedSessionKey) {
-      setTouched({ ...touched, session: true });
-      setError('Please choose either a live session or select to watch the previous recording');
-      return;
+  useEffect(() => {
+    if (selectedCourseId) {
+      const refreshedSessions = buildUpcomingSessions(20, selectedCourseId);
+      setSessions(refreshedSessions);
+      setSelectedSessionKey(refreshedSessions[0]?.key || "");
+    } else {
+      setSessions([]);
+      setSelectedSessionKey("");
     }
-    setError(null);
-    setFormStep(2);
+  }, [selectedCourseId]);
+
+  const handleNextStep = () => {
+    if (formStep === 1) {
+      if (!selectedCourseId) {
+        setError('Please choose a course/webinar to attend');
+        return;
+      }
+      setError(null);
+      setFormStep(2);
+    } else if (formStep === 2) {
+      if (!watchRecording && !selectedSessionKey) {
+        setTouched({ ...touched, session: true });
+        setError('Please choose either a live session or select to watch the previous recording');
+        return;
+      }
+      setError(null);
+      setFormStep(3);
+    }
   };
 
   const handleBackStep = () => {
-    setFormStep(1);
+    if (formStep === 2) {
+      setFormStep(1);
+    } else if (formStep === 3) {
+      setFormStep(2);
+    }
     setError(null);
   };
 
@@ -293,7 +340,7 @@ export default function WebclassSection() {
   }, [widgetOpen, handleWidgetClose]);
 
   useEffect(() => {
-    if (!widgetOpen) return;
+    if (!widgetOpen || !selectedCourseId) return;
 
     const storeOccurrence = (baseKey: string, webinarId: string, occ?: OccurrenceItem) => {
       if (typeof window === "undefined" || !occ) return;
@@ -304,8 +351,11 @@ export default function WebclassSection() {
 
     const loadOccurrencesForModal = async () => {
       const now = new Date();
+      const courseHours = getCourseHours(selectedCourseId);
+      const filteredTemplates = webinarTemplates.filter((t) => courseHours.includes(t.hour));
+
       await Promise.all(
-        webinarTemplates.map(async (template) => {
+        filteredTemplates.map(async (template) => {
           try {
             const result = await fetchOccurrences(template.id);
             if (!result.success || !result.data) return;
@@ -325,7 +375,7 @@ export default function WebclassSection() {
     };
 
     loadOccurrencesForModal();
-  }, [widgetOpen]);
+  }, [widgetOpen, selectedCourseId]);
 
   useEffect(() => {
     const handleOpenRegistration = () => handleWidgetOpen();
@@ -358,7 +408,7 @@ export default function WebclassSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formStep !== 2) return;
+    if (formStep !== 3) return;
 
     setTouched({ email: true, first_name: true, last_name: true, session: true, phone_number: true });
 
@@ -373,6 +423,8 @@ export default function WebclassSection() {
     setError(null);
 
     try {
+      const selectedCourse = WEBINARS.find((w) => w.id === selectedCourseId) || WEBINARS[0];
+
       if (watchRecording) {
         try {
           const response = await fetch('/api/webx/recording-registrations', {
@@ -383,7 +435,7 @@ export default function WebclassSection() {
               first_name: formData.first_name,
               last_name: formData.last_name,
               phone_number: phoneNumber || formData.phone_number || '',
-              webinar_id: DEFAULT_WEBINAR_ID,
+              webinar_id: selectedCourse.id,
             }),
           });
           await response.json();
@@ -396,7 +448,7 @@ export default function WebclassSection() {
           email: formData.email,
           type: 'recording',
         });
-        router.push(`/webinar-recording?${params.toString()}`);
+        router.push(`${selectedCourse.recordingRoute}?${params.toString()}`);
         return;
       }
 
@@ -502,7 +554,7 @@ export default function WebclassSection() {
           <div className="wc-divider" />
 
           {/* Countdown */}
-          <p className="wc-countdown-label">Next Session Starts In</p>
+          <p className="wc-countdown-label">Next Session Starts In ({upcomingWebinarName})</p>
           <div className="wc-countdown-row">
             {[
               { label: "HRS", value: format(hours) },
@@ -612,17 +664,112 @@ export default function WebclassSection() {
                 <div className="form-step-indicator">
                   <div className={`form-step ${formStep === 1 ? 'form-step-active' : formStep > 1 ? 'form-step-completed' : ''}`}>
                     <div className="form-step-number">1</div>
+                    <div className="form-step-label">Choose Course</div>
+                  </div>
+                  <div className={`form-step-line ${formStep >= 2 ? 'form-step-line-active' : ''}`}></div>
+                  <div className={`form-step ${formStep === 2 ? 'form-step-active' : formStep > 2 ? 'form-step-completed' : ''}`}>
+                    <div className="form-step-number">2</div>
                     <div className="form-step-label">Choose Session</div>
                   </div>
-                  <div className={`form-step-line ${formStep === 2 ? 'form-step-line-active' : ''}`}></div>
-                  <div className={`form-step ${formStep === 2 ? 'form-step-active' : ''}`}>
-                    <div className="form-step-number">2</div>
+                  <div className={`form-step-line ${formStep === 3 ? 'form-step-line-active' : ''}`}></div>
+                  <div className={`form-step ${formStep === 3 ? 'form-step-active' : ''}`}>
+                    <div className="form-step-number">3</div>
                     <div className="form-step-label">Personal Details</div>
                   </div>
                 </div>
 
-                {/* Step 1: Session Selection */}
+                {/* Step 1: Course Selection */}
                 {formStep === 1 && (
+                  <div className="form-step-content">
+                    <div className="form-group">
+                      <p className="course-picker-label">Which webinar are you joining?</p>
+                      <div className="form-course-options">
+                        {WEBINARS.map((course) => {
+                          const isSelected = selectedCourseId === course.id;
+                          return (
+                            <div
+                              key={course.id}
+                              role="radio"
+                              aria-checked={isSelected}
+                              tabIndex={0}
+                              className={`form-course-card ${isSelected ? 'form-course-card-active' : ''}`}
+                              onClick={() => { setSelectedCourseId(course.id); setError(null); }}
+                              onKeyDown={(e) => { if (e.key === ' ' || e.key === 'Enter') { setSelectedCourseId(course.id); setError(null); } }}
+                              style={{ '--course-color': course.themeColor, '--course-color-bg': course.themeColor + '15' } as React.CSSProperties}
+                            >
+                              {/* Selected checkmark badge */}
+                              {isSelected && (
+                                <span className="course-check-badge">
+                                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                    <path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                  </svg>
+                                </span>
+                              )}
+
+                              {/* Radio dot */}
+                              <span className={`course-radio-dot ${isSelected ? 'course-radio-dot-active' : ''}`} />
+
+                              {/* Icon */}
+                              <span className={`form-course-icon-wrap ${isSelected ? 'form-course-icon-wrap-active' : ''}`}>
+                                {course.id === 'become-private' && (
+                                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2L2 7v5c0 5.25 4.25 10.15 10 11.35C17.75 22.15 22 17.25 22 12V7L12 2z" stroke={isSelected ? '#fff' : '#2563eb'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                  </svg>
+                                )}
+                                {course.id === 'operate-private' && (
+                                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="3" stroke={isSelected ? '#fff' : '#2563eb'} strokeWidth="2" />
+                                    <path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14" stroke={isSelected ? '#fff' : '#2563eb'} strokeWidth="2" strokeLinecap="round" />
+                                  </svg>
+                                )}
+                                {course.id === 'financial-freedom' && (
+                                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke={isSelected ? '#fff' : '#2563eb'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                  </svg>
+                                )}
+                              </span>
+
+                              {/* Text */}
+                              <div className="form-course-card-body">
+                                <h4 className="form-course-title">{course.name}</h4>
+                                <p className="form-course-desc">{course.description}</p>
+                              </div>
+
+
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {error && (
+                      <div className="form-error-message">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <line x1="12" y1="8" x2="12" y2="12"></line>
+                          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <span>{error}</span>
+                      </div>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={handleNextStep}
+                      className="btn btn-primary form-submit"
+                      disabled={!selectedCourseId}
+                    >
+                      Continue
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                      </svg>
+                    </button>
+                  </div>
+                )}
+
+                {/* Step 2: Session Selection */}
+                {formStep === 2 && (
                   <div className="form-step-content">
                     <div className="form-group">
                       <label htmlFor="webinar_session" className="form-label">
@@ -710,23 +857,32 @@ export default function WebclassSection() {
                       </div>
                     )}
 
-                    <button
-                      type="button"
-                      onClick={handleNextStep}
-                      className="btn btn-primary form-submit"
-                      disabled={isSubmitting || (!watchRecording && !selectedSessionKey)}
-                    >
-                      Next
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                      </svg>
-                    </button>
+                    <div className="form-step-actions">
+                      <button type="button" onClick={handleBackStep} className="btn btn-secondary form-back-button" disabled={isSubmitting}>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <line x1="19" y1="12" x2="5" y2="12"></line>
+                          <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        Back
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleNextStep}
+                        className="btn btn-primary form-submit"
+                        disabled={isSubmitting || (!watchRecording && !selectedSessionKey)}
+                      >
+                        Next
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                 )}
 
-                {/* Step 2: Personal Details */}
-                {formStep === 2 && (
+                {/* Step 3: Personal Details */}
+                {formStep === 3 && (
                   <div className="form-step-content">
                     <div className="form-row">
                       <div className="form-group">
@@ -870,8 +1026,9 @@ export default function WebclassSection() {
           </div>
         </div>
       )}
-
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
         /* =====================
            HERO SECTION
         ===================== */
@@ -1265,6 +1422,7 @@ export default function WebclassSection() {
           to { opacity: 1; }
         }
         .modal {
+          font-family: 'Inter', 'Roboto', sans-serif;
           background: white;
           border-radius: 16px;
           width: 100%;
@@ -1429,16 +1587,16 @@ export default function WebclassSection() {
         .dark .form-divider::before, .dark .form-divider::after { background: #444; }
         .form-divider-text { font-size: 14px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
         .dark .form-divider-text { color: #999; }
-        .form-phone-input-wrapper { width: 100%; }
-        .PhoneInput { display: flex; align-items: stretch; gap: 8px; }
-        .PhoneInputCountry { flex-shrink: 0; }
+        .form-phone-input-wrapper { width: 100%; display: flex; align-items: stretch; gap: 8px; }
+        .PhoneInput { display: flex; align-items: stretch; gap: 8px; width: 100%; }
+        .PhoneInputCountry { flex-shrink: 0; display: flex; align-items: center; }
         .PhoneInputCountryIcon { width: 20px; height: 15px; box-shadow: 0 0 0 1px rgba(0,0,0,0.1); border-radius: 2px; }
         .PhoneInputCountrySelect {
           padding: 12px 36px 12px 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 16px;
-          transition: all 0.2s; background: white; color: #111; cursor: pointer; min-width: 100px;
-          appearance: none;
+          transition: all 0.2s; background: white; color: #111; cursor: pointer; min-width: 90px;
+          appearance: none; height: 100%;
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-          background-repeat: no-repeat; background-position: right 12px center; background-size: 12px;
+          background-repeat: no-repeat; background-position: right 10px center; background-size: 12px;
         }
         .dark .PhoneInputCountrySelect {
           background-color: #2a2a2a; border-color: #444; color: #e5e5e5;
@@ -1447,16 +1605,204 @@ export default function WebclassSection() {
         .PhoneInputCountrySelect:focus { outline: none; border-color: #026fe2; box-shadow: 0 0 0 3px rgba(2,111,226,0.1); }
         .dark .PhoneInputCountrySelect:focus { border-color: #45beff; box-shadow: 0 0 0 3px rgba(69,190,255,0.1); }
         .PhoneInputCountrySelect:disabled { opacity: 0.6; cursor: not-allowed; }
-        .PhoneInputInput {
-          flex: 1; padding: 12px 16px; border: 2px solid #e5e5e5; border-radius: 8px;
-          font-size: 16px; transition: all 0.2s; background: white; color: #111;
+        .PhoneInputInput, .form-phone-input {
+          flex: 1; padding: 12px 16px !important; border: 2px solid #e5e5e5; border-radius: 8px;
+          font-size: 16px; transition: all 0.2s; background: white; color: #111; width: auto !important;
         }
-        .dark .PhoneInputInput { background: #2a2a2a; border-color: #444; color: #e5e5e5; }
-        .PhoneInputInput:focus { outline: none; border-color: #026fe2; box-shadow: 0 0 0 3px rgba(2,111,226,0.1); }
-        .dark .PhoneInputInput:focus { border-color: #45beff; box-shadow: 0 0 0 3px rgba(69,190,255,0.1); }
-        .PhoneInputInput:disabled { opacity: 0.6; cursor: not-allowed; }
-        .PhoneInputInput::placeholder { color: #999; }
-        .dark .PhoneInputInput::placeholder { color: #666; }
+        .dark .PhoneInputInput, .dark .form-phone-input { background: #2a2a2a; border-color: #444; color: #e5e5e5; }
+        .PhoneInputInput:focus, .form-phone-input:focus { outline: none; border-color: #026fe2; box-shadow: 0 0 0 3px rgba(2,111,226,0.1); }
+        .dark .PhoneInputInput:focus, .dark .form-phone-input:focus { border-color: #45beff; box-shadow: 0 0 0 3px rgba(69,190,255,0.1); }
+        .PhoneInputInput:disabled, .form-phone-input:disabled { opacity: 0.6; cursor: not-allowed; }
+        .PhoneInputInput::placeholder, .form-phone-input::placeholder { color: #999; }
+        .dark .PhoneInputInput::placeholder, .dark .form-phone-input::placeholder { color: #666; }
+
+        /* =====================
+           COURSE PICKER (STEP 1)
+        ===================== */
+        .course-picker-label {
+          font-family: 'Inter', 'Roboto', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          color: #333;
+          margin: 0 0 12px;
+        }
+        .dark .course-picker-label { color: #e5e5e5; }
+
+        .form-course-options {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          margin-bottom: 4px;
+        }
+
+        .form-course-card {
+          font-family: 'Inter', 'Roboto', sans-serif;
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          border: 1.5px solid #e5e7eb;
+          border-radius: 14px;
+          padding: 14px 16px;
+          background: #ffffff;
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+          transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, transform 0.15s ease;
+          outline: none;
+        }
+        .form-course-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+          background: linear-gradient(135deg, var(--course-color-bg, #f0f7ff) 0%, transparent 60%);
+          transition: opacity 0.25s ease;
+          pointer-events: none;
+        }
+        .form-course-card:hover::before,
+        .form-course-card-active::before {
+          opacity: 1;
+        }
+        .form-course-card:hover {
+          border-color: var(--course-color, #026fe2);
+          box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+          transform: translateY(-1px);
+        }
+        .form-course-card:focus-visible {
+          box-shadow: 0 0 0 3px var(--course-color, #026fe2)44;
+          border-color: var(--course-color, #026fe2);
+        }
+        .form-course-card-active {
+          border-color: var(--course-color, #026fe2) !important;
+          box-shadow: 0 0 0 3px var(--course-color, #026fe2)22, 0 4px 16px rgba(0,0,0,0.06);
+        }
+        .dark .form-course-card {
+          background: #1c1c1e;
+          border-color: #333;
+        }
+        .dark .form-course-card:hover {
+          border-color: var(--course-color, #45beff);
+          box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+        .dark .form-course-card-active {
+          border-color: var(--course-color, #45beff) !important;
+          background: #1c1c1e;
+        }
+
+        /* Radio dot */
+        .course-radio-dot {
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          border: 2px solid #d1d5db;
+          flex-shrink: 0;
+          transition: border-color 0.2s ease, background 0.2s ease;
+          position: relative;
+        }
+        .course-radio-dot::after {
+          content: '';
+          position: absolute;
+          inset: 3px;
+          border-radius: 50%;
+          background: var(--course-color, #026fe2);
+          opacity: 0;
+          transform: scale(0.5);
+          transition: opacity 0.15s ease, transform 0.15s ease;
+        }
+        .course-radio-dot-active {
+          border-color: var(--course-color, #026fe2);
+        }
+        .course-radio-dot-active::after {
+          opacity: 1;
+          transform: scale(1);
+        }
+        .dark .course-radio-dot { border-color: #555; }
+
+        /* Icon */
+        .form-course-icon-wrap {
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+          border: 1.5px solid #bfdbfe;
+          background: #eff6ff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+        .form-course-icon-wrap-active {
+          background: #2563eb;
+          border-color: #2563eb;
+        }
+        .form-course-card:hover .form-course-icon-wrap,
+        .form-course-card-active .form-course-icon-wrap {
+          transform: scale(1.08);
+        }
+        .dark .form-course-icon-wrap {
+          background: #1e3a6e;
+          border-color: #3b82f6;
+        }
+        .dark .form-course-icon-wrap-active {
+          background: #2563eb;
+          border-color: #2563eb;
+        }
+
+        /* Text body */
+        .form-course-card-body {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+          min-width: 0;
+        }
+        .form-course-title {
+          font-family: 'Inter', 'Roboto', sans-serif;
+          font-size: 16px;
+          font-weight: 700;
+          margin: 0;
+          color: #111827;
+          letter-spacing: -0.01em;
+          line-height: 1.3;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .dark .form-course-title { color: #f3f4f6; }
+        .form-course-card-active .form-course-title {
+          color: var(--course-color, #026fe2);
+        }
+        .form-course-desc {
+          font-family: 'Inter', 'Roboto', sans-serif;
+          font-size: 14px;
+          color: #6b7280;
+          margin: 0;
+          line-height: 1.4;
+        }
+        .dark .form-course-desc { color: #9ca3af; }
+
+
+
+        /* Selected checkmark badge */
+        .course-check-badge {
+          position: absolute;
+          top: -1px;
+          right: -1px;
+          width: 24px;
+          height: 24px;
+          border-radius: 0 13px 0 13px;
+          background: var(--course-color, #026fe2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          animation: badgePop 0.2s ease-out;
+        }
+        @keyframes badgePop {
+          from { transform: scale(0.5); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
       `}</style>
     </>
   );

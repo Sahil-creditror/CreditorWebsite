@@ -181,6 +181,8 @@
 
 
 
+
+
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -202,44 +204,45 @@ export default function BootcampBanner() {
     // Array of masterclasses extracted directly from the flyers
     const classes = [
         {
-            imageSrc: "/images/todayclasstopic/eff.jpg",
-            imageAlt: "Master Class on Equipment Financing Strategies",
-            badge: "Master Class • July 14, 2026",
+            imageSrc: "/images/todayclasstopic/bdc.jpg",
+            imageAlt: "Operate Private Business Documentation Checklist",
+            badge: "Checklist • July 15, 2026",
             heading: (
                 <>
-                    Equipment Financing{" "}
+                    Operate Private{" "}
                     <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        Strategies
-                    </span>
+                        Business Documentation
+                    </span>{" "}
+                    Checklist
                 </>
             ),
             description:
-                "Finance the equipment your business needs—without hurting cash flow.",
+                "Build a strong business foundation with the right documents.",
             benefits: [
-                "Choose the right financing option",
-                "Improve approval chances",
-                "Fund equipment for business growth",
+                "Essential Business Documents",
+                "Stay Organized",
+                "Be Funding Ready",
             ],
         },
         {
-            imageSrc: "/images/todayclasstopic/tab.jpg",
-            imageAlt: "Trust Administration Basics Workshop",
-            badge: "Workshop • July 14, 2026",
+            imageSrc: "/images/todayclasstopic/blc.jpeg",
+            imageAlt: "Master Class: Business Lines of Credit Explained",
+            badge: "Master Class • July 15, 2026",
             heading: (
                 <>
-                    Trust{" "}
+                    Business Lines of{" "}
                     <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        Administration
+                        Credit
                     </span>{" "}
-                    Basics
+                    Explained
                 </>
             ),
             description:
-                "Learn the fundamentals of effective trust administration.",
+                "Learn how business lines of credit work and when to use them.",
             benefits: [
-                "Trustee Roles",
-                "Administration Process",
-                "Avoid Common Mistakes",
+                "Access Flexible Funding",
+                "Improve Cash Flow",
+                "Borrow Smarter",
             ],
         },
     ];

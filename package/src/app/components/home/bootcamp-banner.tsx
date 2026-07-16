@@ -182,7 +182,6 @@
 
 
 
-
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -204,45 +203,44 @@ export default function BootcampBanner() {
     // Array of masterclasses extracted directly from the flyers
     const classes = [
         {
-            imageSrc: "/images/todayclasstopic/bdc.jpg",
-            imageAlt: "Operate Private Business Documentation Checklist",
-            badge: "Checklist • July 15, 2026",
+            imageSrc: "/images/todayclasstopic/mscc.png",
+            imageAlt: "Master Class: SBA Loan Readiness",
+            badge: "Master Class • July 16, 2026 @ 11 AM PST",
             heading: (
                 <>
-                    Operate Private{" "}
+                    SBA Loan{" "}
                     <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        Business Documentation
+                        Readiness
                     </span>{" "}
-                    Checklist
+                    Master Class
                 </>
             ),
             description:
-                "Build a strong business foundation with the right documents.",
+                "Prepare your business for SBA loan success.",
             benefits: [
-                "Essential Business Documents",
-                "Stay Organized",
-                "Be Funding Ready",
+                "Improve Loan Readiness",
+                "Strengthen Your Application",
+                "Increase Approval Confidence",
             ],
         },
         {
-            imageSrc: "/images/todayclasstopic/blc.jpeg",
-            imageAlt: "Master Class: Business Lines of Credit Explained",
-            badge: "Master Class • July 15, 2026",
+            imageSrc: "/images/todayclasstopic/ibpp.png",
+            imageAlt: "Financial Freedom: Investing Business Profits Wisely",
+            badge: "Workshop • July 16, 2026 @ 11 AM PST",
             heading: (
                 <>
-                    Business Lines of{" "}
+                    Investing Business{" "}
                     <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        Credit
-                    </span>{" "}
-                    Explained
+                        Profits Wisely
+                    </span>
                 </>
             ),
             description:
-                "Learn how business lines of credit work and when to use them.",
+                "Make your profits work for your future and secure financial freedom.",
             benefits: [
-                "Access Flexible Funding",
-                "Improve Cash Flow",
-                "Borrow Smarter",
+                "Smart Investment Strategies",
+                "Build Long-Term Wealth",
+                "Grow Your Business & Assets",
             ],
         },
     ];

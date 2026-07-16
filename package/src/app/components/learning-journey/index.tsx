@@ -627,7 +627,7 @@ export default function LearningJourney() {
                   onMouseEnter={() => setActiveCard(i)}
                   onMouseLeave={() => setActiveCard(null)}
                   className={`relative flex flex-col transition-all duration-300 ${
-                    isDimmed ? "opacity-45 scale-[0.98]" : "opacity-100 scale-100"
+                    isDimmed ? "opacity-45 scale-[0.88]" : "opacity-100 scale-100"
                   } ${isFocused ? "z-10" : "z-0"}`}
                 >
                   {/* Animated connector */}

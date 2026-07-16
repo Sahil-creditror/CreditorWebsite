@@ -30,7 +30,7 @@ function renderInlineText(text: string): React.ReactNode {
           href={match[2]}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-600 hover:text-blue-700 underline underline-offset-2 font-medium"
+          className="text-blue-600 hover:text-blue-700 underline underline-offset-2 font-medium italic"
         >
           {match[1]}
         </a>

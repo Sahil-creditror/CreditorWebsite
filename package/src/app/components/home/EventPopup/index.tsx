@@ -7,7 +7,7 @@ import { WORKSHOP_REGISTER_URL } from "@/lib/workshop";
 
 // Target Event Timestamp updated to Saturday, July 18, 2026
 const TARGET_EVENT_MS = new Date("2026-07-18T11:00:00-07:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/cmi.jpg"; 
+const EVENT_IMAGE = "/images/todayclasstopic/www.jpg"; 
 const EVENT_DATE_LABEL = "Saturday, July 18, 2026";
 
 interface EventPopupProps {

@@ -15,7 +15,7 @@ const WORKSHOP_EVENT_TIMEZONE_LABEL  = "PST";
 
 // Target Countdown Date: Saturday, July 18, 2026, 11:00 AM PST
 const WORKSHOP_EVENT_CLOSE_MS        = new Date("2026-07-18T11:00:00-07:00").getTime();
-const WORKSHOP_EVENT_IMAGE           = "/images/todayclasstopic/cmi.jpg"; 
+const WORKSHOP_EVENT_IMAGE           = "/images/todayclasstopic/www.jpg"; 
 const REGISTRATION_LINK_URL          = "https://api.wonderengine.ai/widget/form/mL2L8I8p4RI7AF61stUd"; // Keep your conversion endpoint setup
 // ─────────────────────────────────────────────────────────────────────────────
 

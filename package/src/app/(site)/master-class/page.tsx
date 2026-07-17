@@ -1,8 +1,10 @@
 import { Metadata } from "next";
 import { Herobanner } from "@/app/components/shared/hero-banner";
-import MasterClassHub from "@/app/components/master-class/hub";
+import ModulesHub from "@/app/components/learning-paths/modules-hub";
+import { getCoursePath } from "@/app/components/learning-paths/data";
 import CTA from "@/app/components/shared/cta";
 
+const course = getCoursePath("master-class");
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
 export const metadata: Metadata = {
@@ -23,7 +25,7 @@ export default function MasterClassPage() {
         buttonPath="/masterclass-membership"
         buttonText="Join Membership"
       />
-      <MasterClassHub />
+      <ModulesHub course={course} />
       <CTA />
     </main>
   );

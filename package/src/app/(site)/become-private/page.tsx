@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Herobanner } from "@/app/components/shared/hero-banner";
-import LearningPathHub from "@/app/components/learning-paths/hub";
+import ModulesHub from "@/app/components/learning-paths/modules-hub";
 import { getCoursePath } from "@/app/components/learning-paths/data";
 import CTA from "@/app/components/shared/cta";
 
@@ -22,7 +22,7 @@ export default function BecomePrivateHubPage() {
         buttonPath="/masterclass-membership"
         buttonText="Join Membership"
       />
-      <LearningPathHub course={course} />
+      <ModulesHub course={course} />
       <CTA />
     </main>
   );

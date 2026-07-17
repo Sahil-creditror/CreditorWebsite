@@ -8,6 +8,7 @@ export type CourseId =
 
 export type ModuleItem = {
   id: number;
+  slug: string;
   title: string;
   /** Live or recorded session count shown beside lessons */
   sessions: number;
@@ -30,6 +31,8 @@ export type CoursePath = {
   streetSmartPath: string;
   bookSmart: TrackCurriculum;
   streetSmart: TrackCurriculum;
+  /** Combined module cards shown on the hub page */
+  modules: { slug: string; title: string; totalLessons: number }[];
 };
 
 export const TRACK_ABOUT = {
@@ -65,22 +68,27 @@ export const COURSE_PATHS: Record<CourseId, CoursePath> = {
     hubPath: "/master-class",
     bookSmartPath: "/master-class/book-smart",
     streetSmartPath: "/master-class/street-smart",
+    modules: [
+      { slug: "step-1", title: "Step 1", totalLessons: 17 },
+      { slug: "step-2", title: "Step 2", totalLessons: 5 },
+      { slug: "step-3", title: "Step 3", totalLessons: 4 },
+    ],
     bookSmart: {
       modules: 3,
       lessons: 26,
       items: [
-        { id: 1, title: "Step 1", sessions: 17, lessons: 17 },
-        { id: 2, title: "Step 2", sessions: 5, lessons: 5 },
-        { id: 3, title: "Step 3", sessions: 4, lessons: 4 },
+        { id: 1, slug: "step-1", title: "Step 1", sessions: 17, lessons: 17 },
+        { id: 2, slug: "step-2", title: "Step 2", sessions: 5, lessons: 5 },
+        { id: 3, slug: "step-3", title: "Step 3", sessions: 4, lessons: 4 },
       ],
     },
     streetSmart: {
       modules: 3,
       lessons: 26,
       items: [
-        { id: 1, title: "Step 1", sessions: 17, lessons: 17 },
-        { id: 2, title: "Step 2", sessions: 5, lessons: 5 },
-        { id: 3, title: "Step 3", sessions: 4, lessons: 4 },
+        { id: 1, slug: "step-1", title: "Step 1", sessions: 17, lessons: 17 },
+        { id: 2, slug: "step-2", title: "Step 2", sessions: 5, lessons: 5 },
+        { id: 3, slug: "step-3", title: "Step 3", sessions: 4, lessons: 4 },
       ],
     },
   },
@@ -94,19 +102,26 @@ export const COURSE_PATHS: Record<CourseId, CoursePath> = {
     hubPath: "/become-private",
     bookSmartPath: "/become-private/book-smart",
     streetSmartPath: "/become-private/street-smart",
+    modules: [
+      { slug: "sov-101", title: "SOV 101", totalLessons: 73 },
+      { slug: "spc", title: "Become Private – SPC (Secured Party Creditor)", totalLessons: 76 },
+      { slug: "status-correction", title: "Become Private – Status Correction", totalLessons: 52 },
+    ],
     bookSmart: {
       modules: 3,
       lessons: 127,
       items: [
-        { id: 1, title: "SOV 101", sessions: 1, lessons: 43 },
+        { id: 1, slug: "sov-101", title: "SOV 101", sessions: 1, lessons: 43 },
         {
           id: 2,
+          slug: "spc",
           title: "Become Private – SPC (Secured Party Creditor)",
           sessions: 15,
           lessons: 44,
         },
         {
           id: 3,
+          slug: "status-correction",
           title: "Become Private – Status Correction",
           sessions: 13,
           lessons: 40,
@@ -117,15 +132,17 @@ export const COURSE_PATHS: Record<CourseId, CoursePath> = {
       modules: 3,
       lessons: 74,
       items: [
-        { id: 1, title: "SOV 101", sessions: 7, lessons: 30 },
+        { id: 1, slug: "sov-101", title: "SOV 101", sessions: 7, lessons: 30 },
         {
           id: 2,
+          slug: "spc",
           title: "Become Private – SPC (Secured Party Creditor)",
           sessions: 32,
           lessons: 32,
         },
         {
           id: 3,
+          slug: "status-correction",
           title: "Become Private – Status Correction",
           sessions: 12,
           lessons: 12,
@@ -143,19 +160,26 @@ export const COURSE_PATHS: Record<CourseId, CoursePath> = {
     hubPath: "/operate-private",
     bookSmartPath: "/operate-private/book-smart",
     streetSmartPath: "/operate-private/street-smart",
+    modules: [
+      { slug: "business-trust", title: "Business Trust", totalLessons: 60 },
+      { slug: "pma", title: "PMA (Private Membership Association)", totalLessons: 53 },
+      { slug: "real-estate", title: "Real Estate Through Trusts", totalLessons: 43 },
+    ],
     bookSmart: {
       modules: 3,
       lessons: 124,
       items: [
-        { id: 1, title: "Business Trust", sessions: 16, lessons: 40 },
+        { id: 1, slug: "business-trust", title: "Business Trust", sessions: 16, lessons: 40 },
         {
           id: 2,
+          slug: "pma",
           title: "PMA (Private Membership Association)",
           sessions: 10,
           lessons: 44,
         },
         {
           id: 3,
+          slug: "real-estate",
           title: "Real Estate Through Trusts",
           sessions: 5,
           lessons: 40,
@@ -166,15 +190,17 @@ export const COURSE_PATHS: Record<CourseId, CoursePath> = {
       modules: 3,
       lessons: 32,
       items: [
-        { id: 1, title: "Business Trust", sessions: 20, lessons: 20 },
+        { id: 1, slug: "business-trust", title: "Business Trust", sessions: 20, lessons: 20 },
         {
           id: 2,
+          slug: "pma",
           title: "PMA (Private Membership Association)",
           sessions: 9,
           lessons: 9,
         },
         {
           id: 3,
+          slug: "real-estate",
           title: "Real Estate Through Trusts",
           sessions: 3,
           lessons: 3,
@@ -192,32 +218,39 @@ export const COURSE_PATHS: Record<CourseId, CoursePath> = {
     hubPath: "/financial-freedom",
     bookSmartPath: "/financial-freedom/book-smart",
     streetSmartPath: "/financial-freedom/street-smart",
+    modules: [
+      { slug: "remedy-now", title: "I Want Remedy Now", totalLessons: 52 },
+      { slug: "business-credit", title: "Financial Freedom – Business Credit", totalLessons: 69 },
+      { slug: "business-credit-pma", title: "Business Credit (PMA)", totalLessons: 57 },
+    ],
     bookSmart: {
       modules: 3,
       lessons: 107,
       items: [
-        { id: 1, title: "I Want Remedy Now", sessions: 13, lessons: 27 },
+        { id: 1, slug: "remedy-now", title: "I Want Remedy Now", sessions: 13, lessons: 27 },
         {
           id: 2,
+          slug: "business-credit",
           title: "Financial Freedom – Business Credit",
           sessions: 19,
           lessons: 40,
         },
-        { id: 3, title: "Business Credit (PMA)", sessions: 3, lessons: 40 },
+        { id: 3, slug: "business-credit-pma", title: "Business Credit (PMA)", sessions: 3, lessons: 40 },
       ],
     },
     streetSmart: {
       modules: 3,
       lessons: 71,
       items: [
-        { id: 1, title: "I Want Remedy Now", sessions: 25, lessons: 25 },
+        { id: 1, slug: "remedy-now", title: "I Want Remedy Now", sessions: 25, lessons: 25 },
         {
           id: 2,
+          slug: "business-credit",
           title: "Financial Freedom – Business Credit",
           sessions: 29,
           lessons: 29,
         },
-        { id: 3, title: "Business Credit (PMA)", sessions: 17, lessons: 17 },
+        { id: 3, slug: "business-credit-pma", title: "Business Credit (PMA)", sessions: 17, lessons: 17 },
       ],
     },
   },
@@ -229,4 +262,8 @@ export function getCoursePath(id: CourseId): CoursePath {
 
 export function getTrackCurriculum(course: CoursePath, track: TrackId) {
   return track === "book-smart" ? course.bookSmart : course.streetSmart;
+}
+
+export function getModuleBySlug(course: CoursePath, slug: string) {
+  return course.modules.find((m) => m.slug === slug) ?? null;
 }

@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 
 import { WORKSHOP_REGISTER_URL } from "@/lib/workshop";
 
-// Target Event Timestamp updated to Saturday, July 18, 2026
-const TARGET_EVENT_MS = new Date("2026-07-18T11:00:00-07:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/cmi.jpg"; 
-const EVENT_DATE_LABEL = "Saturday, July 18, 2026";
+// Target Event Timestamp updated to Saturday, July 25, 2026 @ 11 AM PST
+const TARGET_EVENT_MS = new Date("2026-07-25T11:00:00-07:00").getTime();
+const EVENT_IMAGE = "/images/todayclasstopic/bbcs.jpeg"; 
+const EVENT_DATE_LABEL = "Saturday, July 25, 2026";
 
 interface EventPopupProps {
   delayMs?: number;
@@ -41,7 +41,7 @@ export default function EventPopup({
   useEffect(() => {
     if (disableAutoOpen) return;
     const timer = setTimeout(() => setOpen(true), delayMs);
-    return () => clearTimeout(timer);
+    return () => clearInterval(timer);
   }, [delayMs, disableAutoOpen]);
 
   useEffect(() => {
@@ -66,7 +66,7 @@ export default function EventPopup({
       onClick={(e) => {
         if (e.target === e.currentTarget) setOpen(false);
       }}
-      data-event-popup="ca7-multiple-income-streams"
+      data-event-popup="ca7-build-business-credit"
     >
       <div
         role="dialog"
@@ -98,22 +98,22 @@ export default function EventPopup({
                   <span className="event-badge-dot" aria-hidden />
                   WORKSHOP
                 </span>
-                <span className="event-badge event-badge--date">Saturday, July 18, 2026</span>
+                <span className="event-badge event-badge--date">Saturday, July 25, 2026 @ 11 AM PST</span>
               </div>
             </header>
 
             <h2 id="event-popup-title" className="event-popup-title">
-              Create Multiple <span className="event-popup-title-accent">Income Streams</span> With Digital Businesses
+              Build Business Credit <span className="event-popup-title-accent">from Scratch</span> in 2026
             </h2>
 
             <p className="event-popup-desc">
-              <strong>Learn how to build and grow multiple digital income streams.</strong> Start building recurring income with online courses, digital products, memberships, and more.
+              <strong>Build a fundable business with confidence.</strong> Learn key strategies to establish credit and grow your organization seamlessly.
             </p>
 
             <div className="event-popup-tags">
-              <span>Online Courses</span>
-              <span>Digital Products</span>
-              <span>Memberships & More</span>
+              <span>Establish Business Credit</span>
+              <span>Boost Funding Readiness</span>
+              <span>Grow Without Personal Credit</span>
             </div>
 
             <div className="event-popup-countdown-wrap">
@@ -153,7 +153,7 @@ export default function EventPopup({
             <div className="event-popup-poster-card">
               <Image
                 src={EVENT_IMAGE}
-                alt={`Create Multiple Income Streams With Digital Businesses Workshop — ${EVENT_DATE_LABEL}`}
+                alt={`Workshop on Build Business Credit from Scratch in 2026 — ${EVENT_DATE_LABEL}`}
                 width={480}
                 height={480}
                 className="event-popup-poster-img"
@@ -387,7 +387,7 @@ export default function EventPopup({
           font-weight: 700;
           color: #ffffff;
           text-decoration: none;
-          background: #0284c7; /* Brand Blue Background Color */
+          background: #0284c7;
           background: linear-gradient(90deg, #38bdf8 0%, #0284c7 100%);
           box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
           transition: all 0.2s ease;

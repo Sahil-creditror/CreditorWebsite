@@ -12,6 +12,7 @@ export const BOOK_SMART_PATH = "/master-class/book-smart";
 export const STREET_SMART_PATH = "/master-class/street-smart";
 export const COURSES_PAGE_PATH = "/services";
 
+
 export const COURSE_LINKS = [
   {
     title: "Become Private",

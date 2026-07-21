@@ -15,26 +15,26 @@
 //     const containerRef = useRef(null);
 //     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
 
-//     // Single source of truth fully aligned with the ca.jpeg flyer
+//     // Single source of truth fully aligned with the ipp.jpg flyer
 //     const classData = {
-//         imageSrc: "/images/todayclasstopic/ca.jpeg", 
-//         imageAlt: "Business Banking Best Practices Master Class by Creditor Academy",
-//         badge: "Master Class • July 10th, 2026",
+//         imageSrc: "/images/todayclasstopic/ipp.jpg", 
+//         imageAlt: "Investor Pitch Preparation Master Class by Creditor Academy",
+//         badge: "Master Class • July 17th, 2026 at 11 AM PST",
 //         heading: (
 //             <>
-//                 Business Banking{" "}
+//                 Investor Pitch{" "}
 //                 <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-//                     Best Practices
+//                     Preparation
 //                 </span>
 //             </>
 //         ),
 //         description:
-//             "Don't let banking errors stall your success. Master the habits that separate successful businesses from the rest.",
+//             "Pitch with confidence. Get investor-ready by refining your approach, alignment, and executive delivery.",
 //         benefits: [
-//             "Master Successful Banking Habits",
-//             "Avoid Critical Banking Errors",
-//             "Prevent Growth & Financial Stalls",
-//             "Separate Your Business From the Rest",
+//             "Build a Winning Pitch",
+//             "Present with Confidence",
+//             "Attract Investor Interest",
+//             "Creditor Academy Expert Guidance",
 //         ],
 //     };
 
@@ -182,6 +182,7 @@
 
 
 
+
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -200,47 +201,48 @@ export default function BootcampBanner() {
     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Array of masterclasses extracted directly from the flyers
+    // Updated array of masterclasses extracted directly from the provided flyers
     const classes = [
         {
-            imageSrc: "/images/todayclasstopic/mscc.png",
-            imageAlt: "Master Class: SBA Loan Readiness",
-            badge: "Master Class • July 16, 2026 @ 11 AM PST",
+            imageSrc: "/images/todayclasstopic/bput.jpg",
+            imageAlt: "Become Private: Understanding Trust Protectors",
+            badge: "Master Class • July 21, 2026 @ 11 AM PST",
             heading: (
                 <>
-                    SBA Loan{" "}
+                    Become Private:{" "}
                     <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        Readiness
+                        Understanding
                     </span>{" "}
-                    Master Class
+                    Trust Protectors
                 </>
             ),
             description:
-                "Prepare your business for SBA loan success.",
+                "Learn the role of trust protectors in preserving control and protecting assets.",
             benefits: [
-                "Improve Loan Readiness",
-                "Strengthen Your Application",
-                "Increase Approval Confidence",
+                "Understand Trust Protectors",
+                "Strengthen Asset Protection",
+                "Preserve Your Legacy",
             ],
         },
         {
-            imageSrc: "/images/todayclasstopic/ibpp.png",
-            imageAlt: "Financial Freedom: Investing Business Profits Wisely",
-            badge: "Workshop • July 16, 2026 @ 11 AM PST",
+            imageSrc: "/images/todayclasstopic/mcrb.jpg",
+            imageAlt: "Master Class on Revenue-Based Financing",
+            badge: "Master Class • July 21, 2026 @ 11 AM PST",
             heading: (
                 <>
-                    Investing Business{" "}
+                    Master Class on{" "}
                     <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        Profits Wisely
-                    </span>
+                        Revenue-Based
+                    </span>{" "}
+                    Financing
                 </>
             ),
             description:
-                "Make your profits work for your future and secure financial freedom.",
+                "Grow your business without giving up equity.",
             benefits: [
-                "Smart Investment Strategies",
-                "Build Long-Term Wealth",
-                "Grow Your Business & Assets",
+                "Learn RBF Basics",
+                "Access Flexible Capital",
+                "Grow with Confidence",
             ],
         },
     ];

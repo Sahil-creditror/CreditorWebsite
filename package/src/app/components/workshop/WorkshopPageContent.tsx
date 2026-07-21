@@ -5,18 +5,18 @@ import Link from "next/link";
 import { Clock, Sparkles, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 
-// ── Event Constants Extracted Directly From cmi.jpg / cmi.png ────────────────
-const WORKSHOP_EVENT_CALENDAR_DAY    = "18";
+// ── Event Constants Extracted Directly From bbcs_2.jpeg ─────────────────────
+const WORKSHOP_EVENT_CALENDAR_DAY    = "25";
 const WORKSHOP_EVENT_CALENDAR_MONTH  = "JULY";
-const WORKSHOP_EVENT_DATE_LABEL      = "Saturday, July 18, 2026";
+const WORKSHOP_EVENT_DATE_LABEL      = "Saturday, July 25, 2026";
 const WORKSHOP_EVENT_TIME_DISPLAY    = "11:00 AM";
 const WORKSHOP_EVENT_TIME_PST        = "11:00 AM PST";
 const WORKSHOP_EVENT_TIMEZONE_LABEL  = "PST";
 
-// Target Countdown Date: Saturday, July 18, 2026, 11:00 AM PST
-const WORKSHOP_EVENT_CLOSE_MS        = new Date("2026-07-18T11:00:00-07:00").getTime();
-const WORKSHOP_EVENT_IMAGE           = "/images/todayclasstopic/cmi.jpg"; 
-const REGISTRATION_LINK_URL          = "https://api.wonderengine.ai/widget/form/mL2L8I8p4RI7AF61stUd"; // Keep your conversion endpoint setup
+// Target Countdown Date: Saturday, July 25, 2026, 11:00 AM PST
+const WORKSHOP_EVENT_CLOSE_MS        = new Date("2026-07-25T11:00:00-07:00").getTime();
+const WORKSHOP_EVENT_IMAGE           = "/images/todayclasstopic/bbcs.jpeg"; 
+const REGISTRATION_LINK_URL          = "https://api.wonderengine.ai/widget/form/mL2L8I8p4RI7AF61stUd";
 // ─────────────────────────────────────────────────────────────────────────────
 
 function pad(n: number) {
@@ -33,26 +33,26 @@ function getCountdown(targetMs: number) {
   };
 }
 
-// Mirroring the focal points from the Create Multiple Income Streams flyer
+// Key Takeaways & Objectives from the Flyer
 const INCLUDED = [
-  "Build and launch online courses",
-  "Design profitable digital products",
-  "Create recurring membership models",
-  "Set up automated scaling systems",
-  "Generate predictable recurring revenue",
-  "Unlock locations-independent digital growth",
+  "Establish Business Credit",
+  "Boost Funding Readiness",
+  "Grow Without Personal Credit",
+  "Build a fundable business structure with confidence",
+  "Separate personal asset liabilities from corporate entity credit",
+  "Access high-limit commercial lines & vendor accounts",
 ] as const;
 
 const TRADITIONAL = [
-  { title: "Single Source Vulnerability", body: "Relying entirely on one active job or physical business, capping your earning potential and leaving you exposed to market shifts." },
-  { title: "High Overhead & Inventory", body: "Managing high storage, physical shipping logistics, lease agreements, and employee overhead costs with low net margins." },
-  { title: "Trading Active Time for Money", body: "Being structurally locked into working manual operational hours, restricting your ability to scale beyond your physical limits." },
+  { title: "Personal Credit Exposure", body: "Relying strictly on personal SSN, personal guarantee loans, and personal credit cards for business expenses, putting personal assets at risk." },
+  { title: "Low Approval Limits", body: "Getting restricted by individual borrowing caps and high credit utilization ratios, choking business expansion and cash flow." },
+  { title: "Unstructured Credit Profile", body: "Operating without proper corporate registration, missing business bureau profiles (D&B, Experian Commercial), and unoptimized funding readiness." },
 ] as const;
 
 const CREDITOR = [
-  { title: "Multiple Income Portfolios", body: "Constructing a diversified ecosystem of courses, digital downloads, assets, and monthly recurring memberships." },
-  { title: "Zero-Inventory Margins", body: "Delivering digital products instantly to a global market with near-zero logistics, production, or fulfillment costs." },
-  { title: "Leveraged Digital Systems", body: "Implementing systematic web sales funnels to control cash flow, generate customer lifetime value, and earn while you sleep." },
+  { title: "Dedicated Business Credit Profiles", body: "Establishing corporate credit profiles tied exclusively to your EIN, allowing your business to borrow independently." },
+  { title: "High-Limit Funding Readiness", body: "Structuring compliance and bankability metrics to access significant corporate lines of credit and vendor financing." },
+  { title: "Complete Personal Asset Protection", body: "Scaling operations rapidly with business-only liabilities, preserving personal credit scores and shielding personal assets." },
 ] as const;
 
 export default function WorkshopPageContent() {
@@ -89,24 +89,24 @@ export default function WorkshopPageContent() {
                 Creditor Academy · Private Montessori Association
               </p>
               <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-[2.85rem] uppercase">
-                CREATE MULTIPLE{" "}
+                BUILD BUSINESS CREDIT{" "}
                 <span className="block bg-linear-to-r from-blue-400 via-sky-300 to-white bg-clip-text text-transparent font-black mt-1">
-                  INCOME STREAMS
+                  FROM SCRATCH IN 2026
                 </span>
                 <span className="text-2xl sm:text-3xl block mt-1 text-slate-200 lowercase font-medium italic">
-                  with digital businesses
+                  build a fundable business with confidence
                 </span>
               </h1>
 
               <div className="mt-5 inline-block rounded-xl bg-black/30 border border-white/10 px-4 py-2.5 text-left">
                 <p className="text-sm font-bold text-amber-300 sm:text-base flex items-center gap-2">
                   <span className="bg-amber-400 text-slate-950 px-2 py-0.5 rounded text-xs font-black animate-pulse">🔥 LIVE WORKSHOP</span>
-                  START BUILDING RECURRING INCOME.
+                  ESTABLISH &amp; GROW BUSINESS CREDIT.
                 </p>
               </div>
 
               <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-blue-100/85 lg:mx-0">
-                Learn how to build and grow multiple digital income streams through profitable online courses, high-margin digital products, memberships, and automated funnels.
+                Learn step-by-step strategies to build corporate credit profiles, boost funding readiness, and scale your business without relying on personal credit.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -116,7 +116,7 @@ export default function WorkshopPageContent() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-full bg-linear-to-r from-amber-400 to-yellow-500 px-8 py-4 text-base font-extrabold text-slate-950 shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5 hover:brightness-110"
                 >
-                  Register Free Now
+                  Register Today!
                 </Link>
                 <span className="text-xs font-semibold text-blue-200/70 tracking-wide">
                   100% Free Registration • Instant Access Credentials
@@ -128,7 +128,7 @@ export default function WorkshopPageContent() {
               <div className="overflow-hidden rounded-2xl border border-white/20 bg-white p-2 shadow-2xl shadow-black/30 ring-1 ring-primary/30">
                 <Image
                   src={WORKSHOP_EVENT_IMAGE}
-                  alt="Create Multiple Income Streams With Digital Businesses Workshop Flyer — Saturday, July 18, 2026"
+                  alt="Build Business Credit from Scratch in 2026 Workshop Flyer — Saturday, July 25, 2026"
                   width={440}
                   height={440}
                   className="w-full rounded-xl object-contain bg-slate-950"
@@ -155,14 +155,14 @@ export default function WorkshopPageContent() {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                   </span>
-                  LIVE ONLINE MASTERCLASS
+                  LIVE ONLINE WORKSHOP
                 </span>
                 <h2 className="mt-4 text-2xl font-black tracking-tight text-slate-900 md:text-3xl uppercase">
-                  July 18 Workshop
+                  July 25 Workshop
                 </h2>
                 <p className="mt-2 flex items-center justify-center gap-2 text-slate-600 lg:justify-start text-sm">
                   <Video className="h-4 w-4 shrink-0 text-primary" aria-hidden />
-                  Structuring Sustainable Recurring Cashflow
+                  Structuring Corporate Credit &amp; Funding Capacity
                 </p>
               </div>
 
@@ -213,21 +213,21 @@ export default function WorkshopPageContent() {
       <section className="bg-[#f0f7fd] py-16 md:py-24">
         <div className="container">
           <p className="text-center text-sm font-bold uppercase tracking-widest text-primary">
-            Financial Freedom
+            Financial Freedom &amp; Leverage
           </p>
           <h2 className="mx-auto mt-3 max-w-2xl text-center text-3xl font-bold text-slate-900 md:text-4xl">
-            Legacy Employment vs. Digital Business Models
+            Personal Liability vs. Structured Business Credit
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-center text-slate-600">
-            See how incorporating systematic asset streams easily eliminates the boundaries of traditional business bottlenecks.
+            Discover how establishing standalone corporate credit empowers your organization without personal liability bottlenecks.
           </p>
 
           <div className="mx-auto mt-12 grid max-w-5xl gap-8 lg:grid-cols-2">
             <div className="rounded-2xl border-2 border-[#c5dff5] bg-white/60 p-8 backdrop-blur-sm">
               <span className="inline-block rounded-full bg-[#d0e8f8] px-3 py-1 text-xs font-bold uppercase text-slate-600">
-                Traditional Income Methods
+                Personal Credit Reliance
               </span>
-              <p className="mt-4 text-sm font-bold text-slate-400 tracking-wide">LIMITED & HIGH FRICTION</p>
+              <p className="mt-4 text-sm font-bold text-slate-400 tracking-wide">RISKY &amp; RESTRICTED</p>
               <ul className="mt-6 space-y-6">
                 {TRADITIONAL.map((item) => (
                   <li key={item.title}>
@@ -240,9 +240,9 @@ export default function WorkshopPageContent() {
 
             <div className="rounded-2xl border-2 border-primary bg-linear-to-br from-[#dbeafe] to-[#eff6ff] p-8 shadow-lg shadow-blue-500/15">
               <span className="inline-block rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase text-white">
-                Digital Portfolio Ecosystem
+                Fundable Corporate Structure
               </span>
-              <p className="mt-4 text-sm font-bold text-primary tracking-wide">SCALABLE & AUTOMATED</p>
+              <p className="mt-4 text-sm font-bold text-primary tracking-wide">PROTECTED &amp; SCALABLE</p>
               <ul className="mt-6 space-y-6">
                 {CREDITOR.map((item) => (
                   <li key={item.title}>
@@ -265,16 +265,16 @@ export default function WorkshopPageContent() {
               <div>
                 <span className="inline-flex items-center gap-2 rounded-full border border-amber-400/35 bg-amber-400/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-amber-200">
                   <span className="h-1.5 w-1.5 rounded-full bg-amber-400" aria-hidden />
-                  COMPLIMENTARY ACADEMY ACCESS · {WORKSHOP_EVENT_DATE_LABEL}
+                  COMPLIMENTARY WORKSHOP ACCESS · {WORKSHOP_EVENT_DATE_LABEL}
                 </span>
                 <h2 className="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
                   Unlock Your Free{" "}
                   <span className="bg-linear-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent">
-                    Digital Income Blueprint
+                    Business Credit Blueprint
                   </span>
                 </h2>
                 <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-blue-100/90 lg:mx-0">
-                  Secure access to live visual walkthroughs detailing top systems and software frameworks engineered to optimize automated cash flows.
+                  Secure access to live walkthroughs detailing how to build corporate credit tier-by-tier and optimize funding readiness.
                 </p>
               </div>
 
@@ -319,10 +319,10 @@ export default function WorkshopPageContent() {
             <div className="flex flex-col justify-center rounded-3xl bg-white p-6 shadow-2xl shadow-black/25 md:p-8">
               <div className="rounded-2xl bg-linear-to-br from-primary to-[#0259bd] px-6 py-6 text-center text-white">
                 <p className="text-xs font-bold uppercase tracking-widest text-blue-100/90">
-                  ONLINE LIVE TRAINING
+                  ONLINE LIVE WORKSHOP
                 </p>
                 <p className="mt-3 text-2xl font-black tracking-tight uppercase">
-                  CREATE MULTIPLE INCOME STREAMS
+                  BUILD BUSINESS CREDIT FROM SCRATCH
                 </p>
                 <div className="mt-4 inline-flex flex-col gap-1 rounded-xl bg-black/15 px-5 py-3 text-sm font-bold">
                   <span>{WORKSHOP_EVENT_DATE_LABEL}</span>
@@ -334,24 +334,24 @@ export default function WorkshopPageContent() {
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">Registration Fee</span>
                 <span className="text-4xl font-black text-primary mt-1 block">FREE</span>
                 <p className="mt-2 text-xs font-medium text-slate-500">
-                  Includes full stream entry credentials and open Q&amp;A chat pool access.
+                  Includes full stream entry credentials and open Q&amp;A access.
                 </p>
               </div>
 
               <p className="mt-4 text-center text-sm leading-relaxed text-slate-600">
-                Join live this July. Complete registration below to lock in your live streaming seat hookup.
+                Join live this July. Complete registration below to lock in your live streaming seat.
               </p>
 
               <Link
                 href={REGISTRATION_LINK_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 flex w-full items-center justify-center rounded-full bg-blue-600 py-4 text-base font-extrabold text-white shadow-xl shadow-blue-600/30 transition transform hover:-translate-y-0.5 hover:bg-blue-700"
+                className="mt-6 flex w-full items-center justify-center rounded-full bg-blue-600 py-4 text-base font-extrabold text-white shadow-xl shadow-blue-600/30 transition transform hover:-translate-y-0.5 hover:bg-blue-700 uppercase"
               >
-                Register For Free Now
+                Register Today!
               </Link>
               <p className="mt-4 text-center text-xs text-slate-400 font-medium">
-                Your future business starts with one decision. Make it today!
+                Build a fundable business with confidence starting today!
               </p>
             </div>
           </div>
@@ -387,23 +387,27 @@ export default function WorkshopPageContent() {
       <section className="border-t border-[#c5dff5] bg-linear-to-b from-[#dceefb] to-[#e8f4fc] py-16 md:py-20">
         <div className="container text-center">
           <h2 className="text-2xl font-extrabold text-slate-900 md:text-3xl uppercase tracking-tight">
-            Ready to scale using modern workflows?
+            Ready to build a fundable business?
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-slate-600 font-medium text-sm sm:text-base">
-            Claim your complimentary ticket today to bypass traditional bottlenecks.
+            Claim your complimentary seat today and start establishing business credit.
           </p>
           <Link
             href={REGISTRATION_LINK_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center justify-center rounded-full bg-primary px-12 py-4 text-base font-extrabold text-white shadow-lg shadow-blue-500/20 transition transform hover:-translate-y-0.5 hover:bg-[#0259bd]"
+            className="mt-8 inline-flex items-center justify-center rounded-full bg-primary px-12 py-4 text-base font-extrabold text-white shadow-lg shadow-blue-500/20 transition transform hover:-translate-y-0.5 hover:bg-[#0259bd] uppercase"
           >
-            Access Free Live Stream
+            Register Today!
           </Link>
           <p className="mt-6 text-xs font-bold text-slate-400 uppercase tracking-widest">
             Direct Support Line:{" "}
             <a href="tel:+14254009246" className="text-primary hover:underline font-extrabold ml-1">
               425-400-9246
+            </a>
+            {" | "}
+            <a href="https://creditoracademy.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-extrabold ml-1 lowercase">
+              creditoracademy.com
             </a>
           </p>
         </div>

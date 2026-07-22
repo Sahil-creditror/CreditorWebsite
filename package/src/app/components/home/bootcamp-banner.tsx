@@ -182,7 +182,6 @@
 
 
 
-
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -204,45 +203,45 @@ export default function BootcampBanner() {
     // Updated array of masterclasses extracted directly from the provided flyers
     const classes = [
         {
-            imageSrc: "/images/todayclasstopic/bput.jpg",
-            imageAlt: "Become Private: Understanding Trust Protectors",
-            badge: "Master Class • July 21, 2026 @ 11 AM PST",
+            imageSrc: "/images/todayclasstopic/opss.jpg",
+            imageAlt: "Operate Private: SOPs for Business Operations",
+            badge: "Master Class • July 22, 2026 @ 11 AM PST",
             heading: (
                 <>
-                    Become Private:{" "}
+                    Operate Private:{" "}
                     <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        Understanding
+                        SOPs for Business
                     </span>{" "}
-                    Trust Protectors
+                    Operations
                 </>
             ),
             description:
-                "Learn the role of trust protectors in preserving control and protecting assets.",
+                "Build systems that keep your business running efficiently.",
             benefits: [
-                "Understand Trust Protectors",
-                "Strengthen Asset Protection",
-                "Preserve Your Legacy",
+                "Create Effective SOPs",
+                "Streamline Operations",
+                "Scale with Consistency",
             ],
         },
         {
-            imageSrc: "/images/todayclasstopic/mcrb.jpg",
-            imageAlt: "Master Class on Revenue-Based Financing",
-            badge: "Master Class • July 21, 2026 @ 11 AM PST",
+            imageSrc: "/images/todayclasstopic/mbv.jpeg",
+            imageAlt: "Master Class on Business Valuation Fundamentals",
+            badge: "Master Class • July 22, 2026 @ 11 AM PST",
             heading: (
                 <>
                     Master Class on{" "}
                     <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        Revenue-Based
+                        Business Valuation
                     </span>{" "}
-                    Financing
+                    Fundamentals
                 </>
             ),
             description:
-                "Grow your business without giving up equity.",
+                "Know what your business is really worth.",
             benefits: [
-                "Learn RBF Basics",
-                "Access Flexible Capital",
-                "Grow with Confidence",
+                "Understand Business Value",
+                "Learn Key Valuation Methods",
+                "Prepare for Growth & Funding",
             ],
         },
     ];

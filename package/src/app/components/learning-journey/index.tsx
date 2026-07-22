@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence, useSpring } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   Users,
@@ -46,8 +46,8 @@ const stages: Stage[] = [
     bullets: ["Community access", "Orientation materials", "Private network entry"],
     icon: Users,
     href: "/masterclass-membership",
-    color: "#1e293b",
-    light: "#334155",
+    color: "#f8fafc",
+    light: "#3b82f6",
     side: "left",
   },
   {
@@ -58,8 +58,8 @@ const stages: Stage[] = [
     bullets: ["Live & recorded lessons", "Weekly structured sessions", "Direct instructor access"],
     icon: GraduationCap,
     href: "/master-class",
-    color: "#6d28d9",
-    light: "#7c3aed",
+    color: "#f3e8ff",
+    light: "#8b5cf6",
     side: "right",
   },
   {
@@ -70,7 +70,7 @@ const stages: Stage[] = [
     bullets: ["Secured party creditor", "Political status correction", "SOV 101 curriculum"],
     icon: Shield,
     href: BECOME_PRIVATE_HUB_PATH,
-    color: "#0f5b4f",
+    color: "#ccfbf1",
     light: "#0d9488",
     side: "left",
   },
@@ -82,7 +82,7 @@ const stages: Stage[] = [
     bullets: ["Business trust formation", "PMA setup & operation", "Real estate through trusts"],
     icon: Building2,
     href: OPERATE_PRIVATE_HUB_PATH,
-    color: "#92400e",
+    color: "#fef3c7",
     light: "#d97706",
     side: "right",
   },
@@ -94,8 +94,8 @@ const stages: Stage[] = [
     bullets: ["Business credit mastery", "Court remedies", "PMA-based banking"],
     icon: Wallet,
     href: FINANCIAL_FREEDOM_HUB_PATH,
-    color: "#6b21a8",
-    light: "#a21caf",
+    color: "#fae8ff",
+    light: "#c026d3",
     side: "left",
   },
   {
@@ -106,8 +106,8 @@ const stages: Stage[] = [
     bullets: ["Sovereign wealth structures", "Certified operator status", "Legacy & estate planning"],
     icon: Crown,
     href: MASTER_CLASS_PATH,
-    color: "#0f172a",
-    light: "#1e293b",
+    color: "#f1f5f9",
+    light: "#0f172a",
     side: "right",
   },
 ];
@@ -120,12 +120,12 @@ function Spine({ activeIndex, total }: { activeIndex: number | null; total: numb
   return (
     <div
       className="absolute left-1/2 -translate-x-1/2 top-7 bottom-7 w-[3px] z-10 rounded-full overflow-hidden"
-      style={{ background: "rgba(255,255,255,0.12)" }}
+      style={{ background: "rgba(15, 23, 42, 0.1)" }}
       aria-hidden
     >
       <motion.div
         className="w-full rounded-full"
-        style={{ background: "linear-gradient(to bottom, #60a5fa, #a78bfa, #f472b6)" }}
+        style={{ background: "linear-gradient(to bottom, #2563eb, #7c3aed, #db2777)" }}
         animate={{ height: `${pct}%` }}
         transition={{ type: "spring", stiffness: 120, damping: 22 }}
       />
@@ -154,7 +154,7 @@ function HoverBubble({
           animate={{ opacity: 1, x: 0, scale: 1 }}
           exit={{ opacity: 0, x: side === "left" ? 10 : -10, scale: 0.92 }}
           transition={{ type: "spring", stiffness: 340, damping: 26 }}
-          className={`absolute top-1/2 -translate-y-1/2 z-50 w-56 pointer-events-none ${
+          className={`absolute top-1/2 -translate-y-1/2 z-50 w-60 pointer-events-none ${
             side === "left" ? "right-[calc(100%+16px)]" : "left-[calc(100%+16px)]"
           }`}
         >
@@ -166,33 +166,35 @@ function HoverBubble({
                 : "left-[-7px] border-r-[7px] border-y-[6px] border-y-transparent"
             }`}
             style={{
-              borderLeftColor: side === "left" ? stage.color : "transparent",
-              borderRightColor: side === "right" ? stage.color : "transparent",
+              borderLeftColor: side === "left" ? "#ffffff" : "transparent",
+              borderRightColor: side === "right" ? "#ffffff" : "transparent",
             }}
             aria-hidden
           />
 
           <div
-            className="rounded-2xl px-4 py-4 shadow-2xl"
+            className="rounded-2xl px-4 py-4 shadow-xl border border-slate-200/80 bg-white"
             style={{
-              backgroundColor: stage.color,
-              boxShadow: `0 16px 40px ${stage.color}66`,
+              boxShadow: `0 12px 32px rgba(15, 23, 42, 0.12)`,
             }}
           >
-            <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest mb-1">
+            <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-1">
               Step {stage.number}
             </p>
-            <p className="text-white font-extrabold text-sm leading-snug mb-2">
+            <p className="text-slate-900 font-extrabold text-sm leading-snug mb-1">
               {stage.title}
             </p>
-            <p className="text-white/70 text-xs leading-relaxed mb-3">{stage.desc}</p>
+            <p className="text-slate-600 text-xs leading-relaxed mb-3">{stage.desc}</p>
 
             {/* Bullets */}
             <ul className="space-y-1.5 mb-3">
               {stage.bullets.map((b) => (
-                <li key={b} className="flex items-center gap-2 text-[11px] font-semibold text-white/85">
-                  <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-white/20">
-                    <Check className="h-2 w-2 text-white" strokeWidth={3} />
+                <li key={b} className="flex items-center gap-2 text-[11px] font-medium text-slate-700">
+                  <span
+                    className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full text-white"
+                    style={{ backgroundColor: stage.light }}
+                  >
+                    <Check className="h-2 w-2" strokeWidth={3} />
                   </span>
                   {b}
                 </li>
@@ -200,8 +202,11 @@ function HoverBubble({
             </ul>
 
             {/* CTA */}
-            <div className="pt-2 border-t border-white/15">
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-extrabold text-white/80">
+            <div className="pt-2 border-t border-slate-100">
+              <span
+                className="inline-flex items-center gap-1.5 text-[11px] font-extrabold"
+                style={{ color: stage.light }}
+              >
                 Click to explore <ArrowRight className="h-3 w-3" />
               </span>
             </div>
@@ -243,7 +248,7 @@ function Step({
             className="absolute -inset-3 rounded-full"
             style={{ border: `2px solid ${stage.light}` }}
             initial={{ opacity: 0, scale: 0.7 }}
-            animate={{ opacity: [0, 0.7, 0], scale: [0.7, 1.4, 1.4] }}
+            animate={{ opacity: [0, 0.6, 0], scale: [0.7, 1.4, 1.4] }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.1, repeat: Infinity }}
             aria-hidden
@@ -255,40 +260,58 @@ function Step({
         animate={{
           scale: isActive ? 1.15 : isCompleted ? 1.05 : 1,
           boxShadow: isActive
-            ? `0 0 0 5px ${stage.color}44, 0 0 28px ${stage.light}88`
+            ? `0 0 0 4px ${stage.light}22, 0 8px 20px ${stage.light}44`
             : isCompleted
-            ? `0 0 0 3px ${stage.color}66`
-            : "0 2px 12px rgba(0,0,0,0.4)",
+            ? `0 0 0 2px ${stage.light}44`
+            : "0 2px 8px rgba(0,0,0,0.08)",
         }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="relative flex h-14 w-14 items-center justify-center rounded-full text-white font-black text-lg select-none"
-        style={{ backgroundColor: isCompleted ? stage.light : stage.color }}
+        className="relative flex h-14 w-14 items-center justify-center rounded-full font-black text-lg select-none border border-slate-200/60"
+        style={{
+          backgroundColor: isCompleted || isActive ? stage.light : "#ffffff",
+          color: isCompleted || isActive ? "#ffffff" : "#1e293b",
+        }}
       >
         <AnimatePresence mode="wait">
           {isCompleted ? (
-            <motion.span key="check"
-              initial={{ scale: 0, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} exit={{ scale: 0 }}
-              transition={{ type: "spring", stiffness: 400, damping: 18 }}>
-              <Check className="h-5 w-5" strokeWidth={3} />
+            <motion.span
+              key="check"
+              initial={{ scale: 0, rotate: -90 }}
+              animate={{ scale: 1, rotate: 0 }}
+              exit={{ scale: 0 }}
+              transition={{ type: "spring", stiffness: 400, damping: 18 }}
+            >
+              <Check className="h-5 w-5 text-white" strokeWidth={3} />
             </motion.span>
           ) : isActive ? (
-            <motion.span key="icon"
-              initial={{ scale: 0, rotate: 90 }} animate={{ scale: 1, rotate: 0 }} exit={{ scale: 0 }}
-              transition={{ type: "spring", stiffness: 400, damping: 18 }}>
-              <Icon className="h-5 w-5" strokeWidth={2} />
+            <motion.span
+              key="icon"
+              initial={{ scale: 0, rotate: 90 }}
+              animate={{ scale: 1, rotate: 0 }}
+              exit={{ scale: 0 }}
+              transition={{ type: "spring", stiffness: 400, damping: 18 }}
+            >
+              <Icon className="h-5 w-5 text-white" strokeWidth={2} />
             </motion.span>
           ) : (
-            <motion.span key="num"
-              initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
-              transition={{ type: "spring", stiffness: 400, damping: 18 }}>
+            <motion.span
+              key="num"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0 }}
+              transition={{ type: "spring", stiffness: 400, damping: 18 }}
+            >
               {stage.number}
             </motion.span>
           )}
         </AnimatePresence>
 
         {index === 0 && !isActive && (
-          <span className="absolute inset-0 rounded-full animate-ping opacity-25"
-            style={{ backgroundColor: stage.light }} aria-hidden />
+          <span
+            className="absolute inset-0 rounded-full animate-ping opacity-20"
+            style={{ backgroundColor: stage.light }}
+            aria-hidden
+          />
         )}
       </motion.div>
     </div>
@@ -312,33 +335,36 @@ function Step({
           <motion.div
             animate={{
               scale: isActive ? 1.03 : 1,
-              opacity: isActive ? 1 : 0.85,
               boxShadow: isActive
-                ? `0 8px 32px ${stage.color}66, 0 0 0 1px ${stage.light}44`
-                : "0 3px 14px rgba(0,0,0,0.3)",
+                ? `0 10px 25px -5px ${stage.light}33, 0 8px 10px -6px rgba(0, 0, 0, 0.05)`
+                : "0 2px 8px rgba(0,0,0,0.04)",
             }}
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            className="rounded-2xl px-5 py-4"
+            className="rounded-2xl px-5 py-4 border border-slate-200/80 transition-colors"
             style={{ backgroundColor: stage.color }}
           >
             <div className={`flex items-center gap-2.5 ${isLeft ? "flex-row-reverse" : "flex-row"}`}>
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15">
-                <Icon className="h-4 w-4 text-white" strokeWidth={2} />
+              <span
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white shadow-xs"
+                style={{ backgroundColor: stage.light }}
+              >
+                <Icon className="h-4 w-4" strokeWidth={2} />
               </span>
               <div className={`flex-1 ${isLeft ? "text-right" : "text-left"}`}>
-                <p className="text-white font-extrabold text-sm sm:text-[15px] leading-snug">
+                <p className="text-slate-900 font-extrabold text-sm sm:text-[15px] leading-snug">
                   {stage.title}
                 </p>
-                <p className="text-white/60 text-[11px] mt-0.5">{stage.subtitle}</p>
+                <p className="text-slate-500 text-[11px] mt-0.5">{stage.subtitle}</p>
               </div>
             </div>
 
             {/* Hover hint */}
             <motion.div
-              animate={{ opacity: isActive ? 1 : 0.45 }}
-              className={`mt-2 flex items-center gap-1 text-[10px] text-white/50 font-semibold ${
+              animate={{ opacity: isActive ? 1 : 0.6 }}
+              className={`mt-2 flex items-center gap-1 text-[10px] font-bold ${
                 isLeft ? "justify-end" : "justify-start"
               }`}
+              style={{ color: stage.light }}
             >
               <ArrowRight className="h-2.5 w-2.5" />
               <span>Explore</span>
@@ -351,7 +377,12 @@ function Step({
 
   const spacer = <div className="flex-1 max-w-xs" />;
 
-  const connectorColor = isActive ? stage.light : isCompleted ? stage.color : "rgba(255,255,255,0.18)";
+  const connectorColor = isActive
+    ? stage.light
+    : isCompleted
+    ? stage.light
+    : "rgba(148, 163, 184, 0.3)";
+
   const connector = (
     <div className="hidden sm:flex items-center flex-shrink-0 gap-0">
       <motion.div className="h-px w-8" animate={{ backgroundColor: connectorColor }} transition={{ duration: 0.25 }} />
@@ -384,19 +415,15 @@ export default function LearningJourney() {
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
-    <main className="overflow-x-hidden">
+    <main className="overflow-x-hidden bg-white">
       <section
         className="relative w-full py-24 sm:py-32 px-4 sm:px-6 lg:px-10 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/bg/bggg.jpg')" }}
+        style={{ backgroundImage: "url('/images/bg/bgmm.jpg')" }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0d1f4b]/92 via-[#1a2e6b]/85 to-[#111827]/90" />
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: "radial-gradient(circle at 1px 1px, #fff 1px, transparent 0)",
-            backgroundSize: "28px 28px",
-          }}
-          aria-hidden
+        {/* Subtle dark blue gradient from top down */}
+        <div 
+          className="absolute inset-0 bg-gradient-to-b from-blue-700/40 via-slate-900/10 to-transparent pointer-events-none" 
+          aria-hidden 
         />
 
         <div className="relative z-10 max-w-3xl mx-auto">
@@ -409,13 +436,13 @@ export default function LearningJourney() {
             transition={{ duration: 0.5 }}
             className="text-center mb-14"
           >
-            <p className="text-blue-300/70 font-bold tracking-[0.22em] text-xs uppercase mb-3">
+            <p className="text-blue-600 font-bold tracking-[0.22em] text-xs uppercase mb-3">
               The Full Path
             </p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
               Your Journey to Certification
             </h2>
-            <p className="mt-3 text-white/50 text-sm sm:text-base max-w-md mx-auto">
+            <p className="mt-3 text-slate-600 text-sm sm:text-base max-w-md mx-auto font-medium">
               Six milestones — hover any step to preview, click to explore.
             </p>
           </motion.div>
@@ -449,12 +476,12 @@ export default function LearningJourney() {
           >
             <Link
               href="/masterclass-membership"
-              className="inline-flex items-center gap-2.5 px-9 py-4 rounded-full bg-[#2563EB] text-white text-sm font-bold hover:bg-blue-500 hover:scale-[1.03] active:scale-[0.98] transition-all shadow-xl shadow-blue-500/40 ring-4 ring-white/15"
+              className="inline-flex items-center gap-2.5 px-9 py-4 rounded-full bg-blue-600 text-white text-sm font-bold hover:bg-blue-700 hover:scale-[1.03] active:scale-[0.98] transition-all shadow-lg shadow-blue-500/25 ring-4 ring-blue-50"
             >
               Start Your Journey
               <ArrowRight className="w-4 h-4" />
             </Link>
-            <p className="mt-3 text-white/30 text-xs">
+            <p className="mt-3 text-slate-500 text-xs font-medium">
               Move through every step at your own pace.
             </p>
           </motion.div>

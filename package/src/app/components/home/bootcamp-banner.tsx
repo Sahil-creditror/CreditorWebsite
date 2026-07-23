@@ -181,7 +181,6 @@
 
 
 
-
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -203,45 +202,43 @@ export default function BootcampBanner() {
     // Updated array of masterclasses extracted directly from the provided flyers
     const classes = [
         {
-            imageSrc: "/images/todayclasstopic/opss.jpg",
-            imageAlt: "Operate Private: SOPs for Business Operations",
-            badge: "Master Class • July 22, 2026 @ 11 AM PST",
-            heading: (
-                <>
-                    Operate Private:{" "}
-                    <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        SOPs for Business
-                    </span>{" "}
-                    Operations
-                </>
-            ),
-            description:
-                "Build systems that keep your business running efficiently.",
-            benefits: [
-                "Create Effective SOPs",
-                "Streamline Operations",
-                "Scale with Consistency",
-            ],
-        },
-        {
-            imageSrc: "/images/todayclasstopic/mbv.jpeg",
-            imageAlt: "Master Class on Business Valuation Fundamentals",
-            badge: "Master Class • July 22, 2026 @ 11 AM PST",
+            imageSrc: "/images/todayclasstopic/mmm.jpg",
+            imageAlt: "Master Class on Mergers & Acquisitions Basics",
+            badge: "Master Class • July 23, 2026 @ 11:00 AM PST",
             heading: (
                 <>
                     Master Class on{" "}
                     <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                        Business Valuation
+                        Mergers &amp; Acquisitions
                     </span>{" "}
-                    Fundamentals
+                    Basics
                 </>
             ),
-            description:
-                "Know what your business is really worth.",
+            description: "Learn the fundamentals of M&A.",
             benefits: [
-                "Understand Business Value",
-                "Learn Key Valuation Methods",
-                "Prepare for Growth & Funding",
+                "M&A Fundamentals",
+                "Deal Structuring",
+                "Business Growth Strategies",
+            ],
+        },
+        {
+            imageSrc: "/images/todayclasstopic/fff.jpg",
+            imageAlt: "Financial Freedom: Passive Income Through Licensing",
+            badge: "Master Class • July 23, 2026 @ 11:00 AM PST",
+            heading: (
+                <>
+                    Financial Freedom:{" "}
+                    <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
+                        Passive Income
+                    </span>{" "}
+                    Through Licensing
+                </>
+            ),
+            description: "Turn Ideas Into Passive Income",
+            benefits: [
+                "Monetize Your IP",
+                "Earn Licensing Royalties",
+                "Build Long-Term Wealth",
             ],
         },
     ];

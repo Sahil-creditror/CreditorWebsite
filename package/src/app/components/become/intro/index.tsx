@@ -117,7 +117,7 @@ export default function CourseOverviewSection() {
           <div className="w-full aspect-video rounded-2xl relative overflow-hidden">
             <iframe
               className="absolute inset-0 w-full h-full"
-              src="https://drive.google.com/file/d/1_zji-DvTUwqY-ss1l3HA3JBFwQgbNSQp/preview"
+              src="https://drive.google.com/file/d/1lVYIF9buDMaQkP5aoKQL6R9-6pbXq2D_/view?usp=drive_link"
               allow="autoplay"
               allowFullScreen
               title="Course overview video"

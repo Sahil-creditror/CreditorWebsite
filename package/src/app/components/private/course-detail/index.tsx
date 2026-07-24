@@ -212,7 +212,7 @@ export default function CourseOverviewSection() {
           <div className="w-full aspect-video rounded-2xl relative overflow-hidden">
             <iframe
               className="absolute inset-0 w-full h-full"
-              src="https://drive.google.com/file/d/1dMh3rb8cDq-WOna8IKCRdNQX3egHrJyH/preview"
+              src="https://creditorappuniquebucket02082025.s3.us-east-1.amazonaws.com/course/Financial_Freedom.mp42"
               allow="autoplay"
               allowFullScreen
               title="Course detail video"

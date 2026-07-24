@@ -30,7 +30,7 @@ export default function BlogsPage() {
       const matchCategory = category === "All" || post.category === category;
       const matchSearch = post.title.toLowerCase().includes(search.toLowerCase());
       return matchCategory && matchSearch;
-    });
+    }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }, [category, search]);
 
   const featured = useMemo(() => JOURNAL_POSTS.find((p) => p.featured) || JOURNAL_POSTS[0], []);

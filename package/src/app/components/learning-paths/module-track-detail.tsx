@@ -73,19 +73,19 @@ export default function ModuleTrackDetail({ course, moduleSlug, track }: Props) 
       <div className="relative w-full overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0">
-          <Image
+          {/* <Image
             src={trackInfo.image}
             alt={trackInfo.label}
             fill
             className="object-cover object-center"
             sizes="100vw"
             priority
-          />
+          /> */}
           {/* Dark overlay gradient */}
           <div
             className={`absolute inset-0 ${
               isBookSmart
-                ? "bg-gradient-to-br from-[#030d2a]/95 via-[#0a1f5c]/88 to-[#0a1f5c]/80"
+                ? "bg-gradient-to-br from-[#030d2a]/95 via-[#0a1f5c]/98 to-[#0a1f5c]/90"
                 : "bg-gradient-to-br from-[#0a0a0a]/95 via-[#1a1a2e]/90 to-[#16213e]/85"
             }`}
           />
@@ -124,7 +124,7 @@ export default function ModuleTrackDetail({ course, moduleSlug, track }: Props) 
           </motion.div>
 
           {/* Track badge */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-5"
@@ -139,7 +139,7 @@ export default function ModuleTrackDetail({ course, moduleSlug, track }: Props) 
               <TrackIcon className="w-3.5 h-3.5" />
               {trackInfo.badge} · {trackInfo.label}
             </span>
-          </motion.div>
+          </motion.div> */}
 
           {/* Module title */}
           <motion.div

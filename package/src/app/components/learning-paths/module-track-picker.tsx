@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -12,7 +11,8 @@ import {
   BookOpen,
   Radio,
   PlayCircle,
-  ChevronRight,
+  ArrowRight,
+  Compass,
   type LucideIcon,
 } from "lucide-react";
 import { TRACK_ABOUT, type CoursePath } from "./data";
@@ -41,10 +41,17 @@ export default function ModuleTrackPicker({ course, moduleSlug }: Props) {
       id: "book-smart" as const,
       ...TRACK_ABOUT["book-smart"],
       href: `${course.hubPath}/${moduleSlug}/book-smart`,
-      accent: "from-blue-600 to-indigo-700",
+      // Light blue styling definitions
+      cardBg: "bg-gradient-to-b from-blue-100/80 via-blue-100/60 to-slate-100",
+      accentText: "text-blue-700",
+      titleText: "text-slate-900",
+      bodyText: "text-slate-600",
+      statNumberText: "text-slate-900",
+      statLabelText: "text-slate-500",
+      badgeBg: "bg-blue-100/80 text-blue-800 border-blue-200",
+      borderStyle: "border-slate-200/80",
+      ctaBg: "bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-600/20",
       FeatureIcon: Radio,
-      ctaClass:
-        "bg-[#2563EB] text-white hover:bg-blue-700 shadow-md shadow-blue-500/20",
       lessons: course.bookSmart.items.find((m) => m.slug === moduleSlug)?.lessons ?? 0,
       sessions: course.bookSmart.items.find((m) => m.slug === moduleSlug)?.sessions ?? 0,
     },
@@ -52,19 +59,26 @@ export default function ModuleTrackPicker({ course, moduleSlug }: Props) {
       id: "street-smart" as const,
       ...TRACK_ABOUT["street-smart"],
       href: `${course.hubPath}/${moduleSlug}/street-smart`,
-      accent: "from-slate-700 to-slate-900",
+      // Light gray styling definitions
+      cardBg: "bg-gradient-to-b from-zinc-100 via-slate-100/50 to-zinc-100",
+      accentText: "text-amber-800",
+      titleText: "text-zinc-900",
+      bodyText: "text-zinc-600",
+      statNumberText: "text-zinc-900",
+      statLabelText: "text-zinc-500",
+      badgeBg: "bg-amber-100/80 text-amber-900 border-amber-300/60",
+      borderStyle: "border-zinc-200/80",
+      ctaBg: "bg-amber-500 hover:bg-amber-600 text-slate-950 shadow-md shadow-amber-500/20",
       FeatureIcon: PlayCircle,
-      ctaClass:
-        "bg-slate-800 text-white hover:bg-slate-900 shadow-md shadow-slate-800/20",
       lessons: course.streetSmart.items.find((m) => m.slug === moduleSlug)?.lessons ?? 0,
       sessions: course.streetSmart.items.find((m) => m.slug === moduleSlug)?.sessions ?? 0,
     },
   ];
 
   return (
-    <div className="min-h-screen w-full bg-[#F7F8FA]">
-      {/* ── Hero strip ── */}
-      <div className="relative w-full overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-900">
+    <div className="min-h-screen w-full bg-slate-100 flex flex-col">
+      {/* ── Hero strip (Maintained dark aesthetic for header impact) ── */}
+      <div className="relative w-full overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-900 border-b border-slate-800">
         <div
           className="absolute inset-0 opacity-20 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/images/bg/bgc.jpg')" }}
@@ -151,100 +165,90 @@ export default function ModuleTrackPicker({ course, moduleSlug }: Props) {
         </div>
       </div>
 
-      {/* ── Track cards ── */}
-      <div className="relative w-full px-4 sm:px-8 lg:px-14 py-12 sm:py-16">
-        {/* Background */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/images/bg/bgc.jpg')" }}
-        />
-        <div className="absolute inset-0 bg-white/30" />
-
-        <div className="relative z-10 max-w-5xl mx-auto">
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-8"
-          >
+      {/* ── Section Header: Choose Your Learning Path ── */}
+      <div className="w-full bg-slate-200/60 border-b border-slate-300/70 py-10 px-4 sm:px-8 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="max-w-3xl mx-auto flex flex-col items-center"
+        >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-blue-600/10 text-blue-700 border border-blue-600/20 mb-3">
+            <Compass className="w-4 h-4 text-blue-600" />
+            <span>Learning Tracks</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
             Choose Your Learning Path
-          </motion.p>
+          </h2>
+          <p className="mt-2 text-slate-600 text-sm sm:text-base max-w-lg">
+            Select the format that best fits your schedule, goals, and preferred pace of study.
+          </p>
+        </motion.div>
+      </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6">
-            {tracks.map((track, i) => {
-              const FeatureIcon = track.FeatureIcon;
-              return (
-                <motion.div
-                  key={track.id}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.08 + i * 0.1, type: "spring", stiffness: 200 }}
+      {/* ── Full-Width Light Split Screen Track Picker ── */}
+      <div className="relative flex-1 w-full grid grid-cols-1 lg:grid-cols-2">
+        {tracks.map((track, index) => {
+          const FeatureIcon = track.FeatureIcon;
+
+          return (
+            <motion.div
+              key={track.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * index, duration: 0.5 }}
+              className={`relative group min-h-[500px] lg:min-h-[calc(100vh-420px)] flex flex-col justify-between p-8 sm:p-12 lg:p-16 overflow-hidden border-b lg:border-b-0 lg:border-r ${track.borderStyle} last:border-none ${track.cardBg}`}
+            >
+              {/* Card Header Content */}
+              <div className="relative z-10 flex flex-col items-start">
+                {/* Badge */}
+                <div
+                  className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border ${track.badgeBg}`}
                 >
+                  <FeatureIcon className="w-4 h-4" />
+                  <span>{track.badge}</span>
+                </div>
+
+                {/* Subtitle & Title */}
+                <p className={`font-bold text-sm tracking-wider uppercase mt-6 mb-1 ${track.accentText}`}>
+                  {track.subtitle}
+                </p>
+                <h3 className={`text-3xl sm:text-4xl xl:text-5xl font-black tracking-tight ${track.titleText}`}>
+                  {track.label}
+                </h3>
+              </div>
+
+              {/* Card Footer Content */}
+              <div className="relative z-10 flex flex-col gap-8 mt-12">
+                {/* Description */}
+                <p className={`text-base sm:text-lg leading-relaxed max-w-xl font-normal ${track.bodyText}`}>
+                  {track.about}
+                </p>
+
+                {/* Lessons Stats & CTA Row */}
+                <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-6 border-t ${track.borderStyle}`}>
+                  <div>
+                    <span className={`block text-3xl sm:text-4xl font-black tabular-nums ${track.statNumberText}`}>
+                      {track.lessons}
+                    </span>
+                    <span className={`text-xs font-bold uppercase tracking-wider ${track.statLabelText}`}>
+                      Lessons Available
+                    </span>
+                  </div>
+
+                  {/* Action Link Button */}
                   <Link
                     href={track.href}
-                    className="group flex flex-col sm:flex-row lg:flex-col xl:flex-row h-full min-h-[280px] bg-white/90 backdrop-blur-sm rounded-3xl border border-white/80 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:border-blue-200/80 transition-all duration-300 overflow-hidden"
+                    className={`inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl font-extrabold text-sm tracking-wide transition-all duration-300 group/btn ${track.ctaBg}`}
                   >
-                    {/* Image side */}
-                    <div className="relative w-full sm:w-[42%] lg:w-full xl:w-[42%] aspect-[16/11] sm:aspect-auto sm:min-h-[260px] lg:aspect-[16/10] xl:aspect-auto xl:min-h-[280px] bg-slate-100 overflow-hidden shrink-0">
-                      <Image
-                        src={track.image}
-                        alt={track.label}
-                        fill
-                        className="object-cover group-hover:scale-[1.04] transition-transform duration-500"
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-                      <span
-                        className={`absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider text-white bg-gradient-to-r ${track.accent} shadow-md`}
-                      >
-                        <FeatureIcon className="w-3.5 h-3.5" />
-                        {track.badge}
-                      </span>
-                    </div>
-
-                    {/* Content side */}
-                    <div className="flex flex-col flex-1 p-6 sm:p-7 lg:p-8 justify-between">
-                      <div>
-                        <div className="flex items-center gap-2.5 mb-2">
-                          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-[#2563EB]">
-                            <FeatureIcon className="w-4 h-4" />
-                          </span>
-                          <div>
-                            <h3 className="font-extrabold text-slate-900 text-xl sm:text-2xl tracking-tight">
-                              {track.label}
-                            </h3>
-                            <p className="text-sm font-semibold text-blue-600">
-                              {track.subtitle}
-                            </p>
-                          </div>
-                        </div>
-                        <p className="mt-3 text-sm sm:text-[15px] text-slate-600 leading-relaxed">
-                          {track.about}
-                        </p>
-
-                        {/* Lesson count for this module */}
-                        <div className="mt-4 flex items-baseline gap-1.5">
-                          <span className="text-3xl font-extrabold tabular-nums text-[#2563EB]">
-                            {track.lessons}
-                          </span>
-                          <span className="text-sm font-semibold text-slate-500">
-                            lessons in this module
-                          </span>
-                        </div>
-                      </div>
-
-                      <span
-                        className={`mt-6 inline-flex items-center justify-center gap-1.5 w-full py-3.5 px-4 rounded-xl font-bold text-sm transition-all duration-300 ${track.ctaClass}`}
-                      >
-                        View {track.label}
-                        <ChevronRight className="w-4 h-4" />
-                      </span>
-                    </div>
+                    <span>Explore Track</span>
+                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                   </Link>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
     </div>
   );

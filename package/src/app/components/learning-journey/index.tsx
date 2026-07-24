@@ -59,7 +59,7 @@ const stages: Stage[] = [
     icon: GraduationCap,
     href: "/master-class",
     color: "#f3e8ff",
-    light: "#8b5cf6",
+    light: "#5214e3ff",
     side: "right",
   },
   {
@@ -71,7 +71,7 @@ const stages: Stage[] = [
     icon: Shield,
     href: BECOME_PRIVATE_HUB_PATH,
     color: "#ccfbf1",
-    light: "#0d9488",
+    light: "#f5c858ff",
     side: "left",
   },
   {
@@ -95,7 +95,7 @@ const stages: Stage[] = [
     icon: Wallet,
     href: FINANCIAL_FREEDOM_HUB_PATH,
     color: "#fae8ff",
-    light: "#c026d3",
+    light: "#1d09f6ff",
     side: "left",
   },
   {

@@ -19,23 +19,36 @@ type BlogDetailProps = {
 };
 
 function renderInlineText(text: string): React.ReactNode {
-  const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
+  // Split on both bold (**text**) and link ([text](url)) patterns
+  const parts = text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g);
 
   return parts.map((part, index) => {
-    const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-    if (match) {
+    // Handle [link](url)
+    const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (linkMatch) {
       return (
         <a
           key={index}
-          href={match[2]}
+          href={linkMatch[2]}
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 hover:text-blue-700 underline underline-offset-2 font-medium italic"
         >
-          {match[1]}
+          {linkMatch[1]}
         </a>
       );
     }
+
+    // Handle **bold**
+    const boldMatch = part.match(/^\*\*([^*]+)\*\*$/);
+    if (boldMatch) {
+      return (
+        <strong key={index} className="font-semibold text-neutral-900">
+          {boldMatch[1]}
+        </strong>
+      );
+    }
+
     return part;
   });
 }

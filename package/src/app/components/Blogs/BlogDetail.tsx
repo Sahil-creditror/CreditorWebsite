@@ -228,13 +228,29 @@ export default function BlogDetail({ post }: BlogDetailProps) {
                 );
               }
 
-              if (block.startsWith("*") && block.endsWith("*") && block.length > 2) {
+              if (
+                block.startsWith("*") &&
+                block.endsWith("*") &&
+                block.length > 2 &&
+                !block.startsWith("**")
+              ) {
                 return (
                   <p
                     key={index}
                     className="text-neutral-600 text-sm sm:text-base leading-relaxed italic"
                   >
                     {renderInlineText(block.slice(1, -1))}
+                  </p>
+                );
+              }
+
+              if (block.startsWith("**") && block.endsWith("**") && block.length > 4) {
+                return (
+                  <p
+                    key={index}
+                    className="text-neutral-900 text-sm sm:text-base font-semibold leading-relaxed"
+                  >
+                    {block.slice(2, -2)}
                   </p>
                 );
               }

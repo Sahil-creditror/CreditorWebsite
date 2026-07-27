@@ -15,25 +15,25 @@ const BootcampBanner = () => {
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: false, amount: 0.2 });
 
-    // Single source of truth fully aligned with the mll.jpg flyer
+    // Single source of truth fully aligned with the bgt.jpg flyer
     const classData = {
-        imageSrc: "/images/todayclasstopic/mll.jpg", 
-        imageAlt: "Master Class on Exit Strategy Planning by Creditor Academy",
-        badge: "Master Class • July 24, 2026 at 11:00 AM PST",
+        imageSrc: "/images/todayclasstopic/bgt.jpg", 
+        imageAlt: "Master Class on Business Growth Through Strategic Partnerships by Creditor Academy",
+        badge: "Master Class • July 27, 2026 at 11:00 AM PST",
         heading: (
             <>
-                Master Class on{" "}
+                Business Growth Through{" "}
                 <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                    Exit Strategy Planning
+                    Strategic Partnerships
                 </span>
             </>
         ),
         description:
-            "Plan Your Business Exit with Confidence.",
+            "Grow Your Business Through Strategic Partnerships",
         benefits: [
-            "Value",
-            "Transition",
-            "Legacy",
+            "Partner Smarter",
+            "Expand Your Network",
+            "Accelerate Growth",
             "Creditor Academy Expert Guidance",
         ],
     };
@@ -178,6 +178,7 @@ const BootcampBanner = () => {
 };
 
 export default BootcampBanner;
+
 
 
 

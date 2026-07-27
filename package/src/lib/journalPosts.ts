@@ -172,7 +172,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
 
       "## Business Credit vs Personal Credit",
 
-      "Although they share similarities, **business credit vs personal credit** serve different purposes.",
+      "Although they share similarities, [business credit vs personal credit](https://creditoracademy.com/Blogs/business-credit-vs-personal-credit) serve different purposes.",
 
       "[TABLE]\nBusiness Credit|Personal Credit\nBuilt for a business|Built for an individual\nUsed for business expenses|Used for personal expenses\nSupports business financing|Supports personal borrowing\nEvaluated by commercial lenders|Evaluated by consumer lenders\nHelps establish company credibility|Reflects individual financial behavior\n[/TABLE]",
 

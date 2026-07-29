@@ -106,7 +106,7 @@ const HeroSection = () => {
     subTitle: "Build Generational Wealth",
     description:
       "Learn business trusts, asset protection, business credit, and financial sovereignty through the Creditor Academy Masterclass — the strategies the privileged use to build, protect, and pass on wealth.",
-    bgImage: "/images/lifestylebg.png",
+    bgImage: "https://res.cloudinary.com/jup2hjfk/image/upload/v1784883256/lifestylebg_l9rhch.png",
   };
 
   return (

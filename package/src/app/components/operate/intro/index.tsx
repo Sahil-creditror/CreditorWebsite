@@ -221,7 +221,8 @@ export default function CourseOverviewSection() {
           <div className="w-full aspect-video rounded-2xl relative overflow-hidden">
             <iframe
               className="absolute inset-0 w-full h-full"
-              src="https://drive.google.com/file/d/1_x_eof3Q40gXfXepGAeMCEX98Dro6dIA/preview"
+              src="https://creditorappuniquebucket02082025.s3.us-east-1.amazonaws.com/course/Operate+Private+Bootcamp.mp4
+"
               allow="autoplay"
               allowFullScreen
               title="Course detail video"

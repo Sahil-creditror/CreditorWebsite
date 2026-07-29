@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 
 import { WORKSHOP_REGISTER_URL } from "@/lib/workshop";
 
-// Target Event Timestamp updated to Saturday, July 25, 2026 @ 11 AM PST
-const TARGET_EVENT_MS = new Date("2026-07-25T11:00:00-07:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/bbcs.jpeg"; 
-const EVENT_DATE_LABEL = "Saturday, July 25, 2026";
+// Target Event Timestamp updated to Saturday, August 1, 2026 @ 11 AM PST
+const TARGET_EVENT_MS = new Date("2026-08-01T11:00:00-07:00").getTime();
+const EVENT_IMAGE = "/images/todayclasstopic/htp.jpg"; 
+const EVENT_DATE_LABEL = "Saturday, August 1, 2026";
 
 interface EventPopupProps {
   delayMs?: number;
@@ -96,7 +96,7 @@ export default function EventPopup({
       onClick={(e) => {
         if (e.target === e.currentTarget) handleClose();
       }}
-      data-event-popup="ca7-build-business-credit"
+      data-event-popup="ca7-prepare-business-funding"
     >
       <div
         role="dialog"
@@ -131,24 +131,24 @@ export default function EventPopup({
               <div className="event-popup-badges">
                 <span className="event-badge event-badge--live">
                   <span className="event-badge-dot" aria-hidden />
-                  WORKSHOP
+                  FREE WORKSHOP
                 </span>
-                <span className="event-badge event-badge--date">Saturday, July 25, 2026 @ 11 AM PST</span>
+                <span className="event-badge event-badge--date">Saturday, August 1, 2026 @ 11 AM PST</span>
               </div>
             </header>
 
             <h2 id="event-popup-title" className="event-popup-title">
-              Build Business Credit <span className="event-popup-title-accent">from Scratch</span> in 2026
+              How To Prepare Your Business <span className="event-popup-title-accent">For Funding</span>
             </h2>
 
             <p className="event-popup-desc">
-              <strong>Build a fundable business with confidence.</strong> Learn key strategies to establish credit and grow your organization seamlessly.
+              <strong>Get Funding-Ready with Confidence.</strong> Learn essential strategies to establish credibility, strengthen financials, and prepare for business capital.
             </p>
 
             <div className="event-popup-tags">
-              <span>Establish Business Credit</span>
-              <span>Boost Funding Readiness</span>
-              <span>Grow Without Personal Credit</span>
+              <span>Build Credibility</span>
+              <span>Strengthen Financials</span>
+              <span>Prepare For Funding</span>
             </div>
 
             <div className="event-popup-countdown-wrap">
@@ -179,7 +179,7 @@ export default function EventPopup({
               rel="noopener noreferrer"
               className="event-popup-cta"
             >
-              REGISTER TODAY!
+              REGISTER NOW!
             </a>
           </div>
 
@@ -188,7 +188,7 @@ export default function EventPopup({
             <div className="event-popup-poster-card">
               <Image
                 src={EVENT_IMAGE}
-                alt={`Workshop on Build Business Credit from Scratch in 2026 — ${EVENT_DATE_LABEL}`}
+                alt={`Free Workshop on How To Prepare Your Business For Funding — ${EVENT_DATE_LABEL}`}
                 width={480}
                 height={480}
                 className="event-popup-poster-img"

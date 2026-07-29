@@ -5,17 +5,17 @@ import Link from "next/link";
 import { Clock, Sparkles, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 
-// ── Event Constants Extracted Directly From bbcs_2.jpeg ─────────────────────
-const WORKSHOP_EVENT_CALENDAR_DAY    = "25";
-const WORKSHOP_EVENT_CALENDAR_MONTH  = "JULY";
-const WORKSHOP_EVENT_DATE_LABEL      = "Saturday, July 25, 2026";
+// ── Event Constants Extracted Directly From htp_2.jpg ────────────────────────
+const WORKSHOP_EVENT_CALENDAR_DAY    = "1";
+const WORKSHOP_EVENT_CALENDAR_MONTH  = "AUG";
+const WORKSHOP_EVENT_DATE_LABEL      = "Saturday, August 1, 2026";
 const WORKSHOP_EVENT_TIME_DISPLAY    = "11:00 AM";
 const WORKSHOP_EVENT_TIME_PST        = "11:00 AM PST";
 const WORKSHOP_EVENT_TIMEZONE_LABEL  = "PST";
 
-// Target Countdown Date: Saturday, July 25, 2026, 11:00 AM PST
-const WORKSHOP_EVENT_CLOSE_MS        = new Date("2026-07-25T11:00:00-07:00").getTime();
-const WORKSHOP_EVENT_IMAGE           = "/images/todayclasstopic/bbcs.jpeg"; 
+// Target Countdown Date: Saturday, August 1, 2026, 11:00 AM PST
+const WORKSHOP_EVENT_CLOSE_MS        = new Date("2026-08-01T11:00:00-07:00").getTime();
+const WORKSHOP_EVENT_IMAGE           = "/images/todayclasstopic/htp.jpg"; 
 const REGISTRATION_LINK_URL          = "https://api.wonderengine.ai/widget/form/mL2L8I8p4RI7AF61stUd";
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -35,24 +35,24 @@ function getCountdown(targetMs: number) {
 
 // Key Takeaways & Objectives from the Flyer
 const INCLUDED = [
-  "Establish Business Credit",
-  "Boost Funding Readiness",
-  "Grow Without Personal Credit",
-  "Build a fundable business structure with confidence",
-  "Separate personal asset liabilities from corporate entity credit",
-  "Access high-limit commercial lines & vendor accounts",
+  "Build Credibility",
+  "Strengthen Financials",
+  "Prepare For Funding",
+  "Get Funding-Ready with Confidence",
+  "Structure corporate compliance for bankability",
+  "Unlock capital and funding opportunities",
 ] as const;
 
 const TRADITIONAL = [
-  { title: "Personal Credit Exposure", body: "Relying strictly on personal SSN, personal guarantee loans, and personal credit cards for business expenses, putting personal assets at risk." },
-  { title: "Low Approval Limits", body: "Getting restricted by individual borrowing caps and high credit utilization ratios, choking business expansion and cash flow." },
-  { title: "Unstructured Credit Profile", body: "Operating without proper corporate registration, missing business bureau profiles (D&B, Experian Commercial), and unoptimized funding readiness." },
+  { title: "Unprepared Business Profile", body: "Lacking corporate credibility, proper entity setup, and business bureau alignment needed to pass lender screening." },
+  { title: "Weak Financial Foundation", body: "Operating with disorganized records, low cash flow visibility, and unoptimized financials that trigger loan rejections." },
+  { title: "Funding Uncertainty", body: "Approaching lenders blindly without understanding key underwriting criteria, leading to wasted time and credit hard pulls." },
 ] as const;
 
 const CREDITOR = [
-  { title: "Dedicated Business Credit Profiles", body: "Establishing corporate credit profiles tied exclusively to your EIN, allowing your business to borrow independently." },
-  { title: "High-Limit Funding Readiness", body: "Structuring compliance and bankability metrics to access significant corporate lines of credit and vendor financing." },
-  { title: "Complete Personal Asset Protection", body: "Scaling operations rapidly with business-only liabilities, preserving personal credit scores and shielding personal assets." },
+  { title: "Bulletproof Corporate Credibility", body: "Establishing structured business compliance, proper bureau listings, and verification metrics that banks trust." },
+  { title: "Strengthened Financial Statements", body: "Optimizing cash flow indicators and financial readiness to meet high-limit institutional underwriting requirements." },
+  { title: "Strategic Funding Readiness", body: "Approaching financial institutions with complete confidence and a fundable structure built to secure capital." },
 ] as const;
 
 export default function WorkshopPageContent() {
@@ -89,24 +89,24 @@ export default function WorkshopPageContent() {
                 Creditor Academy · Private Montessori Association
               </p>
               <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-[2.85rem] uppercase">
-                BUILD BUSINESS CREDIT{" "}
+                HOW TO PREPARE YOUR BUSINESS{" "}
                 <span className="block bg-linear-to-r from-blue-400 via-sky-300 to-white bg-clip-text text-transparent font-black mt-1">
-                  FROM SCRATCH IN 2026
+                  FOR FUNDING.
                 </span>
                 <span className="text-2xl sm:text-3xl block mt-1 text-slate-200 lowercase font-medium italic">
-                  build a fundable business with confidence
+                  get funding-ready with confidence
                 </span>
               </h1>
 
               <div className="mt-5 inline-block rounded-xl bg-black/30 border border-white/10 px-4 py-2.5 text-left">
                 <p className="text-sm font-bold text-amber-300 sm:text-base flex items-center gap-2">
-                  <span className="bg-amber-400 text-slate-950 px-2 py-0.5 rounded text-xs font-black animate-pulse">🔥 LIVE WORKSHOP</span>
-                  ESTABLISH &amp; GROW BUSINESS CREDIT.
+                  <span className="bg-amber-400 text-slate-950 px-2 py-0.5 rounded text-xs font-black animate-pulse">🔥 FREE WORKSHOP</span>
+                  BUILD CREDIBILITY &amp; STRENGTHEN FINANCIALS.
                 </p>
               </div>
 
               <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-blue-100/85 lg:mx-0">
-                Learn step-by-step strategies to build corporate credit profiles, boost funding readiness, and scale your business without relying on personal credit.
+                Learn step-by-step strategies to build credibility, strengthen your financial positioning, and prepare your business for high-limit funding.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -114,9 +114,9 @@ export default function WorkshopPageContent() {
                   href={REGISTRATION_LINK_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-full bg-linear-to-r from-amber-400 to-yellow-500 px-8 py-4 text-base font-extrabold text-slate-950 shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5 hover:brightness-110"
+                  className="inline-flex items-center justify-center rounded-full bg-linear-to-r from-amber-400 to-yellow-500 px-8 py-4 text-base font-extrabold text-slate-950 shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5 hover:brightness-110 uppercase"
                 >
-                  Register Today!
+                  Register Now!
                 </Link>
                 <span className="text-xs font-semibold text-blue-200/70 tracking-wide">
                   100% Free Registration • Instant Access Credentials
@@ -128,7 +128,7 @@ export default function WorkshopPageContent() {
               <div className="overflow-hidden rounded-2xl border border-white/20 bg-white p-2 shadow-2xl shadow-black/30 ring-1 ring-primary/30">
                 <Image
                   src={WORKSHOP_EVENT_IMAGE}
-                  alt="Build Business Credit from Scratch in 2026 Workshop Flyer — Saturday, July 25, 2026"
+                  alt="How To Prepare Your Business For Funding Workshop Flyer — Saturday, August 1, 2026"
                   width={440}
                   height={440}
                   className="w-full rounded-xl object-contain bg-slate-950"
@@ -158,11 +158,11 @@ export default function WorkshopPageContent() {
                   LIVE ONLINE WORKSHOP
                 </span>
                 <h2 className="mt-4 text-2xl font-black tracking-tight text-slate-900 md:text-3xl uppercase">
-                  July 25 Workshop
+                  August 1 Workshop
                 </h2>
                 <p className="mt-2 flex items-center justify-center gap-2 text-slate-600 lg:justify-start text-sm">
                   <Video className="h-4 w-4 shrink-0 text-primary" aria-hidden />
-                  Structuring Corporate Credit &amp; Funding Capacity
+                  Preparing Corporate Financials &amp; Bankability
                 </p>
               </div>
 
@@ -213,21 +213,21 @@ export default function WorkshopPageContent() {
       <section className="bg-[#f0f7fd] py-16 md:py-24">
         <div className="container">
           <p className="text-center text-sm font-bold uppercase tracking-widest text-primary">
-            Financial Freedom &amp; Leverage
+            Financial Preparedness &amp; Capital Access
           </p>
           <h2 className="mx-auto mt-3 max-w-2xl text-center text-3xl font-bold text-slate-900 md:text-4xl">
-            Personal Liability vs. Structured Business Credit
+            Unprepared Businesses vs. Funding-Ready Organizations
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-center text-slate-600">
-            Discover how establishing standalone corporate credit empowers your organization without personal liability bottlenecks.
+            Discover how positioning your corporate financials and credibility opens doors to high-limit business funding.
           </p>
 
           <div className="mx-auto mt-12 grid max-w-5xl gap-8 lg:grid-cols-2">
             <div className="rounded-2xl border-2 border-[#c5dff5] bg-white/60 p-8 backdrop-blur-sm">
               <span className="inline-block rounded-full bg-[#d0e8f8] px-3 py-1 text-xs font-bold uppercase text-slate-600">
-                Personal Credit Reliance
+                Unprepared Business
               </span>
-              <p className="mt-4 text-sm font-bold text-slate-400 tracking-wide">RISKY &amp; RESTRICTED</p>
+              <p className="mt-4 text-sm font-bold text-slate-400 tracking-wide">HIGH RISK &amp; FREQUENT DENIALS</p>
               <ul className="mt-6 space-y-6">
                 {TRADITIONAL.map((item) => (
                   <li key={item.title}>
@@ -240,9 +240,9 @@ export default function WorkshopPageContent() {
 
             <div className="rounded-2xl border-2 border-primary bg-linear-to-br from-[#dbeafe] to-[#eff6ff] p-8 shadow-lg shadow-blue-500/15">
               <span className="inline-block rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase text-white">
-                Fundable Corporate Structure
+                Funding-Ready Corporate Structure
               </span>
-              <p className="mt-4 text-sm font-bold text-primary tracking-wide">PROTECTED &amp; SCALABLE</p>
+              <p className="mt-4 text-sm font-bold text-primary tracking-wide">CONFIDENT &amp; BANKABLE</p>
               <ul className="mt-6 space-y-6">
                 {CREDITOR.map((item) => (
                   <li key={item.title}>
@@ -270,11 +270,11 @@ export default function WorkshopPageContent() {
                 <h2 className="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
                   Unlock Your Free{" "}
                   <span className="bg-linear-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent">
-                    Business Credit Blueprint
+                    Funding Readiness Blueprint
                   </span>
                 </h2>
                 <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-blue-100/90 lg:mx-0">
-                  Secure access to live walkthroughs detailing how to build corporate credit tier-by-tier and optimize funding readiness.
+                  Secure access to live walkthroughs detailing how to build credibility, strengthen financials, and position your company for funding.
                 </p>
               </div>
 
@@ -322,7 +322,7 @@ export default function WorkshopPageContent() {
                   ONLINE LIVE WORKSHOP
                 </p>
                 <p className="mt-3 text-2xl font-black tracking-tight uppercase">
-                  BUILD BUSINESS CREDIT FROM SCRATCH
+                  HOW TO PREPARE YOUR BUSINESS FOR FUNDING
                 </p>
                 <div className="mt-4 inline-flex flex-col gap-1 rounded-xl bg-black/15 px-5 py-3 text-sm font-bold">
                   <span>{WORKSHOP_EVENT_DATE_LABEL}</span>
@@ -339,7 +339,7 @@ export default function WorkshopPageContent() {
               </div>
 
               <p className="mt-4 text-center text-sm leading-relaxed text-slate-600">
-                Join live this July. Complete registration below to lock in your live streaming seat.
+                Join live this August. Complete registration below to lock in your live streaming seat.
               </p>
 
               <Link
@@ -348,10 +348,10 @@ export default function WorkshopPageContent() {
                 rel="noopener noreferrer"
                 className="mt-6 flex w-full items-center justify-center rounded-full bg-blue-600 py-4 text-base font-extrabold text-white shadow-xl shadow-blue-600/30 transition transform hover:-translate-y-0.5 hover:bg-blue-700 uppercase"
               >
-                Register Today!
+                Register Now!
               </Link>
               <p className="mt-4 text-center text-xs text-slate-400 font-medium">
-                Build a fundable business with confidence starting today!
+                Get funding-ready with confidence starting today!
               </p>
             </div>
           </div>
@@ -387,10 +387,10 @@ export default function WorkshopPageContent() {
       <section className="border-t border-[#c5dff5] bg-linear-to-b from-[#dceefb] to-[#e8f4fc] py-16 md:py-20">
         <div className="container text-center">
           <h2 className="text-2xl font-extrabold text-slate-900 md:text-3xl uppercase tracking-tight">
-            Ready to build a fundable business?
+            Ready to prepare your business for funding?
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-slate-600 font-medium text-sm sm:text-base">
-            Claim your complimentary seat today and start establishing business credit.
+            Claim your complimentary seat today and start getting funding-ready with confidence.
           </p>
           <Link
             href={REGISTRATION_LINK_URL}
@@ -398,7 +398,7 @@ export default function WorkshopPageContent() {
             rel="noopener noreferrer"
             className="mt-8 inline-flex items-center justify-center rounded-full bg-primary px-12 py-4 text-base font-extrabold text-white shadow-lg shadow-blue-500/20 transition transform hover:-translate-y-0.5 hover:bg-[#0259bd] uppercase"
           >
-            Register Today!
+            Register Now!
           </Link>
           <p className="mt-6 text-xs font-bold text-slate-400 uppercase tracking-widest">
             Direct Support Line:{" "}

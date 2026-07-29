@@ -19,23 +19,36 @@ type BlogDetailProps = {
 };
 
 function renderInlineText(text: string): React.ReactNode {
-  const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
+  // Split on both bold (**text**) and link ([text](url)) patterns
+  const parts = text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g);
 
   return parts.map((part, index) => {
-    const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-    if (match) {
+    // Handle [link](url)
+    const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (linkMatch) {
       return (
         <a
           key={index}
-          href={match[2]}
+          href={linkMatch[2]}
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 hover:text-blue-700 underline underline-offset-2 font-medium italic"
         >
-          {match[1]}
+          {linkMatch[1]}
         </a>
       );
     }
+
+    // Handle **bold**
+    const boldMatch = part.match(/^\*\*([^*]+)\*\*$/);
+    if (boldMatch) {
+      return (
+        <strong key={index} className="font-semibold text-neutral-900">
+          {boldMatch[1]}
+        </strong>
+      );
+    }
+
     return part;
   });
 }
@@ -215,13 +228,29 @@ export default function BlogDetail({ post }: BlogDetailProps) {
                 );
               }
 
-              if (block.startsWith("*") && block.endsWith("*") && block.length > 2) {
+              if (
+                block.startsWith("*") &&
+                block.endsWith("*") &&
+                block.length > 2 &&
+                !block.startsWith("**")
+              ) {
                 return (
                   <p
                     key={index}
                     className="text-neutral-600 text-sm sm:text-base leading-relaxed italic"
                   >
                     {renderInlineText(block.slice(1, -1))}
+                  </p>
+                );
+              }
+
+              if (block.startsWith("**") && block.endsWith("**") && block.length > 4) {
+                return (
+                  <p
+                    key={index}
+                    className="text-neutral-900 text-sm sm:text-base font-semibold leading-relaxed"
+                  >
+                    {block.slice(2, -2)}
                   </p>
                 );
               }

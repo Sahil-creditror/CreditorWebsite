@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 
 import { WORKSHOP_REGISTER_URL } from "@/lib/workshop";
 
-// Target Event Timestamp updated to Saturday, August 1, 2026 @ 11 AM PST
-const TARGET_EVENT_MS = new Date("2026-08-01T11:00:00-07:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/htp.jpg"; 
-const EVENT_DATE_LABEL = "Saturday, August 1, 2026";
+// Target Event Timestamp updated to Saturday, July 25, 2026 @ 11 AM PST
+const TARGET_EVENT_MS = new Date("2026-07-25T11:00:00-07:00").getTime();
+const EVENT_IMAGE = "/images/todayclasstopic/bbcs.jpeg"; 
+const EVENT_DATE_LABEL = "Saturday, July 25, 2026";
 
 interface EventPopupProps {
   delayMs?: number;
@@ -30,56 +30,30 @@ function getCountdown(targetMs: number) {
   };
 }
 
-const SESSION_KEY = "event_popup_dismissed";
-
 export default function EventPopup({
   delayMs = 25000,
   disableAutoOpen = false,
   manualTrigger = 0,
 }: EventPopupProps) {
   const [open, setOpen] = useState(false);
-  const [visible, setVisible] = useState(false);
   const [countdown, setCountdown] = useState(() => getCountdown(TARGET_EVENT_MS));
 
-  // Auto-open: only if not already dismissed this session
   useEffect(() => {
     if (disableAutoOpen) return;
-    if (typeof window !== "undefined" && sessionStorage.getItem(SESSION_KEY)) return;
     const timer = setTimeout(() => setOpen(true), delayMs);
-    return () => clearTimeout(timer);
+    return () => clearInterval(timer);
   }, [delayMs, disableAutoOpen]);
 
-  // Manual trigger (Special Offer button) — always opens regardless of session flag
   useEffect(() => {
     if (manualTrigger > 0) setOpen(true);
   }, [manualTrigger]);
 
-  // Trigger entrance animation after mount
   useEffect(() => {
-    if (open) {
-      const frame = requestAnimationFrame(() => setVisible(true));
-      return () => cancelAnimationFrame(frame);
-    } else {
-      setVisible(false);
-    }
-  }, [open]);
-
-  // Countdown ticker
-  useEffect(() => {
-    const id = setInterval(() => setCountdown(getCountdown(TARGET_EVENT_MS)), 1000);
+    const updateCountdown = () => setCountdown(getCountdown(TARGET_EVENT_MS));
+    updateCountdown();
+    const id = setInterval(updateCountdown, 1000);
     return () => clearInterval(id);
   }, []);
-
-  function handleClose() {
-    setVisible(false);
-    // Wait for exit animation then unmount
-    setTimeout(() => {
-      setOpen(false);
-      if (typeof window !== "undefined") {
-        sessionStorage.setItem(SESSION_KEY, "true");
-      }
-    }, 300);
-  }
 
   if (!open) return null;
 
@@ -89,30 +63,21 @@ export default function EventPopup({
   return (
     <div
       className="event-popup-overlay"
-      style={{
-        opacity: visible ? 1 : 0,
-        transition: "opacity 0.3s ease",
-      }}
       onClick={(e) => {
-        if (e.target === e.currentTarget) handleClose();
+        if (e.target === e.currentTarget) setOpen(false);
       }}
-      data-event-popup="ca7-prepare-business-funding"
+      data-event-popup="ca7-build-business-credit"
     >
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="event-popup-title"
         className="event-popup-dialog"
-        style={{
-          transform: visible ? "translateY(0) scale(1)" : "translateY(24px) scale(0.97)",
-          opacity: visible ? 1 : 0,
-          transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease",
-        }}
       >
         <button
           type="button"
           aria-label="Close"
-          onClick={handleClose}
+          onClick={() => setOpen(false)}
           className="event-popup-close"
         >
           <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -131,24 +96,24 @@ export default function EventPopup({
               <div className="event-popup-badges">
                 <span className="event-badge event-badge--live">
                   <span className="event-badge-dot" aria-hidden />
-                  FREE WORKSHOP
+                  WORKSHOP
                 </span>
-                <span className="event-badge event-badge--date">Saturday, August 1, 2026 @ 11 AM PST</span>
+                <span className="event-badge event-badge--date">Saturday, July 25, 2026 @ 11 AM PST</span>
               </div>
             </header>
 
             <h2 id="event-popup-title" className="event-popup-title">
-              How To Prepare Your Business <span className="event-popup-title-accent">For Funding</span>
+              Build Business Credit <span className="event-popup-title-accent">from Scratch</span> in 2026
             </h2>
 
             <p className="event-popup-desc">
-              <strong>Get Funding-Ready with Confidence.</strong> Learn essential strategies to establish credibility, strengthen financials, and prepare for business capital.
+              <strong>Build a fundable business with confidence.</strong> Learn key strategies to establish credit and grow your organization seamlessly.
             </p>
 
             <div className="event-popup-tags">
-              <span>Build Credibility</span>
-              <span>Strengthen Financials</span>
-              <span>Prepare For Funding</span>
+              <span>Establish Business Credit</span>
+              <span>Boost Funding Readiness</span>
+              <span>Grow Without Personal Credit</span>
             </div>
 
             <div className="event-popup-countdown-wrap">
@@ -179,7 +144,7 @@ export default function EventPopup({
               rel="noopener noreferrer"
               className="event-popup-cta"
             >
-              REGISTER NOW!
+              REGISTER TODAY!
             </a>
           </div>
 
@@ -188,7 +153,7 @@ export default function EventPopup({
             <div className="event-popup-poster-card">
               <Image
                 src={EVENT_IMAGE}
-                alt={`Free Workshop on How To Prepare Your Business For Funding — ${EVENT_DATE_LABEL}`}
+                alt={`Workshop on Build Business Credit from Scratch in 2026 — ${EVENT_DATE_LABEL}`}
                 width={480}
                 height={480}
                 className="event-popup-poster-img"

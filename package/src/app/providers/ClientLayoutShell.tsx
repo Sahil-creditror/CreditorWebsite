@@ -114,13 +114,11 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
         /> */}
 
         {/* CA7 June — Business Credit event (auto-opens after 15s; Special Offer button) */}
-        {(pathname === "/" || pathname === "/masterclass-membership") && (
-          <EventPopup
-            delayMs={15000}
-            disableAutoOpen={false}
-            manualTrigger={thanksgivingKey}
-          />
-        )}
+        <EventPopup
+          delayMs={15000}
+          disableAutoOpen={false}
+          manualTrigger={thanksgivingKey}
+        />
 
         {/* Registration Notification Popup - Shows on all pages */}
         {/* <RegPopup /> */}

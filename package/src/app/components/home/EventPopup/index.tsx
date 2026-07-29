@@ -30,30 +30,56 @@ function getCountdown(targetMs: number) {
   };
 }
 
+const SESSION_KEY = "event_popup_dismissed";
+
 export default function EventPopup({
   delayMs = 25000,
   disableAutoOpen = false,
   manualTrigger = 0,
 }: EventPopupProps) {
   const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [countdown, setCountdown] = useState(() => getCountdown(TARGET_EVENT_MS));
 
+  // Auto-open: only if not already dismissed this session
   useEffect(() => {
     if (disableAutoOpen) return;
+    if (typeof window !== "undefined" && sessionStorage.getItem(SESSION_KEY)) return;
     const timer = setTimeout(() => setOpen(true), delayMs);
-    return () => clearInterval(timer);
+    return () => clearTimeout(timer);
   }, [delayMs, disableAutoOpen]);
 
+  // Manual trigger (Special Offer button) — always opens regardless of session flag
   useEffect(() => {
     if (manualTrigger > 0) setOpen(true);
   }, [manualTrigger]);
 
+  // Trigger entrance animation after mount
   useEffect(() => {
-    const updateCountdown = () => setCountdown(getCountdown(TARGET_EVENT_MS));
-    updateCountdown();
-    const id = setInterval(updateCountdown, 1000);
+    if (open) {
+      const frame = requestAnimationFrame(() => setVisible(true));
+      return () => cancelAnimationFrame(frame);
+    } else {
+      setVisible(false);
+    }
+  }, [open]);
+
+  // Countdown ticker
+  useEffect(() => {
+    const id = setInterval(() => setCountdown(getCountdown(TARGET_EVENT_MS)), 1000);
     return () => clearInterval(id);
   }, []);
+
+  function handleClose() {
+    setVisible(false);
+    // Wait for exit animation then unmount
+    setTimeout(() => {
+      setOpen(false);
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem(SESSION_KEY, "true");
+      }
+    }, 300);
+  }
 
   if (!open) return null;
 
@@ -63,8 +89,12 @@ export default function EventPopup({
   return (
     <div
       className="event-popup-overlay"
+      style={{
+        opacity: visible ? 1 : 0,
+        transition: "opacity 0.3s ease",
+      }}
       onClick={(e) => {
-        if (e.target === e.currentTarget) setOpen(false);
+        if (e.target === e.currentTarget) handleClose();
       }}
       data-event-popup="ca7-build-business-credit"
     >
@@ -73,11 +103,16 @@ export default function EventPopup({
         aria-modal="true"
         aria-labelledby="event-popup-title"
         className="event-popup-dialog"
+        style={{
+          transform: visible ? "translateY(0) scale(1)" : "translateY(24px) scale(0.97)",
+          opacity: visible ? 1 : 0,
+          transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease",
+        }}
       >
         <button
           type="button"
           aria-label="Close"
-          onClick={() => setOpen(false)}
+          onClick={handleClose}
           className="event-popup-close"
         >
           <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">

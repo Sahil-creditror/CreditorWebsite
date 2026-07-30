@@ -222,6 +222,12 @@ export const JOURNAL_POSTS: JournalPost[] = [
 
       "Educational platforms such as [Creditor Academy](https://creditoracademy.com/) offer resources to help entrepreneurs improve their financial knowledge.",
 
+      "## Continue Your Financial Education",
+
+      "Want to learn more about financial management, business organization, and long-term planning?",
+
+      "[Contact Creditor Academy](https://creditoracademy.com/contact) to explore educational resources and practical strategies designed to help entrepreneurs make informed business decisions.",
+
       "*This article is for educational purposes only and does not constitute legal, tax, financial, or cybersecurity advice. Consult qualified professionals regarding your specific business circumstances.*",
     ],
   },

@@ -136,7 +136,6 @@ const HeroSection = () => {
         {/* Soft Organic Ambient Light Glares */}
         <div className="absolute top-1/3 left-[-10%] w-[600px] h-[600px] bg-sky-500/10 blur-[180px] rounded-full pointer-events-none" />
         <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-indigo-500/5 blur-[150px] rounded-full pointer-events-none" />
-        <LuxuryParticles />
       </div>
 
       {/* TYPOGRAPHY & CTA LAYOUT CONTAINER */}

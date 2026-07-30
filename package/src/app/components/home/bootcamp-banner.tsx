@@ -184,8 +184,6 @@
 
 
 
-
-
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -204,44 +202,44 @@ export default function BootcampBanner() {
   const isInView = useInView(containerRef, { once: false, amount: 0.2 });
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Content updated from the provided flyers (sowf.jpg & opsdd.jpg)
+  // Updated content extracted directly from mc.jpg and ff.jpg flyers
   const classes = [
     {
-      imageSrc: "/images/todayclasstopic/sowf.jpeg",
-      imageAlt: "Master Class: Scaling Operations with Financing",
-      badge: "Master Class • July 29, 2026 @ 11:00 AM PST",
+      imageSrc: "/images/todayclasstopic/mc.jpg",
+      imageAlt: "Master Class on Preparing for Investor Due Diligence",
+      badge: "Master Class • July 30, 2026 @ 11:00 AM PST",
       heading: (
         <>
-          Scaling Operations{" "}
+          Preparing for{" "}
           <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-            with Financing
+            Investor Due Diligence
           </span>
         </>
       ),
-      description: "Scale Smarter. Grow Faster.",
+      description: "Get your business funding-ready with structured diligence strategies.",
       benefits: [
-        "Secure Growth Capital",
-        "Expand Operations with Confidence",
-        "Build a Scalable Business Strategy",
+        "Clean Financials",
+        "Strong Documentation",
+        "Funding Readiness",
       ],
     },
     {
-      imageSrc: "/images/todayclasstopic/opsdd.jpg",
-      imageAlt: "Operate Private: Secure Digital Documentation",
-      badge: "Master Class • July 29, 2026 @ 11:00 AM PST",
+      imageSrc: "/images/todayclasstopic/ff.jpg",
+      imageAlt: "Financial Freedom: Retirement Planning for Entrepreneurs",
+      badge: "Master Class • July 30, 2026 @ 11:00 AM PST",
       heading: (
         <>
-          Operate Private:{" "}
+          Financial Freedom:{" "}
           <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-            Secure Digital Documentation
+            Retirement Planning
           </span>
         </>
       ),
-      description: "Keep your business records safe and organized.",
+      description: "Build Wealth Beyond Your Business.",
       benefits: [
-        "Secure Digital Files",
-        "Protect Business Records",
-        "Stay Organized",
+        "Plan for Retirement",
+        "Secure Your Future",
+        "Build Lasting Wealth",
       ],
     },
   ];

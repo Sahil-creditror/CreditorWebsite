@@ -52,10 +52,13 @@ const CourseRoadmap: React.FC = () => {
     <section className="relative overflow-hidden py-20 px-5 sm:px-8 bg-slate-100 min-h-screen flex items-center justify-center">
       
       {/* Background Image Layer */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url('/images/bg/bgc.jpg')` }}
-      />
+    <div
+  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+  style={{
+    backgroundImage:
+      "url('https://res.cloudinary.com/jup2hjfk/image/upload/v1785732410/bgc_qdfjxn.jpg')",
+  }}
+/>
 
       {/* Light tint premium overlay: 
         Mix-blend-overlay keeps the structural depth of your custom image 

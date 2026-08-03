@@ -22,7 +22,7 @@ const benefits: BenefitCard[] = [
     description:
       "Join Creditor Academy and unlock private education, exclusive resources, and a structured path toward financial freedom.",
     image:
-      "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883732/creditor-website-assets/images/offers/enrollnew.png",
+      "https://res.cloudinary.com/dlndnmuq1/image/upload/f_auto,q_auto,w_400/v1768883732/creditor-website-assets/images/offers/enrollnew.png",
     accent: "from-blue-600 via-blue-500 to-sky-400",
     glowColor: "rgba(37, 99, 235, 0.25)",
   },
@@ -33,7 +33,7 @@ const benefits: BenefitCard[] = [
     description:
       "Activate your Creditor Card and enter a private economy built around access, opportunity, and member advantages.",
     image:
-      "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883727/creditor-website-assets/images/offers/card.webp",
+      "https://res.cloudinary.com/dlndnmuq1/image/upload/f_auto,q_auto,w_400/v1768883727/creditor-website-assets/images/offers/card.webp",
     accent: "from-sky-500 via-cyan-400 to-blue-500",
     glowColor: "rgba(14, 165, 233, 0.25)",
   },
@@ -44,7 +44,7 @@ const benefits: BenefitCard[] = [
     description:
       "Access premium courses, live masterclasses, and a private network designed for growth and collaboration.",
     image:
-      "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883729/creditor-website-assets/images/offers/courses.webp",
+      "https://res.cloudinary.com/dlndnmuq1/image/upload/f_auto,q_auto,w_400/v1768883729/creditor-website-assets/images/offers/courses.webp",
     accent: "from-indigo-600 via-blue-600 to-sky-400",
     glowColor: "rgba(79, 70, 229, 0.25)",
   },
@@ -55,7 +55,7 @@ const benefits: BenefitCard[] = [
     description:
       "Apply what you learn to operate privately, protect your assets, and build wealth on your own terms.",
     image:
-      "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883751/creditor-website-assets/images/offers/sovnew.png",
+      "https://res.cloudinary.com/dlndnmuq1/image/upload/f_auto,q_auto,w_400/v1768883751/creditor-website-assets/images/offers/sovnew.png",
     accent: "from-violet-600 via-indigo-500 to-blue-400",
     glowColor: "rgba(124, 58, 237, 0.25)",
   },
@@ -66,10 +66,13 @@ export default function MasterclassBenefits() {
     <div className="relative bg-slate-950 min-h-screen text-slate-100 selection:bg-blue-500/20 py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* --- Original Background Layers --- */}
       <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/images/bg/bggg.jpg')" }}
-        />
+       <div
+  className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+  style={{
+    backgroundImage:
+      "url('https://res.cloudinary.com/jup2hjfk/image/upload/v1785732692/bggg_hyoe8c.jpg')",
+  }}
+/>
         <div className="absolute inset-0 z-0 bg-gradient-to-br from-slate-600/30 via-blue-950/80 to-slate-600/60" />
         
         {/* Grid Pattern Mesh */}

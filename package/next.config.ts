@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // Strip console.* calls in production to reduce JS execution time
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
   // Performance optimizations
   compress: true,
   productionBrowserSourceMaps: false,

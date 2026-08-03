@@ -37,14 +37,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Resource hints for performance */}
-        <link rel="preconnect" href="https://api.lmsathena.com" />
+        {/* Resource hints — keep to ≤4 preconnects to avoid Lighthouse warning */}
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://api.lmsathena.com" />
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        {/* Preload critical hero resources for LCP optimization - poster image only, video loads lazily */}
-        <link rel="preload" as="image" href="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883550/creditor-website-assets/images/hero/banner-1.png" fetchPriority="high" />
-        <link rel="dns-prefetch" href="/video/hero-1.mp4" />
+        {/* Preload LCP hero image — f_auto,q_auto,w_1920 for fastest delivery */}
+        <link
+          rel="preload"
+          as="image"
+          href="https://res.cloudinary.com/jup2hjfk/image/upload/f_auto,q_auto,w_1920/v1784883256/lifestylebg_l9rhch.png"
+          fetchPriority="high"
+        />
         {/* Google Site Verification */}
         <meta name="google-site-verification" content="pH5h_UHFyDB48WepO74L0KD0hE-6UE7vSYLxpv_9vK4" />
         <meta name="google-site-verification" content="nDoDpJQvkKIVVuuxj-MbkiGSJaM6p9JhM7GFy8SSM8o" />

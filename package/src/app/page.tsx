@@ -60,7 +60,9 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <Intro />
+      <Suspense fallback={<div className="min-h-[200px]" />}>
+        <Intro />
+      </Suspense>
       {/* <BootcampBanner /> */}
 
       {/* <StatsFacts /> */}

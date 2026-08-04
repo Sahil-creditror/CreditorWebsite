@@ -113,12 +113,14 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
           manualTrigger={thanksgivingKey}
         /> */}
 
-        {/* CA7 June — Business Credit event (auto-opens after 15s; Special Offer button) */}
-        <EventPopup
-          delayMs={15000}
-          disableAutoOpen={false}
-          manualTrigger={thanksgivingKey}
-        />
+        {/* Event popup — home and masterclass-membership only, instant on load, once per session */}
+        {(pathname === "/" || pathname === "/masterclass-membership") && (
+          <EventPopup
+            delayMs={0}
+            disableAutoOpen={false}
+            manualTrigger={thanksgivingKey}
+          />
+        )}
 
         {/* Registration Notification Popup - Shows on all pages */}
         {/* <RegPopup /> */}

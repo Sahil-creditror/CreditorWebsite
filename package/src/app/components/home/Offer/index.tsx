@@ -70,7 +70,7 @@ export default function MasterclassBenefits() {
   className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
   style={{
     backgroundImage:
-      "url('https://res.cloudinary.com/jup2hjfk/image/upload/v1785732692/bggg_hyoe8c.jpg')",
+      "url('https://res.cloudinary.com/jup2hjfk/image/upload/f_auto,q_auto,w_1920/v1785732692/bggg_hyoe8c.jpg')",
   }}
 />
         <div className="absolute inset-0 z-0 bg-gradient-to-br from-slate-600/30 via-blue-950/80 to-slate-600/60" />
@@ -150,6 +150,8 @@ export default function MasterclassBenefits() {
                       src={item.image}
                       alt={item.title}
                       fill
+                      loading="lazy"
+                      decoding="async"
                       className="object-contain object-center filter drop-shadow-[0_16px_24px_rgba(0,0,0,0.7)]"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                     />

@@ -138,10 +138,11 @@ export default function AboutCreditorAcademy() {
                   <div className="relative w-40 h-40 sm:w-44 sm:h-44 rounded-full p-1 bg-gradient-to-tr from-blue-600 to-indigo-600 shadow-xl">
 <div className="w-full h-full rounded-full overflow-hidden bg-slate-100 border-4 border-white relative">
   <Image
-    src="https://res.cloudinary.com/jup2hjfk/image/upload/v1785733640/Paul_o8ocl3.avif"
+    src="https://res.cloudinary.com/jup2hjfk/image/upload/f_auto,q_auto,w_200/v1785733640/Paul_o8ocl3.avif"
     alt="PaulMichael Rowland"
     fill
-    priority
+    loading="lazy"
+    decoding="async"
     className="object-cover object-top scale-105 hover:scale-110 transition-transform duration-500"
   />
 </div>

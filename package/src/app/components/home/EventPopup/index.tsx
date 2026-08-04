@@ -31,19 +31,24 @@ function getCountdown(targetMs: number) {
 }
 
 export default function EventPopup({
-  delayMs = 25000,
+  delayMs = 0,
   disableAutoOpen = false,
   manualTrigger = 0,
 }: EventPopupProps) {
   const [open, setOpen] = useState(false);
   const [countdown, setCountdown] = useState(() => getCountdown(TARGET_EVENT_MS));
 
+  const STORAGE_KEY = "ca_event_popup_dismissed";
+
+  // Auto-open on mount — instant (delayMs=0) unless already dismissed this session
   useEffect(() => {
     if (disableAutoOpen) return;
+    if (sessionStorage.getItem(STORAGE_KEY)) return;
     const timer = setTimeout(() => setOpen(true), delayMs);
-    return () => clearInterval(timer);
+    return () => clearTimeout(timer);
   }, [delayMs, disableAutoOpen]);
 
+  // Manual trigger (e.g. Special Offer button) always opens regardless of session
   useEffect(() => {
     if (manualTrigger > 0) setOpen(true);
   }, [manualTrigger]);
@@ -55,6 +60,11 @@ export default function EventPopup({
     return () => clearInterval(id);
   }, []);
 
+  function dismiss() {
+    setOpen(false);
+    sessionStorage.setItem(STORAGE_KEY, "1");
+  }
+
   if (!open) return null;
 
   const { days, hours, minutes, seconds } = countdown;
@@ -64,7 +74,7 @@ export default function EventPopup({
     <div
       className="event-popup-overlay"
       onClick={(e) => {
-        if (e.target === e.currentTarget) setOpen(false);
+        if (e.target === e.currentTarget) dismiss();
       }}
       data-event-popup="ca7-prepare-business-funding"
     >
@@ -77,7 +87,7 @@ export default function EventPopup({
         <button
           type="button"
           aria-label="Close"
-          onClick={() => setOpen(false)}
+          onClick={() => dismiss()}
           className="event-popup-close"
         >
           <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">

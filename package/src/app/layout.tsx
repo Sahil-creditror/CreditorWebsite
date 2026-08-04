@@ -66,11 +66,7 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* Google Ads - Deferred to improve LCP */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=AW-17542559364"
-          strategy="lazyOnload"
-        />
+        {/* Google Ads conversion tracking - inited below via lazyOnload */}
         {/* Meta Pixel Code */}
         <MetaPixelHead />
       </head>

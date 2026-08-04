@@ -270,10 +270,11 @@ export default function WebclassSection() {
             {/* Core Presenter Photograph Container */}
             <div className="relative w-full h-full overflow-hidden bg-gradient-to-b from-blue-900 via-slate-900 to-slate-950">
               <Image
-                src="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883348/creditor-website-assets/images/avatar/paul2.webp"
+                src="https://res.cloudinary.com/dlndnmuq1/image/upload/f_auto,q_auto,w_600/v1768883348/creditor-website-assets/images/avatar/paul2.webp"
                 alt="PaulMichael Rowland"
                 fill
-                priority
+                loading="lazy"
+                decoding="async"
                 sizes="(max-width: 1024px) 100vw, 35vw"
                 className="object-cover object-top transition-transform duration-700 group-hover:scale-103"
               />

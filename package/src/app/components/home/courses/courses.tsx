@@ -11,7 +11,7 @@ const CourseRoadmap: React.FC = () => {
   const courses = [
     {
       title: "Become Private",
-      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883850/creditor-website-assets/images/projects/projectlist/become.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_auto,q_auto,w_600/v1768883850/creditor-website-assets/images/projects/projectlist/become.webp",
       subtitle: "Reclaim Your Lawful Identity",
       description: "Step out of public systems and transition your legal parameters into the private domain.",
       learnings: [
@@ -23,7 +23,7 @@ const CourseRoadmap: React.FC = () => {
     },
     {
       title: "Operate Private",
-      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883858/creditor-website-assets/images/projects/projectlist/operate.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_auto,q_auto,w_600/v1768883858/creditor-website-assets/images/projects/projectlist/operate.webp",
       subtitle: "Asset Protection & Business",
       description: "Build, manage, and scale an independent private empire shielded from public liabilities.",
       learnings: [
@@ -36,7 +36,7 @@ const CourseRoadmap: React.FC = () => {
     },
     {
       title: "Financial Freedom",
-      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883854/creditor-website-assets/images/projects/projectlist/financial.webp",
+      image: "https://res.cloudinary.com/dlndnmuq1/image/upload/f_auto,q_auto,w_600/v1768883854/creditor-website-assets/images/projects/projectlist/financial.webp",
       subtitle: "Capital & Credit Architectures",
       description: "Master the architecture of modern private commerce, banking funding, and credit systems.",
       learnings: [
@@ -56,7 +56,7 @@ const CourseRoadmap: React.FC = () => {
   className="absolute inset-0 bg-cover bg-center bg-no-repeat"
   style={{
     backgroundImage:
-      "url('https://res.cloudinary.com/jup2hjfk/image/upload/v1785732410/bgc_qdfjxn.jpg')",
+      "url('https://res.cloudinary.com/jup2hjfk/image/upload/f_auto,q_auto,w_1920/v1785732410/bgc_qdfjxn.jpg')",
   }}
 />
 
@@ -109,6 +109,8 @@ const CourseRoadmap: React.FC = () => {
                   <img
                     src={course.image}
                     alt={course.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-40" />

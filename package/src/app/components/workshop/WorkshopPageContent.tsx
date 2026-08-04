@@ -5,17 +5,17 @@ import Link from "next/link";
 import { Clock, Sparkles, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 
-// ── Event Constants Extracted Directly From htp_2.jpg ────────────────────────
-const WORKSHOP_EVENT_CALENDAR_DAY    = "1";
+// ── Event Constants Extracted Directly From wk_2.jpg ─────────────────────────
+const WORKSHOP_EVENT_CALENDAR_DAY    = "8";
 const WORKSHOP_EVENT_CALENDAR_MONTH  = "AUG";
-const WORKSHOP_EVENT_DATE_LABEL      = "Saturday, August 1, 2026";
+const WORKSHOP_EVENT_DATE_LABEL      = "Saturday, August 8, 2026";
 const WORKSHOP_EVENT_TIME_DISPLAY    = "11:00 AM";
 const WORKSHOP_EVENT_TIME_PST        = "11:00 AM PST";
 const WORKSHOP_EVENT_TIMEZONE_LABEL  = "PST";
 
-// Target Countdown Date: Saturday, August 1, 2026, 11:00 AM PST
-const WORKSHOP_EVENT_CLOSE_MS        = new Date("2026-08-01T11:00:00-07:00").getTime();
-const WORKSHOP_EVENT_IMAGE           = "/images/todayclasstopic/htp.jpg"; 
+// Target Countdown Date: Saturday, August 8, 2026, 11:00 AM PST
+const WORKSHOP_EVENT_CLOSE_MS        = new Date("2026-08-08T11:00:00-07:00").getTime();
+const WORKSHOP_EVENT_IMAGE           = "/images/todayclasstopic/wk.jpg"; 
 const REGISTRATION_LINK_URL          = "https://api.wonderengine.ai/widget/form/mL2L8I8p4RI7AF61stUd";
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -33,11 +33,11 @@ function getCountdown(targetMs: number) {
   };
 }
 
-// Key Takeaways & Objectives from the Flyer
+// Key Takeaways & Objectives aligned with Flyer
 const INCLUDED = [
   "Build Credibility",
   "Strengthen Financials",
-  "Prepare For Funding",
+  "Meet Bank Expectations",
   "Get Funding-Ready with Confidence",
   "Structure corporate compliance for bankability",
   "Unlock capital and funding opportunities",
@@ -89,12 +89,12 @@ export default function WorkshopPageContent() {
                 Creditor Academy · Private Montessori Association
               </p>
               <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-[2.85rem] uppercase">
-                HOW TO PREPARE YOUR BUSINESS{" "}
+                BUSINESS FUNDING{" "}
                 <span className="block bg-linear-to-r from-blue-400 via-sky-300 to-white bg-clip-text text-transparent font-black mt-1">
-                  FOR FUNDING.
+                  in 2026
                 </span>
-                <span className="text-2xl sm:text-3xl block mt-1 text-slate-200 lowercase font-medium italic">
-                  get funding-ready with confidence
+                <span className="text-2xl sm:text-3xl block mt-1 text-slate-200 capitalize font-medium italic">
+                  What Banks Want
                 </span>
               </h1>
 
@@ -106,7 +106,7 @@ export default function WorkshopPageContent() {
               </div>
 
               <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-blue-100/85 lg:mx-0">
-                Learn step-by-step strategies to build credibility, strengthen your financial positioning, and prepare your business for high-limit funding.
+                Learn step-by-step strategies to build credibility, strengthen your financial positioning, and meet bank expectations for high-limit funding.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -116,7 +116,7 @@ export default function WorkshopPageContent() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-full bg-linear-to-r from-amber-400 to-yellow-500 px-8 py-4 text-base font-extrabold text-slate-950 shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5 hover:brightness-110 uppercase"
                 >
-                  Register Now!
+                  Register Today!
                 </Link>
                 <span className="text-xs font-semibold text-blue-200/70 tracking-wide">
                   100% Free Registration • Instant Access Credentials
@@ -128,7 +128,7 @@ export default function WorkshopPageContent() {
               <div className="overflow-hidden rounded-2xl border border-white/20 bg-white p-2 shadow-2xl shadow-black/30 ring-1 ring-primary/30">
                 <Image
                   src={WORKSHOP_EVENT_IMAGE}
-                  alt="How To Prepare Your Business For Funding Workshop Flyer — Saturday, August 1, 2026"
+                  alt={`Business Funding in 2026: What Banks Want Workshop Flyer — ${WORKSHOP_EVENT_DATE_LABEL}`}
                   width={440}
                   height={440}
                   className="w-full rounded-xl object-contain bg-slate-950"
@@ -158,7 +158,7 @@ export default function WorkshopPageContent() {
                   LIVE ONLINE WORKSHOP
                 </span>
                 <h2 className="mt-4 text-2xl font-black tracking-tight text-slate-900 md:text-3xl uppercase">
-                  August 1 Workshop
+                  August 8 Workshop
                 </h2>
                 <p className="mt-2 flex items-center justify-center gap-2 text-slate-600 lg:justify-start text-sm">
                   <Video className="h-4 w-4 shrink-0 text-primary" aria-hidden />
@@ -322,7 +322,7 @@ export default function WorkshopPageContent() {
                   ONLINE LIVE WORKSHOP
                 </p>
                 <p className="mt-3 text-2xl font-black tracking-tight uppercase">
-                  HOW TO PREPARE YOUR BUSINESS FOR FUNDING
+                  BUSINESS FUNDING IN 2026: WHAT BANKS WANT
                 </p>
                 <div className="mt-4 inline-flex flex-col gap-1 rounded-xl bg-black/15 px-5 py-3 text-sm font-bold">
                   <span>{WORKSHOP_EVENT_DATE_LABEL}</span>
@@ -348,7 +348,7 @@ export default function WorkshopPageContent() {
                 rel="noopener noreferrer"
                 className="mt-6 flex w-full items-center justify-center rounded-full bg-blue-600 py-4 text-base font-extrabold text-white shadow-xl shadow-blue-600/30 transition transform hover:-translate-y-0.5 hover:bg-blue-700 uppercase"
               >
-                Register Now!
+                Register Today!
               </Link>
               <p className="mt-4 text-center text-xs text-slate-400 font-medium">
                 Get funding-ready with confidence starting today!
@@ -398,7 +398,7 @@ export default function WorkshopPageContent() {
             rel="noopener noreferrer"
             className="mt-8 inline-flex items-center justify-center rounded-full bg-primary px-12 py-4 text-base font-extrabold text-white shadow-lg shadow-blue-500/20 transition transform hover:-translate-y-0.5 hover:bg-[#0259bd] uppercase"
           >
-            Register Now!
+            Register Today!
           </Link>
           <p className="mt-6 text-xs font-bold text-slate-400 uppercase tracking-widest">
             Direct Support Line:{" "}

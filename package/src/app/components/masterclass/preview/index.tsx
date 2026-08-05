@@ -19,11 +19,14 @@ export default function HeroSection({
       {/* HERO */}
       <section className={`w-full ${sectionSpacing} relative overflow-hidden `}>
         {/* Background Image */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat "
-          style={{ backgroundImage: "url('/images/bg/bgmm.jpg')" }}
-        />
+      <div
+  aria-hidden
+  className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
+  style={{
+    backgroundImage:
+      "url('https://res.cloudinary.com/jup2hjfk/image/upload/v1785906188/bgmm_tm3opl.jpg')",
+  }}
+/>
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-linear-to-tr from-sky-100/50 via-white/40 to-blue-100/50 dark:from-slate-900/75 dark:via-slate-900/65 dark:to-slate-900/80"

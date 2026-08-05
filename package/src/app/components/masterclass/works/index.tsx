@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import {
   FiStar,
   FiUsers,
@@ -14,9 +14,9 @@ import {
   FiFileText,
   FiAlertTriangle,
   FiArrowRight,
-  FiCheckCircle,
   FiClock,
   FiShield,
+  FiCheck,
 } from "react-icons/fi";
 
 const plan = {
@@ -39,244 +39,121 @@ const plan = {
   ],
 };
 
-type Step = {
-  id: number;
-  title: string;
-  tagline: string;
-  description: string;
-};
-
-const steps: Step[] = [
+const steps = [
   {
-    id: 1,
-    title: "1. Access",
-    tagline: "Secure Private Footing",
+    num: "01",
+    title: "Access & Footing",
     description:
-      "Get everything you need to transition seamlessly into the private side. Gain step-by-step guidance, early-stage mentorship, and join an empowering, locked community to start operating securely.",
+      "Get everything you need to transition into the private side with step-by-step guidance and early-stage mentorship.",
   },
   {
-    id: 2,
-    title: "2. Fuel",
-    tagline: "Initialize Capitalization",
+    num: "02",
+    title: "Fuel Capitalization",
     description:
-      'Load your custom "Creditor Card" right inside the secure platform hub. Use it on-demand to unlock highly tailored courses, interactive workshops, and specialized legal/operational tools at your own pace.',
+      "Load your custom Creditor Card in the hub to unlock tailored courses, workshops, and legal tools on-demand.",
   },
   {
-    id: 3,
-    title: "3. Execute",
-    tagline: "Sovereign Operations",
+    num: "03",
+    title: "Sovereign Operations",
     description:
-      "Follow our master educational roadmap to ultimate functional sovereignty, strict asset protection, and real wealth management. Break free from public dependencies and step into operational liberty.",
+      "Follow our master educational roadmap to ultimate functional sovereignty, asset protection, and real wealth management.",
   },
 ];
 
-function InteractiveBackground({
-  mouseX,
-  mouseY,
-}: {
-  mouseX: number;
-  mouseY: number;
-}) {
-  const parallaxX = (mouseX - 0.5) * 24;
-  const parallaxY = (mouseY - 0.5) * 16;
-
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-      <div
-        className="absolute inset-0 scale-110 bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-out will-change-transform"
-        style={{
-          backgroundImage: "url('/images/bg/bgmm.jpg')",
-          transform: `translate(${parallaxX}px, ${parallaxY}px) scale(1.08)`,
-        }}
-      />
-      <motion.div
-        className="absolute -left-20 top-1/4 h-64 w-64 rounded-full bg-blue-300/60 blur-3xl"
-        animate={{ y: [0, -18, 0], x: [0, 12, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute -right-16 bottom-1/4 h-72 w-72 rounded-full bg-sky-200/30 blur-3xl"
-        animate={{ y: [0, 14, 0], x: [0, -10, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-      />
-
-      <svg
-        className="absolute bottom-0 left-0 w-full opacity-30"
-        viewBox="0 0 1440 120"
-        preserveAspectRatio="none"
-        fill="none"
-      >
-        <motion.path
-          d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,80 1440,60 L1440,120 L0,120 Z"
-          fill="url(#wave-grad)"
-          animate={{
-            d: [
-              "M0,60 C360,120 720,0 1080,60 C1260,90 1380,80 1440,60 L1440,120 L0,120 Z",
-              "M0,70 C360,30 720,100 1080,50 C1260,70 1380,90 1440,70 L1440,120 L0,120 Z",
-              "M0,60 C360,120 720,0 1080,60 C1260,90 1380,80 1440,60 L1440,120 L0,120 Z",
-            ],
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <defs>
-          <linearGradient id="wave-grad" x1="0" y1="0" x2="1440" y2="0">
-            <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.15" />
-            <stop offset="50%" stopColor="#06B6D4" stopOpacity="0.25" />
-            <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.15" />
-          </linearGradient>
-        </defs>
-      </svg>
-    </div>
-  );
-}
-
 export default function PricingRedesign() {
-  const [activeStep, setActiveStep] = useState(0);
-  const [isAutoplay, setIsAutoplay] = useState(true);
-  const sectionRef = useRef<HTMLElement>(null);
-  const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
-
-  useEffect(() => {
-    if (!isAutoplay) return;
-    const interval = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % steps.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [isAutoplay]);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const handleMove = (e: MouseEvent) => {
-      const rect = section.getBoundingClientRect();
-      setMouse({
-        x: (e.clientX - rect.left) / rect.width,
-        y: (e.clientY - rect.top) / rect.height,
-      });
-    };
-
-    section.addEventListener("mousemove", handleMove);
-    return () => section.removeEventListener("mousemove", handleMove);
-  }, []);
-
   return (
-    <section
-      ref={sectionRef}
-      className="relative overflow-hidden py-20 text-slate-900 lg:py-20"
-    >
-      <InteractiveBackground mouseX={mouse.x} mouseY={mouse.y} />
+    <section className="relative overflow-hidden bg-linear-to-b from-slate-50 via-sky-50/40 to-blue-50/20 py-16 md:py-24 text-slate-900">
+      {/* Soft Background Accent Glows */}
+      <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-96 w-[600px] rounded-full bg-blue-200/30 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 right-10 h-72 w-72 rounded-full bg-cyan-200/30 blur-3xl" />
 
-      <div className="container relative z-10 mx-auto max-w-6xl px-6">
+      <div className="container relative z-10 mx-auto max-w-5xl px-6">
         
-        {/* Header - Shifted Center-Left Asymmetric */}
+        {/* Header */}
         <motion.header
-          className="mb-12 mx-auto max-w-3xl text-center"
-          initial={{ opacity: 0, y: 20 }}
+          className="mx-auto max-w-2xl text-center mb-16"
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
         >
-         
-          <h2 className="mt-4 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+          <span className="inline-block rounded-full bg-blue-100 dark:bg-blue-900/30 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300 mb-3">
+            Simple Pricing
+          </span>
+          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
             Invest in Sovereignty.
           </h2>
-          <p className="mt-4 text-base text-slate-600 sm:text-lg">
-            Unlock your entry path into the Masterclass ecosystem. Gain access to the operational roadmap, premium tools, and community-guided resources at your own speed.
+          <p className="mt-4 text-base text-slate-600 sm:text-lg leading-relaxed">
+            Unlock your entry path into the Masterclass ecosystem. Gain access to the operational roadmap, premium tools, and community resources.
           </p>
         </motion.header>
 
-        {/* Dynamic Multi-Step Pipeline Section */}
-        <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {steps.map((step, idx) => {
-            const isSelected = idx === activeStep;
-            return (
-              <button
-                key={step.id}
-                onClick={() => {
-                  setIsAutoplay(false);
-                  setActiveStep(idx);
-                }}
-                className={`relative flex flex-col items-start rounded-2xl border p-5 text-left transition-all duration-300 backdrop-blur-md ${
-                  isSelected
-                    ? "border-blue-300 bg-white/90 shadow-md shadow-blue-500/5"
-                    : "border-white/40 bg-white/30 hover:border-white/80 hover:bg-white/50"
-                }`}
-              >
-                <span className={`text-xs font-bold uppercase tracking-wider ${isSelected ? "text-blue-600" : "text-slate-400"}`}>
-                  {step.title}
-                </span>
-                <span className="mt-1 font-bold text-slate-800 text-sm">{step.tagline}</span>
-                {isSelected && (
-                  <motion.div
-                    className="absolute bottom-0 left-0 h-1 w-full bg-blue-600 rounded-b-2xl"
-                    layoutId="pipeline-indicator"
-                  />
-                )}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Dynamic Content Panel connected to Pipeline selection */}
-        <div className="mb-12 min-h-[90px] rounded-2xl border border-white/60 bg-white/40 p-5 backdrop-blur-md">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeStep}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.25 }}
-              className="flex items-start gap-3.5"
-            >
-              <div className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-600/10 text-blue-600">
-                <FiCheckCircle className="h-4 w-4" />
-              </div>
-              <p className="text-sm leading-relaxed text-slate-700">
-                {steps[activeStep].description}
-              </p>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Main Monolith Pricing Glass Card */}
-        <motion.div
-          className="relative overflow-hidden rounded-3xl border border-white/70 bg-white/50 p-6 shadow-xl backdrop-blur-xl sm:p-10"
-          initial={{ opacity: 0, y: 30 }}
+        {/* 3-Step Process Pipeline */}
+        <motion.div 
+          className="mb-12 grid grid-cols-1 md:grid-cols-3 gap-4"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
         >
-          {/* Accent top gradient bar */}
+          {steps.map((step) => (
+            <div
+              key={step.num}
+              className="rounded-2xl border border-slate-200/80 bg-white/70 p-5 backdrop-blur-md transition-all hover:border-blue-300 hover:bg-white/90"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
+                  {step.num}
+                </span>
+                <h3 className="font-bold text-slate-800 text-sm">{step.title}</h3>
+              </div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                {step.description}
+              </p>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Main Monolith Pricing Card */}
+        <motion.div
+          className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 md:p-10 shadow-xl shadow-slate-200/50"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          {/* Top accent bar */}
           <div className="absolute inset-x-0 top-0 h-1.5 bg-linear-to-r from-blue-500 via-cyan-400 to-indigo-500" />
-          
-          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
+
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center">
             
-            {/* Left side: Package overview and structured features list */}
+            {/* Left Column: Plan Information */}
             <div className="lg:col-span-7">
-              <div className="flex flex-wrap items-center gap-2">
-                <h3 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <h3 className="text-2xl font-black text-slate-900 sm:text-3xl">
                   {plan.name}
                 </h3>
-                <span className="inline-flex items-center gap-1 rounded-full bg-blue-600/10 px-2.5 py-0.5 text-xs font-bold text-blue-600">
+                <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-600 border border-blue-100">
                   <FiStar className="h-3 w-3 fill-current" /> {plan.badge}
                 </span>
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-slate-600">
+
+              <p className="mt-3 text-sm text-slate-600 leading-relaxed">
                 {plan.short}
               </p>
 
-              <hr className="my-6 border-slate-200/60" />
+              <div className="my-6 h-px w-full bg-slate-100" />
 
               <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
-                What&apos;s included in your active profile:
+                What&apos;s included in your profile:
               </h4>
-              <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {plan.features.map((feature, idx) => {
                   const Icon = feature.icon;
                   return (
-                    <div key={idx} className="flex items-center gap-3">
-                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600">
+                    <div key={idx} className="flex items-center gap-2.5">
+                      <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600">
                         <Icon className="h-3.5 w-3.5" />
                       </div>
                       <span className="text-xs font-medium text-slate-700">{feature.text}</span>
@@ -286,36 +163,38 @@ export default function PricingRedesign() {
               </div>
             </div>
 
-            {/* Right side: High-contrast financial transaction checkout box */}
-            <div className="rounded-2xl border border-white/80 bg-white/60 p-6 backdrop-blur-sm lg:col-span-5 lg:p-10">
-              <div className="text-center lg:text-left">
-                <span className="text-xs font-bold uppercase tracking-widest text-slate-400 line-through">
-                  Standard ${plan.priceOriginal}/mo
+            {/* Right Column: Checkout Box */}
+            <div className="rounded-2xl border border-slate-100 bg-slate-50/80 p-6 lg:col-span-5 text-center lg:text-left">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 line-through">
+                Standard ${plan.priceOriginal}/mo
+              </span>
+
+              <div className="mt-1 flex items-baseline justify-center lg:justify-start gap-1">
+                <span className="text-5xl font-extrabold tracking-tight text-slate-900">
+                  ${plan.priceCurrent}
                 </span>
-                <div className="mt-1 flex items-baseline justify-center gap-1 lg:justify-start">
-                  <span className="text-5xl font-black tracking-tight text-blue-600">
-                    ${plan.priceCurrent}
-                  </span>
-                  <span className="text-sm font-semibold text-slate-500">/ month</span>
-                </div>
-                <p className="mt-2 text-xs text-slate-500">Lock this rate indefinitely. Cancel anytime.</p>
+                <span className="text-sm font-semibold text-slate-500">/ month</span>
               </div>
+
+              <p className="mt-2 text-xs text-slate-500">
+                Lock this rate indefinitely. Cancel anytime.
+              </p>
 
               <div className="mt-6 space-y-3">
                 <motion.a
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group flex w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-blue-600 to-cyan-500 p-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/10 transition-all"
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
+                  className="group flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 p-3.5 text-sm font-bold text-white shadow-md shadow-blue-500/20 hover:bg-blue-700 transition-colors"
                   href="https://lmsathena.com/signup"
                 >
                   Get Started Instantly
                   <FiArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </motion.a>
-                
-                <div className="flex items-center justify-center gap-4 text-[11px] text-slate-400">
-                  <span className="flex items-center gap-1"><FiShield /> PCI-DSS Secure</span>
+
+                <div className="flex items-center justify-center gap-3 text-[11px] font-medium text-slate-400">
+                  <span className="flex items-center gap-1"><FiShield className="h-3 w-3" /> PCI-DSS Secure</span>
                   <span>•</span>
-                  <span className="flex items-center gap-1"><FiClock /> Instant Entry</span>
+                  <span className="flex items-center gap-1"><FiClock className="h-3 w-3" /> Instant Entry</span>
                 </div>
               </div>
             </div>
@@ -323,26 +202,23 @@ export default function PricingRedesign() {
           </div>
         </motion.div>
 
-        {/* Warning Notification Block positioned nicely at baseline */}
-        <div className="mt-8 rounded-2xl border border-amber-400/20 bg-amber-50/50 p-4 text-xs leading-relaxed text-slate-600 backdrop-blur-sm">
+        {/* Rate Notice Alert */}
+        <div className="mt-6 rounded-2xl border border-amber-200/60 bg-amber-50/60 p-4 text-xs leading-relaxed text-amber-900">
           <div className="flex items-start gap-2.5">
-            <FiAlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
+            <FiAlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
             <span>
-              <strong className="uppercase tracking-wide text-amber-700 font-bold mr-1">
-                Notice:
-              </strong>
-              This promotional entry rate transitions to the standard <strong>$147/mo</strong> index shortly. Locking your membership now guarantees authorization at the current <strong>$69/mo architecture indefinitely</strong> for your profile lifespan.
+              <strong>Notice:</strong> This promotional entry rate transitions to the standard <strong>$147/mo</strong> rate shortly. Locking your membership now guarantees authorization at <strong>$69/mo indefinitely</strong>.
             </span>
           </div>
         </div>
 
-        {/* Simple Footer Links */}
-        <div className="mt-8 flex justify-center gap-6 text-xs font-medium text-slate-400">
+        {/* Footer Support */}
+        <div className="mt-8 text-center text-xs text-slate-400">
           <a href="/contact" className="hover:text-blue-600 hover:underline">
-            Contact Academic Support
+            Contact Support
           </a>
-          <span>•</span>
-          <span>Encrypted Checkout Security Guaranteed</span>
+          <span className="mx-2">•</span>
+          <span>Encrypted 256-Bit SSL Checkout Security</span>
         </div>
 
       </div>

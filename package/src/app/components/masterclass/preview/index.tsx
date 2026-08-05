@@ -24,7 +24,7 @@ export default function HeroSection({
   className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
   style={{
     backgroundImage:
-      "url('https://res.cloudinary.com/jup2hjfk/image/upload/v1785906188/bgmm_tm3opl.jpg')",
+      "url('https://res.cloudinary.com/jup2hjfk/image/upload/f_auto,q_auto,w_1920/v1785906188/bgmm_tm3opl.jpg')",
   }}
 />
         <div
@@ -114,7 +114,8 @@ export default function HeroSection({
                   className="w-full h-full"
                   src="https://drive.google.com/file/d/1ATSSVZJ9zTAXFhSgQfFN5AzJud_STVXo/preview?usp=sharing"
                   title="Intro Video"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  loading="lazy"
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
               </div>

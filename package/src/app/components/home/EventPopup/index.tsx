@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 
 import { WORKSHOP_REGISTER_URL } from "@/lib/workshop";
 
-// Target Event Timestamp updated to Saturday, August 8, 2026 @ 11 AM PST
-const TARGET_EVENT_MS = new Date("2026-08-08T11:00:00-07:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/wk.jpg"; 
-const EVENT_DATE_LABEL = "Saturday, August 8, 2026";
+// Target Event Timestamp updated to Saturday, August 15, 2026 @ 11 AM PST
+const TARGET_EVENT_MS = new Date("2026-08-15T11:00:00-07:00").getTime();
+const EVENT_IMAGE = "/images/todayclasstopic/ca15.jpg"; 
+const EVENT_DATE_LABEL = "Saturday, August 15, 2026";
 
 interface EventPopupProps {
   delayMs?: number;
@@ -98,22 +98,23 @@ export default function EventPopup({
                   <span className="event-badge-dot" aria-hidden />
                   FREE WORKSHOP
                 </span>
-                <span className="event-badge event-badge--date">Saturday, August 8, 2026 @ 11 AM PST</span>
+                <span className="event-badge event-badge--date">August 15 @ 11 AM PST</span>
               </div>
             </header>
 
             <h2 id="event-popup-title" className="event-popup-title">
-              Business Funding in 2026: <span className="event-popup-title-accent">What Banks Want</span>
+              How to Get an <span className="event-popup-title-accent">80 Paydex Score</span>
             </h2>
 
             <p className="event-popup-desc">
-              <strong>Get Funding-Ready with Confidence.</strong> Learn essential strategies to establish credibility, strengthen financials, and meet bank expectations.
+              Build stronger business credit and improve your funding readiness.
             </p>
 
             <div className="event-popup-tags">
-              <span>Build Credibility</span>
-              <span>Strengthen Financials</span>
-              <span>Meet Bank Expectations</span>
+              <span>📈 Credit Building</span>
+              <span>⚖️ Payment Strategies</span>
+              <span>⚙️ PAYDEX Insights</span>
+              <span>🚀 Funding Readiness</span>
             </div>
 
             <div className="event-popup-countdown-wrap">
@@ -144,7 +145,7 @@ export default function EventPopup({
               rel="noopener noreferrer"
               className="event-popup-cta"
             >
-              REGISTER TODAY
+              REGISTER NOW
             </a>
           </div>
 
@@ -153,7 +154,7 @@ export default function EventPopup({
             <div className="event-popup-poster-card">
               <Image
                 src={EVENT_IMAGE}
-                alt={`Free Workshop on Business Funding in 2026: What Banks Want — ${EVENT_DATE_LABEL}`}
+                alt={`Free Workshop: How to Get an 80 Paydex Score — ${EVENT_DATE_LABEL}`}
                 width={480}
                 height={480}
                 className="event-popup-poster-img"
@@ -248,7 +249,7 @@ export default function EventPopup({
           font-size: 15px;
           font-weight: 800;
           letter-spacing: 0.03em;
-          color: #0f172a;
+          color: #0052cc;
           line-height: 1.2;
         }
 
@@ -257,7 +258,7 @@ export default function EventPopup({
           font-size: 9px;
           font-weight: 700;
           letter-spacing: 0.04em;
-          color: #64748b;
+          color: #0052cc;
         }
 
         .event-popup-badges {
@@ -298,15 +299,15 @@ export default function EventPopup({
 
         .event-popup-title {
           margin: 0;
-          font-size: 20px;
+          font-size: 24px;
           font-weight: 800;
-          line-height: 1.11;
+          line-height: 1.15;
           letter-spacing: -0.02em;
           color: #0f172a;
         }
         .event-popup-title-accent {
-          color: #0284c7;
-          background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+          color: #0052cc;
+          background: linear-gradient(135deg, #0052cc 0%, #0033aa 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
@@ -314,12 +315,8 @@ export default function EventPopup({
         .event-popup-desc {
           margin: 0;
           font-size: 14px;
-          line-height: 1.32;
+          line-height: 1.35;
           color: #475569;
-        }
-        .event-popup-desc strong {
-          color: #0f172a;
-          font-weight: 700;
         }
 
         .event-popup-tags {
@@ -332,7 +329,7 @@ export default function EventPopup({
           border-radius: 8px;
           font-size: 12px;
           font-weight: 600;
-          color: #475569;
+          color: #1e293b;
           background: #f1f5f9;
           border: 1px solid #e2e8f0;
         }
@@ -382,19 +379,19 @@ export default function EventPopup({
           justify-content: center;
           width: 100%;
           padding: 14px 24px;
-          border-radius: 12px;
-          font-size: 15px;
-          font-weight: 700;
+          border-radius: 50px;
+          font-size: 16px;
+          font-weight: 800;
           color: #ffffff;
           text-decoration: none;
-          background: #0284c7;
-          background: linear-gradient(90deg, #38bdf8 0%, #0284c7 100%);
-          box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+          background: #dc2626;
+          background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
+          box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);
           transition: all 0.2s ease;
         }
         .event-popup-cta:hover {
           transform: translateY(-1px);
-          box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+          box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
           filter: brightness(1.05);
         }
 

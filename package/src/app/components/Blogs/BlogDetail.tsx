@@ -133,9 +133,7 @@ export default function BlogDetail({ post }: BlogDetailProps) {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="bg-white rounded-xl sm:rounded-2xl border border-neutral-200/70 p-5 sm:p-8 md:p-12 shadow-[0_2px_8px_rgba(0,0,0,0.01)]"
         >
-          <p className="text-neutral-600 text-sm sm:text-base md:text-lg leading-relaxed mb-6 sm:mb-8">
-            {post.description}
-          </p>
+          {/* description hidden */}
 
           <div className="space-y-4 sm:space-y-6">
             {post.content.map((block, index) => {

@@ -2,9 +2,11 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import HeroSection from "./components/home/hero";
-import BootcampBanner from "./components/home/bootcamp-banner";
-import MasterclassEbook from "./components/home/MasterclassEbook";
-import Intro from "./components/home/intro/page"
+
+// Intro is lightweight but not above-the-fold on most viewports — load dynamically
+const Intro = dynamic(() => import("./components/home/intro/page"), {
+  loading: () => <div className="min-h-[200px]" />,
+});
 
 // Dynamic imports for all below-the-fold components to improve initial load
 const Courses = dynamic(() => import("./components/home/courses"), {
@@ -22,10 +24,6 @@ const Offer = dynamic(() => import("./components/home/Offer"), {
 const Contact = dynamic(() => import("./components/home/contact"), {
   loading: () => <div className="min-h-[400px]" />,
 });
-
-// const Event = dynamic(() => import("./components/home/event"), {
-//   loading: () => <div className="min-h-[400px]" />,
-// });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
@@ -63,7 +61,7 @@ export default function Home() {
     <>
       <HeroSection />
       <Intro />
-      <BootcampBanner />
+      {/* <BootcampBanner /> */}
 
       {/* <StatsFacts /> */}
       {/* <Masterclass /> */}
@@ -77,7 +75,9 @@ export default function Home() {
       </Suspense>
       {/* <PrivateTeaser /> */}
       {/* <MasterInfo /> */}
-      <Courses />
+      <Suspense fallback={<div className="min-h-[400px]" />}>
+        <Courses />
+      </Suspense>
       {/* <ThanksgivingPopup /> */}
       <Suspense fallback={<div className="min-h-[400px]" />}>
         <Contact contactdataNumber="4" />

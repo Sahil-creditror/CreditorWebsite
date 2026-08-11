@@ -8,6 +8,7 @@ import {
   Shield,
   Heart,
 } from "lucide-react";
+import VideoPlayer from "@/app/components/shared/VideoPlayer";
 
 export default function CourseOverviewSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -216,19 +217,12 @@ export default function CourseOverviewSection() {
       <div aria-hidden className="absolute top-1/4 -left-20 w-64 h-64 rounded-full blob bg-gradient-to-br from-blue-300/15 to-cyan-300/10 dark:from-blue-700/15 dark:to-cyan-600/10 mix-blend-screen blur-2xl transform-gpu" />
 
       <div className="mx-auto max-w-7xl flex flex-wrap gap-10 items-center relative z-10 p-0 md:p-0">
-        {/* Embedded Drive Video */}
+        {/* Embedded Video */}
         <div className="flex-1 min-w-[18rem] max-w-3xl relative rounded-2xl overflow-hidden shadow-2xl">
-          <div className="w-full aspect-video rounded-2xl relative overflow-hidden">
-            <iframe
-              className="absolute inset-0 w-full h-full"
-              src="https://creditorappuniquebucket02082025.s3.us-east-1.amazonaws.com/course/Operate+Private+Bootcamp.mp4
-"
-              allow="autoplay"
-              allowFullScreen
-              title="Course detail video"
-              style={{ border: 0 }}
-            />
-          </div>
+          <VideoPlayer
+            src="https://creditorappuniquebucket02082025.s3.us-east-1.amazonaws.com/course/Operate+Private+Bootcamp.mp4"
+            title="Course detail video"
+          />
         </div>
 
         {/* Enhanced Course Description */}

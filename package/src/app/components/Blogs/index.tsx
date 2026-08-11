@@ -21,6 +21,25 @@ const poppins = Poppins({
 
 const CATEGORIES = ["All", "Become Private", "Operate Private", "Financial Freedom"];
 
+/** Strip markdown syntax and return a plain-text excerpt from the first prose paragraph of a post */
+function getContentPreview(content: string[], maxChars = 140): string {
+  const plain = content
+    .find((block) =>
+      !block.startsWith("#") &&
+      !block.startsWith("-") &&
+      !block.startsWith("[TABLE]") &&
+      !block.startsWith("*") &&
+      block.trim().length > 40
+    ) ?? "";
+  // Strip markdown bold (**text**), links ([text](url)), and inline code
+  const stripped = plain
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/`[^`]+`/g, "")
+    .trim();
+  return stripped.length > maxChars ? stripped.slice(0, maxChars).trimEnd() + "…" : stripped;
+}
+
 export default function BlogsPage() {
   const [category, setCategory] = useState("All");
   const [search, setSearch] = useState("");
@@ -181,8 +200,9 @@ export default function BlogsPage() {
                     {featured.title}
                   </h2>
 
+                  {/* content preview */}
                   <p className="mt-3.5 text-neutral-500 text-xs md:text-sm leading-relaxed font-normal">
-                    {featured.description}
+                    {getContentPreview(featured.content, 160)}
                   </p>
                 </div>
 
@@ -248,8 +268,9 @@ export default function BlogsPage() {
                           {post.title}
                         </h3>
 
-                        <p className="mt-2 text-xs text-neutral-500 leading-relaxed">
-                          {post.description}
+                        {/* content preview */}
+                        <p className="mt-2 text-xs text-neutral-500 leading-relaxed line-clamp-3">
+                          {getContentPreview(post.content, 130)}
                         </p>
                       </div>
                     </div>

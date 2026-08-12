@@ -254,7 +254,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
 
       "Through its educational programs, entrepreneurs can explore concepts related to:",
 
-      "- [Become Private](/services/course-cataloges/become-private)\n- [Operate Private](/services/course-cataloges/operate-private)\n- [Financial Freedom](/services/course-cataloges/financial-freedom)\n- Business credit\n- Business organization\n- Financial literacy\n- Long-term wealth planning",
+      "- Become Private\n- Operate Private\n- Financial Freedom\n- Business credit\n- Business organization\n- Financial literacy\n- Long-term wealth planning",
 
       "If you're interested in learning more, you can also join the [Creditor Academy Free Webinar](https://creditoracademy.com/webinar) for additional educational content.",
 

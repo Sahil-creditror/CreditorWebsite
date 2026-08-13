@@ -66,7 +66,7 @@ export default function EventPopup({
       onClick={(e) => {
         if (e.target === e.currentTarget) setOpen(false);
       }}
-      data-event-popup="ca7-prepare-business-funding"
+      data-event-popup="ca7-build-business-credit"
     >
       <div
         role="dialog"
@@ -96,7 +96,7 @@ export default function EventPopup({
               <div className="event-popup-badges">
                 <span className="event-badge event-badge--live">
                   <span className="event-badge-dot" aria-hidden />
-                  FREE WORKSHOP
+                  WORKSHOP
                 </span>
                 <span className="event-badge event-badge--date">August 15 @ 11 AM PST</span>
               </div>

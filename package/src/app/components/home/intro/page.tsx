@@ -2,13 +2,10 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ShieldCheck,
   Landmark,
-  CreditCard,
-  Sparkles,
-  Trophy,
-  Users,
   ArrowUpRight,
 } from "lucide-react";
 
@@ -20,7 +17,7 @@ export default function AboutCreditorAcademy() {
       <div className="absolute top-[40vh] right-[-10vw] w-[500px] h-[500px] bg-indigo-200/40 rounded-full blur-3xl pointer-events-none -z-10" />
 
       {/* --- HERO / WELCOME SECTION --- */}
-      <section className="relative pt-24 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-x-clip">
+      <section className="relative pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-x-clip">
         {/* Ambient Backlight Glow underneath the hero layout */}
         <div className="absolute top-12 left-1/4 w-[400px] h-[400px] bg-gradient-to-tr from-blue-400/20 to-sky-300/10 rounded-full blur-[120px] pointer-events-none -z-10" />
         <div className="absolute top-24 right-10 w-[300px] h-[300px] bg-gradient-to-br from-indigo-400/20 to-purple-300/10 rounded-full blur-[100px] pointer-events-none -z-10" />
@@ -94,10 +91,22 @@ export default function AboutCreditorAcademy() {
         </div>
       </section>
 
+      {/* --- DIVIDER WITH EXPLORE CTA --- */}
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+        <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
+        <div className="relative flex justify-center">
+          <Link
+            href="/learning-journey"
+            className="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#2563EB] text-white text-sm sm:text-base font-bold shadow-xl shadow-blue-600/35 ring-4 ring-blue-100 hover:bg-blue-700 hover:shadow-2xl hover:shadow-blue-600/40 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300"
+          >
+            Explore Learning Journey
+            <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </Link>
+        </div>
+      </div>
+
       {/* --- MEET YOUR INSTRUCTOR SECTION --- */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative ">
-        {/* Subtle Section Divider */}
-        <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
 
         {/* Enhanced card container with crisp white overlay borders to look high-end on light blue background */}
         <div className="bg-white/90 backdrop-blur-md rounded-4xl border border-white/80 shadow-2xl shadow-blue-900/10 p-8 sm:p-12 relative overflow-hidden">

@@ -2137,7 +2137,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
     keywords:
       "entrepreneur privacy, business privacy, business asset protection, financial education, business planning, wealth preservation, private business practices, risk management, business governance, entrepreneur education, financial freedom, business organization, business trust education, long term business planning, Creditor Academy",
 
-    category: "Operate Private",
+    category: "Become Private",
 
     date: "July 21, 2026",
 

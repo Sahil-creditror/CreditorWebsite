@@ -6,16 +6,16 @@ import { Clock, Sparkles, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 
 // ── Event Constants Extracted Directly From Flyer ────────────────────────────
-const WORKSHOP_EVENT_CALENDAR_DAY = "23";
+const WORKSHOP_EVENT_CALENDAR_DAY = "22";
 const WORKSHOP_EVENT_CALENDAR_MONTH = "AUG";
-const WORKSHOP_EVENT_DATE_LABEL = "Sunday, August 23, 2026";
+const WORKSHOP_EVENT_DATE_LABEL = "Saturday, August 22, 2026";
 const WORKSHOP_EVENT_TIME_DISPLAY = "11:00 AM";
 const WORKSHOP_EVENT_TIME_PST = "11:00 AM PST";
 const WORKSHOP_EVENT_TIMEZONE_LABEL = "PST";
 
-// Target Countdown Date: Sunday, August 23, 2026, 11:00 AM PST
-const WORKSHOP_EVENT_CLOSE_MS = new Date("2026-08-23T11:00:00-07:00").getTime();
-const WORKSHOP_EVENT_IMAGE = "/images/todayclasstopic/ca-workshop.jpg";
+// Target Countdown Date: Saturday, August 22, 2026, 11:00 AM PST
+const WORKSHOP_EVENT_CLOSE_MS = new Date("2026-08-22T11:00:00-07:00").getTime();
+const WORKSHOP_EVENT_IMAGE = "/images/todayclasstopic/ca-wrk.jpg";
 const REGISTRATION_LINK_URL = "https://api.wonderengine.ai/widget/form/mL2L8I8p4RI7AF61stUd";
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -158,7 +158,7 @@ export default function WorkshopPageContent() {
                   LIVE ONLINE WORKSHOP
                 </span>
                 <h2 className="mt-4 text-2xl font-black tracking-tight text-slate-900 md:text-3xl uppercase">
-                  August 23 Workshop
+                  August 22 Workshop
                 </h2>
                 <p className="mt-2 flex items-center justify-center gap-2 text-slate-600 lg:justify-start text-sm">
                   <Video className="h-4 w-4 shrink-0 text-primary" aria-hidden />

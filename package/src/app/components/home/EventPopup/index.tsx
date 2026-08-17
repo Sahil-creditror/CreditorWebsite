@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 
 import { WORKSHOP_REGISTER_URL } from "@/lib/workshop";
 
-// Target Event Timestamp updated to Sunday, August 23, 2026 @ 11 AM PST
-const TARGET_EVENT_MS = new Date("2026-08-23T11:00:00-07:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/ca-workshop.jpg";
-const EVENT_DATE_LABEL = "Sunday, August 23, 2026";
+// Target Event Timestamp updated to Saturday, August 22, 2026 @ 11 AM PST
+const TARGET_EVENT_MS = new Date("2026-08-22T11:00:00-07:00").getTime();
+const EVENT_IMAGE = "/images/todayclasstopic/ca-wrk.jpg";
+const EVENT_DATE_LABEL = "Saturday, August 22, 2026";
 
 interface EventPopupProps {
   delayMs?: number;
@@ -98,7 +98,7 @@ export default function EventPopup({
                   <span className="event-badge-dot" aria-hidden />
                   FREE WORKSHOP
                 </span>
-                <span className="event-badge event-badge--date">August 23 @ 11 AM PST</span>
+                <span className="event-badge event-badge--date">August 22 @ 11 AM PST</span>
               </div>
             </header>
 

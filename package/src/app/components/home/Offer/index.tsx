@@ -1,199 +1,200 @@
+
+
+
 "use client";
 
 import React from "react";
 import Image from "next/image";
+import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
 
-interface BenefitCard {
-  step: string;
-  stageNum: string;
-  title: string;
-  description: string;
-  image: string;
-  accent: string;
-  glowColor: string;
-}
-
-const benefits: BenefitCard[] = [
-  {
-    step: "STAGE 01",
-    stageNum: "01",
-    title: "Become a Member",
-    description:
-      "Join Creditor Academy and unlock private education, exclusive resources, and a structured path toward financial freedom.",
-    image:
-      "https://res.cloudinary.com/dlndnmuq1/image/upload/f_auto,q_auto,w_400/v1768883732/creditor-website-assets/images/offers/enrollnew.png",
-    accent: "from-blue-600 via-blue-500 to-sky-400",
-    glowColor: "rgba(37, 99, 235, 0.25)",
-  },
-  {
-    step: "STAGE 02",
-    stageNum: "02",
-    title: "Charge Your Card",
-    description:
-      "Activate your Creditor Card and enter a private economy built around access, opportunity, and member advantages.",
-    image:
-      "https://res.cloudinary.com/dlndnmuq1/image/upload/f_auto,q_auto,w_400/v1768883727/creditor-website-assets/images/offers/card.webp",
-    accent: "from-sky-500 via-cyan-400 to-blue-500",
-    glowColor: "rgba(14, 165, 233, 0.25)",
-  },
-  {
-    step: "STAGE 03",
-    stageNum: "03",
-    title: "Unlock Courses & Connect",
-    description:
-      "Access premium courses, live masterclasses, and a private network designed for growth and collaboration.",
-    image:
-      "https://res.cloudinary.com/dlndnmuq1/image/upload/f_auto,q_auto,w_400/v1768883729/creditor-website-assets/images/offers/courses.webp",
-    accent: "from-indigo-600 via-blue-600 to-sky-400",
-    glowColor: "rgba(79, 70, 229, 0.25)",
-  },
-  {
-    step: "STAGE 04",
-    stageNum: "04",
-    title: "Become Private",
-    description:
-      "Apply what you learn to operate privately, protect your assets, and build wealth on your own terms.",
-    image:
-      "https://res.cloudinary.com/dlndnmuq1/image/upload/f_auto,q_auto,w_400/v1768883751/creditor-website-assets/images/offers/sovnew.png",
-    accent: "from-violet-600 via-indigo-500 to-blue-400",
-    glowColor: "rgba(124, 58, 237, 0.25)",
-  },
-];
-
 export default function MasterclassBenefits() {
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  });
+
+  type BgCard = {
+    type: "bg";
+    title: string;
+    description: string;
+    bg: string;
+  };
+  type BlockCard = {
+    type: "block";
+    title: string;
+    description: string;
+    img: string;
+    color: string;
+  };
+
+  const benefits: Array<BgCard | BlockCard> = [
+    {
+      type: "bg",
+      title: "Become a Member",
+      description:
+        "Join the movement. Step inside Creditor Academy and unlock access to a world of private education and financial freedom.",
+      bg: "/images/offers/enrollnew.webp",
+    },
+    {
+      type: "block",
+      title: "Charge Your Card",
+      img: "/images/offers/card.webp",
+      description:
+        "Charge your \"Creditor Card\" and step into the private economy. Each swipe unlocks access, wealth, and opportunity reserved for members only.",
+      color: "from-slate-800 to-slate-900 dark:from-slate-900 dark:to-black",
+    },
+    {
+      type: "block",
+      title: "Unlock Courses & Connect",
+      img: "/images/offers/courses.webp",
+      description:
+        "Instantly access premium courses, join daily live masterclasses, and a private network of like-minded achievers. Learn, grow, and collaborate.",
+      color: "from-[#0a1e3f] to-[#1a2e5f] dark:from-[#0a1e3f] dark:to-[#101b36]",
+    },
+    {
+      type: "bg",
+      title: "Become Private",
+      description:
+        "Take control of your sovereignty. Apply what you learn to live free, operate privately, and build wealth on your own terms.",
+      bg: "/images/offers/sovnew.webp",
+    },
+  ];
+
   return (
-    <div className="relative bg-slate-950 min-h-screen text-slate-100 selection:bg-blue-500/20 py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* --- Original Background Layers --- */}
-      <div className="absolute inset-0 pointer-events-none">
-       <div
-  className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-  style={{
-    backgroundImage:
-      "url('https://res.cloudinary.com/jup2hjfk/image/upload/v1785732692/bggg_hyoe8c.jpg')",
-  }}
-/>
-        <div className="absolute inset-0 z-0 bg-gradient-to-br from-slate-600/30 via-blue-950/80 to-slate-600/60" />
+    <section className="relative overflow-hidden py-10 md:py-20">
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('https://res.cloudinary.com/jup2hjfk/image/upload/f_auto,q_auto,w_1920/v1785732692/bggg_hyoe8c.jpg')" }}
+      />
+      <div className="absolute inset-0 bg-black/30 backdrop-blur-[1px]" />
+      <div className="container mx-auto px-4 relative z-10">
         
-        {/* Grid Pattern Mesh */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(59,130,246,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(59,130,246,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
+        {/* --- Section Heading --- */}
+        <div ref={ref} className="mt-0 md:mt-5">
+          
+          
+          {/* Section Title - Center Aligned */}
+          <div className="text-center">
+            <h3 className="text-3xl md:text-5xl font-extrabold text-white dark:text-white leading-tight">
+              The{' '}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-400">
+                Freedom
+              </span>{' '}
+              Formula
+            </h3>
+          </div>
         </div>
-      </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto">
-        {/* --- Header Area --- */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center flex flex-col items-center max-w-3xl mx-auto mb-20"
-        >
-         
-
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white uppercase leading-none">
-            The{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-sky-300 to-indigo-400">
-              Freedom
-            </span>{" "}
-            Formula
-          </h2>
-
-          <p className="mt-6 text-base sm:text-lg text-slate-300 leading-relaxed font-normal max-w-2xl">
-            A precise, sequential pipeline framework engineered to optimize capital scaling, private membership access, and asset protection.
-          </p>
-        </motion.div>
-
-        {/* --- Pipeline Cards Grid --- */}
-        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-         
-
-          {benefits.map((item, index) => (
-            <motion.div
-              key={item.step}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.15, ease: [0.215, 0.61, 0.355, 1] }}
-              className="group relative rounded-3xl border border-slate-800/90 bg-slate-900/60 backdrop-blur-xl p-7 flex flex-col justify-between overflow-hidden transition-all duration-500 hover:border-sky-500/40 hover:-translate-y-2 z-10"
-              style={{
-                boxShadow: "0 10px 30px -10px rgba(0,0,0,0.5)",
-              }}
+        {/* --- Cards Grid --- */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
+          {benefits.map((item, idx) => (
+            <div
+              key={idx}
+              className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 h-full group"
             >
-             
+              {/* --- Large Number Overlay --- */}
+              <span
+                className={`absolute top-3 right-5 text-[90px] md:text-[120px] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-blue-400/40 to-amber-400/40 dark:from-blue-300/50 dark:to-yellow-300/50 select-none pointer-events-none leading-none z-30 drop-shadow-[0_0_20px_rgba(255,215,0,0.25)] group-hover:scale-110 group-hover:opacity-100 opacity-90 transition-transform duration-500 ease-out`}
+              >
+                {String(idx + 1).padStart(1, "0")}
+              </span>
 
-              {/* Card Ambient Glow Effect */}
-              <div
-                className="absolute -bottom-20 -right-20 w-48 h-48 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                style={{ backgroundColor: item.glowColor }}
-              />
+              {/* Shared overlays for ALL card types (subtle glass + gradient + radial glow) */}
+              <div className="absolute inset-0 pointer-events-none z-10">
+                {/* soft tint to unify cards */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10 dark:to-black/40 opacity-60 mix-blend-overlay" />
 
-              {/* Card Header Info */}
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <span className="text-[11px] tracking-[0.25em] font-extrabold uppercase text-blue-400/90 bg-blue-500/10 px-2.5 py-1 rounded-md border border-blue-500/20">
-                    {item.step}
-                  </span>
-                  <span className="text-3xl font-black text-slate-500  duration-300">
-                    {item.stageNum}
-                  </span>
-                </div>
+                {/* radial glow (top-right) */}
+                <div className="absolute -top-10 -right-10 w-36 h-36 rounded-full blur-3xl opacity-60 bg-gradient-to-tr from-blue-400/30 to-indigo-600/20" />
 
-                {/* Image Display Area */}
-                <div className="relative my-6 h-44 w-full flex items-center justify-center">
-                  <div
-                    className={`absolute w-3/4 h-3/4 bg-gradient-to-r ${item.accent} opacity-15 rounded-full filter blur-2xl group-hover:opacity-30 transition-opacity duration-500`}
-                  />
-                  <div className="relative w-full h-full select-none transform transition-transform duration-500 group-hover:scale-105">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="object-contain object-center filter drop-shadow-[0_16px_24px_rgba(0,0,0,0.7)]"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                    />
-                  </div>
-                </div>
+                {/* subtle bottom vignette */}
+                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent" />
 
-                {/* Title & Divider */}
-                <h3 className="text-xl font-bold uppercase tracking-tight text-white group-hover:text-sky-200 transition-colors duration-300">
-                  {item.title}
-                </h3>
-                <div
-                  className={`h-[2px] w-10 bg-gradient-to-r ${item.accent} my-3.5 group-hover:w-16 transition-all duration-300`}
-                />
+                {/* translucent glass layer for readable text */}
+                <div className="absolute inset-0 bg-white/0 dark:bg-black/0 backdrop-blur-[2px]" />
               </div>
 
-              {/* Description */}
-              <p className="text-xs sm:text-sm text-slate-300/90 leading-relaxed font-normal mt-1">
-                {item.description}
-              </p>
-            </motion.div>
+              {/* --- BG type cards (1 & 4) --- */}
+              {item.type === "bg" && (
+                <div
+                  className="relative h-full min-h-[20rem] flex flex-col justify-between rounded-2xl overflow-hidden  "
+                  style={{
+                    backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.12) 0%, rgba(2,6,23,0.38) 60%), url(${item.bg})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                >
+                  {/* Additional overlay specific to BG cards for contrast */}
+                  <div className="absolute inset-0 mix-blend-overlay opacity-40 pointer-events-none z-20" />
+
+                  <div className="absolute -top-8 -right-8 w-36 h-36 bg-gradient-to-tr from-blue-400/30 to-indigo-600/20 rounded-full blur-3xl pointer-events-none opacity-80 z-15" />
+
+                  {/* Top heading overlay for BG cards */}
+                  <div className="p-6 md:p-8 absolute top-0 left-0 right-0 bg-gradient-to-b from-black/40 via-black/10 to-transparent z-30">
+                    <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-md">
+                      {item.title}
+                    </h3>
+                  </div>
+
+                  <div className="p-6 md:p-8 relative z-30 mt-auto">
+                    <p className="text-sm md:text-base text-white/90 leading-relaxed max-w-prose text-justify">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  {/* Hover accent */}
+                  <div className="absolute inset-0 z-0 transition-opacity duration-500 opacity-0 group-hover:opacity-30 bg-gradient-to-br from-blue-400/20 to-amber-300/10" />
+                </div>
+              )}
+
+              {/* --- Block type cards (2 & 3) --- */}
+              {item.type === "block" && (
+                <div
+                  className={`relative flex flex-col justify-between rounded-2xl p-6 md:p-8 h-full bg-gradient-to-b ${item.color}  overflow-hidden`}
+                >
+                  {/* layered gradients to improve readability */}
+                  <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/50 via-black/30 to-transparent" />
+
+                  {/* Heading */}
+                  <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-md relative z-20">
+                    {item.title}
+                  </h3>
+
+                  {/* Image */}
+                  <Image
+                    src={(item as BlockCard).img}
+                    alt={item.title}
+                    width={800}
+                    height={400}
+                    className={`w-full object-contain rounded-xl relative mt-5 z-20 ${idx === 1 ? 'h-28 md:h-32' : 'h-36 md:h-44'}`}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+
+                  {/* Description at bottom */}
+                  <p className="mt-4 text-sm md:text-base text-white/90 leading-relaxed max-w-prose z-20 text-justify">
+                    {item.description}
+                  </p>
+
+                  {/* Hover accent */}
+                  <div className="absolute inset-0 z-10 transition-opacity duration-500 opacity-0 group-hover:opacity-25 bg-gradient-to-br from-white/5 to-black/20 pointer-events-none" />
+                </div>
+              )}
+            </div>
           ))}
         </div>
 
-        {/* --- Bottom Callout CTA --- */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="flex justify-center mt-16 md:mt-20"
-        >
+        {/* CTA Button */}
+        <div className="mt-12 flex flex-col items-center gap-4">
           <a
+            className="relative w-full max-w-md inline-flex items-center justify-center px-10 py-3.5 md:px-10 md:py-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-semibold text-lg md:text-xl shadow-lg ring-1 ring-white/10 dark:ring-black/10 transition-transform duration-200"
             href="/masterclass-membership"
-            className="group relative inline-flex items-center gap-4 pl-8 pr-3 py-3 overflow-hidden rounded-full bg-blue-600 text-white text-xs tracking-widest uppercase font-extrabold transition-all duration-300 shadow-xl shadow-blue-600/30 hover:bg-blue-500 hover:shadow-blue-500/40 hover:scale-[1.02]"
           >
-            <span>Initialize Membership</span>
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/15 text-white transition-transform duration-300 group-hover:translate-x-1">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </div>
+            Become a Member
           </a>
-        </motion.div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

@@ -54,6 +54,29 @@ function renderInlineText(text: string): React.ReactNode {
 }
 
 export default function BlogDetail({ post }: BlogDetailProps) {
+  // Pre-process content to dynamically insert CTA blocks for all blogs
+  const cleanContent = [...post.content].filter(block => !block.startsWith("[CTA]"));
+
+  // Find index of "## Conclusion" heading
+  const conclusionIndex = cleanContent.findIndex(
+    (block) => typeof block === "string" && block.trim() === "## Conclusion"
+  );
+
+  const ctaString = "[CTA]Ready to Take the Next Step?||Join the FREE Live Webinar NOW ! |https://creditoracademy.com/webinar[/CTA]";
+
+  // Insert Conclusion CTA
+  if (conclusionIndex !== -1) {
+    cleanContent.splice(conclusionIndex, 0, ctaString);
+  } else {
+    cleanContent.push(ctaString);
+  }
+
+  // Find middle index of the list (after Conclusion CTA is added)
+  const middleIndex = Math.floor(cleanContent.length / 2);
+  if (middleIndex > 0 && middleIndex < cleanContent.length) {
+    cleanContent.splice(middleIndex, 0, ctaString);
+  }
+
   return (
     <main
       className={`${poppins.className} min-h-screen bg-[#FAFAFA] text-neutral-900 pb-12 sm:pb-18 overflow-x-hidden selection:bg-neutral-900 selection:text-white`}
@@ -136,7 +159,43 @@ export default function BlogDetail({ post }: BlogDetailProps) {
           {/* description hidden */}
 
           <div className="space-y-4 sm:space-y-6">
-            {post.content.map((block, index) => {
+            {cleanContent.map((block, index) => {
+              if (block.startsWith("[CTA]")) {
+                const ctaParts = block
+                  .replace("[CTA]", "")
+                  .replace("[/CTA]", "")
+                  .trim()
+                  .split("|");
+                const [ctaTitle, ctaDesc, btnText, btnUrl] = ctaParts;
+                return (
+                  <div
+                    key={index}
+                    className="my-6 overflow-hidden rounded-xl bg-blue-600 text-white shadow-md flex flex-col md:flex-row md:items-center justify-between py-4 px-6 sm:py-5 sm:px-8 gap-4 border border-blue-500"
+                  >
+                    <div className="flex-1">
+                      <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight leading-tight">
+                        {ctaTitle}
+                      </h3>
+                      {ctaDesc && (
+                        <p className="mt-1 text-blue-100 text-xs sm:text-sm leading-relaxed">
+                          {ctaDesc}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex-shrink-0">
+                      <a
+                        href={btnUrl || "https://creditoracademy.com/webinar"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-yellow-400 text-blue-950 font-semibold hover:bg-yellow-300 transition-all shadow-sm hover:shadow-md text-xs sm:text-sm whitespace-nowrap active:scale-95 duration-150"
+                      >
+                        {btnText}
+                      </a>
+                    </div>
+                  </div>
+                );
+              }
+
               if (block.startsWith("## ")) {
                 return (
                   <h2

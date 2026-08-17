@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 
 import { WORKSHOP_REGISTER_URL } from "@/lib/workshop";
 
-// Target Event Timestamp updated to Saturday, August 15, 2026 @ 11 AM PST
-const TARGET_EVENT_MS = new Date("2026-08-15T11:00:00-07:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/ca15.jpg"; 
-const EVENT_DATE_LABEL = "Saturday, August 15, 2026";
+// Target Event Timestamp updated to Sunday, August 23, 2026 @ 11 AM PST
+const TARGET_EVENT_MS = new Date("2026-08-23T11:00:00-07:00").getTime();
+const EVENT_IMAGE = "/images/todayclasstopic/ca-workshop.jpg";
+const EVENT_DATE_LABEL = "Sunday, August 23, 2026";
 
 interface EventPopupProps {
   delayMs?: number;
@@ -41,7 +41,7 @@ export default function EventPopup({
   useEffect(() => {
     if (disableAutoOpen) return;
     const timer = setTimeout(() => setOpen(true), delayMs);
-    return () => clearInterval(timer);
+    return () => clearTimeout(timer);
   }, [delayMs, disableAutoOpen]);
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export default function EventPopup({
           className="event-popup-close"
         >
           <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13 1L1 13M1 1L13 13" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M13 1L1 13M1 1L13 13" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
 
@@ -96,25 +96,24 @@ export default function EventPopup({
               <div className="event-popup-badges">
                 <span className="event-badge event-badge--live">
                   <span className="event-badge-dot" aria-hidden />
-                  WORKSHOP
+                  FREE WORKSHOP
                 </span>
-                <span className="event-badge event-badge--date">August 15 @ 11 AM PST</span>
+                <span className="event-badge event-badge--date">August 23 @ 11 AM PST</span>
               </div>
             </header>
 
             <h2 id="event-popup-title" className="event-popup-title">
-              How to Get an <span className="event-popup-title-accent">80 Paydex Score</span>
+              Build Business Credit Even <span className="event-popup-title-accent">With Bad Personal Credit</span>
             </h2>
 
             <p className="event-popup-desc">
-              Build stronger business credit and improve your funding readiness.
+              Don’t Let Personal Credit Hold Your Business Back
             </p>
 
             <div className="event-popup-tags">
-              <span>📈 Credit Building</span>
-              <span>⚖️ Payment Strategies</span>
-              <span>⚙️ PAYDEX Insights</span>
-              <span>🚀 Funding Readiness</span>
+              <span>🏛️ Build Business Credit</span>
+              <span>📈 Strengthen Your Business Profile</span>
+              <span>🎯 Improve Funding Readiness</span>
             </div>
 
             <div className="event-popup-countdown-wrap">
@@ -154,7 +153,7 @@ export default function EventPopup({
             <div className="event-popup-poster-card">
               <Image
                 src={EVENT_IMAGE}
-                alt={`Free Workshop: How to Get an 80 Paydex Score — ${EVENT_DATE_LABEL}`}
+                alt={`Free Workshop: Build Business Credit Even With Bad Personal Credit — ${EVENT_DATE_LABEL}`}
                 width={480}
                 height={480}
                 className="event-popup-poster-img"

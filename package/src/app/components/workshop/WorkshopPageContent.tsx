@@ -5,18 +5,18 @@ import Link from "next/link";
 import { Clock, Sparkles, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 
-// ── Event Constants Extracted Directly From ca15_3.jpg ─────────────────────────
-const WORKSHOP_EVENT_CALENDAR_DAY    = "15";
-const WORKSHOP_EVENT_CALENDAR_MONTH  = "AUG";
-const WORKSHOP_EVENT_DATE_LABEL      = "Saturday, August 15, 2026";
-const WORKSHOP_EVENT_TIME_DISPLAY    = "11:00 AM";
-const WORKSHOP_EVENT_TIME_PST        = "11:00 AM PST";
-const WORKSHOP_EVENT_TIMEZONE_LABEL  = "PST";
+// ── Event Constants Extracted Directly From Flyer ────────────────────────────
+const WORKSHOP_EVENT_CALENDAR_DAY = "23";
+const WORKSHOP_EVENT_CALENDAR_MONTH = "AUG";
+const WORKSHOP_EVENT_DATE_LABEL = "Sunday, August 23, 2026";
+const WORKSHOP_EVENT_TIME_DISPLAY = "11:00 AM";
+const WORKSHOP_EVENT_TIME_PST = "11:00 AM PST";
+const WORKSHOP_EVENT_TIMEZONE_LABEL = "PST";
 
-// Target Countdown Date: Saturday, August 15, 2026, 11:00 AM PST
-const WORKSHOP_EVENT_CLOSE_MS        = new Date("2026-08-15T11:00:00-07:00").getTime();
-const WORKSHOP_EVENT_IMAGE           = "/images/todayclasstopic/ca15.jpg"; 
-const REGISTRATION_LINK_URL          = "https://api.wonderengine.ai/widget/form/mL2L8I8p4RI7AF61stUd";
+// Target Countdown Date: Sunday, August 23, 2026, 11:00 AM PST
+const WORKSHOP_EVENT_CLOSE_MS = new Date("2026-08-23T11:00:00-07:00").getTime();
+const WORKSHOP_EVENT_IMAGE = "/images/todayclasstopic/ca-workshop.jpg";
+const REGISTRATION_LINK_URL = "https://api.wonderengine.ai/widget/form/mL2L8I8p4RI7AF61stUd";
 // ─────────────────────────────────────────────────────────────────────────────
 
 function pad(n: number) {
@@ -35,24 +35,24 @@ function getCountdown(targetMs: number) {
 
 // Key Takeaways & Objectives aligned with Flyer
 const INCLUDED = [
-  "Credit Building",
-  "Payment Strategies",
-  "PAYDEX Insights",
-  "Funding Readiness",
-  "Build stronger business credit",
-  "Improve your funding positioning & approval odds",
+  "Build Business Credit",
+  "Strengthen Your Business Profile",
+  "Improve Funding Readiness",
+  "Separate Personal & Business Credit",
+  "Overcome Bad Personal Credit History",
+  "Position Your Business for Maximum Capital Access",
 ] as const;
 
 const TRADITIONAL = [
-  { title: "Low or Missing Paydex Score", body: "Lacking trade lines and timely payment history, causing vendor denials and automated rejection from business lenders." },
-  { title: "Unstructured Payment History", body: "Paying bills without strategic timing or reporting oversight, failing to trigger score increases on Dun & Bradstreet." },
-  { title: "Funding Roadblocks", body: "Applying for high-limit credit without a solid business credit foundation, leading to personal guarantee requirements or rejections." },
+  { title: "Bad Personal Credit Impact", body: "Relying on personal credit scores to secure business financing, leading to instant rejections, high interest rates, or personal liability." },
+  { title: "Weak Corporate Profile", body: "Operating without structured business trade lines or profile depth, keeping lenders from trusting your commercial solvency." },
+  { title: "Funding Roadblocks", body: "Applying for commercial capital unprepared, leading to stringent personal guarantee requirements or complete funding denials." },
 ] as const;
 
 const CREDITOR = [
-  { title: "Optimized 80+ Paydex Score", body: "Establishing structured trade lines and prompt payment habits that generate a strong 80+ Dun & Bradstreet score." },
-  { title: "Strategic Payment Timing", body: "Leveraging payment cycles and bureau reporting windows to maximize business credit profile strength." },
-  { title: "High-Limit Funding Readiness", body: "Approaching vendors and financial institutions with a proven credit profile built for capital access." },
+  { title: "Independent Business Credit Profile", body: "Building strong commercial trade lines separate from personal credit so your business stands strong on its own merit." },
+  { title: "Optimized Business Profile Strength", body: "Structuring corporate credentials, trade lines, and bureau reporting to pass automated lending algorithms." },
+  { title: "High-Limit Funding Access", body: "Approaching financial institutions with a rock-solid business profile optimized for capital approvals without bad credit barriers." },
 ] as const;
 
 export default function WorkshopPageContent() {
@@ -88,13 +88,13 @@ export default function WorkshopPageContent() {
               <p className="text-sm font-bold uppercase tracking-widest text-[#7eb8ff]">
                 Creditor Academy · Private Montessori Association
               </p>
-              <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-[2.85rem] uppercase">
-                HOW TO GET AN{" "}
+              <h1 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.65rem] uppercase">
+                BUILD BUSINESS CREDIT EVEN{" "}
                 <span className="block bg-linear-to-r from-blue-400 via-sky-300 to-white bg-clip-text text-transparent font-black mt-1">
-                  80 PAYDEX SCORE
+                  WITH BAD PERSONAL CREDIT
                 </span>
-                <span className="text-2xl sm:text-3xl block mt-1 text-slate-200 capitalize font-medium italic">
-                  Build Stronger Business Credit
+                <span className="text-xl sm:text-2xl block mt-2 text-slate-200 capitalize font-medium italic">
+                  Don’t Let Personal Credit Hold Your Business Back
                 </span>
               </h1>
 
@@ -106,7 +106,7 @@ export default function WorkshopPageContent() {
               </div>
 
               <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-blue-100/85 lg:mx-0">
-                Learn step-by-step strategies for credit building, payment optimization, and PAYDEX insights to boost your funding readiness.
+                Learn step-by-step strategies to build business credit, strengthen your corporate profile, and improve your funding readiness regardless of personal credit history.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -128,7 +128,7 @@ export default function WorkshopPageContent() {
               <div className="overflow-hidden rounded-2xl border border-white/20 bg-white p-2 shadow-2xl shadow-black/30 ring-1 ring-primary/30">
                 <Image
                   src={WORKSHOP_EVENT_IMAGE}
-                  alt={`How to Get an 80 Paydex Score Workshop Flyer — ${WORKSHOP_EVENT_DATE_LABEL}`}
+                  alt={`Build Business Credit Even With Bad Personal Credit Workshop Flyer — ${WORKSHOP_EVENT_DATE_LABEL}`}
                   width={440}
                   height={440}
                   className="w-full rounded-xl object-contain bg-slate-950"
@@ -158,11 +158,11 @@ export default function WorkshopPageContent() {
                   LIVE ONLINE WORKSHOP
                 </span>
                 <h2 className="mt-4 text-2xl font-black tracking-tight text-slate-900 md:text-3xl uppercase">
-                  August 15 Workshop
+                  August 23 Workshop
                 </h2>
                 <p className="mt-2 flex items-center justify-center gap-2 text-slate-600 lg:justify-start text-sm">
                   <Video className="h-4 w-4 shrink-0 text-primary" aria-hidden />
-                  Business Credit Building &amp; PAYDEX Optimization
+                  Business Credit Building &amp; Corporate Readiness
                 </p>
               </div>
 
@@ -219,13 +219,13 @@ export default function WorkshopPageContent() {
             Unprepared Businesses vs. Credit-Optimized Businesses
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-center text-slate-600">
-            Discover how achieving an 80+ PAYDEX score transforms your corporate funding opportunities.
+            Discover how separating business credit from bad personal credit unlocks corporate capital opportunities.
           </p>
 
           <div className="mx-auto mt-12 grid max-w-5xl gap-8 lg:grid-cols-2">
             <div className="rounded-2xl border-2 border-[#c5dff5] bg-white/60 p-8 backdrop-blur-sm">
               <span className="inline-block rounded-full bg-[#d0e8f8] px-3 py-1 text-xs font-bold uppercase text-slate-600">
-                Weak Business Credit
+                Personal Credit Dependent
               </span>
               <p className="mt-4 text-sm font-bold text-slate-400 tracking-wide">HIGH RISK &amp; LIMITED OPTIONS</p>
               <ul className="mt-6 space-y-6">
@@ -240,7 +240,7 @@ export default function WorkshopPageContent() {
 
             <div className="rounded-2xl border-2 border-primary bg-linear-to-br from-[#dbeafe] to-[#eff6ff] p-8 shadow-lg shadow-blue-500/15">
               <span className="inline-block rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase text-white">
-                80+ PAYDEX Credit Profile
+                Independent Business Credit Profile
               </span>
               <p className="mt-4 text-sm font-bold text-primary tracking-wide">CONFIDENT &amp; FUNDABLE</p>
               <ul className="mt-6 space-y-6">
@@ -270,11 +270,11 @@ export default function WorkshopPageContent() {
                 <h2 className="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
                   Unlock Your Free{" "}
                   <span className="bg-linear-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent">
-                    Paydex Score Blueprint
+                    Business Credit Blueprint
                   </span>
                 </h2>
                 <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-blue-100/90 lg:mx-0">
-                  Secure access to live walkthroughs detailing how to build trade lines, manage payment timing, and score an 80+ PAYDEX.
+                  Secure access to live walkthroughs detailing how to build trade lines, strengthen your corporate profile, and secure funding despite bad personal credit.
                 </p>
               </div>
 
@@ -321,8 +321,8 @@ export default function WorkshopPageContent() {
                 <p className="text-xs font-bold uppercase tracking-widest text-blue-100/90">
                   ONLINE LIVE WORKSHOP
                 </p>
-                <p className="mt-3 text-2xl font-black tracking-tight uppercase">
-                  HOW TO GET AN 80 PAYDEX SCORE
+                <p className="mt-3 text-xl sm:text-2xl font-black tracking-tight uppercase">
+                  BUILD BUSINESS CREDIT EVEN WITH BAD PERSONAL CREDIT
                 </p>
                 <div className="mt-4 inline-flex flex-col gap-1 rounded-xl bg-black/15 px-5 py-3 text-sm font-bold">
                   <span>{WORKSHOP_EVENT_DATE_LABEL}</span>

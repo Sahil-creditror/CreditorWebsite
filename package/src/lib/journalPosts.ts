@@ -1,4 +1,4 @@
-﻿export type JournalPost = {
+export type JournalPost = {
 
   id: number;
 

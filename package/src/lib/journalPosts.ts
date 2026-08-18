@@ -32,6 +32,325 @@ export type JournalPost = {
 
 export const JOURNAL_POSTS: JournalPost[] = [
   {
+    id: 19,
+
+    slug: "public-capacity-vs-private-capacity",
+
+    title: "Public Capacity vs Private Capacity Explained",
+
+    description:
+      "Learn the difference between public and private capacity, how these concepts can apply to individuals and businesses, and why context matters.",
+
+    metaTitle: "Public Capacity vs Private Capacity Explained",
+
+    metaDescription:
+      "Learn the difference between public and private capacity, how these concepts can apply to individuals and businesses, and why context matters.",
+
+    keywords:
+      "public capacity vs private capacity, public capacity, private capacity, private capacity explained, public capacity explained, individual capacity, business capacity, legal capacity, business organization, private business, financial education, business structure, entrepreneur education, Become Private, Creditor Academy",
+
+    category: "Become Private",
+
+    date: "August 18, 2026",
+
+    readTime: "10 min",
+
+    image: "/images/blogs/blog-18.jpg",
+
+    featured: true,
+
+    content: [
+      "Entrepreneurs often encounter the terms **public capacity** and **private capacity** when researching business organization, contracts, legal structures, and financial education.",
+
+      "These terms can be confusing because their meaning depends heavily on the context in which they are used. In legal and business discussions, \"capacity\" can refer to the role in which a person or organization acts, such as acting personally, on behalf of a company, or in an official or representative role.",
+
+      "Understanding these distinctions can help entrepreneurs communicate more clearly, structure business relationships appropriately, and avoid misconceptions about what a particular legal or organizational arrangement can accomplish.",
+
+      "In this article, we'll explore **public capacity vs private capacity**, explain the terminology in practical terms, discuss common misconceptions, and look at why understanding capacity can be useful for entrepreneurs.",
+
+      "## What Does \"Capacity\" Mean?",
+
+      "In a general legal and business context, **capacity** describes the position, authority, or role in which a person or entity is acting.",
+
+      "For example, an individual may act:",
+
+      "- In their personal capacity\n- As an owner of a business\n- As an employee\n- As an authorized representative\n- As a trustee\n- As a director or officer of a company",
+
+      "The same person can have different responsibilities depending on the role they are performing.",
+
+      "This is why identifying the capacity in which someone is acting can be important when reviewing contracts, transactions, and business documents.",
+
+      "## What Is Public Capacity?",
+
+      "The phrase **public capacity** can have different meanings depending on the legal or administrative context.",
+
+      "Generally, it can refer to someone acting in an **official, governmental, public, or representative role** rather than solely in their personal capacity.",
+
+      "For example, a government official may perform certain actions in an official capacity because they are exercising authority connected to their public position.",
+
+      "The exact meaning depends on the applicable law and circumstances.",
+
+      "## What Is Private Capacity?",
+
+      "Similarly, **private capacity** can refer to someone acting in a personal, private, contractual, or non-governmental role.",
+
+      "For example, an entrepreneur entering into a commercial contract may be acting in a private business capacity rather than as a government representative.",
+
+      "However, acting in a private capacity does **not** automatically mean that a person is outside the law or exempt from legal responsibilities.",
+
+      "Private transactions and businesses remain subject to applicable laws and regulations.",
+
+      "## Public Capacity vs Private Capacity: Quick Comparison",
+
+      "[TABLE]\nFactor|Public Capacity|Private Capacity\nGeneral meaning|Acting in an official or public role|Acting personally or in a private/business role\nExample|Government official performing official duties|Entrepreneur entering a commercial agreement\nSource of authority|Public office, statute, or official position|Personal authority, contract, ownership, or organizational role\nLegal obligations|Governed by applicable public and administrative law|Governed by applicable private and commercial law, plus other applicable regulations\nUniversal definition?|No|No\n[/TABLE]",
+
+      "The exact interpretation depends on the legal context and jurisdiction.",
+
+      "## An Easy Example",
+
+      "Imagine an individual named Alex.",
+
+      "When Alex performs duties assigned as part of a government position, Alex may be acting in an **official or public capacity**.",
+
+      "When Alex signs a client agreement on behalf of their own consulting company, Alex may be acting in a **business or private capacity**.",
+
+      "Alex is the same individual, but the role and legal relationship are different.",
+
+      "This distinction is useful when understanding contracts and responsibilities.",
+
+      "## Personal Capacity vs Business Capacity",
+
+      "Another important distinction is between acting personally and acting through a business.",
+
+      "For example, signing an agreement personally means acting in a **personal capacity**. Signing as \"Alex Smith, Manager, ABC Consulting LLC\" indicates acting in a **business or representative capacity** — assuming Alex has the authority to do so.",
+
+      "This distinction can be important for contracts, financial records, and business administration.",
+
+      "## Why Capacity Matters in Contracts",
+
+      "Contracts generally identify the parties entering into an agreement.",
+
+      "When signing a business contract, entrepreneurs should understand:",
+
+      "- Who is the actual contracting party?\n- Who has authority to sign?\n- Is the person signing personally or as a representative?\n- What obligations does the agreement create?\n- Which entity is responsible for performance?",
+
+      "Clear documentation can help reduce confusion about the parties and their responsibilities.",
+
+      "## Private Capacity Does Not Mean \"Outside the Law\"",
+
+      "This is one of the most important points to understand.",
+
+      "Some online discussions suggest that acting in a \"private capacity\" automatically removes an individual or business from public laws, regulations, taxes, licensing requirements, or court authority.",
+
+      "That is not a reliable general rule.",
+
+      "Private businesses and private individuals remain subject to applicable laws.",
+
+      "For example, depending on the circumstances, a private business may still have obligations relating to:",
+
+      "- Taxes\n- Contracts\n- Employment\n- Consumer protection\n- Licensing\n- Property\n- Data privacy\n- Financial reporting",
+
+      "The fact that a transaction is private does not automatically eliminate legal obligations.",
+
+      "## Public Capacity Does Not Mean Government Ownership",
+
+      "Another misconception is that acting in a public capacity necessarily means that an individual or business is owned by or controlled by the government.",
+
+      "That is not generally what the term means.",
+
+      "\"Public capacity\" usually describes the **role or authority in which someone is acting**, not ownership of the individual.",
+
+      "Context matters.",
+
+      "## Private Capacity and Business Organization",
+
+      "Understanding capacity can be particularly useful for entrepreneurs.",
+
+      "Businesses often involve multiple roles. An entrepreneur might simultaneously be:",
+
+      "- An individual\n- An LLC member\n- A company manager\n- A trustee\n- A contracting party\n- An employer",
+
+      "Each role may involve different rights and responsibilities.",
+
+      "Proper business documentation should clearly identify which person or entity is acting in a particular transaction.",
+
+      "## Private Capacity and \"Become Private\"",
+
+      "For entrepreneurs exploring [Become Private](/services/course-cataloges/become-private), understanding the distinction between terminology and actual legal status is important.",
+
+      "\"Private\" can describe many different things in business discussions, including:",
+
+      "- Private ownership\n- Private contracts\n- Confidential business information\n- Non-governmental organizations\n- [Private membership organizations](/Blogs/what-is-a-private-membership-association)\n- Privately held businesses",
+
+      "However, using the word \"private\" does not automatically create a special legal status.",
+
+      "The actual legal effect of a structure depends on applicable law, documentation, and the facts of the situation.",
+
+      "## Private Businesses Still Have Responsibilities",
+
+      "A privately owned business can still have significant legal and financial obligations.",
+
+      "These may include:",
+
+      "**Business Registration**",
+
+      "Depending on the jurisdiction and structure, businesses may need to register with appropriate authorities.",
+
+      "**Tax Responsibilities**",
+
+      "Businesses may have federal, state, local, or other tax obligations.",
+
+      "**Contracts**",
+
+      "Businesses are generally required to comply with agreements they legally enter into.",
+
+      "**Employment Requirements**",
+
+      "Businesses with employees may have obligations under applicable employment laws.",
+
+      "**Licensing**",
+
+      "Certain industries require specific licenses or permits.",
+
+      "**Recordkeeping**",
+
+      "Businesses may need to maintain financial, corporate, or other records.",
+
+      "## Common Myths About Public and Private Capacity",
+
+      "**Myth 1: Private Capacity Means You Are Exempt From the Law**",
+
+      "False. Private individuals and businesses remain subject to applicable laws.",
+
+      "**Myth 2: Saying \"I Am Acting Privately\" Changes Your Legal Status**",
+
+      "Simply making a statement does not necessarily change your legal rights, obligations, or status. Legal consequences depend on applicable law and the facts of the situation.",
+
+      "**Myth 3: Public Capacity Means You Are a Government Employee**",
+
+      "Not necessarily. The meaning of public capacity depends on the particular legal or administrative context.",
+
+      "**Myth 4: A Private Contract Overrides Every Law**",
+
+      "Private contracts generally cannot eliminate mandatory legal requirements. Contracting parties can establish many terms between themselves, but those terms operate within the applicable legal framework.",
+
+      "**Myth 5: Private Business Means No Regulations Apply**",
+
+      "Private businesses can still be subject to laws relating to taxation, employment, licensing, consumer protection, privacy, and other areas.",
+
+      "## Why Entrepreneurs Should Understand Capacity",
+
+      "Understanding the role in which you or your business acts can help with:",
+
+      "- Contract drafting\n- Business organization\n- Corporate governance\n- Financial administration\n- Ownership documentation\n- Business communications\n- Risk management",
+
+      "It can also help prevent confusion between an individual and the business entity they represent.",
+
+      "## Practical Tips for Business Owners",
+
+      "**Clearly Identify Your Business Entity**",
+
+      "Use the correct legal name of your business in contracts and official documents.",
+
+      "**Know Your Authority**",
+
+      "Make sure the person signing an agreement has authority to act for the business.",
+
+      "**Keep Business Records Organized**",
+
+      "Maintain appropriate records of contracts, transactions, ownership, and financial activity.",
+
+      "**Understand Your Obligations**",
+
+      "Research the laws and regulations applicable to your business.",
+
+      "**Get Professional Advice**",
+
+      "For significant legal, tax, or organizational decisions, consult qualified professionals.",
+
+      "## Public Capacity vs Private Capacity and Financial Education",
+
+      "Understanding legal terminology is only one part of becoming a financially informed entrepreneur.",
+
+      "Business owners should also learn about:",
+
+      "- [Business credit](/Blogs/business-credit-vs-personal-credit)\n- [Business funding](/Blogs/business-funding-explained)\n- Financial statements\n- Business structures\n- Risk management\n- Asset management\n- Long-term financial planning",
+
+      "The goal is to understand how different pieces of business and financial organization work together.",
+
+      "## Learn More With Creditor Academy",
+
+      "[Creditor Academy](https://creditoracademy.com/) provides educational resources designed to help entrepreneurs expand their knowledge of business organization, financial education, business credit, and long-term financial planning.",
+
+      "The Academy's three core educational areas include:",
+
+      "- [Become Private](/services/course-cataloges/become-private)\n- [Operate Private](/services/course-cataloges/operate-private)\n- [Financial Freedom](/services/course-cataloges/financial-freedom)",
+
+      "Understanding concepts such as business structures, contracts, credit, and financial planning can help entrepreneurs become more informed and make better decisions.",
+
+      "You can also join the [Creditor Academy Free Webinar](https://creditoracademy.com/webinar) to continue your business and financial education.",
+
+      "## Conclusion",
+
+      "Understanding **public capacity vs private capacity** can help entrepreneurs better understand the roles they play in business and legal relationships.",
+
+      "The key distinction is that **capacity generally concerns the role or authority in which a person or entity acts**. It should not be confused with a claim that someone can simply declare themselves \"private\" and thereby avoid laws or legal obligations.",
+
+      "For business owners, the practical approach is to clearly identify the relevant individual or entity, understand who has authority to act, maintain accurate documentation, and learn the legal and financial responsibilities associated with the business.",
+
+      "Building this knowledge is an important part of becoming a more informed entrepreneur.",
+
+      "To know more, visit our website [Creditor Academy](https://creditoracademy.com/).",
+
+      "## Frequently Asked Questions",
+
+      "### What is public capacity?",
+
+      "Public capacity generally refers to acting in an official, governmental, or public role. Its precise meaning depends on the legal context.",
+
+      "### What is private capacity?",
+
+      "Private capacity can refer to acting personally or in a private or commercial role rather than exercising public governmental authority.",
+
+      "### Is private capacity a special legal status?",
+
+      "Not necessarily. The phrase can have different meanings depending on the context and jurisdiction and should not automatically be treated as a special legal status.",
+
+      "### Does acting in a private capacity remove legal obligations?",
+
+      "No. Private individuals and businesses remain subject to applicable laws and regulations.",
+
+      "### Why does capacity matter in contracts?",
+
+      "Capacity can help clarify who is entering into an agreement and whether the person signing has authority to bind the individual or organization involved.",
+
+      "### Is a private business outside government regulation?",
+
+      "No. Privately owned businesses may still be subject to applicable tax, employment, licensing, consumer protection, and other laws.",
+
+      "### Can one person act in different capacities?",
+
+      "Yes. An individual can act personally, as a business owner, as a company officer, as a trustee, or in another role depending on the circumstances.",
+
+      "### Does saying \"private\" change legal status?",
+
+      "Simply using the term \"private\" does not automatically change a person's or business's legal status or obligations.",
+
+      "### Should I get legal advice about capacity?",
+
+      "If capacity is relevant to an important contract, business structure, trust, or other legal matter, consulting a qualified attorney is advisable.",
+
+      "## Continue Your Financial Education",
+
+      "Want to learn more about [Become Private](/services/course-cataloges/become-private), [Operate Private](/services/course-cataloges/operate-private), and [Financial Freedom](/services/course-cataloges/financial-freedom)?",
+
+      "[Contact Creditor Academy](https://creditoracademy.com/contact) to explore business organization, financial education, business credit, and long-term financial planning.",
+
+      "*This article is for educational purposes only and does not constitute legal, tax, financial, or regulatory advice. The meaning and legal effect of \"public capacity\" and \"private capacity\" can vary depending on the jurisdiction and specific context. Consult a qualified legal professional for advice regarding your circumstances.*",
+    ],
+  },
+
+  {
     id: 18,
 
     slug: "credit-stacking-explained",
@@ -57,7 +376,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
 
     image: "/images/blogs/blog-Credit Stacking Explained.jpg",
 
-    featured: true,
+    featured: false,
 
     content: [
       "Access to capital can be one of the biggest challenges for entrepreneurs. A business may have a strong idea, growing demand, and a clear strategy but still need additional capital to purchase equipment, manage inventory, fund marketing, or support expansion.",

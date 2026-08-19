@@ -35,12 +35,9 @@ const Header = () => {
 
     const handleDirection = () => {
       const currentY = window.scrollY;
-      if (currentY < lastScrollY.current && lastScrollY.current > 120) {
-        setShowHeader(false);
-      } else {
-        setShowHeader(true);
-      }
       lastScrollY.current = currentY;
+      // Always keep header visible
+      setShowHeader(true);
     };
 
     window.addEventListener("scroll", handleDirection);
@@ -122,8 +119,8 @@ const Header = () => {
 
             {/* SERVICES DROPDOWN */}
             <div className="relative group">
-              <Link
-                href={COURSES_PAGE_PATH}
+              <button
+                type="button"
                 className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${sticky
                   ? "text-slate-700 hover:text-slate-950 hover:bg-slate-900/5"
                   : "text-white hover:bg-white/10"
@@ -134,7 +131,7 @@ const Header = () => {
                   size={14}
                   className="opacity-70 transition-transform duration-200 group-hover:rotate-180"
                 />
-              </Link>
+              </button>
 
               <div className="absolute top-full left-0 mt-2 w-45 bg-white border border-slate-100 rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-2">
                 {[
@@ -156,8 +153,8 @@ const Header = () => {
 
 
             <div className="relative group">
-              <Link
-                href={COURSES_PAGE_PATH}
+              <button
+                type="button"
                 className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${sticky
                   ? "text-slate-700 hover:text-slate-950 hover:bg-slate-900/5"
                   : "text-white hover:bg-white/10"
@@ -168,7 +165,7 @@ const Header = () => {
                   size={14}
                   className="opacity-70 transition-transform duration-200 group-hover:rotate-180"
                 />
-              </Link>
+              </button>
 
               <div className="absolute top-full left-0 mt-2 w-36 bg-white border border-slate-100 rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-2">
                 {[

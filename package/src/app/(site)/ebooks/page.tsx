@@ -2,8 +2,9 @@ import { Herobanner } from "@/app/components/shared/hero-banner";
 import EbooksPage from "@/app/components/ebooks";
 
 export const metadata = {
-  title: "eBooks | Creditor Academy",
-  description: "Explore our collection of financial education eBooks by Paulmichael Rowland.",
+  title: "eBook Library | By PaulMichael Rowland | Creditor Academy",
+  description: "Download Creditor Academy eBooks on credit repair, business trusts, asset protection and private wealth-building strategies.",
+  keywords: "financial ebooks, credit repair guide, business trust ebook, asset protection, creditor academy",
 };
 
 export default function Page() {

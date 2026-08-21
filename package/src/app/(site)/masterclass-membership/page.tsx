@@ -20,7 +20,9 @@ const Works = dynamic(() => import("@/app/components/masterclass/works"), {
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
 export const metadata: Metadata = {
-    title: "Membership | Creditor",
+    title: "Masterclass Membership | Join Now | Creditor Academy",
+    description: "Unlock the Creditor Academy Masterclass: business trusts, asset protection, private credit and financial sovereignty training. Join now.",
+    keywords: "masterclass membership, creditor academy membership, join creditor academy, become private, operate private, financial freedom",
     alternates: {
         canonical: `${siteUrl}/masterclass-membership`,
     },

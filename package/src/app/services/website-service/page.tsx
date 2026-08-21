@@ -8,7 +8,9 @@ const Website = dynamic(() => import('./Website').then(mod => ({ default: mod.We
 });
 
 export const metadata: Metadata = {
-  title: "Website Creation | Creditor Academy",
+  title: "Website Services | Creditor Academy",
+  description: "Get a professional website built for your private business or trust with Creditor Academy's website services.",
+  keywords: "website services, private business website, business trust website design, creditor academy",
 };
 
 export default function WebsiteServicePage() {

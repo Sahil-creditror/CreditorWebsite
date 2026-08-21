@@ -28,14 +28,15 @@ const Contact = dynamic(() => import("./components/home/contact"), {
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
 export const metadata: Metadata = {
-  title: "Creditor Academy | Join The Private Economy & Master Sovereign Wealth",
-  description: "Learn how to step out of the public system and operate in private. Creditor Academy provides expert guidance on sovereign wealth, private business operation, and financial freedom.",
+  title: "Become Private & Financial Sovereignty | Creditor Academy",
+  description: "Learn business trusts, asset protection & private wealth strategies with Creditor Academy's Masterclass. Join students building financial freedom today.",
+  keywords: "become private, operate private, financial sovereignty, business trust, asset protection, creditor academy",
   alternates: {
     canonical: siteUrl,
   },
   openGraph: {
-    title: "Creditor Academy | Join The Private Economy & Master Sovereign Wealth",
-    description: "Learn how to step out of the public system and operate in private.",
+    title: "Become Private & Financial Sovereignty | Creditor Academy",
+    description: "Learn business trusts, asset protection & private wealth strategies with Creditor Academy's Masterclass. Join students building financial freedom today.",
     url: siteUrl,
     siteName: "Creditor Academy",
     images: [
@@ -50,8 +51,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Creditor Academy | Join The Private Economy & Master Sovereign Wealth",
-    description: "Learn how to step out of the public system and operate in private.",
+    title: "Become Private & Financial Sovereignty | Creditor Academy",
+    description: "Learn business trusts, asset protection & private wealth strategies with Creditor Academy's Masterclass. Join students building financial freedom today.",
     images: ["https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883571/creditor-website-assets/images/hero/Banner.png"],
   },
 };

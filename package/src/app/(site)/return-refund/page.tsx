@@ -2,7 +2,9 @@ import { Herobanner } from "@/app/components/shared/hero-banner";
 import ReturnAndRefund from "@/app/components/return-and-refund";
 import { Metadata } from "next";
 export const metadata: Metadata = {
-    title: "Return & Refund | Creditor",
+    title: "Return & Refund Policy | Creditor Academy",
+    description: "Learn about Creditor Academy's return and refund policy for courses, memberships and digital products.",
+    keywords: "refund policy, return policy, creditor academy cancellations, creditor academy",
 };
 
 export default function Page() {

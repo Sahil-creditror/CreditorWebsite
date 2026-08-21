@@ -13,7 +13,9 @@ import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Financial Freedom | Creditor",
+  title: "Financial Freedom Syllabus | Creditor Academy",
+  description: "View the Financial Freedom course syllabus covering business credit, personal credit repair and debt stacking strategies.",
+  keywords: "financial freedom, financial freedom syllabus, business credit course, credit repair training, creditor academy",
 };
 
 export default function FinancialFreedomPage() {

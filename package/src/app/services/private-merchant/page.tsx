@@ -7,7 +7,9 @@ const PrivateMerchant = dynamic(() => import('./privatemerchant').then(mod => ({
 });
 
 export const metadata: Metadata = {
-  title: "Private Merchant | Creditor Academy",
+  title: "Private Merchant Services | Creditor Academy",
+  description: "Learn how to set up private merchant processing and payment solutions as part of operating your private business.",
+  keywords: "private merchant services, private merchant account, private payment processing, creditor academy",
 };
 
 export default function PrivateMerchantPage() {

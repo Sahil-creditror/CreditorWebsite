@@ -3,7 +3,9 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-    title: "Membership | Creditor",
+    title: "Membership Plans | Creditor Academy",
+    description: "Compare Creditor Academy membership tiers and unlock courses, live coaching and private wealth-building resources.",
+    keywords: "membership plans, creditor academy pricing, course membership tiers, become private, operate private, financial freedom, creditor academy",
 };
 
 export default function Page() {

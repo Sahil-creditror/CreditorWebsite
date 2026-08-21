@@ -13,7 +13,9 @@ import { Metadata } from "next";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
 export const metadata: Metadata = {
-    title: "Aboutus | Creditor",
+    title: "About Us | Credit & Financial Freedom | Creditor Academy",
+    description: "Meet the team behind Creditor Academy and learn our mission to make financial literacy and private wealth education accessible to everyone.",
+    keywords: "about creditor academy, financial education company, credit coaching team, about us, become private, operate private, financial freedom, creditor academy",
     alternates: {
         canonical: `${siteUrl}/about-us`,
     },

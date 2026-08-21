@@ -11,7 +11,9 @@ const Herobanner = dynamic(() => import("@/app/components/shared/hero-banner").t
 });
 
 export const metadata: Metadata = {
-    title: "Services | Creditor",
+    title: "Our Services | Creditor Academy",
+    description: "Explore Creditor Academy's full range of services: course catalogs, live classes, website services and the Tradeline Exchange.",
+    keywords: "creditor academy services, business services, website service, course catalog, private merchant, become private, operate private, financial freedom, creditor academy",
 };
 
 export default function Page() {

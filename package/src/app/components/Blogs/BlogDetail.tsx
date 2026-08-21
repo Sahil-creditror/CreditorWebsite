@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -17,6 +17,46 @@ const poppins = Poppins({
 type BlogDetailProps = {
   post: JournalPost;
 };
+
+// ── Custom styled native scrollbar via injected style ──────────────────────
+function CustomScrollbar() {
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.id = "blog-scrollbar-style";
+    style.textContent = `
+      html {
+        scrollbar-width: thin;
+        scrollbar-color: #2563EB #e2e8f0;
+      }
+      html::-webkit-scrollbar {
+        width: 8px;
+      }
+      html::-webkit-scrollbar-track {
+        background: #e2e8f0;
+        border-radius: 99px;
+      }
+      html::-webkit-scrollbar-thumb {
+        background: #2563EB;
+        border-radius: 99px;
+        border: 2px solid #e2e8f0;
+        min-height: 40px;
+      }
+      html::-webkit-scrollbar-thumb:hover {
+        background: #1d4ed8;
+      }
+      html::-webkit-scrollbar-button {
+        display: block;
+        height: 6px;
+        background: #e2e8f0;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.getElementById("blog-scrollbar-style")?.remove();
+    };
+  }, []);
+  return null;
+}
 
 function renderInlineText(text: string): React.ReactNode {
   // Split on both bold (**text**) and link ([text](url)) patterns
@@ -81,6 +121,7 @@ export default function BlogDetail({ post }: BlogDetailProps) {
     <main
       className={`${poppins.className} min-h-screen bg-[#FAFAFA] text-neutral-900 pb-12 sm:pb-18 overflow-x-hidden selection:bg-neutral-900 selection:text-white`}
     >
+      <CustomScrollbar />
       {/* HERO BANNER SECTION */}
       <section className="relative overflow-hidden bg-linear-to-br from-[#456ad1] via-[#29479b] to-[#273a86] pt-28 pb-14 sm:pt-34 sm:pb-16 px-4 sm:px-6 md:px-20">
         <div className="absolute inset-0">

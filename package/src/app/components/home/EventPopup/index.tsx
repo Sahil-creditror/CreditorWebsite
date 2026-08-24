@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 
 import { WORKSHOP_REGISTER_URL } from "@/lib/workshop";
 
-// Target Event Timestamp updated to Saturday, August 22, 2026 @ 11 AM PST
-const TARGET_EVENT_MS = new Date("2026-08-22T11:00:00-07:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/ca-wrk.jpg";
-const EVENT_DATE_LABEL = "Saturday, August 22, 2026";
+// Target Event Timestamp updated to Saturday, August 29, 2026 @ 11 AM PST
+const TARGET_EVENT_MS = new Date("2026-08-29T11:00:00-07:00").getTime();
+const EVENT_IMAGE = "/images/todayclasstopic/websiteworkshop-1x1.jpg";
+const EVENT_DATE_LABEL = "Saturday, August 29, 2026";
 
 interface EventPopupProps {
   delayMs?: number;
@@ -66,7 +66,7 @@ export default function EventPopup({
       onClick={(e) => {
         if (e.target === e.currentTarget) setOpen(false);
       }}
-      data-event-popup="ca7-build-business-credit"
+      data-event-popup="ca7-how-to-repair-your-credit"
     >
       <div
         role="dialog"
@@ -98,22 +98,22 @@ export default function EventPopup({
                   <span className="event-badge-dot" aria-hidden />
                   FREE WORKSHOP
                 </span>
-                <span className="event-badge event-badge--date">August 22 @ 11 AM PST</span>
+                <span className="event-badge event-badge--date">August 29 @ 11 AM PST</span>
               </div>
             </header>
 
             <h2 id="event-popup-title" className="event-popup-title">
-              Build Business Credit Even <span className="event-popup-title-accent">With Bad Personal Credit</span>
+              How To <span className="event-popup-title-accent">Repair Your Credit</span>
             </h2>
 
             <p className="event-popup-desc">
-              Don’t Let Personal Credit Hold Your Business Back
+              Stop letting credit problems hold you back.
             </p>
 
             <div className="event-popup-tags">
-              <span>🏛️ Build Business Credit</span>
-              <span>📈 Strengthen Your Business Profile</span>
-              <span>🎯 Improve Funding Readiness</span>
+              <span>Understand your credit report</span>
+              <span>Spot inaccurate info</span>
+              <span>Improve your credit profile</span>
             </div>
 
             <div className="event-popup-countdown-wrap">
@@ -153,7 +153,7 @@ export default function EventPopup({
             <div className="event-popup-poster-card">
               <Image
                 src={EVENT_IMAGE}
-                alt={`Free Workshop: Build Business Credit Even With Bad Personal Credit — ${EVENT_DATE_LABEL}`}
+                alt={`Free Workshop: How To Repair Your Credit — ${EVENT_DATE_LABEL}`}
                 width={480}
                 height={480}
                 className="event-popup-poster-img"
@@ -320,11 +320,11 @@ export default function EventPopup({
 
         .event-popup-tags {
           display: flex;
-          flex-wrap: wrap;
+          flex-direction: column;
           gap: 8px;
         }
         .event-popup-tags span {
-          padding: 6px 12px;
+          padding: 8px 12px;
           border-radius: 8px;
           font-size: 12px;
           font-weight: 600;

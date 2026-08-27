@@ -70,9 +70,9 @@ export default function Home() {
     <>
       <HeroSection />
       <Intro />
-      <Suspense fallback={<div className="min-h-[400px]" />}>
+      {/* <Suspense fallback={<div className="min-h-[400px]" />}>
         <BootcampBanner />
-      </Suspense>
+      </Suspense> */}
 
       {/* <StatsFacts /> */}
       {/* <Masterclass /> */}

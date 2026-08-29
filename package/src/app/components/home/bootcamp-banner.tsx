@@ -17,24 +17,25 @@ const BootcampBanner = () => {
 
     // Single source of truth fully aligned with the camls.jpg flyer
     const classData = {
-        imageSrc: "/images/todayclasstopic/camls.jpg", 
-        imageAlt: "Master Class on Year-End Business Funding Strategy by Creditor Academy",
-        badge: "Master Class • July 31, 2026 at 11:00 AM PST",
+        imageSrc: "/images/event/26event.webp", 
+        imageAlt: "Private Banking YouTube Live by Creditor Academy",
+        badge: "YouTube Live • Today at 2:00 PM PST",
         heading: (
             <>
-                Year-End Business{" "}
+                Exclusive{" "}
                 <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
-                    Funding Strategy
-                </span>
+                    Private Banking
+                </span>{" "}
+                Event
             </>
         ),
         description:
-            "Finish the year funding-ready with a smart financial plan.",
+            "Join our special Private Banking event and take control of your financial future.",
         benefits: [
-            "Prepare Financials",
-            "Improve Fundability",
-            "Plan for Growth",
-            "Creditor Academy Expert Guidance",
+            "Private Banking Secrets",
+            "Asset Protection",
+            "Wealth Building",
+            "Expert Guidance",
         ],
     };
 
@@ -107,11 +108,11 @@ const BootcampBanner = () => {
                 >
                     {/* --- Top Global Header Area --- */}
                     <motion.div variants={itemVariants} className="text-center space-y-3 max-w-2xl mx-auto">
-                        <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-                            Today&apos;s Featured <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">Masterclasses</span>
+                        <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+                            Today&apos;s Featured <span className="bg-linear-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">YouTube Live</span>
                         </h2>
                         <p className="text-slate-400 font-medium text-sm sm:text-base">
-                            Dive straight into intensive interactive modules engineered to transform structural financial workflows in real time.
+                            Join our interactive YouTube Live session engineered to transform structural financial workflows in real time.
                         </p>
                     </motion.div>
 
@@ -144,7 +145,7 @@ const BootcampBanner = () => {
                                 </div>
 
                                 {/* Header text */}
-                                <h3 className="text-3xl md:text-4xl lg:text-5xl text-white font-black leading-[1.15] tracking-tight font-sans uppercase">
+                                <h3 className="text-3xl md:text-4xl lg:text-5xl text-white font-bold leading-[1.15] tracking-tight font-sans uppercase">
                                     {classData.heading}
                                 </h3>
 
@@ -167,6 +168,21 @@ const BootcampBanner = () => {
                                             </span>
                                         </div>
                                     ))}
+                                </div>
+
+                                {/* YouTube CTA Button */}
+                                <div className="mt-4">
+                                    <a
+                                        href="https://www.youtube.com/@creditoracademy"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold text-white transition-all duration-300 bg-red-600 rounded-full hover:bg-red-700 hover:scale-105 shadow-[0_0_20px_rgba(220,38,38,0.3)] uppercase tracking-wide"
+                                    >
+                                        <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                                        </svg>
+                                        Watch on YouTube
+                                    </a>
                                 </div>
                             </motion.div>
                         </div>

@@ -25,6 +25,14 @@ const Contact = dynamic(() => import("./components/home/contact"), {
   loading: () => <div className="min-h-[400px]" />,
 });
 
+const BootcampBanner = dynamic(() => import("./components/home/bootcamp-banner"), {
+  loading: () => <div className="min-h-[400px]" />,
+});
+
+const Event = dynamic(() => import("./components/home/event"), {
+  loading: () => <div className="min-h-[400px]" />,
+});
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
 export const metadata: Metadata = {
@@ -62,7 +70,9 @@ export default function Home() {
     <>
       <HeroSection />
       <Intro />
-      {/* <BootcampBanner /> */}
+      {/* <Suspense fallback={<div className="min-h-[400px]" />}>
+        <BootcampBanner />
+      </Suspense> */}
 
       {/* <StatsFacts /> */}
       {/* <Masterclass /> */}

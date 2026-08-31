@@ -113,12 +113,12 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
           manualTrigger={thanksgivingKey}
         /> */}
 
-        {/* CA7 June — Business Credit event (auto-opens after 15s; Special Offer button) */}
-        {/* <EventPopup
+        {/* CA7 September — Side Hustle to 7-Figure Business event (auto-opens after 15s; Special Offer button) */}
+        <EventPopup
           delayMs={15000}
           disableAutoOpen={false}
           manualTrigger={thanksgivingKey}
-        /> */}
+        />
 
         {/* Registration Notification Popup - Shows on all pages */}
         {/* <RegPopup /> */}

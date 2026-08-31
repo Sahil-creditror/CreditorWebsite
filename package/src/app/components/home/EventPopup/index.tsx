@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 
 import { WORKSHOP_REGISTER_URL } from "@/lib/workshop";
 
-// Target Event Timestamp updated to Saturday, August 29, 2026 @ 11 AM PST
-const TARGET_EVENT_MS = new Date("2026-08-29T11:00:00-07:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/websiteworkshop-1x1.jpg";
-const EVENT_DATE_LABEL = "Saturday, August 29, 2026";
+// Target Event Timestamp updated to Saturday, September 5, 2026 @ 11 AM PST
+const TARGET_EVENT_MS = new Date("2026-09-05T11:00:00-07:00").getTime();
+const EVENT_IMAGE = "/images/todayclasstopic/ca-workshop-1x1.jpg";
+const EVENT_DATE_LABEL = "Saturday, September 5, 2026";
 
 interface EventPopupProps {
   delayMs?: number;
@@ -66,7 +66,7 @@ export default function EventPopup({
       onClick={(e) => {
         if (e.target === e.currentTarget) setOpen(false);
       }}
-      data-event-popup="ca7-how-to-repair-your-credit"
+      data-event-popup="side-hustle-to-7-figure-business"
     >
       <div
         role="dialog"
@@ -98,22 +98,23 @@ export default function EventPopup({
                   <span className="event-badge-dot" aria-hidden />
                   FREE WORKSHOP
                 </span>
-                <span className="event-badge event-badge--date">August 29 @ 11 AM PST</span>
+                <span className="event-badge event-badge--date">September 5 @ 11 AM PST</span>
               </div>
             </header>
 
             <h2 id="event-popup-title" className="event-popup-title">
-              How To <span className="event-popup-title-accent">Repair Your Credit</span>
+              Side Hustle <span className="event-popup-title-accent">→ 7-Figure Business</span>
             </h2>
 
             <p className="event-popup-desc">
-              Stop letting credit problems hold you back.
+              The Blueprint To Turn Your Side Hustle Into A Scalable, Profitable Business
             </p>
 
             <div className="event-popup-tags">
-              <span>Understand your credit report</span>
-              <span>Spot inaccurate info</span>
-              <span>Improve your credit profile</span>
+              <span>Strategy</span>
+              <span>Growth</span>
+              <span>Funding</span>
+              <span>Scale</span>
             </div>
 
             <div className="event-popup-countdown-wrap">
@@ -153,7 +154,7 @@ export default function EventPopup({
             <div className="event-popup-poster-card">
               <Image
                 src={EVENT_IMAGE}
-                alt={`Free Workshop: How To Repair Your Credit — ${EVENT_DATE_LABEL}`}
+                alt={`Free Workshop: Side Hustle to 7-Figure Business — ${EVENT_DATE_LABEL}`}
                 width={480}
                 height={480}
                 className="event-popup-poster-img"
@@ -319,8 +320,8 @@ export default function EventPopup({
         }
 
         .event-popup-tags {
-          display: flex;
-          flex-direction: column;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
           gap: 8px;
         }
         .event-popup-tags span {
@@ -331,6 +332,7 @@ export default function EventPopup({
           color: #1e293b;
           background: #f1f5f9;
           border: 1px solid #e2e8f0;
+          text-align: center;
         }
 
         .event-popup-countdown-wrap {

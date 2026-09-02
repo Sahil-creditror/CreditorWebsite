@@ -51,7 +51,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
 
     category: "Become Private",
 
-    date: "August 1, 2026",
+    date: "September 1, 2026",
 
     readTime: "13 min",
 
@@ -318,7 +318,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
 
       "At [Creditor Academy](https://creditoracademy.com/), the educational framework focuses on three core areas:",
 
-      "- [Become Private](/services/course-cataloges/become-private) — Learn about concepts related to private business organization, privacy, ownership, and financial education.\n- [Operate Private](/services/course-cataloges/operate-private) — Explore how entrepreneurs can develop better knowledge of business operations, organization, and financial management.\n- [Financial Freedom](/services/course-cataloges/financial-freedom) — Build broader knowledge around business credit, funding, asset management, and long-term financial planning.",
+      "- Become Private — Learn about concepts related to private business organization, privacy, ownership, and financial education.\n- Operate Private— Explore how entrepreneurs can develop better knowledge of business operations, organization, and financial management.\n- Financial Freedom — Build broader knowledge around business credit, funding, asset management, and long-term financial planning.",
 
       "The goal is to help entrepreneurs develop the knowledge they need to make more informed business and financial decisions.",
 

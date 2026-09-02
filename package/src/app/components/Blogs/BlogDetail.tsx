@@ -111,10 +111,18 @@ export default function BlogDetail({ post }: BlogDetailProps) {
     cleanContent.push(ctaString);
   }
 
-  // Find middle index of the list (after Conclusion CTA is added)
-  const middleIndex = Math.floor(cleanContent.length / 2);
-  if (middleIndex > 0 && middleIndex < cleanContent.length) {
-    cleanContent.splice(middleIndex, 0, ctaString);
+  // Insert mid-article CTA: prefer the "## Other Mistakes" heading if present,
+  // otherwise fall back to the mathematical midpoint
+  const otherMistakesIndex = cleanContent.findIndex(
+    (block) => typeof block === "string" && block.trim() === "## Other Mistakes Entrepreneurs Should Watch For"
+  );
+
+  const midInsertIndex = otherMistakesIndex !== -1
+    ? otherMistakesIndex
+    : Math.floor(cleanContent.length / 2);
+
+  if (midInsertIndex > 0 && midInsertIndex < cleanContent.length) {
+    cleanContent.splice(midInsertIndex, 0, ctaString);
   }
 
   return (

@@ -6,16 +6,16 @@ import { Clock, Sparkles, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 
 // ── Event Constants Extracted Directly From Flyer ────────────────────────────
-const WORKSHOP_EVENT_CALENDAR_DAY = "5";
+const WORKSHOP_EVENT_CALENDAR_DAY = "12";
 const WORKSHOP_EVENT_CALENDAR_MONTH = "SEP";
-const WORKSHOP_EVENT_DATE_LABEL = "Saturday, September 5, 2026";
+const WORKSHOP_EVENT_DATE_LABEL = "Saturday, 12 September 2026";
 const WORKSHOP_EVENT_TIME_DISPLAY = "11:00 AM";
 const WORKSHOP_EVENT_TIME_PST = "11:00 AM PST";
 const WORKSHOP_EVENT_TIMEZONE_LABEL = "PST";
 
-// Target Countdown Date: Saturday, September 5, 2026, 11:00 AM PST
-const WORKSHOP_EVENT_CLOSE_MS = new Date("2026-09-05T11:00:00-07:00").getTime();
-const WORKSHOP_EVENT_IMAGE = "/images/todayclasstopic/ca-workshop-1x1.jpg";
+// Target Countdown Date: Saturday, September 12, 2026, 11:00 AM PST
+const WORKSHOP_EVENT_CLOSE_MS = new Date("2026-09-12T11:00:00-07:00").getTime();
+const WORKSHOP_EVENT_IMAGE = "/images/todayclasstopic/cawork_12.png";
 const REGISTRATION_LINK_URL = "https://api.wonderengine.ai/widget/form/mL2L8I8p4RI7AF61stUd";
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -35,12 +35,12 @@ function getCountdown(targetMs: number) {
 
 // Key Takeaways & Practical Strategies aligned with Flyer
 const INCLUDED = [
-  "Strategy",
-  "Growth",
-  "Funding",
-  "Scale",
-  "Build actionable strategies for turning a side hustle into a 7-figure business",
-  "Position yourself for financial opportunities & business expansion",
+  "IDEA",
+  "STRATEGY",
+  "ACTION",
+  "SUCCESS",
+  "Turn your skills, ideas and free time into a scalable online business",
+  "Position yourself for financial opportunities & 7-figure expansion",
 ] as const;
 
 const TRADITIONAL = [
@@ -89,12 +89,12 @@ export default function WorkshopPageContent() {
                 Creditor Academy · Private Montessori Association
               </p>
               <h1 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.65rem] uppercase">
-                SIDE HUSTLE{" "}
+                SIDE HUSTLE TO{" "}
                 <span className="block bg-linear-to-r from-amber-400 via-yellow-300 to-white bg-clip-text text-transparent font-black mt-1">
-                  → 7-FIGURE BUSINESS
+                  7-FIGURE BUSINESS BLUEPRINT
                 </span>
                 <span className="text-xl sm:text-2xl block mt-2 text-slate-200 capitalize font-medium italic">
-                  The Blueprint To Turn Your Side Hustle Into A Scalable, Profitable Business
+                  Turn your skills, ideas and free time into a scalable online business.
                 </span>
               </h1>
 
@@ -106,7 +106,7 @@ export default function WorkshopPageContent() {
               </div>
 
               <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-blue-100/85 lg:mx-0">
-                Learn proven strategies covering Strategy, Growth, Funding, and Scale to turn your side hustle into a highly profitable, 7-figure business.
+                Learn proven strategies covering Idea, Strategy, Action, and Success to turn your skills and free time into a highly profitable, 7-figure business.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -128,7 +128,7 @@ export default function WorkshopPageContent() {
               <div className="overflow-hidden rounded-2xl border border-white/20 bg-white p-2 shadow-2xl shadow-black/30 ring-1 ring-primary/30">
                 <Image
                   src={WORKSHOP_EVENT_IMAGE}
-                  alt={`Side Hustle to 7-Figure Business Workshop Flyer — ${WORKSHOP_EVENT_DATE_LABEL}`}
+                  alt={`Side Hustle to 7-Figure Business Blueprint Workshop Flyer — ${WORKSHOP_EVENT_DATE_LABEL}`}
                   width={440}
                   height={440}
                   className="w-full rounded-xl object-contain bg-slate-950"
@@ -158,11 +158,11 @@ export default function WorkshopPageContent() {
                   LIVE ONLINE WORKSHOP
                 </span>
                 <h2 className="mt-4 text-2xl font-black tracking-tight text-slate-900 md:text-3xl uppercase">
-                  September 5 Workshop
+                  12 September Workshop
                 </h2>
                 <p className="mt-2 flex items-center justify-center gap-2 text-slate-600 lg:justify-start text-sm">
                   <Video className="h-4 w-4 shrink-0 text-primary" aria-hidden />
-                  Side Hustle → 7-Figure Business Strategies
+                  Side Hustle → 7-Figure Business Blueprint
                 </p>
               </div>
 
@@ -322,7 +322,7 @@ export default function WorkshopPageContent() {
                   ONLINE LIVE WORKSHOP
                 </p>
                 <p className="mt-3 text-xl sm:text-2xl font-black tracking-tight uppercase">
-                  SIDE HUSTLE → 7-FIGURE BUSINESS
+                  SIDE HUSTLE TO 7-FIGURE BUSINESS BLUEPRINT
                 </p>
                 <div className="mt-4 inline-flex flex-col gap-1 rounded-xl bg-black/15 px-5 py-3 text-sm font-bold">
                   <span>{WORKSHOP_EVENT_DATE_LABEL}</span>

@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 
 import { WORKSHOP_REGISTER_URL } from "@/lib/workshop";
 
-// Target Event Timestamp updated to Saturday, September 5, 2026 @ 11 AM PST
-const TARGET_EVENT_MS = new Date("2026-09-05T11:00:00-07:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/ca-workshop-1x1.jpg";
-const EVENT_DATE_LABEL = "Saturday, September 5, 2026";
+// Target Event Timestamp updated to Saturday, September 12, 2026 @ 11 AM PST
+const TARGET_EVENT_MS = new Date("2026-09-12T11:00:00-07:00").getTime();
+const EVENT_IMAGE = "/images/todayclasstopic/cawork_12.png";
+const EVENT_DATE_LABEL = "Saturday, 12 September 2026";
 
 interface EventPopupProps {
   delayMs?: number;
@@ -66,7 +66,7 @@ export default function EventPopup({
       onClick={(e) => {
         if (e.target === e.currentTarget) setOpen(false);
       }}
-      data-event-popup="side-hustle-to-7-figure-business"
+      data-event-popup="side-hustle-to-7-figure-business-blueprint"
     >
       <div
         role="dialog"
@@ -98,23 +98,23 @@ export default function EventPopup({
                   <span className="event-badge-dot" aria-hidden />
                   FREE WORKSHOP
                 </span>
-                <span className="event-badge event-badge--date">September 5 @ 11 AM PST</span>
+                <span className="event-badge event-badge--date">12 September @ 11 AM PST</span>
               </div>
             </header>
 
             <h2 id="event-popup-title" className="event-popup-title">
-              Side Hustle <span className="event-popup-title-accent">→ 7-Figure Business</span>
+              Side Hustle to <span className="event-popup-title-accent">7-FIGURE Business Blueprint</span>
             </h2>
 
             <p className="event-popup-desc">
-              The Blueprint To Turn Your Side Hustle Into A Scalable, Profitable Business
+              Turn your skills, ideas and free time into a scalable online business.
             </p>
 
             <div className="event-popup-tags">
-              <span>Strategy</span>
-              <span>Growth</span>
-              <span>Funding</span>
-              <span>Scale</span>
+              <span>IDEA</span>
+              <span>STRATEGY</span>
+              <span>ACTION</span>
+              <span>SUCCESS</span>
             </div>
 
             <div className="event-popup-countdown-wrap">
@@ -154,7 +154,7 @@ export default function EventPopup({
             <div className="event-popup-poster-card">
               <Image
                 src={EVENT_IMAGE}
-                alt={`Free Workshop: Side Hustle to 7-Figure Business — ${EVENT_DATE_LABEL}`}
+                alt={`Free Workshop: Side Hustle to 7-Figure Business Blueprint — ${EVENT_DATE_LABEL}`}
                 width={480}
                 height={480}
                 className="event-popup-poster-img"
@@ -306,8 +306,8 @@ export default function EventPopup({
           color: #0f172a;
         }
         .event-popup-title-accent {
-          color: #0052cc;
-          background: linear-gradient(135deg, #0052cc 0%, #0033aa 100%);
+          color: #dc2626;
+          background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }

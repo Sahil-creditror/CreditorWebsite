@@ -1,16 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
-
+import { useEffect, useRef, useState } from "react";
 import { WORKSHOP_REGISTER_URL } from "@/lib/workshop";
 
-// Target Event Timestamp updated to Saturday, September 12, 2026 @ 11 AM PST
 const TARGET_EVENT_MS = new Date("2026-09-12T11:00:00-07:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/cawork_12.png";
+const EVENT_IMAGE = "/images/todayclasstopic/caworkshop_12.jpg";
 const EVENT_DATE_LABEL = "Saturday, 12 September 2026";
 
-interface EventPopupProps {
+export interface EventPopupProps {
   delayMs?: number;
   disableAutoOpen?: boolean;
   manualTrigger?: number;
@@ -37,23 +35,43 @@ export default function EventPopup({
 }: EventPopupProps) {
   const [open, setOpen] = useState(false);
   const [countdown, setCountdown] = useState(() => getCountdown(TARGET_EVENT_MS));
+  const dialogRef = useRef<HTMLDivElement>(null);
 
+  // Auto-open after delay
   useEffect(() => {
     if (disableAutoOpen) return;
-    const timer = setTimeout(() => setOpen(true), delayMs);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setOpen(true), delayMs);
+    return () => clearTimeout(t);
   }, [delayMs, disableAutoOpen]);
 
+  // Manual trigger (gift button click)
   useEffect(() => {
     if (manualTrigger > 0) setOpen(true);
   }, [manualTrigger]);
 
+  // Countdown ticker
   useEffect(() => {
-    const updateCountdown = () => setCountdown(getCountdown(TARGET_EVENT_MS));
-    updateCountdown();
-    const id = setInterval(updateCountdown, 1000);
+    const tick = () => setCountdown(getCountdown(TARGET_EVENT_MS));
+    tick();
+    const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, []);
+
+  // Lock body scroll while open
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, [open]);
+
+  // Close on Escape
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
 
   if (!open) return null;
 
@@ -61,444 +79,292 @@ export default function EventPopup({
   const isLive = Date.now() >= TARGET_EVENT_MS;
 
   return (
+    /* ── Overlay ── */
     <div
-      className="event-popup-overlay"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) setOpen(false);
+      onClick={(e) => { if (e.target === e.currentTarget) setOpen(false); }}
+      data-event-popup="buy-your-house-with-a-credit-card"
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 99999,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "12px",
+        background: "rgba(10,20,40,0.65)",
+        backdropFilter: "blur(6px)",
+        WebkitBackdropFilter: "blur(6px)",
       }}
-      data-event-popup="side-hustle-to-7-figure-business-blueprint"
     >
+      {/* ── Dialog ── */}
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        aria-labelledby="event-popup-title"
-        className="event-popup-dialog"
+        aria-labelledby="ep-title"
+        style={{
+          position: "relative",
+          width: "100%",
+          maxWidth: "min(960px, calc(100vw - 24px))",
+          maxHeight: "calc(100vh - 24px)",
+          overflowY: "auto",
+          borderRadius: "20px",
+          background: "#ffffff",
+          boxShadow: "0 24px 64px rgba(0,0,0,0.25)",
+          display: "grid",
+          gridTemplateColumns: "1fr",
+        }}
       >
+        {/* Close button */}
         <button
           type="button"
           aria-label="Close"
           onClick={() => setOpen(false)}
-          className="event-popup-close"
+          style={{
+            position: "absolute",
+            top: 14,
+            right: 14,
+            zIndex: 10,
+            width: 32,
+            height: 32,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            border: "1.5px solid #e2e8f0",
+            borderRadius: "50%",
+            background: "#f8fafc",
+            color: "#64748b",
+            cursor: "pointer",
+            flexShrink: 0,
+          }}
         >
-          <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="11" height="11" viewBox="0 0 14 14" fill="none">
             <path d="M13 1L1 13M1 1L13 13" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
 
-        <div className="event-popup-grid">
-          {/* Main Content Area */}
-          <div className="event-popup-left">
-            <header className="event-popup-header">
-              <div className="event-popup-brand-wrapper">
-                <p className="event-popup-brand">CREDITOR ACADEMY</p>
-                <p className="event-popup-subbrand">PRIVATE MONTESSORI ASSOCIATION</p>
-              </div>
-              <div className="event-popup-badges">
-                <span className="event-badge event-badge--live">
-                  <span className="event-badge-dot" aria-hidden />
-                  FREE WORKSHOP
-                </span>
-                <span className="event-badge event-badge--date">12 September @ 11 AM PST</span>
-              </div>
-            </header>
-
-            <h2 id="event-popup-title" className="event-popup-title">
-              Side Hustle to <span className="event-popup-title-accent">7-FIGURE Business Blueprint</span>
-            </h2>
-
-            <p className="event-popup-desc">
-              Turn your skills, ideas and free time into a scalable online business.
-            </p>
-
-            <div className="event-popup-tags">
-              <span>IDEA</span>
-              <span>STRATEGY</span>
-              <span>ACTION</span>
-              <span>SUCCESS</span>
-            </div>
-
-            <div className="event-popup-countdown-wrap">
-              {isLive ? (
-                <div className="event-live-status">
-                  <p className="event-popup-countdown-label">LIVE NOW</p>
-                  <p className="event-live-text">Workshop is live — stream now</p>
-                </div>
-              ) : (
-                <>
-                  <p className="event-popup-countdown-label">STARTS IN</p>
-                  <div className="event-popup-countdown-row">
-                    <CountdownBox value={days} label="Days" />
-                    <span className="event-popup-colon">:</span>
-                    <CountdownBox value={pad(hours)} label="Hrs" />
-                    <span className="event-popup-colon">:</span>
-                    <CountdownBox value={pad(minutes)} label="Min" />
-                    <span className="event-popup-colon">:</span>
-                    <CountdownBox value={pad(seconds)} label="Sec" />
-                  </div>
-                </>
-              )}
-            </div>
-
-            <a
-              href={WORKSHOP_REGISTER_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="event-popup-cta"
-            >
-              REGISTER NOW
-            </a>
-          </div>
-
-          {/* Graphical Display Panel */}
-          <div className="event-popup-right">
-            <div className="event-popup-poster-card">
+        {/* ── Responsive grid wrapper ── */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr",
+          }}
+          className="ep-inner-grid"
+        >
+          {/* ── Right: poster (top on mobile, right on desktop) ── */}
+          <div
+            style={{
+              background: "#f1f5f9",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "20px",
+              borderRadius: "20px 20px 0 0",
+            }}
+            className="ep-right-panel"
+          >
+            <div style={{
+              width: "100%",
+              maxWidth: 320,
+              aspectRatio: "1/1",
+              borderRadius: 14,
+              overflow: "hidden",
+              boxShadow: "0 8px 24px rgba(0,0,0,0.10)",
+              background: "#fff",
+            }}>
               <Image
                 src={EVENT_IMAGE}
-                alt={`Free Workshop: Side Hustle to 7-Figure Business Blueprint — ${EVENT_DATE_LABEL}`}
+                alt={`Free Workshop: Buy Your House With A Credit Card — ${EVENT_DATE_LABEL}`}
                 width={480}
                 height={480}
-                className="event-popup-poster-img"
+                style={{ width: "100%", height: "100%", objectFit: "contain" }}
                 priority
                 unoptimized
               />
             </div>
           </div>
+
+          {/* ── Left: content (bottom on mobile, left on desktop) ── */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 18,
+              padding: "28px 24px 28px",
+            }}
+            className="ep-left-panel"
+          >
+            {/* Brand */}
+            <div>
+              <p style={{ margin: 0, fontSize: 13, fontWeight: 800, letterSpacing: "0.04em", color: "#0052cc" }}>
+                CREDITOR ACADEMY
+              </p>
+              <p style={{ margin: "2px 0 0", fontSize: 9, fontWeight: 700, letterSpacing: "0.06em", color: "#0052cc" }}>
+                PRIVATE MONTESSORI ASSOCIATION
+              </p>
+            </div>
+
+            {/* Badges */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              <span style={{
+                display: "inline-flex", alignItems: "center", gap: 6,
+                padding: "5px 10px", borderRadius: 6,
+                fontSize: 10, fontWeight: 700,
+                color: "#ea580c", background: "#fff7ed", border: "1px solid #ffedd5",
+              }}>
+                <span style={{
+                  width: 6, height: 6, borderRadius: "50%",
+                  background: "#f97316", boxShadow: "0 0 6px #f97316", flexShrink: 0,
+                }} />
+                FREE WORKSHOP
+              </span>
+              <span style={{
+                padding: "5px 10px", borderRadius: 6,
+                fontSize: 10, fontWeight: 600,
+                color: "#0284c7", background: "#f0f9ff", border: "1px solid #e0f2fe",
+              }}>
+                Sept 12, 2026 @ 11:00 AM PST
+              </span>
+            </div>
+
+            {/* Title */}
+            <h2 id="ep-title" style={{ margin: 0, fontSize: 26, fontWeight: 800, lineHeight: 1.15, letterSpacing: "-0.02em", color: "#0f172a" }}>
+              BUY YOUR HOUSE{" "}
+              <span style={{
+                background: "linear-gradient(135deg,#0284c7,#0369a1)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}>
+                WITH A CREDIT CARD
+              </span>
+            </h2>
+
+            {/* Subtitle */}
+            <p style={{ margin: 0, fontSize: 13, lineHeight: 1.4, color: "#475569" }}>
+              0% Stacking • Business Credit • Property Without Waiting On A Bank
+            </p>
+
+            {/* Tags */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+              {["0% STACKING", "BUSINESS CREDIT", "NO BANK WAITING", "SMART FUNDING"].map((t) => (
+                <span key={t} style={{
+                  padding: "8px 10px", borderRadius: 8,
+                  fontSize: 11, fontWeight: 600, textAlign: "center",
+                  color: "#1e293b", background: "#f1f5f9", border: "1px solid #e2e8f0",
+                }}>
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            {/* Countdown */}
+            <div style={{
+              padding: 16, borderRadius: 14,
+              background: "#f0f9ff", border: "1px solid #e0f2fe",
+            }}>
+              {isLive ? (
+                <div style={{ textAlign: "center" }}>
+                  <p style={{ margin: 0, fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", color: "#0369a1", marginBottom: 6 }}>
+                    LIVE NOW
+                  </p>
+                  <p style={{ margin: 0, color: "#0284c7", fontWeight: 700, fontSize: 15 }}>
+                    Workshop is live — stream now
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <p style={{ margin: "0 0 10px", textAlign: "center", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", color: "#0369a1" }}>
+                    STARTS IN
+                  </p>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+                    <CBox value={days} label="Days" />
+                    <Colon />
+                    <CBox value={pad(hours)} label="Hrs" />
+                    <Colon />
+                    <CBox value={pad(minutes)} label="Min" />
+                    <Colon />
+                    <CBox value={pad(seconds)} label="Sec" />
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* CTA */}
+            <a
+              href={WORKSHOP_REGISTER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "flex", alignItems: "center", justifyContent: "center",
+                width: "100%", padding: "14px 24px", borderRadius: 50,
+                fontSize: 15, fontWeight: 800, color: "#fff", textDecoration: "none",
+                background: "linear-gradient(90deg,#0284c7,#0052cc)",
+                boxShadow: "0 4px 14px rgba(2,132,199,0.4)",
+              }}
+            >
+              RESERVE YOUR FREE SEAT
+            </a>
+          </div>
         </div>
+
+        {/* Responsive CSS via a <style> tag — does NOT use styled-jsx scoping */}
+        <style>{`
+          @media (min-width: 720px) {
+            [data-event-popup="buy-your-house-with-a-credit-card"] .ep-inner-grid {
+              grid-template-columns: 1.2fr 0.8fr !important;
+              direction: rtl;
+            }
+            [data-event-popup="buy-your-house-with-a-credit-card"] .ep-inner-grid > * {
+              direction: ltr;
+            }
+            [data-event-popup="buy-your-house-with-a-credit-card"] .ep-right-panel {
+              border-radius: 0 20px 20px 0 !important;
+              padding: 0 !important;
+              align-items: stretch !important;
+            }
+            [data-event-popup="buy-your-house-with-a-credit-card"] .ep-right-panel > div {
+              max-width: 100% !important;
+              height: 100% !important;
+              aspect-ratio: unset !important;
+              border-radius: 0 20px 20px 0 !important;
+              box-shadow: none !important;
+            }
+            [data-event-popup="buy-your-house-with-a-credit-card"] .ep-right-panel img {
+              object-fit: cover !important;
+              height: 100% !important;
+            }
+            [data-event-popup="buy-your-house-with-a-credit-card"] .ep-left-panel {
+              padding: 36px 36px 36px !important;
+            }
+          }
+        `}</style>
       </div>
-
-      <style jsx>{`
-        .event-popup-overlay {
-          position: fixed;
-          inset: 0;
-          z-index: 9999;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 6px;
-          background: rgba(15, 23, 42, 0.4);
-          backdrop-filter: blur(8px);
-        }
-        
-        .event-popup-dialog {
-          position: relative;
-          width: 100%;
-          max-width: 480px;
-          max-height: 90vh;
-          overflow-y: auto;
-          scrollbar-width: none;
-          border-radius: 24px;
-          border: 1px solid #ffffff;
-          background: #ffffff;
-          box-shadow: 
-            0 1px 3px rgba(0, 0, 0, 0.05),
-            0 25px 50px -12px rgba(15, 23, 42, 0.15),
-            0 0 40px rgba(14, 165, 233, 0.04);
-        }
-        .event-popup-dialog::-webkit-scrollbar {
-          display: none;
-        }
-
-        .event-popup-close {
-          position: absolute;
-          top: 16px;
-          right: 16px;
-          z-index: 30;
-          width: 32px;
-          height: 32px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid #e2e8f0;
-          border-radius: 50%;
-          background: #f8fafc;
-          color: #64748b;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .event-popup-close:hover {
-          background: #f1f5f9;
-          color: #0f172a;
-          border-color: #cbd5e1;
-        }
-
-        .event-popup-grid {
-          display: flex;
-          flex-direction: column-reverse;
-        }
-
-        .event-popup-left {
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-          padding: 24px;
-        }
-
-        .event-popup-header {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-        }
-
-        .event-popup-brand-wrapper {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .event-popup-brand {
-          margin: 0;
-          font-size: 15px;
-          font-weight: 800;
-          letter-spacing: 0.03em;
-          color: #0052cc;
-          line-height: 1.2;
-        }
-
-        .event-popup-subbrand {
-          margin: 3px 0 0 0;
-          font-size: 9px;
-          font-weight: 700;
-          letter-spacing: 0.04em;
-          color: #0052cc;
-        }
-
-        .event-popup-badges {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .event-badge {
-          display: inline-flex;
-          align-items: center;
-          border-radius: 6px;
-          font-weight: 700;
-          font-size: 10px;
-          padding: 5px 10px;
-        }
-        .event-badge--live {
-          gap: 6px;
-          color: #ea580c;
-          background: #fff7ed;
-          border: 1px solid #ffedd5;
-        }
-        .event-badge-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          background: #f97316;
-          box-shadow: 0 0 6px #f97316;
-          flex-shrink: 0;
-        }
-        .event-badge--date {
-          font-weight: 600;
-          color: #0284c7;
-          background: #f0f9ff;
-          border: 1px solid #e0f2fe;
-        }
-
-        .event-popup-title {
-          margin: 0;
-          font-size: 24px;
-          font-weight: 800;
-          line-height: 1.15;
-          letter-spacing: -0.02em;
-          color: #0f172a;
-        }
-        .event-popup-title-accent {
-          color: #dc2626;
-          background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-
-        .event-popup-desc {
-          margin: 0;
-          font-size: 14px;
-          line-height: 1.35;
-          color: #475569;
-        }
-
-        .event-popup-tags {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 8px;
-        }
-        .event-popup-tags span {
-          padding: 8px 12px;
-          border-radius: 8px;
-          font-size: 12px;
-          font-weight: 600;
-          color: #1e293b;
-          background: #f1f5f9;
-          border: 1px solid #e2e8f0;
-          text-align: center;
-        }
-
-        .event-popup-countdown-wrap {
-          padding: 16px;
-          border-radius: 16px;
-          background: #f0f9ff;
-          border: 1px solid #e0f2fe;
-        }
-        .event-popup-countdown-label {
-          margin: 0 0 12px;
-          text-align: center;
-          font-size: 10px;
-          font-weight: 700;
-          letter-spacing: 0.15em;
-          color: #0369a1;
-        }
-        .event-popup-countdown-row {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 6px;
-          font-variant-numeric: tabular-nums;
-        }
-        .event-popup-colon {
-          padding-bottom: 14px;
-          font-size: 18px;
-          font-weight: 600;
-          color: #bae6fd;
-          user-select: none;
-        }
-        
-        .event-live-status {
-          text-align: center;
-        }
-        .event-live-text {
-          margin: 0;
-          color: #0284c7;
-          font-weight: 700;
-          font-size: 15px;
-        }
-
-        .event-popup-cta {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 100%;
-          padding: 14px 24px;
-          border-radius: 50px;
-          font-size: 16px;
-          font-weight: 800;
-          color: #ffffff;
-          text-decoration: none;
-          background: #dc2626;
-          background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
-          box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);
-          transition: all 0.2s ease;
-        }
-        .event-popup-cta:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
-          filter: brightness(1.05);
-        }
-
-        .event-popup-right {
-          padding: 24px 24px 0 24px;
-          display: flex;
-          justify-content: center;
-          background: #f8fafc;
-        }
-
-        .event-popup-poster-card {
-          width: 100%;
-          border-radius: 16px;
-          overflow: hidden;
-          aspect-ratio: 1 / 1;
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #ffffff;
-          box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
-          border: 4px solid #ffffff;
-        }
-        
-        .event-popup-poster-card :global(.event-popup-poster-img) {
-          width: 100% !important;
-          height: 100% !important;
-          object-fit: contain;
-          object-position: center;
-          border-radius: 12px;
-        }
-
-        /* Desktop Breakpoint Modifications */
-        @media (min-width: 840px) {
-          .event-popup-dialog {
-            max-width: 960px;
-            overflow: hidden;
-          }
-          .event-popup-grid {
-            display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            min-height: 580px;
-          }
-          .event-popup-left {
-            padding: 40px;
-            gap: 24px;
-          }
-          .event-popup-right {
-            padding: 0;
-            align-items: stretch;
-            justify-content: stretch;
-            border-left: 1px solid #f1f5f9;
-          }
-          .event-popup-poster-card {
-            height: 100%;
-            min-height: 580px;
-            aspect-ratio: auto;
-            border-radius: 0;
-            border: 0;
-            box-shadow: none;
-          }
-          .event-popup-title {
-            font-size: 32px;
-          }
-          .event-popup-header {
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-          }
-        }
-      `}</style>
     </div>
   );
 }
 
-function CountdownBox({ value, label }: { value: number | string; label: string }) {
+function CBox({ value, label }: { value: number | string; label: string }) {
   return (
-    <div className="event-countdown-box">
-      <span className="event-countdown-num">{value}</span>
-      <span className="event-countdown-unit">{label}</span>
-      <style jsx>{`
-        .event-countdown-box {
-          display: flex;
-          min-width: 52px;
-          flex-direction: column;
-          align-items: center;
-          padding: 8px 4px;
-          border-radius: 10px;
-          background: #ffffff;
-          border: 1px solid #e0f2fe;
-          box-shadow: 0 2px 4px rgba(3, 105, 161, 0.04);
-        }
-        .event-countdown-num {
-          font-size: 20px;
-          font-weight: 700;
-          line-height: 1;
-          color: #0369a1;
-          font-variant-numeric: tabular-nums;
-        }
-        .event-countdown-unit {
-          margin-top: 4px;
-          font-size: 9px;
-          font-weight: 600;
-          color: #64748b;
-        }
-      `}</style>
+    <div style={{
+      display: "flex", flexDirection: "column", alignItems: "center",
+      minWidth: 52, padding: "8px 4px", borderRadius: 10,
+      background: "#fff", border: "1px solid #e0f2fe",
+      boxShadow: "0 2px 4px rgba(3,105,161,0.05)",
+    }}>
+      <span style={{ fontSize: 20, fontWeight: 700, lineHeight: 1, color: "#0369a1", fontVariantNumeric: "tabular-nums" }}>
+        {value}
+      </span>
+      <span style={{ marginTop: 4, fontSize: 9, fontWeight: 600, color: "#64748b" }}>
+        {label}
+      </span>
     </div>
+  );
+}
+
+function Colon() {
+  return (
+    <span style={{ paddingBottom: 14, fontSize: 18, fontWeight: 600, color: "#bae6fd", userSelect: "none" }}>
+      :
+    </span>
   );
 }

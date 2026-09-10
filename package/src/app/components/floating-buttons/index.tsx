@@ -148,9 +148,10 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
 
 interface FloatingButtonsProps {
   onSpecialOfferClick?: () => void;
+  hideGiftButton?: boolean;
 }
 
-export default function FloatingButtons({ onSpecialOfferClick }: FloatingButtonsProps) {
+export default function FloatingButtons({ onSpecialOfferClick, hideGiftButton = false }: FloatingButtonsProps) {
   const [isHeroContactClosed, setIsHeroContactClosed] = useState(false);
   const pathname = usePathname();
   const isWebinarPage = pathname === "/webinar";
@@ -179,24 +180,26 @@ export default function FloatingButtons({ onSpecialOfferClick }: FloatingButtons
         )}
       </AnimatePresence>
 
-      {/* Special Offer — bottom left, aligned with chatbot avatar */}
-      <div className="fixed bottom-6 left-6 md:left-8 z-[9990]">
-        <motion.button
-          onClick={onSpecialOfferClick}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1, duration: 0.4, ease: "easeOut" }}
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.95 }}
-          className="group relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-orange-500 via-amber-500 to-yellow-500 text-white shadow-lg transition-all duration-300 hover:from-orange-600 hover:via-amber-600 hover:to-yellow-600 hover:shadow-orange-500/40"
-          aria-label="View Special Offers"
-        >
-          <Gift className="h-5 w-5" />
-          <span className="pointer-events-none absolute left-full ml-3 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-lg bg-slate-900 px-3 py-2 text-sm text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-            Special Offers
-          </span>
-        </motion.button>
-      </div>
+      {/* Special Offer — bottom left, only on home page */}
+      {!hideGiftButton && (
+        <div className="fixed bottom-6 left-6 md:left-8 z-[9990]">
+          <motion.button
+            onClick={onSpecialOfferClick}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1, duration: 0.4, ease: "easeOut" }}
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.95 }}
+            className="group relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-orange-500 via-amber-500 to-yellow-500 text-white shadow-lg transition-all duration-300 hover:from-orange-600 hover:via-amber-600 hover:to-yellow-600 hover:shadow-orange-500/40"
+            aria-label="View Special Offers"
+          >
+            <Gift className="h-5 w-5" />
+            <span className="pointer-events-none absolute left-full ml-3 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-lg bg-slate-900 px-3 py-2 text-sm text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+              Special Offers
+            </span>
+          </motion.button>
+        </div>
+      )}
     </>
   );
 }

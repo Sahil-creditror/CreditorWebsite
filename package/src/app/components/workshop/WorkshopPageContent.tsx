@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Clock, Sparkles, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 
+
 // ── Event Constants Extracted Directly From Flyer ────────────────────────────
 const WORKSHOP_EVENT_CALENDAR_DAY = "12";
 const WORKSHOP_EVENT_CALENDAR_MONTH = "SEP";
@@ -15,7 +16,7 @@ const WORKSHOP_EVENT_TIMEZONE_LABEL = "PST";
 
 // Target Countdown Date: Saturday, September 12, 2026, 11:00 AM PST
 const WORKSHOP_EVENT_CLOSE_MS = new Date("2026-09-12T11:00:00-07:00").getTime();
-const WORKSHOP_EVENT_IMAGE = "/images/todayclasstopic/cawork_12.png";
+const WORKSHOP_EVENT_IMAGE = "/images/todayclasstopic/caworkshop_12.jpg";
 const REGISTRATION_LINK_URL = "https://api.wonderengine.ai/widget/form/mL2L8I8p4RI7AF61stUd";
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -35,24 +36,24 @@ function getCountdown(targetMs: number) {
 
 // Key Takeaways & Practical Strategies aligned with Flyer
 const INCLUDED = [
-  "IDEA",
-  "STRATEGY",
-  "ACTION",
-  "SUCCESS",
-  "Turn your skills, ideas and free time into a scalable online business",
-  "Position yourself for financial opportunities & 7-figure expansion",
+  "0% STACKING",
+  "BUSINESS CREDIT",
+  "PROPERTY WITHOUT BANK",
+  "SMART FUNDING",
+  "Use 0% interest credit cards strategically to maximize buying power",
+  "Skip long bank approvals and close faster with smart funding",
 ] as const;
 
 const TRADITIONAL = [
-  { title: "Unstructured Growth", body: "Operating a side hustle without a scalable blueprint, leading to stagnated revenue and exhaustion." },
-  { title: "Lack of Business Funding", body: "Relying purely on personal savings rather than leveraging business funding and strategic leverage." },
-  { title: "Operational Stagnation", body: "Failing to establish scalable systems, preventing your side business from expanding into a 7-figure enterprise." },
+  { title: "Traditional Bank Mortgages", body: "Enduring lengthy approval processes, strict underwriting guidelines, and extensive personal financial disclosures." },
+  { title: "High Out-of-Pocket Downpayments", body: "Draining personal savings and liquidity to meet heavy cash downpayment and closing cost requirements." },
+  { title: "Slow Real Estate Closings", body: "Losing lucrative property deals to fast cash buyers while waiting weeks or months for bank loan commitments." },
 ] as const;
 
 const CREDITOR = [
-  { title: "Strategic Roadmap", body: "Learning proven strategies to turn your side hustle into a high-growth, scalable business model." },
-  { title: "Business Funding Mastery", body: "Unlocking access to corporate funding, business credit, and strategic capital allocation." },
-  { title: "Scalable Systems & Execution", body: "Implementing systems designed to drive continuous growth and predictable 7-figure scaling." },
+  { title: "0% Interest Card Stacking", body: "Leveraging structured 0% interest credit card lines to finance property purchases and downpayments." },
+  { title: "Corporate & Business Credit", body: "Building and utilizing separate business credit lines without relying on personal credit exposure." },
+  { title: "Fast-Track Property Closings", body: "Bypassing conventional bank delays and closing deals rapidly with strategic, non-traditional funding." },
 ] as const;
 
 export default function WorkshopPageContent() {
@@ -89,12 +90,12 @@ export default function WorkshopPageContent() {
                 Creditor Academy · Private Montessori Association
               </p>
               <h1 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.65rem] uppercase">
-                SIDE HUSTLE TO{" "}
+                BUY YOUR HOUSE{" "}
                 <span className="block bg-linear-to-r from-amber-400 via-yellow-300 to-white bg-clip-text text-transparent font-black mt-1">
-                  7-FIGURE BUSINESS BLUEPRINT
+                  WITH A CREDIT CARD
                 </span>
                 <span className="text-xl sm:text-2xl block mt-2 text-slate-200 capitalize font-medium italic">
-                  Turn your skills, ideas and free time into a scalable online business.
+                  0% stacking • Business credit • Property without waiting on a bank
                 </span>
               </h1>
 
@@ -106,7 +107,7 @@ export default function WorkshopPageContent() {
               </div>
 
               <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-blue-100/85 lg:mx-0">
-                Learn proven strategies covering Idea, Strategy, Action, and Success to turn your skills and free time into a highly profitable, 7-figure business.
+                Learn how to strategically use 0% interest credit cards, build business credit, and acquire real estate faster without waiting on bank approvals.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -116,7 +117,7 @@ export default function WorkshopPageContent() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-full bg-linear-to-r from-amber-400 to-yellow-500 px-8 py-4 text-base font-extrabold text-slate-950 shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5 hover:brightness-110 uppercase"
                 >
-                  Register Today!
+                  Reserve Your Free Seat!
                 </Link>
                 <span className="text-xs font-semibold text-blue-200/70 tracking-wide">
                   100% Free Registration • Instant Access Credentials
@@ -128,7 +129,7 @@ export default function WorkshopPageContent() {
               <div className="overflow-hidden rounded-2xl border border-white/20 bg-white p-2 shadow-2xl shadow-black/30 ring-1 ring-primary/30">
                 <Image
                   src={WORKSHOP_EVENT_IMAGE}
-                  alt={`Side Hustle to 7-Figure Business Blueprint Workshop Flyer — ${WORKSHOP_EVENT_DATE_LABEL}`}
+                  alt={`Buy Your House With A Credit Card Workshop Flyer — ${WORKSHOP_EVENT_DATE_LABEL}`}
                   width={440}
                   height={440}
                   className="w-full rounded-xl object-contain bg-slate-950"
@@ -162,7 +163,7 @@ export default function WorkshopPageContent() {
                 </h2>
                 <p className="mt-2 flex items-center justify-center gap-2 text-slate-600 lg:justify-start text-sm">
                   <Video className="h-4 w-4 shrink-0 text-primary" aria-hidden />
-                  Side Hustle → 7-Figure Business Blueprint
+                  Buy Your House With A Credit Card
                 </p>
               </div>
 
@@ -213,21 +214,21 @@ export default function WorkshopPageContent() {
       <section className="bg-[#f0f7fd] py-16 md:py-24">
         <div className="container">
           <p className="text-center text-sm font-bold uppercase tracking-widest text-primary">
-            Business Growth &amp; Scaling Blueprint
+            Smart Funding &amp; Real Estate Acquisition
           </p>
           <h2 className="mx-auto mt-3 max-w-2xl text-center text-3xl font-bold text-slate-900 md:text-4xl">
-            Stagnant Side Hustle vs. Scalable 7-Figure Business
+            Traditional Mortgage Approval vs. Smart Credit Card Funding
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-center text-slate-600">
-            Discover how strategic funding, operational growth, and scaling systems transform your enterprise.
+            Discover how 0% stacking and strategic business credit allow you to fund properties without waiting on conventional bank approvals.
           </p>
 
           <div className="mx-auto mt-12 grid max-w-5xl gap-8 lg:grid-cols-2">
             <div className="rounded-2xl border-2 border-[#c5dff5] bg-white/60 p-8 backdrop-blur-sm">
               <span className="inline-block rounded-full bg-[#d0e8f8] px-3 py-1 text-xs font-bold uppercase text-slate-600">
-                Stagnant Side Hustle
+                Traditional Bank Financing
               </span>
-              <p className="mt-4 text-sm font-bold text-slate-400 tracking-wide">LIMITED GROWTH &amp; LOW LEVERAGE</p>
+              <p className="mt-4 text-sm font-bold text-slate-400 tracking-wide">SLOW &amp; RESTRICTIVE</p>
               <ul className="mt-6 space-y-6">
                 {TRADITIONAL.map((item) => (
                   <li key={item.title}>
@@ -240,9 +241,9 @@ export default function WorkshopPageContent() {
 
             <div className="rounded-2xl border-2 border-primary bg-linear-to-br from-[#dbeafe] to-[#eff6ff] p-8 shadow-lg shadow-blue-500/15">
               <span className="inline-block rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase text-white">
-                Scalable 7-Figure Business
+                Smart Funding Strategy
               </span>
-              <p className="mt-4 text-sm font-bold text-primary tracking-wide">CONFIDENT &amp; EXPANDING</p>
+              <p className="mt-4 text-sm font-bold text-primary tracking-wide">FAST, FLEXIBLE &amp; LEVERAGED</p>
               <ul className="mt-6 space-y-6">
                 {CREDITOR.map((item) => (
                   <li key={item.title}>
@@ -270,11 +271,11 @@ export default function WorkshopPageContent() {
                 <h2 className="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
                   Unlock Your Free{" "}
                   <span className="bg-linear-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent">
-                    7-Figure Business Blueprint
+                    Smart Funding Blueprint
                   </span>
                 </h2>
                 <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-blue-100/90 lg:mx-0">
-                  Secure access to live walkthroughs detailing practical strategies to build strategy, drive growth, secure funding, and scale your business.
+                  Secure access to live walkthroughs detailing practical strategies to build business credit, utilize 0% stacking, and acquire real estate faster.
                 </p>
               </div>
 
@@ -322,7 +323,7 @@ export default function WorkshopPageContent() {
                   ONLINE LIVE WORKSHOP
                 </p>
                 <p className="mt-3 text-xl sm:text-2xl font-black tracking-tight uppercase">
-                  SIDE HUSTLE TO 7-FIGURE BUSINESS BLUEPRINT
+                  BUY YOUR HOUSE WITH A CREDIT CARD
                 </p>
                 <div className="mt-4 inline-flex flex-col gap-1 rounded-xl bg-black/15 px-5 py-3 text-sm font-bold">
                   <span>{WORKSHOP_EVENT_DATE_LABEL}</span>
@@ -348,10 +349,10 @@ export default function WorkshopPageContent() {
                 rel="noopener noreferrer"
                 className="mt-6 flex w-full items-center justify-center rounded-full bg-blue-600 py-4 text-base font-extrabold text-white shadow-xl shadow-blue-600/30 transition transform hover:-translate-y-0.5 hover:bg-blue-700 uppercase"
               >
-                Register Today!
+                Reserve Your Free Seat!
               </Link>
               <p className="mt-4 text-center text-xs text-slate-400 font-medium">
-                Take control of your business growth starting today!
+                Take control of your real estate funding starting today!
               </p>
             </div>
           </div>
@@ -387,10 +388,10 @@ export default function WorkshopPageContent() {
       <section className="border-t border-[#c5dff5] bg-linear-to-b from-[#dceefb] to-[#e8f4fc] py-16 md:py-20">
         <div className="container text-center">
           <h2 className="text-2xl font-extrabold text-slate-900 md:text-3xl uppercase tracking-tight">
-            Ready to scale your business?
+            Ready to fund your next property?
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-slate-600 font-medium text-sm sm:text-base">
-            Claim your complimentary seat today and start turning your side hustle into a 7-figure enterprise.
+            Claim your complimentary seat today and start using smart credit strategies to acquire real estate.
           </p>
           <Link
             href={REGISTRATION_LINK_URL}
@@ -398,12 +399,12 @@ export default function WorkshopPageContent() {
             rel="noopener noreferrer"
             className="mt-8 inline-flex items-center justify-center rounded-full bg-primary px-12 py-4 text-base font-extrabold text-white shadow-lg shadow-blue-500/20 transition transform hover:-translate-y-0.5 hover:bg-[#0259bd] uppercase"
           >
-            Register Today!
+            Reserve Your Free Seat!
           </Link>
           <p className="mt-6 text-xs font-bold text-slate-400 uppercase tracking-widest">
             Direct Support Line:{" "}
-            <a href="tel:+14254009246" className="text-primary hover:underline font-extrabold ml-1">
-              425-400-9246
+            <a href="tel:+14009246" className="text-primary hover:underline font-extrabold ml-1">
+              400-9246
             </a>
             {" | "}
             <a href="https://creditoracademy.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-extrabold ml-1 lowercase">

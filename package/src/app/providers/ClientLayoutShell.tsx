@@ -101,24 +101,22 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
         {children}
         {!hideFooter && <Footer />}
 
-        <FloatingButtons onSpecialOfferClick={() => setThanksgivingKey(prev => prev + 1)} />
+        <FloatingButtons
+          onSpecialOfferClick={pathname === "/" ? () => setThanksgivingKey(prev => prev + 1) : undefined}
+          hideGiftButton={pathname !== "/"}
+        />
 
         {/* Video chatbot — allowed pages only */}
         {isChatbotVisible(pathname) && <FloatingMiniChatbot />}
 
-        {/* Previous Thanksgiving / webinar popup — kept for reference */}
-        {/* <ThanksgivingPopup
-          delayMs={5000}
-          disableAutoOpen={false}
-          manualTrigger={thanksgivingKey}
-        /> */}
-
-        {/* CA7 September — Side Hustle to 7-Figure Business event (auto-opens after 15s; Special Offer button) */}
-        <EventPopup
-          delayMs={15000}
-          disableAutoOpen={false}
-          manualTrigger={thanksgivingKey}
-        />
+        {/* Event popup — home page only (auto-opens after 15s; gift button re-opens it) */}
+        {pathname === "/" && (
+          <EventPopup
+            delayMs={15000}
+            disableAutoOpen={false}
+            manualTrigger={thanksgivingKey}
+          />
+        )}
 
         {/* Registration Notification Popup - Shows on all pages */}
         {/* <RegPopup /> */}

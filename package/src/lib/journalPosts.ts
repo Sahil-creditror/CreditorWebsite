@@ -32,6 +32,271 @@ export type JournalPost = {
 
 export const JOURNAL_POSTS: JournalPost[] = [
   {
+    id: 30,
+
+    slug: "merchant-processing-guide",
+
+    title: "Merchant Processing Guide: How Payment Processing Works for Businesses",
+
+    description:
+      "Learn how merchant processing works, including merchant accounts, payment gateways, transaction fees, chargebacks, security, payouts, and payment methods.",
+
+    metaTitle: "Merchant Processing Guide: How Payment Processing Works",
+
+    metaDescription:
+      "Learn how merchant processing works, including merchant accounts, payment gateways, transaction fees, chargebacks, security, payouts, and payment methods.",
+
+    keywords:
+      "merchant processing, merchant processing guide, payment processing, merchant account, payment gateway, credit card processing, debit card processing, business payment processing, merchant services, payment processing fees, payment gateway for business, credit card merchant services, chargeback protection, payment security, PCI compliance, EMV compliance, business cash flow, business credit, business funding, financial freedom",
+
+    category: "Financial Freedom",
+
+    date: "September 12, 2026",
+
+    readTime: "15 min",
+
+    image: "/images/blogs/CA blog 12 sep.png",
+
+    featured: true,
+
+    content: [
+      "Accepting payments is one of the most important parts of running a modern business.",
+
+      "Whether you operate a retail store, professional service, e-commerce business, or another type of company, customers need a convenient and reliable way to pay for products and services.",
+
+      "This is where **merchant processing** comes in.",
+
+      "Merchant processing allows businesses to accept payments through methods such as credit cards, debit cards, online payment gateways, and other electronic payment methods.",
+
+      "But payment processing involves more than simply giving a customer a card terminal. Businesses also need to understand merchant accounts, payment gateways, transaction fees, security, chargebacks, payouts, and compliance.",
+
+      "In this guide, we will explain **merchant processing**, how it works, what businesses should consider when choosing a payment-processing solution, and how payment processing can fit into broader business and financial planning.",
+
+      "## What Is Merchant Processing?",
+
+      "Merchant processing is the system that allows a business to accept and process electronic payments from customers.",
+
+      "When a customer pays with a credit or debit card, several parties may be involved in completing the transaction. These can include the customer, the business, the merchant account provider, the payment processor, the card network, the customer's bank, and the payment gateway or point-of-sale system.",
+
+      "The transaction moves through these systems before the payment is approved and funds are eventually made available to the business. The exact process depends on the payment method, processor, merchant account, and transaction type.",
+
+      "## What Is a Merchant Account?",
+
+      "A **merchant account** is an account that allows a business to accept card payments.",
+
+      "It is different from a normal business checking account. A merchant account is generally part of the payment-processing system that receives and processes card transactions before funds are settled into the business's designated bank account.",
+
+      "A merchant account may support payment methods such as credit cards, debit cards, online payments, mobile payments, card-present transactions, and card-not-present transactions.",
+
+      "Businesses should understand the terms, fees, funding timelines, and requirements associated with any merchant account before applying.",
+
+      "## How Does Merchant Processing Work?",
+
+      "A typical card transaction involves several steps.",
+
+      "**Step 1: Customer Makes a Payment** — The customer uses a credit card, debit card, mobile wallet, or another supported payment method.",
+
+      "**Step 2: Payment Information Is Submitted** — The payment information is transmitted through a point-of-sale system, card terminal, mobile reader, or online payment gateway.",
+
+      "**Step 3: Authorization** — The transaction is sent through the payment-processing network for authorization. The relevant financial institutions determine whether the transaction can be approved.",
+
+      "**Step 4: Transaction Is Approved or Declined** — If the transaction is approved, the customer receives confirmation and the business can complete the sale. If the transaction is declined, the business may need to request another payment method.",
+
+      "**Step 5: Settlement** — Approved transactions eventually move through settlement. The business receives the funds according to the merchant processor's funding schedule, after applicable fees and adjustments.",
+
+      "## Types of Merchant Processing",
+
+      "**In-Person Card Processing** — In-person processing is common for retail stores, restaurants, professional offices, events, and service businesses. Customers can use a physical terminal or card reader to complete a transaction.",
+
+      "**Online Payment Processing** — Online businesses may accept payments through payment gateways integrated into their websites or online stores. This is common for e-commerce, online courses, memberships, digital products, and professional services. Online transactions generally require additional attention to fraud prevention and payment security.",
+
+      "**Mobile Payment Processing** — Mobile readers can allow businesses to accept payments using smartphones or tablets. This can be useful for mobile businesses, contractors, events, pop-up shops, and service providers.",
+
+      "**Recurring Payments** — Some businesses use recurring billing for memberships, subscriptions, software, coaching, and maintenance services. Recurring payments can simplify billing but require clear customer authorization and appropriate payment-management procedures.",
+
+      "## Important Merchant Processing Features",
+
+      "When comparing payment-processing solutions, business owners should look beyond the transaction rate.",
+
+      "**Payment Methods** — Consider which payment methods your customers actually use. A processor may support credit cards, debit cards, ACH payments, mobile wallets, online payments, and contactless payments. The right combination depends on your business model.",
+
+      "**POS and Payment Gateway Options** — A point-of-sale system can help businesses process payments in person. A payment gateway can facilitate online transactions. Creditor Academy's current merchant-account page describes support for EMV-compliant terminals, mobile readers, and online gateways.",
+
+      "**Transaction Fees** — Payment processors may charge different types of fees, including percentage-based transaction fees, per-transaction fees, monthly fees, gateway fees, chargeback fees, equipment fees, and other service charges. Businesses should evaluate the **total cost of processing**, rather than choosing a provider based only on one advertised rate.",
+
+      "**Payout Speed** — Payout timing can affect business cash flow. Some providers may offer faster settlement options, while others may have longer standard funding periods. Before choosing a processor, ask: When will funds become available? Are weekends included? Are there additional fees for faster funding? What happens if a transaction is flagged for review?",
+
+      "## Merchant Processing and Business Cash Flow",
+
+      "Payment processing has a direct connection to business cash flow.",
+
+      "Imagine a business generates $20,000 in monthly sales but has expenses of $15,000. The timing of customer payments and business expenses can affect how much cash is available at any particular time.",
+
+      "Business owners should monitor daily sales, processing fees, refunds, chargebacks, payout timing, operating expenses, and available cash. Good cash-flow management can help businesses plan expenses and avoid unnecessary financial pressure.",
+
+      "## Merchant Processing and Business Credit",
+
+      "Payment processing and [business credit](/Blogs/how-business-credit-works) are different concepts, but both can be part of a business's broader financial structure.",
+
+      "Merchant processing helps a business accept customer payments. Business credit relates to a company's credit relationships and credit history.",
+
+      "A business may use revenue generated through payment processing to support its broader financial operations, but having a merchant account does not automatically establish or improve business credit. Entrepreneurs should learn how business credit works separately and manage credit responsibly.",
+
+      "## Merchant Processing and Business Funding",
+
+      "Reliable payment processing can help a business maintain organized sales records and monitor incoming revenue.",
+
+      "When entrepreneurs consider [business funding](/Blogs/business-funding-explained), lenders may evaluate factors such as revenue, cash flow, time in business, existing debt, credit history, bank statements, business financial statements, collateral, and other business information.",
+
+      "Payment-processing revenue alone does not guarantee financing approval. Every lender has its own eligibility requirements.",
+
+      "## Security and Compliance",
+
+      "Payment security should be a major consideration for every business that accepts electronic payments.",
+
+      "**PCI Compliance** — The Payment Card Industry Data Security Standard, commonly known as PCI DSS, provides security requirements for organizations involved in handling payment-card information. Businesses should understand their responsibilities when accepting and processing card payments.",
+
+      "**Fraud Prevention** — Fraud can create financial losses and operational problems. Businesses may use tools such as transaction monitoring, address verification, card verification, fraud detection, customer authentication, and transaction limits. The appropriate tools depend on the business and the types of transactions it processes.",
+
+      "## What Is a Chargeback?",
+
+      "A **chargeback** occurs when a card transaction is disputed and the transaction is reversed through the card-payment system.",
+
+      "Chargebacks can happen for different reasons, including unauthorized transactions, product or service disputes, duplicate transactions, processing errors, and customer complaints.",
+
+      "Businesses should maintain appropriate records that can help demonstrate what was purchased, when it was delivered, and what terms applied to the transaction. Useful documentation may include receipts, invoices, customer communications, delivery records, refund policies, and terms and conditions.",
+
+      "## Choosing a Merchant Processing Provider",
+
+      "Before choosing a provider, business owners should compare several factors.",
+
+      "**1. Pricing** — Look at the complete fee structure rather than only the advertised transaction rate.",
+
+      "**2. Payment Methods** — Make sure the provider supports the payment methods your customers use.",
+
+      "**3. Funding Time** — Understand how quickly funds are normally made available.",
+
+      "**4. Security** — Ask what security and fraud-prevention tools are included.",
+
+      "**5. Customer Support** — Consider whether you will have access to dedicated support when problems occur.",
+
+      "**6. Reporting** — Good reporting can help businesses monitor sales, fees, refunds, chargebacks, transaction volume, and settlement activity.",
+
+      "**7. Integration** — Businesses should check whether the payment system integrates with their website, e-commerce platform, accounting software, CRM, and POS system.",
+
+      "## Common Merchant Processing Mistakes",
+
+      "**Choosing Only Based on the Lowest Rate** — The cheapest advertised rate is not always the lowest total cost. Additional fees, contract terms, equipment costs, and chargeback expenses can affect the overall price.",
+
+      "**Ignoring Chargebacks** — Businesses should have a process for responding to payment disputes.",
+
+      "**Not Understanding the Agreement** — Always review fees, contract length, cancellation terms, reserve requirements, funding timelines, and chargeback policies.",
+
+      "**Poor Recordkeeping** — Keep accurate transaction and customer records.",
+
+      "**Ignoring Security** — Payment information requires careful handling. Businesses should follow applicable security standards and the requirements of their payment processor.",
+
+      "## Merchant Processing for Growing Businesses",
+
+      "As a business grows, its payment-processing needs can change. A small business may initially need only a basic card reader. Later, it may need online payment processing, multiple payment methods, recurring billing, international payments, multiple locations, advanced reporting, fraud management, and accounting integration.",
+
+      "Business owners should periodically review their payment-processing system to determine whether it still fits their needs.",
+
+      "## Merchant Processing and Financial Freedom",
+
+      "Merchant processing is one part of a larger business financial system.",
+
+      "Entrepreneurs who want to strengthen their financial foundation should also learn about [business credit](/Blogs/how-business-credit-works), [business funding](/Blogs/business-funding-explained), cash flow management, financial planning, [asset protection](/Blogs/asset-protection-for-entrepreneurs), business structures, and risk management.",
+
+      "Understanding how money enters and leaves a business can help entrepreneurs make better financial decisions. Financial freedom is not created simply by accepting more payments. It requires responsible financial management, sustainable business practices, planning, and informed decision-making.",
+
+      "## A Simple Merchant Processing Checklist",
+
+      "**Payment Methods**\n\n- Does the provider support the payment methods my customers use?\n- Can I accept both in-person and online payments if needed?",
+
+      "**Pricing**\n\n- What are the transaction fees?\n- Are there monthly or annual fees?\n- Are there additional gateway or equipment charges?",
+
+      "**Funding**\n\n- How quickly are funds normally deposited?\n- Are there additional fees for faster funding?",
+
+      "**Security**\n\n- What security tools are included?\n- What are my PCI compliance responsibilities?",
+
+      "**Chargebacks**\n\n- How are disputes handled?\n- What documentation should I maintain?",
+
+      "**Support**\n\n- How can I contact support?\n- Is dedicated account assistance available?",
+
+      "**Reporting**\n\n- Can I easily track transactions, fees, refunds, and settlements?",
+
+      "**Business Growth**\n\n- Can the system scale as transaction volume increases?",
+
+      "## Conclusion",
+
+      "Merchant processing is a fundamental part of modern commerce.",
+
+      "From card terminals and payment gateways to merchant accounts, transaction fees, security, chargebacks, and funding timelines, businesses need to understand how payment processing affects their daily operations.",
+
+      "The right payment-processing solution depends on the business's size, transaction volume, customers, payment methods, risk profile, and financial needs.",
+
+      "Rather than choosing a provider based only on price, entrepreneurs should evaluate the complete package — including **payment methods, fees, funding speed, security, customer support, reporting, and scalability**.",
+
+      "A well-organized payment-processing system can become an important part of a broader business financial foundation.",
+
+      "To know more, visit our website [Creditor Academy](https://creditoracademy.com/).",
+
+      "## Frequently Asked Questions",
+
+      "### What is merchant processing?",
+
+      "Merchant processing is the system that enables businesses to accept and process electronic payments from customers.",
+
+      "### What is a merchant account?",
+
+      "A merchant account is an account used as part of the payment-processing system that allows a business to accept card payments.",
+
+      "### What is a payment gateway?",
+
+      "A payment gateway facilitates the secure transmission of payment information for transactions, particularly online transactions.",
+
+      "### How much does merchant processing cost?",
+
+      "Costs vary by provider, transaction type, business volume, payment method, and pricing structure. Businesses should evaluate all applicable fees rather than looking at only one transaction rate.",
+
+      "### How long does it take to receive merchant-processing funds?",
+
+      "Funding timelines vary by provider and transaction. Some providers offer next-day or faster funding, while others may take longer.",
+
+      "### What is PCI compliance?",
+
+      "PCI DSS is a set of security standards designed to help protect payment-card information. Businesses should understand which PCI responsibilities apply to their payment environment.",
+
+      "### What is a chargeback?",
+
+      "A chargeback is a disputed card transaction that may be reversed through the payment network.",
+
+      "### Does having a merchant account improve business credit?",
+
+      "Not automatically. Merchant processing and business credit are separate areas of business finance.",
+
+      "### Can merchant processing help business growth?",
+
+      "Reliable payment processing can make it easier for customers to pay and can support organized sales and cash-flow management. However, growth also depends on factors such as demand, profitability, operations, and financial management.",
+
+      "## Learn More With Creditor Academy",
+
+      "At [Creditor Academy](https://creditoracademy.com/), entrepreneurs can explore educational resources covering business credit, [asset protection](/Blogs/asset-protection-for-entrepreneurs), private business operations, financial education, and financial freedom.",
+
+      "- [Become Private](/services/course-cataloges/become-private) — Learn about private business concepts, organization, ownership, and financial education.\n- [Operate Private](/services/course-cataloges/operate-private) — Explore business operations, organization, financial management, and related concepts.\n- [Financial Freedom](/services/course-cataloges/financial-freedom) — Develop broader knowledge around business credit, funding, asset management, and financial planning.",
+
+      "## Continue Your Business & Financial Education",
+
+      "A strong financial foundation involves more than accepting payments. Continue learning about merchant processing, business credit, business funding, cash-flow management, asset protection, business structures, financial planning, and financial freedom.",
+
+      "Join the [Creditor Academy Free Webinar](https://creditoracademy.com/webinar) to continue expanding your financial knowledge.",
+
+      "*This article is provided for general educational and informational purposes only. It is not legal, financial, tax, accounting, payment-processing, credit, or investment advice. Merchant-processing fees, funding times, security requirements, and eligibility vary by provider and business circumstances. Always review the applicable merchant agreement and consult qualified professionals when appropriate.*",
+    ],
+  },
+
+  {
     id: 29,
 
     slug: "private-commerce-explained",
@@ -57,7 +322,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
 
     image: "/images/blogs/cablg.png",
 
-    featured: true,
+    featured: false,
 
     content: [
       "Private commerce is an important concept for entrepreneurs who want to better understand how business relationships, contracts, financial systems, and private business operations can work together.",

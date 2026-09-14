@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { WORKSHOP_REGISTER_URL } from "@/lib/workshop";
 
-const TARGET_EVENT_MS = new Date("2026-09-12T11:00:00-07:00").getTime();
-const EVENT_IMAGE = "/images/todayclasstopic/caworkshop_12.jpg";
-const EVENT_DATE_LABEL = "Saturday, 12 September 2026";
+const TARGET_EVENT_MS = new Date("2026-09-19T11:00:00-07:00").getTime();
+const EVENT_IMAGE = "/images/todayclasstopic/CAwork.png";
+const EVENT_DATE_LABEL = "Saturday, 19 September 2026";
 
 export interface EventPopupProps {
   delayMs?: number;
@@ -82,7 +82,7 @@ export default function EventPopup({
     /* ── Overlay ── */
     <div
       onClick={(e) => { if (e.target === e.currentTarget) setOpen(false); }}
-      data-event-popup="buy-your-house-with-a-credit-card"
+      data-event-popup="fund-an-airbnb-with-0-apr-cards"
       style={{
         position: "fixed",
         inset: 0,
@@ -174,7 +174,7 @@ export default function EventPopup({
             }}>
               <Image
                 src={EVENT_IMAGE}
-                alt={`Free Workshop: Buy Your House With A Credit Card — ${EVENT_DATE_LABEL}`}
+                alt={`Free Workshop: Fund An Airbnb With 0% APR Cards — ${EVENT_DATE_LABEL}`}
                 width={480}
                 height={480}
                 style={{ width: "100%", height: "100%", objectFit: "contain" }}
@@ -223,30 +223,30 @@ export default function EventPopup({
                 fontSize: 10, fontWeight: 600,
                 color: "#0284c7", background: "#f0f9ff", border: "1px solid #e0f2fe",
               }}>
-                Sept 12, 2026 @ 11:00 AM PST
+                Sept 19, 2026 @ 11:00 AM PST
               </span>
             </div>
 
             {/* Title */}
             <h2 id="ep-title" style={{ margin: 0, fontSize: 26, fontWeight: 800, lineHeight: 1.15, letterSpacing: "-0.02em", color: "#0f172a" }}>
-              BUY YOUR HOUSE{" "}
+              FUND AN AIRBNB{" "}
               <span style={{
                 background: "linear-gradient(135deg,#0284c7,#0369a1)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}>
-                WITH A CREDIT CARD
+                WITH 0% APR CARDS
               </span>
             </h2>
 
             {/* Subtitle */}
             <p style={{ margin: 0, fontSize: 13, lineHeight: 1.4, color: "#475569" }}>
-              0% Stacking • Business Credit • Property Without Waiting On A Bank
+              Learn how to use 0% APR credit cards to fund your next Airbnb stay or investment — without paying interest.
             </p>
 
             {/* Tags */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-              {["0% STACKING", "BUSINESS CREDIT", "NO BANK WAITING", "SMART FUNDING"].map((t) => (
+              {["0% APR CARDS", "AIRBNB FUNDING", "ZERO INTEREST", "SMART INVESTING"].map((t) => (
                 <span key={t} style={{
                   padding: "8px 10px", borderRadius: 8,
                   fontSize: 11, fontWeight: 600, textAlign: "center",
@@ -302,7 +302,7 @@ export default function EventPopup({
                 boxShadow: "0 4px 14px rgba(2,132,199,0.4)",
               }}
             >
-              RESERVE YOUR FREE SEAT
+              SAVE YOUR SPOT
             </a>
           </div>
         </div>
@@ -310,30 +310,30 @@ export default function EventPopup({
         {/* Responsive CSS via a <style> tag — does NOT use styled-jsx scoping */}
         <style>{`
           @media (min-width: 720px) {
-            [data-event-popup="buy-your-house-with-a-credit-card"] .ep-inner-grid {
+            [data-event-popup="fund-an-airbnb-with-0-apr-cards"] .ep-inner-grid {
               grid-template-columns: 1.2fr 0.8fr !important;
               direction: rtl;
             }
-            [data-event-popup="buy-your-house-with-a-credit-card"] .ep-inner-grid > * {
+            [data-event-popup="fund-an-airbnb-with-0-apr-cards"] .ep-inner-grid > * {
               direction: ltr;
             }
-            [data-event-popup="buy-your-house-with-a-credit-card"] .ep-right-panel {
+            [data-event-popup="fund-an-airbnb-with-0-apr-cards"] .ep-right-panel {
               border-radius: 0 20px 20px 0 !important;
               padding: 0 !important;
               align-items: stretch !important;
             }
-            [data-event-popup="buy-your-house-with-a-credit-card"] .ep-right-panel > div {
+            [data-event-popup="fund-an-airbnb-with-0-apr-cards"] .ep-right-panel > div {
               max-width: 100% !important;
               height: 100% !important;
               aspect-ratio: unset !important;
               border-radius: 0 20px 20px 0 !important;
               box-shadow: none !important;
             }
-            [data-event-popup="buy-your-house-with-a-credit-card"] .ep-right-panel img {
+            [data-event-popup="fund-an-airbnb-with-0-apr-cards"] .ep-right-panel img {
               object-fit: cover !important;
               height: 100% !important;
             }
-            [data-event-popup="buy-your-house-with-a-credit-card"] .ep-left-panel {
+            [data-event-popup="fund-an-airbnb-with-0-apr-cards"] .ep-left-panel {
               padding: 36px 36px 36px !important;
             }
           }

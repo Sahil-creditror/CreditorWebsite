@@ -174,7 +174,7 @@ const InstructorSection = () => {
               transition
               "
             >
-              Secure My Spot in the Live Webclass
+              Secure My Spot in the  Webclass
             </button>
 
 

@@ -175,7 +175,7 @@ export default function WebclassSection() {
               {/* Event Header Pill - Changed to highlight Webinar training */}
               <div className="inline-flex items-center gap-2 bg-blue-600 text-white font-black text-[11px] uppercase tracking-wider px-3 py-1 rounded-md mb-5 shadow-md shadow-blue-600/10">
                 <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                Free Live Webinar Training
+                Free Recorded Webinar Training
               </div>
 
               {/* Bold Headline Transformation */}
@@ -221,7 +221,7 @@ export default function WebclassSection() {
 
             {/* Action Frame & Live Countdown integration - Retuned for webinar terminology */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 bg-white/60 backdrop-blur-md border border-blue-100 p-5 rounded-2xl shadow-md shadow-blue-900/5 max-w-xl">
-              <div>
+              {/* <div>
                 <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-2">
                   Next Live Broadcast In
                 </p>
@@ -232,7 +232,7 @@ export default function WebclassSection() {
                   <span className="text-lg font-bold text-blue-200 px-0.5">:</span>
                   <CountUnit value={pad(s)} label="sec" />
                 </div>
-              </div>
+              </div> */}
 
               <Link
                 href="/webinar"

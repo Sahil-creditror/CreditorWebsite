@@ -232,12 +232,12 @@ export default function WebclassSection() {
 
   const [widgetOpen, setWidgetOpen] = useState(false);
   const [selectedCourseId, setSelectedCourseId] = useState<string>("");
-  const [formStep, setFormStep] = useState<1 | 2 | 3>(1);
+  const [formStep, setFormStep] = useState<1 | 3>(1);
   const [formData, setFormData] = useState<FormState>({ ...initialFormState });
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>(undefined);
   const [sessions, setSessions] = useState<WebinarSession[]>([]);
   const [selectedSessionKey, setSelectedSessionKey] = useState<string>("");
-  const [watchRecording, setWatchRecording] = useState<boolean>(false);
+  const [watchRecording, setWatchRecording] = useState<boolean>(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [touched, setTouched] = useState({
@@ -263,13 +263,12 @@ export default function WebclassSection() {
 
   const selectedSession =
     sessions.find((session) => session.key === selectedSessionKey) ?? sessions[0];
-  const sessionTimezoneLabel = "PST";
 
   const resetFormState = useCallback(() => {
     setSelectedCourseId("");
     setFormData({ ...initialFormState });
     setPhoneNumber(undefined);
-    setWatchRecording(false);
+    setWatchRecording(true);
     setFormStep(1);
     setTouched({ email: false, first_name: false, last_name: false, session: false, phone_number: false });
     setSessions([]);
@@ -295,23 +294,15 @@ export default function WebclassSection() {
         return;
       }
       setError(null);
-      setFormStep(2);
-    } else if (formStep === 2) {
-      if (!watchRecording && !selectedSessionKey) {
-        setTouched({ ...touched, session: true });
-        setError('Please choose either a live session or select to watch the previous recording');
-        return;
-      }
+      // Live-session selection is temporarily disabled; registrations use the recording path.
       setError(null);
       setFormStep(3);
     }
   };
 
   const handleBackStep = () => {
-    if (formStep === 2) {
+    if (formStep === 3) {
       setFormStep(1);
-    } else if (formStep === 3) {
-      setFormStep(2);
     }
     setError(null);
   };
@@ -506,7 +497,7 @@ export default function WebclassSection() {
   <span className="bg-red-500 text-white px-2 py-2 md:mb-4 rounded-md font-bold">
     FREE
   </span>{" "}
-  <span className="wc-eyebrow">LIVE WEBCLASS</span>
+  <span className="wc-eyebrow">WEBCLASS</span>
 </h1>
           {/* H2 Headline */}
           <h1 className="wc-headline">
@@ -551,9 +542,10 @@ export default function WebclassSection() {
           </div>
 
           {/* Divider */}
-          <div className="wc-divider" />
-
           {/* Countdown */}
+
+          {/* <div className="wc-divider" />
+
           <p className="wc-countdown-label">Next Session Starts In ({upcomingWebinarName})</p>
           <div className="wc-countdown-row">
             {[
@@ -569,7 +561,7 @@ export default function WebclassSection() {
                 {i < 2 && <span className="wc-countdown-sep">:</span>}
               </div>
             ))}
-          </div>
+          </div> */}
 
           {/* CTA Button */}
           <button className="wc-cta-btn" onClick={handleWidgetOpen}>
@@ -592,7 +584,7 @@ export default function WebclassSection() {
           {/* Live stream badge */}
           <div className="wc-live-badge">
             <span className="wc-live-dot" />
-            LIVE STREAM
+            Recorded Webinar
           </div>
 
           <div className="wc-right-image-wrap">
@@ -666,14 +658,9 @@ export default function WebclassSection() {
                     <div className="form-step-number">1</div>
                     <div className="form-step-label">Choose Course</div>
                   </div>
-                  <div className={`form-step-line ${formStep >= 2 ? 'form-step-line-active' : ''}`}></div>
-                  <div className={`form-step ${formStep === 2 ? 'form-step-active' : formStep > 2 ? 'form-step-completed' : ''}`}>
-                    <div className="form-step-number">2</div>
-                    <div className="form-step-label">Choose Session</div>
-                  </div>
                   <div className={`form-step-line ${formStep === 3 ? 'form-step-line-active' : ''}`}></div>
                   <div className={`form-step ${formStep === 3 ? 'form-step-active' : ''}`}>
-                    <div className="form-step-number">3</div>
+                    <div className="form-step-number">2</div>
                     <div className="form-step-label">Personal Details</div>
                   </div>
                 </div>
@@ -768,7 +755,11 @@ export default function WebclassSection() {
                   </div>
                 )}
 
-                {/* Step 2: Session Selection */}
+                {/*
+                  Step 2: Session Selection (temporarily disabled)
+                  The previous live-session and recording choice UI is kept here for later restoration.
+                */}
+                {/*
                 {formStep === 2 && (
                   <div className="form-step-content">
                     <div className="form-group">
@@ -880,6 +871,7 @@ export default function WebclassSection() {
                     </div>
                   </div>
                 )}
+                */}
 
                 {/* Step 3: Personal Details */}
                 {formStep === 3 && (

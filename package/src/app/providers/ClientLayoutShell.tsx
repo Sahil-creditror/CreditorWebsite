@@ -8,7 +8,7 @@ import Header from "../components/layout/header";
 import Footer from "../components/layout/footer";
 import FloatingButtons from "../components/floating-buttons";
 import { MetaPixelPageView } from "../components/analytics/MetaPixelPageView";
-import EventPopup from "../components/home/EventPopup";
+// import EventPopup from "../components/home/EventPopup";
 
 // const ThanksgivingPopup = dynamic(() => import("../components/home/Thanksgiving"), {
 //   ssr: false,
@@ -109,14 +109,14 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
         {/* Video chatbot — allowed pages only */}
         {isChatbotVisible(pathname) && <FloatingMiniChatbot />}
 
-        {/* Event popup — home page only (auto-opens after 15s; gift button re-opens it) */}
-        {pathname === "/" && (
+        {/* Event popup — commented out for now */}
+        {/* {pathname === "/" && (
           <EventPopup
             delayMs={15000}
             disableAutoOpen={false}
             manualTrigger={thanksgivingKey}
           />
-        )}
+        )} */}
 
         {/* Registration Notification Popup - Shows on all pages */}
         {/* <RegPopup /> */}

@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# Explicit allow for AI search crawlers (GEO — Generative Engine Optimization)
+# Explicit allow for AI search crawlers (GEO - Generative Engine Optimization)
 User-agent: GPTBot
 Allow: /
 

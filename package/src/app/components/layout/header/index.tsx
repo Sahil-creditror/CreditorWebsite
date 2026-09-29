@@ -9,7 +9,7 @@ import { Icon } from "@iconify/react";
 import Logo from "../logo";
 import MenuList from "./MenuList";
 import { COURSES_PAGE_PATH } from "@/lib/coursePaths";
-import { WORKSHOP_PATH } from "@/lib/workshop";
+// import { WORKSHOP_PATH } from "@/lib/workshop";
 import { ChevronDown } from "lucide-react";
 
 const Header = () => {
@@ -101,8 +101,9 @@ const Header = () => {
 
               ["Masterclass", "/masterclass-membership"],
               ["Free Webinar", "/webinar"],
+              ["Bootcamp", "/bootcamp"],
               ["eBooks", "/ebooks"],
-              ["Workshop", "/workshop"],
+              // ["Workshop", "/workshop"],
 
             ].map(([name, url]) => (
               <Link

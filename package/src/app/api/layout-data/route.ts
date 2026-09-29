@@ -19,10 +19,16 @@ const MenuData = [
     path: "/masterclass-membership",
     newTab: false,
   },
+  // {
+  //   id: 4,
+  //   title: "Workshop",
+  //   path: "/workshop",
+  //   newTab: false,
+  // },
   {
     id: 4,
-    title: "Workshop",
-    path: "/workshop",
+    title: "Bootcamp",
+    path: "/bootcamp",
     newTab: false,
   },
   {

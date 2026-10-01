@@ -4,11 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
+  Banknote,
   Clock,
-  FileText,
+  Handshake,
   Phone,
-  Search,
-  Target,
   TrendingUp,
   Video,
 } from "lucide-react";
@@ -41,24 +40,19 @@ function getCountdown(targetMs: number) {
 
 const FEATURES = [
   {
-    title: "Dispute Letter Writing Strategies",
-    body: "Learn how to organize a clear, accurate dispute letter so each item on your report is addressed the right way.",
-    icon: FileText,
+    title: "Business Loans",
+    body: "Understand the kinds of business loans available, what lenders typically review, and how repayment fits into cash flow.",
+    icon: Banknote,
   },
   {
-    title: "Credit Report Analysis",
-    body: "Walk through a credit report section by section and spot the items that belong in an October dispute batch.",
-    icon: Search,
-  },
-  {
-    title: "Score Improvement Techniques",
-    body: "See which habits and corrections can support a healthier credit profile over time — without shortcuts or guarantees.",
+    title: "Credit Building",
+    body: "See how personal and business credit can affect funding options, and what it takes to build a stronger profile over time.",
     icon: TrendingUp,
   },
   {
-    title: "Step-by-Step Guidance",
-    body: "Follow a practical sequence from review to letter so you know what to do first, next, and after you send.",
-    icon: Target,
+    title: "Funding Strategies",
+    body: "Learn how to match the right funding approach to your business goals so you can grow with a clearer plan.",
+    icon: Handshake,
   },
 ] as const;
 
@@ -103,19 +97,20 @@ export default function BootcampPageContent() {
               </p>
 
               <h1 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
-                Dispute Letter Batch
-                <span className="mt-2 block text-[#facc15]">For October</span>
+                Unlock Your
+                <span className="mt-2 block text-[#facc15]">
+                  Business Funding Potential
+                </span>
               </h1>
 
               <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-blue-100/85 lg:mx-0">
-                Join this free bootcamp and learn how to review a credit report,
-                write a dispute letter batch, and follow a step-by-step process
-                aimed at a healthier credit profile.
+                Learn how to access the right funding, grow faster, and take
+                your business to the next level.
               </p>
 
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-bold text-white shadow-md">
-                  <span className="text-[#facc15]">30 SEP · {BOOTCAMP_EVENT_WEEKDAY}</span>
+                  <span className="text-[#facc15]">1 OCT · {BOOTCAMP_EVENT_WEEKDAY}</span>
                   <span className="text-white/40">·</span>
                   {BOOTCAMP_EVENT_TIME_PST}
                 </span>
@@ -126,7 +121,7 @@ export default function BootcampPageContent() {
                   href={BOOTCAMP_REGISTER_URL}
                   className="inline-flex items-center justify-center rounded-full bg-linear-to-r from-[#facc15] to-[#f5c400] px-8 py-4 text-base font-extrabold uppercase text-[#0b2f6b] shadow-xl shadow-[#facc15]/30 transition hover:-translate-y-0.5 hover:brightness-105"
                 >
-                  Reserve Your Spot
+                  Register Now
                 </Link>
                 <a
                   href={`tel:${BOOTCAMP_PHONE.replace(/-/g, "")}`}
@@ -142,7 +137,7 @@ export default function BootcampPageContent() {
               <div className="overflow-hidden rounded-2xl border-2 border-[#facc15]/50 bg-white p-2 shadow-2xl shadow-black/40 ring-1 ring-white/10">
                 <Image
                   src={BOOTCAMP_EVENT_IMAGE}
-                  alt={`Free Bootcamp: Dispute Letter Batch for October — ${BOOTCAMP_EVENT_DATE_LABEL}`}
+                  alt={`Free Bootcamp: Unlock Your Business Funding Potential — ${BOOTCAMP_EVENT_DATE_LABEL}`}
                   width={720}
                   height={720}
                   className="w-full rounded-xl object-contain bg-[#eef6ff]"
@@ -170,11 +165,11 @@ export default function BootcampPageContent() {
                   Live Online Bootcamp
                 </span>
                 <h2 className="mt-4 text-2xl font-black tracking-tight text-[#0b2f6b] md:text-3xl uppercase">
-                  30 September Bootcamp
+                  1 October Bootcamp
                 </h2>
                 <p className="mt-2 flex items-center justify-center gap-2 text-slate-600 lg:justify-start text-sm">
                   <Video className="h-4 w-4 shrink-0 text-[#1d4ed8]" aria-hidden />
-                  Dispute Letter Batch for October
+                  Unlock Your Business Funding Potential
                 </p>
               </div>
 
@@ -267,11 +262,11 @@ export default function BootcampPageContent() {
               What this bootcamp covers
             </h2>
             <p className="mt-3 text-slate-600">
-              Four practical topics from the October dispute letter batch.
+              Three topics from this free business funding bootcamp.
             </p>
           </div>
 
-          <div className="mx-auto mt-12 grid max-w-5xl gap-5 sm:grid-cols-2">
+          <div className="mx-auto mt-12 grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {FEATURES.map((item, i) => {
               const Icon = item.icon;
               return (
@@ -306,12 +301,12 @@ export default function BootcampPageContent() {
         <div className="container">
           <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 text-center">
             <h2 className="text-2xl font-extrabold text-white sm:text-3xl">
-              Ready for your October dispute letter batch?
+              Ready to unlock your business funding potential?
             </h2>
             <p className="max-w-xl text-blue-100/90">
               Join the free bootcamp on{" "}
               <span className="font-bold text-[#facc15]">
-                30 Sep · {BOOTCAMP_EVENT_WEEKDAY} · {BOOTCAMP_EVENT_TIME_PST}
+                1 Oct · {BOOTCAMP_EVENT_WEEKDAY} · {BOOTCAMP_EVENT_TIME_PST}
               </span>
               .
             </p>
@@ -320,7 +315,7 @@ export default function BootcampPageContent() {
                 href={BOOTCAMP_REGISTER_URL}
                 className="inline-flex items-center justify-center rounded-full bg-[#facc15] px-8 py-3.5 text-sm font-extrabold uppercase text-[#0b2f6b] shadow-lg shadow-[#facc15]/30 transition hover:brightness-105"
               >
-                Reserve Your Spot
+                Register Now
               </Link>
               <a
                 href="https://creditoracademy.com"

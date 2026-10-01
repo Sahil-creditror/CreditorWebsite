@@ -4,11 +4,11 @@ import BootcampPageContent from "@/app/components/bootcamp/BootcampPageContent";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
 export const metadata: Metadata = {
-  title: "Free Bootcamp: Dispute Letter Batch for October | Creditor Academy",
+  title: "Free Bootcamp: Unlock Your Business Funding Potential | Creditor Academy",
   description:
-    "Join Creditor Academy's free bootcamp on 30 September at 3 PM PST. Learn dispute letter writing, credit report analysis, score improvement techniques, and step-by-step guidance.",
+    "Join Creditor Academy's free bootcamp on 1 October at 3 PM PST. Learn about business loans, credit building, and funding strategies to grow your business.",
   keywords:
-    "dispute letter batch, free bootcamp, credit report analysis, dispute letter writing, score improvement, creditor academy, October credit bootcamp",
+    "business funding, free bootcamp, business loans, credit building, funding strategies, creditor academy, October bootcamp",
   alternates: {
     canonical: `${siteUrl}/bootcamp`,
   },

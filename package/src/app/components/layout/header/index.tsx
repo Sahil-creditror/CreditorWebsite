@@ -101,7 +101,7 @@ const Header = () => {
 
               ["Masterclass", "/masterclass-membership"],
               ["Free Webinar", "/webinar"],
-              ["Bootcamp", "/bootcamp"],
+              // ["Bootcamp", "/bootcamp"],
               ["eBooks", "/ebooks"],
               // ["Workshop", "/workshop"],
 

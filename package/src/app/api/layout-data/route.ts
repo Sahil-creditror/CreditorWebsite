@@ -25,12 +25,12 @@ const MenuData = [
   //   path: "/workshop",
   //   newTab: false,
   // },
-  {
-    id: 4,
-    title: "Bootcamp",
-    path: "/bootcamp",
-    newTab: false,
-  },
+  // {
+  //   id: 4,
+  //   title: "Bootcamp",
+  //   path: "/bootcamp",
+  //   newTab: false,
+  // },
   {
     id: 5,
     title: "Courses",

@@ -117,9 +117,17 @@ export default function BlogDetail({ post }: BlogDetailProps) {
     (block) => typeof block === "string" && block.trim() === "## Other Mistakes Entrepreneurs Should Watch For"
   );
 
-  const midInsertIndex = otherMistakesIndex !== -1
+  let midInsertIndex = otherMistakesIndex !== -1
     ? otherMistakesIndex
     : Math.floor(cleanContent.length / 2);
+
+  // Keep the CTA above a heading instead of splitting a heading from its first paragraph
+  if (otherMistakesIndex === -1 && midInsertIndex > 0) {
+    const prev = cleanContent[midInsertIndex - 1];
+    if (typeof prev === "string" && /^#{1,6}\s/.test(prev.trim())) {
+      midInsertIndex -= 1;
+    }
+  }
 
   if (midInsertIndex > 0 && midInsertIndex < cleanContent.length) {
     cleanContent.splice(midInsertIndex, 0, ctaString);

@@ -129,6 +129,16 @@ export default function BlogDetail({ post }: BlogDetailProps) {
     }
   }
 
+  // If the midpoint lands on a mistake item, place the CTA after that point
+  const midBlock = cleanContent[midInsertIndex];
+  if (
+    otherMistakesIndex === -1 &&
+    typeof midBlock === "string" &&
+    /^\*\*Mistake\s+\d+/i.test(midBlock.trim())
+  ) {
+    midInsertIndex += 1;
+  }
+
   if (midInsertIndex > 0 && midInsertIndex < cleanContent.length) {
     cleanContent.splice(midInsertIndex, 0, ctaString);
   }

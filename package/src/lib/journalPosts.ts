@@ -36,7 +36,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
 
     slug: "merchant-processing-website-business-credit",
 
-    title: "Merchant Processing and Website Readiness: Step 2 of the Creditor Academy Master Class",
+    title: "Step 2 of the Master Class: Merchant Processing and Website Done Right.",
 
     description:
       "Learn how merchant processing, website readiness, consistent business information, and Dun & Bradstreet preparation support a professional business credit journey.",

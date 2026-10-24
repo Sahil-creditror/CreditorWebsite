@@ -32,6 +32,213 @@ export type JournalPost = {
 
 export const JOURNAL_POSTS: JournalPost[] = [
   {
+    id: 48,
+
+    slug: "free-business-credit-resource-pack",
+
+    title: "This Week’s Free Business Credit Resource Pack (and How to Get It)",
+
+    description:
+      "Explore free business credit resources, learn how they support the 3-step Master Class System, and register for the Creditor Academy webinar to access this week's offer.",
+
+    metaTitle: "Free Business Credit Resource Pack | Creditor Academy",
+
+    metaDescription:
+      "Explore free business credit resources, learn how they support the 3-step Master Class System, and register for the Creditor Academy webinar to access this week's offer.",
+
+    keywords:
+      "Free Business Credit Resources, Business Credit Checklist, Business Credit Starter Checklist, Business Credit Readiness One-Pager, Business Trust, Merchant Processing, Dun & Bradstreet, Business Credit Preparation, Free Business Credit Webinar, Creditor Academy",
+
+    category: "Financial Freedom",
+
+    date: "October 23, 2026",
+
+    readTime: "14 min",
+
+    image: "/images/blogs/CA blog banner 23 oct.png",
+
+    featured: true,
+
+    content: [
+      "Preparing a business for growth can feel confusing when you are unsure which steps to take first. Business structure, payment processing, website readiness, and commercial credit information all serve different purposes. Without a clear plan, it can be difficult to know what to review and what to do next.",
+
+      "That is why having the right educational resources can make a difference.",
+
+      "Creditor Academy's 3-Step Master Class System introduces business owners to three key areas: understanding business trust concepts, preparing business operations through merchant processing and website readiness, and learning about Dun & Bradstreet (D&B) and commercial credit information.",
+
+      "To help you organize your learning, Creditor Academy invites you to explore its free business credit resources through the webinar offer.",
+
+      "In this guide, you’ll learn what the resources are intended to help you understand, how they fit into the three-step framework, and how to find out what is available this week.",
+
+      "Ready to get started? Register for the [Creditor Academy FREE webinar](/webinar) and follow the instructions provided for accessing the current free resources.",
+
+      "## Why Use a Business Credit Resource Pack?",
+
+      "Business credit preparation involves more than obtaining an identifier or submitting a credit application. It starts with understanding your business, keeping information accurate, and learning how different business systems work.",
+
+      "A resource pack can help you:\n- Organize important business preparation tasks.\n- Understand the purpose of each step in the Master Class System.\n- Identify information that may be missing or outdated.\n- Prepare questions before approaching service providers or credit-related organizations.\n- Avoid common misconceptions about business credit.\n- Create a practical list of next actions.",
+
+      "The goal is not to promise instant credit or guaranteed funding. It is to help you approach business preparation with better information and a clearer plan.",
+
+      "## What Is Included in the Free Business Credit Resource Pack?",
+
+      "The following resources are referenced in the Creditor Academy Master Class content. Confirm which items are included in the current offer before promoting them as a complete downloadable bundle.",
+
+      "### 1. Business Credit Starter Checklist",
+
+      "**Purpose:** Help you organize the initial areas to review as you prepare your business.",
+
+      "A starter checklist can help you identify whether your business information is accurate, whether your website and payment setup need attention, and which questions you should investigate before moving forward.",
+
+      "It may help you review:\n- Business identity and contact information\n- Website completeness and professionalism\n- Payment processing needs\n- Business recordkeeping\n- Business credit preparation questions\n- Potential next steps for further research",
+
+      "How it supports the three-step system: It provides a starting point for organizing the topics covered across business structure, operational readiness, and commercial credit information.",
+
+      "**Best for:** Business owners who want a structured way to identify preparation gaps.",
+
+      "### 2. Business Credit Readiness One-Pager",
+
+      "**Purpose:** Help you review key information and questions before exploring commercial credit services.",
+
+      "A readiness one-pager can provide a concise overview of items worth checking before approaching Dun & Bradstreet or another business information provider.",
+
+      "Depending on the confirmed resource contents, it may help you consider:\n- Whether your business information is accurate and current\n- Which business identifiers are relevant to your goals\n- Whether you have reviewed available business credit information\n- Whether supplier payment-reporting practices are understood\n- Which records or details may need correction\n- What questions to ask before pursuing supplier terms or financing",
+
+      "How it supports the three-step system: It is especially relevant to Step 3, which focuses on understanding Dun & Bradstreet and commercial credit information.",
+
+      "**Best for:** Business owners who want a concise reference for their business credit preparation.",
+
+      "Availability and the exact contents of this resource should be confirmed on the current [webinar registration page](/webinar).",
+
+      "## How the Resources Connect to the 3-Step Master Class System",
+
+      "The value of these resources becomes clearer when you understand how they relate to the three learning areas. Start with [The 3-Step Master Class System](/Blogs/three-step-master-class-system).",
+
+      "### Step 1: Business Trust",
+
+      "The first step introduces business trust concepts and explains why understanding ownership, responsibilities, and business structure can matter in certain circumstances.",
+
+      "A checklist can help you organize questions about your current structure and identify whether professional legal or tax advice may be appropriate.",
+
+      "Keep in mind that a trust is not required for every business and is not a universal prerequisite for merchant processing or business credit. Learn more in [How to Set Up a Business Trust the Right Way](/Blogs/how-to-set-up-a-business-trust).",
+
+      "### Step 2: Merchant Processing and Website Readiness",
+
+      "The second step focuses on the practical side of operating a business.",
+
+      "A professional website should accurately explain what the business does, provide appropriate contact details, and present relevant customer policies. If the business accepts electronic payments, its payment processing arrangement should fit its needs and comply with provider requirements.",
+
+      "A business readiness checklist can help you identify gaps such as:\n- Incomplete website pages\n- Inconsistent business information\n- Unclear customer policies\n- Payment processing questions\n- Disorganized transaction records",
+
+      "Merchant processing helps a business accept payments; it does not automatically establish business credit. Continue with [Merchant Processing and Website Readiness](/Blogs/merchant-processing-website-business-credit).",
+
+      "### Step 3: Dun & Bradstreet and Business Credit Information",
+
+      "The third step introduces Dun & Bradstreet and the role of business identification and commercial credit information.",
+
+      "A readiness one-pager can help you prepare questions about business records, identifiers, available credit information, and supplier reporting practices.",
+
+      "A D-U-N-S Number identifies a business record; it is not itself a credit score or guarantee of funding. Different lenders and suppliers may use different information sources and evaluation criteria. See [Step 3 Explained: Approaching Dun & Bradstreet](/Blogs/approaching-dun-and-bradstreet-business-credit).",
+
+      "## The Three Steps at a Glance",
+
+      "[TABLE]\nMaster Class step|Main focus|How a resource can help\nStep 1: Business Trust|Understand structural considerations|Organize questions about business ownership and responsibilities\nStep 2: Merchant Processing and Website|Review operational readiness|Identify website, payment, and recordkeeping gaps\nStep 3: Dun & Bradstreet|Understand business information and credit reporting|Prepare questions and review relevant records\n[/TABLE]",
+
+      "These steps are an educational framework, not a mandatory legal sequence. The appropriate actions depend on your business and its objectives.",
+
+      "## Who Should Get the Free Resources?",
+
+      "The resources may be useful if you:\n- Are starting a business and want to understand the preparation process.\n- Already operate a business but want to review your business information.\n- Need to improve your website or understand payment processing requirements.\n- Want to learn how Dun & Bradstreet fits into the commercial credit landscape.\n- Prefer a checklist or one-page reference instead of trying to remember every detail.\n- Want to prepare more informed questions before speaking with service providers.",
+
+      "You do not need to assume that every step applies to every business. Use the information to understand your options and identify which areas are relevant to your circumstances.",
+
+      "## How to Get This Week’s Free Business Credit Resources",
+
+      "Getting started is straightforward.",
+
+      "### Step 1: Visit the webinar page.",
+
+      "Go to the [Creditor Academy FREE webinar registration page](/webinar).",
+
+      "### Step 2: Register for the webinar.",
+
+      "Complete the registration process and review the details provided on the page.",
+
+      "### Step 3: Follow the resource instructions.",
+
+      "Check the registration confirmation or webinar instructions for details about the free Business Credit Starter Checklist and Business Credit Readiness One-Pager, including which resources are included in the current offer.",
+
+      "### Step 4: Use the resources to organize your next steps.",
+
+      "Review the information, identify gaps, and write down questions you need to investigate. Focus on practical preparation rather than expecting a checklist to guarantee credit approval.",
+
+      "## Register for the Creditor Academy FREE Webinar",
+
+      "The resources available, eligibility requirements, and delivery method may vary. Check the current offer for the confirmed details.",
+
+      "Register now on the [Creditor Academy FREE webinar page](/webinar).",
+
+      "## Why Register This Week?",
+
+      "If you have been putting off learning about business credit, this week's webinar is an opportunity to take a practical first step.",
+
+      "Instead of trying to piece together information from multiple sources, use the Master Class System to explore the relationship between business structure, operational readiness, and commercial credit information.",
+
+      "Register now to review the webinar details and find out how to access the resources included in the current offer.",
+
+      "Don't wait until you are preparing an application or responding to a supplier's requirements to start organizing your business information.",
+
+      "Your next step is simple: [Register for This Week’s Free Webinar](/webinar). Follow the instructions on the registration page to confirm how to access the available free resources.",
+
+      "## Frequently Asked Questions",
+
+      "### What is included in the free business credit resource pack?",
+
+      "The Master Class content references a Business Credit Starter Checklist and a Business Credit Readiness One-Pager. Confirm the current offer to verify which resources are available and whether additional materials are included.",
+
+      "### Are the resources really free?",
+
+      "The offer is presented as a free resource connected to the webinar. Review the current [registration page](/webinar) for any eligibility conditions, access instructions, or other applicable terms.",
+
+      "### Do I need to attend the webinar to receive the resources?",
+
+      "Check the current webinar page and registration instructions. If access depends on registering or attending, those conditions should be clearly stated in the offer.",
+
+      "### How does the checklist support business credit preparation?",
+
+      "A checklist can help you organize business information, review website and payment readiness, and identify questions about commercial credit information. It does not guarantee credit approval or funding.",
+
+      "### Is a business trust required to build business credit?",
+
+      "No universal rule requires every business to establish a trust before pursuing business credit. The appropriate structure depends on the business's circumstances and applicable law.",
+
+      "### Does merchant processing automatically build business credit?",
+
+      "No. Merchant processing enables a business to accept payments. Business credit reporting is a separate process, and reporting practices vary among providers.",
+
+      "### What is the role of Dun & Bradstreet?",
+
+      "Dun & Bradstreet provides business information and credit-related products. Business owners can learn how to review relevant records and understand the role of commercial credit information.",
+
+      "### Where can I register for the webinar?",
+
+      "Visit the [Creditor Academy FREE webinar page](/webinar) to review the event details and register.",
+
+      "## Conclusion",
+
+      "The right educational resources can help you approach business credit preparation with a clearer understanding of what to review and which questions to ask.",
+
+      "Creditor Academy's 3-Step Master Class System covers business trust concepts, merchant processing and website readiness, and Dun & Bradstreet. The Business Credit Starter Checklist and Business Credit Readiness One-Pager can help organize that learning when they are included in the current offer.",
+
+      "Take the first step today. Visit the webinar page, register, and follow the instructions to access the free resources available this week.",
+
+      "[Register for the Free Creditor Academy Webinar](/webinar)",
+
+      "*This article is for educational and informational purposes only. It is not legal, tax, financial, or credit-repair advice. Resource availability, eligibility, and delivery methods can change. Confirm current details on the webinar registration page and consult qualified professionals before applying for credit or changing your business structure.*",
+    ],
+  },
+
+  {
     id: 47,
 
     slug: "approaching-dun-and-bradstreet-business-credit",
@@ -57,7 +264,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
 
     image: "/images/blogs/CA blog 22 oct.png",
 
-    featured: true,
+    featured: false,
 
     content: [
       "Building business credit is not simply a matter of opening an account and waiting for a score to appear. A stronger process starts with preparation: making sure your business information is consistent, understanding how commercial credit reporting works, and creating payment experiences that can support your business credit profile over time.",

@@ -2,12 +2,9 @@
 // @ts-nocheck
 import Hero from "@/app/services/components/Hero";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
 
-export const metadata: Metadata = {
-  title: "Buy & Sell Tradelines Exchange | Creditor Academy",
-  description: "Buy or sell authorized user tradelines to boost credit scores. A trusted, verified tradeline marketplace by Creditor Academy.",
-  keywords: "tradeline exchange, buy tradelines, sell tradelines, authorized user tradelines, creditor academy",
-};
+export const metadata: Metadata = pageMetadata("/services/tradeline-exchange");
 
 export default function Home() {
   return (

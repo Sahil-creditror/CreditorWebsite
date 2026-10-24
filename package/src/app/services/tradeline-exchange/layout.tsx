@@ -2,10 +2,10 @@
 import Navbar from "@/app/components/layout/header/index";
 import Footer from "@/app/components/layout/footer/index";
 
-export const metadata = {
-  title: "Tradeline Exchange | Creditor Academy",
-  description: "Buy and sell seasoned tradelines to strengthen credit profiles with a secure and compliant process.",
-};
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
+
+export const metadata: Metadata = pageMetadata("/services/tradeline-exchange");
 
 export default function TradelineLayout({children}: {children: React.ReactNode}) {
   return (

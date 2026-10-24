@@ -8,11 +8,8 @@ import WhyAttendSection from "@/app/components/webclass/whyattend";
 import FAQSection from "@/app/components/webclass/faq";
 
 import { Metadata } from "next";
-export const metadata: Metadata = {
-    title: "Free Webinar: Become & Operate Private | Creditor Academy",
-    description: "Join Creditor Academy's free live webinar and learn the exact framework to step outside the public system and achieve financial sovereignty.",
-    keywords: "free webinar, become private, operate private, financial freedom, financial sovereignty, creditor academy",
-};
+import { pageMetadata } from "@/lib/pageSeo";
+export const metadata: Metadata = pageMetadata("/webinar");
 
 export default function Page() {
     return (

@@ -12,9 +12,8 @@ import FaqSection from '@/app/components/private/faq';
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
-export const metadata: Metadata = {
-  title: "Financial Freedom | Creditor",
-};
+import { pageMetadata } from "@/lib/pageSeo";
+export const metadata: Metadata = pageMetadata("/private-wonder");
 
 const PrivatePage = () => {
   const become = getAllProjects();

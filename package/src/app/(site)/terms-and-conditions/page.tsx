@@ -1,11 +1,8 @@
 import { Herobanner } from "@/app/components/shared/hero-banner";
 import TermsAndCondition from "@/app/components/terms-and-condition";
 import { Metadata } from "next";
-export const metadata: Metadata = {
-    title: "Terms and Conditions | Creditor Academy",
-    description: "Read the general terms and conditions governing use of the Creditor Academy website and services.",
-    keywords: "terms and conditions, website service, course catalog, private merchant, financial freedom, creditor academy",
-};
+import { pageMetadata } from "@/lib/pageSeo";
+export const metadata: Metadata = pageMetadata("/terms-and-conditions");
 
 export default function Page() {
     return (

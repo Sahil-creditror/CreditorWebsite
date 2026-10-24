@@ -14,9 +14,8 @@ import Works from "@/app/components/masterclass/works";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
-export const metadata: Metadata = {
-    title: "Membership | Creditor",
-};
+import { pageMetadata } from "@/lib/pageSeo";
+export const metadata: Metadata = pageMetadata("/projects-wonder");
 
 export default function Page() {
     const projects = getAllProjects();

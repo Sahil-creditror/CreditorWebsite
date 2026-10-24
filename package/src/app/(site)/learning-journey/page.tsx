@@ -1,11 +1,8 @@
 import { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
 import LearningJourney from "@/app/components/learning-journey";
 
-export const metadata: Metadata = {
-  title: "Four Steps to Private Mastery | Creditor Academy",
-  description:
-    "Follow the Creditor Academy learning path — from Master Class through Become Private, Operate Private, and Financial Freedom to Certified Private Operator.",
-};
+export const metadata: Metadata = pageMetadata("/learning-journey");
 
 export default function LearningJourneyPage() {
   return <LearningJourney />;

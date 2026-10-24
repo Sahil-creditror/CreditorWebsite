@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
 import WebinarRegistrationClient from "./WebinarRegistrationClient";
 
-export const metadata: Metadata = {
-  title: "Register: Free Become Private Webinar | Creditor Academy",
-  description: "Reserve your free seat in Creditor Academy's live webinar and learn the framework to become private and achieve financial sovereignty.",
-  keywords: "webinar registration, free webinar signup, become private webinar, operate private, financial freedom, creditor academy",
-};
+export const metadata: Metadata = pageMetadata("/webinar-registration");
 
 export default function WebinarRegistrationPage() {
   return <WebinarRegistrationClient />;

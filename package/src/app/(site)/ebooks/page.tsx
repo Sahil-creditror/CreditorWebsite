@@ -1,11 +1,9 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
 import { Herobanner } from "@/app/components/shared/hero-banner";
 import EbooksPage from "@/app/components/ebooks";
 
-export const metadata = {
-  title: "eBook Library | By PaulMichael Rowland | Creditor Academy",
-  description: "Download Creditor Academy eBooks on credit repair, business trusts, asset protection and private wealth-building strategies.",
-  keywords: "financial ebooks, credit repair guide, business trust ebook, asset protection, creditor academy",
-};
+export const metadata: Metadata = pageMetadata("/ebooks");
 
 export default function Page() {
   return (

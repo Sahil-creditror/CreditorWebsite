@@ -1,11 +1,8 @@
 import { Herobanner } from "@/app/components/shared/hero-banner";
 import Courses from "@/app/components/courses";
 import { Metadata } from "next";
-export const metadata: Metadata = {
-    title: "Course Catalogs | Creditor Academy",
-    description: "Explore Creditor Academy's course catalog featuring Become Private, Operate Private and Financial Freedom training programs.",
-    keywords: "course catalog, creditor academy courses, become private, operate private, financial freedom, creditor academy",
-};
+import { pageMetadata } from "@/lib/pageSeo";
+export const metadata: Metadata = pageMetadata("/services/course-cataloges");
 
 export default function Page() {
     return (

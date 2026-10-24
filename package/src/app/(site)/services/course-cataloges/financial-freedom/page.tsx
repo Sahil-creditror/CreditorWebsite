@@ -11,12 +11,9 @@ import WebinarBootcamp from "@/app/components/shared/WebinarBootcamp";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
 
-export const metadata: Metadata = {
-  title: "Financial Freedom Syllabus | Creditor Academy",
-  description: "View the Financial Freedom course syllabus covering business credit, personal credit repair and debt stacking strategies.",
-  keywords: "financial freedom, financial freedom syllabus, business credit course, credit repair training, creditor academy",
-};
+export const metadata: Metadata = pageMetadata("/services/course-cataloges/financial-freedom");
 
 export default function FinancialFreedomPage() {
   getAllProjects();

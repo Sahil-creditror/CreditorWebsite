@@ -12,9 +12,8 @@ import FaqSection from "@/app/components/become/faq";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
-export const metadata: Metadata = {
-    title: "Become Private | Creditor",
-};
+import { pageMetadata } from "@/lib/pageSeo";
+export const metadata: Metadata = pageMetadata("/become-wonder");
 
 export default function Page() {
     const become = getAllProjects();

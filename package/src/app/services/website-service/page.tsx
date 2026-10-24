@@ -1,5 +1,6 @@
 // app/services/website-service/page.tsx
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 
@@ -7,11 +8,7 @@ const Website = dynamic(() => import('./Website').then(mod => ({ default: mod.We
   loading: () => <div className="min-h-screen" />,
 });
 
-export const metadata: Metadata = {
-  title: "Website Services | Creditor Academy",
-  description: "Get a professional website built for your private business or trust with Creditor Academy's website services.",
-  keywords: "website services, private business website, business trust website design, creditor academy",
-};
+export const metadata: Metadata = pageMetadata("/services/website-service");
 
 export default function WebsiteServicePage() {
   return (

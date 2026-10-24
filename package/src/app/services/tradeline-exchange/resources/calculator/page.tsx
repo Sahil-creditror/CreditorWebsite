@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
 import CalculatorClient from "./CalculatorClient";
 
-export const metadata: Metadata = {
-  title: "Tradeline Calculator: Credit Score Boost | Creditor Academy",
-  description: "Use our free calculator to estimate how much an authorized user tradeline could boost your credit score.",
-  keywords: "tradeline calculator, credit score boost estimator, tradeline impact calculator, creditor academy",
-};
+export const metadata: Metadata = pageMetadata("/services/tradeline-exchange/resources/calculator");
 
 export default function CalculatorPage() {
   return <CalculatorClient />;

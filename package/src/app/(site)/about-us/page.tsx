@@ -9,17 +9,11 @@ import AboutusTestimonials from "@/app/components/about/aboutus-testimonials";
 import Team from "@/app/components/home/team";
 import { Herobanner } from "@/app/components/shared/hero-banner";
 import { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
-export const metadata: Metadata = {
-    title: "About Us | Credit & Financial Freedom | Creditor Academy",
-    description: "Meet the team behind Creditor Academy and learn our mission to make financial literacy and private wealth education accessible to everyone.",
-    keywords: "about creditor academy, financial education company, credit coaching team, about us, become private, operate private, financial freedom, creditor academy",
-    alternates: {
-        canonical: `${siteUrl}/about-us`,
-    },
-};
+
+export const metadata: Metadata = pageMetadata("/about-us");
 
 export default function Page() {
     return (

@@ -1,4 +1,9 @@
 // @ts-nocheck
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
+
+export const metadata: Metadata = pageMetadata("/services/tradeline-exchange/features");
+
 export default function FeaturesPage() {
   return (
     <div className="p-10">

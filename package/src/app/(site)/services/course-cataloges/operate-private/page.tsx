@@ -11,12 +11,9 @@ import WebinarBootcamp from "@/app/components/shared/WebinarBootcamp";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
 
-export const metadata: Metadata = {
-  title: "Operate Private Syllabus: Trust & PMA | Creditor Academy",
-  description: "Explore the full Operate Private syllabus: unincorporated business trusts, private membership associations and family legacy planning.",
-  keywords: "operate private, operate private syllabus, business trust course, PMA training curriculum, creditor academy",
-};
+export const metadata: Metadata = pageMetadata("/services/course-cataloges/operate-private");
 
 export default function Page() {
   getAllProjects();

@@ -1,12 +1,9 @@
 import NewWorks from "@/app/components/membership/works";
 import { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-    title: "Membership Plans | Creditor Academy",
-    description: "Compare Creditor Academy membership tiers and unlock courses, live coaching and private wealth-building resources.",
-    keywords: "membership plans, creditor academy pricing, course membership tiers, become private, operate private, financial freedom, creditor academy",
-};
+export const metadata: Metadata = pageMetadata("/membership");
 
 export default function Page() {
     return (

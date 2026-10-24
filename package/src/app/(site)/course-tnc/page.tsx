@@ -4,11 +4,8 @@ import TnC from "@/app/components/shared/course-tnc";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
-export const metadata: Metadata = {
-    title: "Enroll Course | Terms & Conditions | Creditor Academy",
-    description: "Review the terms and conditions applicable to all Creditor Academy course purchases and enrollments.",
-    keywords: "course terms and conditions, creditor academy, course policy",
-};
+import { pageMetadata } from "@/lib/pageSeo";
+export const metadata: Metadata = pageMetadata("/course-tnc");
 
 export default function Page() {
     const become = getAllProjects();

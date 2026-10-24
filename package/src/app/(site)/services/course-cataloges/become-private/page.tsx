@@ -12,11 +12,8 @@ import FaqSection from "@/app/components/become/faq";
 
 import WebinarBootcamp from "@/app/components/shared/WebinarBootcamp";
 import { Metadata } from "next";
-export const metadata: Metadata = {
-    title: "Become Private Syllabus | Creditor Academy",
-    description: "See the full Become Private course syllabus: status correction, lawful identity documents & the steps to exit public jurisdiction.",
-    keywords: "become private, become private syllabus, status correction course, lawful identity training, creditor academy",
-};
+import { pageMetadata } from "@/lib/pageSeo";
+export const metadata: Metadata = pageMetadata("/services/course-cataloges/become-private");
 
 export default function Page() {
     return (

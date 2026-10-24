@@ -1,18 +1,12 @@
 import { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
 import { Herobanner } from "@/app/components/shared/hero-banner";
 import TrackDetailPage from "@/app/components/learning-paths/track-detail";
 import CTA from "@/app/components/shared/cta";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
-export const metadata: Metadata = {
-  title: "Book Smart — Live Lessons | Operate Private | Creditor Academy",
-  description:
-    "Operate Private Book Smart — live lessons across Business Trust, PMA, and Real Estate Through Trusts.",
-  alternates: {
-    canonical: `${siteUrl}/operate-private/book-smart`,
-  },
-};
+
+export const metadata: Metadata = pageMetadata("/operate-private/book-smart");
 
 export default function Page() {
   return (

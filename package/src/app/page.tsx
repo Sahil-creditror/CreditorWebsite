@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import HeroSection from "./components/home/hero";
@@ -35,16 +36,8 @@ const Event = dynamic(() => import("./components/home/event"), {
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
-export const metadata: Metadata = {
-  title: "Become Private & Financial Sovereignty | Creditor Academy",
-  description: "Learn business trusts, asset protection & private wealth strategies with Creditor Academy's Masterclass. Join students building financial freedom today.",
-  keywords: "become private, operate private, financial sovereignty, business trust, asset protection, creditor academy",
-  alternates: {
-    canonical: siteUrl,
-  },
+export const metadata: Metadata = pageMetadata("/", {
   openGraph: {
-    title: "Become Private & Financial Sovereignty | Creditor Academy",
-    description: "Learn business trusts, asset protection & private wealth strategies with Creditor Academy's Masterclass. Join students building financial freedom today.",
     url: siteUrl,
     siteName: "Creditor Academy",
     images: [
@@ -58,12 +51,9 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Become Private & Financial Sovereignty | Creditor Academy",
-    description: "Learn business trusts, asset protection & private wealth strategies with Creditor Academy's Masterclass. Join students building financial freedom today.",
     images: ["https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883571/creditor-website-assets/images/hero/Banner.png"],
   },
-};
+});
 
 export default function Home() {
   return (

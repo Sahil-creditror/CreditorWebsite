@@ -13,9 +13,8 @@ import Cards from "@/app/components/operate/cards";
 
 import { getAllProjects } from "@/lib/markdown";
 import { Metadata } from "next";
-export const metadata: Metadata = {
-    title: "Operate Private | Creditor",
-};
+import { pageMetadata } from "@/lib/pageSeo";
+export const metadata: Metadata = pageMetadata("/operate-wonder");
 
 export default function Page() {
     const operate = getAllProjects();

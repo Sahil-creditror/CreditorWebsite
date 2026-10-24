@@ -1,17 +1,14 @@
 import { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
 import { Herobanner } from "@/app/components/shared/hero-banner";
 import ModulesHub from "@/app/components/learning-paths/modules-hub";
 import { getCoursePath } from "@/app/components/learning-paths/data";
 import CTA from "@/app/components/shared/cta";
 
 const course = getCoursePath("operate-private");
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
-export const metadata: Metadata = {
-  title: "Operate Private | Creditor Academy",
-  description: course.description,
-  alternates: { canonical: `${siteUrl}${course.hubPath}` },
-};
+
+export const metadata: Metadata = pageMetadata("/operate-private");
 
 export default function OperatePrivateHubPage() {
   return (

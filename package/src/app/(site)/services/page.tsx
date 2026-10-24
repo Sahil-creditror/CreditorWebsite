@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageSeo";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 
@@ -10,11 +11,7 @@ const Herobanner = dynamic(() => import("@/app/components/shared/hero-banner").t
     loading: () => <div className="min-h-[300px]" />,
 });
 
-export const metadata: Metadata = {
-    title: "Our Services | Creditor Academy",
-    description: "Explore Creditor Academy's full range of services: course catalogs, live classes, website services and the Tradeline Exchange.",
-    keywords: "creditor academy services, business services, website service, course catalog, private merchant, become private, operate private, financial freedom, creditor academy",
-};
+export const metadata: Metadata = pageMetadata("/services");
 
 export default function Page() {
     return (

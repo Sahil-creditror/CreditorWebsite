@@ -6,6 +6,8 @@ import CTASection from "@/app/components/webclass/cta";
 import InstructorSection from "@/app/components/webclass/intro";
 import WhyAttendSection from "@/app/components/webclass/whyattend";
 import FAQSection from "@/app/components/webclass/faq";
+import Header from "@/app/components/layout/header";
+import Footer from "@/app/components/layout/footer";
 
 import { Metadata } from "next";
 import { pageMetadata } from "@/lib/pageSeo";
@@ -13,15 +15,19 @@ export const metadata: Metadata = pageMetadata("/webinar");
 
 export default function Page() {
     return (
-        <main>
-            <Webclass />
-            <InstructorSection />
-            <PresentationSection />
-            <FAQSection />
-            <CTASection />
+        <>
+            <Header />
+            <main>
+                <Webclass />
+                <InstructorSection />
+                <PresentationSection />
+                <FAQSection />
+                <CTASection />
 
-            <LearningSection />
-            {/* <WhyAttendSection /> */}
-        </main>
+                <LearningSection />
+                {/* <WhyAttendSection /> */}
+            </main>
+            <Footer />
+        </>
     );
 };

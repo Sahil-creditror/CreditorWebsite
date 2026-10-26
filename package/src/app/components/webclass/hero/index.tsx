@@ -1040,7 +1040,7 @@ export default function WebclassSection() {
           display: flex;
           flex-direction: column;
           justify-content: center;
-          padding: 30px 45px 30px 55px;
+          padding: 110px 45px 30px 55px;
           color: white;
           position: relative;
           z-index: 1;
@@ -1248,18 +1248,17 @@ export default function WebclassSection() {
           height: 100%;
           position: relative;
           overflow: hidden;
-          background: #0d1a5e;
+          background: linear-gradient(160deg, #1a2fa8 0%, #2348d4 40%, #1e3ab8 100%);
           min-height: 350px;
         }
 
         .wc-right-image-wrap {
           position: absolute;
-          top: 0;
+          top: 80px;
           left: 0;
           right: 0;
-          bottom: 0;
           width: 100%;
-          height: 100%;
+          height: calc(100% - 80px);
         }
 
         .wc-right-overlay {
@@ -1276,7 +1275,7 @@ export default function WebclassSection() {
 
         .wc-live-badge {
           position: absolute;
-          top: 20px;
+          top: 100px;
           right: 20px;
           z-index: 10;
           display: flex;

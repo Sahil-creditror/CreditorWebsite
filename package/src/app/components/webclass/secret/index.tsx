@@ -14,7 +14,7 @@ export default function LearningSection() {
      
 
       {/* SIMPLE 7. FOOTER */}
-      <footer className="bg-slate-900 text-slate-400 py-8 border-t border-slate-800">
+      {/* <footer className="bg-slate-900 text-slate-400 py-8 border-t border-slate-800">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs md:text-sm">
           <p className="text-white/80">
             &copy; {currentYear} Creditor Academy. All Rights Reserved.
@@ -29,7 +29,7 @@ export default function LearningSection() {
            
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }

@@ -83,6 +83,9 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 transform ${showHeader ? "translate-y-0" : "-translate-y-full"} ${sticky ? "pt-4 px-4 sm:px-6" : "pt-0 px-0"}`}
+      style={pathname === "/webinar" ? {
+        background: "linear-gradient(160deg, #1a2fa8 0%, #2348d4 40%, #1e3ab8 100%)",
+      } : undefined}
     >
       <div
         className={`mx-auto transition-all duration-500 ${sticky

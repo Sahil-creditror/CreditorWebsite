@@ -191,11 +191,11 @@ export default function FloatingButtons({ onSpecialOfferClick, hideGiftButton = 
             whileHover={{ scale: 1.06 }}
             whileTap={{ scale: 0.95 }}
             className="group relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-orange-500 via-amber-500 to-yellow-500 text-white shadow-lg transition-all duration-300 hover:from-orange-600 hover:via-amber-600 hover:to-yellow-600 hover:shadow-orange-500/40"
-            aria-label="View Special Offers"
+            aria-label="Weekly class schedule"
           >
             <Gift className="h-5 w-5" />
             <span className="pointer-events-none absolute left-full ml-3 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-lg bg-slate-900 px-3 py-2 text-sm text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-              Special Offers
+              Weekly class schedule
             </span>
           </motion.button>
         </div>
@@ -203,4 +203,3 @@ export default function FloatingButtons({ onSpecialOfferClick, hideGiftButton = 
     </>
   );
 }
-

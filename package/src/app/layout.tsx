@@ -50,8 +50,9 @@ export default function RootLayout({
           fetchPriority="high"
         />
         {/* Google Site Verification */}
-        <meta name="google-site-verification" content="pH5h_UHFyDB48WepO74L0KD0hE-6UE7vSYLxpv_9vK4" />
-        <meta name="google-site-verification" content="nDoDpJQvkKIVVuuxj-MbkiGSJaM6p9JhM7GFy8SSM8o" />
+        {/* <meta name="google-site-verification" content="pH5h_UHFyDB48WepO74L0KD0hE-6UE7vSYLxpv_9vK4" />
+        <meta name="google-site-verification" content="nDoDpJQvkKIVVuuxj-MbkiGSJaM6p9JhM7GFy8SSM8o" /> */}
+        <meta name="google-site-verification" content="VQSF1U-8I6_3TYdeghSPDgLE-GTZl-SWEtM3WzerVLg" />
         {/* Google Tag Manager - Deferred to improve LCP */}
         <Script
           id="gtm-head"

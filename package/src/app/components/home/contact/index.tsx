@@ -1,8 +1,8 @@
 "use client";
 
-import Script from "next/script";
 import { useEffect, useState } from "react";
-import { PhoneCall, Calendar, ShieldCheck, Mail, ArrowRight, Sparkles } from "lucide-react";
+import { PhoneCall, Calendar, ShieldCheck, Mail, ArrowRight } from "lucide-react";
+import GoogleSheetContactForm from "@/app/components/shared/GoogleSheetContactForm";
 
 type ContactProps = {
   contactdataNumber?: string;
@@ -10,7 +10,6 @@ type ContactProps = {
 
 export default function Contact({ contactdataNumber }: ContactProps) {
   const [activeTab, setActiveTab] = useState<"form" | "calendar">("form");
-  const [isFormLoaded, setIsFormLoaded] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
   void contactdataNumber;
@@ -109,40 +108,10 @@ export default function Contact({ contactdataNumber }: ContactProps) {
 
               {/* TAB CONTENT PANES */}
               <div className="relative min-h-[420px]">
-                
-                {/* Loader State shared between embeds */}
-                {!isFormLoaded && activeTab === "form" && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-white z-20">
-                    <div className="text-center">
-                      <div className="w-10 h-10 border-3 border-blue-100 border-t-blue-600 rounded-full animate-spin mx-auto mb-4" />
-                      <p className="text-xs text-slate-500 font-medium tracking-wide">
-                        Establishing secure connection...
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {/* TAB 1: FORM INTERFACE */}
+                {/* TAB 1: GOOGLE SHEETS FORM INTERFACE */}
                 {activeTab === "form" && isMounted && (
-                  <div className="animate-in fade-in duration-300">
-                    <iframe
-                      src="https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls"
-                      className="w-full"
-                      style={{
-                        height: "420px",
-                        display: isFormLoaded ? "block" : "none",
-                        border: "0",
-                        background: "transparent"
-                      }}
-                      id="inline-o69tKOXv3NV8GnS4aGls"
-                      data-layout="{'id':'INLINE'}"
-                      data-trigger-type="alwaysShow"
-                      data-form-name="Contact us form"
-                      data-height="402"
-                      data-form-id="o69tKOXv3NV8GnS4aGls"
-                      title="Contact us form"
-                      onLoad={() => setIsFormLoaded(true)}
-                    />
+                  <div className="animate-in fade-in duration-300 py-2">
+                    <GoogleSheetContactForm theme="light" />
                   </div>
                 )}
 
@@ -173,14 +142,6 @@ export default function Contact({ contactdataNumber }: ContactProps) {
 
         </div>
       </div>
-
-      {/* External Form Loader Script */}
-      {isMounted && (
-        <Script
-          src="https://api.wonderengine.ai/js/form_embed.js"
-          strategy="afterInteractive"
-        />
-      )}
     </section>
   );
 }

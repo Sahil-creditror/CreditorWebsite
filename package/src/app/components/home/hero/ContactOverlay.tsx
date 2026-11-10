@@ -1,22 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Script from "next/script";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, MessageSquare, ChevronDown, ChevronUp, Mail } from "lucide-react";
+import { motion } from "framer-motion";
+import { X, MessageSquare } from "lucide-react";
+import GoogleSheetContactForm from "@/app/components/shared/GoogleSheetContactForm";
 
 interface HeroContactOverlayProps {
     onClose?: () => void;
 }
 
 export default function HeroContactOverlay({ onClose }: HeroContactOverlayProps) {
-    const [isMounted, setIsMounted] = useState(false);
-    const [isFormLoaded, setIsFormLoaded] = useState(false);
-
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
-
     // Fixed position card, always visible (controlled by parent mounting/unmounting)
     return (
         <div className="fixed right-4 md:right-10 top-24 md:top-20 z-[9999] max-w-[92vw] md:max-w-md w-full flex flex-col items-end">
@@ -74,44 +66,9 @@ export default function HeroContactOverlay({ onClose }: HeroContactOverlayProps)
                 </div>      {/* No close button for standard hero view */}
 
                 {/* Content (Form) */}
-                <div className="p-2 bg-gradient-to-b from-transparent to-black/20">
-                    <div className="relative w-full h-[550px] max-h-[60vh] rounded-2xl overflow-y-auto bg-white/5 custom-scrollbar">
-
-                        {!isFormLoaded && (
-                            <div className="absolute inset-0 flex flex-col items-center justify-center text-white/60 gap-3">
-                                <div className="w-8 h-8 border-2 border-primary/50 border-t-primary rounded-full animate-spin" />
-                                <span className="text-xs tracking-wider">LOADING SECURE FORM</span>
-                            </div>
-                        )}
-
-                        {isMounted && (
-                            <div className="w-full h-full md:transform md:scale-[1.0] md:origin-top">
-                                <iframe
-                                    src="https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls"
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        border: "none",
-                                        opacity: isFormLoaded ? 1 : 0,
-                                        transition: "opacity 0.4s ease-out"
-                                    }}
-                                    id="hero-form-iframe-fixed"
-                                    data-layout="{'id':'INLINE'}"
-                                    data-trigger-type="alwaysShow"
-                                    data-trigger-value=""
-                                    data-activation-type="alwaysActivated"
-                                    data-activation-value=""
-                                    data-deactivation-type="neverDeactivate"
-                                    data-deactivation-value=""
-                                    data-form-name="Contact us form"
-                                    data-height="402"
-                                    data-layout-iframe-id="hero-form-iframe-fixed"
-                                    data-form-id="o69tKOXv3NV8GnS4aGls"
-                                    title="Contact us form"
-                                    onLoad={() => setIsFormLoaded(true)}
-                                />
-                            </div>
-                        )}
+                <div className="p-4 bg-gradient-to-b from-transparent to-black/20">
+                    <div className="relative w-full max-h-[60vh] overflow-y-auto rounded-2xl p-1 custom-scrollbar">
+                        <GoogleSheetContactForm theme="dark" compact={true} />
                     </div>
                 </div>
 
@@ -123,14 +80,6 @@ export default function HeroContactOverlay({ onClose }: HeroContactOverlayProps)
                     </p>
                 </div>
             </motion.div>
-
-            {/* Script loading */}
-            {isMounted && (
-                <Script
-                    src="https://api.wonderengine.ai/js/form_embed.js"
-                    strategy="afterInteractive"
-                />
-            )}
         </div>
     );
 }

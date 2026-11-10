@@ -3,17 +3,11 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X } from "lucide-react";
-import Script from "next/script";
+import GoogleSheetContactForm from "@/app/components/shared/GoogleSheetContactForm";
 
 export default function ContactButton() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isFormLoaded, setIsFormLoaded] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -105,53 +99,7 @@ export default function ContactButton() {
 
                 {/* Form Content */}
                 <div className="flex-1 overflow-y-auto p-6">
-                  {/* Form loading state */}
-                  {!isFormLoaded && (
-                    <div className="w-full h-96 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-xl animate-pulse flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="w-12 h-12 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mx-auto mb-4"></div>
-                        <p className="text-gray-500 dark:text-gray-400">
-                          Loading form...
-                        </p>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* WonderEngine Form */}
-                  {isMounted && (
-                    <iframe
-                      src="https://api.wonderengine.ai/widget/form/o69tKOXv3NV8GnS4aGls"
-                      style={{
-                        width: "100%",
-                        height: "500px",
-                        border: "none",
-                        borderRadius: "12px",
-                        display: isFormLoaded ? "block" : "none",
-                      }}
-                      id="modal-o69tKOXv3NV8GnS4aGls"
-                      data-layout="{'id':'INLINE'}"
-                      data-trigger-type="alwaysShow"
-                      data-trigger-value=""
-                      data-activation-type="alwaysActivated"
-                      data-activation-value=""
-                      data-deactivation-type="neverDeactivate"
-                      data-deactivation-value=""
-                      data-form-name="Contact us form"
-                      data-height="500"
-                      data-layout-iframe-id="modal-o69tKOXv3NV8GnS4aGls"
-                      data-form-id="o69tKOXv3NV8GnS4aGls"
-                      title="Contact us form"
-                      onLoad={() => setIsFormLoaded(true)}
-                    />
-                  )}
-
-                  {/* WonderEngine Script */}
-                  {isMounted && (
-                    <Script
-                      src="https://api.wonderengine.ai/js/form_embed.js"
-                      strategy="afterInteractive"
-                    />
-                  )}
+                  <GoogleSheetContactForm theme="auto" />
                 </div>
               </div>
             </motion.div>

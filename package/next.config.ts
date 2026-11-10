@@ -13,18 +13,8 @@ const nextConfig: NextConfig = {
   // Performance optimizations
   compress: true,
   productionBrowserSourceMaps: false,
-  // Optimize package imports to reduce bundle size
-  experimental: {
-    optimizePackageImports: [
-      'framer-motion',
-      'react-infinite-logo-slider',
-      'lucide-react',
-      '@tabler/icons-react',
-      'react-icons',
-    ],
-  },
   // Webpack optimizations for better code splitting
-  webpack: (config: any, { isServer }: any) => {
+  webpack: (config: any, { isServer, dev }: any) => {
     config.module.rules.push({
       test: /\.(mp4|webm|ogg)$/i,
       type: "asset/resource",
@@ -33,8 +23,8 @@ const nextConfig: NextConfig = {
       },
     });
 
-    if (!isServer) {
-      // Optimize chunk splitting to reduce initial bundle size
+    if (!isServer && !dev) {
+      // Optimize chunk splitting to reduce initial bundle size in production only
       config.optimization = {
         ...config.optimization,
         splitChunks: {

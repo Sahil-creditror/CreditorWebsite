@@ -53,6 +53,11 @@ export default function RootLayout({
         {/* <meta name="google-site-verification" content="pH5h_UHFyDB48WepO74L0KD0hE-6UE7vSYLxpv_9vK4" />
         <meta name="google-site-verification" content="nDoDpJQvkKIVVuuxj-MbkiGSJaM6p9JhM7GFy8SSM8o" /> */}
         <meta name="google-site-verification" content="VQSF1U-8I6_3TYdeghSPDgLE-GTZl-SWEtM3WzerVLg" />
+      </head>
+      <body className={manrope.className}>
+        {/* Meta Pixel Code */}
+        <MetaPixelHead />
+        <MetaPixelNoscript />
         {/* Google Tag Manager - Deferred to improve LCP */}
         <Script
           id="gtm-head"
@@ -72,11 +77,6 @@ export default function RootLayout({
           src="https://www.googletagmanager.com/gtag/js?id=AW-17542559364"
           strategy="lazyOnload"
         />
-        {/* Meta Pixel Code */}
-        <MetaPixelHead />
-      </head>
-      <body className={manrope.className}>
-        <MetaPixelNoscript />
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

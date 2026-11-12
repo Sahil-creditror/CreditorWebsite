@@ -143,9 +143,9 @@ const HeroSection = () => {
         {/* Thanksgiving Golden Sunset & Foliage Edge Framing */}
         {thanksgiving && (
           <>
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#69452F]/45 via-[#B85C32]/12 to-[#E8B85C]/18 pointer-events-none" />
-            <div className="absolute top-1/4 right-[-5%] w-[520px] h-[520px] bg-[#E8B85C]/15 blur-[160px] rounded-full pointer-events-none" />
-            <AutumnFoliageCorner className="hidden lg:block absolute bottom-0 right-0 w-72 h-56 opacity-75 z-10" flipX flipY />
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#69452F]/45 via-[#B85C32]/15 to-[#E8B85C]/22 pointer-events-none" />
+            <div className="absolute top-1/4 right-[-5%] w-[520px] h-[520px] bg-[#E8B85C]/18 blur-[160px] rounded-full pointer-events-none" />
+            <AutumnFoliageCorner className="hidden lg:block absolute bottom-0 right-0 w-64 h-48 opacity-65 z-10" flipX flipY />
           </>
         )}
       </div>

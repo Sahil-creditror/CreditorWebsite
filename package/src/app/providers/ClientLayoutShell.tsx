@@ -19,6 +19,9 @@ const RegPopup = dynamic(() => import("../components/reg_popup"), {
 });
 
 import FloatingMiniChatbot from "../components/chatbot/FloatingMiniChatbot";
+import { isThanksgivingThemeEnabled } from "@/lib/themeConfig";
+import ThanksgivingLeaves from "../components/theme/ThanksgivingLeaves";
+import { ThanksgivingTopStrip } from "../components/theme/ThanksgivingBanner";
 
 const CHATBOT_ALLOWED_EXACT = ["/", "/about-us", "/services", "/masterclass-membership"];
 
@@ -93,31 +96,38 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
     pathname.startsWith("/services/tradeline-exchange") ||
     is404;
 
+  const thanksgivingEnabled = isThanksgivingThemeEnabled();
+
   return (
     <SessionProvider>
       <ThemeProvider attribute="class" enableSystem={false} defaultTheme="light">
-        <MetaPixelPageView />
-        {!hideHeader && <Header />}
-        {children}
-        {!hideFooter && <Footer />}
+        <div className={thanksgivingEnabled ? "thanksgiving-theme" : undefined}>
+          <MetaPixelPageView />
+          {thanksgivingEnabled && !hideHeader && <ThanksgivingTopStrip />}
+          {!hideHeader && <Header />}
+          {children}
+          {!hideFooter && <Footer />}
 
-        <FloatingButtons
-          onSpecialOfferClick={pathname === "/" ? () => setThanksgivingKey(prev => prev + 1) : undefined}
-          hideGiftButton={pathname !== "/"}
-        />
-
-        {/* Video chatbot — allowed pages only */}
-        {isChatbotVisible(pathname) && <FloatingMiniChatbot />}
-
-        {pathname === "/" && (
-          <EventPopup
-            delayMs={0}
-            manualTrigger={thanksgivingKey}
+          <FloatingButtons
+            onSpecialOfferClick={pathname === "/" ? () => setThanksgivingKey(prev => prev + 1) : undefined}
+            hideGiftButton={pathname !== "/"}
           />
-        )}
 
-        {/* Registration Notification Popup - Shows on all pages */}
-        {/* <RegPopup /> */}
+          {/* Video chatbot — allowed pages only */}
+          {isChatbotVisible(pathname) && <FloatingMiniChatbot />}
+
+          {thanksgivingEnabled && !is404 && <ThanksgivingLeaves />}
+
+          {pathname === "/" && (
+            <EventPopup
+              delayMs={0}
+              manualTrigger={thanksgivingKey}
+            />
+          )}
+
+          {/* Registration Notification Popup - Shows on all pages */}
+          {/* <RegPopup /> */}
+        </div>
       </ThemeProvider>
     </SessionProvider>
   );

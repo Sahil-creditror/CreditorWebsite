@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import HeroContactOverlay from "./ContactOverlay";
+import { isThanksgivingThemeEnabled } from "@/lib/themeConfig";
+import { AutumnFoliageCorner } from "@/app/components/theme/ThanksgivingDecor";
 
 // --- Luxury Ambient Blue Particle Field ---
 const LuxuryParticles = () => {
@@ -97,6 +99,7 @@ const LuxuryParticles = () => {
 // --- Main Hero Component ---
 const HeroSection = () => {
   const [showContactForm, setShowContactForm] = useState<boolean>(false);
+  const thanksgiving = isThanksgivingThemeEnabled();
 
   const heroContent = {
     eyebrow: "Creditor Academy Masterclass",
@@ -134,8 +137,17 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-linear-to-b from-[#020617]/90 via-transparent to-[#020617] lg:hidden block" />
 
         {/* Soft Organic Ambient Light Glares */}
-        <div className="absolute top-1/3 left-[-10%] w-[600px] h-[600px] bg-sky-500/10 blur-[180px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-indigo-500/5 blur-[150px] rounded-full pointer-events-none" />
+        <div className={`absolute top-1/3 left-[-10%] w-[600px] h-[600px] ${thanksgiving ? "bg-[#D99438]/20" : "bg-sky-500/10"} blur-[180px] rounded-full pointer-events-none`} />
+        <div className={`absolute bottom-10 right-1/4 w-[400px] h-[400px] ${thanksgiving ? "bg-[#B85C32]/20" : "bg-indigo-500/5"} blur-[150px] rounded-full pointer-events-none`} />
+
+        {/* Thanksgiving Golden Sunset & Foliage Edge Framing */}
+        {thanksgiving && (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#69452F]/45 via-[#B85C32]/12 to-[#E8B85C]/18 pointer-events-none" />
+            <div className="absolute top-1/4 right-[-5%] w-[520px] h-[520px] bg-[#E8B85C]/15 blur-[160px] rounded-full pointer-events-none" />
+            <AutumnFoliageCorner className="hidden lg:block absolute bottom-0 right-0 w-72 h-56 opacity-75 z-10" flipX flipY />
+          </>
+        )}
       </div>
 
       {/* TYPOGRAPHY & CTA LAYOUT CONTAINER */}
@@ -146,10 +158,10 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center gap-3 text-[8px] sm:text-[10px] uppercase tracking-[0.4em] text-sky-400 font-bold mb-4"
+            className={`inline-flex items-center gap-3 text-[8px] sm:text-[10px] uppercase tracking-[0.4em] ${thanksgiving ? "text-[#E8B85C]" : "text-sky-400"} font-bold mb-4`}
           >
-            <span className="w-6 h-px bg-linear-to-r from-sky-400 to-transparent" />
-            <span className="bg-linear-to-r from-sky-400 via-sky-200 to-white bg-clip-text text-transparent">
+            <span className={`w-6 h-px bg-linear-to-r ${thanksgiving ? "from-[#E8B85C]" : "from-sky-400"} to-transparent`} />
+            <span className={`bg-linear-to-r ${thanksgiving ? "from-[#E8B85C] via-[#FFF7E9] to-white" : "from-sky-400 via-sky-200 to-white"} bg-clip-text text-transparent`}>
               {heroContent.eyebrow}
             </span>
           </motion.div>
@@ -179,7 +191,7 @@ const HeroSection = () => {
                 delay: 0.22,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="block text-transparent bg-clip-text bg-linear-to-r from-sky-400 via-sky-100 to-slate-200 font-light italic mt-1"
+              className={`block text-transparent bg-clip-text bg-linear-to-r ${thanksgiving ? "from-[#E8B85C] via-[#FFF7E9] to-[#D99438]" : "from-sky-400 via-sky-100 to-slate-200"} font-light italic mt-1`}
             >
               {heroContent.titleAccent}
             </motion.span>
@@ -193,7 +205,7 @@ const HeroSection = () => {
                 delay: 0.34,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="block text-transparent bg-clip-text bg-linear-to-r from-white via-slate-200 to-sky-300 font-light pb-2 mt-1 tracking-tight text-xl sm:text-2xl lg:text-5xl italic"
+              className={`block text-transparent bg-clip-text bg-linear-to-r ${thanksgiving ? "from-[#FFF7E9] via-[#F0E5D5] to-[#E8B85C]" : "from-white via-slate-200 to-sky-300"} font-light pb-2 mt-1 tracking-tight text-xl sm:text-2xl lg:text-5xl italic`}
             >
               {heroContent.titleFreedom}
             </motion.span>
@@ -203,7 +215,7 @@ const HeroSection = () => {
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 1, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="h-px w-1/3 bg-linear-to-r from-sky-500/50 to-transparent my-4 origin-left"
+              className={`h-px w-1/3 bg-linear-to-r ${thanksgiving ? "from-[#E8B85C]/70" : "from-sky-500/50"} to-transparent my-4 origin-left`}
             />
 
             {/* Sub-Headline Label */}
@@ -215,7 +227,7 @@ const HeroSection = () => {
                 delay: 0.55,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="block text-sm sm:text-lg lg:text-xl font-sans font-medium tracking-[0.12em] text-sky-300/90 uppercase"
+              className={`block text-sm sm:text-lg lg:text-xl font-sans font-medium tracking-[0.12em] ${thanksgiving ? "text-[#E8B85C]/95" : "text-sky-300/90"} uppercase`}
             >
               {heroContent.subTitle}
             </motion.span>
@@ -241,10 +253,10 @@ const HeroSection = () => {
             {/* Primary Action Button */}
             <Link
               href="/masterclass-membership"
-              className="group relative inline-flex items-center justify-between gap-6 bg-white text-[#020617] font-bold text-[11px] uppercase tracking-[0.2em] rounded-full pl-7 pr-2.5 py-2.5 shadow-[0_10px_30px_rgba(2,6,23,0.3)] hover:shadow-[0_0_35px_rgba(56,189,248,0.4)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
+              className={`group relative inline-flex items-center justify-between gap-6 ${thanksgiving ? "bg-[#FFF7E9] text-[#69452F] hover:shadow-[0_0_35px_rgba(232,184,92,0.45)]" : "bg-white text-[#020617] hover:shadow-[0_0_35px_rgba(56,189,248,0.4)]"} font-bold text-[11px] uppercase tracking-[0.2em] rounded-full pl-7 pr-2.5 py-2.5 shadow-[0_10px_30px_rgba(2,6,23,0.3)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0`}
             >
               <span>Join Membership</span>
-              <span className="w-9 h-9 rounded-full bg-[#020617] text-white flex items-center justify-center transition-all duration-300 group-hover:rotate-45 group-hover:bg-sky-500">
+              <span className={`w-9 h-9 rounded-full ${thanksgiving ? "bg-[#B85C32] group-hover:bg-[#D99438]" : "bg-[#020617] group-hover:bg-sky-500"} text-white flex items-center justify-center transition-all duration-300 group-hover:rotate-45`}>
                 <svg
                   width="14"
                   height="14"
@@ -262,10 +274,10 @@ const HeroSection = () => {
             {/* Secondary Action Button */}
             <Link
               href="/webinar"
-              className="inline-flex items-center justify-center gap-3 px-7 py-4 rounded-full border border-slate-700/60 bg-slate-900/40 text-slate-200 font-semibold text-[11px] uppercase tracking-[0.2em] backdrop-blur-md hover:bg-sky-500/10 hover:text-white hover:border-sky-400/40 transition-all duration-300 group"
+              className={`inline-flex items-center justify-center gap-3 px-7 py-4 rounded-full border ${thanksgiving ? "border-[#E8B85C]/45 bg-[#69452F]/40 text-[#FFF7E9] hover:bg-[#B85C32]/30 hover:border-[#E8B85C]" : "border-slate-700/60 bg-slate-900/40 text-slate-200 hover:bg-sky-500/10 hover:text-white hover:border-sky-400/40"} font-semibold text-[11px] uppercase tracking-[0.2em] backdrop-blur-md transition-all duration-300 group`}
             >
               <span>Watch Free Webinar</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-sky-400 group-hover:scale-150 transition-transform duration-300" />
+              <span className={`w-1.5 h-1.5 rounded-full ${thanksgiving ? "bg-[#E8B85C]" : "bg-sky-400"} group-hover:scale-150 transition-transform duration-300`} />
             </Link>
           </motion.div>
         </div>

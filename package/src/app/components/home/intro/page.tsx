@@ -8,13 +8,19 @@ import {
   Landmark,
   ArrowUpRight,
 } from "lucide-react";
+import { isThanksgivingThemeEnabled } from "@/lib/themeConfig";
+import { AutumnFoliageCorner } from "@/app/components/theme/ThanksgivingDecor";
 
 export default function AboutCreditorAcademy() {
+  const thanksgiving = isThanksgivingThemeEnabled();
   return (
-    <div className="relative min-h-screen bg-gradient-to-tr from-sky-100/30 via-blue-50/60 to-indigo-50/30 text-slate-900 font-sans selection:bg-blue-600 selection:text-white overflow-x-clip">
-      {/* Background Decorative Gradients - Enhanced for depth over the blue background */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-tr from-blue-300/30 via-sky-200/40 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute top-[40vh] right-[-10vw] w-[500px] h-[500px] bg-indigo-200/40 rounded-full blur-3xl pointer-events-none -z-10" />
+    <div className={`relative min-h-screen ${thanksgiving ? "bg-gradient-to-tr from-[#FFF7E9] via-[#F0E5D5]/70 to-[#FFF7E9] text-[#69452F] selection:bg-[#B85C32]" : "bg-gradient-to-tr from-sky-100/30 via-blue-50/60 to-indigo-50/30 text-slate-900 selection:bg-blue-600"} font-sans selection:text-white overflow-x-clip`}>
+      {/* Background Decorative Gradients */}
+      <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] ${thanksgiving ? "bg-gradient-to-tr from-[#E8B85C]/25 via-[#D99438]/15 to-transparent" : "bg-gradient-to-tr from-blue-300/30 via-sky-200/40 to-transparent"} rounded-full blur-3xl pointer-events-none -z-10`} />
+      <div className={`absolute top-[40vh] right-[-10vw] w-[500px] h-[500px] ${thanksgiving ? "bg-[#B85C32]/15" : "bg-indigo-200/40"} rounded-full blur-3xl pointer-events-none -z-10`} />
+      {thanksgiving && (
+        <AutumnFoliageCorner className="hidden md:block absolute bottom-0 right-0 w-56 h-44 opacity-60 pointer-events-none" flipX flipY />
+      )}
 
       {/* --- HERO / WELCOME SECTION --- */}
       <section className="relative pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-x-clip">
@@ -29,7 +35,7 @@ export default function AboutCreditorAcademy() {
             <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl  tracking-tight text-slate-900 leading-[1.1]">
                 Welcome to <br />
-                <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 bg-clip-text text-transparent drop-shadow-sm">
+                <span className={`bg-gradient-to-r ${thanksgiving ? "from-[#B85C32] via-[#D99438] to-[#69452F]" : "from-blue-600 via-indigo-600 to-sky-500"} bg-clip-text text-transparent drop-shadow-sm`}>
                   Creditor Academy
                 </span>
               </h1>
@@ -93,11 +99,11 @@ export default function AboutCreditorAcademy() {
 
       {/* --- DIVIDER WITH EXPLORE CTA --- */}
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
-        <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
+        <div className={`absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent ${thanksgiving ? "via-[#D99438]/50" : "via-blue-200"} to-transparent`} />
         <div className="relative flex justify-center">
           <Link
             href="/learning-journey"
-            className="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#2563EB] text-white text-sm sm:text-base font-bold shadow-xl shadow-blue-600/35 ring-4 ring-blue-100 hover:bg-blue-700 hover:shadow-2xl hover:shadow-blue-600/40 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300"
+            className={`group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full ${thanksgiving ? "bg-[#B85C32] hover:bg-[#9E4C27] shadow-xl shadow-[#B85C32]/30 ring-4 ring-[#F0E5D5]" : "bg-[#2563EB] hover:bg-blue-700 shadow-xl shadow-blue-600/35 ring-4 ring-blue-100 hover:shadow-blue-600/40"} text-white text-sm sm:text-base font-bold hover:shadow-2xl hover:scale-[1.03] active:scale-[0.98] transition-all duration-300`}
           >
             Explore Learning Journey
             <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

@@ -12,8 +12,8 @@ export default function Page() {
         <main>
             <Herobanner
                 bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883362/creditor-website-assets/images/contact/banner/you.jpg"
-                heading="Contact"
-                desc="Ready to <span>start something</span> great? Reach out  we’d love to hear from you." />
+                heading="Contact Creditor Academy"
+                desc="Have questions about our <span>courses or membership</span>? Connect with our team — we typically respond within 1–2 business days." />
             <Contact contactdataNumber="01" />
         </main>
     );

@@ -20,15 +20,18 @@ export default function Page() {
   return (
     <main>
       <HeroBanner
-        heading="Operate Private"
-        desc="Build <span>Wealth & Privacy</span> Through Private Business Structures"
-        buttonPath="https://lmsathena.com/signup"
+        heading="Operate Private Bootcamp: Business Trusts, PMAs & Legacy Planning"
+        desc="Build <span>Wealth & Privacy</span> through lawful business trusts, private membership associations, and structured banking."
+        buttonText="Get Operate Private Course Details"
+        buttonPath="https://lmsathena.com/signup?course=operate-private"
       />
       <Intro2 />
       <WebinarBootcamp
         title="Operate Private"
         imageSrc="/images/webinar/operate/becomeoperate.webp"
-        description="Master the art of operating your business in the private domain. Learn tactical strategies for asset protection, tax efficiency, and operational privacy in this exclusive live bootcamp."
+        description="Master the educational foundations of operating your enterprise in the private domain. Learn structured frameworks for business trusts, PMAs, asset protection, and operational privacy."
+        ctaText="Get Operate Private Course Details"
+        ctaHref="https://lmsathena.com/signup?course=operate-private"
         features={[
           { title: "Tactical Operations", description: "Execute business maneuvers with precision and privacy.", iconName: "tactical" },
           { title: "Asset Defense", description: "Fortify your wealth against external threats.", iconName: "shield" },

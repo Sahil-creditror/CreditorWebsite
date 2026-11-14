@@ -293,8 +293,9 @@ export default function WebclassSection() {
         setError('Please choose a course/webinar to attend');
         return;
       }
-      setError(null);
-      // Live-session selection is temporarily disabled; registrations use the recording path.
+      if (!watchRecording && !selectedSessionKey && sessions.length > 0) {
+        setSelectedSessionKey(sessions[0].key);
+      }
       setError(null);
       setFormStep(3);
     }
@@ -371,6 +372,23 @@ export default function WebclassSection() {
   useEffect(() => {
     const handleOpenRegistration = () => handleWidgetOpen();
     window.addEventListener('openWebinarRegistration', handleOpenRegistration);
+
+    // Auto-prefill and open modal if navigated from homepage free class form
+    if (typeof window !== "undefined") {
+      const sp = new URLSearchParams(window.location.search);
+      const fn = sp.get("first_name");
+      const em = sp.get("email");
+      if (fn || em) {
+        setFormData((prev) => ({
+          ...prev,
+          first_name: fn || prev.first_name,
+          email: em || prev.email,
+        }));
+        setSelectedCourseId((prev) => prev || "become-private");
+        setWidgetOpen(true);
+      }
+    }
+
     return () => window.removeEventListener('openWebinarRegistration', handleOpenRegistration);
   }, [handleWidgetOpen]);
 
@@ -401,20 +419,24 @@ export default function WebclassSection() {
     e.preventDefault();
     if (formStep !== 3) return;
 
-    setTouched({ email: true, first_name: true, last_name: true, session: true, phone_number: true });
+    setTouched({ email: true, first_name: true, last_name: false, session: true, phone_number: false });
 
     if (!formData.first_name.trim()) { setError('First name is required'); return; }
-    if (!formData.last_name.trim()) { setError('Last name is required'); return; }
     if (!formData.email.trim()) { setError('Email is required'); return; }
     if (!validateEmail(formData.email)) { setError('Please enter a valid email address'); return; }
-    if (!phoneNumber || !phoneNumber.trim()) { setError('Phone number is required'); return; }
-    if (!validatePhoneNumber(phoneNumber)) { setError('Please enter a valid phone number'); return; }
+    if (phoneNumber && phoneNumber.trim()) {
+      if (!validatePhoneNumber(phoneNumber)) {
+        setError('Please enter a valid phone number or leave it blank');
+        return;
+      }
+    }
 
     setIsSubmitting(true);
     setError(null);
 
     try {
       const selectedCourse = WEBINARS.find((w) => w.id === selectedCourseId) || WEBINARS[0];
+      const effectiveLastName = formData.last_name.trim() || formData.first_name.trim();
 
       if (watchRecording) {
         try {
@@ -424,7 +446,7 @@ export default function WebclassSection() {
             body: JSON.stringify({
               email: formData.email,
               first_name: formData.first_name,
-              last_name: formData.last_name,
+              last_name: effectiveLastName,
               phone_number: phoneNumber || formData.phone_number || '',
               webinar_id: selectedCourse.id,
             }),
@@ -435,7 +457,7 @@ export default function WebclassSection() {
         }
 
         const params = new URLSearchParams({
-          name: `${formData.first_name} ${formData.last_name}`,
+          name: `${formData.first_name} ${effectiveLastName}`,
           email: formData.email,
           type: 'recording',
         });
@@ -450,6 +472,7 @@ export default function WebclassSection() {
 
       const result = await registerZoomWebinar({
         ...formData,
+        last_name: effectiveLastName,
         phone_number: phoneNumber || formData.phone_number || '',
         webinarId: sessionId,
         occurrence_id: occurrenceId,
@@ -457,7 +480,7 @@ export default function WebclassSection() {
 
       if (result.success && result.data) {
         const params = new URLSearchParams({
-          name: `${formData.first_name} ${formData.last_name}`,
+          name: `${formData.first_name} ${effectiveLastName}`,
           join_url: result.data.join_url,
           session_date: result.data.start_time || new Date().toISOString(),
           registrant_id: result.data.registrant_id,
@@ -492,17 +515,17 @@ export default function WebclassSection() {
             />
           </div>
 
-          {/* H1 Eyebrow */}
-<h1 className="wc-eyebrow">
-  <span className="bg-red-500 text-white px-2 py-2 md:mb-4 rounded-md font-bold">
-    FREE
-  </span>{" "}
-  <span className="wc-eyebrow">WEBCLASS</span>
-</h1>
-          {/* H2 Headline */}
+          {/* Eyebrow Badge */}
+          <div className="wc-eyebrow mb-2">
+            <span className="bg-primary text-white px-2.5 py-1 rounded-md font-bold text-xs uppercase tracking-wider">
+              FREE
+            </span>{" "}
+            <span className="text-xs uppercase tracking-widest text-slate-300 font-semibold ml-1">WEBCLASS</span>
+          </div>
+
+          {/* Single Primary H1 */}
           <h1 className="wc-headline">
-            Learn 3 core pillars of<br />
-            <span className="wc-headline-accent">Creditor Academy</span>
+            Free Webinar: Learn Business Structure, Credit &amp; Private Operations
           </h1>
 
           {/* H3 Pillars */}
@@ -729,6 +752,68 @@ export default function WebclassSection() {
                       </div>
                     </div>
 
+                    {/* FORMAT SELECTION: Live vs Recorded */}
+                    <div className="form-group mt-5">
+                      <p className="course-picker-label">Choose Training Format</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+                        <div
+                          role="radio"
+                          aria-checked={watchRecording}
+                          tabIndex={0}
+                          onClick={() => { setWatchRecording(true); setError(null); }}
+                          onKeyDown={(e) => { if (e.key === ' ' || e.key === 'Enter') { setWatchRecording(true); setError(null); } }}
+                          className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                            watchRecording ? 'border-[#026fe2] bg-[#026fe2]/5 ring-1 ring-[#026fe2]' : 'border-slate-200 bg-white hover:border-slate-300'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-700">Immediate Access</span>
+                          </div>
+                          <p className="font-bold text-sm text-[#1F2A2E]">Instant On-Demand</p>
+                          <p className="text-xs text-slate-500 mt-0.5">45-minute recording available immediately after signup</p>
+                        </div>
+
+                        <div
+                          role="radio"
+                          aria-checked={!watchRecording}
+                          tabIndex={0}
+                          onClick={() => { setWatchRecording(false); setError(null); }}
+                          onKeyDown={(e) => { if (e.key === ' ' || e.key === 'Enter') { setWatchRecording(false); setError(null); } }}
+                          className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                            !watchRecording ? 'border-[#026fe2] bg-[#026fe2]/5 ring-1 ring-[#026fe2]' : 'border-slate-200 bg-white hover:border-slate-300'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="w-2.5 h-2.5 rounded-full bg-[#026fe2]" />
+                            <span className="text-[11px] font-bold uppercase tracking-wider text-[#026fe2]">Interactive Broadcast</span>
+                          </div>
+                          <p className="font-bold text-sm text-[#1F2A2E]">Live Session + Q&amp;A</p>
+                          <p className="text-xs text-slate-500 mt-0.5">Join scheduled Zoom with direct instructor discussion</p>
+                        </div>
+                      </div>
+
+                      {!watchRecording && sessions.length > 0 && (
+                        <div className="mt-3">
+                          <label htmlFor="session-select" className="block text-xs font-semibold text-[#1F2A2E] mb-1">
+                            Select Session Time
+                          </label>
+                          <select
+                            id="session-select"
+                            value={selectedSessionKey}
+                            onChange={(e) => setSelectedSessionKey(e.target.value)}
+                            className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 bg-white text-[#1F2A2E]"
+                          >
+                            {sessions.map((s) => (
+                              <option key={s.key} value={s.key}>
+                                {s.label} — {s.time}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
+                    </div>
+
                     {error && (
                       <div className="form-error-message">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -898,12 +983,12 @@ export default function WebclassSection() {
                       </div>
                       <div className="form-group">
                         <label htmlFor="last_name" className="form-label">
-                          Last Name <span className="required">*</span>
+                          Last Name <span className="text-xs text-slate-400 font-normal ml-1">(Optional)</span>
                         </label>
                         <input
                           type="text"
                           id="last_name"
-                          className={`form-input ${touched.last_name && !formData.last_name.trim() ? 'form-input-error' : ''}`}
+                          className="form-input"
                           value={formData.last_name}
                           onChange={(e) => handleChange('last_name', e.target.value)}
                           onBlur={() => handleBlur('last_name')}
@@ -911,9 +996,6 @@ export default function WebclassSection() {
                           placeholder="Enter your last name"
                           autoComplete="family-name"
                         />
-                        {touched.last_name && !formData.last_name.trim() && (
-                          <p className="form-error">Last name is required</p>
-                        )}
                       </div>
                     </div>
 
@@ -940,7 +1022,7 @@ export default function WebclassSection() {
 
                     <div className="form-group">
                       <label htmlFor="phone_number" className="form-label">
-                        Phone Number <span className="required">*</span>
+                        Phone Number <span className="text-xs text-slate-400 font-normal ml-1">(Optional)</span>
                       </label>
                       <PhoneInput
                         international
@@ -952,14 +1034,11 @@ export default function WebclassSection() {
                         className="form-phone-input-wrapper"
                         numberInputProps={{
                           id: "phone_number",
-                          className: `form-input form-phone-input ${touched.phone_number && (!phoneNumber || !phoneNumber.trim() || !validatePhoneNumber(phoneNumber)) ? 'form-input-error' : ''}`,
+                          className: `form-input form-phone-input ${touched.phone_number && phoneNumber && phoneNumber.trim() && !validatePhoneNumber(phoneNumber) ? 'form-input-error' : ''}`,
                           placeholder: "(555) 123-4567",
                           autoComplete: "tel",
                         }}
                       />
-                      {touched.phone_number && (!phoneNumber || !phoneNumber.trim()) && (
-                        <p className="form-error">Phone number is required</p>
-                      )}
                       {touched.phone_number && phoneNumber && phoneNumber.trim() && !validatePhoneNumber(phoneNumber) && (
                         <p className="form-error">Please enter a valid phone number</p>
                       )}

@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   motion,
   AnimatePresence,
-  useInView,
   Variants,
 } from "framer-motion";
 import Link from "next/link";
@@ -34,6 +33,8 @@ interface WebinarBootcampProps {
   driveVideoId?: string;
   driveViewUrl?: string;
   videoPosterSrc?: string;
+  ctaText?: string;
+  ctaHref?: string;
   features: {
     title: string;
     description: string;
@@ -57,33 +58,6 @@ const getIcon = (name: string): React.ReactNode => {
   return ICON_MAP[name] || <FaCheckCircle />;
 };
 
-const REGISTERED_TARGET = 127;
-const SEATS_TOTAL = 150;
-
-function useCountUp(target: number, active: boolean, duration = 1400) {
-  const [value, setValue] = useState(0);
-
-  useEffect(() => {
-    if (!active) return;
-
-    let start: number | null = null;
-    let frame: number;
-
-    const step = (timestamp: number) => {
-      if (start === null) start = timestamp;
-      const progress = Math.min((timestamp - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.round(eased * target));
-      if (progress < 1) frame = requestAnimationFrame(step);
-    };
-
-    frame = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(frame);
-  }, [active, target, duration]);
-
-  return value;
-}
-
 const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
   title,
   description,
@@ -92,16 +66,13 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
   driveVideoId,
   driveViewUrl,
   videoPosterSrc,
+  ctaText = "Explore Enrollment",
+  ctaHref = "/webinar",
   features,
 }) => {
   const hasVideo = Boolean(youtubeVideoId?.trim() || driveVideoId?.trim());
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [spotsHovered, setSpotsHovered] = useState(false);
-
-  const statsRef = useRef<HTMLDivElement>(null);
-  const statsInView = useInView(statsRef, { once: true, margin: "-80px" });
-  const registeredCount = useCountUp(REGISTERED_TARGET, statsInView);
 
   useEffect(() => {
     if (isPaused || features.length <= 1) return;
@@ -112,7 +83,6 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
   }, [isPaused, features.length]);
 
   const activeFeature = features[activeIndex] ?? features[0];
-  const fillPercent = Math.round((REGISTERED_TARGET / SEATS_TOTAL) * 100);
 
   // Structural Framer Motion Orchestrator Variants
   const containerVariants: Variants = {
@@ -380,45 +350,29 @@ const WebinarBootcamp: React.FC<WebinarBootcampProps> = ({
 
             {/* Conversion CTA Matrix Panel */}
             <motion.div 
-              ref={statsRef} 
               variants={itemVariants}
               className="flex flex-col gap-4 sm:flex-row sm:items-center border-t border-slate-200/60 dark:border-slate-800/60 pt-6"
             >
-              <Link href="/webinar" className="group relative inline-flex w-full sm:w-auto">
+              <Link href={ctaHref} className="group relative inline-flex w-full sm:w-auto">
                 <span className="absolute -inset-0.5 rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 opacity-30 blur transition duration-300 group-hover:opacity-50" />
                 <span className="relative flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-7 py-3 text-sm font-bold text-white shadow-md transition-colors group-hover:bg-slate-800 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-200">
-                  Register Now
+                  {ctaText}
                   <FaArrowRight className="text-xs transition-transform group-hover:translate-x-1 duration-200" />
                 </span>
               </Link>
 
-              <div
-                className="flex-1 rounded-xl border border-slate-200/60 bg-white/50 p-3.5 backdrop-blur-sm dark:border-slate-800/60 dark:bg-slate-900/30"
-                onMouseEnter={() => setSpotsHovered(true)}
-                onMouseLeave={() => setSpotsHovered(false)}
-              >
-                <div className="mb-1.5 flex items-center justify-between text-xs font-bold tracking-wide">
-                  <span className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+              <div className="flex-1 rounded-xl border border-slate-200/60 bg-white/50 p-3.5 backdrop-blur-sm dark:border-slate-800/60 dark:bg-slate-900/30">
+                <div className="mb-1 flex items-center justify-between text-xs font-bold tracking-wide">
+                  <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-200">
                     <FaUsers className="text-indigo-600 dark:text-indigo-400" />
-                    Seats filling fast
+                    Structured Learning Format
                   </span>
-                  <motion.span
-                    animate={{ scale: spotsHovered ? 1.03 : 1 }}
-                    className="text-slate-900 dark:text-white font-extrabold"
-                  >
-                    {registeredCount}+ registered
-                  </motion.span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-extrabold text-[11px] uppercase tracking-wide">
+                    Cohort & On-Demand
+                  </span>
                 </div>
-                <div className="h-1.5 overflow-hidden rounded-full bg-slate-200/60 dark:bg-slate-800">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={statsInView ? { width: `${fillPercent}%` } : { width: 0 }}
-                    transition={{ duration: 1.4, ease: "easeOut", delay: 0.2 }}
-                    className="h-full rounded-full bg-linear-to-r from-blue-500 to-indigo-600"
-                  />
-                </div>
-                <p className="mt-1.5 text-[10px] font-medium text-slate-400 dark:text-slate-500 tracking-wide">
-                  {SEATS_TOTAL - REGISTERED_TARGET} spots remaining — reserve yours today
+                <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400 leading-normal">
+                  Step-by-step video curriculum, document templates, practical workflows, and instructor Q&A access.
                 </p>
               </div>
             </motion.div>

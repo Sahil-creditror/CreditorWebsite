@@ -2,6 +2,7 @@
 
 import { useState, useId } from "react";
 import { User, Mail, Phone, MessageSquare, Send, CheckCircle2, AlertCircle, Loader2, HelpCircle } from "lucide-react";
+import { analytics } from "@/lib/analytics";
 
 interface GoogleSheetContactFormProps {
   theme?: "light" | "dark" | "auto";
@@ -11,10 +12,10 @@ interface GoogleSheetContactFormProps {
 }
 
 const PURPOSE_OPTIONS = [
-  { value: "Query", label: "Query" },
-  { value: "Issue", label: "Issue" },
-  { value: "Service", label: "Service" },
-  { value: "Others", label: "Others" },
+  { value: "Course Inquiry", label: "Course Inquiry" },
+  { value: "Masterclass Membership", label: "Masterclass Membership" },
+  { value: "Consultation", label: "Consultation" },
+  { value: "General / Other", label: "General / Other" },
 ];
 
 export default function GoogleSheetContactForm({
@@ -28,7 +29,7 @@ export default function GoogleSheetContactForm({
     name: "",
     email: "",
     phone: "",
-    purpose: "Query",
+    purpose: "Course Inquiry",
     message: "",
   });
 
@@ -120,7 +121,8 @@ export default function GoogleSheetContactForm({
       });
 
       setStatus("success");
-      setFormData({ name: "", email: "", phone: "", purpose: "Query", message: "" });
+      analytics.trackContactFormSubmit(trimmedPurpose);
+      setFormData({ name: "", email: "", phone: "", purpose: "Course Inquiry", message: "" });
       if (onSuccess) {
         onSuccess();
       }
@@ -302,7 +304,7 @@ export default function GoogleSheetContactForm({
           </div>
 
           <p className={`text-[11px] leading-relaxed ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-            Submission date & time are recorded automatically.
+            Our team typically reviews and responds to all inquiries within 1–2 business days.
           </p>
 
           {/* Submit Button */}

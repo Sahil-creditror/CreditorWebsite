@@ -19,16 +19,18 @@ export default function Page() {
     return (
         <main>
             <Herobanner
-               
-                heading="Become Private"
-                desc="Reclaim Your <span>Lawful Identity</span> and Exit the Public System."
-                buttonPath="https://lmsathena.com/signup" // 👈 you now define the path here
+                heading="Become Private: Status, Documents & Private Operations Bootcamp"
+                desc="Step into <span>lawful standing</span>, master private declarations, and navigate operations with confidence."
+                buttonText="View Become Private Curriculum & Enrollment"
+                buttonPath="https://lmsathena.com/signup?course=become-private"
             />
             <Intro2 />
             <WebinarBootcamp
                 title="Become Private"
                 imageSrc="/images/webinar/become/bootcampbecome.webp"
-                description="Step into your authority. This elite bootcamp guides you through the process of status correction and reclaiming your sovereignty in a world of conformity."
+                description="Step into your authority. This practical educational bootcamp guides you through lawful status correction frameworks, private documents, and operating with confidence."
+                ctaText="View Become Private Curriculum & Enroll"
+                ctaHref="https://lmsathena.com/signup?course=become-private"
                 features={[
                     { title: "Status Correction", description: "Reclaim your lawful standing and identity.", iconName: "status" },
                     { title: "Elite Authority", description: "Command respect and operate with supreme confidence.", iconName: "crown" },

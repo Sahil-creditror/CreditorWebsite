@@ -71,9 +71,9 @@ const CourseRoadmap: React.FC = () => {
 
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 drop-shadow-sm">
-            Explore Our Premium Catalogs
-          </h2>
+          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 drop-shadow-sm">
+            Course Catalog: Private Business, Credit & Financial Education
+          </h1>
           <div className="w-20 h-1.5 bg-linear-to-r from-blue-600 to-indigo-600 mx-auto mt-5 rounded-full shadow-sm" />
           <p className="mt-6 text-base sm:text-lg text-slate-800 font-semibold leading-relaxed max-w-2xl mx-auto drop-shadow-sm">
             Structured masterclasses designed to help you build, protect, and expand your private foundation.

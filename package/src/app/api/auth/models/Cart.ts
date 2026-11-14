@@ -22,8 +22,7 @@ const CartSchema: Schema = new Schema(
     userId: {
       type: String,
       required: [true, "User ID is required"],
-      unique: true, // One cart per user
-      index: true,
+      unique: true, // Automatically creates index
     },
     email: {
       type: String,
@@ -44,10 +43,6 @@ const CartSchema: Schema = new Schema(
     timestamps: true, // Automatically adds createdAt and updatedAt
   }
 );
-
-// Index for faster lookups
-CartSchema.index({ userId: 1 });
-CartSchema.index({ email: 1 });
 
 // Export the model
 const Cart: Model<ICart> =

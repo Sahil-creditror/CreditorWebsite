@@ -5,12 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import { Icon } from "@iconify/react";
 import Logo from "../logo";
-import MenuList from "./MenuList";
-import { COURSES_PAGE_PATH } from "@/lib/coursePaths";
-// import { WORKSHOP_PATH } from "@/lib/workshop";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, X, Menu, ArrowRight } from "lucide-react";
+import {
+  BECOME_PRIVATE_PATH,
+  OPERATE_PRIVATE_PATH,
+  FINANCIAL_FREEDOM_PATH,
+} from "@/lib/coursePaths";
 
 const Header = () => {
   const { data: session } = useSession();
@@ -21,221 +22,269 @@ const Header = () => {
 
   const [sticky, setSticky] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [menuData, setMenuData] = useState<any[]>([]);
+  const [coursesDropdownOpen, setCoursesDropdownOpen] = useState(false);
+  const [resourcesDropdownOpen, setResourcesDropdownOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
-  const [showHeader, setShowHeader] = useState(true);
-  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const scroll = () => {
-      setSticky(window.scrollY > 120);
+    const handleScroll = () => {
+      setSticky(window.scrollY > 40);
     };
 
-    window.addEventListener("scroll", scroll);
-
-    const handleDirection = () => {
-      const currentY = window.scrollY;
-      lastScrollY.current = currentY;
-      // Always keep header visible
-      setShowHeader(true);
-    };
-
-    window.addEventListener("scroll", handleDirection);
+    window.addEventListener("scroll", handleScroll);
 
     const stored = localStorage.getItem("user");
     if (stored) {
-      setUser(JSON.parse(stored));
+      try {
+        setUser(JSON.parse(stored));
+      } catch {
+        setUser(null);
+      }
     }
 
-    fetch("/api/layout-data")
-      .then((res) => res.json())
-      .then((data) => {
-        setMenuData(data?.MenuData || []);
-      });
-
     return () => {
-      window.removeEventListener("scroll", scroll);
-      window.removeEventListener("scroll", handleDirection);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   useEffect(() => {
-    const close = (e: any) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setMenuOpen(false);
       }
     };
 
     if (menuOpen) {
-      document.addEventListener("mousedown", close);
+      document.addEventListener("mousedown", handleOutsideClick);
     }
 
-    return () => document.removeEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [menuOpen]);
 
-  const logout = () => {
-    localStorage.removeItem("user");
-    signOut();
-    setUser(null);
-    router.push("/services_page/tradeline-exchange");
-  };
+  // Close mobile drawer on route change
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  const courseItems = [
+    {
+      title: "Become Private",
+      desc: "Status correction & lawful standing",
+      href: "/become-private",
+    },
+    {
+      title: "Operate Private",
+      desc: "Business trusts, PMAs & asset defense",
+      href: "/operate-private",
+    },
+    {
+      title: "Financial Freedom",
+      desc: "Capital, banking & private credit",
+      href: "/financial-freedom",
+    },
+    {
+      title: "All Course Catalogs",
+      desc: "Browse our complete curriculum",
+      href: "/services/course-cataloges",
+    },
+  ];
+
+  const resourceItems = [
+    {
+      title: "eBook Library",
+      desc: "Guides and educational books",
+      href: "/ebooks",
+    },
+    {
+      title: "Articles & Insights",
+      desc: "Educational blogs and deep-dives",
+      href: "/Blogs",
+    },
+    {
+      title: "Documentation & Tools",
+      desc: "Frameworks and checklists",
+      href: "/documentation",
+    },
+  ];
 
   return (
     <header
-      className={`fixed left-0 w-full z-50 transition-all duration-500 transform ${showHeader ? "translate-y-0" : "-translate-y-full"} ${sticky ? "pt-4 px-4 sm:px-6" : "pt-0 px-0"}`}
-      style={{
-        top: "var(--tg-strip-offset, 0px)",
-        ...(pathname === "/webinar"
-          ? {
-              background: "linear-gradient(160deg, #1a2fa8 0%, #2348d4 40%, #1e3ab8 100%)",
-            }
-          : {}),
-      }}
+      className={`fixed left-0 top-0 w-full z-50 transition-all duration-300 ${
+        sticky ? "py-2 sm:py-3 px-3 sm:px-6" : "py-3 sm:py-4 px-3 sm:px-6"
+      }`}
     >
       <div
-        className={`mx-auto transition-all duration-500 ${sticky
-          ? "max-w-6xl bg-white/60 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] rounded-2xl  px-6"
-          : "max-w-7xl px-4 sm:px-6 bg-transparent"
-          }`}
+        className={`mx-auto transition-all duration-300 rounded-2xl ${
+          sticky
+            ? "max-w-7xl bg-white/95 backdrop-blur-md shadow-sm border border-slate-200/80 px-4 sm:px-6"
+            : "max-w-7xl bg-white/90 backdrop-blur-md border border-slate-200/60 shadow-xs px-4 sm:px-6"
+        }`}
       >
-        <nav className={`${sticky ? "h-16" : "h-20"} flex items-center justify-between`}>
-          {/* LOGO */}
-          <Logo sticky={sticky} />
+        <nav className="h-16 flex items-center justify-between">
+          {/* BRAND LOGO */}
+          <Logo sticky={true} />
 
-          {/* DESKTOP MENU */}
-          {/* DESKTOP MENU */}
-          <div className="hidden lg:flex items-center gap-0.1">
-            {[
-
-              ["Masterclass", "/masterclass-membership"],
-              ["Free Webinar", "/webinar"],
-              // ["Bootcamp", "/bootcamp"],
-              ["eBooks", "/ebooks"],
-              // ["Workshop", "/workshop"],
-
-            ].map(([name, url]) => (
-              <Link
-                key={name}
-                href={url}
-                className={`px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${sticky
-                  ? "text-slate-700 hover:text-slate-950 hover:bg-slate-900/5"
-                  : "text-white hover:bg-white/10"
-                  }`}
-              >
-                {name}
-              </Link>
-            ))}
-
-            {/* SERVICES DROPDOWN */}
-            <div className="relative group">
+          {/* DESKTOP NAVIGATION: Courses | Membership | Free Training | Resources | About */}
+          <div className="hidden lg:flex items-center gap-1 xl:gap-2">
+            {/* Courses Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setCoursesDropdownOpen(true)}
+              onMouseLeave={() => setCoursesDropdownOpen(false)}
+            >
               <button
                 type="button"
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${sticky
-                  ? "text-slate-700 hover:text-slate-950 hover:bg-slate-900/5"
-                  : "text-white hover:bg-white/10"
-                  }`}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold transition-colors ${
+                  pathname.startsWith("/become-private") ||
+                  pathname.startsWith("/operate-private") ||
+                  pathname.startsWith("/financial-freedom") ||
+                  pathname.startsWith("/services/course-cataloges")
+                    ? "text-primary"
+                    : "text-secondary hover:text-primary hover:bg-slate-100/60"
+                }`}
               >
-                Services
+                <span>Courses</span>
                 <ChevronDown
-                  size={14}
-                  className="opacity-70 transition-transform duration-200 group-hover:rotate-180"
+                  size={15}
+                  className={`transition-transform duration-200 ${
+                    coursesDropdownOpen ? "rotate-180" : ""
+                  }`}
                 />
               </button>
 
-              <div className="absolute top-full left-0 mt-2 w-45 bg-white border border-slate-100 rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-2">
-                {[
-                  ["Website Services", "/services/website-service"],
-                  ["Course Catalogs", "/services/course-cataloges"],
-                  // ["Private Merchant", "/services/private-merchant"],
-                ].map(([title, url]) => (
-                  <Link
-                    key={title}
-                    href={url}
-                    className="block px-4 py-3 rounded-xl text-slate-700 text-sm hover:bg-slate-50 hover:text-indigo-600"
-                  >
-                    {title}
-                  </Link>
-                ))}
-              </div>
+              {coursesDropdownOpen && (
+                <div className="absolute top-full left-0 pt-2 w-72 z-50">
+                  <div className="bg-white border border-slate-200/80 rounded-2xl shadow-xl p-2 animate-in fade-in-50 zoom-in-95">
+                    {courseItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="block px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-colors group"
+                        onClick={() => setCoursesDropdownOpen(false)}
+                      >
+                        <div className="text-sm font-semibold text-secondary group-hover:text-primary transition-colors">
+                          {item.title}
+                        </div>
+                        <div className="text-xs text-slate-500 line-clamp-1">
+                          {item.desc}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
+            {/* Membership */}
+            <Link
+              href="/masterclass-membership"
+              className={`px-3 py-2 rounded-xl text-sm font-semibold transition-colors ${
+                pathname === "/masterclass-membership"
+                  ? "text-primary"
+                  : "text-secondary hover:text-primary hover:bg-slate-100/60"
+              }`}
+            >
+              Membership
+            </Link>
 
+            {/* Free Training */}
+            <Link
+              href="/webinar"
+              className={`px-3 py-2 rounded-xl text-sm font-semibold transition-colors ${
+                pathname === "/webinar"
+                  ? "text-primary"
+                  : "text-secondary hover:text-primary hover:bg-slate-100/60"
+              }`}
+            >
+              Free Training
+            </Link>
 
-            <div className="relative group">
+            {/* Resources Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setResourcesDropdownOpen(true)}
+              onMouseLeave={() => setResourcesDropdownOpen(false)}
+            >
               <button
                 type="button"
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${sticky
-                  ? "text-slate-700 hover:text-slate-950 hover:bg-slate-900/5"
-                  : "text-white hover:bg-white/10"
-                  }`}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold transition-colors ${
+                  pathname === "/ebooks" ||
+                  pathname === "/Blogs" ||
+                  pathname === "/documentation"
+                    ? "text-primary"
+                    : "text-secondary hover:text-primary hover:bg-slate-100/60"
+                }`}
               >
-                Resources
+                <span>Resources</span>
                 <ChevronDown
-                  size={14}
-                  className="opacity-70 transition-transform duration-200 group-hover:rotate-180"
+                  size={15}
+                  className={`transition-transform duration-200 ${
+                    resourcesDropdownOpen ? "rotate-180" : ""
+                  }`}
                 />
               </button>
 
-              <div className="absolute top-full left-0 mt-2 w-36 bg-white border border-slate-100 rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-2">
-                {[
-                  ["About Us", "/about-us"],
-
-                  ["Blogs", "/Blogs"],
-                  // ["Private Merchant", "/services/private-merchant"],
-                ].map(([title, url]) => (
-                  <Link
-                    key={title}
-                    href={url}
-                    className="block px-4 py-3 rounded-xl text-slate-700 text-sm hover:bg-slate-50 hover:text-indigo-600"
-                  >
-                    {title}
-                  </Link>
-                ))}
-              </div>
+              {resourcesDropdownOpen && (
+                <div className="absolute top-full left-0 pt-2 w-64 z-50">
+                  <div className="bg-white border border-slate-200/80 rounded-2xl shadow-xl p-2 animate-in fade-in-50 zoom-in-95">
+                    {resourceItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="block px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-colors group"
+                        onClick={() => setResourcesDropdownOpen(false)}
+                      >
+                        <div className="text-sm font-semibold text-secondary group-hover:text-primary transition-colors">
+                          {item.title}
+                        </div>
+                        <div className="text-xs text-slate-500 line-clamp-1">
+                          {item.desc}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-            {[
 
-              ["Contact", "/contact"],
-
-            ].map(([name, url]) => (
-              <Link
-                key={name}
-                href={url}
-                className={`px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${sticky
-                  ? "text-slate-700 hover:text-slate-950 hover:bg-slate-900/5"
-                  : "text-white hover:bg-white/10"
-                  }`}
-              >
-                {name}
-              </Link>
-            ))}
+            {/* About */}
+            <Link
+              href="/about-us"
+              className={`px-3 py-2 rounded-xl text-sm font-semibold transition-colors ${
+                pathname === "/about-us"
+                  ? "text-primary"
+                  : "text-secondary hover:text-primary hover:bg-slate-100/60"
+              }`}
+            >
+              About
+            </Link>
           </div>
 
-
-          {/* RIGHT */}
-          <div className="flex items-center gap-3">
-            <Link
-              href="https://lmsathena.com/signup"
-              className="hidden md:flex px-5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-sm hover:bg-amber-400 transition-all duration-200 shadow-lg shadow-amber-500/10 active:scale-[0.98]"
-            >
-              Sign Up
-            </Link>
-
+          {/* RIGHT ACTION BUTTONS: Member Login (Subtle) | Start Free (Prominent) */}
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="https://lmsathena.com/login"
-              className="hidden md:flex px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-500 transition-all duration-200 shadow-lg shadow-indigo-600/10 active:scale-[0.98]"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex px-3 sm:px-4 py-2 text-sm font-semibold text-secondary hover:text-primary transition-colors rounded-xl"
             >
-              Sign In
+              Member Login
             </Link>
 
-            {/* MOBILE BUTTON */}
-            <button onClick={() => setMenuOpen(true)} className="lg:hidden">
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center border transition-all ${sticky
-                ? "bg-slate-100 text-slate-800 border-slate-200"
-                : "bg-white/10 text-white border-white/5 hover:bg-white/20"
-                }`}>
-                ☰
-              </div>
+            <Link
+              href="/webinar"
+              className="inline-flex items-center justify-center px-4 sm:px-5 py-2.5 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition-all duration-200 shadow-sm hover:shadow active:scale-[0.98]"
+            >
+              Start Free
+            </Link>
+
+            {/* MOBILE MENU TOGGLE */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="lg:hidden p-2 rounded-xl text-secondary hover:bg-slate-100 transition-colors"
+              aria-label="Toggle navigation menu"
+            >
+              {menuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </nav>
@@ -243,68 +292,104 @@ const Header = () => {
 
       {/* MOBILE DRAWER */}
       {menuOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/20 backdrop-blur-sm animate-fade-in">
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs lg:hidden">
           <div
             ref={menuRef}
-            className="fixed right-0 top-0 h-screen w-full sm:w-96 bg-white border-l border-slate-100 shadow-2xl p-6 flex flex-col justify-between overflow-y-auto"
+            className="fixed right-0 top-0 h-full w-[85%] max-w-sm bg-white shadow-2xl p-6 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-200"
           >
             <div>
-              <div className="flex justify-between items-center mb-8">
-                <h2 className="text-xl font-bold text-slate-800">Menu</h2>
+              {/* Drawer Top Header */}
+              <div className="flex items-center justify-between pb-6 border-b border-slate-100">
+                <Logo sticky={true} />
                 <button
                   onClick={() => setMenuOpen(false)}
-                  className="text-2xl text-slate-400 hover:text-slate-800 transition"
+                  className="p-2 rounded-xl text-slate-500 hover:text-secondary hover:bg-slate-100 transition-colors"
+                  aria-label="Close menu"
                 >
-                  ×
+                  <X size={20} />
                 </button>
               </div>
 
-              <div className="space-y-2">
-                {menuData.map((item: any, i: number) => (
-                  <MenuList
-                    key={i}
-                    item={item}
-                    closeMenu={() => setMenuOpen(false)}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* MOBILE FOOTER ACTIONS CONTAINER */}
-            <div className="mt-8 space-y-3">
-              {/* Show Auth links conditionally when no user session is present */}
-              {!(user?.user || session?.user) && (
-                <div className="grid grid-cols-2 gap-3">
-                  <Link
-                    href="https://lmsathena.com/signup"
-                    onClick={() => setMenuOpen(false)}
-                    className="flex items-center justify-center py-3 rounded-xl bg-amber-500 text-slate-950 font-bold text-sm hover:bg-amber-400 transition-all text-center shadow-md shadow-amber-500/5"
-                  >
-                    Sign Up
-                  </Link>
-
-                  <Link
-                    href="https://lmsathena.com/login"
-                    onClick={() => setMenuOpen(false)}
-                    className="flex items-center justify-center py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-500 transition-all text-center shadow-md shadow-indigo-600/5"
-                  >
-                    Sign In
-                  </Link>
+              {/* Drawer Navigation Links */}
+              <div className="py-6 flex flex-col gap-1">
+                {/* Courses Header & Links */}
+                <div className="px-3 py-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                  Courses
                 </div>
-              )}
+                {courseItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="px-4 py-2 text-sm font-semibold text-secondary hover:text-primary hover:bg-slate-50 rounded-xl transition-colors"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item.title}
+                  </Link>
+                ))}
 
-              {/* Logout view state logic intact */}
-              {(user?.user || session?.user) && (
-                <button
-                  onClick={logout}
-                  className="w-full rounded-xl bg-rose-50 text-rose-600 border border-rose-100 hover:bg-rose-600 hover:text-white py-3 font-bold flex items-center justify-center gap-2 transition-all duration-200"
+                <div className="my-2 border-t border-slate-100" />
+
+                <Link
+                  href="/masterclass-membership"
+                  className="px-4 py-2.5 text-base font-semibold text-secondary hover:text-primary hover:bg-slate-50 rounded-xl transition-colors"
+                  onClick={() => setMenuOpen(false)}
                 >
-                  Logout
-                  <Icon icon="solar:logout-outline" className="w-5 h-5" />
-                </button>
-              )}
+                  Membership
+                </Link>
+
+                <Link
+                  href="/webinar"
+                  className="px-4 py-2.5 text-base font-semibold text-secondary hover:text-primary hover:bg-slate-50 rounded-xl transition-colors"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Free Training
+                </Link>
+
+                <div className="px-3 pt-3 pb-1 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                  Resources
+                </div>
+                {resourceItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="px-4 py-2 text-sm font-semibold text-secondary hover:text-primary hover:bg-slate-50 rounded-xl transition-colors"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item.title}
+                  </Link>
+                ))}
+
+                <div className="my-2 border-t border-slate-100" />
+
+                <Link
+                  href="/about-us"
+                  className="px-4 py-2.5 text-base font-semibold text-secondary hover:text-primary hover:bg-slate-50 rounded-xl transition-colors"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  About Us
+                </Link>
+              </div>
             </div>
 
+            {/* Drawer Bottom Actions */}
+            <div className="pt-6 border-t border-slate-100 flex flex-col gap-3">
+              <Link
+                href="https://lmsathena.com/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full text-center py-2.5 px-4 rounded-xl text-sm font-semibold text-secondary border border-slate-200 hover:bg-slate-50 transition-colors"
+              >
+                Member Login
+              </Link>
+
+              <Link
+                href="/webinar"
+                className="w-full text-center py-3 px-4 rounded-xl text-sm font-semibold text-white bg-primary hover:bg-primary/90 transition-all shadow-sm"
+                onClick={() => setMenuOpen(false)}
+              >
+                Start Free
+              </Link>
+            </div>
           </div>
         </div>
       )}

@@ -32,14 +32,14 @@ export default function HeroSection() {
           Creditor Academy
         </motion.p>
 
-        <motion.h1
+        <motion.h2
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.6, duration: 1 }}
-          className="text-4xl md:text-5xl font-extrabold text-white mb-4"
+          className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4"
         >
-          The System is Presuming You're a Corporate Asset
-        </motion.h1>
+          Take Control of Your Legal Standing & Identity
+        </motion.h2>
 
         <motion.p
           initial={{ opacity: 0 }}
@@ -47,7 +47,7 @@ export default function HeroSection() {
           transition={{ delay: 0.8, duration: 1 }}
           className="italic text-base sm:text-lg text-gray-200 mb-3"
         >
-          "Secure Your Freedom."
+          "Educational Frameworks for Status & Privacy."
         </motion.p>
 
         <motion.p
@@ -56,17 +56,17 @@ export default function HeroSection() {
           transition={{ delay: 1, duration: 1 }}
           className="text-sm sm:text-base text-gray-300 mb-6 sm:mb-8"
         >
-          Go step-by-step through every lawful declaration, filing, and notarization to correct your status and secure your estate.
+          Go step-by-step through lawful declarations, recorded notices, and private jurisdictional principles with practical educational templates.
         </motion.p>
 
         {/* CTA Button */}
         <motion.a
-          href="/signup"
-          whileHover={{ scale: 1.1 }}
+          href="https://lmsathena.com/signup?course=become-private"
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-white text-sm sm:text-base font-semibold shadow-lg transition-transform duration-300 hover:shadow-xl"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-700 text-white text-sm sm:text-base font-semibold shadow-lg transition-transform duration-300 hover:shadow-xl"
         >
-          Enroll Today <FaArrowRight />
+          Enroll in Become Private <FaArrowRight />
         </motion.a>
       </motion.div>
     </section>

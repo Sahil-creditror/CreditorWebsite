@@ -32,22 +32,22 @@ export default function HeroSection() {
           Creditor Academy
         </motion.p>
 
-        <motion.h1
+        <motion.h2
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.6, duration: 1 }}
           className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4"
         >
-          Let's Go Private with 
-        </motion.h1>
+          Launch and Protect Your Private Enterprise
+        </motion.h2>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 1 }}
-          className="italic text-2xl sm:text-3xl font-extrabold text-gray-200 mb-3"
+          className="italic text-xl sm:text-2xl font-bold text-gray-200 mb-3"
         >
-          "Operate Private"
+          "Business Trusts & Private Membership Associations"
         </motion.p>
 
         <motion.p
@@ -56,17 +56,17 @@ export default function HeroSection() {
           transition={{ delay: 1, duration: 1 }}
           className="text-sm sm:text-base text-gray-300 mb-6 sm:mb-8"
         >
-          Launch a Private Business with Trusts & PMAs
+          Master private commerce foundations, asset segregation, and contract jurisdiction with practical step-by-step educational coursework.
         </motion.p>
 
         {/* CTA Button */}
         <motion.a
-          href="/signup"
-          whileHover={{ scale: 1.1 }}
+          href="https://lmsathena.com/signup?course=operate-private"
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-white text-sm sm:text-base font-semibold shadow-lg transition-transform duration-300 hover:shadow-xl"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-700 text-white text-sm sm:text-base font-semibold shadow-lg transition-transform duration-300 hover:shadow-xl"
         >
-          Enroll Today <FaArrowRight />
+          Enroll in Operate Private <FaArrowRight />
         </motion.a>
       </motion.div>
     </section>

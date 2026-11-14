@@ -26,9 +26,10 @@ export default function Page() {
     return (
         <main>
             <Herobanner
-                heading="Masterclass Membership"
-                desc="Learn how to <span>set up your Trust</span>, your Private Identity, and Business Credit step-by-step."
-                buttonPath="https://lmsathena.com/signup"
+                heading="Masterclass Membership: Business Credit and Trust Education"
+                desc="Learn how to <span>set up your Trust</span>, your Private Identity, and Business Credit step-by-step with live weekly mentorship."
+                buttonPath="https://lmsathena.com/signup?plan=masterclass"
+                buttonText="Join Membership ($69/mo)"
             />
             <Suspense fallback={<div className="min-h-[500px]" />}>
                 <Preview />

@@ -3,7 +3,7 @@ import Cards from "@/app/components/private/cards";
 import CourseFeatures from "@/app/components/private/course-feature";
 import CourseDetail from "@/app/components/private/course-detail";
 import Contact from "@/app/components/shared/cta";
-import Offer from "@/app/components/become/appointment";
+import Offer from "@/app/components/private/appointment";
 // import Event from "@/app/components/home/event";
 import HowItWorks from "@/app/components/private/works";
 
@@ -20,15 +20,18 @@ export default function FinancialFreedomPage() {
   return (
     <main>
       <Herobanner
-        heading="Financial Freedom"
-        desc="Your Gateway to <span>Financial Sovereignty</span>."
-        buttonPath="https://lmsathena.com/signup"
+        heading="Financial Freedom Bootcamp: Business and Personal Credit Education"
+        desc="Your gateway to <span>credit structuring</span>, debt elimination education, and commercial banking foundations."
+        buttonText="View Financial Freedom Curriculum & Enroll"
+        buttonPath="https://lmsathena.com/signup?course=financial-freedom"
       />
       <CourseDetail />
       <WebinarBootcamp
         title="Financial Freedom"
         imageSrc="/images/webinar/financial/financial.webp"
-        description="Unlock the secrets to true financial independence. This bootcamp reveals the strategies used by the wealthy to build, protect, and grow assets outside the traditional system."
+        description="Discover practical strategies for credit structuring, commercial funding preparation, and lawful asset growth with step-by-step guidance."
+        ctaText="View Financial Freedom Curriculum & Enroll"
+        ctaHref="https://lmsathena.com/signup?course=financial-freedom"
         features={[
           { title: "Wealth Systems", description: "Automated frameworks for consistent growth.", iconName: "wealth" },
           { title: "Private Investing", description: "Access high-yield opportunities hidden from the public.", iconName: "investing" },

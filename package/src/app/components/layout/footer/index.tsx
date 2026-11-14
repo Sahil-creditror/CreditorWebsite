@@ -173,12 +173,23 @@ const Footer = () => {
       </div>
 
       {/* FOOTER BOTTOM BAR */}
-      <div className="border-t border-white/5 bg-black/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <p className="text-center text-xs text-slate-400">
-            &copy; {new Date().getFullYear()} Creditor Academy. All rights reserved.
+      <div className="border-t border-white/10 bg-black/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-center md:text-left text-xs text-slate-400">
+            &copy; {new Date().getFullYear()} Creditor Academy. General education. Not individualized legal, tax or financial advice.
           </p>
-          
+
+          <div className="flex items-center gap-6 text-xs text-slate-400">
+            <Link href="/contact" className="hover:text-white transition-colors">
+              Contact
+            </Link>
+            <Link href="/privacy-policy" className="hover:text-white transition-colors">
+              Privacy
+            </Link>
+            <Link href="/terms-and-conditions" className="hover:text-white transition-colors">
+              Terms
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

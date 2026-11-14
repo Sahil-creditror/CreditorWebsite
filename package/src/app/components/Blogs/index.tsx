@@ -47,6 +47,34 @@ export default function BlogsPage() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
+  // Sync state from query parameters on mount for SEO & direct links
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const p = parseInt(params.get("page") || "1", 10);
+      if (!isNaN(p) && p >= 1) {
+        setPage(p);
+      }
+      const cat = params.get("category");
+      if (cat && CATEGORIES.includes(cat)) {
+        setCategory(cat);
+      }
+      const q = params.get("q");
+      if (q) {
+        setSearch(q);
+      }
+    }
+  }, []);
+
+  function getPageHref(pageNum: number, cat: string, q: string) {
+    const params = new URLSearchParams();
+    if (pageNum > 1) params.set("page", String(pageNum));
+    if (cat !== "All") params.set("category", cat);
+    if (q.trim()) params.set("q", q.trim());
+    const qs = params.toString();
+    return qs ? `/Blogs?${qs}` : "/Blogs";
+  }
+
   // Reset to page 1 whenever filter/search changes
   useEffect(() => { setPage(1); }, [category, search]);
 
@@ -270,24 +298,41 @@ export default function BlogsPage() {
           </motion.div>
         )}
 
-        {/* ── PAGINATION ── */}
+        {/* ── PAGINATION (Crawlable SEO Links) ── */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-2 mt-14 mb-4">
+          <nav aria-label="Journal pagination" className="flex items-center justify-center gap-2 mt-14 mb-4">
             {/* Prev */}
-            <button
-              onClick={() => goTo(page - 1)}
-              disabled={page === 1}
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-500 hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
-              aria-label="Previous page"
-            >
-              <ChevronLeft size={15} />
-            </button>
+            {page > 1 ? (
+              <Link
+                href={getPageHref(page - 1, category, search)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  goTo(page - 1);
+                }}
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-500 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-200"
+                aria-label="Previous page"
+              >
+                <ChevronLeft size={15} />
+              </Link>
+            ) : (
+              <span
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-300 opacity-40 cursor-not-allowed"
+                aria-hidden="true"
+              >
+                <ChevronLeft size={15} />
+              </span>
+            )}
 
             {/* Page numbers */}
             {pageNumbers.map((n) => (
-              <button
+              <Link
                 key={n}
-                onClick={() => goTo(n)}
+                href={getPageHref(n, category, search)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  goTo(n);
+                }}
+                aria-current={n === page ? "page" : undefined}
                 className={`flex h-9 w-9 items-center justify-center rounded-lg text-xs font-semibold border transition-all duration-200 ${
                   n === page
                     ? "bg-blue-500 text-white border-blue-500 shadow-sm"
@@ -295,19 +340,31 @@ export default function BlogsPage() {
                 }`}
               >
                 {n}
-              </button>
+              </Link>
             ))}
 
             {/* Next */}
-            <button
-              onClick={() => goTo(page + 1)}
-              disabled={page === totalPages}
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-500 hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
-              aria-label="Next page"
-            >
-              <ChevronRight size={15} />
-            </button>
-          </div>
+            {page < totalPages ? (
+              <Link
+                href={getPageHref(page + 1, category, search)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  goTo(page + 1);
+                }}
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-500 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-200"
+                aria-label="Next page"
+              >
+                <ChevronRight size={15} />
+              </Link>
+            ) : (
+              <span
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-300 opacity-40 cursor-not-allowed"
+                aria-hidden="true"
+              >
+                <ChevronRight size={15} />
+              </span>
+            )}
+          </nav>
         )}
 
         {/* Page info */}

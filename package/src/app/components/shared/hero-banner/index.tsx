@@ -18,7 +18,7 @@ const BLUR_DATA_URL =
   "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q==";
 
 const BUTTON_CLASSNAME =
-  "inline-flex items-center gap-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-3 rounded-md transition-all duration-200 shadow-lg shadow-amber-500/10 hover:shadow-amber-500/20 tracking-wide text-sm uppercase";
+  "inline-flex items-center gap-3 bg-primary hover:bg-primary/90 text-white font-bold px-6 py-3 rounded-xl transition-all duration-200 shadow-md shadow-primary/20 tracking-wide text-sm";
 
 function renderDescription(text: string): ReactNode[] {
   const parts = text.split(/(<span>.*?<\/span>)/g);
@@ -27,7 +27,7 @@ function renderDescription(text: string): ReactNode[] {
     if (part.startsWith("<span>") && part.endsWith("</span>")) {
       const cleanText = part.replace(/<\/?span>/g, "");
       return (
-        <span key={index} className="text-yellow-400 font-semibold">
+        <span key={index} className="text-sky-300 font-semibold">
           {cleanText}
         </span>
       );

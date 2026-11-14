@@ -1,295 +1,172 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import HeroContactOverlay from "./ContactOverlay";
-import { isThanksgivingThemeEnabled } from "@/lib/themeConfig";
-import { AutumnFoliageCorner } from "@/app/components/theme/ThanksgivingDecor";
+import { useRouter } from "next/navigation";
+import { Play } from "lucide-react";
 
-// --- Luxury Ambient Blue Particle Field ---
-const LuxuryParticles = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
-
-    const colors = [
-      "rgba(56, 189, 248, ",
-      "rgba(14, 165, 233, ",
-      "rgba(255, 255, 255, ",
-    ];
-    const particles: Array<{
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      radius: number;
-      opacity: number;
-      color: string;
-    }> = [];
-    const particleCount = 45;
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.15,
-        vy: -Math.random() * 0.25 - 0.05,
-        radius: Math.random() * 1.5 + 0.3,
-        opacity: Math.random() * 0.25 + 0.05,
-        color: colors[Math.floor(Math.random() * colors.length)],
-      });
-    }
-
-    const draw = () => {
-      ctx.clearRect(0, 0, width, height);
-
-      particles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.y < -10) {
-          p.y = height + 10;
-          p.x = Math.random() * width;
-        }
-        if (p.x < -10) p.x = width + 10;
-        if (p.x > width + 10) p.x = -10;
-
-        ctx.beginPath();
-        ctx.fillStyle = `${p.color}${p.opacity})`;
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      animationFrameId = requestAnimationFrame(draw);
-    };
-
-    draw();
-
-    const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 pointer-events-none z-10 opacity-70 mix-blend-screen"
-    />
-  );
-};
-
-// --- Main Hero Component ---
 const HeroSection = () => {
-  const [showContactForm, setShowContactForm] = useState<boolean>(false);
-  const thanksgiving = isThanksgivingThemeEnabled();
+  const router = useRouter();
+  const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const heroContent = {
-    eyebrow: "Creditor Academy Masterclass",
-    title: "Become Private",
-    titleAccent: "Operate Private",
-    titleFreedom: "Achieve Financial Freedom",
-    subTitle: "Build Generational Wealth",
-    description:
-      "Learn business trusts, asset protection, business credit, and financial sovereignty through the Creditor Academy Masterclass — the strategies the privileged use to build, protect, and pass on wealth.",
-    bgImage: "https://res.cloudinary.com/jup2hjfk/image/upload/v1784883256/lifestylebg_l9rhch.png",
+  const handleHeroSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+
+    setLoading(true);
+    const params = new URLSearchParams({
+      first_name: firstName.trim(),
+      email: email.trim(),
+      mode: "recording",
+    });
+    router.push(`/webinar?${params.toString()}`);
   };
 
   return (
-    <div className="relative min-h-screen w-full flex items-center lg:items-end overflow-hidden bg-[#020617] text-white font-sans selection:bg-sky-500/30">
-      {/* BACKGROUND GRAPHICS & TEXTURES */}
-      <div className="absolute inset-0 z-0">
-        {/* Main Hero Media Asset */}
-        <div className="absolute inset-0 opacity-60 lg:w-full lg:opacity-100">
-          <Image
-            src={heroContent.bgImage}
-            alt="Private skyline overlooking the city — the world of financial sovereignty"
-            fill
-            priority
-            quality={100}
-            sizes="100vw"
-            className="object-cover object-center transition-transform duration-4000 ease-out hover:scale-105"
-          />
-
-          {/* High-tech Grid Matrix Overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.02)_1px,transparent_1px)] bg-size-[5rem_5rem]" />
-        </div>
-
-        {/* Cinematic Vignettes & Dynamic Environmental Gradients */}
-        <div className="absolute inset-0 bg-linear-to-r from-[#020617]/85 via-[#020617]/40 to-transparent hidden lg:block" />
-        <div className="absolute inset-0 bg-linear-to-b from-[#020617]/90 via-transparent to-[#020617] lg:hidden block" />
-
-        {/* Soft Organic Ambient Light Glares */}
-        <div className={`absolute top-1/3 left-[-10%] w-[600px] h-[600px] ${thanksgiving ? "bg-[#D99438]/20" : "bg-sky-500/10"} blur-[180px] rounded-full pointer-events-none`} />
-        <div className={`absolute bottom-10 right-1/4 w-[400px] h-[400px] ${thanksgiving ? "bg-[#B85C32]/20" : "bg-indigo-500/5"} blur-[150px] rounded-full pointer-events-none`} />
-
-        {/* Thanksgiving Golden Sunset & Foliage Edge Framing */}
-        {thanksgiving && (
-          <>
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#69452F]/45 via-[#B85C32]/15 to-[#E8B85C]/22 pointer-events-none" />
-            <div className="absolute top-1/4 right-[-5%] w-[520px] h-[520px] bg-[#E8B85C]/18 blur-[160px] rounded-full pointer-events-none" />
-            <AutumnFoliageCorner className="hidden lg:block absolute bottom-0 right-0 w-64 h-48 opacity-65 z-10" flipX flipY />
-          </>
-        )}
+    <section className="relative pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-32 lg:pb-24 overflow-hidden bg-gradient-to-b from-slate-50/70 via-white to-sky-50/30">
+      {/* Subtle City Silhouette & Curving Line Background Accent */}
+      <div className="absolute inset-0 pointer-events-none z-0 opacity-15 overflow-hidden">
+        <Image
+          src="https://res.cloudinary.com/jup2hjfk/image/upload/v1784883256/lifestylebg_l9rhch.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center mix-blend-multiply"
+        />
+        {/* Soft curving line / radial backdrop accent matching reference */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_70%_at_45%_35%,rgba(2,111,226,0.07),transparent_70%)]" />
       </div>
 
-      {/* TYPOGRAPHY & CTA LAYOUT CONTAINER */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 pb-20 pt-24 lg:pb-24 flex justify-start">
-        <div className="max-w-2xl text-left flex flex-col items-start backdrop-blur-[2px] lg:backdrop-blur-none p-4 lg:p-0 rounded-2xl">
-          {/* Premium Eyebrow Flag */}
-          <motion.div
-            initial={{ opacity: 0, y: -15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className={`inline-flex items-center gap-3 text-[8px] sm:text-[10px] uppercase tracking-[0.4em] ${thanksgiving ? "text-[#E8B85C]" : "text-sky-400"} font-bold mb-4`}
-          >
-            <span className={`w-6 h-px bg-linear-to-r ${thanksgiving ? "from-[#E8B85C]" : "from-sky-400"} to-transparent`} />
-            <span className={`bg-linear-to-r ${thanksgiving ? "from-[#E8B85C] via-[#FFF7E9] to-white" : "from-sky-400 via-sky-200 to-white"} bg-clip-text text-transparent`}>
-              {heroContent.eyebrow}
-            </span>
-          </motion.div>
+      <div className="relative z-10 max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 xl:gap-10 items-center">
+          
+          {/* LEFT COLUMN: Larger text, natural width to eliminate awkward center gap */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left lg:pr-2">
+            {/* Category / Eyebrow text */}
+            <p className="text-xs sm:text-[13px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-4">
+              PRACTICAL BUSINESS &amp; FINANCIAL EDUCATION
+            </p>
 
-          {/* Heading Architectural Complex */}
-          <h1 className="font-serif tracking-tight leading-[1.08] text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white w-full">
-            {/* Heading 1: Become Private */}
-            <motion.span
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.1,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="block tracking-tight drop-shadow-md text-slate-50"
-            >
-              {heroContent.title}
-            </motion.span>
+            {/* Main Headline - significantly enlarged to command presence */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[62px] xl:text-[70px] font-extrabold tracking-tight text-[#102a43] leading-[1.06] mb-6">
+              <span className="block">Business Trusts.</span>
+              <span className="block">Asset Protection.</span>
+              <span className="block">Business Credit.</span>
+            </h1>
 
-            {/* Heading 2: Operate Private */}
-            <motion.span
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.22,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className={`block text-transparent bg-clip-text bg-linear-to-r ${thanksgiving ? "from-[#E8B85C] via-[#FFF7E9] to-[#D99438]" : "from-sky-400 via-sky-100 to-slate-200"} font-light italic mt-1`}
-            >
-              {heroContent.titleAccent}
-            </motion.span>
+            {/* Sub-headline description */}
+            <p className="text-base sm:text-lg lg:text-[19px] text-slate-600 max-w-xl font-normal leading-relaxed mb-8">
+              Understand the concepts. Compare your options.<br className="hidden sm:inline" /> Choose your next step.
+            </p>
 
-            {/* Heading 3: Financial Freedom */}
-            <motion.span
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.34,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className={`block text-transparent bg-clip-text bg-linear-to-r ${thanksgiving ? "from-[#FFF7E9] via-[#F0E5D5] to-[#E8B85C]" : "from-white via-slate-200 to-sky-300"} font-light pb-2 mt-1 tracking-tight text-xl sm:text-2xl lg:text-5xl italic`}
-            >
-              {heroContent.titleFreedom}
-            </motion.span>
+            {/* Explore Courses Button */}
+            <div className="mb-4">
+              <Link
+                href="/services/course-cataloges"
+                className="inline-flex items-center justify-center px-7 py-3 rounded-lg border border-slate-700/80 text-slate-800 font-semibold text-sm hover:bg-slate-900 hover:text-white transition-all duration-200"
+              >
+                Explore Courses
+              </Link>
+            </div>
 
-            {/* Micro Separation Rule */}
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 1, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className={`h-px w-1/3 bg-linear-to-r ${thanksgiving ? "from-[#E8B85C]/70" : "from-sky-500/50"} to-transparent my-4 origin-left`}
-            />
+            {/* Micro-copy reassurance */}
+            <p className="text-xs sm:text-[13px] text-slate-500 font-normal">
+              Clear curriculum. Thoughtful guidance. Education first.
+            </p>
+          </div>
 
-            {/* Sub-Headline Label */}
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.55,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className={`block text-sm sm:text-lg lg:text-xl font-sans font-medium tracking-[0.12em] ${thanksgiving ? "text-[#E8B85C]/95" : "text-sky-300/90"} uppercase`}
-            >
-              {heroContent.subTitle}
-            </motion.span>
-          </h1>
+          {/* RIGHT COLUMN: "Start with a free class" Card - shifted naturally adjacent to left column */}
+          <div className="lg:col-span-5 flex justify-center lg:justify-start w-full lg:pl-2">
+            <div className="w-full max-w-[420px] bg-white rounded-2xl shadow-xl shadow-slate-300/40 border border-slate-200/90 overflow-hidden">
+              
+              {/* Card Header Ribbon */}
+              <div className="bg-[#102a43] px-5 py-3.5 flex items-center gap-3 text-white">
+                <div className="w-7 h-7 rounded-full bg-[#2ea3cc] flex items-center justify-center text-white shrink-0 shadow-sm">
+                  <Play size={13} className="fill-white translate-x-0.5 text-white" />
+                </div>
+                <span className="text-xs font-bold tracking-wider uppercase text-slate-100">
+                  FREE · 45-MINUTE RECORDED CLASS
+                </span>
+              </div>
 
-          {/* Context Body Copy */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.7 }}
-            className="mt-6 mb-9 text-xs sm:text-sm text-slate-300 leading-relaxed tracking-wide font-light max-w-lg"
-          >
-            {heroContent.description}
-          </motion.p>
+              {/* Card Body & Form */}
+              <div className="p-6 sm:p-7">
+                <h2 className="text-xl sm:text-[22px] font-bold text-[#102a43] mb-1 tracking-tight">
+                  Start with a free class
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-500 mb-5 leading-normal">
+                  Get an introduction before choosing a learning path.
+                </p>
 
-          {/* High-Fidelity Call To Action Interfaces */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-4 w-full sm:w-auto"
-          >
-            {/* Primary Action Button */}
-            <Link
-              href="/masterclass-membership"
-              className={`group relative inline-flex items-center justify-between gap-6 ${thanksgiving ? "bg-[#FFF7E9] text-[#69452F] hover:shadow-[0_0_35px_rgba(232,184,92,0.45)]" : "bg-white text-[#020617] hover:shadow-[0_0_35px_rgba(56,189,248,0.4)]"} font-bold text-[11px] uppercase tracking-[0.2em] rounded-full pl-7 pr-2.5 py-2.5 shadow-[0_10px_30px_rgba(2,6,23,0.3)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0`}
-            >
-              <span>Join Membership</span>
-              <span className={`w-9 h-9 rounded-full ${thanksgiving ? "bg-[#B85C32] group-hover:bg-[#D99438]" : "bg-[#020617] group-hover:bg-sky-500"} text-white flex items-center justify-center transition-all duration-300 group-hover:rotate-45`}>
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                >
-                  <line x1="7" y1="17" x2="17" y2="7" />
-                  <polyline points="7 7 17 7 17 17" />
-                </svg>
-              </span>
-            </Link>
+                <form onSubmit={handleHeroSubmit} className="space-y-4">
+                  {/* First Name Input */}
+                  <div>
+                    <label
+                      htmlFor="hero-first-name"
+                      className="block text-xs font-semibold text-slate-700 mb-1.5"
+                    >
+                      First name
+                    </label>
+                    <input
+                      id="hero-first-name"
+                      type="text"
+                      required
+                      placeholder="Your name"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300/80 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2ea3cc]/30 focus:border-[#2ea3cc] transition-all bg-white"
+                    />
+                  </div>
 
-            {/* Secondary Action Button */}
-            <Link
-              href="/webinar"
-              className={`inline-flex items-center justify-center gap-3 px-7 py-4 rounded-full border ${thanksgiving ? "border-[#E8B85C]/45 bg-[#69452F]/40 text-[#FFF7E9] hover:bg-[#B85C32]/30 hover:border-[#E8B85C]" : "border-slate-700/60 bg-slate-900/40 text-slate-200 hover:bg-sky-500/10 hover:text-white hover:border-sky-400/40"} font-semibold text-[11px] uppercase tracking-[0.2em] backdrop-blur-md transition-all duration-300 group`}
-            >
-              <span>Watch Free Webinar</span>
-              <span className={`w-1.5 h-1.5 rounded-full ${thanksgiving ? "bg-[#E8B85C]" : "bg-sky-400"} group-hover:scale-150 transition-transform duration-300`} />
-            </Link>
-          </motion.div>
+                  {/* Email Input */}
+                  <div>
+                    <label
+                      htmlFor="hero-email"
+                      className="block text-xs font-semibold text-slate-700 mb-1.5"
+                    >
+                      Email address
+                    </label>
+                    <input
+                      id="hero-email"
+                      type="email"
+                      required
+                      placeholder="you@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300/80 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2ea3cc]/30 focus:border-[#2ea3cc] transition-all bg-white"
+                    />
+                  </div>
+
+                  {/* CTA Submit Button */}
+                  <div className="pt-1">
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full py-3 px-4 rounded-lg bg-[#2ea3cc] hover:bg-[#258eb2] text-white font-semibold text-sm transition-colors shadow-sm active:scale-[0.99] cursor-pointer"
+                    >
+                      {loading ? "Preparing Access..." : "Watch Free Training"}
+                    </button>
+                  </div>
+
+                  {/* Trust Microtext */}
+                  <div className="pt-0.5 text-center">
+                    <p className="text-xs text-slate-500">
+                      No phone number needed to start.
+                    </p>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </div>
-
-      {/* Overlay Modal Portal */}
-      <AnimatePresence>
-        {showContactForm && (
-          <HeroContactOverlay onClose={() => setShowContactForm(false)} />
-        )}
-      </AnimatePresence>
-    </div>
+    </section>
   );
 };
 

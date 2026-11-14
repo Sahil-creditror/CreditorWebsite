@@ -9,10 +9,10 @@ export default function Page() {
   return (
     <main>
       <Herobanner
-        heading="eBook Library"
-        desc="Expert financial guides by <span>Paulmichael Rowland</span> — click any book to view and purchase."
+        heading="Practical eBooks on Credit, Debt Collection & Child Support"
+        desc="Practical legal and financial self-help guides by <span>PaulMichael Rowland</span> — digital editions with instant access at $49.99 each."
         buttonPath="https://ebook.lmsathena.com/"
-        buttonText="Browse All Books"
+        buttonText="Explore eBook Catalog"
       />
       <EbooksPage />
     </main>

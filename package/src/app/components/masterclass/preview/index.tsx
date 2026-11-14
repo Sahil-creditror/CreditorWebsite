@@ -35,9 +35,9 @@ export default function HeroSection({
         {/* Centered Title & Subtitle */}
         <div className="relative z-10 container mx-auto px-4 sm:px-6">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight font-extrabold mb-3 sm:mb-4 text-slate-900 dark:text-white">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight font-extrabold mb-3 sm:mb-4 text-slate-900 dark:text-white">
               Build Your <span className={`bg-clip-text text-transparent bg-linear-to-r ${primaryGradient}`}>Private Business</span> Empire
-            </h1>
+            </h2>
             <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base md:text-md mb-8 sm:mb-12 leading-relaxed">
               Get into the private fast with a clear, guided workflow — secure freedom, protection, and funding step by step.
             </p>

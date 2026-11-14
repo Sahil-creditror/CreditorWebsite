@@ -1,38 +1,12 @@
 import { Metadata } from "next";
 import { pageMetadata } from "@/lib/pageSeo";
-import { Suspense } from "react";
-import dynamic from "next/dynamic";
 import HeroSection from "./components/home/hero";
-
-// Intro is lightweight but not above-the-fold on most viewports — load dynamically
-const Intro = dynamic(() => import("./components/home/intro/page"), {
-  loading: () => <div className="min-h-[200px]" />,
-});
-
-// Dynamic imports for all below-the-fold components to improve initial load
-const Courses = dynamic(() => import("./components/home/courses"), {
-  loading: () => <div className="min-h-[400px]" />,
-});
-
-const WebclassSection = dynamic(() => import("./components/home/webclass"), {
-  loading: () => <div className="min-h-[400px]" />,
-});
-
-const Offer = dynamic(() => import("./components/home/Offer"), {
-  loading: () => <div className="min-h-[400px]" />,
-});
-
-const Contact = dynamic(() => import("./components/home/contact"), {
-  loading: () => <div className="min-h-[400px]" />,
-});
-
-const BootcampBanner = dynamic(() => import("./components/home/bootcamp-banner"), {
-  loading: () => <div className="min-h-[400px]" />,
-});
-
-// const Event = dynamic(() => import("./components/home/event"), {
-//   loading: () => <div className="min-h-[400px]" />,
-// });
+import LearningPathsSection from "./components/home/learning-paths-section";
+import InstructorCredibility from "./components/home/instructor-credibility";
+import MembershipBanner from "./components/home/membership-banner";
+import HowLearningWorks from "./components/home/how-learning-works";
+import FAQSection from "./components/home/faq-section";
+import FinalCTA from "./components/home/final-cta";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://creditoracademy.com";
 
@@ -57,45 +31,27 @@ export const metadata: Metadata = pageMetadata("/", {
 
 export default function Home() {
   return (
-    <>
+    <main className="min-h-screen bg-white">
+      {/* 1. Hero Section */}
       <HeroSection />
-      <Intro />
-      <Suspense fallback={<div className="min-h-[400px]" />}>
-        <BootcampBanner />
-      </Suspense>
 
-      {/* <StatsFacts /> */}
-      {/* <Masterclass /> */}
-      {/* <Aboutus /> */}
-      {/* <About /> */}
-      <Suspense fallback={<div className="min-h-[400px]" />}>
-        <WebclassSection />
-      </Suspense>
-      <Suspense fallback={<div className="min-h-[400px]" />}>
-        <Offer />
-      </Suspense>
-      {/* <PrivateTeaser /> */}
-      {/* <MasterInfo /> */}
-      <Suspense fallback={<div className="min-h-[400px]" />}>
-        <Courses />
-      </Suspense>
-      {/* <ThanksgivingPopup /> */}
-      <Suspense fallback={<div className="min-h-[400px]" />}>
-        <Contact contactdataNumber="4" />
-      </Suspense>
-      {/* <Suspense fallback={<div className="min-h-[400px]" />}>
-        <Event />
-      </Suspense> */}
-      {/* <MasterclassEbook /> */}
-      {/* <Roadmap /> */}
-      {/* <Testimonial /> */}
-      {/* <AnimatedTestimonialsDemo /> */}
-      {/* <Game /> */}
-      {/* <Team teamdataNumber="06" /> */}
-      {/* <Commitment /> */}
-      {/* <Pricing */}
-      {/* <Faq /> */}
-      {/* <Resources /> */}
-    </>
+      {/* 2. Three Learning Paths */}
+      <LearningPathsSection />
+
+      {/* 3. Instructor & Credibility */}
+      <InstructorCredibility />
+
+      {/* 4. Membership Benefits */}
+      <MembershipBanner />
+
+      {/* 5. How Learning Works */}
+      <HowLearningWorks />
+
+      {/* 6. FAQs & Useful Resources */}
+      <FAQSection />
+
+      {/* 7. Final CTA */}
+      <FinalCTA />
+    </main>
   );
 }

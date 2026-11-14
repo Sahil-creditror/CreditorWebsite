@@ -150,10 +150,9 @@ const OrderSchema: Schema = new Schema(
   }
 );
 
-// Create indexes for faster queries
+// Create compound indexes for faster queries
 OrderSchema.index({ userId: 1, createdAt: -1 }); // User's orders by date
 OrderSchema.index({ email: 1, createdAt: -1 }); // Orders by email
-OrderSchema.index({ status: 1 }); // Orders by status
 
 // Export the model
 const Order: Model<IOrder> =

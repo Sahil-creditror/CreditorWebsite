@@ -1,10 +1,11 @@
 /**
  * Seasonal / Holiday Theme Configuration
  *
- * Set NEXT_PUBLIC_THANKSGIVING_THEME="false" in .env.local to disable,
- * or flip THANKSGIVING_THEME_DEFAULT below.
+ * Temporarily disabled per instructions.
+ * To re-enable the Thanksgiving theme in the future:
+ * Set THANKSGIVING_THEME_DEFAULT = true, or set NEXT_PUBLIC_THANKSGIVING_THEME="true" in .env.local
  */
-const THANKSGIVING_THEME_DEFAULT = true;
+const THANKSGIVING_THEME_DEFAULT = false;
 
 export function isThanksgivingThemeEnabled(): boolean {
   const envFlag = process.env.NEXT_PUBLIC_THANKSGIVING_THEME;

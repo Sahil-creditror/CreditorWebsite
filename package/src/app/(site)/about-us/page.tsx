@@ -20,8 +20,8 @@ export default function Page() {
         <main>
             <Herobanner
                 bannerimage="https://res.cloudinary.com/dlndnmuq1/image/upload/v1768883280/creditor-website-assets/images/about-us/banner/aboutus-banner1.png"
-                heading="About us"
-                desc="We create <span>transformative credit education</span> that drives real financial freedom."
+                heading="About Creditor Academy: Our Mission and Founder"
+                desc="We provide <span>practical education</span> in business trusts, private operations, and credit foundations."
             />
             <AboutusDetail />
             {/* <AboutusStory /> */}

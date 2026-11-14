@@ -162,7 +162,7 @@ export default function EbooksPage() {
                   <span className="text-2xl font-black text-slate-900">{featuredBook.price}</span>
                 </div>
                 <span className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-5 py-2.5 rounded-xl shadow-lg shadow-blue-600/25 group-hover:gap-3 transition-all">
-                  Get eBook <ArrowUpRight className="w-4 h-4" />
+                  View Details &amp; Preview <ArrowUpRight className="w-4 h-4" />
                 </span>
               </div>
             </div>
@@ -220,7 +220,7 @@ export default function EbooksPage() {
               <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
                 <span className="text-lg font-black text-slate-900">{book.price}</span>
                 <span className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 group-hover:text-blue-700 transition-colors">
-                  View Book Details <ArrowUpRight className="w-3.5 h-3.5" />
+                  View Details &amp; Preview <ArrowUpRight className="w-3.5 h-3.5" />
                 </span>
               </div>
             </motion.a>

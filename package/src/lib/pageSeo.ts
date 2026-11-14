@@ -22,9 +22,9 @@ const DEFAULT_KEYWORDS = [
 
 const PAGE_SEO: Record<string, PageSeoEntry> = {
   "/": {
-    title: "Creditor Academy | Business Trust & Asset Protection | Creditor Academy",
+    title: "Creditor Academy | Business Trusts, Asset Protection & Business Credit",
     description:
-      "Learn business trusts, asset protection, business credit and private wealth strategies in the Creditor Academy Masterclass. Join a free webinar today.",
+      "Learn Business Trusts, Asset Protection & Business Credit. Understand the concepts, compare your options, and build generational wealth with Creditor Academy.",
     keywords: [
       "creditor academy",
       "business trust course",
@@ -38,9 +38,9 @@ const PAGE_SEO: Record<string, PageSeoEntry> = {
     ],
   },
   "/about-us": {
-    title: "About Creditor Academy | Our Mission & Instructor | Creditor Academy",
+    title: "About Creditor Academy | Credit Education Mission & Founder",
     description:
-      "Meet Creditor Academy and founder PaulMichael Rowland. Our mission: make business trusts, asset protection and private wealth education accessible.",
+      "About Creditor Academy: Our Mission and Founder. Meet PaulMichael Rowland and explore our practical financial sovereignty frameworks.",
     keywords: [
       "about creditor academy",
       "paulmichael rowland",
@@ -51,17 +51,17 @@ const PAGE_SEO: Record<string, PageSeoEntry> = {
     ],
   },
   "/about": {
-    title: "About Creditor Academy | Our Story & Mission | Creditor Academy",
+    title: "About Creditor Academy | Credit Education Mission & Founder",
     description:
-      "Discover the story behind Creditor Academy and how our Masterclass helps students learn business trusts, asset protection and private wealth strategies.",
+      "About Creditor Academy: Our Mission and Founder. Meet PaulMichael Rowland and explore our practical financial sovereignty frameworks.",
     keywords: ["about creditor academy", "creditor academy story", "financial education company", "creditor academy"],
   },
   "/Blogs": {
-    title: "Creditor Academy Blog | Trusts, Credit & Wealth Insights | Creditor Academy",
+    title: "Creditor Academy Journal | Business Credit, Trusts & Operations",
     description:
-      "Read Creditor Academy articles on business trusts, asset protection, business credit and private wealth strategies. Practical tips from our team.",
+      "Business Credit, Trusts & Operations Journal. Educational articles and practical perspectives on asset protection, trusts, and business credit.",
     keywords: [
-      "creditor academy blog",
+      "creditor academy journal",
       "business trust articles",
       "asset protection tips",
       "business credit blog",
@@ -183,9 +183,9 @@ const PAGE_SEO: Record<string, PageSeoEntry> = {
     keywords: ["creditor academy bootcamp", "business trust bootcamp", "asset protection training", "intensive financial course", "creditor academy"],
   },
   "/contact": {
-    title: "Contact Creditor Academy | Talk to Our Team | Creditor Academy",
+    title: "Contact Creditor Academy | Courses, Membership and Consultation",
     description:
-      "Questions about courses or membership? Contact the Creditor Academy team by email, phone or message. Open 9 AM to 5 PM EST, Monday to Friday.",
+      "Contact Creditor Academy. Inquiries for courses, masterclass membership, consultations, and student support.",
     keywords: ["contact creditor academy", "creditor academy support", "creditor academy phone", "creditor academy email", "creditor academy"],
   },
   "/course-tnc": {
@@ -201,10 +201,10 @@ const PAGE_SEO: Record<string, PageSeoEntry> = {
     keywords: ["creditor academy documentation", "course guides", "student resources", "help center", "creditor academy"],
   },
   "/ebooks": {
-    title: "Free eBooks on Trusts & Asset Protection | Creditor Academy",
+    title: "Credit, Debt Collection & Child Support eBooks | Creditor Academy",
     description:
-      "Download Creditor Academy eBooks on business trusts, asset protection, business credit and private wealth strategies.",
-    keywords: ["creditor academy ebooks", "business trust ebook", "asset protection ebook", "wealth building ebook", "creditor academy"],
+      "Practical eBooks on Credit, Debt Collection & Child Support. Explore comprehensive guides and previews from Creditor Academy.",
+    keywords: ["creditor academy ebooks", "credit ebooks", "debt collection ebook", "child support ebook", "creditor academy"],
   },
   "/enterprise-tnc": {
     title: "Enterprise Terms & Conditions | Creditor Academy",
@@ -369,9 +369,9 @@ const PAGE_SEO: Record<string, PageSeoEntry> = {
     keywords: ["masterclass step 3", "creditor academy masterclass", "financial education", "private wealth", "street smart training", "creditor academy"],
   },
   "/masterclass-membership": {
-    title: "Masterclass Membership | Join Creditor Academy | Creditor Academy",
+    title: "Masterclass Membership | Business Credit & Trust Education | Creditor Academy",
     description:
-      "Become a Creditor Academy member: unlock premium courses, daily live masterclasses and a private community focused on financial freedom.",
+      "Masterclass Membership: Business Credit and Trust Education. Unlock premium courses, weekly live masterclasses, and a private PMA community.",
     keywords: ["masterclass membership", "creditor academy membership", "join creditor academy", "online financial courses", "creditor academy"],
   },
   "/membership": {
@@ -519,27 +519,27 @@ const PAGE_SEO: Record<string, PageSeoEntry> = {
     keywords: ["creditor academy services", "course catalog", "live class", "website services", "tradeline exchange", "creditor academy"],
   },
   "/services/course-cataloges": {
-    title: "Course Catalog | Creditor Academy Programs",
+    title: "Course Catalog | Private Business, Credit & Financial Education",
     description:
-      "Browse the Creditor Academy course catalog: Become Private, Operate Private and Financial Freedom programs with full syllabi.",
+      "Private Business, Credit & Financial Education Course Catalog. Browse Become Private, Operate Private and Financial Freedom programs with full syllabi.",
     keywords: ["creditor academy course catalog", "financial courses", "business trust courses", "online wealth courses", "creditor academy"],
   },
   "/services/course-cataloges/become-private": {
-    title: "Become Private Syllabus | Creditor Academy",
+    title: "Become Private Bootcamp | Status, Documents & Private Operations",
     description:
-      "View the Become Private syllabus: status correction principles, essential lawful documents and the path to financial sovereignty.",
+      "Become Private: Status, Documents & Private Operations Bootcamp. Learn status correction principles, essential lawful documents, and the path to sovereignty.",
     keywords: ["become private syllabus", "status correction", "lawful documents", "course syllabus", "creditor academy"],
   },
   "/services/course-cataloges/financial-freedom": {
-    title: "Financial Freedom Syllabus | Creditor Academy",
+    title: "Financial Freedom Bootcamp | Business & Personal Credit Education",
     description:
-      "View the Financial Freedom syllabus: private business credit, personal credit repair and credit card stacking strategies.",
+      "Financial Freedom Bootcamp: Business and Personal Credit Education. Master private business credit foundations, personal credit review, and banking architectures.",
     keywords: ["financial freedom syllabus", "business credit", "credit repair", "credit card stacking", "creditor academy"],
   },
   "/services/course-cataloges/operate-private": {
-    title: "Operate Private Syllabus | Creditor Academy",
+    title: "Operate Private Bootcamp: Business Trusts, PMAs & Legacy Planning | Creditor Academy",
     description:
-      "View the Operate Private syllabus: unincorporated business trusts, Private Membership Associations and family legacy planning.",
+      "Operate Private Bootcamp: Business Trusts, PMAs & Legacy Planning. Learn unincorporated business trusts, Private Membership Associations and legacy planning.",
     keywords: ["operate private syllabus", "business trusts", "private membership association", "legacy planning", "creditor academy"],
   },
   "/services/live-class": {
@@ -687,10 +687,10 @@ const PAGE_SEO: Record<string, PageSeoEntry> = {
     keywords: ["sell tradelines", "list tradelines", "tradeline seller", "tradeline exchange", "creditor academy"],
   },
   "/webinar": {
-    title: "Free Webinar: Become & Operate Private | Creditor Academy",
+    title: "Free Webinar: Business Structure, Credit & Private Operations | Creditor Academy",
     description:
-      "Join the free Creditor Academy webinar: learn the framework for business trusts, asset protection and financial sovereignty.",
-    keywords: ["free webinar", "become and operate private", "creditor academy webinar", "financial sovereignty webinar", "creditor academy"],
+      "Free Webinar: Learn Business Structure, Credit & Private Operations. Watch our comprehensive 45-minute on-demand masterclass or join upcoming live sessions.",
+    keywords: ["free webinar", "business structure", "private operations", "creditor academy webinar", "financial sovereignty webinar", "creditor academy"],
   },
   "/webinar-registration": {
     title: "Free Webinar Registration | Creditor Academy",

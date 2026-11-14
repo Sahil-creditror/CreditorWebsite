@@ -154,15 +154,61 @@ export default function MasterclassBenefits() {
           ))}
         </div>
 
+        {/* Pricing, Billing Terms & Athena LMS Handoff Box */}
+        <motion.div
+          className="mt-14 max-w-xl mx-auto rounded-3xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 p-8 sm:p-10 shadow-xl text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-900/40 mb-4">
+            Masterclass Membership
+          </span>
+          <div className="flex items-baseline justify-center gap-1.5 mb-2">
+            <span className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white">$69</span>
+            <span className="text-sm font-medium text-slate-500 dark:text-slate-400">/ month (recurring)</span>
+          </div>
+          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-6">
+            Cancel anytime through your account settings. Individual bootcamps remain separate intensive cohorts available with member privileges.
+          </p>
+
+          <div className="text-left bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-5 mb-6 space-y-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300 border border-slate-100 dark:border-slate-800">
+            <div className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-600 shrink-0" />
+              <span>Weekly live interactive coaching and instructor Q&amp;A</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-600 shrink-0" />
+              <span>Introductory curriculum access across all 3 learning tracks</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-600 shrink-0" />
+              <span>Private PMA member network and document updates</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-600 shrink-0" />
+              <span>Account registration &amp; checkout completes securely on Athena LMS</span>
+            </div>
+          </div>
+
+          <a
+            href="https://lmsathena.com/signup?plan=masterclass"
+            className="inline-flex w-full items-center justify-center gap-2 py-4 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm sm:text-base shadow-lg shadow-blue-600/25 transition-all duration-200 active:scale-[0.98]"
+          >
+            Join Membership on Athena LMS ($69/mo)
+          </a>
+        </motion.div>
+
         {/* Sub-footer / note */}
         <motion.div
-          className="mt-10 max-w-3xl mx-auto text-center text-sm text-slate-700 dark:text-white"
+          className="mt-8 max-w-3xl mx-auto text-center text-xs text-slate-500 dark:text-slate-400"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <p className="text-slate-700 dark:text-white">
-            Join today to get exclusive previews, live coaching, and entry to member-only community groups — cancel anytime.
+          <p>
+            Educational training and community mentorship. Creditor Academy provides general educational resources, not individualized legal, tax, or investment advice.
           </p>
         </motion.div>
       </div>

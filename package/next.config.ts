@@ -104,6 +104,24 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // 1. Canonical Hostname Normalization (www to non-www)
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "www.creditoracademy.com",
+          },
+        ],
+        destination: "https://creditoracademy.com/:path*",
+        permanent: true,
+      },
+      // 2. Canonical Blog URL mapping (/blog/* -> /Blogs/*)
+      {
+        source: "/blog/:slug*",
+        destination: "/Blogs/:slug*",
+        permanent: true,
+      },
       {
         source: "/about",
         destination: "/about-us",

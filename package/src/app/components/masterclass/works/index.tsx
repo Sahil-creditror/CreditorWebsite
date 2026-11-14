@@ -212,6 +212,68 @@ export default function PricingRedesign() {
           </div>
         </div>
 
+        {/* Membership vs Individual Courses Distinction */}
+        <div className="mt-10 bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+          <h4 className="text-base sm:text-lg font-bold text-slate-900 mb-2">
+            Membership vs. Individual Course Purchases
+          </h4>
+          <p className="text-xs sm:text-sm text-slate-500 mb-6">
+            Understanding the distinction helps you select the exact level of support you need.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="rounded-2xl border border-blue-100 bg-blue-50/40 p-5">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-2.5 h-2.5 rounded-full bg-blue-600" />
+                <h5 className="font-bold text-sm text-blue-950">Masterclass Membership ($69/mo)</h5>
+              </div>
+              <ul className="space-y-2 text-xs text-slate-700">
+                <li className="flex items-start gap-2">
+                  <FiCheck className="mt-0.5 text-blue-600 shrink-0" />
+                  <span>Access to live classes &amp; mentoring sessions Monday–Friday</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <FiCheck className="mt-0.5 text-blue-600 shrink-0" />
+                  <span>Interactive PMA member community &amp; discussion vaults</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <FiCheck className="mt-0.5 text-blue-600 shrink-0" />
+                  <span>Continuous curriculum updates, guides, and template additions</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <FiCheck className="mt-0.5 text-blue-600 shrink-0" />
+                  <span>Flexible monthly pay-as-you-go — cancel anytime</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-2.5 h-2.5 rounded-full bg-slate-700" />
+                <h5 className="font-bold text-sm text-slate-900">Individual Course Purchases</h5>
+              </div>
+              <ul className="space-y-2 text-xs text-slate-700">
+                <li className="flex items-start gap-2">
+                  <FiCheck className="mt-0.5 text-slate-600 shrink-0" />
+                  <span>One-time purchase for single specialized curriculum tracks</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <FiCheck className="mt-0.5 text-slate-600 shrink-0" />
+                  <span>Permanent lifetime access to module recordings &amp; slide decks</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <FiCheck className="mt-0.5 text-slate-600 shrink-0" />
+                  <span>Focused single-subject deep dives without ongoing subscriptions</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <FiCheck className="mt-0.5 text-slate-600 shrink-0" />
+                  <span>Independent self-study roadmap at your own pace</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
         {/* Footer Support */}
         <div className="mt-8 text-center text-xs text-slate-400">
           <a href="/contact" className="hover:text-blue-600 hover:underline">

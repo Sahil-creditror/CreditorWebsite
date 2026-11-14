@@ -108,22 +108,22 @@ export function ClientLayoutShell({ children }: PropsWithChildren) {
           {children}
           {!hideFooter && <Footer />}
 
-          <FloatingButtons
+          {/* <FloatingButtons
             onSpecialOfferClick={pathname === "/" ? () => setThanksgivingKey(prev => prev + 1) : undefined}
             hideGiftButton={pathname !== "/"}
-          />
+          /> */}
 
           {/* Video chatbot — allowed pages only */}
           {isChatbotVisible(pathname) && <FloatingMiniChatbot />}
 
           {thanksgivingEnabled && !is404 && <ThanksgivingLeaves />}
 
-          {pathname === "/" && (
+          {/* {pathname === "/" && (
             <EventPopup
               delayMs={0}
               manualTrigger={thanksgivingKey}
             />
-          )}
+          )} */}
 
           {/* Registration Notification Popup - Shows on all pages */}
           {/* <RegPopup /> */}
